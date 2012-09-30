@@ -30,6 +30,7 @@
   <component name="EntryPointsManager">
     <entry_points version="2.0" />
   </component>
+  <component name="IdProvider" IDEtalkID="3A9B7F236641A0057ECC25DB768D230A" />
   <component name="Palette2">
     <group name="Swing">
       <item class="com.intellij.uiDesigner.HSpacer" tooltip-text="Horizontal Spacer" icon="/com/intellij/uiDesigner/icons/hspacer.png" removable="false" auto-create-binding="false" can-attach-label="false">
@@ -151,19 +152,33 @@
       </item>
     </group>
   </component>
+  <component name="ProjectCodeStyleSettingsManager">
+    <option name="PER_PROJECT_SETTINGS">
+      <value />
+    </option>
+  </component>
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/../../../boofcv/main/calibration/BoofCV Calibration.iml" filepath="$PROJECT_DIR$/../../../boofcv/main/calibration/BoofCV Calibration.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../../../boofcv/main/feature/BoofCV Feature.iml" filepath="$PROJECT_DIR$/../../../boofcv/main/feature/BoofCV Feature.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../../../boofcv/main/geo/BoofCV Geometric Vision.iml" filepath="$PROJECT_DIR$/../../../boofcv/main/geo/BoofCV Geometric Vision.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../../../boofcv/main/io/BoofCV IO.iml" filepath="$PROJECT_DIR$/../../../boofcv/main/io/BoofCV IO.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../../../boofcv/main/ip/BoofCV Image Processing.iml" filepath="$PROJECT_DIR$/../../../boofcv/main/ip/BoofCV Image Processing.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../../../boofcv/main/numerics/BoofCV Numerics.iml" filepath="$PROJECT_DIR$/../../../boofcv/main/numerics/BoofCV Numerics.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../../../boofcv/main/sfm/BoofCV SFM.iml" filepath="$PROJECT_DIR$/../../../boofcv/main/sfm/BoofCV SFM.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../../../georegression/GeoRegression.iml" filepath="$PROJECT_DIR$/../../../georegression/GeoRegression.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../../boofcv/main/calibration/BoofCV Calibration.iml" filepath="$PROJECT_DIR$/../../boofcv/main/calibration/BoofCV Calibration.iml" />
+      <module fileurl="file://$USER_HOME$/boofcv/main/calibration/BoofCV Calibration.iml" filepath="$USER_HOME$/boofcv/main/calibration/BoofCV Calibration.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../../boofcv/main/feature/BoofCV Feature.iml" filepath="$PROJECT_DIR$/../../boofcv/main/feature/BoofCV Feature.iml" />
+      <module fileurl="file://$USER_HOME$/boofcv/main/feature/BoofCV Feature.iml" filepath="$USER_HOME$/boofcv/main/feature/BoofCV Feature.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../../boofcv/main/geo/BoofCV Geometric Vision.iml" filepath="$PROJECT_DIR$/../../boofcv/main/geo/BoofCV Geometric Vision.iml" />
+      <module fileurl="file://$USER_HOME$/boofcv/main/geo/BoofCV Geometric Vision.iml" filepath="$USER_HOME$/boofcv/main/geo/BoofCV Geometric Vision.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../../boofcv/main/io/BoofCV IO.iml" filepath="$PROJECT_DIR$/../../boofcv/main/io/BoofCV IO.iml" />
+      <module fileurl="file://$USER_HOME$/boofcv/main/io/BoofCV IO.iml" filepath="$USER_HOME$/boofcv/main/io/BoofCV IO.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../../boofcv/main/ip/BoofCV Image Processing.iml" filepath="$PROJECT_DIR$/../../boofcv/main/ip/BoofCV Image Processing.iml" />
+      <module fileurl="file://$USER_HOME$/boofcv/main/ip/BoofCV Image Processing.iml" filepath="$USER_HOME$/boofcv/main/ip/BoofCV Image Processing.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../../boofcv/main/numerics/BoofCV Numerics.iml" filepath="$PROJECT_DIR$/../../boofcv/main/numerics/BoofCV Numerics.iml" />
+      <module fileurl="file://$USER_HOME$/boofcv/main/numerics/BoofCV Numerics.iml" filepath="$USER_HOME$/boofcv/main/numerics/BoofCV Numerics.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../../boofcv/main/sfm/BoofCV SFM.iml" filepath="$PROJECT_DIR$/../../boofcv/main/sfm/BoofCV SFM.iml" />
+      <module fileurl="file://$USER_HOME$/boofcv/main/sfm/BoofCV SFM.iml" filepath="$USER_HOME$/boofcv/main/sfm/BoofCV SFM.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../../georegression/GeoRegression.iml" filepath="$PROJECT_DIR$/../../georegression/GeoRegression.iml" />
+      <module fileurl="file://$USER_HOME$/georegression/GeoRegression.iml" filepath="$USER_HOME$/georegression/GeoRegression.iml" />
       <module fileurl="file://$PROJECT_DIR$/boofcv validator.iml" filepath="$PROJECT_DIR$/boofcv validator.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../../../ejml/trunk/ejml.iml" filepath="$PROJECT_DIR$/../../../ejml/trunk/ejml.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../../../libpjajava/libpja.iml" filepath="$PROJECT_DIR$/../../../libpjajava/libpja.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../../ejml/trunk/ejml.iml" filepath="$PROJECT_DIR$/../../ejml/trunk/ejml.iml" />
+      <module fileurl="file://$USER_HOME$/ejml/trunk/ejml.iml" filepath="$USER_HOME$/ejml/trunk/ejml.iml" />
+      <module fileurl="file://$USER_HOME$/libpjajava/libpja.iml" filepath="$USER_HOME$/libpjajava/libpja.iml" />
     </modules>
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_1_6" assert-keyword="true" jdk-15="true" project-jdk-name="1.6" project-jdk-type="JavaSDK">
@@ -173,21 +188,21 @@
     <option name="mySupportsUserInfoFilter" value="true" />
   </component>
   <component name="VcsDirectoryMappings">
-    <mapping directory="$PROJECT_DIR$/../.." vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/../../../boofcv" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/../../../ejml/trunk" vcs="svn" />
-    <mapping directory="$PROJECT_DIR$/../../../georegression" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/../../../libpjajava" vcs="svn" />
+    <mapping directory="$PROJECT_DIR$/.." vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/../../boofcv" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/../../ejml/trunk" vcs="svn" />
+    <mapping directory="$PROJECT_DIR$/../../georegression" vcs="Git" />
   </component>
+  <component name="WebServicesPlugin" addRequiredLibraries="true" />
   <component name="libraryTable">
     <library name="testing">
       <CLASSES>
-        <root url="jar://$PROJECT_DIR$/../../../boofcv/lib/testing/junit-4.10.jar!/" />
-        <root url="jar://$PROJECT_DIR$/../../../boofcv/lib/testing/caliper.jar!/" />
+        <root url="jar://$PROJECT_DIR$/../../boofcv/lib/testing/caliper.jar!/" />
+        <root url="jar://$PROJECT_DIR$/../../boofcv/lib/testing/junit-4.10.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES>
-        <root url="jar://$PROJECT_DIR$/../../../boofcv/lib/testing/caliper.jar!/" />
+        <root url="jar://$PROJECT_DIR$/../../boofcv/lib/testing/caliper.jar!/" />
       </SOURCES>
     </library>
   </component>
