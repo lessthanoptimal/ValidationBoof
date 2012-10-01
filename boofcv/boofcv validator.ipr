@@ -154,7 +154,11 @@
   </component>
   <component name="ProjectCodeStyleSettingsManager">
     <option name="PER_PROJECT_SETTINGS">
-      <value />
+      <value>
+        <XML>
+          <option name="XML_LEGACY_SETTINGS_IMPORTED" value="true" />
+        </XML>
+      </value>
     </option>
   </component>
   <component name="ProjectModuleManager">
@@ -178,6 +182,7 @@
       <module fileurl="file://$PROJECT_DIR$/boofcv validator.iml" filepath="$PROJECT_DIR$/boofcv validator.iml" />
       <module fileurl="file://$PROJECT_DIR$/../../ejml/trunk/ejml.iml" filepath="$PROJECT_DIR$/../../ejml/trunk/ejml.iml" />
       <module fileurl="file://$USER_HOME$/ejml/trunk/ejml.iml" filepath="$USER_HOME$/ejml/trunk/ejml.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../../libpjajava/libpja.iml" filepath="$PROJECT_DIR$/../../libpjajava/libpja.iml" />
       <module fileurl="file://$USER_HOME$/libpjajava/libpja.iml" filepath="$USER_HOME$/libpjajava/libpja.iml" />
     </modules>
   </component>
@@ -192,6 +197,7 @@
     <mapping directory="$PROJECT_DIR$/../../boofcv" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/../../ejml/trunk" vcs="svn" />
     <mapping directory="$PROJECT_DIR$/../../georegression" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/../../libpjajava" vcs="svn" />
   </component>
   <component name="WebServicesPlugin" addRequiredLibraries="true" />
   <component name="libraryTable">

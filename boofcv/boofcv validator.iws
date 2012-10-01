@@ -2,46 +2,37 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" readonly="true" id="5ae49738-03a7-49e6-8d41-9676d295fd24" name="Default" comment="In the process of rewriting the FAST detector since the old version was broken.  Found bug while validating its correctness against the original version&#10;FAST is now TOTALLY broken until the rewrite is finished">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../trifocal/wongt/e_from_T.m" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../trifocal/wongt/homo.m" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../trifocal/wongt/minAlg_5p6.m" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../trifocal/wongt/normalise2dpts.m" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../trifocal/wongt/estimateWongt.m" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../trifocal/wongt/triftensor.m" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../boofcv/main/geo/generate/python/trifocal.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/generate/GenerateTrifocalObservations.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/performance/EvaluateTrifocal.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/validation/ComputeTrifocalTensor.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../trifocal/camera_matrix.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../trifocal/results/boofcv_noise_algebraic7.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../trifocal/results/boofcv_noise_linear7.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../trifocal/results/boofcv_perfect_algebraic7.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../trifocal/results/boofcv_perfect_linear7.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../trifocal/tensor_pixel_noise.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../trifocal/tensor_pixel_perfect.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../trifocal/tensor_world.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../trifocal/wongt/notes.txt" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/../fast/boofcv/Boofcv Feature.iml" afterPath="$PROJECT_DIR$/Boofcv Feature.iml" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/../fast/boofcv/boofcv validator.iml" afterPath="$PROJECT_DIR$/boofcv validator.iml" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/../fast/boofcv/boofcv validator.ipr" afterPath="$PROJECT_DIR$/boofcv validator.ipr" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/../fast/boofcv/boofcv validator.iws" afterPath="$PROJECT_DIR$/boofcv validator.iws" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/../fast/boofcv/src/validation/DetectFast.java" afterPath="$PROJECT_DIR$/src/validation/DetectFast.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../trifocal/results/wongt_noise_linear7.txt" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../trifocal/results/wongt_perfect_linear7.txt" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../boofcv/main/geo/src/boofcv/alg/geo/LowLevelMultiViewOps.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../boofcv/main/geo/test/boofcv/alg/geo/TestLowLevelMultiViewOps.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../lib/BoofCV.jar" afterPath="$PROJECT_DIR$/../lib/BoofCV.jar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../lib/EJML.jar" afterPath="$PROJECT_DIR$/../lib/EJML.jar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../lib/GeoRegression.jar" afterPath="$PROJECT_DIR$/../lib/GeoRegression.jar" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../boofcv/data" afterPath="$PROJECT_DIR$/../../boofcv/data" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../boofcv/lib/EJML.jar" afterPath="$PROJECT_DIR$/../../boofcv/lib/EJML.jar" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../boofcv/lib/GeoRegression.jar" afterPath="$PROJECT_DIR$/../../boofcv/lib/GeoRegression.jar" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/boofcv validator.iml" afterPath="$PROJECT_DIR$/boofcv validator.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/boofcv validator.ipr" afterPath="$PROJECT_DIR$/boofcv validator.ipr" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/boofcv validator.iws" afterPath="$PROJECT_DIR$/boofcv validator.iws" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../boofcv/main/geo/generate/python/utilsymbolic.py" afterPath="$PROJECT_DIR$/../../boofcv/main/geo/generate/python/utilsymbolic.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../boofcv/main/geo/src/boofcv/alg/geo/MultiViewOps.java" afterPath="$PROJECT_DIR$/../../boofcv/main/geo/src/boofcv/alg/geo/MultiViewOps.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../boofcv/main/geo/src/boofcv/alg/geo/PerspectiveOps.java" afterPath="$PROJECT_DIR$/../../boofcv/main/geo/src/boofcv/alg/geo/PerspectiveOps.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../boofcv/main/geo/src/boofcv/alg/geo/f/FundamentalLinear.java" afterPath="$PROJECT_DIR$/../../boofcv/main/geo/src/boofcv/alg/geo/f/FundamentalLinear.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../boofcv/main/geo/src/boofcv/alg/geo/f/FundamentalLinear7.java" afterPath="$PROJECT_DIR$/../../boofcv/main/geo/src/boofcv/alg/geo/f/FundamentalLinear7.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../boofcv/main/geo/src/boofcv/alg/geo/f/FundamentalLinear8.java" afterPath="$PROJECT_DIR$/../../boofcv/main/geo/src/boofcv/alg/geo/f/FundamentalLinear8.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../boofcv/main/geo/src/boofcv/alg/geo/h/HomographyLinear4.java" afterPath="$PROJECT_DIR$/../../boofcv/main/geo/src/boofcv/alg/geo/h/HomographyLinear4.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../boofcv/main/geo/src/boofcv/alg/geo/trifocal/EnforceTrifocalGeometry.java" afterPath="$PROJECT_DIR$/../../boofcv/main/geo/src/boofcv/alg/geo/trifocal/EnforceTrifocalGeometry.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../boofcv/main/geo/src/boofcv/alg/geo/trifocal/TrifocalAlgebraicPoint7.java" afterPath="$PROJECT_DIR$/../../boofcv/main/geo/src/boofcv/alg/geo/trifocal/TrifocalAlgebraicPoint7.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../boofcv/main/geo/src/boofcv/alg/geo/trifocal/TrifocalLinearPoint7.java" afterPath="$PROJECT_DIR$/../../boofcv/main/geo/src/boofcv/alg/geo/trifocal/TrifocalLinearPoint7.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../boofcv/main/geo/src/boofcv/struct/geo/AssociatedTriple.java" afterPath="$PROJECT_DIR$/../../boofcv/main/geo/src/boofcv/struct/geo/AssociatedTriple.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../boofcv/main/geo/src/boofcv/struct/geo/TrifocalTensor.java" afterPath="$PROJECT_DIR$/../../boofcv/main/geo/src/boofcv/struct/geo/TrifocalTensor.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../boofcv/main/geo/test/boofcv/alg/geo/TestMultiViewOps.java" afterPath="$PROJECT_DIR$/../../boofcv/main/geo/test/boofcv/alg/geo/TestMultiViewOps.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../boofcv/main/geo/test/boofcv/alg/geo/TestPerspectiveOps.java" afterPath="$PROJECT_DIR$/../../boofcv/main/geo/test/boofcv/alg/geo/TestPerspectiveOps.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../boofcv/main/geo/test/boofcv/alg/geo/trifocal/CommonTrifocalChecks.java" afterPath="$PROJECT_DIR$/../../boofcv/main/geo/test/boofcv/alg/geo/trifocal/CommonTrifocalChecks.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../boofcv/main/geo/test/boofcv/alg/geo/trifocal/TestTrifocalAlgebraicPoint7.java" afterPath="$PROJECT_DIR$/../../boofcv/main/geo/test/boofcv/alg/geo/trifocal/TestTrifocalAlgebraicPoint7.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../boofcv/main/geo/test/boofcv/alg/geo/trifocal/TestTrifocalLinearPoint7.java" afterPath="$PROJECT_DIR$/../../boofcv/main/geo/test/boofcv/alg/geo/trifocal/TestTrifocalLinearPoint7.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../boofcv/main/numerics/src/boofcv/numerics/optimization/impl/LevenbergBase.java" afterPath="$PROJECT_DIR$/../../boofcv/main/numerics/src/boofcv/numerics/optimization/impl/LevenbergBase.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../ejml/trunk/EJML.iws" afterPath="$PROJECT_DIR$/../../ejml/trunk/EJML.iws" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../ejml/trunk/src/org/ejml/factory/LinearSolverFactory.java" afterPath="$PROJECT_DIR$/../../ejml/trunk/src/org/ejml/factory/LinearSolverFactory.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../georegression/GeoRegression.ipr" afterPath="$PROJECT_DIR$/../../georegression/GeoRegression.ipr" />
@@ -103,65 +94,20 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="DetectFast.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/validation/DetectFast.java">
+      <file leaf-file-name="MultiViewOps.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/../../boofcv/main/geo/src/boofcv/alg/geo/MultiViewOps.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="25" column="19" selection-start="764" selection-end="764" vertical-scroll-proportion="0.0">
+            <state line="607" column="18" selection-start="18854" selection-end="18854" vertical-scroll-proportion="0.7619048">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="GenerateTrifocalObservations.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/generate/GenerateTrifocalObservations.java">
+      <file leaf-file-name="TestMultiViewOps.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../../boofcv/main/geo/test/boofcv/alg/geo/TestMultiViewOps.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="69" column="68" selection-start="2805" selection-end="2805" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ComputeTrifocalTensor.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/validation/ComputeTrifocalTensor.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="45" column="22" selection-start="738" selection-end="1330" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#851#869#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="EvaluateTrifocal.java" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/performance/EvaluateTrifocal.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="90" column="54" selection-start="2306" selection-end="2306" vertical-scroll-proportion="0.7120921">
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="TestTrifocalAlgebraicPoint7.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../../boofcv/main/geo/test/boofcv/alg/geo/trifocal/TestTrifocalAlgebraicPoint7.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="46" column="0" selection-start="1424" selection-end="1599" vertical-scroll-proportion="0.0">
+            <state line="443" column="3" selection-start="13449" selection-end="13449" vertical-scroll-proportion="0.0">
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="CommonTrifocalChecks.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../../boofcv/main/geo/test/boofcv/alg/geo/trifocal/CommonTrifocalChecks.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="126" column="21" selection-start="3411" selection-end="3971" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="e#1663#1676#0" expanded="true" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -174,14 +120,11 @@
     </FindUsagesManager>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../boofcv" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$USER_HOME$/boofcv/main/feature/src/boofcv/alg/feature/detect/intensity/impl/ImplFastDetect.java" />
-        <option value="$USER_HOME$/boofcv/main/feature/src/boofcv/alg/feature/detect/intensity/ImplFastDetect.java" />
-        <option value="$USER_HOME$/boofcv/main/feature/src/boofcv/alg/feature/detect/intensity/FastCornerIntensity.java" />
         <option value="$USER_HOME$/boofcv/main/feature/src/boofcv/alg/feature/detect/intensity/impl/ImplFastCorner12_F32.java" />
         <option value="$USER_HOME$/boofcv/main/feature/test/boofcv/alg/feature/detect/intensity/impl/TestImplFastCorner12_U8.java" />
         <option value="$USER_HOME$/boofcv/main/feature/test/boofcv/alg/feature/detect/intensity/impl/TestImplFastDetect9.java" />
@@ -195,6 +138,9 @@
         <option value="$PROJECT_DIR$/src/validation/ComputeTrifocalLinear7.java" />
         <option value="$PROJECT_DIR$/src/validation/ComputeTrifocalTensor.java" />
         <option value="$PROJECT_DIR$/src/performance/EvaluateTrifocal.java" />
+        <option value="$PROJECT_DIR$/../../boofcv/main/geo/test/boofcv/alg/geo/trifocal/TestTrifocalAlgebraicPoint7.java" />
+        <option value="$PROJECT_DIR$/../../boofcv/main/geo/src/boofcv/alg/geo/MultiViewOps.java" />
+        <option value="$PROJECT_DIR$/../../boofcv/main/geo/test/boofcv/alg/geo/TestMultiViewOps.java" />
       </list>
     </option>
   </component>
@@ -270,72 +216,12 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="ProjectPane">
-        <subPane>
+      <pane id="Scope">
+        <subPane subId="Project Files">
           <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="boofcv validator" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="boofcv validator" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="boofcv" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="boofcv validator" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="boofcv" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="validation" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="boofcv validator" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="boofcv" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="performance" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="boofcv validator" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="boofcv" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
@@ -350,12 +236,88 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope">
-        <subPane subId="Project Files">
+      <pane id="ProjectPane">
+        <subPane>
           <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
+            <PATH_ELEMENT>
+              <option name="myItemId" value="boofcv validator" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="boofcv validator" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="sfm" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="boofcv validator" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="sfm" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="boofcv" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="boofcv validator" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="sfm" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="boofcv" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="sfm" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="boofcv validator" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="sfm" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="boofcv" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="sfm" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="robust" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
@@ -365,7 +327,7 @@
   <component name="PropertiesComponent">
     <property name="last_directory_selection" value="$USER_HOME$/boofcv/main/feature/src/boofcv/alg/feature/detect/intensity" />
     <property name="GoToFile.includeJavaFiles" value="false" />
-    <property name="project.structure.last.edited" value="Libraries" />
+    <property name="project.structure.last.edited" value="Modules" />
     <property name="OverrideImplement.combined" value="true" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="options.splitter.main.proportions" value="0.3" />
@@ -378,9 +340,9 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="MemberChooser.showClasses" value="true" />
     <property name="GoToClass.includeLibraries" value="false" />
-    <property name="options.searchVisible" value="true" />
-    <property name="options.splitter.details.proportions" value="0.2" />
     <property name="dynamic.classpath" value="false" />
+    <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="options.searchVisible" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
@@ -391,39 +353,7 @@
       <recent name="boofcv.alg.feature.detect.intensity.impl" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.EvaluateTrifocal">
-    <configuration default="false" name="TestImplFastDetect9.checkIntensity" type="JUnit" factoryName="JUnit" temporary="true">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
-        <pattern>
-          <option name="PATTERN" value="boofcv.alg.feature.detect.intensity.impl.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <module name="BoofCV Feature" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PACKAGE_NAME" value="boofcv.alg.feature.detect.intensity.impl" />
-      <option name="MAIN_CLASS_NAME" value="boofcv.alg.feature.detect.intensity.impl.TestImplFastDetect9" />
-      <option name="METHOD_NAME" value="checkIntensity" />
-      <option name="TEST_OBJECT" value="method" />
-      <option name="VM_PARAMETERS" value="-ea" />
-      <option name="PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="moduleWithDependencies" />
-      </option>
-      <envs />
-      <patterns />
-      <RunnerSettings RunnerId="Debug">
-        <option name="DEBUG_PORT" value="" />
-        <option name="TRANSPORT" value="0" />
-        <option name="LOCAL" value="true" />
-      </RunnerSettings>
-      <ConfigurationWrapper RunnerId="Debug" />
-      <method />
-    </configuration>
+  <component name="RunManager" selected="JUnit.TestMultiViewOps.decomposeEssential">
     <configuration default="false" name="boofcv in BoofCV Feature" type="JUnit" factoryName="JUnit" temporary="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
         <pattern>
@@ -534,6 +464,38 @@
       <ConfigurationWrapper RunnerId="Debug" />
       <method />
     </configuration>
+    <configuration default="false" name="TestMultiViewOps.decomposeEssential" type="JUnit" factoryName="JUnit" temporary="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
+        <pattern>
+          <option name="PATTERN" value="boofcv.alg.geo.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <module name="BoofCV Geometric Vision" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" value="boofcv.alg.geo" />
+      <option name="MAIN_CLASS_NAME" value="boofcv.alg.geo.TestMultiViewOps" />
+      <option name="METHOD_NAME" value="decomposeEssential" />
+      <option name="TEST_OBJECT" value="method" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="moduleWithDependencies" />
+      </option>
+      <envs />
+      <patterns />
+      <RunnerSettings RunnerId="Debug">
+        <option name="DEBUG_PORT" value="" />
+        <option name="TRANSPORT" value="0" />
+        <option name="LOCAL" value="true" />
+      </RunnerSettings>
+      <ConfigurationWrapper RunnerId="Debug" />
+      <method />
+    </configuration>
     <configuration default="true" type="Remote" factoryName="Remote">
       <option name="USE_SOCKET_TRANSPORT" value="true" />
       <option name="SERVER_MODE" value="false" />
@@ -543,24 +505,6 @@
       <method>
         <option name="AntTarget" enabled="false" />
         <option name="BuildArtifacts" enabled="false" />
-        <option name="Maven.BeforeRunTask" enabled="false" />
-      </method>
-    </configuration>
-    <configuration default="true" type="Applet" factoryName="Applet">
-      <module name="" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="HTML_FILE_NAME" />
-      <option name="HTML_USED" value="false" />
-      <option name="WIDTH" value="400" />
-      <option name="HEIGHT" value="300" />
-      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
-      <option name="VM_PARAMETERS" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <method>
-        <option name="AntTarget" enabled="false" />
-        <option name="BuildArtifacts" enabled="false" />
-        <option name="Make" enabled="true" />
         <option name="Maven.BeforeRunTask" enabled="false" />
       </method>
     </configuration>
@@ -590,6 +534,24 @@
       <envs />
       <properties />
       <listeners />
+      <method>
+        <option name="AntTarget" enabled="false" />
+        <option name="BuildArtifacts" enabled="false" />
+        <option name="Make" enabled="true" />
+        <option name="Maven.BeforeRunTask" enabled="false" />
+      </method>
+    </configuration>
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <module name="" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="HTML_FILE_NAME" />
+      <option name="HTML_USED" value="false" />
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <option name="VM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
       <method>
         <option name="AntTarget" enabled="false" />
         <option name="BuildArtifacts" enabled="false" />
@@ -644,11 +606,11 @@
       </method>
     </configuration>
     <list size="5">
-      <item index="0" class="java.lang.String" itemvalue="JUnit.TestImplFastDetect9.checkIntensity" />
-      <item index="1" class="java.lang.String" itemvalue="JUnit.boofcv in BoofCV Feature" />
-      <item index="2" class="java.lang.String" itemvalue="Application.GenerateTrifocalObservations" />
-      <item index="3" class="java.lang.String" itemvalue="Application.ComputeTrifocalTensor" />
-      <item index="4" class="java.lang.String" itemvalue="Application.EvaluateTrifocal" />
+      <item index="0" class="java.lang.String" itemvalue="JUnit.boofcv in BoofCV Feature" />
+      <item index="1" class="java.lang.String" itemvalue="Application.GenerateTrifocalObservations" />
+      <item index="2" class="java.lang.String" itemvalue="Application.ComputeTrifocalTensor" />
+      <item index="3" class="java.lang.String" itemvalue="Application.EvaluateTrifocal" />
+      <item index="4" class="java.lang.String" itemvalue="JUnit.TestMultiViewOps.decomposeEssential" />
     </list>
     <configuration name="&lt;template&gt;" type="WebApp" default="true" selected="false">
       <Host>localhost</Host>
@@ -683,6 +645,10 @@
           <option name="myVcsRoot" value="$PROJECT_DIR$/../../ejml/trunk" />
           <option name="myCopyRoot" value="$PROJECT_DIR$/../../ejml/trunk" />
         </SvnCopyRootSimple>
+        <SvnCopyRootSimple>
+          <option name="myVcsRoot" value="$PROJECT_DIR$/../../libpjajava" />
+          <option name="myCopyRoot" value="$PROJECT_DIR$/../../libpjajava" />
+        </SvnCopyRootSimple>
       </list>
     </option>
     <option name="myMoreRealMappingRoots">
@@ -690,6 +656,10 @@
         <SvnCopyRootSimple>
           <option name="myVcsRoot" value="$PROJECT_DIR$/../../ejml/trunk" />
           <option name="myCopyRoot" value="$PROJECT_DIR$/../../ejml/trunk" />
+        </SvnCopyRootSimple>
+        <SvnCopyRootSimple>
+          <option name="myVcsRoot" value="$PROJECT_DIR$/../../libpjajava" />
+          <option name="myCopyRoot" value="$PROJECT_DIR$/../../libpjajava" />
         </SvnCopyRootSimple>
       </list>
     </option>
@@ -714,25 +684,25 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1920" height="1055" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
-      <window_info id="Data Sources" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Data Sources" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3975771" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3975771" sideWeight="0.49573106" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3975771" sideWeight="0.50053364" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3288835" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32819384" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
-      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.20405982" sideWeight="0.39537445" order="1" side_tool="true" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.20437567" sideWeight="0.6024229" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.20405982" sideWeight="0.6024229" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -837,52 +807,67 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/validation/DetectFast.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="25" column="19" selection-start="764" selection-end="764" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="25" column="19" selection-start="764" selection-end="764" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/generate/GenerateTrifocalObservations.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="69" column="68" selection-start="2805" selection-end="2805" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/validation/ComputeTrifocalTensor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="43" column="89" selection-start="1315" selection-end="1315" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/../../boofcv/main/geo/test/boofcv/alg/geo/trifocal/CommonTrifocalChecks.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="126" column="21" selection-start="3411" selection-end="3971" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/performance/EvaluateTrifocal.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="54" column="28" selection-start="1287" selection-end="1287" vertical-scroll-proportion="0.0">
           <folding>
-            <element signature="e#1663#1676#0" expanded="true" />
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/../../boofcv/main/geo/test/boofcv/alg/geo/trifocal/TestTrifocalAlgebraicPoint7.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="46" column="0" selection-start="1424" selection-end="1599" vertical-scroll-proportion="0.0">
+        <state line="103" column="31" selection-start="3374" selection-end="3374" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/generate/GenerateTrifocalObservations.java">
+    <entry file="file://$PROJECT_DIR$/../../boofcv/main/sfm/src/boofcv/alg/sfm/robust/Se3FromEssentialGenerator.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="69" column="68" selection-start="2805" selection-end="2805" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state line="25" column="11" selection-start="986" selection-end="986" vertical-scroll-proportion="0.0">
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/validation/ComputeTrifocalTensor.java">
+    <entry file="file://$PROJECT_DIR$/../../boofcv/main/geo/src/boofcv/alg/geo/DecomposeEssential.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="45" column="22" selection-start="738" selection-end="1330" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#851#869#0" expanded="true" />
-          </folding>
+        <state line="47" column="13" selection-start="1749" selection-end="1749" vertical-scroll-proportion="0.0">
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/performance/EvaluateTrifocal.java">
+    <entry file="file://$PROJECT_DIR$/../../boofcv/main/geo/test/boofcv/alg/geo/TestMultiViewOps.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="90" column="54" selection-start="2306" selection-end="2306" vertical-scroll-proportion="0.7120921">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state line="443" column="3" selection-start="13449" selection-end="13449" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../boofcv/main/geo/src/boofcv/alg/geo/MultiViewOps.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="607" column="18" selection-start="18854" selection-end="18854" vertical-scroll-proportion="0.7619048">
+          <folding />
         </state>
       </provider>
     </entry>
