@@ -1,4 +1,4 @@
-package validation;
+package validate.trifocal;
 
 import boofcv.alg.geo.trifocal.TrifocalAlgebraicPoint7;
 import boofcv.alg.geo.trifocal.TrifocalLinearPoint7;
@@ -66,15 +66,16 @@ public class ComputeTrifocalTensor {
 
 	public static void evaluate( List<AssociatedTriple> obs , String dataName ) throws FileNotFoundException {
 		TrifocalLinearPoint7 linear7 = new TrifocalLinearPoint7();
-		linear7.process(obs);
+		TrifocalTensor solution = new TrifocalTensor();
+		linear7.process(obs,solution);
 
-		saveTrifocal(linear7.getSolution(), "boofcv_"+dataName+"_linear7.txt");
+		saveTrifocal(solution, "boofcv_"+dataName+"_linear7.txt");
 
 		UnconstrainedLeastSquares optimizer = FactoryOptimization.leastSquareLevenberg(1e-3);
 		TrifocalAlgebraicPoint7 algebraic7 = new TrifocalAlgebraicPoint7(optimizer,300,1e-20,1e-20);
-		algebraic7.process(obs);
+		algebraic7.process(obs,solution);
 
-		saveTrifocal(algebraic7.getSolution(), "boofcv_"+dataName+"_algebraic7.txt");
+		saveTrifocal(solution, "boofcv_"+dataName+"_algebraic7.txt");
 	}
 
 	public static void main( String args[] ) throws IOException {

@@ -1,11 +1,11 @@
-package performance;
+package validate.trifocal;
 
 import boofcv.alg.geo.MultiViewOps;
 import boofcv.struct.geo.AssociatedTriple;
 import boofcv.struct.geo.TrifocalTensor;
 import org.ejml.data.DenseMatrix64F;
 import org.ejml.ops.SpecializedOps;
-import validation.ComputeTrifocalTensor;
+import validate.trifocal.ComputeTrifocalTensor;
 
 import java.io.*;
 import java.util.ArrayList;

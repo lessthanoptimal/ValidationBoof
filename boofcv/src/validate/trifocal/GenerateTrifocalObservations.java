@@ -1,4 +1,4 @@
-package generate;
+package validate.trifocal;
 
 import boofcv.alg.geo.PerspectiveOps;
 import boofcv.struct.geo.AssociatedTriple;

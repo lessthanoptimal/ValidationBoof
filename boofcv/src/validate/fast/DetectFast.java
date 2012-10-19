@@ -1,4 +1,4 @@
-package validation;
+package validate.fast;
 
 import boofcv.abst.feature.detect.interest.GeneralFeatureDetector;
 import boofcv.alg.feature.detect.extract.NonMaxBlockStrict;
