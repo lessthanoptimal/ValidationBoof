@@ -18,8 +18,7 @@ public class WrapParseLeuven07 implements SequenceStereoImages {
 
 	StereoParameters stereoParam;
 
-	Se3_F64 rightToWorld = new Se3_F64();
-	Se3_F64 leftToWorld = new Se3_F64();
+	Se3_F64 worldToLeft = new Se3_F64();
 
 	public WrapParseLeuven07(ParseLeuven07 data) {
 		this.data = data;
@@ -36,8 +35,8 @@ public class WrapParseLeuven07 implements SequenceStereoImages {
 	@Override
 	public boolean next() {
 		if( data.loadFrame(index++) ) {
-			data.getWorldToLeft().invert(leftToWorld);
-			data.getWorldToRight().invert(rightToWorld);
+			data.getLeftToWorld().invert(worldToLeft);
+
 			return true;
 		}
 		return false;
@@ -55,20 +54,16 @@ public class WrapParseLeuven07 implements SequenceStereoImages {
 
 	@Override
 	public Se3_F64 getLeftToWorld() {
-		return leftToWorld;
+		return data.getLeftToWorld();
 	}
 
 	@Override
-	public StereoParameters getCalibration() {
-		DenseMatrix64F K = data.getLeftK();
-		PerspectiveOps.matrixToParam(K,360,288,false,stereoParam.left);
+	public StereoParameters getCalibration()
+	{
+		PerspectiveOps.matrixToParam(data.getLeftK(),360,288,false,stereoParam.left);
+		PerspectiveOps.matrixToParam(data.getRightK(),360,288,false,stereoParam.right);
 
-		K = data.getRightK();
-		PerspectiveOps.matrixToParam(K,360,288,false,stereoParam.right);
-
-		Se3_F64 worldToLeft = data.getWorldToLeft();
-
-		rightToWorld.concat(worldToLeft,stereoParam.rightToLeft);
+		data.getRightToWorld().concat(worldToLeft,stereoParam.rightToLeft);
 
 		return stereoParam;
 	}

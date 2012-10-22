@@ -1,6 +1,9 @@
 package validate.vo;
 
 import boofcv.io.image.UtilImageIO;
+import georegression.geometry.GeometryMath_F64;
+import georegression.geometry.UtilPoint2D_F64;
+import georegression.geometry.UtilPoint3D_F64;
 import georegression.struct.se.Se3_F64;
 import org.ejml.data.DenseMatrix64F;
 
@@ -23,8 +26,8 @@ public class ParseLeuven07 {
 	// camera calibration information
 	private DenseMatrix64F leftK = new DenseMatrix64F(3,3);
 	private DenseMatrix64F rightK = new DenseMatrix64F(3,3);
-	private Se3_F64 worldToLeft = new Se3_F64();
-	private Se3_F64 worldToRight = new Se3_F64();
+	private Se3_F64 leftToWorld = new Se3_F64();
+	private Se3_F64 rightToWorld = new Se3_F64();
 
 	// camera images
 	private BufferedImage leftImage;
@@ -57,8 +60,8 @@ public class ParseLeuven07 {
 		String calibrationLeft = String.format("maps/camera.%05d",frame*2);
 		String calibrationRight = String.format("maps/camera.%05d",frame*2+1);
 
-		loadCalibration(homeDirectory + "/left/" + calibrationLeft, leftK, worldToLeft);
-		loadCalibration(homeDirectory + "/right/" + calibrationRight, rightK, worldToRight);
+		loadCalibration(homeDirectory + "/left/" + calibrationLeft, leftK, leftToWorld);
+		loadCalibration(homeDirectory + "/right/" + calibrationRight, rightK, rightToWorld);
 
 		return true;
 	}
@@ -104,6 +107,9 @@ public class ParseLeuven07 {
 			line = readNumbers(reader);
 			motion.getT().set(line[0],line[1],line[2]);
 
+			// convert into meters
+			GeometryMath_F64.scale(motion.getT(),0.49603);
+
 			reader.close();
 
 		} catch (FileNotFoundException e) {
@@ -141,11 +147,11 @@ public class ParseLeuven07 {
 		return rightK;
 	}
 
-	public Se3_F64 getWorldToLeft() {
-		return worldToLeft;
+	public Se3_F64 getLeftToWorld() {
+		return leftToWorld;
 	}
 
-	public Se3_F64 getWorldToRight() {
-		return worldToRight;
+	public Se3_F64 getRightToWorld() {
+		return rightToWorld;
 	}
 }
