@@ -3,56 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" readonly="true" id="5ae49738-03a7-49e6-8d41-9676d295fd24" name="Default" comment="In the process of rewriting the FAST detector since the old version was broken.  Found bug while validating its correctness against the original version&#10;FAST is now TOTALLY broken until the rewrite is finished">
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../visual_odometry/leuven07/read_camera.m" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/validate/vo/DebugDenseStereoVideo.java" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../visual_odometry/leuven07/readme.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../boofcv/main/visualize/src/boofcv/gui/image/ImageGridPanel.java" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../boofcv/evaluation/sfm/src/boofcv/geo/simulation/CameraControl.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../boofcv/evaluation/sfm/src/boofcv/geo/simulation/CameraModel.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../boofcv/evaluation/sfm/src/boofcv/geo/simulation/EnvironmentModel.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../boofcv/evaluation/sfm/src/boofcv/geo/simulation/SimPoint3D.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../boofcv/evaluation/sfm/src/boofcv/geo/simulation/SimulationEngine.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../boofcv/evaluation/sfm/src/boofcv/geo/simulation/impl/BasicEnvironment.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../boofcv/evaluation/sfm/src/boofcv/geo/simulation/impl/DistortedPinholeCamera.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../boofcv/evaluation/sfm/src/boofcv/geo/simulation/impl/ForwardCameraMotion.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../boofcv/evaluation/sfm/src/boofcv/geo/simulation/impl/SimulatedTracker.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../boofcv/evaluation/sfm/src/boofcv/geo/simulation/mono/EvaluateMonoSeparated.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../boofcv/evaluation/sfm/src/boofcv/geo/simulation/mono/EvaluateMonoSimple.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../boofcv/evaluation/sfm/src/boofcv/geo/simulation/mono/EvaluateMonoVisualOdometry.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../boofcv/evaluation/sfm/src/boofcv/geo/simulation/mono/MonoMetrics.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../boofcv/evaluation/sfm/src/boofcv/geo/simulation/mono/MonoMonteCarloStatistics.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../boofcv/evaluation/sfm/src/boofcv/geo/simulation/mono/MonoSimulationPanel.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../boofcv/evaluation/sfm/src/boofcv/geo/simulation/mono/MonoTrialResults.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../boofcv/evaluation/sfm/src/boofcv/geo/simulation/mono/StandardMonoScenarios.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../boofcv/evaluation/sfm/test/boofcv/geo/simulation/impl/TestBasicEnvironment.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../boofcv/evaluation/sfm/test/boofcv/geo/simulation/impl/TestDistortedPinholeCamera.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../boofcv/evaluation/sfm/test/boofcv/geo/simulation/impl/TestForwardCameraMotion.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../boofcv/evaluation/sfm/test/boofcv/geo/simulation/impl/TestSimulatedTracker.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../boofcv/main/feature/test/boofcv/abst/feature/disparity/TestDisparityToCoordinate.java" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/boofcv validator.iws" afterPath="$PROJECT_DIR$/boofcv validator.iws" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/validate/vo/DebugVisualOdometryStereo.java" afterPath="$PROJECT_DIR$/src/validate/vo/DebugVisualOdometryStereo.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/validate/vo/ParseLeuven07.java" afterPath="$PROJECT_DIR$/src/validate/vo/ParseLeuven07.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/validate/vo/WrapParseLeuven07.java" afterPath="$PROJECT_DIR$/src/validate/vo/WrapParseLeuven07.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../boofcv/evaluation/visualization/src/boofcv/alg/sfm/VisualizeMonoVisualOdometry.java" afterPath="$PROJECT_DIR$/../../boofcv/evaluation/visualization/src/boofcv/alg/sfm/VisualizeMonoVisualOdometry.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../boofcv/evaluation/visualization/src/boofcv/alg/sfm/VisualizeStereoVisualOdometry.java" afterPath="$PROJECT_DIR$/../../boofcv/evaluation/visualization/src/boofcv/alg/sfm/VisualizeStereoVisualOdometry.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../boofcv/examples/src/boofcv/examples/ExampleStereoTwoViewsOneCamera.java" afterPath="$PROJECT_DIR$/../../boofcv/examples/src/boofcv/examples/ExampleStereoTwoViewsOneCamera.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../boofcv/main/BoofCV Main.ipr" afterPath="$PROJECT_DIR$/../../boofcv/main/BoofCV Main.ipr" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../boofcv/main/geo/src/boofcv/alg/geo/RectifyImageOps.java" afterPath="$PROJECT_DIR$/../../boofcv/main/geo/src/boofcv/alg/geo/RectifyImageOps.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../boofcv/main/geo/src/boofcv/alg/geo/rectify/RectifyCalibrated.java" afterPath="$PROJECT_DIR$/../../boofcv/main/geo/src/boofcv/alg/geo/rectify/RectifyCalibrated.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../boofcv/main/geo/test/boofcv/alg/geo/rectify/TestRectifyCalibrated.java" afterPath="$PROJECT_DIR$/../../boofcv/main/geo/test/boofcv/alg/geo/rectify/TestRectifyCalibrated.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../boofcv/main/geo/todo.txt" afterPath="$PROJECT_DIR$/../../boofcv/main/geo/todo.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../boofcv/main/ip/src/boofcv/alg/distort/DistortImageOps.java" afterPath="$PROJECT_DIR$/../../boofcv/main/ip/src/boofcv/alg/distort/DistortImageOps.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../boofcv/main/ip/src/boofcv/alg/distort/PointTransformHomography_F32.java" afterPath="$PROJECT_DIR$/../../boofcv/main/ip/src/boofcv/alg/distort/PointTransformHomography_F32.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../boofcv/main/sfm/src/boofcv/abst/sfm/VisualOdometry.java" afterPath="$PROJECT_DIR$/../../boofcv/main/sfm/src/boofcv/abst/sfm/VisualOdometry.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../boofcv/main/sfm/src/boofcv/abst/sfm/WrapMonocularSeparatedMotion.java" afterPath="$PROJECT_DIR$/../../boofcv/main/sfm/src/boofcv/abst/sfm/WrapMonocularSeparatedMotion.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../boofcv/main/sfm/src/boofcv/abst/sfm/WrapMonocularSimpleVo.java" afterPath="$PROJECT_DIR$/../../boofcv/main/sfm/src/boofcv/abst/sfm/WrapMonocularSimpleVo.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../boofcv/main/sfm/src/boofcv/abst/sfm/WrapPixelDepthVoEpipolar.java" afterPath="$PROJECT_DIR$/../../boofcv/main/sfm/src/boofcv/abst/sfm/WrapPixelDepthVoEpipolar.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../boofcv/main/sfm/src/boofcv/alg/sfm/PixelDepthVoEpipolar.java" afterPath="$PROJECT_DIR$/../../boofcv/main/sfm/src/boofcv/alg/sfm/PixelDepthVoEpipolar.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../boofcv/main/sfm/src/boofcv/alg/sfm/StereoProcessingBase.java" afterPath="$PROJECT_DIR$/../../boofcv/main/sfm/src/boofcv/alg/sfm/StereoProcessingBase.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../boofcv/main/sfm/src/boofcv/alg/sfm/StereoSparse3D.java" afterPath="$PROJECT_DIR$/../../boofcv/main/sfm/src/boofcv/alg/sfm/StereoSparse3D.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../boofcv/main/sfm/test/boofcv/alg/sfm/TestStereoSparse3D.java" afterPath="$PROJECT_DIR$/../../boofcv/main/sfm/test/boofcv/alg/sfm/TestStereoSparse3D.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../boofcv/main/visualize/src/boofcv/gui/d3/PointCloudTiltPanel.java" afterPath="$PROJECT_DIR$/../../boofcv/main/visualize/src/boofcv/gui/d3/PointCloudTiltPanel.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../boofcv/main/visualize/src/boofcv/gui/d3/PointCloudViewer.java" afterPath="$PROJECT_DIR$/../../boofcv/main/visualize/src/boofcv/gui/d3/PointCloudViewer.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../boofcv/main/visualize/src/boofcv/gui/image/ShowImages.java" afterPath="$PROJECT_DIR$/../../boofcv/main/visualize/src/boofcv/gui/image/ShowImages.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../libpjajava/src/pja/sorting/QuickSelectArray.java" afterPath="$PROJECT_DIR$/../../libpjajava/src/pja/sorting/QuickSelectArray.java" />
     </list>
     <list id="a1871b72-0229-4eb0-82fb-6085d307f536" name="Failed commit: Default" comment="">
@@ -114,39 +68,19 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="PixelDepthVoEpipolar.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../../boofcv/main/sfm/src/boofcv/alg/sfm/PixelDepthVoEpipolar.java">
+      <file leaf-file-name="BundleAdjustmentCalibratedDense.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../../boofcv/main/geo/src/boofcv/abst/geo/bundle/BundleAdjustmentCalibratedDense.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="21" column="48" selection-start="770" selection-end="770" vertical-scroll-proportion="0.0">
+            <state line="97" column="33" selection-start="3291" selection-end="3291" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ImageGridPanel.java" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/../../boofcv/main/visualize/src/boofcv/gui/image/ImageGridPanel.java">
+      <file leaf-file-name="WrapTrustRegion.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../../boofcv/main/numerics/src/boofcv/numerics/optimization/wrap/WrapTrustRegion.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="28" column="9" selection-start="647" selection-end="647" vertical-scroll-proportion="0.5405405">
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ShowImages.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../../boofcv/main/visualize/src/boofcv/gui/image/ShowImages.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="55" column="32" selection-start="1605" selection-end="1619" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ImagePanel.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../../boofcv/main/visualize/src/boofcv/gui/image/ImagePanel.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="50" column="0" selection-start="1373" selection-end="1485" vertical-scroll-proportion="0.0">
+            <state line="66" column="0" selection-start="2042" selection-end="2042" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -155,7 +89,70 @@
       <file leaf-file-name="DebugVisualOdometryStereo.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/validate/vo/DebugVisualOdometryStereo.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="116" column="52" selection-start="3136" selection-end="3136" vertical-scroll-proportion="0.0">
+            <state line="143" column="30" selection-start="3718" selection-end="3718" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="VisOdomPixelDepthPnP.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/../../boofcv/main/sfm/src/boofcv/alg/sfm/VisOdomPixelDepthPnP.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="217" column="17" selection-start="6277" selection-end="6277" vertical-scroll-proportion="0.020408163">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="BundleAdjustmentCalibrated.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../../boofcv/main/geo/src/boofcv/abst/geo/BundleAdjustmentCalibrated.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="42" column="19" selection-start="1491" selection-end="1491" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TrustRegionLeastSquares.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../../boofcv/main/numerics/src/boofcv/numerics/optimization/impl/TrustRegionLeastSquares.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="132" column="17" selection-start="4005" selection-end="4005" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TestPnPRefineRodrigues.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../../boofcv/main/geo/test/boofcv/abst/geo/pose/TestPnPRefineRodrigues.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="69" column="26" selection-start="2078" selection-end="2078" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="PnPRefineRodrigues.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../../boofcv/main/geo/src/boofcv/abst/geo/pose/PnPRefineRodrigues.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="79" column="33" selection-start="2615" selection-end="2615" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TestPnPJacobianRodrigues.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../../boofcv/main/geo/test/boofcv/alg/geo/pose/TestPnPJacobianRodrigues.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="48" column="0" selection-start="1462" selection-end="1462" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="JacobianChecker.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../../boofcv/main/numerics/src/boofcv/numerics/optimization/JacobianChecker.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="83" column="0" selection-start="2834" selection-end="2834" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -174,22 +171,22 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/src/validate/vo/ParseLeuven07.java" />
-        <option value="$PROJECT_DIR$/src/validate/vo/WrapParseLeuven07.java" />
-        <option value="$PROJECT_DIR$/src/validate/simulation/mono/EvaluateMonoVisualOdometry.java" />
-        <option value="$PROJECT_DIR$/../../boofcv/main/sfm/src/boofcv/abst/sfm/WrapPixelDepthVoEpipolar.java" />
-        <option value="$PROJECT_DIR$/../../boofcv/main/ip/src/boofcv/alg/distort/DistortImageOps.java" />
-        <option value="$PROJECT_DIR$/../../boofcv/main/sfm/test/boofcv/alg/sfm/TestStereoSparse3D.java" />
-        <option value="$PROJECT_DIR$/../../boofcv/main/geo/src/boofcv/alg/geo/rectify/RectifyCalibrated.java" />
-        <option value="$PROJECT_DIR$/../../boofcv/main/geo/test/boofcv/alg/geo/rectify/TestRectifyCalibrated.java" />
-        <option value="$PROJECT_DIR$/../../boofcv/main/sfm/src/boofcv/alg/sfm/StereoSparse3D.java" />
-        <option value="$PROJECT_DIR$/../../boofcv/main/sfm/src/boofcv/alg/sfm/StereoProcessingBase.java" />
-        <option value="$PROJECT_DIR$/../../boofcv/main/geo/src/boofcv/alg/geo/RectifyImageOps.java" />
+        <option value="$PROJECT_DIR$/../../boofcv/main/geo/src/boofcv/alg/geo/bundle/CalibPoseAndPointRodriguesJacobian.java" />
+        <option value="$PROJECT_DIR$/../../boofcv/main/geo/src/boofcv/alg/geo/pose/PnPJacobianRodrigues.java" />
+        <option value="$PROJECT_DIR$/../../boofcv/main/geo/test/boofcv/alg/geo/pose/TestPnPJacobianRodrigues.java" />
+        <option value="$PROJECT_DIR$/../../boofcv/main/geo/src/boofcv/abst/geo/pose/LeastSquaresPose.java" />
+        <option value="$PROJECT_DIR$/../../boofcv/main/geo/test/boofcv/abst/geo/pose/TestLeastSquaresPose.java" />
+        <option value="$PROJECT_DIR$/../../boofcv/main/geo/src/boofcv/abst/geo/pose/PnPRefineLeastSquares.java" />
         <option value="$PROJECT_DIR$/../../boofcv/main/geo/todo.txt" />
+        <option value="$PROJECT_DIR$/../../boofcv/main/geo/test/boofcv/abst/geo/pose/TestPnPRefineLeastSquares.java" />
+        <option value="$PROJECT_DIR$/../../boofcv/main/geo/test/boofcv/abst/geo/pose/TestPnPRefineRodrigues.java" />
+        <option value="$PROJECT_DIR$/../../boofcv/main/geo/src/boofcv/factory/geo/FactoryMultiView.java" />
         <option value="$PROJECT_DIR$/../../boofcv/main/sfm/src/boofcv/alg/sfm/PixelDepthVoEpipolar.java" />
-        <option value="$PROJECT_DIR$/../../boofcv/main/visualize/src/boofcv/gui/image/ShowImages.java" />
+        <option value="$PROJECT_DIR$/../../boofcv/main/numerics/src/boofcv/numerics/optimization/impl/TrustRegionLeastSquares.java" />
+        <option value="$PROJECT_DIR$/../../boofcv/main/geo/src/boofcv/abst/geo/bundle/BundleAdjustmentCalibratedDense.java" />
+        <option value="$PROJECT_DIR$/../../boofcv/main/geo/src/boofcv/abst/geo/pose/PnPRefineRodrigues.java" />
         <option value="$PROJECT_DIR$/src/validate/vo/DebugVisualOdometryStereo.java" />
-        <option value="$PROJECT_DIR$/../../boofcv/main/visualize/src/boofcv/gui/image/ImageGridPanel.java" />
+        <option value="$PROJECT_DIR$/../../boofcv/main/sfm/src/boofcv/alg/sfm/VisOdomPixelDepthPnP.java" />
       </list>
     </option>
   </component>
@@ -266,66 +263,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="ProjectPane">
-        <subPane>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="boofcv validator" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="boofcv validator" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="visualize" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="boofcv validator" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="visualize" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="gui" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="boofcv validator" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="visualize" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="gui" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="image" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
       <pane id="Scope">
         <subPane subId="Project Files">
           <PATH>
@@ -342,6 +279,16 @@
             <PATH_ELEMENT>
               <option name="myItemId" value="boofcv validator" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+      <pane id="ProjectPane">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="boofcv validator" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
@@ -378,70 +325,6 @@
     </key>
   </component>
   <component name="RunManager" selected="Application.DebugVisualOdometryStereo">
-    <configuration default="false" name="TestRectifyCalibrated.checkEpipolarGeometry" type="JUnit" factoryName="JUnit" temporary="true">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
-        <pattern>
-          <option name="PATTERN" value="boofcv.alg.geo.rectify.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <module name="BoofCV Geometric Vision" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PACKAGE_NAME" value="boofcv.alg.geo.rectify" />
-      <option name="MAIN_CLASS_NAME" value="boofcv.alg.geo.rectify.TestRectifyCalibrated" />
-      <option name="METHOD_NAME" value="checkEpipolarGeometry" />
-      <option name="TEST_OBJECT" value="method" />
-      <option name="VM_PARAMETERS" value="-ea" />
-      <option name="PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="moduleWithDependencies" />
-      </option>
-      <envs />
-      <patterns />
-      <RunnerSettings RunnerId="Debug">
-        <option name="DEBUG_PORT" value="" />
-        <option name="TRANSPORT" value="0" />
-        <option name="LOCAL" value="true" />
-      </RunnerSettings>
-      <ConfigurationWrapper RunnerId="Debug" />
-      <method />
-    </configuration>
-    <configuration default="false" name="TestRectifyCalibrated.alignY" type="JUnit" factoryName="JUnit" temporary="true">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
-        <pattern>
-          <option name="PATTERN" value="boofcv.alg.geo.rectify.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <module name="BoofCV Geometric Vision" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PACKAGE_NAME" value="boofcv.alg.geo.rectify" />
-      <option name="MAIN_CLASS_NAME" value="boofcv.alg.geo.rectify.TestRectifyCalibrated" />
-      <option name="METHOD_NAME" value="alignY" />
-      <option name="TEST_OBJECT" value="method" />
-      <option name="VM_PARAMETERS" value="-ea" />
-      <option name="PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="moduleWithDependencies" />
-      </option>
-      <envs />
-      <patterns />
-      <RunnerSettings RunnerId="Debug">
-        <option name="DEBUG_PORT" value="" />
-        <option name="TRANSPORT" value="0" />
-        <option name="LOCAL" value="true" />
-      </RunnerSettings>
-      <ConfigurationWrapper RunnerId="Debug" />
-      <method />
-    </configuration>
     <configuration default="false" name="DebugVisualOdometryStereo" type="Application" factoryName="Application" temporary="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
         <pattern>
@@ -518,6 +401,70 @@
       <option name="PASS_PARENT_ENVS" value="true" />
       <module name="boofcv validator" />
       <envs />
+      <RunnerSettings RunnerId="Debug">
+        <option name="DEBUG_PORT" value="" />
+        <option name="TRANSPORT" value="0" />
+        <option name="LOCAL" value="true" />
+      </RunnerSettings>
+      <ConfigurationWrapper RunnerId="Debug" />
+      <method />
+    </configuration>
+    <configuration default="false" name="TestPnPJacobianRodrigues.compareToNumerical" type="JUnit" factoryName="JUnit" temporary="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
+        <pattern>
+          <option name="PATTERN" value="boofcv.alg.geo.pose.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <module name="BoofCV Geometric Vision" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" value="boofcv.alg.geo.pose" />
+      <option name="MAIN_CLASS_NAME" value="boofcv.alg.geo.pose.TestPnPJacobianRodrigues" />
+      <option name="METHOD_NAME" value="compareToNumerical" />
+      <option name="TEST_OBJECT" value="method" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="moduleWithDependencies" />
+      </option>
+      <envs />
+      <patterns />
+      <RunnerSettings RunnerId="Debug">
+        <option name="DEBUG_PORT" value="" />
+        <option name="TRANSPORT" value="0" />
+        <option name="LOCAL" value="true" />
+      </RunnerSettings>
+      <ConfigurationWrapper RunnerId="Debug" />
+      <method />
+    </configuration>
+    <configuration default="false" name="TestPnPRefineRodrigues" type="JUnit" factoryName="JUnit" temporary="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
+        <pattern>
+          <option name="PATTERN" value="boofcv.abst.geo.pose.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <module name="BoofCV Geometric Vision" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" value="boofcv.abst.geo.pose" />
+      <option name="MAIN_CLASS_NAME" value="boofcv.abst.geo.pose.TestPnPRefineRodrigues" />
+      <option name="METHOD_NAME" />
+      <option name="TEST_OBJECT" value="class" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="moduleWithDependencies" />
+      </option>
+      <envs />
+      <patterns />
       <RunnerSettings RunnerId="Debug">
         <option name="DEBUG_PORT" value="" />
         <option name="TRANSPORT" value="0" />
@@ -636,11 +583,11 @@
       </method>
     </configuration>
     <list size="5">
-      <item index="0" class="java.lang.String" itemvalue="JUnit.TestRectifyCalibrated.checkEpipolarGeometry" />
-      <item index="1" class="java.lang.String" itemvalue="JUnit.TestRectifyCalibrated.alignY" />
-      <item index="2" class="java.lang.String" itemvalue="Application.DebugVisualOdometryStereo" />
-      <item index="3" class="java.lang.String" itemvalue="JUnit.TestStereoSparse3D.checkGeometry" />
-      <item index="4" class="java.lang.String" itemvalue="Application.DebugDenseStereoVideo" />
+      <item index="0" class="java.lang.String" itemvalue="Application.DebugVisualOdometryStereo" />
+      <item index="1" class="java.lang.String" itemvalue="JUnit.TestStereoSparse3D.checkGeometry" />
+      <item index="2" class="java.lang.String" itemvalue="Application.DebugDenseStereoVideo" />
+      <item index="3" class="java.lang.String" itemvalue="JUnit.TestPnPJacobianRodrigues.compareToNumerical" />
+      <item index="4" class="java.lang.String" itemvalue="JUnit.TestPnPRefineRodrigues" />
     </list>
     <configuration name="&lt;template&gt;" type="WebApp" default="true" selected="false">
       <Host>localhost</Host>
@@ -713,20 +660,23 @@
       <created>1350684489557</created>
       <updated>1350684489557</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="- Added visualization for stereo disparity for debugging purposes&#10;- Improved visual odometry evaluation">
+      <created>1350946077983</created>
+      <updated>1350946077983</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="25" width="1280" height="974" extended-state="0" />
     <editor active="false" />
     <layout>
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3276699" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3254486" sideWeight="0.39441746" order="1" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.28466558" sideWeight="0.47815534" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.30179444" sideWeight="0.47815534" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.5218447" sideWeight="0.49573106" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3975771" sideWeight="0.50053364" order="7" side_tool="true" content_ui="tabs" />
@@ -739,6 +689,7 @@
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3288835" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3276699" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
@@ -782,7 +733,7 @@
     <option name="SHOW_VCS_ERROR_NOTIFICATIONS" value="false" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="- Initial attempt at adding leuven07 data for validation purposes" />
+    <option name="LAST_COMMIT_MESSAGE" value="- Added visualization for stereo disparity for debugging purposes&#10;- Improved visual odometry evaluation" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -797,6 +748,7 @@
     <option name="FILE_HISTORY_SPLITTER_PROPORTION" value="0.6" />
     <MESSAGE value="- Added FAST validation code" />
     <MESSAGE value="- Initial attempt at adding leuven07 data for validation purposes" />
+    <MESSAGE value="- Added visualization for stereo disparity for debugging purposes&#10;- Improved visual odometry evaluation" />
   </component>
   <component name="VssConfiguration">
     <option name="CLIENT_PATH" value="" />
@@ -840,115 +792,115 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/../../boofcv/main/geo/src/boofcv/alg/geo/rectify/RectifyCalibrated.java">
+    <entry file="file://$PROJECT_DIR$/../../boofcv/main/geo/src/boofcv/abst/geo/GeoModelEstimatorNto1.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="176" column="39" selection-start="5694" selection-end="5694" vertical-scroll-proportion="0.0">
+        <state line="35" column="22" selection-start="1263" selection-end="1263" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../../boofcv/main/geo/test/boofcv/alg/geo/rectify/TestRectifyCalibrated.java">
+    <entry file="file://$PROJECT_DIR$/../../boofcv/main/geo/src/boofcv/abst/geo/pose/EstimateNto1ofPnP.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="114" column="19" selection-start="4273" selection-end="4273" vertical-scroll-proportion="0.0">
+        <state line="33" column="55" selection-start="1168" selection-end="1168" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../../boofcv/main/sfm/src/boofcv/alg/sfm/StereoSparse3D.java">
+    <entry file="file://$PROJECT_DIR$/../../boofcv/main/geo/src/boofcv/abst/geo/Estimate1ofPnP.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="60" column="23" selection-start="1859" selection-end="1859" vertical-scroll-proportion="0.0">
+        <state line="36" column="17" selection-start="1277" selection-end="1277" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../../boofcv/main/sfm/test/boofcv/alg/sfm/TestStereoSparse3D.java">
+    <entry file="file://$PROJECT_DIR$/../../boofcv/main/geo/src/boofcv/alg/geo/pose/PnPJacobianRodrigues.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="48" column="19" selection-start="1527" selection-end="1527" vertical-scroll-proportion="0.0">
+        <state line="39" column="59" selection-start="1518" selection-end="1532" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/validate/vo/DebugDenseStereoVideo.java">
+    <entry file="file://$PROJECT_DIR$/../../boofcv/main/geo/src/boofcv/factory/geo/FactoryMultiView.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="32" column="13" selection-start="1159" selection-end="1159" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../boofcv/main/sfm/src/boofcv/alg/sfm/StereoProcessingBase.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="88" column="33" selection-start="2929" selection-end="2929" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../boofcv/main/geo/src/boofcv/alg/geo/RectifyImageOps.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="360" column="0" selection-start="13700" selection-end="13700" vertical-scroll-proportion="0.0">
+        <state line="335" column="55" selection-start="12745" selection-end="12745" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/../../boofcv/main/geo/todo.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="31" column="59" selection-start="825" selection-end="825" vertical-scroll-proportion="0.0">
+        <state line="27" column="66" selection-start="675" selection-end="675" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/validate/vo/ParseLeuven07.java">
+    <entry file="file://$PROJECT_DIR$/../../boofcv/main/geo/src/boofcv/abst/geo/bundle/BundleAdjustmentCalibratedDense.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="20" column="13" selection-start="541" selection-end="541" vertical-scroll-proportion="0.0">
+        <state line="97" column="33" selection-start="3291" selection-end="3291" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/validate/vo/WrapParseLeuven07.java">
+    <entry file="file://$PROJECT_DIR$/../../boofcv/main/numerics/src/boofcv/numerics/optimization/wrap/WrapTrustRegion.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="13" selection-start="314" selection-end="314" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../boofcv/main/sfm/src/boofcv/factory/sfm/FactoryVisualOdometry.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="144" column="13" selection-start="6248" selection-end="6248" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../boofcv/main/sfm/src/boofcv/alg/sfm/PixelDepthVoEpipolar.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="21" column="48" selection-start="770" selection-end="770" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../boofcv/main/visualize/src/boofcv/gui/image/ImagePanel.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="50" column="0" selection-start="1373" selection-end="1485" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../boofcv/main/visualize/src/boofcv/gui/image/ShowImages.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="55" column="32" selection-start="1605" selection-end="1619" vertical-scroll-proportion="0.0">
+        <state line="66" column="0" selection-start="2042" selection-end="2042" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/validate/vo/DebugVisualOdometryStereo.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="116" column="52" selection-start="3136" selection-end="3136" vertical-scroll-proportion="0.0">
+        <state line="143" column="30" selection-start="3718" selection-end="3718" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../../boofcv/main/visualize/src/boofcv/gui/image/ImageGridPanel.java">
+    <entry file="file://$PROJECT_DIR$/../../boofcv/main/geo/src/boofcv/abst/geo/BundleAdjustmentCalibrated.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="28" column="9" selection-start="647" selection-end="647" vertical-scroll-proportion="0.5405405">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state line="42" column="19" selection-start="1491" selection-end="1491" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../boofcv/main/numerics/src/boofcv/numerics/optimization/impl/TrustRegionLeastSquares.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="132" column="17" selection-start="4005" selection-end="4005" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../boofcv/main/geo/test/boofcv/abst/geo/pose/TestPnPRefineRodrigues.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="69" column="26" selection-start="2078" selection-end="2078" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../boofcv/main/geo/src/boofcv/abst/geo/pose/PnPRefineRodrigues.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="79" column="33" selection-start="2615" selection-end="2615" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../boofcv/main/geo/test/boofcv/alg/geo/pose/TestPnPJacobianRodrigues.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="48" column="0" selection-start="1462" selection-end="1462" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../boofcv/main/numerics/src/boofcv/numerics/optimization/JacobianChecker.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="83" column="0" selection-start="2834" selection-end="2834" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../boofcv/main/sfm/src/boofcv/alg/sfm/VisOdomPixelDepthPnP.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="217" column="17" selection-start="6277" selection-end="6277" vertical-scroll-proportion="0.020408163">
+          <folding />
         </state>
       </provider>
     </entry>

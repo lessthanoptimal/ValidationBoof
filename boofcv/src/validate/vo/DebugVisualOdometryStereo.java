@@ -4,6 +4,7 @@ import boofcv.abst.feature.disparity.StereoDisparitySparse;
 import boofcv.abst.feature.tracker.ImagePointTracker;
 import boofcv.abst.sfm.StereoVisualOdometry;
 import boofcv.alg.sfm.AccessSfmPointTracks;
+import boofcv.alg.sfm.PointPoseTrack;
 import boofcv.core.image.ConvertBufferedImage;
 import boofcv.core.image.GeneralizedImageOps;
 import boofcv.factory.feature.disparity.FactoryStereoDisparity;
@@ -26,6 +27,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.util.*;
+import java.util.List;
 
 /**
  * @author Peter Abeles
@@ -44,13 +46,17 @@ public class DebugVisualOdometryStereo<T extends ImageSingleBand> implements Mou
 	int numFaults = 0;
 	int numSkipUpdate = 0;
 
-	double distanceTruth = 0;
-	double distanceFound = 0;
+	double distanceTruth;
+	double distanceFound;
 
 	Se3_F64 previousWorldToLeftFound = new Se3_F64();
 	Se3_F64 previousWorldToLeft = new Se3_F64();
 	Se3_F64 initialWorldToLeft = new Se3_F64();
 
+	double maxErrorDistance;
+	double maxErrorRotation;
+
+	int frame;
 
 	public DebugVisualOdometryStereo(SequenceStereoImages data,
 									 StereoVisualOdometry<T> alg ,
@@ -67,8 +73,17 @@ public class DebugVisualOdometryStereo<T extends ImageSingleBand> implements Mou
 		paused = false;
 		alg.reset();
 
+		maxErrorDistance = 0;
+		maxErrorRotation = 0;
+
 		numFaults = 0;
 		numSkipUpdate = 0;
+
+		distanceTruth = 0;
+		distanceFound = 0;
+
+		frame = 0;
+
 	}
 
 	public void processSequence() {
@@ -111,6 +126,8 @@ public class DebugVisualOdometryStereo<T extends ImageSingleBand> implements Mou
 				}
 			}
 		}
+
+		System.out.println("Max Errors: location = "+maxErrorDistance+"  angle "+maxErrorRotation);
 	}
 
 	private void processFrame() {
@@ -124,7 +141,7 @@ public class DebugVisualOdometryStereo<T extends ImageSingleBand> implements Mou
 			if( alg.isFault() ) {
 				numFaults++;
 			}
-			System.out.println(" NO UPDATE fault = "+alg.isFault());
+			System.out.println(frame+" NO UPDATE fault = "+alg.isFault());
 		} else {
 			Se3_F64 found = alg.getLeftToWorld().concat(previousWorldToLeftFound,null);
 			Se3_F64 expected = data.getLeftToWorld().concat(previousWorldToLeft,null);
@@ -140,15 +157,18 @@ public class DebugVisualOdometryStereo<T extends ImageSingleBand> implements Mou
 			double errorAngle = computeAngularError(foundAbsolute,expectedAbsolute);
 //			errorAngle = UtilAngle.radianToDegree(errorAngle);
 
-			expectedAbsolute.getT().print();
-			foundAbsolute.getT().print();
-
-
-			System.out.printf(" location error %f error frac %f  angle %6.3f\n", error, errorFrac,errorAngle);
+			System.out.printf("%5d location error %f error frac %f  angle %6.3f\n", frame,error, errorFrac,errorAngle);
 
 			data.getLeftToWorld().invert(previousWorldToLeft);
 			alg.getLeftToWorld().invert(previousWorldToLeftFound);
+
+			if( maxErrorDistance < errorFrac )
+				maxErrorDistance = errorFrac;
+			if( maxErrorRotation < errorAngle )
+				maxErrorRotation = errorAngle;
 		}
+
+		frame++;
 	}
 
 	private double computeAngularError( Se3_F64 found , Se3_F64 expected ) {
@@ -167,46 +187,48 @@ public class DebugVisualOdometryStereo<T extends ImageSingleBand> implements Mou
 
 		Graphics2D g2 = image.createGraphics();
 
-		for( Point2D_F64 p : tracker.getNewTracks() ) {
-			VisualizeFeatures.drawPoint(g2, (int) p.x, (int) p.y, 3, Color.GREEN);
-		}
+//		for( Point2D_F64 p : tracker.getNewTracks() ) {
+//			VisualizeFeatures.drawPoint(g2, (int) p.x, (int) p.y, 3, Color.GREEN);
+//		}
 
-		g2.setColor(Color.BLUE);
-		g2.setStroke(new BasicStroke(3));
-		for( Point2D_F64 p : tracker.getAllTracks() ) {
-			VisualizeFeatures.drawCross(g2,(int)p.x,(int)p.y,3);
-		}
+//		g2.setColor(Color.BLUE);
+//		g2.setStroke(new BasicStroke(3));
+//		for( Point2D_F64 p : tracker.getAllTracks() ) {
+//			VisualizeFeatures.drawCross(g2,(int)p.x,(int)p.y,3);
+//		}
 
-		java.util.List<Point2D_F64> inliers = tracker.getInlierTracks();
+		// highlight inliers
+		List<Point2D_F64> inliers = tracker.getInlierTracks();
 		if( inliers.size() > 0 ) {
-			double ranges[] = new double[tracker.getInlierTracks().size() ];
-			for( int i = 0; i < tracker.getInlierTracks().size(); i++ ) {
-
-				int indexAll = tracker.fromInlierToAllIndex(i);
-				Point3D_F64 p3 = tracker.getTrackLocation(indexAll);
-
-				ranges[i] = p3.z;
+			for( int i = 0; i < inliers.size(); i++ ) {
+				Point2D_F64 pixel = inliers.get(i);
+				VisualizeFeatures.drawPoint(g2,(int)pixel.x,(int)pixel.y,5,Color.WHITE);
 			}
-			Arrays.sort(ranges);
+		}
 
-			double maxRange = ranges[(int)(ranges.length*0.8)];
+		// indicate range of each point
+		List<Point2D_F64> location = tracker.getAllTracks();
 
-			for( int i = 0; i < tracker.getInlierTracks().size(); i++ ) {
+		double ranges[] = new double[location.size() ];
+		for( int i = 0; i < location.size(); i++ ) {
+			Point3D_F64 X = tracker.getTrackLocation(i);
+			ranges[i] = X.z;
+		}
 
-				int indexAll = tracker.fromInlierToAllIndex(i);
+		Arrays.sort(ranges);
+		double maxRange = ranges[(int)(ranges.length*0.8)];
 
-				Point2D_F64 pixel = tracker.getInlierTracks().get(i);
-				Point3D_F64 p3 = tracker.getTrackLocation(indexAll);
+		for( int i = 0; i < location.size(); i++ ) {
+			Point2D_F64 pixel = location.get(i);
+			Point3D_F64 X = tracker.getTrackLocation(i);
 
-				double r = p3.z/maxRange;
-				if( r < 0 ) r = 0;
-				else if( r > 1 ) r = 1;
+			double r = X.z/maxRange;
+			if( r < 0 ) r = 0;
+			else if( r > 1 ) r = 1;
 
-				int color = (255 << 16) | ((int)(255*r) << 8);
+			int color = (255 << 16) | ((int)(255*r) << 8);
 
-				VisualizeFeatures.drawPoint(g2,(int)pixel.x,(int)pixel.y,3,new Color(color));
-			}
-
+			VisualizeFeatures.drawPoint(g2,(int)pixel.x,(int)pixel.y,3,new Color(color));
 		}
 
 		g2.setColor(Color.BLACK);
@@ -248,12 +270,15 @@ public class DebugVisualOdometryStereo<T extends ImageSingleBand> implements Mou
 				FactoryStereoDisparity.regionSparseWta(10, 120, 2, 2, 30, 0.1, true, imageType);
 
 
-		StereoVisualOdometry alg = FactoryVisualOdometry.stereoDepth(75,1,tracker,disparity,imageType);
+		StereoVisualOdometry alg = FactoryVisualOdometry.stereoDepth(40,1.2,tracker,disparity,imageType);
 
 		DebugVisualOdometryStereo app = new DebugVisualOdometryStereo(new WrapParseLeuven07(data),alg,imageType);
 
 		app.initialize();
 
 		app.processSequence();
+
+		System.out.println("DONE!!!");
+		System.exit(0);
 	}
 }
