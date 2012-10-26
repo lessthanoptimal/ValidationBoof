@@ -1,0 +1,19 @@
+** STEP ONE **
+
+You need to download two large files containg images from the left and rigtht camera from:
+
+http://www.vision.ee.ethz.ch/~bleibe/cvpr07/datasets.html
+
+files: leuven-left.tgz leuven-right.tgz 
+
+** STEP TWO **
+
+To decompress type the following in linux:
+
+cd visual_odometry/leuven07
+tar -xzf leuven-left.tgz
+tar -xzf leuven-right.tgz
+
+** STEP THREE **
+
+You are done.  Feel free to run the validation code
