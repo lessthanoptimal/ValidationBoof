@@ -46,15 +46,20 @@ public class DebugVisualOdometryStereo<T extends ImageSingleBand> implements Mou
 	int numFaults = 0;
 	int numSkipUpdate = 0;
 
-	double distanceTruth;
-	double distanceFound;
-
 	Se3_F64 previousWorldToLeftFound = new Se3_F64();
 	Se3_F64 previousWorldToLeft = new Se3_F64();
 	Se3_F64 initialWorldToLeft = new Se3_F64();
 
-	double maxErrorDistance;
-	double maxErrorRotation;
+	double totalErrorDistance;
+	double totalErrorRotation;
+	double totalFoundDistance;
+	double totalFoundRotation;
+	double totalDistance;
+	double totalRotation;
+	double absoluteLocation;
+	double absoluteRotation;
+
+	int numEstimates;
 
 	int frame;
 
@@ -73,14 +78,17 @@ public class DebugVisualOdometryStereo<T extends ImageSingleBand> implements Mou
 		paused = false;
 		alg.reset();
 
-		maxErrorDistance = 0;
-		maxErrorRotation = 0;
+		totalErrorDistance = 0;
+		totalErrorRotation = 0;
+		totalFoundDistance = 0;
+		totalFoundRotation = 0;
+		totalDistance = 0;
+		totalRotation = 0;
+
+		numEstimates = 0;
 
 		numFaults = 0;
 		numSkipUpdate = 0;
-
-		distanceTruth = 0;
-		distanceFound = 0;
 
 		frame = 0;
 
@@ -127,45 +135,68 @@ public class DebugVisualOdometryStereo<T extends ImageSingleBand> implements Mou
 			}
 		}
 
-		System.out.println("Max Errors: location = "+maxErrorDistance+"  angle "+maxErrorRotation);
+		// todo add absolute location and absolute rotation?
+;
+		double integralDistance = Math.abs(totalFoundDistance-totalDistance)/totalDistance;
+		double integralRotation = Math.abs(totalFoundRotation-totalRotation)/totalDistance;
+		double averageDistance = totalErrorDistance/numEstimates;
+		double averageRotation = totalErrorRotation/numEstimates;
+
+		System.out.println("Ave per estimate:      location = "+averageDistance+"  angle "+averageRotation);
+		System.out.println("Absolute per distance: location "+(absoluteLocation/totalDistance)+" rotation "+
+		(absoluteRotation/totalDistance));
+		System.out.println("Integral per distance: distance "+integralDistance+" rotation "+integralRotation);
+
 	}
 
 	private void processFrame() {
 		ConvertBufferedImage.convertFrom(data.getLeft(), inputLeft);
 		ConvertBufferedImage.convertFrom(data.getRight(), inputRight);
 
+		long before = System.nanoTime();
 		alg.setCalibration(data.getCalibration());
+		boolean updated = alg.process(inputLeft,inputRight);
+		long after = System.nanoTime();
 
-		if( !alg.process(inputLeft,inputRight) ) {
+		double fps = 1.0/((after-before)*1e-9);
+
+		if( !updated ) {
 			numSkipUpdate++;
 			if( alg.isFault() ) {
 				numFaults++;
 			}
-			System.out.println(frame+" NO UPDATE fault = "+alg.isFault());
+			System.out.printf("%d %6.2f NO UPDATE fault = %s\n",frame,fps,alg.isFault());
 		} else {
 			Se3_F64 found = alg.getLeftToWorld().concat(previousWorldToLeftFound,null);
 			Se3_F64 expected = data.getLeftToWorld().concat(previousWorldToLeft,null);
 
-			distanceFound += found.getT().norm();
-			distanceTruth += expected.getT().norm();
+			Se3_F64 diff = expected.concat(found.invert(null), null);
 
-			double error = Math.abs(distanceFound-distanceTruth);
-			double errorFrac = error / distanceTruth;
+			double distanceError = diff.getT().norm();
+			double distanceTruth = expected.getT().norm();
 
-			Se3_F64 foundAbsolute = alg.getLeftToWorld();
-			Se3_F64 expectedAbsolute = data.getLeftToWorld().concat(initialWorldToLeft,null);
-			double errorAngle = computeAngularError(foundAbsolute,expectedAbsolute);
-//			errorAngle = UtilAngle.radianToDegree(errorAngle);
+			double errorFrac = distanceError / distanceTruth;
+			double errorAngle = rotationMatrixToRadian(diff.getR());
 
-			System.out.printf("%5d location error %f error frac %f  angle %6.3f\n", frame,error, errorFrac,errorAngle);
+			System.out.printf("%5d %6.2f location error %f error frac %f  angle %6.3f\n", frame,fps,distanceError, errorFrac,errorAngle);
 
-			data.getLeftToWorld().invert(previousWorldToLeft);
 			alg.getLeftToWorld().invert(previousWorldToLeftFound);
+			data.getLeftToWorld().invert(previousWorldToLeft);
 
-			if( maxErrorDistance < errorFrac )
-				maxErrorDistance = errorFrac;
-			if( maxErrorRotation < errorAngle )
-				maxErrorRotation = errorAngle;
+			numEstimates++;
+			totalErrorDistance += distanceError;
+			totalFoundDistance += found.getT().norm();
+			totalFoundRotation += rotationMatrixToRadian(found.getR());
+			totalDistance += distanceTruth;
+			totalErrorRotation = errorAngle;
+			totalRotation += rotationMatrixToRadian(expected.getR());
+
+			// find difference in absolute location
+			Se3_F64 leftToWorld = data.getLeftToWorld().concat(initialWorldToLeft,null);
+
+			diff = leftToWorld.concat(alg.getLeftToWorld().invert(null),null);
+			absoluteLocation = diff.getT().norm();
+			absoluteRotation = rotationMatrixToRadian(diff.getR());
 		}
 
 		frame++;
@@ -176,7 +207,11 @@ public class DebugVisualOdometryStereo<T extends ImageSingleBand> implements Mou
 
 		CommonOps.multTransA(found.getR(), expected.getR(),A);
 
-		double angles[] = RotationMatrixGenerator.matrixToEulerXYZ(A);
+		return rotationMatrixToRadian(A);
+	}
+
+	private double rotationMatrixToRadian(DenseMatrix64F a) {
+		double angles[] = RotationMatrixGenerator.matrixToEulerXYZ(a);
 
 		double sum = angles[0]*angles[0] + angles[1]*angles[1] + angles[1]*angles[1];
 
@@ -270,7 +305,8 @@ public class DebugVisualOdometryStereo<T extends ImageSingleBand> implements Mou
 				FactoryStereoDisparity.regionSparseWta(10, 120, 2, 2, 30, 0.1, true, imageType);
 
 
-		StereoVisualOdometry alg = FactoryVisualOdometry.stereoDepth(40,1.2,tracker,disparity,imageType);
+		// nominal track = 80  inlier = 1.2
+		StereoVisualOdometry alg = FactoryVisualOdometry.stereoDepth(80,1.2,tracker,disparity,imageType);
 
 		DebugVisualOdometryStereo app = new DebugVisualOdometryStereo(new WrapParseLeuven07(data),alg,imageType);
 

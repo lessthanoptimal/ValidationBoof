@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" readonly="true" id="5ae49738-03a7-49e6-8d41-9676d295fd24" name="Default" comment="In the process of rewriting the FAST detector since the old version was broken.  Found bug while validating its correctness against the original version&#10;FAST is now TOTALLY broken until the rewrite is finished">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../visual_odometry/leuven07/read_camera.m" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../visual_odometry/leuven07/readme.txt" />
+    <list default="true" readonly="true" id="5ae49738-03a7-49e6-8d41-9676d295fd24" name="Default" comment="- Added getMinimunSize() to ModelMatcher&#10;- Renamed PointPosePair to Point2D3D&#10;- Improvements to VO">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../boofcv/main/sfm/src/boofcv/alg/sfm/TrackDistributionCheck.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../boofcv/main/sfm/src/boofcv/alg/sfm/TrackGaussianCheck.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../boofcv/data" afterPath="$PROJECT_DIR$/../../boofcv/data" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/boofcv validator.iws" afterPath="$PROJECT_DIR$/boofcv validator.iws" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/validate/vo/DebugVisualOdometryStereo.java" afterPath="$PROJECT_DIR$/src/validate/vo/DebugVisualOdometryStereo.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../boofcv/main/BoofCV Main.ipr" afterPath="$PROJECT_DIR$/../../boofcv/main/BoofCV Main.ipr" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../libpjajava/src/pja/sorting/QuickSelectArray.java" afterPath="$PROJECT_DIR$/../../libpjajava/src/pja/sorting/QuickSelectArray.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../boofcv/change.txt" afterPath="$PROJECT_DIR$/../../boofcv/change.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../boofcv/main/io/src/boofcv/io/video/CreateMJpeg.java" afterPath="$PROJECT_DIR$/../../boofcv/main/io/src/boofcv/io/video/CreateMJpeg.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../boofcv/main/sfm/src/boofcv/abst/sfm/WrapVisOdomPixelDepthPnP.java" afterPath="$PROJECT_DIR$/../../boofcv/main/sfm/src/boofcv/abst/sfm/WrapVisOdomPixelDepthPnP.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../boofcv/main/sfm/src/boofcv/alg/sfm/PointPoseTrack.java" afterPath="$PROJECT_DIR$/../../boofcv/main/sfm/src/boofcv/alg/sfm/PointPoseTrack.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../boofcv/main/sfm/src/boofcv/alg/sfm/VisOdomPixelDepthPnP.java" afterPath="$PROJECT_DIR$/../../boofcv/main/sfm/src/boofcv/alg/sfm/VisOdomPixelDepthPnP.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../georegression/GeoRegression.ipr" afterPath="$PROJECT_DIR$/../../georegression/GeoRegression.ipr" />
     </list>
     <list id="a1871b72-0229-4eb0-82fb-6085d307f536" name="Failed commit: Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../ejml/trunk/EJML.iws" afterPath="$PROJECT_DIR$/../../ejml/trunk/EJML.iws" />
@@ -68,91 +73,71 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="BundleAdjustmentCalibratedDense.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../../boofcv/main/geo/src/boofcv/abst/geo/bundle/BundleAdjustmentCalibratedDense.java">
+      <file leaf-file-name="TrackGaussianCheck.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../../boofcv/main/sfm/src/boofcv/alg/sfm/TrackGaussianCheck.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="97" column="33" selection-start="3291" selection-end="3291" vertical-scroll-proportion="0.0">
+            <state line="77" column="86" selection-start="1476" selection-end="1476" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="WrapTrustRegion.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../../boofcv/main/numerics/src/boofcv/numerics/optimization/wrap/WrapTrustRegion.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="66" column="0" selection-start="2042" selection-end="2042" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="DebugVisualOdometryStereo.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="DebugVisualOdometryStereo.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/validate/vo/DebugVisualOdometryStereo.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="143" column="30" selection-start="3718" selection-end="3718" vertical-scroll-proportion="0.0">
+            <state line="177" column="0" selection-start="5059" selection-end="5059" vertical-scroll-proportion="0.33333334">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="VisOdomPixelDepthPnP.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="FactoryVisualOdometry.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../../boofcv/main/sfm/src/boofcv/factory/sfm/FactoryVisualOdometry.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="147" column="33" selection-start="6101" selection-end="6101" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="WrapVisOdomPixelDepthPnP.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../../boofcv/main/sfm/src/boofcv/abst/sfm/WrapVisOdomPixelDepthPnP.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="71" column="37" selection-start="2073" selection-end="2073" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="VisOdomPixelDepthPnP.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../../boofcv/main/sfm/src/boofcv/alg/sfm/VisOdomPixelDepthPnP.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="217" column="17" selection-start="6277" selection-end="6277" vertical-scroll-proportion="0.020408163">
+            <state line="95" column="28" selection-start="3400" selection-end="3400" vertical-scroll-proportion="0.0">
+              <folding>
+                <element signature="e#2604#2617#0" expanded="true" />
+                <element signature="e#5945#5961#0" expanded="true" />
+                <element signature="e#6509#6525#0" expanded="true" />
+                <element signature="e#7524#7540#0" expanded="true" />
+                <element signature="e#8509#8520#0" expanded="true" />
+                <element signature="e#10989#11012#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="EstimatorToGenerator.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../../boofcv/main/sfm/src/boofcv/alg/sfm/robust/EstimatorToGenerator.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="12" column="71" selection-start="352" selection-end="352" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="BundleAdjustmentCalibrated.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../../boofcv/main/geo/src/boofcv/abst/geo/BundleAdjustmentCalibrated.java">
+      <file leaf-file-name="KltTracker.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../../boofcv/main/feature/src/boofcv/alg/tracker/klt/KltTracker.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="42" column="19" selection-start="1491" selection-end="1491" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="TrustRegionLeastSquares.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../../boofcv/main/numerics/src/boofcv/numerics/optimization/impl/TrustRegionLeastSquares.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="132" column="17" selection-start="4005" selection-end="4005" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="TestPnPRefineRodrigues.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../../boofcv/main/geo/test/boofcv/abst/geo/pose/TestPnPRefineRodrigues.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="69" column="26" selection-start="2078" selection-end="2078" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="PnPRefineRodrigues.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../../boofcv/main/geo/src/boofcv/abst/geo/pose/PnPRefineRodrigues.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="79" column="33" selection-start="2615" selection-end="2615" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="TestPnPJacobianRodrigues.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../../boofcv/main/geo/test/boofcv/alg/geo/pose/TestPnPJacobianRodrigues.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="48" column="0" selection-start="1462" selection-end="1462" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="JacobianChecker.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../../boofcv/main/numerics/src/boofcv/numerics/optimization/JacobianChecker.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="83" column="0" selection-start="2834" selection-end="2834" vertical-scroll-proportion="0.0">
+            <state line="204" column="22" selection-start="6524" selection-end="6524" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -166,34 +151,33 @@
     </FindUsagesManager>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../boofcv" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/../../boofcv/main/geo/src/boofcv/alg/geo/bundle/CalibPoseAndPointRodriguesJacobian.java" />
-        <option value="$PROJECT_DIR$/../../boofcv/main/geo/src/boofcv/alg/geo/pose/PnPJacobianRodrigues.java" />
-        <option value="$PROJECT_DIR$/../../boofcv/main/geo/test/boofcv/alg/geo/pose/TestPnPJacobianRodrigues.java" />
-        <option value="$PROJECT_DIR$/../../boofcv/main/geo/src/boofcv/abst/geo/pose/LeastSquaresPose.java" />
-        <option value="$PROJECT_DIR$/../../boofcv/main/geo/test/boofcv/abst/geo/pose/TestLeastSquaresPose.java" />
-        <option value="$PROJECT_DIR$/../../boofcv/main/geo/src/boofcv/abst/geo/pose/PnPRefineLeastSquares.java" />
-        <option value="$PROJECT_DIR$/../../boofcv/main/geo/todo.txt" />
-        <option value="$PROJECT_DIR$/../../boofcv/main/geo/test/boofcv/abst/geo/pose/TestPnPRefineLeastSquares.java" />
-        <option value="$PROJECT_DIR$/../../boofcv/main/geo/test/boofcv/abst/geo/pose/TestPnPRefineRodrigues.java" />
-        <option value="$PROJECT_DIR$/../../boofcv/main/geo/src/boofcv/factory/geo/FactoryMultiView.java" />
-        <option value="$PROJECT_DIR$/../../boofcv/main/sfm/src/boofcv/alg/sfm/PixelDepthVoEpipolar.java" />
-        <option value="$PROJECT_DIR$/../../boofcv/main/numerics/src/boofcv/numerics/optimization/impl/TrustRegionLeastSquares.java" />
-        <option value="$PROJECT_DIR$/../../boofcv/main/geo/src/boofcv/abst/geo/bundle/BundleAdjustmentCalibratedDense.java" />
-        <option value="$PROJECT_DIR$/../../boofcv/main/geo/src/boofcv/abst/geo/pose/PnPRefineRodrigues.java" />
+        <option value="$PROJECT_DIR$/../../boofcv/main/sfm/src/boofcv/factory/sfm/FactoryVisualOdometry.java" />
+        <option value="$PROJECT_DIR$/../../boofcv/main/geo/src/boofcv/struct/geo/PointPosePair.java" />
+        <option value="$PROJECT_DIR$/../../boofcv/main/geo/src/boofcv/struct/geo/ObservationLocation.java" />
+        <option value="$PROJECT_DIR$/../../boofcv/main/geo/src/boofcv/struct/geo/Point2D3D.java" />
+        <option value="$PROJECT_DIR$/../../boofcv/main/numerics/src/boofcv/numerics/fitting/modelset/ransac/Ransac.java" />
+        <option value="$PROJECT_DIR$/../../boofcv/main/numerics/src/boofcv/numerics/fitting/modelset/ModelMatcher.java" />
+        <option value="$PROJECT_DIR$/../../boofcv/main/numerics/src/boofcv/numerics/fitting/modelset/lmeds/LeastMedianOfSquares.java" />
+        <option value="$PROJECT_DIR$/../../boofcv/main/numerics/src/boofcv/numerics/fitting/modelset/distance/StatisticalDistanceModelMatcher.java" />
+        <option value="$PROJECT_DIR$/../../boofcv/main/sfm/src/boofcv/alg/sfm/robust/ModelMatcherTranGivenRot.java" />
+        <option value="$PROJECT_DIR$/../../boofcv/main/sfm/test/boofcv/alg/sfm/d2/TestImageMotionPointKey.java" />
+        <option value="$PROJECT_DIR$/../../boofcv/main/sfm/src/boofcv/alg/sfm/PointPoseTrack.java" />
         <option value="$PROJECT_DIR$/src/validate/vo/DebugVisualOdometryStereo.java" />
+        <option value="$PROJECT_DIR$/../../boofcv/main/sfm/src/boofcv/alg/sfm/TrackDistributionCheck.java" />
+        <option value="$PROJECT_DIR$/../../boofcv/main/sfm/src/boofcv/abst/sfm/WrapVisOdomPixelDepthPnP.java" />
+        <option value="$PROJECT_DIR$/../../boofcv/main/sfm/src/boofcv/alg/sfm/TrackGaussianCheck.java" />
         <option value="$PROJECT_DIR$/../../boofcv/main/sfm/src/boofcv/alg/sfm/VisOdomPixelDepthPnP.java" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="y" value="25" />
-    <option name="width" value="1280" />
-    <option name="height" value="974" />
+    <option name="width" value="1920" />
+    <option name="height" value="1055" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -289,6 +273,106 @@
             <PATH_ELEMENT>
               <option name="myItemId" value="boofcv validator" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="boofcv validator" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="sfm" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="boofcv validator" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="sfm" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="boofcv" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="boofcv validator" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="sfm" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="boofcv" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="sfm" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="boofcv validator" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="boofcv" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="boofcv validator" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="boofcv" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="validate" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="vo" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="boofcv validator" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="boofcv" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="validate" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
@@ -668,31 +752,31 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="25" width="1280" height="974" extended-state="0" />
+    <frame x="0" y="0" width="1920" height="1055" extended-state="6" />
     <editor active="false" />
     <layout>
-      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3254486" sideWeight="0.39441746" order="1" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.30179444" sideWeight="0.47815534" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.5218447" sideWeight="0.49573106" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3975771" sideWeight="0.50053364" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Data Sources" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3288835" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.46585903" sideWeight="0.49573106" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3276699" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3975771" sideWeight="0.50053364" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3270925" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3254486" sideWeight="0.39441746" order="1" side_tool="true" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.30128205" sideWeight="0.53414094" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32819384" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -733,7 +817,7 @@
     <option name="SHOW_VCS_ERROR_NOTIFICATIONS" value="false" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="- Added visualization for stereo disparity for debugging purposes&#10;- Improved visual odometry evaluation" />
+    <option name="LAST_COMMIT_MESSAGE" value="- Added getMinimunSize() to ModelMatcher&#10;- Renamed PointPosePair to Point2D3D&#10;- Improvements to VO" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -749,6 +833,7 @@
     <MESSAGE value="- Added FAST validation code" />
     <MESSAGE value="- Initial attempt at adding leuven07 data for validation purposes" />
     <MESSAGE value="- Added visualization for stereo disparity for debugging purposes&#10;- Improved visual odometry evaluation" />
+    <MESSAGE value="- Added getMinimunSize() to ModelMatcher&#10;- Renamed PointPosePair to Point2D3D&#10;- Improvements to VO" />
   </component>
   <component name="VssConfiguration">
     <option name="CLIENT_PATH" value="" />
@@ -792,114 +877,93 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/../../boofcv/main/geo/src/boofcv/abst/geo/GeoModelEstimatorNto1.java">
+    <entry file="file://$PROJECT_DIR$/../../boofcv/main/numerics/src/boofcv/numerics/fitting/modelset/ransac/Ransac.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="35" column="22" selection-start="1263" selection-end="1263" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="271" column="50" selection-start="8198" selection-end="8198" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../../boofcv/main/geo/src/boofcv/abst/geo/pose/EstimateNto1ofPnP.java">
+    <entry file="file://$PROJECT_DIR$/../../boofcv/main/numerics/src/boofcv/numerics/fitting/modelset/lmeds/LeastMedianOfSquares.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="33" column="55" selection-start="1168" selection-end="1168" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="200" column="0" selection-start="6251" selection-end="6316" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../../boofcv/main/geo/src/boofcv/abst/geo/Estimate1ofPnP.java">
+    <entry file="file://$PROJECT_DIR$/../../boofcv/main/numerics/src/boofcv/numerics/fitting/modelset/distance/StatisticalDistanceModelMatcher.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="36" column="17" selection-start="1277" selection-end="1277" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="247" column="27" selection-start="7873" selection-end="7873" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../../boofcv/main/geo/src/boofcv/alg/geo/pose/PnPJacobianRodrigues.java">
+    <entry file="file://$PROJECT_DIR$/../../boofcv/main/sfm/src/boofcv/alg/sfm/robust/ModelMatcherTranGivenRot.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="39" column="59" selection-start="1518" selection-end="1532" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="57" column="36" selection-start="1356" selection-end="1356" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../../boofcv/main/geo/src/boofcv/factory/geo/FactoryMultiView.java">
+    <entry file="file://$PROJECT_DIR$/../../boofcv/main/sfm/test/boofcv/alg/sfm/d2/TestImageMotionPointKey.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="335" column="55" selection-start="12745" selection-end="12745" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="218" column="32" selection-start="6146" selection-end="6146" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../../boofcv/main/geo/todo.txt">
+    <entry file="file://$PROJECT_DIR$/../../boofcv/main/geo/src/boofcv/struct/geo/Point2D3D.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="27" column="66" selection-start="675" selection-end="675" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="34" column="41" selection-start="1082" selection-end="1082" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../../boofcv/main/geo/src/boofcv/abst/geo/bundle/BundleAdjustmentCalibratedDense.java">
+    <entry file="file://$PROJECT_DIR$/../../boofcv/main/numerics/src/boofcv/numerics/fitting/modelset/ModelMatcher.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="97" column="33" selection-start="3291" selection-end="3291" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="57" column="23" selection-start="1702" selection-end="1702" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../../boofcv/main/numerics/src/boofcv/numerics/optimization/wrap/WrapTrustRegion.java">
+    <entry file="file://$PROJECT_DIR$/../../boofcv/main/sfm/src/boofcv/alg/sfm/PointPoseTrack.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="66" column="0" selection-start="2042" selection-end="2042" vertical-scroll-proportion="0.0">
-          <folding />
+        <state line="21" column="9" selection-start="640" selection-end="650" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../boofcv/main/sfm/src/boofcv/alg/sfm/TrackDistributionCheck.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="15" column="54" selection-start="337" selection-end="337" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../boofcv/main/sfm/src/boofcv/alg/sfm/TrackGaussianCheck.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="77" column="86" selection-start="1476" selection-end="1476" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../boofcv/main/sfm/src/boofcv/factory/sfm/FactoryVisualOdometry.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="147" column="33" selection-start="6101" selection-end="6101" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../boofcv/main/sfm/src/boofcv/abst/sfm/WrapVisOdomPixelDepthPnP.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="71" column="37" selection-start="2073" selection-end="2073" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../boofcv/main/sfm/src/boofcv/alg/sfm/robust/EstimatorToGenerator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="12" column="71" selection-start="352" selection-end="352" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../boofcv/main/feature/src/boofcv/alg/tracker/klt/KltTracker.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="204" column="22" selection-start="6524" selection-end="6524" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../boofcv/main/sfm/src/boofcv/alg/sfm/VisOdomPixelDepthPnP.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="95" column="28" selection-start="3400" selection-end="3400" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="e#2604#2617#0" expanded="true" />
+            <element signature="e#5945#5961#0" expanded="true" />
+            <element signature="e#6509#6525#0" expanded="true" />
+            <element signature="e#7524#7540#0" expanded="true" />
+            <element signature="e#8509#8520#0" expanded="true" />
+            <element signature="e#10989#11012#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/validate/vo/DebugVisualOdometryStereo.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="143" column="30" selection-start="3718" selection-end="3718" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../boofcv/main/geo/src/boofcv/abst/geo/BundleAdjustmentCalibrated.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="42" column="19" selection-start="1491" selection-end="1491" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../boofcv/main/numerics/src/boofcv/numerics/optimization/impl/TrustRegionLeastSquares.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="132" column="17" selection-start="4005" selection-end="4005" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../boofcv/main/geo/test/boofcv/abst/geo/pose/TestPnPRefineRodrigues.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="69" column="26" selection-start="2078" selection-end="2078" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../boofcv/main/geo/src/boofcv/abst/geo/pose/PnPRefineRodrigues.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="79" column="33" selection-start="2615" selection-end="2615" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../boofcv/main/geo/test/boofcv/alg/geo/pose/TestPnPJacobianRodrigues.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="48" column="0" selection-start="1462" selection-end="1462" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../boofcv/main/numerics/src/boofcv/numerics/optimization/JacobianChecker.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="83" column="0" selection-start="2834" selection-end="2834" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../boofcv/main/sfm/src/boofcv/alg/sfm/VisOdomPixelDepthPnP.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="217" column="17" selection-start="6277" selection-end="6277" vertical-scroll-proportion="0.020408163">
+        <state line="177" column="0" selection-start="5059" selection-end="5059" vertical-scroll-proportion="0.33333334">
           <folding />
         </state>
       </provider>
