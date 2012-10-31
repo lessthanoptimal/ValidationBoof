@@ -179,6 +179,8 @@ public class DebugVisualOdometryStereo<T extends ImageSingleBand> implements Mou
 			double errorAngle = rotationMatrixToRadian(diff.getR());
 
 			System.out.printf("%5d %6.2f location error %f error frac %f  angle %6.3f\n", frame,fps,distanceError, errorFrac,errorAngle);
+			System.out.println("  expected "+expected.getT());
+			System.out.println("  found "+found.getT());
 
 			alg.getLeftToWorld().invert(previousWorldToLeftFound);
 			data.getLeftToWorld().invert(previousWorldToLeft);
@@ -299,14 +301,15 @@ public class DebugVisualOdometryStereo<T extends ImageSingleBand> implements Mou
 
 		Class imageType = ImageFloat32.class;
 
+//		ImagePointTracker<ImageFloat32> tracker =
+//				FactoryPointSequentialTracker.brief(400,200,1,1,imageType);
+
 		ImagePointTracker<ImageFloat32> tracker =
 				FactoryPointSequentialTracker.klt(400, new int[]{1, 2, 4, 8}, 3, 3, 2, imageType, ImageFloat32.class);
 		StereoDisparitySparse<ImageFloat32> disparity =
 				FactoryStereoDisparity.regionSparseWta(10, 120, 2, 2, 30, 0.1, true, imageType);
 
-
-		// nominal track = 80  inlier = 1.2
-		StereoVisualOdometry alg = FactoryVisualOdometry.stereoDepth(80,1.2,tracker,disparity,imageType);
+		StereoVisualOdometry alg = FactoryVisualOdometry.stereoDepth(80,2,1.5,tracker,disparity,100,imageType);
 
 		DebugVisualOdometryStereo app = new DebugVisualOdometryStereo(new WrapParseLeuven07(data),alg,imageType);
 
