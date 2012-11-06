@@ -2,9 +2,8 @@ package validate.vo;
 
 import boofcv.abst.feature.disparity.StereoDisparitySparse;
 import boofcv.abst.feature.tracker.ImagePointTracker;
+import boofcv.abst.sfm.AccessPointTracks3D;
 import boofcv.abst.sfm.StereoVisualOdometry;
-import boofcv.alg.sfm.AccessSfmPointTracks;
-import boofcv.alg.sfm.PointPoseTrack;
 import boofcv.core.image.ConvertBufferedImage;
 import boofcv.core.image.GeneralizedImageOps;
 import boofcv.factory.feature.disparity.FactoryStereoDisparity;
@@ -26,7 +25,7 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
-import java.util.*;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -118,8 +117,8 @@ public class DebugVisualOdometryStereo<T extends ImageSingleBand> implements Mou
 
 			processFrame();
 
-			if( alg instanceof AccessSfmPointTracks ) {
-				drawFeatures((AccessSfmPointTracks)alg,data.getLeft());
+			if( alg instanceof AccessPointTracks3D) {
+				drawFeatures((AccessPointTracks3D)alg,data.getLeft());
 			}
 
 			imageDisplay.repaint();
@@ -179,8 +178,8 @@ public class DebugVisualOdometryStereo<T extends ImageSingleBand> implements Mou
 			double errorAngle = rotationMatrixToRadian(diff.getR());
 
 			System.out.printf("%5d %6.2f location error %f error frac %f  angle %6.3f\n", frame,fps,distanceError, errorFrac,errorAngle);
-			System.out.println("  expected "+expected.getT());
-			System.out.println("  found "+found.getT());
+//			System.out.println("  expected "+expected.getT());
+//			System.out.println("  found "+found.getT());
 
 			alg.getLeftToWorld().invert(previousWorldToLeftFound);
 			data.getLeftToWorld().invert(previousWorldToLeft);
@@ -220,59 +219,52 @@ public class DebugVisualOdometryStereo<T extends ImageSingleBand> implements Mou
 		return Math.sqrt(sum);
 	}
 
-	private static void drawFeatures( AccessSfmPointTracks tracker , BufferedImage image )  {
+	private static void drawFeatures( AccessPointTracks3D tracker , BufferedImage image )  {
 
 		Graphics2D g2 = image.createGraphics();
 
-//		for( Point2D_F64 p : tracker.getNewTracks() ) {
-//			VisualizeFeatures.drawPoint(g2, (int) p.x, (int) p.y, 3, Color.GREEN);
-//		}
+		List<Point2D_F64> points = tracker.getAllTracks();
 
-//		g2.setColor(Color.BLUE);
-//		g2.setStroke(new BasicStroke(3));
-//		for( Point2D_F64 p : tracker.getAllTracks() ) {
-//			VisualizeFeatures.drawCross(g2,(int)p.x,(int)p.y,3);
-//		}
+		int numInliers = 0;
+		double ranges[] = new double[points.size() ];
 
-		// highlight inliers
-		List<Point2D_F64> inliers = tracker.getInlierTracks();
-		if( inliers.size() > 0 ) {
-			for( int i = 0; i < inliers.size(); i++ ) {
-				Point2D_F64 pixel = inliers.get(i);
-				VisualizeFeatures.drawPoint(g2,(int)pixel.x,(int)pixel.y,5,Color.WHITE);
-			}
+		for( int i = 0; i < points.size(); i++ ) {
+			ranges[i] = tracker.getTrackLocation(i).z;
 		}
-
-		// indicate range of each point
-		List<Point2D_F64> location = tracker.getAllTracks();
-
-		double ranges[] = new double[location.size() ];
-		for( int i = 0; i < location.size(); i++ ) {
-			Point3D_F64 X = tracker.getTrackLocation(i);
-			ranges[i] = X.z;
-		}
-
 		Arrays.sort(ranges);
 		double maxRange = ranges[(int)(ranges.length*0.8)];
 
-		for( int i = 0; i < location.size(); i++ ) {
-			Point2D_F64 pixel = location.get(i);
-			Point3D_F64 X = tracker.getTrackLocation(i);
+		for( int i = 0; i < points.size(); i++ ) {
+			Point2D_F64 pixel = points.get(i);
 
-			double r = X.z/maxRange;
+			if( tracker.isNew(i) ) {
+				VisualizeFeatures.drawPoint(g2,(int)pixel.x,(int)pixel.y,3,Color.GREEN);
+				continue;
+			}
+
+			if( tracker.isInlier(i) ) {
+				numInliers++;
+//				VisualizeFeatures.drawPoint(g2,(int)pixel.x,(int)pixel.y,7,Color.BLUE,false);
+			}
+
+			Point3D_F64 p3 = tracker.getTrackLocation(i);
+
+			double r = p3.z/maxRange;
 			if( r < 0 ) r = 0;
 			else if( r > 1 ) r = 1;
 
 			int color = (255 << 16) | ((int)(255*r) << 8);
 
+
 			VisualizeFeatures.drawPoint(g2,(int)pixel.x,(int)pixel.y,3,new Color(color));
 		}
+
 
 		g2.setColor(Color.BLACK);
 		g2.fillRect(25,15,80,45);
 		g2.setColor(Color.CYAN);
 		g2.drawString("Total: " + tracker.getAllTracks().size(), 30, 30);
-		g2.drawString("Inliers: "+inliers.size(),30,50);
+		g2.drawString("Inliers: "+numInliers,30,50);
 	}
 
 
@@ -301,11 +293,11 @@ public class DebugVisualOdometryStereo<T extends ImageSingleBand> implements Mou
 
 		Class imageType = ImageFloat32.class;
 
-//		ImagePointTracker<ImageFloat32> tracker =
-//				FactoryPointSequentialTracker.brief(400,200,1,1,imageType);
-
 		ImagePointTracker<ImageFloat32> tracker =
-				FactoryPointSequentialTracker.klt(400, new int[]{1, 2, 4, 8}, 3, 3, 2, imageType, ImageFloat32.class);
+				FactoryPointSequentialTracker.dda_ShiTomasi_BRIEF(500,200,1,1,4,imageType,null);
+
+//		ImagePointTracker<ImageFloat32> tracker =
+//				FactoryPointSequentialTracker.klt(400, new int[]{1, 2, 4, 8}, 3, 3, 2, imageType, ImageFloat32.class);
 		StereoDisparitySparse<ImageFloat32> disparity =
 				FactoryStereoDisparity.regionSparseWta(10, 120, 2, 2, 30, 0.1, true, imageType);
 

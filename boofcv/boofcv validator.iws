@@ -2,11 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" readonly="true" id="5ae49738-03a7-49e6-8d41-9676d295fd24" name="Default" comment="- Added getMinimunSize() to ModelMatcher&#10;- Renamed PointPosePair to Point2D3D&#10;- Improvements to VO">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../boofcv/data" afterPath="$PROJECT_DIR$/../../boofcv/data" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../visual_odometry/leuven07/read_camera.m" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/boofcv validator.iws" afterPath="$PROJECT_DIR$/boofcv validator.iws" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/validate/vo/DebugVisualOdometryStereo.java" afterPath="$PROJECT_DIR$/src/validate/vo/DebugVisualOdometryStereo.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../boofcv/main/io/src/boofcv/io/video/CreateMJpeg.java" afterPath="$PROJECT_DIR$/../../boofcv/main/io/src/boofcv/io/video/CreateMJpeg.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../georegression/GeoRegression.ipr" afterPath="$PROJECT_DIR$/../../georegression/GeoRegression.ipr" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../libpjajava/src/pja/sorting/QuickSelectArray.java" afterPath="$PROJECT_DIR$/../../libpjajava/src/pja/sorting/QuickSelectArray.java" />
     </list>
     <list id="a1871b72-0229-4eb0-82fb-6085d307f536" name="Failed commit: Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../ejml/trunk/EJML.iws" afterPath="$PROJECT_DIR$/../../ejml/trunk/EJML.iws" />
@@ -70,7 +69,7 @@
       <file leaf-file-name="VisOdomPixelDepthPnP.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../../boofcv/main/sfm/src/boofcv/alg/sfm/VisOdomPixelDepthPnP.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="28" column="27" selection-start="1346" selection-end="1346" vertical-scroll-proportion="0.0">
+            <state line="28" column="27" selection-start="1605" selection-end="1605" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -79,7 +78,16 @@
       <file leaf-file-name="FactoryVisualOdometry.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../../boofcv/main/sfm/src/boofcv/factory/sfm/FactoryVisualOdometry.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="86" column="38" selection-start="3462" selection-end="3462" vertical-scroll-proportion="0.0">
+            <state line="88" column="25" selection-start="3578" selection-end="3578" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="WrapVisOdomPixelDepthPnP.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../../boofcv/main/sfm/src/boofcv/abst/sfm/WrapVisOdomPixelDepthPnP.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="24" column="63" selection-start="838" selection-end="857" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -88,7 +96,7 @@
       <file leaf-file-name="DebugVisualOdometryStereo.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/validate/vo/DebugVisualOdometryStereo.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="303" column="0" selection-start="8769" selection-end="8880" vertical-scroll-proportion="0.5578231">
+            <state line="246" column="32" selection-start="7268" selection-end="7268" vertical-scroll-proportion="0.8527778">
               <folding />
             </state>
           </provider>
@@ -97,7 +105,7 @@
       <file leaf-file-name="FactoryPointSequentialTracker.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../../boofcv/main/geo/src/boofcv/factory/feature/tracker/FactoryPointSequentialTracker.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="190" column="23" selection-start="9126" selection-end="9126" vertical-scroll-proportion="0.0">
+            <state line="190" column="23" selection-start="8817" selection-end="8817" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -154,9 +162,9 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-3" />
-    <option name="width" value="1926" />
-    <option name="height" value="1057" />
+    <option name="y" value="25" />
+    <option name="width" value="1280" />
+    <option name="height" value="974" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -286,22 +294,22 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="PackagesPane">
-        <subPane>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="boofcv validator" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
       <pane id="Scope">
         <subPane subId="Project Files">
           <PATH>
             <PATH_ELEMENT USER_OBJECT="Root">
               <option name="myItemId" value="" />
               <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+      <pane id="PackagesPane">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="boofcv validator" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
@@ -693,30 +701,30 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-3" y="0" width="1926" height="1057" extended-state="6" />
-    <editor active="false" />
+    <frame x="0" y="25" width="1280" height="974" extended-state="0" />
+    <editor active="true" />
     <layout>
-      <window_info id="Data Sources" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3264563" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.46585903" sideWeight="0.49573106" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3975771" sideWeight="0.50053364" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3254486" sideWeight="0.39441746" order="1" side_tool="true" content_ui="tabs" />
-      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.30074787" sideWeight="0.53414094" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32300162" sideWeight="0.53519416" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.4648058" sideWeight="0.49573106" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3975771" sideWeight="0.50053364" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Data Sources" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32819384" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3270925" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
@@ -821,11 +829,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/../../boofcv/main/sfm/src/boofcv/abst/sfm/WrapVisOdomPixelDepthPnP.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="71" column="37" selection-start="2073" selection-end="2073" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../../boofcv/main/sfm/src/boofcv/alg/sfm/robust/EstimatorToGenerator.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="12" column="71" selection-start="352" selection-end="352" vertical-scroll-proportion="0.0" />
@@ -868,17 +871,22 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/../../boofcv/main/sfm/src/boofcv/alg/sfm/VisOdomPixelDepthPnP.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="28" column="27" selection-start="1346" selection-end="1346" vertical-scroll-proportion="0.0" />
+        <state line="28" column="27" selection-start="1605" selection-end="1605" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/../../boofcv/main/sfm/src/boofcv/factory/sfm/FactoryVisualOdometry.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="86" column="38" selection-start="3462" selection-end="3462" vertical-scroll-proportion="0.0" />
+        <state line="88" column="25" selection-start="3578" selection-end="3578" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../boofcv/main/sfm/src/boofcv/abst/sfm/WrapVisOdomPixelDepthPnP.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="24" column="63" selection-start="838" selection-end="857" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/../../boofcv/main/geo/src/boofcv/factory/feature/tracker/FactoryPointSequentialTracker.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="190" column="23" selection-start="9126" selection-end="9126" vertical-scroll-proportion="0.0">
+        <state line="190" column="23" selection-start="8817" selection-end="8817" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
@@ -895,7 +903,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/validate/vo/DebugVisualOdometryStereo.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="303" column="0" selection-start="8769" selection-end="8880" vertical-scroll-proportion="0.5578231">
+        <state line="246" column="32" selection-start="7268" selection-end="7268" vertical-scroll-proportion="0.8527778">
           <folding />
         </state>
       </provider>
