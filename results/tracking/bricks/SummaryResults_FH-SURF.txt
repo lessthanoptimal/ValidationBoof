@@ -1,0 +1,14 @@
+# Inlier Tolerance 5.0  Algorithm FH-SURF
+# (File) (Skip) (F) (F all inside) (Precision) (Recall) (Recall all inside) (Tracks)
+bricks/skew  1  0.445  0.577  0.688  0.338  0.498  235.0
+bricks/skew  4  0.442  0.576  0.686  0.334  0.496  233.0
+bricks/skew  8  0.439  0.574  0.684  0.331  0.495  232.0
+bricks/rotate  1  0.633  0.700  0.848  0.509  0.599  303.0
+bricks/rotate  4  0.629  0.695  0.847  0.504  0.591  300.0
+bricks/rotate  8  0.624  0.689  0.842  0.499  0.584  299.0
+bricks/move_out  1  0.203  0.203  0.391  0.143  0.143  163.0
+bricks/move_out  4  0.197  0.197  0.385  0.138  0.138  161.0
+bricks/move_out  8  0.192  0.192  0.383  0.133  0.133  160.0
+bricks/move_in  1  0.378  0.510  0.616  0.284  0.442  210.0
+bricks/move_in  4  0.377  0.510  0.616  0.282  0.441  209.0
+bricks/move_in  8  0.370  0.504  0.610  0.276  0.437  206.0

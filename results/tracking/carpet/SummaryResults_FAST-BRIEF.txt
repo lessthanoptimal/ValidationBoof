@@ -1,0 +1,14 @@
+# Inlier Tolerance 5.0  Algorithm FAST-BRIEF
+# (File) (Skip) (F) (F all inside) (Precision) (Recall) (Recall all inside) (Tracks)
+carpet/skew  1  0.200  0.251  0.298  0.152  0.224  142.0
+carpet/skew  4  0.194  0.245  0.290  0.148  0.220  141.0
+carpet/skew  8  0.186  0.237  0.278  0.142  0.213  141.0
+carpet/rotate  1  0.145  0.154  0.205  0.114  0.124  140.0
+carpet/rotate  4  0.135  0.143  0.191  0.105  0.114  138.0
+carpet/rotate  8  0.122  0.130  0.177  0.094  0.104  136.0
+carpet/move_out  1  0.131  0.131  0.240  0.092  0.092  136.0
+carpet/move_out  4  0.131  0.131  0.241  0.091  0.091  135.0
+carpet/move_out  8  0.130  0.130  0.241  0.090  0.090  133.0
+carpet/move_in  1  0.290  0.345  0.414  0.226  0.298  159.0
+carpet/move_in  4  0.282  0.336  0.405  0.220  0.289  157.0
+carpet/move_in  8  0.276  0.328  0.396  0.215  0.281  156.0

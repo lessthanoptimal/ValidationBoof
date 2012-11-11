@@ -1,0 +1,14 @@
+# Inlier Tolerance 5.0  Algorithm FAST-BRIEF
+# (File) (Skip) (F) (F all inside) (Precision) (Recall) (Recall all inside) (Tracks)
+bricks/skew  1  0.389  0.506  0.591  0.300  0.443  253.0
+bricks/skew  4  0.382  0.499  0.584  0.294  0.437  250.0
+bricks/skew  8  0.374  0.492  0.574  0.287  0.430  249.0
+bricks/rotate  1  0.256  0.267  0.340  0.208  0.223  199.0
+bricks/rotate  4  0.244  0.255  0.326  0.198  0.212  196.0
+bricks/rotate  8  0.221  0.232  0.298  0.179  0.193  190.0
+bricks/move_out  1  0.119  0.119  0.172  0.093  0.093  175.0
+bricks/move_out  4  0.115  0.115  0.169  0.089  0.089  172.0
+bricks/move_out  8  0.109  0.109  0.161  0.084  0.084  171.0
+bricks/move_in  1  0.267  0.317  0.386  0.207  0.269  184.0
+bricks/move_in  4  0.265  0.315  0.384  0.205  0.267  183.0
+bricks/move_in  8  0.256  0.305  0.372  0.198  0.259  182.0

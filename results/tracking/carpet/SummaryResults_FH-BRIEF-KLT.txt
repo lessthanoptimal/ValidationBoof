@@ -1,0 +1,14 @@
+# Inlier Tolerance 5.0  Algorithm FH-BRIEF-KLT
+# (File) (Skip) (F) (F all inside) (Precision) (Recall) (Recall all inside) (Tracks)
+carpet/skew  1  0.443  0.615  0.574  0.380  0.674  358.0
+carpet/skew  4  0.440  0.615  0.576  0.375  0.673  353.0
+carpet/skew  8  0.422  0.596  0.568  0.356  0.637  336.0
+carpet/rotate  1  0.702  0.779  0.779  0.640  0.779  475.0
+carpet/rotate  4  0.675  0.748  0.764  0.607  0.733  457.0
+carpet/rotate  8  0.659  0.726  0.805  0.564  0.664  403.0
+carpet/move_out  1  0.975  0.975  0.975  0.975  0.975  565.0
+carpet/move_out  4  0.973  0.973  0.975  0.970  0.970  562.0
+carpet/move_out  8  0.959  0.959  0.972  0.946  0.946  549.0
+carpet/move_in  1  0.519  0.646  0.629  0.459  0.669  409.0
+carpet/move_in  4  0.526  0.657  0.637  0.464  0.684  410.0
+carpet/move_in  8  0.523  0.661  0.645  0.456  0.686  399.0

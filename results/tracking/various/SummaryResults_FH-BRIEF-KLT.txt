@@ -1,0 +1,11 @@
+# Inlier Tolerance 5.0  Algorithm FH-BRIEF-KLT
+# (File) (Skip) (F) (F all inside) (Precision) (Recall) (Recall all inside) (Tracks)
+various/lighting  1  0.714  0.714  0.726  0.702  0.702  497.0
+various/lighting  4  0.712  0.712  0.727  0.698  0.698  495.0
+various/lighting  8  0.702  0.702  0.722  0.683  0.683  485.0
+various/compressed  1  0.301  0.391  0.531  0.220  0.311  190.0
+various/compressed  4  0.340  0.433  0.538  0.261  0.365  217.0
+various/compressed  8  0.366  0.472  0.580  0.281  0.400  221.0
+various/urban  1  0.764  0.903  0.906  0.668  0.901  356.0
+various/urban  4  0.712  0.806  0.886  0.607  0.744  328.0
+various/urban  8  0.666  0.745  0.869  0.554  0.658  305.0
