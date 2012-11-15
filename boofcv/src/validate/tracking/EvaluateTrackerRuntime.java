@@ -68,7 +68,7 @@ public class EvaluateTrackerRuntime<T extends ImageSingleBand> implements Serial
 		params[3] = "-Xmx500M";
 		params[4] = "-classpath";
 		params[5] = classPath;
-		params[6] = "boofcv.dev.feature.new2.EvaluateTrackerRuntime";
+		params[6] = EvaluateTrackerRuntime.class.getCanonicalName();
 		params[7] = alg.name();
 		params[8] = inputPath;
 		params[9] = imageType.getName();

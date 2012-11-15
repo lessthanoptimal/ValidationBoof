@@ -61,18 +61,18 @@ public class BatchEvaluateSummaryAndTime {
 
 	public static void main( String args[] ) throws FileNotFoundException {
 		int skips[] = new int[]{1,4,8};
-		String dir = "various";
+		String dir = "bricks";
 
-		String dataSets[] = new String[]{"lighting","compressed","urban"};
-//		String dataSets[] = new String[]{"skew","rotate","move_out","move_in"};
+//		String dataSets[] = new String[]{"lighting","compressed","urban"};
+		String dataSets[] = new String[]{"skew","rotate","move_out","move_in"};
 //		String dataSets[] = new String[]{"urban"};
 
 		Class imageType = ImageFloat32.class;
 
 		createDirectories(dir);
 
-		for( EvaluatedAlgorithm alg : EvaluatedAlgorithm.values() ) {
-//		EvaluatedAlgorithm alg = EvaluatedAlgorithm.FH_SURF_KLT;
+//		for( EvaluatedAlgorithm alg : EvaluatedAlgorithm.values() ) {
+		EvaluatedAlgorithm alg = EvaluatedAlgorithm.FH_SURF_KLT;
 			System.out.println("Evaluating "+alg);
 
 			// create the summary file
@@ -98,6 +98,6 @@ public class BatchEvaluateSummaryAndTime {
 			}
 
 			outSummary.close();
-		}
+//		}
 	}
 }

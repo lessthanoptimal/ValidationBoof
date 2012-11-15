@@ -1,8 +1,9 @@
 package validate.tracking;
 
 import boofcv.abst.filter.derivative.ImageGradient;
-import boofcv.alg.tracker.fused.CombinedTrack;
-import boofcv.alg.tracker.fused.CombinedPointTracker;
+import boofcv.alg.filter.derivative.GImageDerivativeOps;
+import boofcv.alg.tracker.combined.CombinedTrack;
+import boofcv.alg.tracker.combined.CombinedTrackerScalePoint;
 import boofcv.alg.transform.pyramid.PyramidOps;
 import boofcv.factory.filter.derivative.FactoryDerivative;
 import boofcv.factory.transform.pyramid.FactoryPyramid;
@@ -11,7 +12,6 @@ import boofcv.struct.image.ImageSingleBand;
 import boofcv.struct.pyramid.PyramidDiscrete;
 import boofcv.struct.pyramid.PyramidUpdaterDiscrete;
 import georegression.struct.point.Point2D_F64;
-import validate.tracking.EvaluationTracker;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +26,7 @@ public class WrapFusedTracker
 	implements EvaluationTracker<I>
 {
 
-	CombinedPointTracker<I,D,TD> tracker;
+	CombinedTrackerScalePoint<I,D,TD> tracker;
 
 	PyramidUpdaterDiscrete<I> updaterP;
 
@@ -42,13 +42,12 @@ public class WrapFusedTracker
 
 	int previousSpawn;
 
-	public WrapFusedTracker(CombinedPointTracker<I, D,TD> tracker, boolean modeKlt) {
+	public WrapFusedTracker(CombinedTrackerScalePoint<I, D,TD> tracker, boolean modeKlt,
+							Class<I> imageType ) {
 		this.tracker = tracker;
 		this.modeKlt = modeKlt;
 
-		Class<I> imageType = tracker.getImageType();
-		Class<D> derivType = tracker.getDerivType();
-
+		Class<D> derivType = GImageDerivativeOps.getDerivativeType(imageType);
 
 		updaterP = FactoryPyramid.discreteGaussian(imageType, -1, 2);
 		gradient = FactoryDerivative.sobel(imageType, derivType);
@@ -68,11 +67,11 @@ public class WrapFusedTracker
 		PyramidOps.gradient(pyramid, gradient, derivX, derivY);
 
 		// pass in filtered inputs
-		tracker.track(image,pyramid,derivX,derivY);
+		tracker.updateTracks(image, pyramid, derivX, derivY);
 
 		if( isFirstImage ) {
-			tracker.detectInterestPoints();
-			tracker.spawnTracksFromPoints();
+			tracker.associateTaintedToDetected();
+			tracker.spawnTracksFromDetected();
 			List<CombinedTrack<TD>> tracks = tracker.getPureKlt();
 
 			// save locations of the track in the first image
@@ -87,13 +86,10 @@ public class WrapFusedTracker
 			int numActive = tracker.getPureKlt().size() + tracker.getReactivated().size();
 //			System.out.printf("  prev %d   curr %d\n",previousSpawn,numActive);
 			if( previousSpawn-numActive > 0.10*numActive ) {
-//				System.out.println("Detecting and associating tracks");
-				tracker.detectInterestPoints();
-				tracker.associateTaintedToPoints();
+				tracker.associateTaintedToDetected();
 				previousSpawn = tracker.getPureKlt().size() + tracker.getReactivated().size();
 			}
 		}
-//		tracker.maintenance();
 	}
 
 	@Override

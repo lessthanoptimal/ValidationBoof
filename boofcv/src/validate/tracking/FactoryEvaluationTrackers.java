@@ -10,8 +10,8 @@ import boofcv.abst.feature.detect.interest.WrapFHtoInterestPoint;
 import boofcv.alg.feature.detect.interest.FastHessianFeatureDetector;
 import boofcv.alg.feature.orientation.OrientationIntegral;
 import boofcv.alg.filter.derivative.GImageDerivativeOps;
-import boofcv.alg.tracker.fused.CombinedPointTracker;
-import boofcv.alg.tracker.fused.DetectTrackKLT;
+import boofcv.alg.tracker.combined.CombinedTrackerScalePoint;
+import boofcv.alg.tracker.combined.PyramidKltForCombined;
 import boofcv.alg.tracker.klt.KltConfig;
 import boofcv.alg.transform.ii.GIntegralImageOps;
 import boofcv.factory.feature.associate.FactoryAssociation;
@@ -100,12 +100,12 @@ public class FactoryEvaluationTrackers<T extends ImageSingleBand> {
 		ScoreAssociation<SurfFeature> scorer = FactoryAssociation.scoreEuclidean(describe.getDescriptorType(),true);
 		GeneralAssociation<SurfFeature> associate = FactoryAssociation.greedy(scorer,Double.MAX_VALUE,0,true);
 
-		DetectTrackKLT<T, T> klt = defaultFusedKlt();
+		PyramidKltForCombined<T, T> klt = defaultFusedKlt();
 
-		CombinedPointTracker<T, T,SurfFeature> tracker = new CombinedPointTracker<T, T,SurfFeature>(klt,detector,describe,associate,
-				2,imageType,imageType);
+		CombinedTrackerScalePoint<T, T,SurfFeature> tracker = new CombinedTrackerScalePoint<T, T,SurfFeature>(klt,
+				detector,describe,associate);
 
-		return new WrapFusedTracker<T,T,SurfFeature>(tracker,false);
+		return new WrapFusedTracker<T,T,SurfFeature>(tracker,false,imageType);
 	}
 //
 	public EvaluationTracker<T> createFhBriefKlt(boolean isFixed) {
@@ -115,23 +115,20 @@ public class FactoryEvaluationTrackers<T extends ImageSingleBand> {
 		ScoreAssociation<TupleDesc_B> scorer = FactoryAssociation.scoreHamming(describe.getDescriptorType());
 		GeneralAssociation<TupleDesc_B> associate = FactoryAssociation.greedy(scorer,Double.MAX_VALUE,0,true);
 
-		DetectTrackKLT<T, T> klt = defaultFusedKlt();
+		PyramidKltForCombined<T, T> klt = defaultFusedKlt();
 
-		CombinedPointTracker<T, T,TupleDesc_B> tracker = new CombinedPointTracker<T, T,TupleDesc_B>(klt,detector,describe,associate,
-				2,imageType,imageType);
+		CombinedTrackerScalePoint<T, T,TupleDesc_B> tracker = new CombinedTrackerScalePoint<T, T,TupleDesc_B>(klt,
+				detector,describe,associate);
 
-		return new WrapFusedTracker<T,T,TupleDesc_B>(tracker,false);
+		return new WrapFusedTracker<T,T,TupleDesc_B>(tracker,false,imageType);
 	}
 
 	public EvaluationTracker<T> createKlt() {
 		InterestPointDetector<T> detector = createDetector(false);
 
-		DetectTrackKLT<T, T> klt = defaultFusedKlt();
+		PyramidKltForCombined<T, T> klt = defaultFusedKlt();
 
-		CombinedPointTracker<T, T,TupleDesc> tracker = new CombinedPointTracker<T, T,TupleDesc>(klt,detector,null,null,
-				2,imageType,imageType);
-
-		return new WrapFusedTracker<T,T,TupleDesc>(tracker,true);
+		return new WrapFusedKltTracker<T,T>(detector,klt,imageType);
 	}
 
 	private InterestPointDetector<T> createDetector( boolean estimateOrientation) {
@@ -154,13 +151,13 @@ public class FactoryEvaluationTrackers<T extends ImageSingleBand> {
 		return new WrapFHtoInterestPoint(feature,angleII);
 	}
 
-	private DetectTrackKLT<T, T> defaultFusedKlt() {
+	private PyramidKltForCombined<T, T> defaultFusedKlt() {
 		KltConfig kltConfig = KltConfig.createDefault();
 		int scales[] = new int[]{1,2,4,8};
 		int featureRadius = 5;
 		kltConfig.maxPerPixelError = 10;
 
-		return new DetectTrackKLT<T, T>(kltConfig,
+		return new PyramidKltForCombined<T, T>(kltConfig,
 				featureRadius,scales,imageType,imageType);
 	}
 }

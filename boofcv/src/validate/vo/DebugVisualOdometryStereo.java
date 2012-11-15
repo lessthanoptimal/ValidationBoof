@@ -289,15 +289,16 @@ public class DebugVisualOdometryStereo<T extends ImageSingleBand> implements Mou
 		// TODO light invariant sparse stereo
 		// TODO or preprocess images with edge detector?
 
-		ParseLeuven07 data = new ParseLeuven07("../visual_odometry/leuven07");
+		ParseLeuven07 data = new ParseLeuven07("../data/leuven07");
 
 		Class imageType = ImageFloat32.class;
 
-		ImagePointTracker<ImageFloat32> tracker =
-				FactoryPointSequentialTracker.dda_ShiTomasi_BRIEF(500,200,1,1,4,imageType,null);
-
 //		ImagePointTracker<ImageFloat32> tracker =
-//				FactoryPointSequentialTracker.klt(400, new int[]{1, 2, 4, 8}, 3, 3, 2, imageType, ImageFloat32.class);
+//				FactoryPointSequentialTracker.dda_ShiTomasi_BRIEF(500,200,1,1,imageType,null);
+//		ImagePointTracker<ImageFloat32> tracker =
+//				FactoryPointSequentialTracker.dda_FH_SURF(500,2,200,2,imageType);
+		ImagePointTracker<ImageFloat32> tracker =
+				FactoryPointSequentialTracker.klt(400, new int[]{1, 2, 4, 8}, 3, 3, 2, imageType, ImageFloat32.class);
 		StereoDisparitySparse<ImageFloat32> disparity =
 				FactoryStereoDisparity.regionSparseWta(10, 120, 2, 2, 30, 0.1, true, imageType);
 
