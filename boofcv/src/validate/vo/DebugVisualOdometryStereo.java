@@ -15,6 +15,7 @@ import boofcv.gui.image.ShowImages;
 import boofcv.struct.image.ImageFloat32;
 import boofcv.struct.image.ImageSingleBand;
 import georegression.geometry.RotationMatrixGenerator;
+import georegression.metric.UtilAngle;
 import georegression.struct.point.Point2D_F64;
 import georegression.struct.point.Point3D_F64;
 import georegression.struct.se.Se3_F64;
@@ -51,10 +52,10 @@ public class DebugVisualOdometryStereo<T extends ImageSingleBand> implements Mou
 
 	double totalErrorDistance;
 	double totalErrorRotation;
-	double totalFoundDistance;
-	double totalFoundRotation;
-	double totalDistance;
-	double totalRotation;
+	double integralFoundDistance;
+	double integralFoundRotation;
+	double integralTrueDistance;
+	double integralTrueRotation;
 	double absoluteLocation;
 	double absoluteRotation;
 
@@ -79,10 +80,10 @@ public class DebugVisualOdometryStereo<T extends ImageSingleBand> implements Mou
 
 		totalErrorDistance = 0;
 		totalErrorRotation = 0;
-		totalFoundDistance = 0;
-		totalFoundRotation = 0;
-		totalDistance = 0;
-		totalRotation = 0;
+		integralFoundDistance = 0;
+		integralFoundRotation = 0;
+		integralTrueDistance = 0;
+		integralTrueRotation = 0;
 
 		numEstimates = 0;
 
@@ -136,15 +137,15 @@ public class DebugVisualOdometryStereo<T extends ImageSingleBand> implements Mou
 
 		// todo add absolute location and absolute rotation?
 ;
-		double integralDistance = Math.abs(totalFoundDistance-totalDistance)/totalDistance;
-		double integralRotation = Math.abs(totalFoundRotation-totalRotation)/totalDistance;
+		double integralDistance = Math.abs(integralFoundDistance - integralTrueDistance)/ integralTrueDistance;
+		double integralRotation = Math.abs(integralFoundRotation - integralTrueRotation)/ integralTrueDistance;
 		double averageDistance = totalErrorDistance/numEstimates;
 		double averageRotation = totalErrorRotation/numEstimates;
 
-		System.out.println("Ave per estimate:      location = "+averageDistance+"  angle "+averageRotation);
-		System.out.println("Absolute per distance: location "+(absoluteLocation/totalDistance)+" rotation "+
-		(absoluteRotation/totalDistance));
-		System.out.println("Integral per distance: distance "+integralDistance+" rotation "+integralRotation);
+		System.out.printf("Ave per estimate:      distance %9.7f  rotation %11.9f\n",averageDistance,averageRotation);
+		System.out.printf("Absolute:              location %9.5f  rotation %6.2f degrees\n",absoluteLocation,
+				UtilAngle.radianToDegree(absoluteRotation));
+		System.out.printf("Integral per distance: distance %9.5f%% rotation %5.2e\n",100*integralDistance,integralRotation);
 
 	}
 
@@ -186,11 +187,12 @@ public class DebugVisualOdometryStereo<T extends ImageSingleBand> implements Mou
 
 			numEstimates++;
 			totalErrorDistance += distanceError;
-			totalFoundDistance += found.getT().norm();
-			totalFoundRotation += rotationMatrixToRadian(found.getR());
-			totalDistance += distanceTruth;
-			totalErrorRotation = errorAngle;
-			totalRotation += rotationMatrixToRadian(expected.getR());
+			totalErrorRotation += errorAngle;
+
+			integralFoundDistance += found.getT().norm();
+			integralFoundRotation += rotationMatrixToRadian(found.getR());
+			integralTrueDistance += distanceTruth;
+			integralTrueRotation += rotationMatrixToRadian(expected.getR());
 
 			// find difference in absolute location
 			Se3_F64 leftToWorld = data.getLeftToWorld().concat(initialWorldToLeft,null);
