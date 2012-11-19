@@ -4,14 +4,17 @@ import boofcv.abst.feature.disparity.StereoDisparitySparse;
 import boofcv.abst.feature.tracker.ImagePointTracker;
 import boofcv.abst.sfm.AccessPointTracks3D;
 import boofcv.abst.sfm.StereoVisualOdometry;
+import boofcv.alg.geo.PerspectiveOps;
 import boofcv.core.image.ConvertBufferedImage;
 import boofcv.core.image.GeneralizedImageOps;
 import boofcv.factory.feature.disparity.FactoryStereoDisparity;
 import boofcv.factory.feature.tracker.FactoryPointSequentialTracker;
 import boofcv.factory.sfm.FactoryVisualOdometry;
+import boofcv.gui.d3.Polygon3DSequenceViewer;
 import boofcv.gui.feature.VisualizeFeatures;
 import boofcv.gui.image.ImageGridPanel;
 import boofcv.gui.image.ShowImages;
+import boofcv.struct.calib.StereoParameters;
 import boofcv.struct.image.ImageFloat32;
 import boofcv.struct.image.ImageSingleBand;
 import georegression.geometry.RotationMatrixGenerator;
@@ -19,6 +22,7 @@ import georegression.metric.UtilAngle;
 import georegression.struct.point.Point2D_F64;
 import georegression.struct.point.Point3D_F64;
 import georegression.struct.se.Se3_F64;
+import georegression.transform.se.SePointOps_F64;
 import org.ejml.data.DenseMatrix64F;
 import org.ejml.ops.CommonOps;
 
@@ -38,6 +42,7 @@ public class DebugVisualOdometryStereo<T extends ImageSingleBand> implements Mou
 	StereoVisualOdometry<T> alg;
 
 	ImageGridPanel imageDisplay;
+	Polygon3DSequenceViewer viewer = null;//new Polygon3DSequenceViewer();
 
 	T inputLeft;
 	T inputRight;
@@ -111,6 +116,16 @@ public class DebugVisualOdometryStereo<T extends ImageSingleBand> implements Mou
 		data.getLeftToWorld().invert(previousWorldToLeft);
 		initialWorldToLeft.set(previousWorldToLeft);
 
+		if( viewer != null ) {
+			DenseMatrix64F K = PerspectiveOps.calibrationMatrix(data.getCalibration().left,null);
+			viewer.setK(K);
+			viewer.setStepSize(data.getCalibration().getBaseline());
+			viewer.setPreferredSize(new Dimension(inputLeft.width, inputLeft.height));
+			viewer.setMaximumSize(viewer.getPreferredSize());
+
+			ShowImages.showWindow(viewer,"3D");
+		}
+
 		processFrame();
 
 		while( data.next() ) {
@@ -136,7 +151,6 @@ public class DebugVisualOdometryStereo<T extends ImageSingleBand> implements Mou
 		}
 
 		// todo add absolute location and absolute rotation?
-;
 		double integralDistance = Math.abs(integralFoundDistance - integralTrueDistance)/ integralTrueDistance;
 		double integralRotation = Math.abs(integralFoundRotation - integralTrueRotation)/ integralTrueDistance;
 		double averageDistance = totalErrorDistance/numEstimates;
@@ -147,6 +161,25 @@ public class DebugVisualOdometryStereo<T extends ImageSingleBand> implements Mou
 				UtilAngle.radianToDegree(absoluteRotation));
 		System.out.printf("Integral per distance: distance %9.5f%% rotation %5.2e\n",100*integralDistance,integralRotation);
 
+	}
+
+	private void updateView3D( Se3_F64 leftToWorld , Color color ) {
+		StereoParameters config = data.getCalibration();
+
+		double r = config.getBaseline();
+
+		Point3D_F64 p1 = new Point3D_F64(-r,-r,0);
+		Point3D_F64 p2 = new Point3D_F64(r,-r,0);
+		Point3D_F64 p3 = new Point3D_F64(r,r,0);
+		Point3D_F64 p4 = new Point3D_F64(-r,r,0);
+
+		SePointOps_F64.transform(leftToWorld, p1, p1);
+		SePointOps_F64.transform(leftToWorld,p2,p2);
+		SePointOps_F64.transform(leftToWorld,p3,p3);
+		SePointOps_F64.transform(leftToWorld,p4,p4);
+
+		viewer.add(color,p1,p2,p3,p4);
+		viewer.repaint();
 	}
 
 	private void processFrame() {
@@ -200,6 +233,12 @@ public class DebugVisualOdometryStereo<T extends ImageSingleBand> implements Mou
 			diff = leftToWorld.concat(alg.getLeftToWorld().invert(null),null);
 			absoluteLocation = diff.getT().norm();
 			absoluteRotation = rotationMatrixToRadian(diff.getR());
+
+			if( viewer != null ) {
+				updateView3D(alg.getLeftToWorld(),Color.BLACK);
+				updateView3D(leftToWorld,Color.ORANGE);
+			}
+
 		}
 
 		frame++;
@@ -296,11 +335,18 @@ public class DebugVisualOdometryStereo<T extends ImageSingleBand> implements Mou
 		Class imageType = ImageFloat32.class;
 
 //		ImagePointTracker<ImageFloat32> tracker =
+//				FactoryPointSequentialTracker.dda_FAST_BRIEF(500,200,3,9,20,imageType);
+//		ImagePointTracker<ImageFloat32> tracker =
 //				FactoryPointSequentialTracker.dda_ShiTomasi_BRIEF(500,200,1,1,imageType,null);
 //		ImagePointTracker<ImageFloat32> tracker =
-//				FactoryPointSequentialTracker.dda_FH_SURF(500,2,200,2,imageType);
+//				FactoryPointSequentialTracker.dda_FH_SURF(500,2,200,1,true,imageType);
 		ImagePointTracker<ImageFloat32> tracker =
 				FactoryPointSequentialTracker.klt(400, new int[]{1, 2, 4, 8}, 3, 3, 2, imageType, ImageFloat32.class);
+//		ImagePointTracker<ImageFloat32> tracker =
+//				FactoryPointSequentialTracker.combined_FH_SURF_KLT(400, 200,1,1,3,new int[]{1, 2, 4, 8}, 1000, false,imageType);
+//		ImagePointTracker<ImageFloat32> tracker =
+//				FactoryPointSequentialTracker.combined_ST_SURF_KLT(400,3,1,3,new int[]{1, 2, 4, 8}, 60, true,imageType,null);
+
 		StereoDisparitySparse<ImageFloat32> disparity =
 				FactoryStereoDisparity.regionSparseWta(10, 120, 2, 2, 30, 0.1, true, imageType);
 

@@ -21,7 +21,6 @@ import boofcv.factory.feature.detect.interest.FactoryDetectPoint;
 import boofcv.factory.feature.detect.interest.FactoryInterestPoint;
 import boofcv.factory.feature.orientation.FactoryOrientationAlgs;
 import boofcv.struct.feature.SurfFeature;
-import boofcv.struct.feature.TupleDesc;
 import boofcv.struct.feature.TupleDesc_B;
 import boofcv.struct.image.ImageSingleBand;
 
@@ -80,7 +79,7 @@ public class FactoryEvaluationTrackers<T extends ImageSingleBand> {
 		InterestPointDetector<T> detector;
 		if( useFast ) {
 			Class derivType = GImageDerivativeOps.getDerivativeType(imageType);
-			GeneralFeatureDetector det = FactoryDetectPoint.createFast(10, 6, 600, imageType);
+			GeneralFeatureDetector det = FactoryDetectPoint.createFast(10, 6, 9,600, imageType);
 			detector = FactoryInterestPoint.wrapPoint(det,imageType,derivType);
 		} else {
 			detector = createDetector(true);

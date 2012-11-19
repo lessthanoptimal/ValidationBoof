@@ -70,7 +70,7 @@ public class WrapFusedTracker
 		tracker.updateTracks(image, pyramid, derivX, derivY);
 
 		if( isFirstImage ) {
-			tracker.associateTaintedToDetected();
+			tracker.associateAllToDetected();
 			tracker.spawnTracksFromDetected();
 			List<CombinedTrack<TD>> tracks = tracker.getPureKlt();
 
@@ -86,7 +86,7 @@ public class WrapFusedTracker
 			int numActive = tracker.getPureKlt().size() + tracker.getReactivated().size();
 //			System.out.printf("  prev %d   curr %d\n",previousSpawn,numActive);
 			if( previousSpawn-numActive > 0.10*numActive ) {
-				tracker.associateTaintedToDetected();
+				tracker.associateAllToDetected();
 				previousSpawn = tracker.getPureKlt().size() + tracker.getReactivated().size();
 			}
 		}

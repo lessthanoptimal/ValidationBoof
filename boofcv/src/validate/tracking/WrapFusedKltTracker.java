@@ -1,11 +1,10 @@
 package validate.tracking;
 
 import boofcv.abst.feature.detect.interest.InterestPointDetector;
-import boofcv.abst.feature.tracker.PointTrack;
 import boofcv.abst.filter.derivative.ImageGradient;
 import boofcv.alg.filter.derivative.GImageDerivativeOps;
 import boofcv.alg.tracker.combined.PyramidKltForCombined;
-import boofcv.alg.tracker.pklt.PyramidKltFeature;
+import boofcv.alg.tracker.klt.PyramidKltFeature;
 import boofcv.alg.transform.pyramid.PyramidOps;
 import boofcv.factory.filter.derivative.FactoryDerivative;
 import boofcv.factory.transform.pyramid.FactoryPyramid;

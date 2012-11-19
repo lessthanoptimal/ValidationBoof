@@ -82,7 +82,9 @@ public class WrapGenericDetectTracker<I extends ImageSingleBand, TD extends Tupl
 				descKey.add(tracks.get(i).desc);
 			}
 
-			associate.associate(descKey,descCurr);
+			associate.setSource(descKey);
+			associate.setDestination(descCurr);
+			associate.associate();
 
 			// update the active track list
 			FastQueue<AssociatedIndex> matches = associate.getMatches();
