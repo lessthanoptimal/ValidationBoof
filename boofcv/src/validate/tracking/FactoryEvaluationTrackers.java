@@ -3,12 +3,14 @@ package validate.tracking;
 import boofcv.abst.feature.associate.GeneralAssociation;
 import boofcv.abst.feature.associate.ScoreAssociation;
 import boofcv.abst.feature.describe.DescribeRegionPoint;
+import boofcv.abst.feature.detdesc.DetectDescribeFusion;
 import boofcv.abst.feature.detect.extract.FeatureExtractor;
 import boofcv.abst.feature.detect.interest.GeneralFeatureDetector;
 import boofcv.abst.feature.detect.interest.InterestPointDetector;
 import boofcv.abst.feature.detect.interest.WrapFHtoInterestPoint;
+import boofcv.abst.feature.orientation.OrientationImage;
+import boofcv.abst.feature.orientation.OrientationIntegral;
 import boofcv.alg.feature.detect.interest.FastHessianFeatureDetector;
-import boofcv.alg.feature.orientation.OrientationIntegral;
 import boofcv.alg.filter.derivative.GImageDerivativeOps;
 import boofcv.alg.tracker.combined.CombinedTrackerScalePoint;
 import boofcv.alg.tracker.combined.PyramidKltForCombined;
@@ -19,7 +21,7 @@ import boofcv.factory.feature.describe.FactoryDescribeRegionPoint;
 import boofcv.factory.feature.detect.extract.FactoryFeatureExtractor;
 import boofcv.factory.feature.detect.interest.FactoryDetectPoint;
 import boofcv.factory.feature.detect.interest.FactoryInterestPoint;
-import boofcv.factory.feature.orientation.FactoryOrientationAlgs;
+import boofcv.factory.feature.orientation.FactoryOrientation;
 import boofcv.struct.feature.SurfFeature;
 import boofcv.struct.feature.TupleDesc_B;
 import boofcv.struct.image.ImageSingleBand;
@@ -66,49 +68,71 @@ public class FactoryEvaluationTrackers<T extends ImageSingleBand> {
 	}
 
 	public EvaluationTracker<T> createFhSurf(boolean copyDescription) {
-		InterestPointDetector<T> detector = createDetector(false);
-		DescribeRegionPoint<T,SurfFeature> describe = FactoryDescribeRegionPoint.surfm(true, imageType);
+		InterestPointDetector<T> detector = createDetector();
+		DescribeRegionPoint<T,SurfFeature> describe = FactoryDescribeRegionPoint.surf(true, imageType);
 
 		ScoreAssociation<SurfFeature> scorer = FactoryAssociation.scoreEuclidean(describe.getDescriptorType(),true);
 		GeneralAssociation<SurfFeature> associate = FactoryAssociation.greedy(scorer, Double.MAX_VALUE, 0, true);
+		OrientationImage<T> orientation = createOrientation();
 
-		return new WrapGenericDetectTracker<T,SurfFeature>(detector,describe,associate,copyDescription);
+		DetectDescribeFusion<T,SurfFeature> fused =
+				new DetectDescribeFusion<T, SurfFeature>(detector,orientation,describe);
+
+		return new WrapGenericDetectTracker<T,SurfFeature>(fused,associate,copyDescription);
 	}
 
 	public EvaluationTracker<T> createBrief( boolean copyDescription , boolean useFast ) {
 		InterestPointDetector<T> detector;
+		OrientationImage<T> orientation;
 		if( useFast ) {
 			Class derivType = GImageDerivativeOps.getDerivativeType(imageType);
 			GeneralFeatureDetector det = FactoryDetectPoint.createFast(10, 6, 9,600, imageType);
 			detector = FactoryInterestPoint.wrapPoint(det,imageType,derivType);
+			orientation = null;
 		} else {
-			detector = createDetector(true);
+			detector = createDetector();
+			orientation = createOrientation();
 		}
 
 		DescribeRegionPoint<T,TupleDesc_B> describe = FactoryDescribeRegionPoint.brief(16,512,-1,4,useFast,imageType);
 		ScoreAssociation<TupleDesc_B> scorer = FactoryAssociation.scoreHamming(describe.getDescriptorType());
 		GeneralAssociation<TupleDesc_B> associate = FactoryAssociation.greedy(scorer,Double.MAX_VALUE,0,true);
 
-		return new WrapGenericDetectTracker<T,TupleDesc_B>(detector,describe,associate,copyDescription);
+		DetectDescribeFusion<T,TupleDesc_B> fused =
+				new DetectDescribeFusion<T, TupleDesc_B>(detector,orientation,describe);
+
+		return new WrapGenericDetectTracker<T,TupleDesc_B>(fused,associate,copyDescription);
 	}
 
 	public EvaluationTracker<T> createFhSurfKlt() {
-		InterestPointDetector<T> detector = createDetector(false);
+		InterestPointDetector<T> detector = createDetector();
 
-		DescribeRegionPoint<T,SurfFeature> describe = FactoryDescribeRegionPoint.surfm(true,imageType);
+		DescribeRegionPoint<T,SurfFeature> describe = FactoryDescribeRegionPoint.surf(true, imageType);
 		ScoreAssociation<SurfFeature> scorer = FactoryAssociation.scoreEuclidean(describe.getDescriptorType(),true);
 		GeneralAssociation<SurfFeature> associate = FactoryAssociation.greedy(scorer,Double.MAX_VALUE,0,true);
 
+		OrientationImage<T> orientation = createOrientation();
+
+		DetectDescribeFusion<T,SurfFeature> fused =
+				new DetectDescribeFusion<T, SurfFeature>(detector,orientation,describe);
+
 		PyramidKltForCombined<T, T> klt = defaultFusedKlt();
 
-		CombinedTrackerScalePoint<T, T,SurfFeature> tracker = new CombinedTrackerScalePoint<T, T,SurfFeature>(klt,
-				detector,describe,associate);
+		CombinedTrackerScalePoint<T, T,SurfFeature> tracker =
+				new CombinedTrackerScalePoint<T, T,SurfFeature>(klt, fused,associate);
 
 		return new WrapFusedTracker<T,T,SurfFeature>(tracker,false,imageType);
 	}
-//
-	public EvaluationTracker<T> createFhBriefKlt(boolean isFixed) {
-		InterestPointDetector<T> detector = createDetector(!isFixed);
+
+	private OrientationImage<T> createOrientation() {
+		Class integralType = GIntegralImageOps.getIntegralType(imageType);
+		OrientationIntegral orientationII = FactoryOrientation.surfDefault(true, integralType);
+		return FactoryOrientation.convertImage(orientationII,imageType);
+	}
+
+	//
+	public EvaluationTracker<T> createFhBriefKlt( boolean isFixed ) {
+		InterestPointDetector<T> detector = createDetector();
 
 		DescribeRegionPoint<T,TupleDesc_B> describe = FactoryDescribeRegionPoint.brief(16,512,-1,4,isFixed,imageType);
 		ScoreAssociation<TupleDesc_B> scorer = FactoryAssociation.scoreHamming(describe.getDescriptorType());
@@ -116,21 +140,28 @@ public class FactoryEvaluationTrackers<T extends ImageSingleBand> {
 
 		PyramidKltForCombined<T, T> klt = defaultFusedKlt();
 
-		CombinedTrackerScalePoint<T, T,TupleDesc_B> tracker = new CombinedTrackerScalePoint<T, T,TupleDesc_B>(klt,
-				detector,describe,associate);
+		OrientationImage<T> orientation = null;
+		if( !isFixed ) {
+			orientation = createOrientation();
+		}
+
+		DetectDescribeFusion<T,TupleDesc_B> fused =
+				new DetectDescribeFusion<T, TupleDesc_B>(detector,orientation,describe);
+
+		CombinedTrackerScalePoint<T, T,TupleDesc_B> tracker = new CombinedTrackerScalePoint<T, T,TupleDesc_B>(klt,fused,associate);
 
 		return new WrapFusedTracker<T,T,TupleDesc_B>(tracker,false,imageType);
 	}
 
 	public EvaluationTracker<T> createKlt() {
-		InterestPointDetector<T> detector = createDetector(false);
+		InterestPointDetector<T> detector = createDetector();
 
 		PyramidKltForCombined<T, T> klt = defaultFusedKlt();
 
 		return new WrapFusedKltTracker<T,T>(detector,klt,imageType);
 	}
 
-	private InterestPointDetector<T> createDetector( boolean estimateOrientation) {
+	private InterestPointDetector<T> createDetector() {
 		float detectThreshold = 1;
 		int extractRadius = 2;
 		int maxFeaturesPerScale = 200;
@@ -142,12 +173,8 @@ public class FactoryEvaluationTrackers<T extends ImageSingleBand> {
 		FeatureExtractor extractor = FactoryFeatureExtractor.nonmax(extractRadius, detectThreshold, 5, true);
 		FastHessianFeatureDetector<T> feature = new FastHessianFeatureDetector<T>(extractor,maxFeaturesPerScale,
 				initialSampleSize, initialSize,numberScalesPerOctave,numberOfOctaves);
-		Class integralType = GIntegralImageOps.getIntegralType(imageType);
 
-		OrientationIntegral angleII = estimateOrientation ?
-				FactoryOrientationAlgs.sliding_ii(0.65, Math.PI/3.0,8,-1, 6, integralType) : null;
-
-		return new WrapFHtoInterestPoint(feature,angleII);
+		return new WrapFHtoInterestPoint(feature);
 	}
 
 	private PyramidKltForCombined<T, T> defaultFusedKlt() {

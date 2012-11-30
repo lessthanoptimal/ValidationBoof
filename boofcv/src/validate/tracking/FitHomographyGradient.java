@@ -3,8 +3,8 @@ package validate.tracking;
 import boofcv.alg.interpolate.InterpolatePixel;
 import boofcv.core.image.FactoryGImageSingleBand;
 import boofcv.core.image.GImageSingleBand;
-import boofcv.numerics.optimization.functions.FunctionNtoN;
 import boofcv.struct.image.ImageSingleBand;
+import org.ddogleg.optimization.functions.FunctionNtoN;
 
 /**
  * Computes the gradient of {@link FitHomographyFunction}.

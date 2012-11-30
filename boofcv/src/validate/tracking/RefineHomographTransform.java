@@ -5,13 +5,13 @@ import boofcv.alg.interpolate.InterpolatePixel;
 import boofcv.core.image.border.BorderType;
 import boofcv.factory.interpolate.FactoryInterpolation;
 import boofcv.factory.transform.pyramid.FactoryPyramid;
-import boofcv.numerics.optimization.FactoryOptimization;
-import boofcv.numerics.optimization.UnconstrainedMinimization;
-import boofcv.numerics.optimization.impl.UtilOptimize;
 import boofcv.struct.image.ImageSingleBand;
 import boofcv.struct.pyramid.PyramidDiscrete;
 import boofcv.struct.pyramid.PyramidUpdaterDiscrete;
 import georegression.struct.homo.Homography2D_F64;
+import org.ddogleg.optimization.FactoryOptimization;
+import org.ddogleg.optimization.UnconstrainedMinimization;
+import org.ddogleg.optimization.UtilOptimize;
 
 /**
  *
@@ -105,7 +105,7 @@ public class RefineHomographTransform<I extends ImageSingleBand, D extends Image
 		minimizer.initialize(param,1e-20,1e-20);
 
 //		System.out.println("initial error "+minimizer.getFunctionValue());
-		UtilOptimize.process(minimizer,1000);
+		UtilOptimize.process(minimizer, 1000);
 //		System.out.println("after error "+minimizer.getFunctionValue());
 
 		Homography2D_F64 result = new Homography2D_F64();

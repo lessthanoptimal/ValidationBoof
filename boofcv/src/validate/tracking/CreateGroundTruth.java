@@ -16,8 +16,6 @@ import boofcv.io.image.SimpleImageSequence;
 import boofcv.io.image.UtilImageIO;
 import boofcv.io.wrapper.DefaultMediaManager;
 import boofcv.misc.BoofMiscOps;
-import boofcv.numerics.fitting.modelset.ModelMatcher;
-import boofcv.numerics.fitting.modelset.ransac.Ransac;
 import boofcv.struct.calib.IntrinsicParameters;
 import boofcv.struct.distort.PointTransform_F32;
 import boofcv.struct.geo.AssociatedPair;
@@ -25,6 +23,8 @@ import boofcv.struct.image.ImageFloat32;
 import georegression.struct.homo.Homography2D_F64;
 import georegression.struct.homo.UtilHomography;
 import georegression.struct.point.Point2D_F64;
+import org.ddogleg.fitting.modelset.ModelMatcher;
+import org.ddogleg.fitting.modelset.ransac.Ransac;
 import org.ejml.data.DenseMatrix64F;
 
 import java.awt.image.BufferedImage;

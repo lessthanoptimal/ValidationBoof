@@ -1,12 +1,12 @@
 package validate.vo;
 
 import boofcv.abst.feature.disparity.StereoDisparity;
-import boofcv.abst.sfm.StereoVisualOdometry;
 import boofcv.alg.distort.ImageDistort;
 import boofcv.alg.filter.derivative.GImageDerivativeOps;
 import boofcv.alg.geo.PerspectiveOps;
 import boofcv.alg.geo.RectifyImageOps;
 import boofcv.alg.geo.rectify.RectifyCalibrated;
+import boofcv.alg.misc.GImageMiscOps;
 import boofcv.alg.misc.GPixelMath;
 import boofcv.core.image.ConvertBufferedImage;
 import boofcv.core.image.GeneralizedImageOps;
@@ -19,7 +19,6 @@ import boofcv.gui.stereo.RectifiedPairPanel;
 import boofcv.struct.calib.StereoParameters;
 import boofcv.struct.image.ImageFloat32;
 import boofcv.struct.image.ImageSingleBand;
-import boofcv.struct.image.ImageUInt8;
 import georegression.struct.se.Se3_F64;
 import org.ejml.data.DenseMatrix64F;
 
@@ -115,8 +114,8 @@ public class DebugDenseStereoVideo<T extends ImageSingleBand> implements MouseLi
 		GImageDerivativeOps.laplace(inputRight,filteredRight);
 		GPixelMath.abs(filteredLeft, filteredLeft);
 		GPixelMath.abs(filteredRight,filteredRight);
-		GPixelMath.divide(filteredLeft,filteredLeft,4);
-		GPixelMath.divide(filteredRight,filteredRight,4);
+		GPixelMath.divide(filteredLeft,4,filteredLeft);
+		GPixelMath.divide(filteredRight,4,filteredRight);
 
 		StereoParameters param = data.getCalibration();
 
@@ -149,8 +148,8 @@ public class DebugDenseStereoVideo<T extends ImageSingleBand> implements MouseLi
 		filteredLeft.setTo(inputLeft);
 		filteredRight.setTo(inputRight);
 
-		GeneralizedImageOps.fill(inputLeft,0);
-		GeneralizedImageOps.fill(inputRight,0);
+		GImageMiscOps.fill(inputLeft, 0);
+		GImageMiscOps.fill(inputRight,0);
 
 		imageDistortLeft.apply(filteredLeft, inputLeft);
 		imageDistortRight.apply(filteredRight, inputRight);
@@ -199,7 +198,7 @@ public class DebugDenseStereoVideo<T extends ImageSingleBand> implements MouseLi
 	public void mouseExited(MouseEvent e) {}
 
 	public static void main( String args[] ) {
-		ParseLeuven07 data = new ParseLeuven07("../visual_odometry/leuven07");
+		ParseLeuven07 data = new ParseLeuven07("../data/leuven07");
 
 		Class imageType = ImageFloat32.class;
 

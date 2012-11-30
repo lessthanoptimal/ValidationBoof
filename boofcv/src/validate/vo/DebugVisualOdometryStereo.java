@@ -340,12 +340,12 @@ public class DebugVisualOdometryStereo<T extends ImageSingleBand> implements Mou
 //				FactoryPointSequentialTracker.dda_ShiTomasi_BRIEF(500,200,1,1,imageType,null);
 //		ImagePointTracker<ImageFloat32> tracker =
 //				FactoryPointSequentialTracker.dda_FH_SURF(500,2,200,1,true,imageType);
+//		ImagePointTracker<ImageFloat32> tracker =
+//				FactoryPointSequentialTracker.klt(500, new int[]{1, 2, 4, 8}, 3, 3, 2, imageType, ImageFloat32.class);
+//		ImagePointTracker<ImageFloat32> tracker =
+//				FactoryPointSequentialTracker.combined_FH_SURF_KLT(500, 200,1,1,3,new int[]{1, 2, 4, 8}, 1000, false,imageType);
 		ImagePointTracker<ImageFloat32> tracker =
-				FactoryPointSequentialTracker.klt(400, new int[]{1, 2, 4, 8}, 3, 3, 2, imageType, ImageFloat32.class);
-//		ImagePointTracker<ImageFloat32> tracker =
-//				FactoryPointSequentialTracker.combined_FH_SURF_KLT(400, 200,1,1,3,new int[]{1, 2, 4, 8}, 1000, false,imageType);
-//		ImagePointTracker<ImageFloat32> tracker =
-//				FactoryPointSequentialTracker.combined_ST_SURF_KLT(400,3,1,3,new int[]{1, 2, 4, 8}, 60, true,imageType,null);
+				FactoryPointSequentialTracker.combined_ST_SURF_KLT(500,3,1,3,new int[]{1, 2, 4, 8}, 60, false,imageType,null);
 
 		StereoDisparitySparse<ImageFloat32> disparity =
 				FactoryStereoDisparity.regionSparseWta(10, 120, 2, 2, 30, 0.1, true, imageType);

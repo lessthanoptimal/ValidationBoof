@@ -3,8 +3,8 @@ package validate.tracking;
 import boofcv.alg.interpolate.InterpolatePixel;
 import boofcv.core.image.FactoryGImageSingleBand;
 import boofcv.core.image.GImageSingleBand;
-import boofcv.numerics.optimization.functions.FunctionNtoS;
 import boofcv.struct.image.ImageSingleBand;
+import org.ddogleg.optimization.functions.FunctionNtoS;
 
 /**
  * Computes the average difference in intensity values inside of overlapping regions between two

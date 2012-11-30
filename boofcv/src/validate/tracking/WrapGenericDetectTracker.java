@@ -1,12 +1,10 @@
 package validate.tracking;
 
 import boofcv.abst.feature.associate.GeneralAssociation;
-import boofcv.abst.feature.describe.DescribeRegionPoint;
-import boofcv.abst.feature.detect.interest.InterestPointDetector;
+import boofcv.abst.feature.detdesc.DetectDescribePoint;
 import boofcv.struct.FastQueue;
 import boofcv.struct.feature.AssociatedIndex;
 import boofcv.struct.feature.TupleDesc;
-import boofcv.struct.feature.TupleDescQueue;
 import boofcv.struct.image.ImageSingleBand;
 import georegression.struct.point.Point2D_F64;
 
@@ -23,8 +21,8 @@ public class WrapGenericDetectTracker<I extends ImageSingleBand, TD extends Tupl
 
 
 	// todo comment more
-	InterestPointDetector<I> detector;
-	DescribeRegionPoint<I, TD> describe;
+	DetectDescribePoint<I,TD> detector;
+
 	GeneralAssociation<TD> associate;
 
 	List<Info> tracks = new ArrayList<Info>();
@@ -38,25 +36,19 @@ public class WrapGenericDetectTracker<I extends ImageSingleBand, TD extends Tupl
 	boolean hasKeyFrame = false;
 	boolean copyDescription;
 
-	public WrapGenericDetectTracker(InterestPointDetector<I> detector,
-									DescribeRegionPoint<I, TD> describe,
+	public WrapGenericDetectTracker(DetectDescribePoint<I,TD> detector,
 									GeneralAssociation<TD> associate,
 									boolean copyDescription ) {
 		this.detector = detector;
-		this.describe = describe;
 		this.associate = associate;
 		this.copyDescription =copyDescription;
 
-		if( describe.requiresOrientation() && !detector.hasOrientation() )
-			throw new RuntimeException("Orientation not provided by detector");
-
-		descKey = new TupleDescQueue<TD>(describe,false);
-		descCurr = new TupleDescQueue<TD>(describe,true);
+		descKey = new FastQueue<TD>(10,detector.getDescriptorType(),false);
+		descCurr = new FastQueue<TD>(10,detector.getDescriptorType(),false);
 	}
 
 	@Override
 	public void track(I image) {
-		describe.setImage(image);
 		detector.detect(image);
 
 		pointCurr.reset();
@@ -65,14 +57,8 @@ public class WrapGenericDetectTracker<I extends ImageSingleBand, TD extends Tupl
 		tracksMatched.clear();
 
 		for( int i = 0; i < detector.getNumberOfFeatures(); i++ ) {
-			Point2D_F64 p = detector.getLocation(i);
-			double scale = detector.getScale(i);
-			double yaw = detector.getOrientation(i);
-
-			if( describe.isInBounds(p.x,p.y,yaw,scale)) {
-				pointCurr.add(p);
-				describe.process(p.x,p.y,yaw,scale,descCurr.grow());
-			}
+			descCurr.add(detector.getDescriptor(i));
+			pointCurr.add(detector.getLocation(i));
 		}
 
 		if( hasKeyFrame ) {
