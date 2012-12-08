@@ -2,8 +2,6 @@ package validate.vo;
 
 import boofcv.io.image.UtilImageIO;
 import georegression.geometry.GeometryMath_F64;
-import georegression.geometry.UtilPoint2D_F64;
-import georegression.geometry.UtilPoint3D_F64;
 import georegression.struct.se.Se3_F64;
 import org.ejml.data.DenseMatrix64F;
 
@@ -119,7 +117,7 @@ public class ParseLeuven07 {
 		}
 	}
 
-	private double[] readNumbers( BufferedReader reader ) throws IOException {
+	public static double[] readNumbers( BufferedReader reader ) throws IOException {
 		String line = reader.readLine();
 
 		String words[] = line.split("\\s") ;

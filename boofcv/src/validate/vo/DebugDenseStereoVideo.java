@@ -2,12 +2,10 @@ package validate.vo;
 
 import boofcv.abst.feature.disparity.StereoDisparity;
 import boofcv.alg.distort.ImageDistort;
-import boofcv.alg.filter.derivative.GImageDerivativeOps;
 import boofcv.alg.geo.PerspectiveOps;
 import boofcv.alg.geo.RectifyImageOps;
 import boofcv.alg.geo.rectify.RectifyCalibrated;
 import boofcv.alg.misc.GImageMiscOps;
-import boofcv.alg.misc.GPixelMath;
 import boofcv.core.image.ConvertBufferedImage;
 import boofcv.core.image.GeneralizedImageOps;
 import boofcv.factory.feature.disparity.DisparityAlgorithms;
@@ -40,8 +38,8 @@ public class DebugDenseStereoVideo<T extends ImageSingleBand> implements MouseLi
 	T inputLeft;
 	T inputRight;
 
-	T filteredLeft;
-	T filteredRight;
+	T rectifiedLeft;
+	T rectifiedRight;
 
 	boolean paused;
 
@@ -59,8 +57,8 @@ public class DebugDenseStereoVideo<T extends ImageSingleBand> implements MouseLi
 		inputLeft = GeneralizedImageOps.createSingleBand(imageType, 1, 1);
 		inputRight = GeneralizedImageOps.createSingleBand(imageType,1,1);
 
-		filteredLeft = GeneralizedImageOps.createSingleBand(imageType,1,1);
-		filteredRight = GeneralizedImageOps.createSingleBand(imageType,1,1);
+		rectifiedLeft = GeneralizedImageOps.createSingleBand(imageType,1,1);
+		rectifiedRight = GeneralizedImageOps.createSingleBand(imageType,1,1);
 	}
 
 	public void processSequence() {
@@ -76,8 +74,8 @@ public class DebugDenseStereoVideo<T extends ImageSingleBand> implements MouseLi
 
 		inputLeft.reshape(data.getLeft().getWidth(),data.getLeft().getHeight());
 		inputRight.reshape(data.getRight().getWidth(),data.getRight().getHeight());
-		filteredLeft.reshape(data.getLeft().getWidth(),data.getLeft().getHeight());
-		filteredRight.reshape(data.getRight().getWidth(),data.getRight().getHeight());
+		rectifiedLeft.reshape(data.getLeft().getWidth(), data.getLeft().getHeight());
+		rectifiedRight.reshape(data.getRight().getWidth(), data.getRight().getHeight());
 
 		ShowImages.showWindow(imageLeft, "Left");
 		ShowImages.showWindow(imageRight,"Right");
@@ -109,14 +107,6 @@ public class DebugDenseStereoVideo<T extends ImageSingleBand> implements MouseLi
 		ConvertBufferedImage.convertFrom(data.getLeft(), inputLeft);
 		ConvertBufferedImage.convertFrom(data.getRight(), inputRight);
 
-		// add invariance to lighting conditions
-		GImageDerivativeOps.laplace(inputLeft, filteredLeft);
-		GImageDerivativeOps.laplace(inputRight,filteredRight);
-		GPixelMath.abs(filteredLeft, filteredLeft);
-		GPixelMath.abs(filteredRight,filteredRight);
-		GPixelMath.divide(filteredLeft,4,filteredLeft);
-		GPixelMath.divide(filteredRight,4,filteredRight);
-
 		StereoParameters param = data.getCalibration();
 
 		// Compute rectification
@@ -144,17 +134,15 @@ public class DebugDenseStereoVideo<T extends ImageSingleBand> implements MouseLi
 		ImageDistort<T> imageDistortRight =
 				RectifyImageOps.rectifyImage(param.getRight(), rect2, imageType);
 
-		// todo hack
-		filteredLeft.setTo(inputLeft);
-		filteredRight.setTo(inputRight);
+		GImageMiscOps.fill(rectifiedLeft, 0);
+		GImageMiscOps.fill(rectifiedRight,0);
 
-		GImageMiscOps.fill(inputLeft, 0);
-		GImageMiscOps.fill(inputRight,0);
+		imageDistortLeft.apply(inputLeft, rectifiedLeft);
+		imageDistortRight.apply(inputRight, rectifiedRight);
 
-		imageDistortLeft.apply(filteredLeft, inputLeft);
-		imageDistortRight.apply(filteredRight, inputRight);
+		alg.process(rectifiedLeft,rectifiedRight);
+//		alg.process(inputLeft,inputRight);
 
-		alg.process(inputLeft,inputRight);
 
 		ImageFloat32 disparity = alg.getDisparity();
 
@@ -198,14 +186,15 @@ public class DebugDenseStereoVideo<T extends ImageSingleBand> implements MouseLi
 	public void mouseExited(MouseEvent e) {}
 
 	public static void main( String args[] ) {
-		ParseLeuven07 data = new ParseLeuven07("../data/leuven07");
+//		SequenceStereoImages data = new WrapParseLeuven07(new ParseLeuven07("../data/leuven07"));
+		SequenceStereoImages data = new WrapParseKITTI("/home/pja/Desktop/visual_odometry_testing/dataset","00");
 
 		Class imageType = ImageFloat32.class;
 
 		StereoDisparity alg = FactoryStereoDisparity.regionSubpixelWta(DisparityAlgorithms.RECT,
 				10, 120, 2, 2, 30, 0, 0.1, imageType);
 
-		DebugDenseStereoVideo app = new DebugDenseStereoVideo(alg,new WrapParseLeuven07(data));
+		DebugDenseStereoVideo app = new DebugDenseStereoVideo(alg,data);
 		app.processSequence();
 	}
 }
