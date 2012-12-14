@@ -1,14 +1,25 @@
 package validate.vo;
 
+import boofcv.abst.feature.describe.WrapDescribeBrief;
+import boofcv.abst.feature.detdesc.DetectDescribePoint;
+import boofcv.abst.feature.detect.interest.GeneralFeatureDetector;
+import boofcv.abst.feature.detect.interest.InterestPointDetector;
 import boofcv.abst.feature.disparity.StereoDisparitySparse;
 import boofcv.abst.feature.tracker.ImagePointTracker;
 import boofcv.abst.sfm.AccessPointTracks3D;
 import boofcv.abst.sfm.StereoVisualOdometry;
+import boofcv.alg.feature.describe.DescribePointBrief;
+import boofcv.alg.feature.describe.brief.FactoryBriefDefinition;
+import boofcv.alg.filter.derivative.GImageDerivativeOps;
 import boofcv.alg.geo.PerspectiveOps;
 import boofcv.core.image.ConvertBufferedImage;
 import boofcv.core.image.GeneralizedImageOps;
+import boofcv.factory.feature.describe.FactoryDescribePointAlgs;
+import boofcv.factory.feature.detdesc.FactoryDetectDescribe;
+import boofcv.factory.feature.detect.interest.FactoryInterestPoint;
 import boofcv.factory.feature.disparity.FactoryStereoDisparity;
 import boofcv.factory.feature.tracker.FactoryPointSequentialTracker;
+import boofcv.factory.filter.blur.FactoryBlurFilter;
 import boofcv.factory.sfm.FactoryVisualOdometry;
 import boofcv.gui.d3.Polygon3DSequenceViewer;
 import boofcv.gui.feature.VisualizeFeatures;
@@ -32,6 +43,7 @@ import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 /**
  * @author Peter Abeles
@@ -403,26 +415,40 @@ public class DebugVisualOdometryStereo<T extends ImageSingleBand> implements Mou
 
 		Class imageType = ImageFloat32.class;
 
+		StereoDisparitySparse<ImageFloat32> disparity =
+				FactoryStereoDisparity.regionSparseWta(10, 120, 2, 2, 30, 0.1, true, imageType);
+		StereoVisualOdometry alg;
+
+		if( false ) {
 //		ImagePointTracker<ImageFloat32> tracker =
 //				FactoryPointSequentialTracker.dda_FAST_BRIEF(-1,200,5,9,10,imageType);
 //		ImagePointTracker<ImageFloat32> tracker =
 //				FactoryPointSequentialTracker.dda_ST_BRIEF(-1,200,5,500,imageType,null);
 //		ImagePointTracker<ImageFloat32> tracker =
 //				FactoryPointSequentialTracker.dda_FH_SURF(500,2,200,1,true,imageType);
-		ImagePointTracker<ImageFloat32> tracker =
-				FactoryPointSequentialTracker.klt(-1,500, new int[]{1, 2, 4, 8}, 1, 5, 1, 1, imageType, ImageFloat32.class);
+			ImagePointTracker<ImageFloat32> tracker =
+					FactoryPointSequentialTracker.klt(-1,500, new int[]{1, 2, 4, 8}, 1, 5, 1, 1, imageType, ImageFloat32.class);
 //		ImagePointTracker<ImageFloat32> tracker =
 //				FactoryPointSequentialTracker.combined_FH_SURF_KLT(500, 200,3,1,3,new int[]{1, 2, 4, 8}, 100, false,imageType);
 //		ImagePointTracker<ImageFloat32> tracker =
 //				FactoryPointSequentialTracker.combined_ST_SURF_KLT(-1,3,500,3,new int[]{1, 2, 4, 8}, 80, true,imageType,null);
 
-		StereoDisparitySparse<ImageFloat32> disparity =
-				FactoryStereoDisparity.regionSparseWta(10, 120, 2, 2, 30, 0.1, true, imageType);
+			alg = FactoryVisualOdometry.stereoDepth(120,2,1.5,tracker,disparity,400,100,imageType);
+		} else {
+			Class derivType = GImageDerivativeOps.getDerivativeType(imageType);
+			DescribePointBrief brief = FactoryDescribePointAlgs.brief(FactoryBriefDefinition.gaussian2(new Random(123), 16, 512),
+					FactoryBlurFilter.gaussian(imageType, 0, 4));
 
-		StereoVisualOdometry alg = FactoryVisualOdometry.stereoDepth(120,2,1.5,tracker,disparity,10000,100,imageType);
+			GeneralFeatureDetector corner = FactoryPointSequentialTracker.createShiTomasi(
+					600, 2, 0, derivType);
+
+			InterestPointDetector detector = FactoryInterestPoint.wrapPoint(corner, 1, imageType, derivType);
+
+			DetectDescribePoint detDesc = FactoryDetectDescribe.fuseTogether(detector, null, new WrapDescribeBrief(brief));
+			alg = FactoryVisualOdometry.stereoDepth(120,2,1.5, detDesc, disparity, 400,100,150,20.0, imageType);
+		}
 
 		DebugVisualOdometryStereo app = new DebugVisualOdometryStereo(data,alg,imageType);
-
 		app.initialize();
 
 		app.processSequence();
