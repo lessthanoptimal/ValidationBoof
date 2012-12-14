@@ -64,34 +64,37 @@ public class OutputForKITTI {
 	}
 
 	public static void main( String args[] ) throws FileNotFoundException {
-		SequenceStereoImages data = new WrapParseKITTI("../data/KITTI","00");
 
 		Class imageType = ImageFloat32.class;
 
-//		ImagePointTracker<ImageFloat32> tracker =
-//				FactoryPointSequentialTracker.dda_FAST_BRIEF(500, 200, 3, 9, 20, imageType);
+		for( int dataSet = 0; dataSet < 11; dataSet++ ) {
+		ImagePointTracker<ImageFloat32> tracker =
+				FactoryPointSequentialTracker.dda_FAST_BRIEF(500, 200, 3, 9, 20, imageType);
 //		ImagePointTracker<ImageFloat32> tracker =
 //				FactoryPointSequentialTracker.dda_ShiTomasi_BRIEF(500,200,1,1,imageType,null);
 //		ImagePointTracker<ImageFloat32> tracker =
 //				FactoryPointSequentialTracker.dda_FH_SURF(500,2,200,1,true,imageType);
-		ImagePointTracker<ImageFloat32> tracker =
-				FactoryPointSequentialTracker.klt(2000, new int[]{1, 2, 4, 8}, 3, 3, 2, imageType, ImageFloat32.class);
+//			ImagePointTracker<ImageFloat32> tracker =
+//					FactoryPointSequentialTracker.klt(2000, 500,new int[]{1, 2, 4, 8}, 3, 3, 3, 2, imageType, ImageFloat32.class);
 //		ImagePointTracker<ImageFloat32> tracker =
 //				FactoryPointSequentialTracker.combined_FH_SURF_KLT(500, 200,1,1,3,new int[]{1, 2, 4, 8}, 1000, false,imageType);
-//		ImagePointTracker<ImageFloat32> tracker =
-//				FactoryPointSequentialTracker.combined_ST_SURF_KLT(500,3,1,3,new int[]{1, 2, 4, 8}, 60, false,imageType,null);
+//			ImagePointTracker<ImageFloat32> tracker =
+//					FactoryPointSequentialTracker.combined_ST_SURF_KLT(-1,3,500,3,new int[]{1, 2, 4, 8}, 80, true,imageType,null);
 
-		// TODO add stereo NCC error to handle
-		StereoDisparitySparse<ImageFloat32> disparity =
-				FactoryStereoDisparity.regionSparseWta(10, 120, 2, 2, 30, 0.1, true, imageType);
+			// TODO add stereo NCC error to handle
+			StereoDisparitySparse<ImageFloat32> disparity =
+					FactoryStereoDisparity.regionSparseWta(10, 120, 2, 2, 30, 0.1, true, imageType);
 
-		StereoVisualOdometry alg = FactoryVisualOdometry.stereoDepth(120, 2, 1.5, tracker, disparity, 100, imageType);
+			StereoVisualOdometry alg = FactoryVisualOdometry.stereoDepth(120,2,1.5,tracker,disparity,1000,100,imageType);
 
+			String dataID = String.format("%02d",dataSet);
 
-		PrintStream output = new PrintStream(new FileOutputStream("results00.txt"));
+			SequenceStereoImages data = new WrapParseKITTI("../data/KITTI",dataID);
+			PrintStream output = new PrintStream(new FileOutputStream(dataID+".txt"));
 
-		computeOdometry(data,alg,imageType,output);
+			computeOdometry(data,alg,imageType,output);
 
-		output.close();
+			output.close();
+		}
 	}
 }

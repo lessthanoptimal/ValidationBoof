@@ -1,6 +1,6 @@
 package validate.tracking;
 
-import boofcv.abst.feature.associate.GeneralAssociation;
+import boofcv.abst.feature.associate.AssociateDescription;
 import boofcv.abst.feature.associate.ScoreAssociation;
 import boofcv.abst.feature.describe.DescribeRegionPoint;
 import boofcv.abst.feature.detdesc.DetectDescribeFusion;
@@ -72,7 +72,7 @@ public class FactoryEvaluationTrackers<T extends ImageSingleBand> {
 		DescribeRegionPoint<T,SurfFeature> describe = FactoryDescribeRegionPoint.surf(true, imageType);
 
 		ScoreAssociation<SurfFeature> scorer = FactoryAssociation.scoreEuclidean(describe.getDescriptorType(),true);
-		GeneralAssociation<SurfFeature> associate = FactoryAssociation.greedy(scorer, Double.MAX_VALUE, 0, true);
+		AssociateDescription<SurfFeature> associate = FactoryAssociation.greedy(scorer, Double.MAX_VALUE, 0, true);
 		OrientationImage<T> orientation = createOrientation();
 
 		DetectDescribeFusion<T,SurfFeature> fused =
@@ -87,7 +87,7 @@ public class FactoryEvaluationTrackers<T extends ImageSingleBand> {
 		if( useFast ) {
 			Class derivType = GImageDerivativeOps.getDerivativeType(imageType);
 			GeneralFeatureDetector det = FactoryDetectPoint.createFast(10, 6, 9,600, imageType);
-			detector = FactoryInterestPoint.wrapPoint(det,imageType,derivType);
+			detector = FactoryInterestPoint.wrapPoint(det,1,imageType,derivType);
 			orientation = null;
 		} else {
 			detector = createDetector();
@@ -96,7 +96,7 @@ public class FactoryEvaluationTrackers<T extends ImageSingleBand> {
 
 		DescribeRegionPoint<T,TupleDesc_B> describe = FactoryDescribeRegionPoint.brief(16,512,-1,4,useFast,imageType);
 		ScoreAssociation<TupleDesc_B> scorer = FactoryAssociation.scoreHamming(describe.getDescriptorType());
-		GeneralAssociation<TupleDesc_B> associate = FactoryAssociation.greedy(scorer,Double.MAX_VALUE,0,true);
+		AssociateDescription<TupleDesc_B> associate = FactoryAssociation.greedy(scorer,Double.MAX_VALUE,0,true);
 
 		DetectDescribeFusion<T,TupleDesc_B> fused =
 				new DetectDescribeFusion<T, TupleDesc_B>(detector,orientation,describe);
@@ -109,7 +109,7 @@ public class FactoryEvaluationTrackers<T extends ImageSingleBand> {
 
 		DescribeRegionPoint<T,SurfFeature> describe = FactoryDescribeRegionPoint.surf(true, imageType);
 		ScoreAssociation<SurfFeature> scorer = FactoryAssociation.scoreEuclidean(describe.getDescriptorType(),true);
-		GeneralAssociation<SurfFeature> associate = FactoryAssociation.greedy(scorer,Double.MAX_VALUE,0,true);
+		AssociateDescription<SurfFeature> associate = FactoryAssociation.greedy(scorer,Double.MAX_VALUE,0,true);
 
 		OrientationImage<T> orientation = createOrientation();
 
@@ -136,7 +136,7 @@ public class FactoryEvaluationTrackers<T extends ImageSingleBand> {
 
 		DescribeRegionPoint<T,TupleDesc_B> describe = FactoryDescribeRegionPoint.brief(16,512,-1,4,isFixed,imageType);
 		ScoreAssociation<TupleDesc_B> scorer = FactoryAssociation.scoreHamming(describe.getDescriptorType());
-		GeneralAssociation<TupleDesc_B> associate = FactoryAssociation.greedy(scorer,Double.MAX_VALUE,0,true);
+		AssociateDescription<TupleDesc_B> associate = FactoryAssociation.greedy(scorer,Double.MAX_VALUE,0,true);
 
 		PyramidKltForCombined<T, T> klt = defaultFusedKlt();
 

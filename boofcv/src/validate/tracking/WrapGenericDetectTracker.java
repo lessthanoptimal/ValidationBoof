@@ -1,6 +1,6 @@
 package validate.tracking;
 
-import boofcv.abst.feature.associate.GeneralAssociation;
+import boofcv.abst.feature.associate.AssociateDescription;
 import boofcv.abst.feature.detdesc.DetectDescribePoint;
 import boofcv.struct.FastQueue;
 import boofcv.struct.feature.AssociatedIndex;
@@ -23,7 +23,7 @@ public class WrapGenericDetectTracker<I extends ImageSingleBand, TD extends Tupl
 	// todo comment more
 	DetectDescribePoint<I,TD> detector;
 
-	GeneralAssociation<TD> associate;
+	AssociateDescription<TD> associate;
 
 	List<Info> tracks = new ArrayList<Info>();
 	// tracks that where associated in the most recent image
@@ -37,7 +37,7 @@ public class WrapGenericDetectTracker<I extends ImageSingleBand, TD extends Tupl
 	boolean copyDescription;
 
 	public WrapGenericDetectTracker(DetectDescribePoint<I,TD> detector,
-									GeneralAssociation<TD> associate,
+									AssociateDescription<TD> associate,
 									boolean copyDescription ) {
 		this.detector = detector;
 		this.associate = associate;

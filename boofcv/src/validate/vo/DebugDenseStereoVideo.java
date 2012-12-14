@@ -141,7 +141,6 @@ public class DebugDenseStereoVideo<T extends ImageSingleBand> implements MouseLi
 		imageDistortRight.apply(inputRight, rectifiedRight);
 
 		alg.process(rectifiedLeft,rectifiedRight);
-//		alg.process(inputLeft,inputRight);
 
 
 		ImageFloat32 disparity = alg.getDisparity();
@@ -187,7 +186,7 @@ public class DebugDenseStereoVideo<T extends ImageSingleBand> implements MouseLi
 
 	public static void main( String args[] ) {
 //		SequenceStereoImages data = new WrapParseLeuven07(new ParseLeuven07("../data/leuven07"));
-		SequenceStereoImages data = new WrapParseKITTI("/home/pja/Desktop/visual_odometry_testing/dataset","00");
+		SequenceStereoImages data = new WrapParseKITTI("../data/KITTI","00");
 
 		Class imageType = ImageFloat32.class;
 

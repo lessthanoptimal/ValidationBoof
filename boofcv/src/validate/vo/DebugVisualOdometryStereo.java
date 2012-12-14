@@ -36,6 +36,7 @@ import java.util.List;
 /**
  * @author Peter Abeles
  */
+// TODO Remove rotational component from translational error vector by applying inverse to total rotation estimate
 public class DebugVisualOdometryStereo<T extends ImageSingleBand> implements MouseListener {
 
 	SequenceStereoImages data;
@@ -55,6 +56,11 @@ public class DebugVisualOdometryStereo<T extends ImageSingleBand> implements Mou
 	Se3_F64 previousWorldToLeft = new Se3_F64();
 	Se3_F64 initialWorldToLeft = new Se3_F64();
 
+	Se3_F64 prevSkipEstimated = new Se3_F64();
+	Se3_F64 prevSkipTruth = new Se3_F64();
+
+	double totalErrorDistanceSkip;
+	double totalErrorRotationSkip;
 	double totalErrorDistance;
 	double totalErrorRotation;
 	double integralFoundDistance;
@@ -64,9 +70,14 @@ public class DebugVisualOdometryStereo<T extends ImageSingleBand> implements Mou
 	double absoluteLocation;
 	double absoluteRotation;
 
+	int skipFrame = 20;
+
 	int numEstimates;
 
 	int frame;
+
+	BufferedImage rgb;
+
 
 	public DebugVisualOdometryStereo(SequenceStereoImages data,
 									 StereoVisualOdometry<T> alg ,
@@ -83,6 +94,8 @@ public class DebugVisualOdometryStereo<T extends ImageSingleBand> implements Mou
 		paused = false;
 		alg.reset();
 
+		totalErrorDistanceSkip = 0;
+		totalErrorRotationSkip = 0;
 		totalErrorDistance = 0;
 		totalErrorRotation = 0;
 		integralFoundDistance = 0;
@@ -104,11 +117,16 @@ public class DebugVisualOdometryStereo<T extends ImageSingleBand> implements Mou
 		if( !data.next() )
 			throw new RuntimeException("Failed to read first frame");
 
-//		imageDisplay = new ImageGridPanel(1,2,data.getLeft(),data.getRight());
-//		imageDisplay.addMouseListener(this);
+		imageDisplay = new ImageGridPanel(1,2,data.getLeft(),data.getRight());
+		imageDisplay.addMouseListener(this);
 
 		inputLeft.reshape(data.getLeft().getWidth(),data.getLeft().getHeight());
 		inputRight.reshape(data.getRight().getWidth(),data.getRight().getHeight());
+
+		boolean convertToRgb = data.getLeft().getType() == BufferedImage.TYPE_BYTE_GRAY;
+
+		if( convertToRgb )
+			rgb = new BufferedImage(inputLeft.width,inputLeft.height,BufferedImage.TYPE_INT_BGR);
 
 		if( imageDisplay != null )
 			ShowImages.showWindow(imageDisplay,"Input");
@@ -116,6 +134,12 @@ public class DebugVisualOdometryStereo<T extends ImageSingleBand> implements Mou
 		previousWorldToLeftFound.reset();
 		data.getLeftToWorld().invert(previousWorldToLeft);
 		initialWorldToLeft.set(previousWorldToLeft);
+
+		prevSkipEstimated.reset();
+		prevSkipTruth.set(data.getLeftToWorld());
+
+		if( data.isCalibrationFixed() )
+			alg.setCalibration(data.getCalibration());
 
 		if( viewer != null ) {
 			DenseMatrix64F K = PerspectiveOps.calibrationMatrix(data.getCalibration().left,null);
@@ -130,14 +154,20 @@ public class DebugVisualOdometryStereo<T extends ImageSingleBand> implements Mou
 		processFrame();
 
 		while( data.next() ) {
-			if( imageDisplay != null )
-				imageDisplay.setImages(data.getLeft(), data.getRight());
+			if( imageDisplay != null ) {
+				if( convertToRgb )
+					rgb.getGraphics().drawImage(data.getLeft(),0,0,null);
+				else
+					rgb = data.getLeft();
+				imageDisplay.setImages(rgb, data.getRight());
+			}
 
 			processFrame();
 
 			if( imageDisplay != null ) {
+
 				if( alg instanceof AccessPointTracks3D) {
-					drawFeatures((AccessPointTracks3D)alg,data.getLeft());
+					drawFeatures((AccessPointTracks3D)alg,rgb);
 				}
 
 				imageDisplay.repaint();
@@ -161,9 +191,13 @@ public class DebugVisualOdometryStereo<T extends ImageSingleBand> implements Mou
 		double averagePerEstRotation = totalErrorRotation/numEstimates;
 		double averagePerDistDistance = totalErrorDistance/integralTrueDistance;
 		double averagePerDistRotation = totalErrorRotation/integralTrueDistance;
+		double averageSkipDistance = totalErrorDistanceSkip/integralTrueDistance;
+		double averageSkipRotation = totalErrorRotationSkip/integralTrueDistance;
+
 
 		System.out.printf("Ave per estimate:      distance %9.7f  rotation %11.9f\n",averagePerEstDistance,averagePerEstRotation);
 		System.out.printf("Ave per distance:      distance %9.5f%% deg/unit = %5.2e\n",100*averagePerDistDistance,UtilAngle.radianToDegree(averagePerDistRotation));
+		System.out.printf("Ave Skip %2d:           distance %9.5f%% deg/unit = %5.2e\n",skipFrame,100*averageSkipDistance,UtilAngle.radianToDegree(averageSkipRotation));
 		System.out.printf("Absolute:              location %9.5f  rotation %6.2f degrees\n",absoluteLocation,
 				UtilAngle.radianToDegree(absoluteRotation));
 		System.out.printf("Integral per distance: distance %9.5f%% deg/unit = %5.2e\n",100*integralDistance,UtilAngle.radianToDegree(integralRotation));
@@ -190,11 +224,17 @@ public class DebugVisualOdometryStereo<T extends ImageSingleBand> implements Mou
 	}
 
 	private void processFrame() {
+//		if( frame < 300 ) {
+//			frame++;
+//			return;
+//		}
+
 		ConvertBufferedImage.convertFrom(data.getLeft(), inputLeft);
 		ConvertBufferedImage.convertFrom(data.getRight(), inputRight);
 
 		long before = System.nanoTime();
-		alg.setCalibration(data.getCalibration());
+		if( !data.isCalibrationFixed() )
+			alg.setCalibration(data.getCalibration());
 		boolean updated = alg.process(inputLeft,inputRight);
 		long after = System.nanoTime();
 
@@ -221,6 +261,19 @@ public class DebugVisualOdometryStereo<T extends ImageSingleBand> implements Mou
 			System.out.printf("%5d %6.2f location error %f error frac %f  angle %6.3f\n", frame,fps,distanceError, errorFrac,errorAngle);
 //			System.out.println("  expected "+expected.getT());
 //			System.out.println("  found "+found.getT());
+
+			if( (frame%skipFrame) == 0 ) {
+				Se3_F64 deltaEstimated = alg.getLeftToWorld().concat(prevSkipEstimated.invert(null),null);
+				Se3_F64 deltaTruth = data.getLeftToWorld().concat(prevSkipTruth.invert(null),null);
+
+				Se3_F64 error = deltaEstimated.invert(null).concat(deltaTruth,null);
+
+				totalErrorDistanceSkip += error.getT().norm();
+				totalErrorRotationSkip += rotationMatrixToRadian(error.getR());
+
+				prevSkipEstimated.set(alg.getLeftToWorld());
+				prevSkipTruth.set(data.getLeftToWorld());
+			}
 
 			alg.getLeftToWorld().invert(previousWorldToLeftFound);
 			data.getLeftToWorld().invert(previousWorldToLeft);
@@ -272,6 +325,9 @@ public class DebugVisualOdometryStereo<T extends ImageSingleBand> implements Mou
 		Graphics2D g2 = image.createGraphics();
 
 		List<Point2D_F64> points = tracker.getAllTracks();
+		if( points.isEmpty() )
+			return;
+
 
 		int numInliers = 0;
 		double ranges[] = new double[points.size() ];
@@ -285,16 +341,6 @@ public class DebugVisualOdometryStereo<T extends ImageSingleBand> implements Mou
 		for( int i = 0; i < points.size(); i++ ) {
 			Point2D_F64 pixel = points.get(i);
 
-			if( tracker.isNew(i) ) {
-				VisualizeFeatures.drawPoint(g2,(int)pixel.x,(int)pixel.y,3,Color.GREEN);
-				continue;
-			}
-
-			if( tracker.isInlier(i) ) {
-				numInliers++;
-//				VisualizeFeatures.drawPoint(g2,(int)pixel.x,(int)pixel.y,7,Color.BLUE,false);
-			}
-
 			Point3D_F64 p3 = tracker.getTrackLocation(i);
 
 			double r = p3.z/maxRange;
@@ -305,6 +351,21 @@ public class DebugVisualOdometryStereo<T extends ImageSingleBand> implements Mou
 
 
 			VisualizeFeatures.drawPoint(g2,(int)pixel.x,(int)pixel.y,3,new Color(color));
+		}
+
+		for( int i = 0; i < points.size(); i++ ) {
+			Point2D_F64 pixel = points.get(i);
+
+			if( tracker.isNew(i) ) {
+//				VisualizeFeatures.drawPoint(g2,(int)pixel.x,(int)pixel.y,3,Color.GREEN);
+				continue;
+			}
+
+			if( tracker.isInlier(i) ) {
+				numInliers++;
+				VisualizeFeatures.drawPoint(g2,(int)pixel.x,(int)pixel.y,7,Color.WHITE,false);
+				VisualizeFeatures.drawPoint(g2,(int)pixel.x,(int)pixel.y,5,Color.BLACK,false);
+			}
 		}
 
 
@@ -338,28 +399,27 @@ public class DebugVisualOdometryStereo<T extends ImageSingleBand> implements Mou
 		// TODO or preprocess images with edge detector?
 
 //		SequenceStereoImages data = new WrapParseLeuven07(new ParseLeuven07("../data/leuven07"));
-		SequenceStereoImages data = new WrapParseKITTI("../data/KITTI","00");
+		SequenceStereoImages data = new WrapParseKITTI("../data/KITTI","01");
 
 		Class imageType = ImageFloat32.class;
 
 //		ImagePointTracker<ImageFloat32> tracker =
-//				FactoryPointSequentialTracker.dda_FAST_BRIEF(500,200,3,9,20,imageType);
+//				FactoryPointSequentialTracker.dda_FAST_BRIEF(-1,200,5,9,10,imageType);
 //		ImagePointTracker<ImageFloat32> tracker =
-//				FactoryPointSequentialTracker.dda_ST_BRIEF(500,200,3,1,imageType,null);
+//				FactoryPointSequentialTracker.dda_ST_BRIEF(-1,200,5,500,imageType,null);
 //		ImagePointTracker<ImageFloat32> tracker =
 //				FactoryPointSequentialTracker.dda_FH_SURF(500,2,200,1,true,imageType);
-//		ImagePointTracker<ImageFloat32> tracker =
-//				FactoryPointSequentialTracker.klt(2000, new int[]{1, 2, 4, 8}, 3, 3, 2, imageType, ImageFloat32.class);
 		ImagePointTracker<ImageFloat32> tracker =
-				FactoryPointSequentialTracker.combined_FH_SURF_KLT(500, 200,3,1,3,new int[]{1, 2, 4, 8}, 100, false,imageType);
+				FactoryPointSequentialTracker.klt(-1,500, new int[]{1, 2, 4, 8}, 1, 5, 1, 1, imageType, ImageFloat32.class);
 //		ImagePointTracker<ImageFloat32> tracker =
-//				FactoryPointSequentialTracker.combined_ST_SURF_KLT(1000,3,1,3,new int[]{1, 2, 4, 8}, 60, false,imageType,null);
+//				FactoryPointSequentialTracker.combined_FH_SURF_KLT(500, 200,3,1,3,new int[]{1, 2, 4, 8}, 100, false,imageType);
+//		ImagePointTracker<ImageFloat32> tracker =
+//				FactoryPointSequentialTracker.combined_ST_SURF_KLT(-1,3,500,3,new int[]{1, 2, 4, 8}, 80, true,imageType,null);
 
-		// TODO add stereo NCC error to handle
 		StereoDisparitySparse<ImageFloat32> disparity =
 				FactoryStereoDisparity.regionSparseWta(10, 120, 2, 2, 30, 0.1, true, imageType);
 
-		StereoVisualOdometry alg = FactoryVisualOdometry.stereoDepth(120,2,1.5,tracker,disparity,100,imageType);
+		StereoVisualOdometry alg = FactoryVisualOdometry.stereoDepth(120,2,1.5,tracker,disparity,10000,100,imageType);
 
 		DebugVisualOdometryStereo app = new DebugVisualOdometryStereo(data,alg,imageType);
 
