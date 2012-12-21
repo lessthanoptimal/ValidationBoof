@@ -2,6 +2,7 @@ package validate.vo;
 
 import boofcv.abst.feature.disparity.StereoDisparitySparse;
 import boofcv.abst.feature.tracker.ImagePointTracker;
+import boofcv.abst.sfm.ModelAssistedTrackerCalibrated;
 import boofcv.abst.sfm.StereoVisualOdometry;
 import boofcv.core.image.ConvertBufferedImage;
 import boofcv.core.image.GeneralizedImageOps;
@@ -17,8 +18,8 @@ import java.io.FileOutputStream;
 import java.io.PrintStream;
 
 /**
- * @author Peter Abeles
- */
+* @author Peter Abeles
+*/
 public class OutputForKITTI {
 
 	public static <T extends ImageSingleBand>
@@ -81,11 +82,13 @@ public class OutputForKITTI {
 //			ImagePointTracker<ImageFloat32> tracker =
 //					FactoryPointSequentialTracker.combined_ST_SURF_KLT(-1,3,500,3,new int[]{1, 2, 4, 8}, 80, true,imageType,null);
 
+			ModelAssistedTrackerCalibrated assistedTracker = FactoryVisualOdometry.trackerP3P(tracker,1.5,500,100);
+
 			// TODO add stereo NCC error to handle
 			StereoDisparitySparse<ImageFloat32> disparity =
 					FactoryStereoDisparity.regionSparseWta(10, 120, 2, 2, 30, 0.1, true, imageType);
 
-			StereoVisualOdometry alg = FactoryVisualOdometry.stereoDepth(120,2,1.5,tracker,disparity,1000,100,imageType);
+			StereoVisualOdometry alg = FactoryVisualOdometry.stereoDepth(120, 2,disparity, assistedTracker, imageType);
 
 			String dataID = String.format("%02d",dataSet);
 

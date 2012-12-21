@@ -53,6 +53,9 @@ public class DebugTrackerVideo <T extends ImageSingleBand> implements MouseListe
 
 	boolean step;
 
+	// if true then all but the selected tracks are hidden
+	boolean hideTracks = false;
+
 
 	public DebugTrackerVideo(ImagePointTracker<T> alg,
 							 SequenceStereoImages data,
@@ -144,7 +147,8 @@ public class DebugTrackerVideo <T extends ImageSingleBand> implements MouseListe
 
 	private synchronized void processFrame() {
 		ConvertBufferedImage.convertFrom(data.getLeft(), inputLeft);
-
+		if( frame > 350 )
+		{
 		alg.process(inputLeft);
 
 		if( frame % KEY_FRAME_PERIOD == 0 ) {
@@ -159,6 +163,7 @@ public class DebugTrackerVideo <T extends ImageSingleBand> implements MouseListe
 			}
 			key.createGraphics().drawImage(rgb,0,0,null);
 		}
+		}
 
 		updateSelectedIndex();
 		renderTracks();
@@ -171,67 +176,76 @@ public class DebugTrackerVideo <T extends ImageSingleBand> implements MouseListe
 		g2.drawImage(key,0,0,null);
 		g2.drawImage(rgb,0,h,null);
 
-		List<PointTrack> all = new ArrayList<PointTrack>();
-		alg.getAllTracks(all);
+		List<PointTrack> active = new ArrayList<PointTrack>();
+		alg.getActiveTracks(active);
 
-		if( selected != -1 && selected < all.size() ) {
-			PointTrack p = all.get(selected);
-			Point2D_F64 orig = p.getCookie();
-
-			VisualizeFeatures.drawPoint(g2, (int) orig.x, (int) orig.y, 5, Color.WHITE, false);
-			VisualizeFeatures.drawPoint(g2, (int)orig.x, (int) orig.y, 3, Color.black, false);
-
-			g2.setColor( Color.blue);
-			g2.setStroke(new BasicStroke(2));
-			g2.drawLine((int)orig.x, (int) orig.y, (int)p.x, h+(int) p.y);
-
-			VisualizeFeatures.drawPoint(g2, (int)p.x, h+(int) p.y, 5, Color.WHITE, false);
-			VisualizeFeatures.drawPoint(g2, (int)p.x, h+(int) p.y, 3, Color.RED, false);
-		} else {
-
-			for( PointTrack p : all ) {
+		if( !hideTracks ) {
+			for( PointTrack p : active ) {
 				Point2D_F64 orig = p.getCookie();
 
-				VisualizeFeatures.drawPoint(g2, (int) orig.x, (int) orig.y, 5, Color.WHITE, false);
-				VisualizeFeatures.drawPoint(g2, (int)orig.x, (int) orig.y, 3, Color.black, false);
+				VisualizeFeatures.drawPoint(g2, (int)orig.x, h+(int) orig.y, 5, Color.WHITE, false);
+				VisualizeFeatures.drawPoint(g2, (int)orig.x, h+(int) orig.y, 3, Color.gray, false);
 			}
 
-			for( PointTrack p : all ) {
+			for( PointTrack p : active ) {
 				Point2D_F64 orig = p.getCookie();
 
 				g2.setColor( Color.blue);
 				g2.setStroke(new BasicStroke(2));
-				g2.drawLine((int)orig.x, (int) orig.y, (int)p.x, h+(int) p.y);
+				g2.drawLine((int)orig.x, h+(int) orig.y, (int)p.x, h+(int) p.y);
 
 				VisualizeFeatures.drawPoint(g2, (int)p.x, h+(int) p.y, 5, Color.WHITE, false);
 				VisualizeFeatures.drawPoint(g2, (int)p.x, h+(int) p.y, 3, Color.RED, false);
 			}
 		}
-	}
 
+		if( selected != -1 && selected < active.size() ) {
+			PointTrack p = active.get(selected);
+			Point2D_F64 orig = p.getCookie();
+
+			VisualizeFeatures.drawPoint(g2, (int) orig.x, (int) orig.y, 5, Color.WHITE, false);
+			VisualizeFeatures.drawPoint(g2, (int)orig.x, (int) orig.y, 3, Color.gray, false);
+
+			g2.setColor( Color.blue);
+			g2.setStroke(new BasicStroke(2));
+			g2.drawLine((int)orig.x, h+(int) orig.y, (int)p.x, h+(int) p.y);
+
+			g2.setColor( Color.CYAN);
+			g2.setStroke(new BasicStroke(5));
+			g2.drawLine((int)orig.x, (int) orig.y, (int)p.x, h+(int) p.y);
+
+			VisualizeFeatures.drawPoint(g2, (int)p.x, h+(int) p.y, 5, Color.WHITE, false);
+			VisualizeFeatures.drawPoint(g2, (int)p.x, h+(int) p.y, 3, Color.RED, false);
+		}
+	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		imageLeft.grabFocus();
 		paused = selected != -1 ? true : !paused;
+		hideTracks = false;
+		int prevSelected = selected;
 		selected = -1;
 
-		List<PointTrack> all = new ArrayList<PointTrack>();
-		alg.getAllTracks(all);
+		List<PointTrack> active = new ArrayList<PointTrack>();
+		alg.getActiveTracks(active);
 
 		Point2D_F64 w = new Point2D_F64(e.getX(),e.getY());
 		Point2D_F64 t = new Point2D_F64();
 
-		for( int i = 0; i < all.size(); i++ ) {
-			PointTrack p = all.get(i);
-			Point2D_F64 orig = p.getCookie();
+		int h = data.getLeft().getHeight();
 
-			if( w.distance(orig) < 5 ) {
+		for( int i = 0; i < active.size(); i++ ) {
+			PointTrack p = active.get(i);
+			t.set((Point2D_F64)p.getCookie());
+			t.y += h;
+
+			if( w.distance(t) < 5 ) {
 				selected = i;
 				break;
 			}
 
-			t.set(p.x,data.getLeft().getHeight()+p.y);
+			t.set(p.x,h+p.y);
 
 			if( w.distance(t) < 5 ) {
 				selected = i;
@@ -240,7 +254,9 @@ public class DebugTrackerVideo <T extends ImageSingleBand> implements MouseListe
 		}
 
 		if( selected != -1 )  {
-			selectedPt.set(all.get(selected));
+			if( prevSelected == selected )
+				hideTracks = true;
+			selectedPt.set(active.get(selected));
 			paused = true;
 		}
 		renderTracks();
@@ -280,6 +296,8 @@ public class DebugTrackerVideo <T extends ImageSingleBand> implements MouseListe
 		Class imageType = ImageFloat32.class;
 
 //		ImagePointTracker<ImageFloat32> tracker = FactoryPointSequentialTracker.dda_ST_BRIEF(-1,200,5,500,imageType,null);
+//		ImagePointTracker<ImageFloat32> tracker =
+//				FactoryPointSequentialTracker.dda_FH_SURF(500,2,200,1,true,imageType);
 		ImagePointTracker<ImageFloat32> tracker =
 				FactoryPointSequentialTracker.klt(-1,500, new int[]{1, 2, 4, 8}, 3, 5, 1, 1, imageType, ImageFloat32.class);
 
