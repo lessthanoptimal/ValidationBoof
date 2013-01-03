@@ -1,0 +1,1 @@
+g++ OutputForKITTI.cpp *.o -I/home/pja/projects/thirdparty/libviso2/src `pkg-config --cflags libpng` `pkg-config --libs libpng`

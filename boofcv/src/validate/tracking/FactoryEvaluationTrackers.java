@@ -22,6 +22,7 @@ import boofcv.factory.feature.detect.extract.FactoryFeatureExtractor;
 import boofcv.factory.feature.detect.interest.FactoryDetectPoint;
 import boofcv.factory.feature.detect.interest.FactoryInterestPoint;
 import boofcv.factory.feature.orientation.FactoryOrientation;
+import boofcv.factory.feature.orientation.FactoryOrientationAlgs;
 import boofcv.struct.feature.SurfFeature;
 import boofcv.struct.feature.TupleDesc_B;
 import boofcv.struct.image.ImageSingleBand;
@@ -69,7 +70,7 @@ public class FactoryEvaluationTrackers<T extends ImageSingleBand> {
 
 	public EvaluationTracker<T> createFhSurf(boolean copyDescription) {
 		InterestPointDetector<T> detector = createDetector();
-		DescribeRegionPoint<T,SurfFeature> describe = FactoryDescribeRegionPoint.surf(true, imageType);
+		DescribeRegionPoint<T,SurfFeature> describe = FactoryDescribeRegionPoint.surfStable(null, imageType);
 
 		ScoreAssociation<SurfFeature> scorer = FactoryAssociation.scoreEuclidean(describe.getDescriptorType(),true);
 		AssociateDescription<SurfFeature> associate = FactoryAssociation.greedy(scorer, Double.MAX_VALUE, 0, true);
@@ -107,7 +108,7 @@ public class FactoryEvaluationTrackers<T extends ImageSingleBand> {
 	public EvaluationTracker<T> createFhSurfKlt() {
 		InterestPointDetector<T> detector = createDetector();
 
-		DescribeRegionPoint<T,SurfFeature> describe = FactoryDescribeRegionPoint.surf(true, imageType);
+		DescribeRegionPoint<T,SurfFeature> describe = FactoryDescribeRegionPoint.surfStable(null, imageType);
 		ScoreAssociation<SurfFeature> scorer = FactoryAssociation.scoreEuclidean(describe.getDescriptorType(),true);
 		AssociateDescription<SurfFeature> associate = FactoryAssociation.greedy(scorer,Double.MAX_VALUE,0,true);
 
@@ -126,7 +127,7 @@ public class FactoryEvaluationTrackers<T extends ImageSingleBand> {
 
 	private OrientationImage<T> createOrientation() {
 		Class integralType = GIntegralImageOps.getIntegralType(imageType);
-		OrientationIntegral orientationII = FactoryOrientation.surfDefault(true, integralType);
+		OrientationIntegral orientationII = FactoryOrientationAlgs.sliding_ii(null, integralType);
 		return FactoryOrientation.convertImage(orientationII,imageType);
 	}
 

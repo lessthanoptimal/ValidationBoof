@@ -413,7 +413,7 @@ public class DebugVisualOdometryStereo<T extends ImageSingleBand> implements Mou
 		// TODO or preprocess images with edge detector?
 
 //		SequenceStereoImages data = new WrapParseLeuven07(new ParseLeuven07("../data/leuven07"));
-		SequenceStereoImages data = new WrapParseKITTI("../data/KITTI","02");
+		SequenceStereoImages data = new WrapParseKITTI("../data/KITTI","01");
 
 		Class imageType = ImageFloat32.class;
 		Class derivType = GImageDerivativeOps.getDerivativeType(imageType);
@@ -422,7 +422,7 @@ public class DebugVisualOdometryStereo<T extends ImageSingleBand> implements Mou
 				FactoryStereoDisparity.regionSparseWta(10, 120, 2, 2, 30, 0.1, true, imageType);
 		ModelAssistedTrackerCalibrated assistedTracker;
 
-		int selection = 3;
+		int selection = 0;
 
 		if( selection == 0 ) {
 //		ImagePointTracker<ImageFloat32> tracker =
@@ -431,12 +431,12 @@ public class DebugVisualOdometryStereo<T extends ImageSingleBand> implements Mou
 //				FactoryPointSequentialTracker.dda_ST_BRIEF(-1,200,5,500,imageType,null);
 //		ImagePointTracker<ImageFloat32> tracker =
 //				FactoryPointSequentialTracker.dda_FH_SURF(500,2,200,1,true,imageType);
-			ImagePointTracker<ImageFloat32> tracker =
-					FactoryPointSequentialTracker.klt(-1,1, new int[]{2, 4, 8}, 3, 3, 1, 1, imageType, ImageFloat32.class);
+//			ImagePointTracker<ImageFloat32> tracker =
+//					FactoryPointSequentialTracker.klt(-1,1, new int[]{1,2, 4, 8}, 3, 3, 1, 1, imageType, ImageFloat32.class);
 //		ImagePointTracker<ImageFloat32> tracker =
 //				FactoryPointSequentialTracker.combined_FH_SURF_KLT(500, 200,3,1,3,new int[]{1, 2, 4, 8}, 100, false,imageType);
-//		ImagePointTracker<ImageFloat32> tracker =
-//				FactoryPointSequentialTracker.combined_ST_SURF_KLT(-1,3,500,3,new int[]{1, 2, 4, 8}, 80, true,imageType,null);
+		ImagePointTracker<ImageFloat32> tracker =
+				FactoryPointSequentialTracker.combined_ST_SURF_KLT(-1,3,500,3,new int[]{1, 2, 4, 8}, 80, null,null,imageType,null);
 
 			assistedTracker = FactoryVisualOdometry.trackerP3P(tracker,1.5,500,100);
 		} else if( selection == 1 ) {
@@ -450,11 +450,11 @@ public class DebugVisualOdometryStereo<T extends ImageSingleBand> implements Mou
 
 			DetectDescribePoint detDesc = FactoryDetectDescribe.fuseTogether(detector, null, new WrapDescribeBrief(brief));
 
-			assistedTracker = FactoryVisualOdometry.trackerAssistedDdaP3P(detDesc,1.5,200,0,100,10.0);
+			assistedTracker = FactoryVisualOdometry.trackerAssistedDdaP3P(detDesc,1.5,500,400,100,30.0);
 		} else {
 			PkltConfig config =
 					PkltConfig.createDefault(imageType, derivType);
-			config.pyramidScaling = new int[]{2,4,8};
+			config.pyramidScaling = new int[]{1,2,4,8};
 			config.maxFeatures = -1;
 			config.featureRadius = 3;
 			config.typeInput = imageType;
@@ -467,7 +467,7 @@ public class DebugVisualOdometryStereo<T extends ImageSingleBand> implements Mou
 
 		}
 
-		StereoVisualOdometry alg = FactoryVisualOdometry.stereoDepth(120, 2,disparity, assistedTracker, imageType);
+		StereoVisualOdometry alg = FactoryVisualOdometry.stereoDepth(200, 2,disparity, assistedTracker, imageType);
 
 		DebugVisualOdometryStereo app = new DebugVisualOdometryStereo(data,alg,imageType);
 		app.initialize();

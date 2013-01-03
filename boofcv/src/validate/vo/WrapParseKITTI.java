@@ -28,7 +28,7 @@ public class WrapParseKITTI implements SequenceStereoImages {
 		DenseMatrix64F leftP = parser.getLeftProjection();
 		DenseMatrix64F rightP = parser.getRightProjection();
 
-		// load the first image to get its dimention
+		// load the first image to get its dimension
 		parser.loadFrame(0);
 		int leftWidth = parser.getLeftImage().getWidth();
 		int leftHeight = parser.getLeftImage().getHeight();
