@@ -1,11 +1,11 @@
 package validate.fast;
 
-import boofcv.abst.feature.detect.interest.GeneralFeatureDetector;
-import boofcv.alg.feature.detect.extract.NonMaxBlockStrict;
+import boofcv.abst.feature.detect.extract.ConfigExtract;
+import boofcv.abst.feature.detect.extract.NonMaxSuppression;
 import boofcv.alg.feature.detect.intensity.FastCornerIntensity;
 import boofcv.alg.feature.detect.intensity.impl.ImplFastHelper_U8;
 import boofcv.alg.feature.detect.intensity.impl.ImplFastIntensity9;
-import boofcv.factory.feature.detect.interest.FactoryDetectPoint;
+import boofcv.factory.feature.detect.extract.FactoryFeatureExtractor;
 import boofcv.io.image.UtilImageIO;
 import boofcv.struct.QueueCorner;
 import boofcv.struct.image.ImageFloat32;
@@ -44,10 +44,10 @@ public class DetectFast {
 
 		System.out.println("Detected " + found.size + " features");
 
-		NonMaxBlockStrict nonmax = new NonMaxBlockStrict(1,0,3);
+		NonMaxSuppression nonmax = FactoryFeatureExtractor.nonmax(new ConfigExtract(1,0,3,true, false, true));
 
 		QueueCorner peaks = new QueueCorner(1000);
-		nonmax.process(intensity,peaks);
+		nonmax.process(intensity,null,found,null,peaks);
 
 		System.out.println("Nonmax "+peaks.size);
 	}

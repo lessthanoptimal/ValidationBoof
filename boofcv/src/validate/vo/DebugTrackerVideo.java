@@ -1,7 +1,8 @@
 package validate.vo;
 
-import boofcv.abst.feature.tracker.ImagePointTracker;
+import boofcv.abst.feature.detect.extract.ConfigExtract;
 import boofcv.abst.feature.tracker.PointTrack;
+import boofcv.abst.feature.tracker.PointTracker;
 import boofcv.core.image.ConvertBufferedImage;
 import boofcv.core.image.GeneralizedImageOps;
 import boofcv.factory.feature.tracker.FactoryPointSequentialTracker;
@@ -30,7 +31,7 @@ public class DebugTrackerVideo <T extends ImageSingleBand> implements MouseListe
 	int KEY_FRAME_PERIOD = 10;
 
 	SequenceStereoImages data;
-	ImagePointTracker<T> alg;
+	PointTracker<T> alg;
 
 	ImagePanel imageLeft;
 
@@ -57,7 +58,7 @@ public class DebugTrackerVideo <T extends ImageSingleBand> implements MouseListe
 	boolean hideTracks = false;
 
 
-	public DebugTrackerVideo(ImagePointTracker<T> alg,
+	public DebugTrackerVideo(PointTracker<T> alg,
 							 SequenceStereoImages data,
 							 Class<T> imageType ) {
 		this.alg = alg;
@@ -298,8 +299,8 @@ public class DebugTrackerVideo <T extends ImageSingleBand> implements MouseListe
 //		ImagePointTracker<ImageFloat32> tracker = FactoryPointSequentialTracker.dda_ST_BRIEF(-1,200,5,500,imageType,null);
 //		ImagePointTracker<ImageFloat32> tracker =
 //				FactoryPointSequentialTracker.dda_FH_SURF(500,2,200,1,true,imageType);
-		ImagePointTracker<ImageFloat32> tracker =
-				FactoryPointSequentialTracker.klt(-1,500, new int[]{1, 2, 4, 8}, 3, 5, 1, 1, imageType, ImageFloat32.class);
+		PointTracker<ImageFloat32> tracker =
+				FactoryPointSequentialTracker.klt(-1,new int[]{1, 2, 4, 8}, new ConfigExtract(5,300),3, imageType, ImageFloat32.class);
 
 		DebugTrackerVideo app = new DebugTrackerVideo(tracker,data,imageType);
 		app.processSequence();

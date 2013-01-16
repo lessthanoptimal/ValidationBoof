@@ -1,13 +1,20 @@
 package validate.vo;
 
-import boofcv.abst.feature.disparity.StereoDisparitySparse;
-import boofcv.abst.feature.tracker.ImagePointTracker;
-import boofcv.abst.sfm.ModelAssistedTrackerCalibrated;
+import boofcv.abst.feature.describe.DescribeRegionPoint;
+import boofcv.abst.feature.detdesc.DetectDescribeMulti;
+import boofcv.abst.feature.detdesc.DetectDescribeMultiFusion;
+import boofcv.abst.feature.detect.extract.ConfigExtract;
+import boofcv.abst.feature.detect.extract.NonMaxSuppression;
+import boofcv.abst.feature.detect.intensity.GeneralFeatureIntensity;
+import boofcv.abst.feature.detect.interest.DetectorInterestPointMulti;
+import boofcv.abst.feature.detect.interest.GeneralToInterestMulti;
 import boofcv.abst.sfm.StereoVisualOdometry;
+import boofcv.alg.feature.detect.interest.GeneralFeatureDetector;
 import boofcv.core.image.ConvertBufferedImage;
 import boofcv.core.image.GeneralizedImageOps;
-import boofcv.factory.feature.disparity.FactoryStereoDisparity;
-import boofcv.factory.feature.tracker.FactoryPointSequentialTracker;
+import boofcv.factory.feature.describe.FactoryDescribeRegionPoint;
+import boofcv.factory.feature.detect.extract.FactoryFeatureExtractor;
+import boofcv.factory.feature.detect.intensity.FactoryIntensityPoint;
 import boofcv.factory.sfm.FactoryVisualOdometry;
 import boofcv.struct.image.ImageFloat32;
 import boofcv.struct.image.ImageSingleBand;
@@ -67,28 +74,22 @@ public class OutputForKITTI {
 	public static void main( String args[] ) throws FileNotFoundException {
 
 		Class imageType = ImageFloat32.class;
+		Class derivType = ImageFloat32.class;
 
 		for( int dataSet = 0; dataSet < 11; dataSet++ ) {
-//		ImagePointTracker<ImageFloat32> tracker =
-//				FactoryPointSequentialTracker.dda_FAST_BRIEF(500, 200, 3, 9, 20, imageType);
-//		ImagePointTracker<ImageFloat32> tracker =
-//				FactoryPointSequentialTracker.dda_ShiTomasi_BRIEF(500,200,1,1,imageType,null);
-//		ImagePointTracker<ImageFloat32> tracker =
-//				FactoryPointSequentialTracker.dda_FH_SURF(500,2,200,1,true,imageType);
-			ImagePointTracker<ImageFloat32> tracker =
-					FactoryPointSequentialTracker.klt(500, 500,new int[]{1, 2, 4, 8}, 3, 3, 3, 2, imageType, ImageFloat32.class);
-//		ImagePointTracker<ImageFloat32> tracker =
-//				FactoryPointSequentialTracker.combined_FH_SURF_KLT(500, 200,1,1,3,new int[]{1, 2, 4, 8}, 1000, false,imageType);
-//			ImagePointTracker<ImageFloat32> tracker =
-//					FactoryPointSequentialTracker.combined_ST_SURF_KLT(-1,3,500,3,new int[]{1, 2, 4, 8}, 80, true,imageType,null);
+//			GeneralFeatureIntensity intensity =
+//					FactoryIntensityPoint.hessian(HessianBlobIntensity.Type.DETERMINANT, imageType);
+			GeneralFeatureIntensity intensity =
+					FactoryIntensityPoint.shiTomasi(2, false, imageType);
+			NonMaxSuppression nonmax = FactoryFeatureExtractor.nonmax(new ConfigExtract(4, 400, 0, true, false, true));
+			GeneralFeatureDetector general = new GeneralFeatureDetector(intensity,nonmax);
+			DetectorInterestPointMulti detector = new GeneralToInterestMulti(general,1,imageType,derivType);
+//			DescribeRegionPoint describe = FactoryDescribeRegionPoint.brief(16,512,-1,4,true,imageType);
+//			DescribeRegionPoint describe = FactoryDescribeRegionPoint.pixelNCC(11,11,imageType);
+			DescribeRegionPoint describe = FactoryDescribeRegionPoint.surfFast(null, imageType);
+			DetectDescribeMulti detDescMulti =  new DetectDescribeMultiFusion(detector,null,describe);
 
-			ModelAssistedTrackerCalibrated assistedTracker = FactoryVisualOdometry.trackerP3P(tracker,1.5,500,100);
-
-			// TODO add stereo NCC error to handle
-			StereoDisparitySparse<ImageFloat32> disparity =
-					FactoryStereoDisparity.regionSparseWta(10, 120, 2, 2, 30, 0.1, true, imageType);
-
-			StereoVisualOdometry alg = FactoryVisualOdometry.stereoDepth(120, 2,disparity, assistedTracker, imageType);
+			StereoVisualOdometry alg = FactoryVisualOdometry.stereoQuadPnP(1.5, 0.1 , Double.MAX_VALUE, 5000, 50, detDescMulti, imageType);
 
 			String dataID = String.format("%02d",dataSet);
 

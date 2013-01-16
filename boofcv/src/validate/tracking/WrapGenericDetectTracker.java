@@ -43,8 +43,8 @@ public class WrapGenericDetectTracker<I extends ImageSingleBand, TD extends Tupl
 		this.associate = associate;
 		this.copyDescription =copyDescription;
 
-		descKey = new FastQueue<TD>(10,detector.getDescriptorType(),false);
-		descCurr = new FastQueue<TD>(10,detector.getDescriptorType(),false);
+		descKey = new FastQueue<TD>(10,detector.getDescriptionType(),false);
+		descCurr = new FastQueue<TD>(10,detector.getDescriptionType(),false);
 	}
 
 	@Override
@@ -57,7 +57,7 @@ public class WrapGenericDetectTracker<I extends ImageSingleBand, TD extends Tupl
 		tracksMatched.clear();
 
 		for( int i = 0; i < detector.getNumberOfFeatures(); i++ ) {
-			descCurr.add(detector.getDescriptor(i));
+			descCurr.add(detector.getDescription(i));
 			pointCurr.add(detector.getLocation(i));
 		}
 
