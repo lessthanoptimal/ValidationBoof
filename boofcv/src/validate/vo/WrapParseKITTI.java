@@ -53,6 +53,11 @@ public class WrapParseKITTI implements SequenceStereoImages {
 		GeometryMath_F64.mult(K_inv,param.rightToLeft.getT(),param.rightToLeft.getT());
 	}
 
+	public WrapParseKITTI( String baseDirectory , String sequence , int initialFrame ) {
+		this(baseDirectory,sequence);
+		frameNumber = initialFrame;
+	}
+
 	@Override
 	public boolean next() {
 		return parser.loadFrame(frameNumber++);

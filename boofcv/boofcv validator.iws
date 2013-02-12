@@ -2,33 +2,19 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" readonly="true" id="5ae49738-03a7-49e6-8d41-9676d295fd24" name="Default" comment="- Added assisted tracker for KLT&#10;- Updated related code">
-      <change type="MOVED" beforePath="$PROJECT_DIR$/../../boofcv/main/feature/src/boofcv/alg/feature/detect/extract/SortBestFeatures.java" afterPath="$PROJECT_DIR$/../../boofcv/main/feature/src/boofcv/alg/feature/detect/extract/SelectNBestFeatures.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/../../boofcv/main/feature/test/boofcv/alg/feature/detect/extract/TestSortBestFeatures.java" afterPath="$PROJECT_DIR$/../../boofcv/main/feature/test/boofcv/alg/feature/detect/extract/TestSelectNBestFeatures.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../boofcv/integration/android/src/boofcv/android/BoofAndroidFiles.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../boofcv/lib/DDogleg.jar" afterPath="$PROJECT_DIR$/../../boofcv/lib/DDogleg.jar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../boofcv/main/feature/src/boofcv/abst/feature/detect/extract/ConfigExtract.java" afterPath="$PROJECT_DIR$/../../boofcv/main/feature/src/boofcv/abst/feature/detect/extract/ConfigExtract.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../boofcv/lib/GeoRegression.jar" afterPath="$PROJECT_DIR$/../../boofcv/lib/GeoRegression.jar" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../boofcv/main/calibration/src/boofcv/alg/geo/calibration/CalibrationPlanarGridZhang99.java" afterPath="$PROJECT_DIR$/../../boofcv/main/calibration/src/boofcv/alg/geo/calibration/CalibrationPlanarGridZhang99.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/validate/vo/DebugTrackerVideo.java" afterPath="$PROJECT_DIR$/src/validate/vo/DebugTrackerVideo.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/validate/vo/DebugVisualOdometryStereo.java" afterPath="$PROJECT_DIR$/src/validate/vo/DebugVisualOdometryStereo.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/validate/fast/DetectFast.java" afterPath="$PROJECT_DIR$/src/validate/fast/DetectFast.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../boofcv/examples/src/boofcv/examples/ExampleCalibrateMonocularPlanar.java" afterPath="$PROJECT_DIR$/../../boofcv/examples/src/boofcv/examples/ExampleCalibrateMonocularPlanar.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../ddogleg/example/src/org/ddogleg/example/ExampleSimpleRobustFit.java" afterPath="$PROJECT_DIR$/../../ddogleg/example/src/org/ddogleg/example/ExampleSimpleRobustFit.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/validate/tracking/FactoryEvaluationTrackers.java" afterPath="$PROJECT_DIR$/src/validate/tracking/FactoryEvaluationTrackers.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../boofcv/main/feature/src/boofcv/factory/feature/detect/extract/FactoryFeatureExtractor.java" afterPath="$PROJECT_DIR$/../../boofcv/main/feature/src/boofcv/factory/feature/detect/extract/FactoryFeatureExtractor.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../boofcv/main/feature/src/boofcv/factory/feature/detect/interest/FactoryInterestPointAlgs.java" afterPath="$PROJECT_DIR$/../../boofcv/main/feature/src/boofcv/factory/feature/detect/interest/FactoryInterestPointAlgs.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../boofcv/main/sfm/src/boofcv/factory/sfm/FactoryVisualOdometry.java" afterPath="$PROJECT_DIR$/../../boofcv/main/sfm/src/boofcv/factory/sfm/FactoryVisualOdometry.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../boofcv/main/feature/src/boofcv/alg/feature/detect/interest/FastHessianFeatureDetector.java" afterPath="$PROJECT_DIR$/../../boofcv/main/feature/src/boofcv/alg/feature/detect/interest/FastHessianFeatureDetector.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../boofcv/main/feature/src/boofcv/alg/feature/detect/interest/GeneralFeatureDetector.java" afterPath="$PROJECT_DIR$/../../boofcv/main/feature/src/boofcv/alg/feature/detect/interest/GeneralFeatureDetector.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../boofcv/main/feature/src/boofcv/abst/feature/detect/intensity/GeneralFeatureIntensity.java" afterPath="$PROJECT_DIR$/../../boofcv/main/feature/src/boofcv/abst/feature/detect/intensity/GeneralFeatureIntensity.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/validate/vo/OutputForKITTI.java" afterPath="$PROJECT_DIR$/src/validate/vo/OutputForKITTI.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../boofcv/main/sfm/src/boofcv/alg/geo/pose/PnPStereoRefineRodrigues.java" afterPath="$PROJECT_DIR$/../../boofcv/main/sfm/src/boofcv/alg/geo/pose/PnPStereoRefineRodrigues.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../boofcv/main/feature/src/boofcv/alg/feature/detect/interest/SiftDetector.java" afterPath="$PROJECT_DIR$/../../boofcv/main/feature/src/boofcv/alg/feature/detect/interest/SiftDetector.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../boofcv/main/feature/test/boofcv/alg/feature/detect/interest/TestGeneralFeatureDetector.java" afterPath="$PROJECT_DIR$/../../boofcv/main/feature/test/boofcv/alg/feature/detect/interest/TestGeneralFeatureDetector.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/validate/tracking/WrapGenericDetectTracker.java" afterPath="$PROJECT_DIR$/src/validate/tracking/WrapGenericDetectTracker.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/validate/tracking/WrapPointTracker.java" afterPath="$PROJECT_DIR$/src/validate/tracking/WrapPointTracker.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../boofcv/main/sfm/src/boofcv/abst/sfm/WrapVisOdomQuadPnP.java" afterPath="$PROJECT_DIR$/../../boofcv/main/sfm/src/boofcv/abst/sfm/WrapVisOdomQuadPnP.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../boofcv/main/feature/src/boofcv/abst/feature/detect/intensity/WrapperFastCornerIntensity.java" afterPath="$PROJECT_DIR$/../../boofcv/main/feature/src/boofcv/abst/feature/detect/intensity/WrapperFastCornerIntensity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../boofcv/main/feature/src/boofcv/abst/feature/detect/intensity/WrapperGradientCornerIntensity.java" afterPath="$PROJECT_DIR$/../../boofcv/main/feature/src/boofcv/abst/feature/detect/intensity/WrapperGradientCornerIntensity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../boofcv/main/feature/src/boofcv/abst/feature/detect/intensity/WrapperHessianBlobIntensity.java" afterPath="$PROJECT_DIR$/../../boofcv/main/feature/src/boofcv/abst/feature/detect/intensity/WrapperHessianBlobIntensity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../boofcv/main/feature/src/boofcv/abst/feature/detect/intensity/WrapperKitRosCornerIntensity.java" afterPath="$PROJECT_DIR$/../../boofcv/main/feature/src/boofcv/abst/feature/detect/intensity/WrapperKitRosCornerIntensity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../boofcv/main/feature/src/boofcv/abst/feature/detect/intensity/WrapperMedianCornerIntensity.java" afterPath="$PROJECT_DIR$/../../boofcv/main/feature/src/boofcv/abst/feature/detect/intensity/WrapperMedianCornerIntensity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/validate/vo/ParseKITTI.java" afterPath="$PROJECT_DIR$/src/validate/vo/ParseKITTI.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../boofcv/main/calibration/test/boofcv/alg/geo/calibration/TestCalibrationPlanarGridZhang99.java" afterPath="$PROJECT_DIR$/../../boofcv/main/calibration/test/boofcv/alg/geo/calibration/TestCalibrationPlanarGridZhang99.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../boofcv/evaluation/visualization/src/boofcv/alg/sfm/d3/VisualizeStereoVisualOdometryApp.java" afterPath="$PROJECT_DIR$/../../boofcv/evaluation/visualization/src/boofcv/alg/sfm/d3/VisualizeStereoVisualOdometryApp.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/validate/vo/WrapParseKITTI.java" afterPath="$PROJECT_DIR$/src/validate/vo/WrapParseKITTI.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/boofcv validator.iws" afterPath="$PROJECT_DIR$/boofcv validator.iws" />
     </list>
     <list id="a1871b72-0229-4eb0-82fb-6085d307f536" name="Failed commit: Default" comment="">
@@ -36,11 +22,11 @@
     </list>
     <ignored path="boofcv validator.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1358308559572" ignored="false" />
-    <file path="/DebugTrackerVideo.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1357678047547" ignored="false" />
+    <file path="/Dummy.txt" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1360631680558" ignored="false" />
+    <file path="/DebugTrackerVideo.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1358902892003" ignored="false" />
     <file path="/a.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1356040316395" ignored="false" />
     <file path="/DetectAssociateTracker.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1357271746017" ignored="false" />
-    <file path="/DebugVisualOdometryStereo.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1358300301705" ignored="false" />
+    <file path="/DebugVisualOdometryStereo.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1360632453197" ignored="false" />
     <file path="/AssistedPyramidKltTracker.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1356112872227" ignored="false" />
     <file path="/FactoryModelAssistedTracker.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1356105560482" ignored="false" />
     <file path="/AssistedTrackerTwoPass.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1357273253479" ignored="false" />
@@ -51,21 +37,13 @@
     <file path="/ModelAssistedToCalibrated.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1356115681282" ignored="false" />
     <file path="/VisOdomPixelDepthPnP.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1356111511147" ignored="false" />
     <file path="/ExampleStereoVisualOdometry.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1356111842923" ignored="false" />
-    <file path="/VisualizeStereoVisualOdometryApp.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1356112754003" ignored="false" />
+    <file path="/VisualizeStereoVisualOdometryApp.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1358943055217" ignored="false" />
     <file path="/ModelAssistedTrackerCalibrated.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1356115744002" ignored="false" />
-    <file path="$PROJECT_DIR$/../../boofcv/main/geo/src/boofcv/factory/feature/tracker/FactoryModelAssistedTracker.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1356116208854" ignored="false" />
-    <file path="$PROJECT_DIR$/../../boofcv/main/geo/src/boofcv/alg/feature/tracker/AssistedPyramidKltTracker.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1356116208854" ignored="false" />
-    <file path="/WrapParseKITTI.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1357185739961" ignored="false" />
-    <file path="/FactoryEvaluationTrackers.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1358178291343" ignored="false" />
-    <file path="$PROJECT_DIR$/../../boofcv/main/geo/src/boofcv/abst/feature/tracker/WrapCombinedTracker.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1357528357791" ignored="false" />
-    <file path="$PROJECT_DIR$/../../boofcv/main/geo/src/boofcv/abst/feature/tracker/PointTrackerKltPyramid.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1357528357791" ignored="false" />
-    <file path="$PROJECT_DIR$/../../boofcv/main/geo/src/boofcv/abst/feature/tracker/ModelAssistedTracker.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1357528357791" ignored="false" />
-    <file path="$PROJECT_DIR$/../../boofcv/main/geo/src/boofcv/abst/feature/tracker/PointTrack.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1357528357792" ignored="false" />
+    <file path="/WrapParseKITTI.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1358344732847" ignored="false" />
+    <file path="/FactoryEvaluationTrackers.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1358902983426" ignored="false" />
     <file path="$PROJECT_DIR$/../../boofcv/main/feature/src/boofcv/abst/feature/detect/interest/GeneralFeatureDetector.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1357528357792" ignored="false" />
-    <file path="$PROJECT_DIR$/../../boofcv/main/geo/src/boofcv/abst/feature/tracker/DetectAssociateTracker.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1357677517357" ignored="false" />
-    <file path="$PROJECT_DIR$/../../boofcv/main/geo/src/boofcv/abst/feature/tracker/PointTracker.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1357677517357" ignored="false" />
     <file path="$PROJECT_DIR$/../../boofcv/main/feature/src/boofcv/factory/feature/detect/interest/FactoryInterestPoint.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1357677517357" ignored="false" />
-    <file path="/OutputForKITTI.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1357678085756" ignored="false" />
+    <file path="/OutputForKITTI.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1358954718948" ignored="false" />
     <file path="/WrapGenericDetectTracker.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1358178325302" ignored="false" />
     <file path="/DetectFast.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1358178490799" ignored="false" />
     <file path="/WrapVisOdomQuadPnP.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1358294070480" ignored="false" />
@@ -77,8 +55,22 @@
     <file path="/WrapperHessianBlobIntensity.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1358296335432" ignored="false" />
     <file path="/FactoryFeatureExtractor.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1358297246657" ignored="false" />
     <file path="/ConfigExtract.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1358297285272" ignored="false" />
-    <file path="/FindRealRootsSturm.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1358304292277" ignored="false" />
+    <file path="/FindRealRootsSturm.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1358359230832" ignored="false" />
     <file path="/change.txt" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1358308529009" ignored="false" />
+    <file path="/VisOdomQuadPnP.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1358346252542" ignored="false" />
+    <file path="/PnPStereoResidualReprojection.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1358345592359" ignored="false" />
+    <file path="/PnPStereoEstimator.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1358346555837" ignored="false" />
+    <file path="/Ransac.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1358347419318" ignored="false" />
+    <file path="/PnPStereoRefineRodrigues.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1358348671494" ignored="false" />
+    <file path="/TestPnPRodriguesCodec.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1358348500406" ignored="false" />
+    <file path="/RotationMatrixGenerator.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1358352356536" ignored="false" />
+    <file path="/fragment.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1358349747832" ignored="false" />
+    <file path="/TestRotationMatrixGenerator.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1358349339878" ignored="false" />
+    <file path="/PnPRodriguesCodec.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1358349448607" ignored="false" />
+    <file path="/WrapRealRootsSturm.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1358903168811" ignored="false" />
+    <file path="/FactoryPointTracker.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1358943413694" ignored="false" />
+    <file path="/WrapCombinedTracker.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1358942807800" ignored="false" />
+    <file path="/ParseKITTI.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1358961028694" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -105,9 +97,12 @@
     <disable_hints />
   </component>
   <component name="DebuggerManager">
-    <line_breakpoints default_suspend_policy="SuspendAll" default_condition_enabled="true">
-      <breakpoint url="file://$PROJECT_DIR$/../../boofcv/main/geo/src/boofcv/alg/feature/tracker/AssistedTrackerTwoPass.java" line="146" class="boofcv.alg.feature.tracker.AssistedTrackerTwoPass" package="boofcv.alg.feature.tracker">
-        <option name="ENABLED" value="true" />
+    <line_breakpoints default_suspend_policy="SuspendAll" default_condition_enabled="true" />
+    <breakpoint_any>
+      <breakpoint>
+        <option name="NOTIFY_CAUGHT" value="true" />
+        <option name="NOTIFY_UNCAUGHT" value="true" />
+        <option name="ENABLED" value="false" />
         <option name="LOG_ENABLED" value="false" />
         <option name="LOG_EXPRESSION_ENABLED" value="false" />
         <option name="SUSPEND_POLICY" value="SuspendAll" />
@@ -120,8 +115,6 @@
         <option name="CONDITION" value="" />
         <option name="LOG_MESSAGE" value="" />
       </breakpoint>
-    </line_breakpoints>
-    <breakpoint_any default_suspend_policy="SuspendAll" default_condition_enabled="true">
       <breakpoint>
         <option name="NOTIFY_CAUGHT" value="true" />
         <option name="NOTIFY_UNCAUGHT" value="true" />
@@ -132,30 +125,13 @@
         <option name="SUSPEND" value="true" />
         <option name="COUNT_FILTER_ENABLED" value="false" />
         <option name="COUNT_FILTER" value="0" />
-        <option name="CONDITION_ENABLED" value="false" />
-        <option name="CLASS_FILTERS_ENABLED" value="false" />
-        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
-        <option name="CONDITION" value="" />
-        <option name="LOG_MESSAGE" value="" />
-      </breakpoint>
-      <breakpoint>
-        <option name="NOTIFY_CAUGHT" value="true" />
-        <option name="NOTIFY_UNCAUGHT" value="true" />
-        <option name="ENABLED" value="false" />
-        <option name="LOG_ENABLED" value="false" />
-        <option name="LOG_EXPRESSION_ENABLED" value="false" />
-        <option name="SUSPEND_POLICY" value="SuspendAll" />
-        <option name="SUSPEND" value="true" />
-        <option name="COUNT_FILTER_ENABLED" value="false" />
-        <option name="COUNT_FILTER" value="0" />
-        <option name="CONDITION_ENABLED" value="false" />
+        <option name="CONDITION_ENABLED" value="true" />
         <option name="CLASS_FILTERS_ENABLED" value="false" />
         <option name="INSTANCE_FILTERS_ENABLED" value="false" />
         <option name="CONDITION" value="" />
         <option name="LOG_MESSAGE" value="" />
       </breakpoint>
     </breakpoint_any>
-    <ui_properties default_suspend_policy="SuspendAll" default_condition_enabled="true" />
     <breakpoint_rules />
     <ui_properties />
   </component>
@@ -165,29 +141,13 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="TestGeneralFeatureDetector.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../../boofcv/main/feature/test/boofcv/alg/feature/detect/interest/TestGeneralFeatureDetector.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="43" column="24" selection-start="1302" selection-end="1302" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="PnPStereoRefineRodrigues.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../../boofcv/main/sfm/src/boofcv/alg/geo/pose/PnPStereoRefineRodrigues.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="36" column="13" selection-start="1258" selection-end="1258" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="DebugVisualOdometryStereo.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="DebugVisualOdometryStereo.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/validate/vo/DebugVisualOdometryStereo.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="532" column="27" selection-start="19592" selection-end="19592" vertical-scroll-proportion="0.0">
-              <folding />
+            <state line="436" column="25" selection-start="14241" selection-end="14241" vertical-scroll-proportion="0.29451287">
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -195,68 +155,63 @@
       <file leaf-file-name="OutputForKITTI.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/validate/vo/OutputForKITTI.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="100" column="33" selection-start="4245" selection-end="4245" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="change.txt" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/../../ddogleg/change.txt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="12" column="137" selection-start="365" selection-end="365" vertical-scroll-proportion="0.36734694">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="FindRealRootsSturm.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../../ddogleg/src/org/ddogleg/solver/impl/FindRealRootsSturm.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="259" column="89" selection-start="8817" selection-end="8817" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SturmSequence.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../../ddogleg/src/org/ddogleg/solver/impl/SturmSequence.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="145" column="0" selection-start="4301" selection-end="4301" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="FactoryVisualOdometry.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../../boofcv/main/sfm/src/boofcv/factory/sfm/FactoryVisualOdometry.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="320" column="24" selection-start="12889" selection-end="12909" vertical-scroll-proportion="0.0">
+            <state line="36" column="38" selection-start="1487" selection-end="1487" vertical-scroll-proportion="0.0">
               <folding>
-                <element signature="e#5482#5501#0" expanded="true" />
-                <element signature="e#7214#7233#0" expanded="true" />
-                <element signature="e#9331#9350#0" expanded="true" />
-                <element signature="e#11755#11775#0" expanded="true" />
-                <element signature="e#13621#13641#0" expanded="true" />
-                <element signature="e#14772#14778#0" expanded="true" />
+                <element signature="imports" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="FactoryFeatureExtractor.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../../boofcv/main/feature/src/boofcv/factory/feature/detect/extract/FactoryFeatureExtractor.java">
+      <file leaf-file-name="BoofDefaults.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../../boofcv/main/ip/src/boofcv/struct/BoofDefaults.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="89" column="44" selection-start="3208" selection-end="3208" vertical-scroll-proportion="0.0">
+            <state line="31" column="40" selection-start="891" selection-end="891" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="GeneralFeatureDetector.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../../boofcv/main/feature/src/boofcv/alg/feature/detect/interest/GeneralFeatureDetector.java">
+      <file leaf-file-name="ParseKITTI.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/validate/vo/ParseKITTI.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="143" column="0" selection-start="5812" selection-end="5812" vertical-scroll-proportion="0.0">
+            <state line="82" column="50" selection-start="2101" selection-end="2101" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="WrapParseKITTI.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/validate/vo/WrapParseKITTI.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="25" column="0" selection-start="699" selection-end="699" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="VisOdomQuadPnP.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../../boofcv/main/sfm/src/boofcv/alg/sfm/d3/VisOdomQuadPnP.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="145" column="40" selection-start="6162" selection-end="6162" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="FactoryPointTracker.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../../boofcv/main/geo/src/boofcv/factory/feature/tracker/FactoryPointTracker.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="483" column="20" selection-start="21201" selection-end="21201" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CombinedTrackerScalePoint.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../../boofcv/main/feature/src/boofcv/alg/tracker/combined/CombinedTrackerScalePoint.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="245" column="0" selection-start="7536" selection-end="7536" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -270,7 +225,7 @@
     </FindUsagesManager>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../ddogleg" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="GitLogSettings">
     <option name="myDateState">
@@ -280,22 +235,22 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/../../boofcv/main/feature/test/boofcv/alg/feature/detect/extract/TestSortBestFeatures.java" />
-        <option value="$PROJECT_DIR$/../../boofcv/main/feature/test/boofcv/alg/feature/detect/extract/TestSelectNBestFeatures.java" />
-        <option value="$PROJECT_DIR$/../../boofcv/main/feature/src/boofcv/abst/feature/detect/intensity/WrapperFastCornerIntensity.java" />
-        <option value="$PROJECT_DIR$/../../boofcv/main/feature/src/boofcv/abst/feature/detect/intensity/WrapperHessianBlobIntensity.java" />
-        <option value="$PROJECT_DIR$/../../boofcv/main/feature/src/boofcv/abst/feature/detect/intensity/WrapperGradientCornerIntensity.java" />
-        <option value="$PROJECT_DIR$/../../boofcv/main/feature/src/boofcv/abst/feature/detect/intensity/WrapperMedianCornerIntensity.java" />
-        <option value="$PROJECT_DIR$/../../boofcv/main/feature/src/boofcv/abst/feature/detect/intensity/WrapperKitRosCornerIntensity.java" />
-        <option value="$PROJECT_DIR$/../../boofcv/main/feature/test/boofcv/alg/feature/detect/interest/TestGeneralFeatureDetector.java" />
-        <option value="$PROJECT_DIR$/../../boofcv/main/feature/src/boofcv/factory/feature/detect/extract/FactoryFeatureExtractor.java" />
-        <option value="$PROJECT_DIR$/../../boofcv/main/feature/src/boofcv/abst/feature/detect/extract/ConfigExtract.java" />
-        <option value="$PROJECT_DIR$/../../boofcv/main/feature/src/boofcv/alg/feature/detect/interest/GeneralFeatureDetector.java" />
-        <option value="$PROJECT_DIR$/../../boofcv/main/sfm/src/boofcv/factory/sfm/FactoryVisualOdometry.java" />
+        <option value="$PROJECT_DIR$/../../boofcv/main/sfm/src/boofcv/alg/geo/pose/PnPStereoResidualReprojection.java" />
+        <option value="$PROJECT_DIR$/../../boofcv/main/sfm/src/boofcv/alg/geo/pose/PnPStereoEstimator.java" />
+        <option value="$PROJECT_DIR$/../../georegression/test/georegression/geometry/TestRotationMatrixGenerator.java" />
+        <option value="$PROJECT_DIR$/../../georegression/src/georegression/geometry/RotationMatrixGenerator.java" />
+        <option value="$PROJECT_DIR$/../../boofcv/main/geo/src/boofcv/abst/feature/tracker/PointTrackerAux.java" />
+        <option value="$PROJECT_DIR$/src/validate/tracking/FactoryEvaluationTrackers.java" />
         <option value="$PROJECT_DIR$/../../ddogleg/src/org/ddogleg/solver/impl/FindRealRootsSturm.java" />
-        <option value="$PROJECT_DIR$/src/validate/vo/DebugVisualOdometryStereo.java" />
+        <option value="$PROJECT_DIR$/../../ddogleg/src/org/ddogleg/solver/impl/WrapRealRootsSturm.java" />
+        <option value="$PROJECT_DIR$/src/validate/vo/DebugTrackerVideo.java" />
+        <option value="$PROJECT_DIR$/../../boofcv/main/geo/src/boofcv/factory/feature/tracker/FactoryPointTracker.java" />
+        <option value="$PROJECT_DIR$/../../boofcv/main/sfm/src/boofcv/alg/sfm/d3/VisOdomStereoPnP.java" />
+        <option value="$PROJECT_DIR$/../../boofcv/main/sfm/src/boofcv/alg/sfm/d3/VisOdomQuadPnP.java" />
+        <option value="$PROJECT_DIR$/src/validate/vo/ParseKITTI.java" />
+        <option value="$PROJECT_DIR$/../../boofcv/main/ip/src/boofcv/struct/BoofDefaults.java" />
         <option value="$PROJECT_DIR$/src/validate/vo/OutputForKITTI.java" />
-        <option value="$PROJECT_DIR$/../../ddogleg/change.txt" />
+        <option value="$PROJECT_DIR$/src/validate/vo/DebugVisualOdometryStereo.java" />
       </list>
     </option>
   </component>
@@ -371,22 +326,22 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="PackagesPane">
-        <subPane>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="boofcv validator" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
       <pane id="ProjectPane">
         <subPane>
           <PATH>
             <PATH_ELEMENT>
               <option name="myItemId" value="boofcv validator" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+      <pane id="PackagesPane">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="boofcv validator" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
@@ -415,6 +370,7 @@
     <property name="recentsLimit" value="5" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder1" value="1" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder0" value="0" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/boofcv validator.ipr" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth2" value="261" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth3" value="1055" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth3" value="1055" />
@@ -428,8 +384,8 @@
     <property name="GoToClass.includeLibraries" value="false" />
     <property name="options.splitter.details.proportions" value="0.2" />
     <property name="GoToFile.includeJavaFiles" value="false" />
-    <property name="last_directory_selection" value="$USER_HOME$/boofcv/main/feature/src/boofcv/alg/feature/detect/intensity" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder0" value="0" />
+    <property name="last_directory_selection" value="$USER_HOME$/boofcv/main/feature/src/boofcv/alg/feature/detect/intensity" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder3" value="3" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder1" value="1" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder2" value="2" />
@@ -448,7 +404,7 @@
       <recent name="boofcv.alg.feature.detect.intensity.impl" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.org.ddogleg in DDogleg">
+  <component name="RunManager" selected="Application.DebugVisualOdometryStereo">
     <configuration default="false" name="DebugVisualOdometryStereo" type="Application" factoryName="Application" temporary="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
         <pattern>
@@ -477,77 +433,19 @@
       <ConfigurationWrapper RunnerId="Debug" />
       <method />
     </configuration>
-    <configuration default="false" name="OutputForKITTI" type="Application" factoryName="Application" temporary="true">
+    <configuration default="false" name="TestRotationMatrixGenerator.matrixToRodrigues_case0" type="JUnit" factoryName="JUnit" temporary="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
         <pattern>
-          <option name="PATTERN" value="validate.vo.*" />
+          <option name="PATTERN" value="georegression.geometry.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="MAIN_CLASS_NAME" value="validate.vo.OutputForKITTI" />
-      <option name="VM_PARAMETERS" />
-      <option name="PROGRAM_PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <module name="GeoRegression" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="ENABLE_SWING_INSPECTOR" value="false" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <module name="boofcv validator" />
-      <envs />
-      <RunnerSettings RunnerId="Debug">
-        <option name="DEBUG_PORT" value="" />
-        <option name="TRANSPORT" value="0" />
-        <option name="LOCAL" value="true" />
-      </RunnerSettings>
-      <ConfigurationWrapper RunnerId="Debug" />
-      <method />
-    </configuration>
-    <configuration default="false" name="boofcv.alg.feature in BoofCV Feature" type="JUnit" factoryName="JUnit" temporary="true">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
-        <pattern>
-          <option name="PATTERN" value="boofcv.alg.feature.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <module name="BoofCV Feature" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PACKAGE_NAME" value="boofcv.alg.feature" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="METHOD_NAME" />
-      <option name="TEST_OBJECT" value="package" />
-      <option name="VM_PARAMETERS" value="-ea" />
-      <option name="PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="moduleWithDependencies" />
-      </option>
-      <envs />
-      <patterns />
-      <RunnerSettings RunnerId="Debug">
-        <option name="DEBUG_PORT" value="" />
-        <option name="TRANSPORT" value="0" />
-        <option name="LOCAL" value="true" />
-      </RunnerSettings>
-      <ConfigurationWrapper RunnerId="Debug" />
-      <method />
-    </configuration>
-    <configuration default="false" name="TestGeneralFeatureDetector.testDetection" type="JUnit" factoryName="JUnit" temporary="true">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
-        <pattern>
-          <option name="PATTERN" value="boofcv.alg.feature.detect.interest.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <module name="BoofCV Feature" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PACKAGE_NAME" value="boofcv.alg.feature.detect.interest" />
-      <option name="MAIN_CLASS_NAME" value="boofcv.alg.feature.detect.interest.TestGeneralFeatureDetector" />
-      <option name="METHOD_NAME" value="testDetection" />
+      <option name="PACKAGE_NAME" value="georegression.geometry" />
+      <option name="MAIN_CLASS_NAME" value="georegression.geometry.TestRotationMatrixGenerator" />
+      <option name="METHOD_NAME" value="matrixToRodrigues_case0" />
       <option name="TEST_OBJECT" value="method" />
       <option name="VM_PARAMETERS" value="-ea" />
       <option name="PARAMETERS" />
@@ -567,20 +465,20 @@
       <ConfigurationWrapper RunnerId="Debug" />
       <method />
     </configuration>
-    <configuration default="false" name="org.ddogleg in DDogleg" type="JUnit" factoryName="JUnit" temporary="true">
+    <configuration default="false" name="TestRotationMatrixGenerator.matrixToRodrigues" type="JUnit" factoryName="JUnit" temporary="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
         <pattern>
-          <option name="PATTERN" value="org.ddogleg.*" />
+          <option name="PATTERN" value="georegression.geometry.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <module name="DDogleg" />
+      <module name="GeoRegression" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PACKAGE_NAME" value="org.ddogleg" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="METHOD_NAME" />
-      <option name="TEST_OBJECT" value="package" />
+      <option name="PACKAGE_NAME" value="georegression.geometry" />
+      <option name="MAIN_CLASS_NAME" value="georegression.geometry.TestRotationMatrixGenerator" />
+      <option name="METHOD_NAME" value="matrixToRodrigues" />
+      <option name="TEST_OBJECT" value="method" />
       <option name="VM_PARAMETERS" value="-ea" />
       <option name="PARAMETERS" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
@@ -591,6 +489,64 @@
       </option>
       <envs />
       <patterns />
+      <RunnerSettings RunnerId="Debug">
+        <option name="DEBUG_PORT" value="" />
+        <option name="TRANSPORT" value="0" />
+        <option name="LOCAL" value="true" />
+      </RunnerSettings>
+      <ConfigurationWrapper RunnerId="Debug" />
+      <method />
+    </configuration>
+    <configuration default="false" name="TestRotationMatrixGenerator.matrixToRodrigues_case1" type="JUnit" factoryName="JUnit" temporary="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
+        <pattern>
+          <option name="PATTERN" value="georegression.geometry.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <module name="GeoRegression" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" value="georegression.geometry" />
+      <option name="MAIN_CLASS_NAME" value="georegression.geometry.TestRotationMatrixGenerator" />
+      <option name="METHOD_NAME" value="matrixToRodrigues_case1" />
+      <option name="TEST_OBJECT" value="method" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="moduleWithDependencies" />
+      </option>
+      <envs />
+      <patterns />
+      <RunnerSettings RunnerId="Debug">
+        <option name="DEBUG_PORT" value="" />
+        <option name="TRANSPORT" value="0" />
+        <option name="LOCAL" value="true" />
+      </RunnerSettings>
+      <ConfigurationWrapper RunnerId="Debug" />
+      <method />
+    </configuration>
+    <configuration default="false" name="OutputForKITTI" type="Application" factoryName="Application" temporary="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
+        <pattern>
+          <option name="PATTERN" value="validate.vo.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="MAIN_CLASS_NAME" value="validate.vo.OutputForKITTI" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="boofcv validator" />
+      <envs />
       <RunnerSettings RunnerId="Debug">
         <option name="DEBUG_PORT" value="" />
         <option name="TRANSPORT" value="0" />
@@ -658,18 +614,18 @@
     </configuration>
     <list size="5">
       <item index="0" class="java.lang.String" itemvalue="Application.DebugVisualOdometryStereo" />
-      <item index="1" class="java.lang.String" itemvalue="Application.OutputForKITTI" />
-      <item index="2" class="java.lang.String" itemvalue="JUnit.boofcv.alg.feature in BoofCV Feature" />
-      <item index="3" class="java.lang.String" itemvalue="JUnit.TestGeneralFeatureDetector.testDetection" />
-      <item index="4" class="java.lang.String" itemvalue="JUnit.org.ddogleg in DDogleg" />
+      <item index="1" class="java.lang.String" itemvalue="JUnit.TestRotationMatrixGenerator.matrixToRodrigues_case0" />
+      <item index="2" class="java.lang.String" itemvalue="JUnit.TestRotationMatrixGenerator.matrixToRodrigues" />
+      <item index="3" class="java.lang.String" itemvalue="JUnit.TestRotationMatrixGenerator.matrixToRodrigues_case1" />
+      <item index="4" class="java.lang.String" itemvalue="Application.OutputForKITTI" />
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="JUnit.org.ddogleg in DDogleg" />
+        <item index="0" class="java.lang.String" itemvalue="Application.DebugVisualOdometryStereo" />
         <item index="1" class="java.lang.String" itemvalue="Application.OutputForKITTI" />
-        <item index="2" class="java.lang.String" itemvalue="Application.DebugVisualOdometryStereo" />
-        <item index="3" class="java.lang.String" itemvalue="JUnit.TestGeneralFeatureDetector.testDetection" />
-        <item index="4" class="java.lang.String" itemvalue="JUnit.boofcv.alg.feature in BoofCV Feature" />
+        <item index="2" class="java.lang.String" itemvalue="JUnit.TestRotationMatrixGenerator.matrixToRodrigues_case1" />
+        <item index="3" class="java.lang.String" itemvalue="JUnit.TestRotationMatrixGenerator.matrixToRodrigues_case0" />
+        <item index="4" class="java.lang.String" itemvalue="JUnit.TestRotationMatrixGenerator.matrixToRodrigues" />
       </list>
     </recent_temporary>
     <configuration name="&lt;template&gt;" type="WebApp" default="true" selected="false">
@@ -775,7 +731,11 @@
       <created>1358308568066</created>
       <updated>1358308568066</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="- Updated for changed in BoofCV&#10;- added new VO code">
+      <created>1358336877842</created>
+      <updated>1358336877842</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -785,16 +745,16 @@
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.4586549" sideWeight="0.49573106" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.45755237" sideWeight="0.49573106" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3264563" sideWeight="0.5008157" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32929516" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.31863284" sideWeight="0.49347472" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.31422272" sideWeight="0.49347472" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.20931478" sideWeight="0.4553473" order="1" side_tool="true" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.31584582" sideWeight="0.4586549" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.20931478" sideWeight="0.5413451" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.31584582" sideWeight="0.53362733" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32855567" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Data Sources" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -849,7 +809,7 @@
     <option name="MAXIMUM_HISTORY_ROWS" value="1000" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="- FIxed bug in FindRealRootsSturm" />
+    <option name="LAST_COMMIT_MESSAGE" value="- Updated for changed in BoofCV&#10;- added new VO code" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -875,6 +835,7 @@
     <MESSAGE value="- Added parser for KITTI dataset&#10;- Tweaks to VO metrics" />
     <MESSAGE value="- Updated for changes in BoofCV&#10;- Improved DebugTrackerVideo" />
     <MESSAGE value="- FIxed bug in FindRealRootsSturm" />
+    <MESSAGE value="- Updated for changed in BoofCV&#10;- added new VO code" />
   </component>
   <component name="VssConfiguration">
     <option name="CLIENT_PATH" value="" />
@@ -918,122 +879,107 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/../../boofcv/main/feature/test/boofcv/alg/feature/detdesc/TestDetectDescribeSift.java">
+    <entry file="file://$PROJECT_DIR$/../../boofcv/main/geo/src/boofcv/factory/feature/tracker/FactoryPointTracker.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="69" column="16" selection-start="2188" selection-end="2188" vertical-scroll-proportion="0.0">
+        <state line="483" column="20" selection-start="21201" selection-end="21201" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../../boofcv/main/feature/src/boofcv/factory/feature/detect/intensity/FactoryIntensityPoint.java">
+    <entry file="file://$PROJECT_DIR$/../../boofcv/main/feature/src/boofcv/alg/tracker/combined/CombinedTrackerScalePoint.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="128" column="26" selection-start="5579" selection-end="5579" vertical-scroll-proportion="0.0">
+        <state line="245" column="0" selection-start="7536" selection-end="7536" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../../boofcv/main/feature/src/boofcv/abst/feature/detect/intensity/WrapperHessianBlobIntensity.java">
+    <entry file="file://$PROJECT_DIR$/src/validate/tracking/FactoryEvaluationTrackers.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="41" column="11" selection-start="1367" selection-end="1367" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="115" column="104" selection-start="4660" selection-end="4660" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../../boofcv/main/feature/src/boofcv/abst/feature/detect/extract/NonMaxSuppression.java">
+    <entry file="jar:///opt/jdk/jdk1.6.0_34/src.zip!/java/lang/Object.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="53" column="17" selection-start="2379" selection-end="2379" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../boofcv/main/feature/src/boofcv/alg/feature/detect/extract/NonMaxBlockStrict.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="128" column="0" selection-start="3036" selection-end="3036" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../boofcv/main/feature/src/boofcv/abst/feature/detect/extract/ConfigExtract.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="57" column="11" selection-start="1820" selection-end="1820" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../boofcv/main/feature/src/boofcv/alg/feature/detect/interest/GeneralFeatureDetector.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="143" column="0" selection-start="5812" selection-end="5812" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../boofcv/main/sfm/src/boofcv/alg/geo/pose/PnPStereoRefineRodrigues.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="36" column="13" selection-start="1258" selection-end="1258" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../boofcv/main/feature/test/boofcv/alg/feature/detect/interest/TestGeneralFeatureDetector.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="43" column="24" selection-start="1302" selection-end="1302" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../boofcv/main/feature/src/boofcv/factory/feature/detect/extract/FactoryFeatureExtractor.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="89" column="44" selection-start="3208" selection-end="3208" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="364" column="29" selection-start="17894" selection-end="17894" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/../../ddogleg/src/org/ddogleg/solver/impl/SturmSequence.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="145" column="0" selection-start="4301" selection-end="4301" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="145" column="0" selection-start="4301" selection-end="4301" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/../../ddogleg/src/org/ddogleg/solver/impl/FindRealRootsSturm.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="259" column="89" selection-start="8817" selection-end="8817" vertical-scroll-proportion="0.0">
+        <state line="123" column="0" selection-start="4457" selection-end="4457" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../ddogleg/src/org/ddogleg/solver/impl/WrapRealRootsSturm.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="54" column="25" selection-start="1576" selection-end="1576" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/validate/vo/DebugTrackerVideo.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="303" column="35" selection-start="7551" selection-end="7551" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../boofcv/main/geo/src/boofcv/factory/feature/tracker/FactoryPointTracker.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="483" column="20" selection-start="21201" selection-end="21201" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/validate/vo/DebugVisualOdometryStereo.java">
+    <entry file="file://$PROJECT_DIR$/../../boofcv/main/feature/src/boofcv/alg/tracker/combined/CombinedTrackerScalePoint.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="532" column="27" selection-start="19592" selection-end="19592" vertical-scroll-proportion="0.0">
+        <state line="245" column="0" selection-start="7536" selection-end="7536" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../../boofcv/main/sfm/src/boofcv/factory/sfm/FactoryVisualOdometry.java">
+    <entry file="file://$PROJECT_DIR$/../../boofcv/main/sfm/src/boofcv/alg/sfm/d3/VisOdomQuadPnP.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="320" column="24" selection-start="12889" selection-end="12909" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="e#5482#5501#0" expanded="true" />
-            <element signature="e#7214#7233#0" expanded="true" />
-            <element signature="e#9331#9350#0" expanded="true" />
-            <element signature="e#11755#11775#0" expanded="true" />
-            <element signature="e#13621#13641#0" expanded="true" />
-            <element signature="e#14772#14778#0" expanded="true" />
-          </folding>
+        <state line="145" column="40" selection-start="6162" selection-end="6162" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/validate/vo/WrapParseKITTI.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="25" column="0" selection-start="699" selection-end="699" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/validate/vo/ParseKITTI.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="82" column="50" selection-start="2101" selection-end="2101" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../boofcv/main/ip/src/boofcv/struct/BoofDefaults.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="31" column="40" selection-start="891" selection-end="891" vertical-scroll-proportion="0.0">
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/validate/vo/OutputForKITTI.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="100" column="33" selection-start="4245" selection-end="4245" vertical-scroll-proportion="0.0">
-          <folding />
+        <state line="36" column="38" selection-start="1487" selection-end="1487" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../../ddogleg/change.txt">
+    <entry file="file://$PROJECT_DIR$/src/validate/vo/DebugVisualOdometryStereo.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="12" column="137" selection-start="365" selection-end="365" vertical-scroll-proportion="0.36734694">
-          <folding />
+        <state line="436" column="25" selection-start="14241" selection-end="14241" vertical-scroll-proportion="0.29451287">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

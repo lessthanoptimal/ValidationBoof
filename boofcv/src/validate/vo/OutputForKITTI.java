@@ -8,7 +8,7 @@ import boofcv.abst.feature.detect.extract.NonMaxSuppression;
 import boofcv.abst.feature.detect.intensity.GeneralFeatureIntensity;
 import boofcv.abst.feature.detect.interest.DetectorInterestPointMulti;
 import boofcv.abst.feature.detect.interest.GeneralToInterestMulti;
-import boofcv.abst.sfm.StereoVisualOdometry;
+import boofcv.abst.sfm.d3.StereoVisualOdometry;
 import boofcv.alg.feature.detect.interest.GeneralFeatureDetector;
 import boofcv.core.image.ConvertBufferedImage;
 import boofcv.core.image.GeneralizedImageOps;
@@ -16,6 +16,7 @@ import boofcv.factory.feature.describe.FactoryDescribeRegionPoint;
 import boofcv.factory.feature.detect.extract.FactoryFeatureExtractor;
 import boofcv.factory.feature.detect.intensity.FactoryIntensityPoint;
 import boofcv.factory.sfm.FactoryVisualOdometry;
+import boofcv.struct.GrowQueue_F64;
 import boofcv.struct.image.ImageFloat32;
 import boofcv.struct.image.ImageSingleBand;
 import georegression.struct.se.Se3_F64;
@@ -28,6 +29,8 @@ import java.io.PrintStream;
 * @author Peter Abeles
 */
 public class OutputForKITTI {
+
+	public static GrowQueue_F64 averageTimes = new GrowQueue_F64();
 
 	public static <T extends ImageSingleBand>
 	void computeOdometry( SequenceStereoImages data,
@@ -68,7 +71,10 @@ public class OutputForKITTI {
 			System.out.println("Processed "+totalFrames++);
 		} while( data.next() );
 		long after = System.currentTimeMillis();
-		System.out.print("Frame Average: "+(after-before)/(totalFrames*1000.0));
+
+		double averagePerFrame = (after-before)/(totalFrames*1000.0);
+		averageTimes.push(averagePerFrame);
+		System.out.println("Frame Average: "+averagePerFrame);
 	}
 
 	public static void main( String args[] ) throws FileNotFoundException {
@@ -76,20 +82,19 @@ public class OutputForKITTI {
 		Class imageType = ImageFloat32.class;
 		Class derivType = ImageFloat32.class;
 
-		for( int dataSet = 0; dataSet < 11; dataSet++ ) {
-//			GeneralFeatureIntensity intensity =
-//					FactoryIntensityPoint.hessian(HessianBlobIntensity.Type.DETERMINANT, imageType);
+		for( int dataSet = 11; dataSet < 22; dataSet++ ) {
 			GeneralFeatureIntensity intensity =
-					FactoryIntensityPoint.shiTomasi(2, false, imageType);
+					FactoryIntensityPoint.shiTomasi(2,false,imageType);
 			NonMaxSuppression nonmax = FactoryFeatureExtractor.nonmax(new ConfigExtract(4, 400, 0, true, false, true));
 			GeneralFeatureDetector general = new GeneralFeatureDetector(intensity,nonmax);
+			general.setMaxFeatures(800);
 			DetectorInterestPointMulti detector = new GeneralToInterestMulti(general,1,imageType,derivType);
 //			DescribeRegionPoint describe = FactoryDescribeRegionPoint.brief(16,512,-1,4,true,imageType);
 //			DescribeRegionPoint describe = FactoryDescribeRegionPoint.pixelNCC(11,11,imageType);
-			DescribeRegionPoint describe = FactoryDescribeRegionPoint.surfFast(null, imageType);
+			DescribeRegionPoint describe = FactoryDescribeRegionPoint.surfFast(null,imageType);
 			DetectDescribeMulti detDescMulti =  new DetectDescribeMultiFusion(detector,null,describe);
 
-			StereoVisualOdometry alg = FactoryVisualOdometry.stereoQuadPnP(1.5, 0.1 , Double.MAX_VALUE, 5000, 50, detDescMulti, imageType);
+			StereoVisualOdometry alg = FactoryVisualOdometry.stereoQuadPnP(1.5, 0.9 , 100, Double.MAX_VALUE, 1000, 50, detDescMulti, imageType);
 
 			String dataID = String.format("%02d",dataSet);
 
@@ -100,5 +105,11 @@ public class OutputForKITTI {
 
 			output.close();
 		}
+
+		double total = 0;
+		for( int i = 0; i < averageTimes.size; i++ ) {
+			total += averageTimes.get(i);
+		}
+		System.out.println("Overall Average "+(total/averageTimes.size));
 	}
 }

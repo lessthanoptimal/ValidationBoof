@@ -1,11 +1,11 @@
 package validate.vo;
 
-import boofcv.abst.feature.detect.extract.ConfigExtract;
+import boofcv.abst.feature.detect.interest.ConfigGeneralDetector;
 import boofcv.abst.feature.tracker.PointTrack;
 import boofcv.abst.feature.tracker.PointTracker;
 import boofcv.core.image.ConvertBufferedImage;
 import boofcv.core.image.GeneralizedImageOps;
-import boofcv.factory.feature.tracker.FactoryPointSequentialTracker;
+import boofcv.factory.feature.tracker.FactoryPointTracker;
 import boofcv.gui.feature.VisualizeFeatures;
 import boofcv.gui.image.ImagePanel;
 import boofcv.gui.image.ShowImages;
@@ -300,7 +300,7 @@ public class DebugTrackerVideo <T extends ImageSingleBand> implements MouseListe
 //		ImagePointTracker<ImageFloat32> tracker =
 //				FactoryPointSequentialTracker.dda_FH_SURF(500,2,200,1,true,imageType);
 		PointTracker<ImageFloat32> tracker =
-				FactoryPointSequentialTracker.klt(-1,new int[]{1, 2, 4, 8}, new ConfigExtract(5,300),3, imageType, ImageFloat32.class);
+				FactoryPointTracker.klt(new int[]{1, 2, 4, 8}, new ConfigGeneralDetector(-2,5,300),3, imageType, ImageFloat32.class);
 
 		DebugTrackerVideo app = new DebugTrackerVideo(tracker,data,imageType);
 		app.processSequence();

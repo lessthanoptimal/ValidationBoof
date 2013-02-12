@@ -80,7 +80,8 @@ public class ParseKITTI {
 			}
 
 		} catch (FileNotFoundException e) {
-			throw new RuntimeException(e);
+			// not all datasets have ground truth
+//			throw new RuntimeException(e);
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
