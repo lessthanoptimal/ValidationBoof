@@ -71,8 +71,8 @@ public class BatchEvaluateSummaryAndTime {
 
 		createDirectories(dir);
 
-//		for( EvaluatedAlgorithm alg : EvaluatedAlgorithm.values() ) {
-		EvaluatedAlgorithm alg = EvaluatedAlgorithm.FH_SURF_KLT;
+		for( EvaluatedAlgorithm alg : EvaluatedAlgorithm.values() ) {
+//		EvaluatedAlgorithm alg = EvaluatedAlgorithm.FH_SURF_KLT;
 			System.out.println("Evaluating "+alg);
 
 			// create the summary file
@@ -98,6 +98,6 @@ public class BatchEvaluateSummaryAndTime {
 			}
 
 			outSummary.close();
-//		}
+		}
 	}
 }

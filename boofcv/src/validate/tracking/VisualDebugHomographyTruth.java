@@ -175,7 +175,8 @@ public class VisualDebugHomographyTruth<T extends ImageSingleBand> implements Mo
 
 		FactoryEvaluationTrackers trackers = new FactoryEvaluationTrackers(imageType);
 //		EvaluationTracker tracker = trackers.createFhSurf(false);
-		EvaluationTracker tracker = trackers.createFhSurfKlt();
+//		EvaluationTracker tracker = trackers.createFhSurfKlt();
+		EvaluationTracker tracker = trackers.createFhBriefKlt(false);
 //		EvaluationTracker tracker = trackers.createKlt();
 //		EvaluationTracker tracker = trackers.createBrief(false,false);
 

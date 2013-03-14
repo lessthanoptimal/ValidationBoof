@@ -7,6 +7,8 @@ import boofcv.abst.feature.describe.DescribeRegionPoint;
 import boofcv.abst.feature.detdesc.DetectDescribeFusion;
 import boofcv.abst.feature.detect.extract.ConfigExtract;
 import boofcv.abst.feature.detect.extract.NonMaxSuppression;
+import boofcv.abst.feature.detect.interest.ConfigFast;
+import boofcv.abst.feature.detect.interest.ConfigGeneralDetector;
 import boofcv.abst.feature.detect.interest.InterestPointDetector;
 import boofcv.abst.feature.detect.interest.WrapFHtoInterestPoint;
 import boofcv.abst.feature.orientation.OrientationImage;
@@ -89,7 +91,8 @@ public class FactoryEvaluationTrackers<T extends ImageSingleBand> {
 		OrientationImage<T> orientation;
 		if( useFast ) {
 			Class derivType = GImageDerivativeOps.getDerivativeType(imageType);
-			GeneralFeatureDetector det = FactoryDetectPoint.createFast(10, 6, 9,600, imageType);
+			GeneralFeatureDetector det = FactoryDetectPoint.createFast(
+					new ConfigFast(6,9), new ConfigGeneralDetector(600,10,6), imageType);
 			detector = FactoryInterestPoint.wrapPoint(det,1,imageType,derivType);
 			orientation = null;
 		} else {

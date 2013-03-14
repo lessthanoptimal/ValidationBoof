@@ -21,7 +21,6 @@ import static validate.tracking.BatchEvaluateSummaryAndTime.pathToData;
 /**
  * @author Peter Abeles
  */
-// TODO Prune redundant tracks.  Those are tracks with the same center point but different scales
 public class EvaluateTrackerStability<T extends ImageSingleBand> {
 
 	// list of tracks that have never gone outside the image's FOV
