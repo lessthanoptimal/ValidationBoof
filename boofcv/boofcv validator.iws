@@ -4,25 +4,18 @@
     <list default="true" readonly="true" id="5ae49738-03a7-49e6-8d41-9676d295fd24" name="Default" comment="- Added parser for KITTI dataset&#10;- Tweaks to VO metrics">
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../boofcv/main/feature/src/boofcv/abst/feature/detect/interest/ConfigFast.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../boofcv/applet/src/boofcv/applet/AppletMediaManager.java" afterPath="$PROJECT_DIR$/../../boofcv/applet/src/boofcv/applet/AppletMediaManager.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/validate/tracking/BatchEvaluateSummaryAndTime.java" afterPath="$PROJECT_DIR$/src/validate/tracking/BatchEvaluateSummaryAndTime.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../boofcv/evaluation/benchmark/src/boofcv/benchmark/feature/corner/BenchmarkCornerAccuracy.java" afterPath="$PROJECT_DIR$/../../boofcv/evaluation/benchmark/src/boofcv/benchmark/feature/corner/BenchmarkCornerAccuracy.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../boofcv/evaluation/benchmark/src/boofcv/benchmark/feature/corner/BenchmarkCornerRuntime.java" afterPath="$PROJECT_DIR$/../../boofcv/evaluation/benchmark/src/boofcv/benchmark/feature/corner/BenchmarkCornerRuntime.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../boofcv/evaluation/benchmark/src/boofcv/benchmark/feature/detect/BenchmarkDetectHelper.java" afterPath="$PROJECT_DIR$/../../boofcv/evaluation/benchmark/src/boofcv/benchmark/feature/detect/BenchmarkDetectHelper.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/validate/vo/DebugVisualOdometryStereo.java" afterPath="$PROJECT_DIR$/src/validate/vo/DebugVisualOdometryStereo.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../boofcv/evaluation/visualization/src/boofcv/alg/feature/detect/interest/DetectFeaturePointApp.java" afterPath="$PROJECT_DIR$/../../boofcv/evaluation/visualization/src/boofcv/alg/feature/detect/interest/DetectFeaturePointApp.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../boofcv/main/ip/src/boofcv/misc/DiscretizedCircle.java" afterPath="$PROJECT_DIR$/../../boofcv/main/ip/src/boofcv/misc/DiscretizedCircle.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/validate/tracking/EvaluateTrackerStability.java" afterPath="$PROJECT_DIR$/src/validate/tracking/EvaluateTrackerStability.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../boofcv/main/feature/src/boofcv/factory/feature/detect/interest/FactoryDetectPoint.java" afterPath="$PROJECT_DIR$/../../boofcv/main/feature/src/boofcv/factory/feature/detect/interest/FactoryDetectPoint.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/validate/tracking/FactoryEvaluationTrackers.java" afterPath="$PROJECT_DIR$/src/validate/tracking/FactoryEvaluationTrackers.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../boofcv/main/geo/src/boofcv/factory/feature/tracker/FactoryPointTracker.java" afterPath="$PROJECT_DIR$/../../boofcv/main/geo/src/boofcv/factory/feature/tracker/FactoryPointTracker.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../boofcv/main/feature/src/boofcv/alg/feature/detect/intensity/FastCornerIntensity.java" afterPath="$PROJECT_DIR$/../../boofcv/main/feature/src/boofcv/alg/feature/detect/intensity/FastCornerIntensity.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../georegression/src/georegression/struct/GeoTuple.java" afterPath="$PROJECT_DIR$/../../georegression/src/georegression/struct/GeoTuple.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../boofcv/main/feature/src/boofcv/alg/feature/detect/line/HoughTransformLineFootOfNorm.java" afterPath="$PROJECT_DIR$/../../boofcv/main/feature/src/boofcv/alg/feature/detect/line/HoughTransformLineFootOfNorm.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../georegression/src/georegression/struct/InvertibleTransform.java" afterPath="$PROJECT_DIR$/../../georegression/src/georegression/struct/InvertibleTransform.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/validate/vo/OutputForKITTI.java" afterPath="$PROJECT_DIR$/src/validate/vo/OutputForKITTI.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../georegression/src/georegression/struct/se/Se3_F64.java" afterPath="$PROJECT_DIR$/../../georegression/src/georegression/struct/se/Se3_F64.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/validate/tracking/VisualDebugHomographyTruth.java" afterPath="$PROJECT_DIR$/src/validate/tracking/VisualDebugHomographyTruth.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/boofcv validator.ipr" afterPath="$PROJECT_DIR$/boofcv validator.ipr" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/boofcv validator.iws" afterPath="$PROJECT_DIR$/boofcv validator.iws" />
     </list>
     <list id="a1871b72-0229-4eb0-82fb-6085d307f536" name="Failed commit: Default" comment="">
@@ -30,7 +23,7 @@
     </list>
     <ignored path="boofcv validator.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1363277329662" ignored="false" />
+    <file path="/Dummy.txt" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1363277728029" ignored="false" />
     <file path="$PROJECT_DIR$/../../SURFPerformance/describe_stability_VLFeat_SIFT.txt" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1356626929203" ignored="false" />
     <file path="$PROJECT_DIR$/../../SURFPerformance/src/boofcv/benchmark/surf/BenchmarkRuntimeAllSurf.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1356627618037" ignored="false" />
     <file path="/FactoryEvaluationTrackers.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1363275221098" ignored="false" />
@@ -116,7 +109,7 @@
       <file leaf-file-name="FactoryEvaluationTrackers.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/validate/tracking/FactoryEvaluationTrackers.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="94" column="36" selection-start="3693" selection-end="3693" vertical-scroll-proportion="1.0272988">
+            <state line="89" column="36" selection-start="3394" selection-end="3394" vertical-scroll-proportion="1.0272988">
               <folding />
             </state>
           </provider>
@@ -1014,7 +1007,11 @@
       <created>1354926130438</created>
       <updated>1354926130438</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="- Updated code for recent changes to BoofCV's API.&#10;- Made sure FAST and trackers produce the same/comparable reslts">
+      <created>1363277730801</created>
+      <updated>1363277730801</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -1089,7 +1086,7 @@
     <option name="MAXIMUM_HISTORY_ROWS" value="1000" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="- Added parser for KITTI dataset&#10;- Tweaks to VO metrics" />
+    <option name="LAST_COMMIT_MESSAGE" value="- Updated code for recent changes to BoofCV's API.&#10;- Made sure FAST and trackers produce the same/comparable reslts" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -1113,6 +1110,7 @@
     <MESSAGE value="- Changed KLT pyramid PointTracker so that its behavior matches the previous version exactly.&#10;  * Major Change: Wasn't updating the KLT description" />
     <MESSAGE value="- minor tweaks in error metrics" />
     <MESSAGE value="- Added parser for KITTI dataset&#10;- Tweaks to VO metrics" />
+    <MESSAGE value="- Updated code for recent changes to BoofCV's API.&#10;- Made sure FAST and trackers produce the same/comparable reslts" />
   </component>
   <component name="VssConfiguration">
     <option name="CLIENT_PATH" value="" />
@@ -1263,7 +1261,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/validate/tracking/FactoryEvaluationTrackers.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="94" column="36" selection-start="3693" selection-end="3693" vertical-scroll-proportion="1.0272988">
+        <state line="89" column="36" selection-start="3394" selection-end="3394" vertical-scroll-proportion="1.0272988">
           <folding />
         </state>
       </provider>

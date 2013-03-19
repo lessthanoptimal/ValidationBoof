@@ -2,12 +2,12 @@ package validate.tracking;
 
 import boofcv.alg.filter.derivative.GImageDerivativeOps;
 import boofcv.alg.interpolate.InterpolatePixel;
+import boofcv.alg.transform.pyramid.PyramidOps;
 import boofcv.core.image.border.BorderType;
 import boofcv.factory.interpolate.FactoryInterpolation;
 import boofcv.factory.transform.pyramid.FactoryPyramid;
 import boofcv.struct.image.ImageSingleBand;
 import boofcv.struct.pyramid.PyramidDiscrete;
-import boofcv.struct.pyramid.PyramidUpdaterDiscrete;
 import georegression.struct.homo.Homography2D_F64;
 import org.ddogleg.optimization.FactoryOptimization;
 import org.ddogleg.optimization.UnconstrainedMinimization;
@@ -21,10 +21,10 @@ import org.ddogleg.optimization.UtilOptimize;
  */
 public class RefineHomographTransform<I extends ImageSingleBand, D extends ImageSingleBand> {
 
-	PyramidUpdaterDiscrete<I> updater;
 	PyramidDiscrete<I> src;
-	PyramidDiscrete<D> srcDericX;
-	PyramidDiscrete<D> srcDericY;
+	D[] srcDericX;
+	D[] srcDericY;
+	Class<D> derivType;
 
 	PyramidDiscrete<I> dst;
 
@@ -37,29 +37,25 @@ public class RefineHomographTransform<I extends ImageSingleBand, D extends Image
 	Homography2D_F64 result = new Homography2D_F64();
 
 	public RefineHomographTransform( int scales[], Class<I> imageType , Class<D> derivType ) {
+		this.derivType = derivType;
 		InterpolatePixel<I> interp = FactoryInterpolation.bilinearPixel(imageType);
 
 		function = new FitHomographyFunction<I>(interp);
 		gradient = new FitHomographyGradient<I, D>(interp);
 
-		src = new PyramidDiscrete<I>(imageType,true,scales);
-		dst = new PyramidDiscrete<I>(imageType,true,scales);
-
-		srcDericX = new PyramidDiscrete<D>(derivType,false,scales);
-		srcDericY = new PyramidDiscrete<D>(derivType,false,scales);
-
-		updater = FactoryPyramid.discreteGaussian(imageType, -1, 2);
+		src = FactoryPyramid.discreteGaussian(scales,-1,2,true,imageType);
+		dst = FactoryPyramid.discreteGaussian(scales,-1,2,true,imageType);
 	}
 
 	public void setSource( I src ) {
 
-		updater.update(src,this.src);
-		srcDericX.initialize(src.width, src.height);
-		srcDericY.initialize(src.width,src.height);
+		this.src.process(src);
+		srcDericX = PyramidOps.declareOutput(this.src, derivType);
+		srcDericY = PyramidOps.declareOutput(this.src, derivType);
 
 		for( int i = 0; i < this.src.getNumLayers(); i++ ) {
-			D dx = srcDericX.getLayer(i);
-			D dy = srcDericY.getLayer(i);
+			D dx = srcDericX[i];
+			D dy = srcDericY[i];
 
 			GImageDerivativeOps.sobel(this.src.getLayer(i),dx,dy, BorderType.EXTENDED);
 		}
@@ -67,7 +63,7 @@ public class RefineHomographTransform<I extends ImageSingleBand, D extends Image
 
 	public boolean process( I dst, Homography2D_F64 H_init ) {
 
-		updater.update(dst,this.dst);
+		this.dst.process(dst);
 
 		Homography2D_F64 H = H_init.copy();
 
@@ -80,7 +76,7 @@ public class RefineHomographTransform<I extends ImageSingleBand, D extends Image
 			Homography2D_F64 H_layer = H_scale.concat(H,null).concat(H_scale_inv,null);
 
 			H_layer = processLayer( src.getLayer(layer),this.dst.getLayer(layer),
-					srcDericX.getLayer(layer),srcDericY.getLayer(layer),H_layer);
+					srcDericX[layer],srcDericY[layer],H_layer);
 
 			// convert the scale back up into the original image scale
 			H_scale_inv.concat(H_layer,null).concat(H_scale,H);

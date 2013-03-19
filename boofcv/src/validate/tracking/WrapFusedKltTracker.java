@@ -10,7 +10,6 @@ import boofcv.factory.filter.derivative.FactoryDerivative;
 import boofcv.factory.transform.pyramid.FactoryPyramid;
 import boofcv.struct.image.ImageSingleBand;
 import boofcv.struct.pyramid.PyramidDiscrete;
-import boofcv.struct.pyramid.PyramidUpdaterDiscrete;
 import georegression.struct.point.Point2D_F64;
 
 import java.util.ArrayList;
@@ -25,12 +24,13 @@ public class WrapFusedKltTracker <I extends ImageSingleBand, D extends ImageSing
 	InterestPointDetector<I> detector;
 	PyramidKltForCombined<I,D> tracker;
 
-	PyramidUpdaterDiscrete<I> updaterP;
 	ImageGradient<I,D> gradient;
 
 	PyramidDiscrete<I> pyramid;
-	PyramidDiscrete<D> derivX;
-	PyramidDiscrete<D> derivY;
+	D[] derivX;
+	D[] derivY;
+
+	Class<D> derivType;
 
 	List<PyramidKltFeature> tracks = new ArrayList<PyramidKltFeature>();
 
@@ -42,23 +42,24 @@ public class WrapFusedKltTracker <I extends ImageSingleBand, D extends ImageSing
 		this.detector = detector;
 		this.tracker = tracker;
 
-		Class<D> derivType = GImageDerivativeOps.getDerivativeType(imageType);
+		derivType = GImageDerivativeOps.getDerivativeType(imageType);
 
-		updaterP = FactoryPyramid.discreteGaussian(imageType, -1, 2);
 		gradient = FactoryDerivative.sobel(imageType, derivType);
 
 		int pyramidScaling[] = tracker.pyramidScaling;
 
-		pyramid = new PyramidDiscrete<I>(imageType,true,pyramidScaling);
-		derivX = new PyramidDiscrete<D>(derivType,false,pyramidScaling);
-		derivY = new PyramidDiscrete<D>(derivType,false,pyramidScaling);
+		pyramid = FactoryPyramid.discreteGaussian(pyramidScaling,-1,2,true,imageType);
 	}
 
 	@Override
 	public void track(I image) {
 
 		// update the image pyramid
-		updaterP.update(image,pyramid);
+		pyramid.process(image);
+		if( derivX == null ) {
+			derivX = PyramidOps.declareOutput(pyramid,derivType);
+			derivY = PyramidOps.declareOutput(pyramid,derivType);
+		}
 		PyramidOps.gradient(pyramid, gradient, derivX, derivY);
 
 		tracker.setInputs(pyramid,derivX,derivY);

@@ -10,7 +10,6 @@ import boofcv.factory.transform.pyramid.FactoryPyramid;
 import boofcv.struct.feature.TupleDesc;
 import boofcv.struct.image.ImageSingleBand;
 import boofcv.struct.pyramid.PyramidDiscrete;
-import boofcv.struct.pyramid.PyramidUpdaterDiscrete;
 import georegression.struct.point.Point2D_F64;
 
 import java.util.ArrayList;
@@ -28,11 +27,10 @@ public class WrapFusedTracker
 
 	CombinedTrackerScalePoint<I,D,TD> tracker;
 
-	PyramidUpdaterDiscrete<I> updaterP;
-
 	PyramidDiscrete<I> pyramid;
-	PyramidDiscrete<D> derivX;
-	PyramidDiscrete<D> derivY;
+	D[] derivX;
+	D[] derivY;
+	Class<D> derivType;
 
 	ImageGradient<I,D> gradient;
 
@@ -47,23 +45,24 @@ public class WrapFusedTracker
 		this.tracker = tracker;
 		this.modeKlt = modeKlt;
 
-		Class<D> derivType = GImageDerivativeOps.getDerivativeType(imageType);
+		derivType = GImageDerivativeOps.getDerivativeType(imageType);
 
-		updaterP = FactoryPyramid.discreteGaussian(imageType, -1, 2);
 		gradient = FactoryDerivative.sobel(imageType, derivType);
 
 		int pyramidScaling[] = tracker.getTrackerKlt().pyramidScaling;
 
-		pyramid = new PyramidDiscrete<I>(imageType,true,pyramidScaling);
-		derivX = new PyramidDiscrete<D>(derivType,false,pyramidScaling);
-		derivY = new PyramidDiscrete<D>(derivType,false,pyramidScaling);
+		pyramid = FactoryPyramid.discreteGaussian(pyramidScaling,-1,2,true,imageType);
 	}
 
 	@Override
 	public void track(I image) {
 
 		// update the image pyramid
-		updaterP.update(image,pyramid);
+		pyramid.process(image);
+		if( derivX == null ) {
+			derivX = PyramidOps.declareOutput(pyramid,derivType);
+			derivY = PyramidOps.declareOutput(pyramid,derivType);
+		}
 		PyramidOps.gradient(pyramid, gradient, derivX, derivY);
 
 		// pass in filtered inputs

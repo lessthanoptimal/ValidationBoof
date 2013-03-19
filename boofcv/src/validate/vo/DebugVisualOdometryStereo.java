@@ -414,7 +414,7 @@ public class DebugVisualOdometryStereo<T extends ImageSingleBand> implements Mou
 		if( selection == 0 ) {
 			PkltConfig configKlt = PkltConfig.createDefault(imageType, derivType);
 			configKlt.pyramidScaling = new int[]{1, 2, 4, 8};
-			configKlt.featureRadius = 3;
+			configKlt.templateRadius = 3;
 
 			tracker = FactoryPointTrackerTwoPass.klt(configKlt, new ConfigGeneralDetector(600, 3, 1));
 		}

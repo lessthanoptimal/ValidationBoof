@@ -86,7 +86,7 @@ public class OutputForKITTI {
 
 			PkltConfig configKlt = PkltConfig.createDefault(imageType, derivType);
 			configKlt.pyramidScaling = new int[]{1, 2, 4, 8};
-			configKlt.featureRadius = 3;
+			configKlt.templateRadius = 3;
 
 			PointTrackerTwoPass tracker =
 					FactoryPointTrackerTwoPass.klt(configKlt, new ConfigGeneralDetector(600, 3, 1));
