@@ -2,6 +2,7 @@ package validate.tracking;
 
 import boofcv.io.image.SimpleImageSequence;
 import boofcv.io.wrapper.DefaultMediaManager;
+import boofcv.struct.image.ImageDataType;
 import boofcv.struct.image.ImageFloat32;
 import boofcv.struct.image.ImageSingleBand;
 
@@ -31,9 +32,9 @@ public class EvaluateTrackerRuntime<T extends ImageSingleBand> implements Serial
 	public double evaluate() {
 
 		SimpleImageSequence<T> sequence =
-				DefaultMediaManager.INSTANCE.openVideo(inputPath, imageType);
+				DefaultMediaManager.INSTANCE.openVideo(inputPath, ImageDataType.single(imageType));
 
-		FactoryEvaluationTrackers<T> factory = new FactoryEvaluationTrackers<T>(sequence.getImageType());
+		FactoryEvaluationTrackers<T> factory = new FactoryEvaluationTrackers<T>(sequence.getImageType().getDataType().getImageClass());
 		EvaluationTracker<T> tracker = factory.create(alg);
 
 		long totalRuntime = 0;

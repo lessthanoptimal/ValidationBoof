@@ -250,7 +250,7 @@ public class DebugVisualOdometryStereo<T extends ImageSingleBand> implements Mou
 			}
 			System.out.printf("%d %6.2f NO UPDATE fault = %s\n",frame,fps,alg.isFault());
 		} else {
-			Se3_F64 found = alg.getLeftToWorld().concat(previousWorldToLeftFound,null);
+			Se3_F64 found = alg.getCameraToWorld().concat(previousWorldToLeftFound,null);
 			Se3_F64 expected = data.getLeftToWorld().concat(previousWorldToLeft,null);
 
 			Se3_F64 diff = expected.concat(found.invert(null), null);
@@ -266,7 +266,7 @@ public class DebugVisualOdometryStereo<T extends ImageSingleBand> implements Mou
 //			System.out.println("  found "+found.getT());
 
 			if( (frame%skipFrame) == 0 ) {
-				Se3_F64 deltaEstimated = alg.getLeftToWorld().concat(prevSkipEstimated.invert(null),null);
+				Se3_F64 deltaEstimated = alg.getCameraToWorld().concat(prevSkipEstimated.invert(null),null);
 				Se3_F64 deltaTruth = data.getLeftToWorld().concat(prevSkipTruth.invert(null),null);
 
 				Se3_F64 error = deltaEstimated.invert(null).concat(deltaTruth,null);
@@ -274,11 +274,11 @@ public class DebugVisualOdometryStereo<T extends ImageSingleBand> implements Mou
 				totalErrorDistanceSkip += error.getT().norm();
 				totalErrorRotationSkip += rotationMatrixToRadian(error.getR());
 
-				prevSkipEstimated.set(alg.getLeftToWorld());
+				prevSkipEstimated.set(alg.getCameraToWorld());
 				prevSkipTruth.set(data.getLeftToWorld());
 			}
 
-			alg.getLeftToWorld().invert(previousWorldToLeftFound);
+			alg.getCameraToWorld().invert(previousWorldToLeftFound);
 			data.getLeftToWorld().invert(previousWorldToLeft);
 
 			numEstimates++;
@@ -293,12 +293,12 @@ public class DebugVisualOdometryStereo<T extends ImageSingleBand> implements Mou
 			// find difference in absolute location
 			Se3_F64 leftToWorld = data.getLeftToWorld().concat(initialWorldToLeft,null);
 
-			diff = leftToWorld.concat(alg.getLeftToWorld().invert(null),null);
+			diff = leftToWorld.concat(alg.getCameraToWorld().invert(null),null);
 			absoluteLocation = diff.getT().norm();
 			absoluteRotation = rotationMatrixToRadian(diff.getR());
 
 			if( viewer != null ) {
-				updateView3D(alg.getLeftToWorld(),Color.BLACK);
+				updateView3D(alg.getCameraToWorld(),Color.BLACK);
 				updateView3D(leftToWorld,Color.ORANGE);
 			}
 

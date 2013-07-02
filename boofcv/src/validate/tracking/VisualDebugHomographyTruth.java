@@ -11,6 +11,7 @@ import boofcv.gui.image.ShowImages;
 import boofcv.io.image.SimpleImageSequence;
 import boofcv.io.wrapper.DefaultMediaManager;
 import boofcv.misc.BoofMiscOps;
+import boofcv.struct.image.ImageDataType;
 import boofcv.struct.image.ImageFloat32;
 import boofcv.struct.image.ImageSingleBand;
 import georegression.struct.homo.Homography2D_F64;
@@ -169,7 +170,7 @@ public class VisualDebugHomographyTruth<T extends ImageSingleBand> implements Mo
 //		String whichData = "carpet/move_in";
 
 		SimpleImageSequence sequence =
-				DefaultMediaManager.INSTANCE.openVideo(pathToData+whichData+"_undistorted.mjpeg",imageType);
+				DefaultMediaManager.INSTANCE.openVideo(pathToData+whichData+"_undistorted.mjpeg", ImageDataType.single(imageType));
 
 		List<Homography2D_F64> groundTruth = LogParseHomography.parse(pathToData+whichData+"_homography.txt");
 

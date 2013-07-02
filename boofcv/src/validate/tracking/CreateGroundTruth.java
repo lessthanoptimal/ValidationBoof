@@ -19,6 +19,7 @@ import boofcv.misc.BoofMiscOps;
 import boofcv.struct.calib.IntrinsicParameters;
 import boofcv.struct.distort.PointTransform_F32;
 import boofcv.struct.geo.AssociatedPair;
+import boofcv.struct.image.ImageDataType;
 import boofcv.struct.image.ImageFloat32;
 import georegression.struct.homo.Homography2D_F64;
 import georegression.struct.homo.UtilHomography;
@@ -232,7 +233,7 @@ public class CreateGroundTruth {
 
 
 		SimpleImageSequence sequence =
-				DefaultMediaManager.INSTANCE.openVideo(pathToData+whichData+".mjpeg",ImageFloat32.class);
+				DefaultMediaManager.INSTANCE.openVideo(pathToData+whichData+".mjpeg", ImageDataType.single(ImageFloat32.class));
 
 		IntrinsicParameters cameraParam = BoofMiscOps.loadXML("../data/intrinsic.xml");
 

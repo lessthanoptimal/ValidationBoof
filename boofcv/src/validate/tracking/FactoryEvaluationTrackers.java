@@ -29,6 +29,7 @@ import boofcv.factory.feature.orientation.FactoryOrientation;
 import boofcv.factory.feature.orientation.FactoryOrientationAlgs;
 import boofcv.struct.feature.SurfFeature;
 import boofcv.struct.feature.TupleDesc_B;
+import boofcv.struct.image.ImageDataType;
 import boofcv.struct.image.ImageSingleBand;
 
 /**
@@ -74,7 +75,8 @@ public class FactoryEvaluationTrackers<T extends ImageSingleBand> {
 
 	public EvaluationTracker<T> createFhSurf(boolean copyDescription) {
 		InterestPointDetector<T> detector = createDetector();
-		DescribeRegionPoint<T,SurfFeature> describe = FactoryDescribeRegionPoint.surfStable(null, imageType);
+		DescribeRegionPoint<T,SurfFeature> describe =
+				FactoryDescribeRegionPoint.surfStable(null, ImageDataType.single(imageType));
 
 		ScoreAssociation<SurfFeature> scorer = FactoryAssociation.scoreEuclidean(describe.getDescriptionType(),true);
 		AssociateDescription<SurfFeature> associate = FactoryAssociation.greedy(scorer, Double.MAX_VALUE, true);
@@ -114,7 +116,8 @@ public class FactoryEvaluationTrackers<T extends ImageSingleBand> {
 	public EvaluationTracker<T> createFhSurfKlt() {
 		InterestPointDetector<T> detector = createDetector();
 
-		DescribeRegionPoint<T,SurfFeature> describe = FactoryDescribeRegionPoint.surfStable(null, imageType);
+		DescribeRegionPoint<T,SurfFeature> describe =
+				FactoryDescribeRegionPoint.surfStable(null, ImageDataType.single(imageType));
 		ScoreAssociation<SurfFeature> scorer = FactoryAssociation.scoreEuclidean(describe.getDescriptionType(),true);
 		AssociateDescription<SurfFeature> associate = FactoryAssociation.greedy(scorer,Double.MAX_VALUE,true);
 

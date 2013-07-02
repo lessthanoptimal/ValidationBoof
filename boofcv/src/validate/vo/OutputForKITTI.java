@@ -48,7 +48,7 @@ public class OutputForKITTI {
 			if( !alg.process(inputLeft,inputRight) ) {
 				throw new RuntimeException("Updated failed!??!");
 			} else {
-				Se3_F64 found = alg.getLeftToWorld();
+				Se3_F64 found = alg.getCameraToWorld();
 
 				for( int row = 0; row < 3; row++ ) {
 					for( int i = 0; i < 3; i++ )

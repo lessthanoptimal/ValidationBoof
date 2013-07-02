@@ -2,6 +2,7 @@ package validate.tracking;
 
 import boofcv.io.image.SimpleImageSequence;
 import boofcv.io.wrapper.DefaultMediaManager;
+import boofcv.struct.image.ImageDataType;
 import boofcv.struct.image.ImageFloat32;
 import georegression.struct.homo.Homography2D_F64;
 
@@ -27,7 +28,7 @@ public class BatchEvaluateAveTolerance {
 		for( double tol : tolerances ) {
 
 			SimpleImageSequence sequence =
-					DefaultMediaManager.INSTANCE.openVideo(pathToData + whichData+"_undistorted.mjpeg",imageType);
+					DefaultMediaManager.INSTANCE.openVideo(pathToData + whichData+"_undistorted.mjpeg", ImageDataType.single(imageType));
 
 			List<Homography2D_F64> groundTruth = LogParseHomography.parse(pathToData + whichData + "_homography.txt");
 
