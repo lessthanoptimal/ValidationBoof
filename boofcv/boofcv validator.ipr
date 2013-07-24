@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="AntConfiguration">
-    <defaultAnt bundledAnt="true" />
-  </component>
   <component name="CompilerConfiguration">
     <option name="DEFAULT_COMPILER" value="Javac" />
     <resourceExtensions />
@@ -172,6 +169,7 @@
       <module fileurl="file://$PROJECT_DIR$/../../boofcv/main/geo/BoofCV Geometric Vision.iml" filepath="$PROJECT_DIR$/../../boofcv/main/geo/BoofCV Geometric Vision.iml" />
       <module fileurl="file://$PROJECT_DIR$/../../boofcv/main/io/BoofCV IO.iml" filepath="$PROJECT_DIR$/../../boofcv/main/io/BoofCV IO.iml" />
       <module fileurl="file://$PROJECT_DIR$/../../boofcv/main/ip/BoofCV Image Processing.iml" filepath="$PROJECT_DIR$/../../boofcv/main/ip/BoofCV Image Processing.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../../boofcv/main/recognition/BoofCV Recognition.iml" filepath="$PROJECT_DIR$/../../boofcv/main/recognition/BoofCV Recognition.iml" />
       <module fileurl="file://$PROJECT_DIR$/../../boofcv/main/sfm/BoofCV SFM.iml" filepath="$PROJECT_DIR$/../../boofcv/main/sfm/BoofCV SFM.iml" />
       <module fileurl="file://$PROJECT_DIR$/../../boofcv/main/visualize/BoofCV Visualize.iml" filepath="$PROJECT_DIR$/../../boofcv/main/visualize/BoofCV Visualize.iml" />
       <module fileurl="file://$PROJECT_DIR$/../../ddogleg/DDogleg.iml" filepath="$PROJECT_DIR$/../../ddogleg/DDogleg.iml" />
@@ -180,7 +178,7 @@
       <module fileurl="file://$PROJECT_DIR$/../../ejml/trunk/ejml.iml" filepath="$PROJECT_DIR$/../../ejml/trunk/ejml.iml" />
     </modules>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_6" assert-keyword="true" jdk-15="true" project-jdk-name="1.7" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_6" assert-keyword="true" jdk-15="true" project-jdk-name="1.6 (64bit)" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/out" />
   </component>
   <component name="SvnBranchConfigurationManager">
