@@ -15,7 +15,9 @@ import georegression.struct.shapes.RectangleCorner2D_F64;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintStream;
 
 /**
  * @author Peter Abeles
@@ -33,7 +35,7 @@ public class DebugTrackerTldData<T extends ImageBase> {
 
 		String path = "../data/track_rect/TLD/"+dataName;
 
-		RectangleCorner2D_F64 initial = UtilTldData.parseRectangle(path+"/init.txt");
+		RectangleCorner2D_F64 initial = UtilTldData.parseRectangle(path + "/init.txt");
 		RectangleCorner2D_F64 found = new RectangleCorner2D_F64();
 
 		PrintStream out;
@@ -46,9 +48,11 @@ public class DebugTrackerTldData<T extends ImageBase> {
 
 		ImagePanel gui = null;
 
+		String imageType = new File(path+"/00001.jpg").exists() ? "jpg" : "png";
+
 		int imageNum = 0;
 		while( true ) {
-			String imageName = String.format("%s/%05d.jpg",path,imageNum+1);
+			String imageName = String.format("%s/%05d.%s",path,imageNum+1,imageType);
 			BufferedImage image = UtilImageIO.loadImage(imageName);
 			if( image == null )
 				break;
@@ -106,8 +110,8 @@ public class DebugTrackerTldData<T extends ImageBase> {
 	}
 
 	public static void main(String[] args) {
-//		evaluate("01_david");
-		evaluate("02_jumping");
+		evaluate("01_david");
+//		evaluate("02_jumping");
 //		evaluate("03_pedestrian1");
 //		evaluate("04_pedestrian2");
 //		evaluate("05_pedestrian3");

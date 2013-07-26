@@ -1,7 +1,6 @@
 package validate.trackrect;
 
 import georegression.metric.Intersection2D_F64;
-import georegression.metric.Intersection2D_I32;
 import georegression.struct.shapes.RectangleCorner2D_F64;
 
 import java.awt.*;
@@ -14,6 +13,15 @@ import java.io.IOException;
  * @author Peter Abeles
  */
 public class UtilTldData {
+
+	public static double computeFMeasure( TldResults stats ) {
+
+		double precision = stats.truePositives/(double)(stats.truePositives + stats.falsePositives);
+		double recall = stats.truePositives/(double)(stats.truePositives + stats.falseNegatives);
+
+		return 2.0*(precision*recall)/(precision + recall);
+	}
+
 
 	public static void updateStatistics( RectangleCorner2D_F64 expected , RectangleCorner2D_F64 found ,
 										 TldResults stats ) {
