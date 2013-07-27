@@ -12,8 +12,9 @@ libname = 'copentld'
 print '------ Reading directory '+inputDir
 
 datasets = ["01_david","02_jumping","03_pedestrian1","04_pedestrian2",
-            "05_pedestrian3","06_car","07_motocross","09_carchase","10_panda"]
+            "05_pedestrian3","06_car","07_motocross","08_volkswagen","09_carchase","10_panda"]
 
+datasets = ["08_volkswagen"]
 
 def convertData( dataset ):
     fout = open(libname+'_'+dataset+'.txt','w')
