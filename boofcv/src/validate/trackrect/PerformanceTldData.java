@@ -1,11 +1,11 @@
 package validate.trackrect;
 
-import boofcv.io.image.UtilImageIO;
-import boofcv.misc.BoofMiscOps;
 import georegression.struct.shapes.RectangleCorner2D_F64;
 
-import java.awt.image.BufferedImage;
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.PrintStream;
 
 /**
  * @author Peter Abeles
@@ -88,7 +88,7 @@ public class PerformanceTldData {
 		PerformanceTldData performance = new PerformanceTldData();
 
 //		performance.evaluateAll("../thirdparty/opentld_c","copentld");
-		performance.evaluateAll("./","TLD");
+		performance.evaluateAll("./","BoofCV");
 
 		System.out.println("DONE!");
 	}

@@ -92,15 +92,15 @@ public class GenerateDetectionsTldData<T extends ImageBase> {
 
 	public static void main(String[] args) {
 		evaluate("01_david");
-		evaluate("02_jumping");
-		evaluate("03_pedestrian1");
-		evaluate("04_pedestrian2");
-		evaluate("05_pedestrian3");
-		evaluate("06_car");
-		evaluate("07_motocross");
-		evaluate("08_volkswagen");
-		evaluate("09_carchase");
-		evaluate("10_panda");
+//		evaluate("02_jumping");
+//		evaluate("03_pedestrian1");
+//		evaluate("04_pedestrian2");
+//		evaluate("05_pedestrian3");
+//		evaluate("06_car");
+//		evaluate("07_motocross");
+//		evaluate("08_volkswagen");
+//		evaluate("09_carchase");
+//		evaluate("10_panda");
 
 		System.out.println("DONE!");
 	}

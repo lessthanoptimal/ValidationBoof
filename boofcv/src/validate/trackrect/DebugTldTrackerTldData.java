@@ -1,16 +1,14 @@
 package validate.trackrect;
 
-import boofcv.abst.tracker.TrackerObjectRectangle;
 import boofcv.alg.tracker.tld.TldConfig;
+import boofcv.alg.tracker.tld.TldTracker;
 import boofcv.core.image.ConvertBufferedImage;
-import boofcv.factory.tracker.FactoryTrackerObjectRectangle;
-import boofcv.gui.image.ImagePanel;
 import boofcv.gui.image.ShowImages;
+import boofcv.gui.tracker.TldVisualizationPanel;
 import boofcv.io.image.UtilImageIO;
-import boofcv.struct.image.ImageBase;
 import boofcv.struct.image.ImageDataType;
 import boofcv.struct.image.ImageFloat32;
-import boofcv.struct.image.ImageUInt8;
+import boofcv.struct.image.ImageSingleBand;
 import georegression.struct.shapes.RectangleCorner2D_F64;
 
 import java.awt.*;
@@ -20,15 +18,16 @@ import java.io.File;
 /**
  * @author Peter Abeles
  */
-public class DebugTrackerTldData<T extends ImageBase> {
+public class DebugTldTrackerTldData<T extends ImageSingleBand> implements TldVisualizationPanel.Listener {
 
 	T input;
+	boolean paused = false;
 
-	public DebugTrackerTldData(ImageDataType<T> type) {
+	public DebugTldTrackerTldData(ImageDataType<T> type) {
 		input = type.createImage(1,1);
 	}
 
-	public void evaluate( String dataName , String outputName , TrackerObjectRectangle<T> tracker ) {
+	public void evaluate( String dataName , String outputName , TldTracker<T,?> tracker ) {
 		System.out.println("Processing "+dataName);
 
 		String path = "../data/track_rect/TLD/"+dataName;
@@ -36,7 +35,7 @@ public class DebugTrackerTldData<T extends ImageBase> {
 		RectangleCorner2D_F64 initial = UtilTldData.parseRectangle(path + "/init.txt");
 		RectangleCorner2D_F64 found = new RectangleCorner2D_F64();
 
-		ImagePanel gui = null;
+		TldVisualizationPanel gui = null;
 
 		String imageType = new File(path+"/00001.jpg").exists() ? "jpg" : "png";
 
@@ -53,17 +52,21 @@ public class DebugTrackerTldData<T extends ImageBase> {
 			boolean detected;
 
 			if( imageNum == 0 ) {
-				gui = new ImagePanel(image);
+				gui = new TldVisualizationPanel(this);
+				gui.setFrame(image);
+				gui.setSelectRectangle(false);
 				ShowImages.showWindow(gui,dataName);
-				detected = tracker.initialize(input,(int)initial.x0,(int)initial.y0,(int)initial.x1,(int)initial.y1);
+				tracker.initialize(input,(int)initial.x0,(int)initial.y0,(int)initial.x1,(int)initial.y1);
+				detected = true;
 			} else {
-				detected = tracker.process(input,found);
+				detected = tracker.track(input);
+				found.set(tracker.getTargetRegion());
 			}
 
 			if( !detected ) {
-				System.out.print("-");
+				System.out.println("No Detection");
 			} else {
-				System.out.print("+");
+				System.out.printf("Detection: %f,%f,%f,%f\n",found.x0,found.y0,found.x1,found.y1);
 
 				Graphics2D g2 = image.createGraphics();
 
@@ -73,31 +76,45 @@ public class DebugTrackerTldData<T extends ImageBase> {
 				g2.drawRect((int)found.x0,(int)found.y0,w,h);
 			}
 
-			gui.setBufferedImageSafe(image);
+			gui.setFrame(image);
+			gui.update(tracker,detected);
 			gui.repaint();
 
 			imageNum++;
-			if( imageNum % 50 == 0 )
-				System.out.println();
+
+			while( paused ) {
+				Thread.yield();
+			}
+
+//			BoofMiscOps.pause(30);
 		}
 		System.out.println();
 	}
 
 	public static void evaluate( String dataset ) {
-		Class type = ImageUInt8.class;
+		Class type = ImageFloat32.class;
 
-		DebugTrackerTldData generator = new DebugTrackerTldData(ImageDataType.single(type));
+		DebugTldTrackerTldData generator = new DebugTldTrackerTldData(ImageDataType.single(type));
 
-		TrackerObjectRectangle<ImageFloat32> tracker =
-				FactoryTrackerObjectRectangle.createTLD(new TldConfig(type));
+		TldTracker tracker = new TldTracker(new TldConfig(type));
 
 		String name = "TLD";
 
 		generator.evaluate(dataset,name,tracker);
 	}
 
+	@Override
+	public void startTracking(int x0, int y0, int x1, int y1) {
+		//To change body of implemented methods use File | Settings | File Templates.
+	}
+
+	@Override
+	public void togglePause() {
+		paused = !paused;
+	}
+
 	public static void main(String[] args) {
-//		evaluate("01_david");
+		evaluate("01_david");
 //		evaluate("02_jumping");
 //		evaluate("03_pedestrian1");
 //		evaluate("04_pedestrian2");
