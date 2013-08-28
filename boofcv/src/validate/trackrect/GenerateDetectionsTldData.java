@@ -8,6 +8,7 @@ import boofcv.io.image.UtilImageIO;
 import boofcv.struct.image.ImageBase;
 import boofcv.struct.image.ImageDataType;
 import boofcv.struct.image.ImageFloat32;
+import boofcv.struct.image.ImageUInt8;
 import georegression.struct.shapes.RectangleCorner2D_F64;
 
 import java.awt.image.BufferedImage;
@@ -80,10 +81,12 @@ public class GenerateDetectionsTldData<T extends ImageBase> {
 	}
 
 	public static void evaluate( String dataset ) {
-		GenerateDetectionsTldData generator = new GenerateDetectionsTldData(ImageDataType.single(ImageFloat32.class));
+		Class imageType = ImageFloat32.class;
 
-		TrackerObjectRectangle<ImageFloat32> tracker =
-				FactoryTrackerObjectRectangle.createTLD(new TldConfig(ImageFloat32.class));
+		GenerateDetectionsTldData generator = new GenerateDetectionsTldData(ImageDataType.single(imageType));
+
+		TrackerObjectRectangle tracker =
+				FactoryTrackerObjectRectangle.createTLD(new TldConfig(false,imageType));
 
 		String name = "BoofCV";
 
@@ -92,15 +95,15 @@ public class GenerateDetectionsTldData<T extends ImageBase> {
 
 	public static void main(String[] args) {
 		evaluate("01_david");
-//		evaluate("02_jumping");
-//		evaluate("03_pedestrian1");
-//		evaluate("04_pedestrian2");
-//		evaluate("05_pedestrian3");
-//		evaluate("06_car");
-//		evaluate("07_motocross");
-//		evaluate("08_volkswagen");
-//		evaluate("09_carchase");
-//		evaluate("10_panda");
+		evaluate("02_jumping");
+		evaluate("03_pedestrian1");
+		evaluate("04_pedestrian2");
+		evaluate("05_pedestrian3");
+		evaluate("06_car");
+		evaluate("07_motocross");
+		evaluate("08_volkswagen");
+		evaluate("09_carchase");
+		evaluate("10_panda");
 
 		System.out.println("DONE!");
 	}

@@ -6,9 +6,7 @@ import boofcv.core.image.ConvertBufferedImage;
 import boofcv.gui.image.ShowImages;
 import boofcv.gui.tracker.TldVisualizationPanel;
 import boofcv.io.image.UtilImageIO;
-import boofcv.struct.image.ImageDataType;
-import boofcv.struct.image.ImageFloat32;
-import boofcv.struct.image.ImageSingleBand;
+import boofcv.struct.image.*;
 import georegression.struct.shapes.RectangleCorner2D_F64;
 
 import java.awt.*;
@@ -27,7 +25,7 @@ public class DebugTldTrackerTldData<T extends ImageSingleBand> implements TldVis
 		input = type.createImage(1,1);
 	}
 
-	public void evaluate( String dataName , String outputName , TldTracker<T,?> tracker ) {
+	public void evaluate( String dataName , TldTracker<T,?> tracker ) {
 		System.out.println("Processing "+dataName);
 
 		String path = "../data/track_rect/TLD/"+dataName;
@@ -96,11 +94,9 @@ public class DebugTldTrackerTldData<T extends ImageSingleBand> implements TldVis
 
 		DebugTldTrackerTldData generator = new DebugTldTrackerTldData(ImageDataType.single(type));
 
-		TldTracker tracker = new TldTracker(new TldConfig(type));
+		TldTracker tracker = new TldTracker(new TldConfig(true,type));
 
-		String name = "TLD";
-
-		generator.evaluate(dataset,name,tracker);
+		generator.evaluate(dataset,tracker);
 	}
 
 	@Override

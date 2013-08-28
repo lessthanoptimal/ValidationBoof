@@ -89,7 +89,7 @@ public class DebugTrackerTldData<T extends ImageBase> {
 		DebugTrackerTldData generator = new DebugTrackerTldData(ImageDataType.single(type));
 
 		TrackerObjectRectangle<ImageFloat32> tracker =
-				FactoryTrackerObjectRectangle.createTLD(new TldConfig(type));
+				FactoryTrackerObjectRectangle.createTLD(new TldConfig(false,type));
 
 		String name = "TLD";
 

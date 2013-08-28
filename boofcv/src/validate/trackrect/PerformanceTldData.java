@@ -52,6 +52,7 @@ public class PerformanceTldData {
 
 		TldResults stats = new TldResults();
 
+		int lineNumber = 0;
 		while( true ) {
 			String lineTruth = readerTruth.readLine();
 			if( lineTruth == null )
@@ -59,7 +60,7 @@ public class PerformanceTldData {
 
 			String lineFound = readerRect.readLine();
 			if( lineFound == null )
-				throw new RuntimeException("Found is missing data");
+				throw new RuntimeException("Found is missing data on line "+lineNumber);
 
 			UtilTldData.parseRect(lineTruth, expected);
 			UtilTldData.parseRect(lineFound,found);
@@ -69,6 +70,7 @@ public class PerformanceTldData {
 			System.out.printf("  F = %6.3f      TP %5d TN %5d      FP %5d FN %5d\n",
 					UtilTldData.computeFMeasure(stats),stats.truePositives,stats.trueNegatives,stats.falsePositives,stats.falseNegatives);
 
+			lineNumber++;
 		}
 
 		System.out.println("F-measure: "+UtilTldData.computeFMeasure(stats));

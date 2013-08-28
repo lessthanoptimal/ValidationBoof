@@ -83,7 +83,7 @@ public class VisualizeResultsTldData{
 			gui.repaint();
 
 			imageNum++;
-			BoofMiscOps.pause(10);
+			BoofMiscOps.pause(30);
 		}
 
 		System.out.println("F-measure: "+UtilTldData.computeFMeasure(stats));
@@ -101,10 +101,10 @@ public class VisualizeResultsTldData{
 //		String dataset = "01_david";
 //		String dataset = "02_jumping";
 //		String dataset = "03_pedestrian1";
-		String dataset = "04_pedestrian2";
+//		String dataset = "04_pedestrian2";
 //		String dataset = "05_pedestrian3";
 //		String dataset = "06_car";
-//		String dataset = "07_motocross";
+		String dataset = "07_motocross";
 //		String dataset = "08_volkswagen";
 //		String dataset = "09_carchase";
 //		String dataset = "10_panda";
