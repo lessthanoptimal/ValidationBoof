@@ -6,7 +6,9 @@ import boofcv.core.image.ConvertBufferedImage;
 import boofcv.gui.image.ShowImages;
 import boofcv.gui.tracker.TldVisualizationPanel;
 import boofcv.io.image.UtilImageIO;
-import boofcv.struct.image.*;
+import boofcv.struct.image.ImageFloat32;
+import boofcv.struct.image.ImageSingleBand;
+import boofcv.struct.image.ImageType;
 import georegression.struct.shapes.RectangleCorner2D_F64;
 
 import java.awt.*;
@@ -21,7 +23,7 @@ public class DebugTldTrackerTldData<T extends ImageSingleBand> implements TldVis
 	T input;
 	boolean paused = false;
 
-	public DebugTldTrackerTldData(ImageDataType<T> type) {
+	public DebugTldTrackerTldData(ImageType<T> type) {
 		input = type.createImage(1,1);
 	}
 
@@ -45,7 +47,7 @@ public class DebugTldTrackerTldData<T extends ImageSingleBand> implements TldVis
 				break;
 
 			input.reshape(image.getWidth(),image.getHeight());
-			ConvertBufferedImage.convertFrom(image,input);
+			ConvertBufferedImage.convertFrom(image,input,true);
 
 			boolean detected;
 
@@ -92,7 +94,7 @@ public class DebugTldTrackerTldData<T extends ImageSingleBand> implements TldVis
 	public static void evaluate( String dataset ) {
 		Class type = ImageFloat32.class;
 
-		DebugTldTrackerTldData generator = new DebugTldTrackerTldData(ImageDataType.single(type));
+		DebugTldTrackerTldData generator = new DebugTldTrackerTldData(ImageType.single(type));
 
 		TldTracker tracker = new TldTracker(new TldConfig(true,type));
 

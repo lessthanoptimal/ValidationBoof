@@ -2,25 +2,45 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" readonly="true" id="5ae49738-03a7-49e6-8d41-9676d295fd24" name="Default" comment="- Added parser for KITTI dataset&#10;- Tweaks to VO metrics">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../results/trackrect/BoofCV_performance.txt" afterPath="$PROJECT_DIR$/../results/trackrect/BoofCV_performance.txt" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../thirdparty/circulant/matlab/tracker_release.zip" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/validate/trackrect/GenerateDetectionsMilTrackData.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/validate/trackrect/VisualizeResultsMilTrackData.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../data/track_rect/MILTrack/notes.txt" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../data/track_rect/MILTrack/setup.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/validate/tracking/BatchEvaluateAveTolerance.java" afterPath="$PROJECT_DIR$/src/validate/tracking/BatchEvaluateAveTolerance.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/validate/tracking/BatchEvaluateSummaryAndTime.java" afterPath="$PROJECT_DIR$/src/validate/tracking/BatchEvaluateSummaryAndTime.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../boofcv/main/recognition/src/boofcv/alg/tracker/circulant/CirculantTracker.java" afterPath="$PROJECT_DIR$/../../boofcv/main/recognition/src/boofcv/alg/tracker/circulant/CirculantTracker.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/validate/tracking/CreateGroundTruth.java" afterPath="$PROJECT_DIR$/src/validate/tracking/CreateGroundTruth.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/validate/vo/DebugDenseStereoVideo.java" afterPath="$PROJECT_DIR$/src/validate/vo/DebugDenseStereoVideo.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/validate/trackrect/DebugTldTrackerTldData.java" afterPath="$PROJECT_DIR$/src/validate/trackrect/DebugTldTrackerTldData.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/validate/trackrect/DebugTrackerTldData.java" afterPath="$PROJECT_DIR$/src/validate/trackrect/DebugTrackerTldData.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/validate/vo/DebugTrackerVideo.java" afterPath="$PROJECT_DIR$/src/validate/vo/DebugTrackerVideo.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/validate/vo/DebugVisualOdometryStereo.java" afterPath="$PROJECT_DIR$/src/validate/vo/DebugVisualOdometryStereo.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/validate/tracking/EvaluateTrackerRuntime.java" afterPath="$PROJECT_DIR$/src/validate/tracking/EvaluateTrackerRuntime.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/validate/tracking/EvaluateTrackerStability.java" afterPath="$PROJECT_DIR$/src/validate/tracking/EvaluateTrackerStability.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/validate/tracking/FactoryEvaluationTrackers.java" afterPath="$PROJECT_DIR$/src/validate/tracking/FactoryEvaluationTrackers.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/validate/tracking/FitHomographyFunction.java" afterPath="$PROJECT_DIR$/src/validate/tracking/FitHomographyFunction.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/validate/tracking/FitHomographyGradient.java" afterPath="$PROJECT_DIR$/src/validate/tracking/FitHomographyGradient.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/validate/trackrect/GenerateDetectionsTldData.java" afterPath="$PROJECT_DIR$/src/validate/trackrect/GenerateDetectionsTldData.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../ddogleg/src/org/ddogleg/fitting/modelset/lmeds/LeastMedianOfSquares.java" afterPath="$PROJECT_DIR$/../../ddogleg/src/org/ddogleg/fitting/modelset/lmeds/LeastMedianOfSquares.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/validate/trackrect/PerformanceTldData.java" afterPath="$PROJECT_DIR$/src/validate/trackrect/PerformanceTldData.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../boofcv/main/recognition/test/boofcv/alg/tracker/tld/TestTldFernClassifier.java" afterPath="$PROJECT_DIR$/../../boofcv/main/recognition/test/boofcv/alg/tracker/tld/TestTldFernClassifier.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../boofcv/main/recognition/src/boofcv/alg/tracker/tld/TldDetection.java" afterPath="$PROJECT_DIR$/../../boofcv/main/recognition/src/boofcv/alg/tracker/tld/TldDetection.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../boofcv/main/recognition/src/boofcv/alg/tracker/tld/TldFernClassifier.java" afterPath="$PROJECT_DIR$/../../boofcv/main/recognition/src/boofcv/alg/tracker/tld/TldFernClassifier.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/validate/trackrect/VisualizeResultsTldData.java" afterPath="$PROJECT_DIR$/src/validate/trackrect/VisualizeResultsTldData.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../boofcv/main/ip/src/boofcv/struct/image/ImageFloat32.java" afterPath="$PROJECT_DIR$/../../boofcv/main/ip/src/boofcv/struct/image/ImageFloat32.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../boofcv/main/ip/src/boofcv/struct/image/InterleavedF32.java" afterPath="$PROJECT_DIR$/../../boofcv/main/ip/src/boofcv/struct/image/InterleavedF32.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/validate/vo/OutputForKITTI.java" afterPath="$PROJECT_DIR$/src/validate/vo/OutputForKITTI.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/validate/tracking/RefineHomographTransform.java" afterPath="$PROJECT_DIR$/src/validate/tracking/RefineHomographTransform.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../boofcv/main/recognition/test/boofcv/alg/tracker/circulant/TestCirculantTracker.java" afterPath="$PROJECT_DIR$/../../boofcv/main/recognition/test/boofcv/alg/tracker/circulant/TestCirculantTracker.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/validate/tracking/VisualDebugHomographyTruth.java" afterPath="$PROJECT_DIR$/src/validate/tracking/VisualDebugHomographyTruth.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/validate/tracking/WrapGenericDetectTracker.java" afterPath="$PROJECT_DIR$/src/validate/tracking/WrapGenericDetectTracker.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/boofcv validator.ipr" afterPath="$PROJECT_DIR$/boofcv validator.ipr" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/boofcv validator.iws" afterPath="$PROJECT_DIR$/boofcv validator.iws" />
     </list>
-    <list id="a1871b72-0229-4eb0-82fb-6085d307f536" name="Failed commit: Default" comment="" />
+    <list id="a1871b72-0229-4eb0-82fb-6085d307f536" name="Failed commit: Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../ejml/trunk/EJML.iws" afterPath="$PROJECT_DIR$/../../ejml/trunk/EJML.iws" />
+    </list>
     <ignored path="boofcv validator.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1377630098813" ignored="false" />
+    <file path="/Dummy.txt" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1384800258538" ignored="false" />
     <file path="$PROJECT_DIR$/../../SURFPerformance/describe_stability_VLFeat_SIFT.txt" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1356626929203" ignored="false" />
     <file path="$PROJECT_DIR$/../../SURFPerformance/src/boofcv/benchmark/surf/BenchmarkRuntimeAllSurf.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1356627618037" ignored="false" />
-    <file path="/FactoryEvaluationTrackers.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1363275221098" ignored="false" />
+    <file path="/FactoryEvaluationTrackers.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1384737768969" ignored="false" />
     <file path="/WrapGenericDetectTracker.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1363114031307" ignored="false" />
     <file path="/DebugTrackerVideo.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1363115361771" ignored="false" />
     <file path="/DebugVisualOdometryStereo.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1363114812211" ignored="false" />
@@ -43,30 +63,30 @@
     <file path="/BenchmarkDetectHelper.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1363275577450" ignored="false" />
     <file path="/DetectFeaturePointApp.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1363275621336" ignored="false" />
     <file path="/GenerateResultsTldData.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1374632996817" ignored="false" />
-    <file path="/a.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1374542197853" ignored="false" />
-    <file path="/fragment.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1377204643444" ignored="false" />
-    <file path="/DebugTrackerTldData.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1377001685585" ignored="false" />
+    <file path="/a.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1384737981346" ignored="false" />
+    <file path="/fragment.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1384740392118" ignored="false" />
+    <file path="/DebugTrackerTldData.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1384736215891" ignored="false" />
     <file path="/TldConfig.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1377354975041" ignored="false" />
-    <file path="/TldTracker.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1377262453003" ignored="false" />
-    <file path="/TldFernClassifier.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1377612497692" ignored="false" />
+    <file path="/TldTracker.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1378867286923" ignored="false" />
+    <file path="/TldFernClassifier.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1378838388302" ignored="false" />
     <file path="$PROJECT_DIR$/../../SURFPerformance/interfaces/vlfeat/detdesc.py" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1374622776018" ignored="false" />
     <file path="/VisualizeResultsTldData.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1374683983771" ignored="false" />
     <file path="/UtilTldData.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1374683838798" ignored="false" />
     <file path="/TldResults.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1374634375405" ignored="false" />
-    <file path="/TldLearning.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1377354996557" ignored="false" />
+    <file path="/TldLearning.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1378863250473" ignored="false" />
     <file path="/ScaleTranslate2D.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1374755690412" ignored="false" />
     <file path="/ScaleTranslate2D_F32.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1374755701769" ignored="false" />
     <file path="/TldNonMaximalSuppression.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1374759302115" ignored="false" />
     <file path="/TestTldNonMaximalSuppression.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1374759661369" ignored="false" />
-    <file path="/TestTldFernClassifier.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1377612857263" ignored="false" />
+    <file path="/TestTldFernClassifier.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1378832148774" ignored="false" />
     <file path="/TldVisualizationPanel.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1377002677423" ignored="false" />
     <file path="/TldRegionTracker.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1377007977166" ignored="false" />
-    <file path="/TldTemplateMatching.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1377178520087" ignored="false" />
-    <file path="/VisualizeTldDetectionApp.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1377019882308" ignored="false" />
-    <file path="/TldDetection.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1377630383882" ignored="false" />
+    <file path="/TldTemplateMatching.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1378865483872" ignored="false" />
+    <file path="/VisualizeTldDetectionApp.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1378905233773" ignored="false" />
+    <file path="/TldDetection.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1378905209591" ignored="false" />
     <file path="/PerformanceTldData.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1377167109035" ignored="false" />
     <file path="/DebugTldTrackerTldData.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1377355095062" ignored="false" />
-    <file path="/GenerateDetectionsTldData.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1377630172492" ignored="false" />
+    <file path="/GenerateDetectionsTldData.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1378828107972" ignored="false" />
     <file path="$SVN_ROOT$/RobotControl/Localization/src/us/ihmc/localization/ProcessDanielCsv.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1377204846123" ignored="false" />
     <file path="/ProcessDanielCsv.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1377204607969" ignored="false" />
     <file path="$SVN_ROOT$/RobotControl/Localization/src/us/ihmc/localization/LadarMappingComponent.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1377204704719" ignored="false" />
@@ -74,6 +94,18 @@
     <file path="/TldVarianceFilter.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1377257007238" ignored="false" />
     <file path="/TestTld_to_TrackerObjectRectangle.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1377342752239" ignored="false" />
     <file path="/VisualizeTldTrackerApp.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1377342766816" ignored="false" />
+    <file path="/UtilPolygons2D_F64.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1378827483413" ignored="false" />
+    <file path="/TestUtilPolygons2D_F64.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1378827578703" ignored="false" />
+    <file path="/TldAdjustRegion.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1378852084971" ignored="false" />
+    <file path="$PROJECT_DIR$/../../boofcv/evaluation/visualization/src/boofcv/alg/tracker/VisualizeTldDetectionApp.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1378906613933" ignored="false" />
+    <file path="$PROJECT_DIR$/../../boofcv/main/recognition/test/boofcv/alg/tracker/tld/TestTldFernClassifier.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1378906613933" ignored="false" />
+    <file path="/FitHomographyGradient.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1384737742464" ignored="false" />
+    <file path="/CreateGroundTruth.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1384737990659" ignored="false" />
+    <file path="/FitHomographyFunction.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1384738036551" ignored="false" />
+    <file path="/EvaluateTrackerRuntime.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1384738091612" ignored="false" />
+    <file path="/GenerateDetectionsMilTrackData.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1384739632937" ignored="false" />
+    <file path="/CirculantTracker.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1384780880448" ignored="false" />
+    <file path="/VisualizeResultsMilTrackData.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1384802476852" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -88,6 +120,7 @@
     <disable_hints />
   </component>
   <component name="DebuggerManager">
+    <ui_properties default_suspend_policy="SuspendAll" default_condition_enabled="true" />
     <breakpoint_any default_suspend_policy="SuspendAll" default_condition_enabled="true">
       <breakpoint>
         <option name="NOTIFY_CAUGHT" value="true" />
@@ -124,7 +157,7 @@
         <option name="LOG_MESSAGE" value="" />
       </breakpoint>
     </breakpoint_any>
-    <ui_properties default_suspend_policy="SuspendAll" default_condition_enabled="true" />
+    <line_breakpoints default_suspend_policy="SuspendAll" default_condition_enabled="true" />
     <breakpoint_rules />
     <ui_properties />
   </component>
@@ -137,43 +170,25 @@
       <file leaf-file-name="GenerateDetectionsTldData.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/validate/trackrect/GenerateDetectionsTldData.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="82" column="27" selection-start="2269" selection-end="2269" vertical-scroll-proportion="0.0">
+            <state line="37" column="0" selection-start="1149" selection-end="1149" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TestTldLearning.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../../boofcv/main/recognition/test/boofcv/alg/tracker/tld/TestTldLearning.java">
+      <file leaf-file-name="EvaluateTrackerRuntime.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/validate/tracking/EvaluateTrackerRuntime.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="149" column="0" selection-start="3638" selection-end="3638" vertical-scroll-proportion="0.0">
+            <state line="37" column="131" selection-start="1145" selection-end="1145" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="FactoryTrackerObjectRectangle.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../../boofcv/main/recognition/src/boofcv/factory/tracker/FactoryTrackerObjectRectangle.java">
+      <file leaf-file-name="VisualDebugHomographyTruth.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/validate/tracking/VisualDebugHomographyTruth.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="32" column="30" selection-start="1126" selection-end="1126" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="DebugTldTrackerTldData.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/validate/trackrect/DebugTldTrackerTldData.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="96" column="62" selection-start="2628" selection-end="2628" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="BoofCV_performance.txt" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/BoofCV_performance.txt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="585" vertical-scroll-proportion="0.0">
+            <state line="173" column="103" selection-start="5576" selection-end="5576" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -182,7 +197,106 @@
       <file leaf-file-name="PerformanceTldData.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/validate/trackrect/PerformanceTldData.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="26" column="37" selection-start="668" selection-end="668" vertical-scroll-proportion="0.0">
+            <state line="12" column="13" selection-start="248" selection-end="248" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="GenerateDetectionsMilTrackData.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/validate/trackrect/GenerateDetectionsMilTrackData.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="39" column="34" selection-start="1292" selection-end="1292" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="VisualizeResultsMilTrackData.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/validate/trackrect/VisualizeResultsMilTrackData.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="82" column="32" selection-start="2413" selection-end="2413" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CirculantTracker.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/../../boofcv/main/recognition/src/boofcv/alg/tracker/circulant/CirculantTracker.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="337" column="143" selection-start="11348" selection-end="11348" vertical-scroll-proportion="5.0924954">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DiscreteFourierTransformOps.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../../boofcv/main/ip/src/boofcv/alg/transform/fft/DiscreteFourierTransformOps.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="458" column="23" selection-start="14842" selection-end="14842" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="InterleavedF32.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../../boofcv/main/ip/src/boofcv/struct/image/InterleavedF32.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="150" column="54" selection-start="4068" selection-end="4068" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ImageFloat32.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../../boofcv/main/ip/src/boofcv/struct/image/ImageFloat32.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="92" column="0" selection-start="2286" selection-end="2486" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="EvaluateResultsTldData.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/validate/trackrect/EvaluateResultsTldData.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="5" column="13" selection-start="74" selection-end="74" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="RectangleCorner2D_F64.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../../georegression/src/georegression/struct/shapes/RectangleCorner2D_F64.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="25" column="13" selection-start="1078" selection-end="1078" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="UtilTldData.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/validate/trackrect/UtilTldData.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="84" column="0" selection-start="2330" selection-end="2330" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ConfigCirculantTracker.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../../boofcv/main/recognition/src/boofcv/abst/tracker/ConfigCirculantTracker.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="53" column="11" selection-start="1617" selection-end="1617" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DistanceHomographySq.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../../boofcv/main/sfm/src/boofcv/alg/sfm/robust/DistanceHomographySq.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="38" column="79" selection-start="1349" selection-end="1365" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -191,7 +305,25 @@
       <file leaf-file-name="TldConfig.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../../boofcv/main/recognition/src/boofcv/alg/tracker/tld/TldConfig.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="160" column="34" selection-start="4707" selection-end="4707" vertical-scroll-proportion="0.0">
+            <state line="44" column="41" selection-start="1541" selection-end="1541" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TldDetection.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../../boofcv/main/recognition/src/boofcv/alg/tracker/tld/TldDetection.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="186" column="53" selection-start="5966" selection-end="5966" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TldAdjustRegion.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../../boofcv/main/recognition/src/boofcv/alg/tracker/tld/TldAdjustRegion.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="47" column="82" selection-start="1684" selection-end="1684" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -200,16 +332,7 @@
       <file leaf-file-name="TldLearning.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../../boofcv/main/recognition/src/boofcv/alg/tracker/tld/TldLearning.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="184" column="48" selection-start="6000" selection-end="6000" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="VisualizeTldDetectionApp.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../../boofcv/main/visualize/src/boofcv/gui/tracker/VisualizeTldDetectionApp.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="66" column="63" selection-start="2214" selection-end="2214" vertical-scroll-proportion="0.0">
+            <state line="66" column="12" selection-start="2235" selection-end="2235" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -218,7 +341,7 @@
       <file leaf-file-name="DebugTrackerTldData.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/validate/trackrect/DebugTrackerTldData.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="91" column="76" selection-start="2574" selection-end="2574" vertical-scroll-proportion="0.0">
+            <state line="96" column="42" selection-start="2917" selection-end="2917" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -232,7 +355,7 @@
     </FindUsagesManager>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../boofcv" />
   </component>
   <component name="GitLogSettings">
     <option name="myDateState">
@@ -242,28 +365,29 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/../../boofcv/main/recognition/src/boofcv/alg/tracker/tld/TldTemplateMatching.java" />
-        <option value="$PROJECT_DIR$/../../boofcv/main/recognition/src/boofcv/alg/tracker/tld/TldVarianceFilter.java" />
-        <option value="$PROJECT_DIR$/src/validate/trackrect/PerformanceTldData.java" />
-        <option value="$PROJECT_DIR$/../../boofcv/main/recognition/src/boofcv/alg/tracker/tld/TldTracker.java" />
-        <option value="$PROJECT_DIR$/../../boofcv/main/recognition/src/boofcv/alg/tracker/tld/TldDetection.java" />
-        <option value="$PROJECT_DIR$/../../boofcv/main/recognition/src/boofcv/alg/tracker/tld/TldFernClassifier.java" />
-        <option value="$PROJECT_DIR$/../../boofcv/main/recognition/test/boofcv/abst/tracker/TestTld_to_TrackerObjectRectangle.java" />
-        <option value="$PROJECT_DIR$/../../boofcv/main/visualize/src/boofcv/gui/tracker/VisualizeTldTrackerApp.java" />
-        <option value="$PROJECT_DIR$/../../boofcv/main/visualize/src/boofcv/gui/tracker/VisualizeTldDetectionApp.java" />
-        <option value="$PROJECT_DIR$/src/validate/trackrect/DebugTrackerTldData.java" />
-        <option value="$PROJECT_DIR$/../../boofcv/main/recognition/src/boofcv/alg/tracker/tld/TldLearning.java" />
-        <option value="$PROJECT_DIR$/src/validate/trackrect/DebugTldTrackerTldData.java" />
-        <option value="$PROJECT_DIR$/../../boofcv/main/recognition/src/boofcv/alg/tracker/tld/TldConfig.java" />
-        <option value="$PROJECT_DIR$/../../boofcv/main/recognition/test/boofcv/alg/tracker/tld/TestTldLearning.java" />
-        <option value="$PROJECT_DIR$/src/validate/trackrect/GenerateDetectionsTldData.java" />
-        <option value="$PROJECT_DIR$/BoofCV_performance.txt" />
+        <option value="$PROJECT_DIR$/src/validate/tracking/FitHomographyGradient.java" />
+        <option value="$PROJECT_DIR$/src/validate/tracking/BatchEvaluateSummaryAndTime.java" />
+        <option value="$PROJECT_DIR$/src/validate/tracking/EvaluateTrackerStability.java" />
+        <option value="$PROJECT_DIR$/src/validate/tracking/FactoryEvaluationTrackers.java" />
+        <option value="$PROJECT_DIR$/src/validate/tracking/CreateGroundTruth.java" />
+        <option value="$PROJECT_DIR$/src/validate/tracking/RefineHomographTransform.java" />
+        <option value="$PROJECT_DIR$/src/validate/tracking/FitHomographyFunction.java" />
+        <option value="$PROJECT_DIR$/src/validate/tracking/BatchEvaluateAveTolerance.java" />
+        <option value="$PROJECT_DIR$/src/validate/vo/OutputForKITTI.java" />
+        <option value="$PROJECT_DIR$/src/validate/tracking/EvaluateTrackerRuntime.java" />
+        <option value="$PROJECT_DIR$/src/validate/tracking/VisualDebugHomographyTruth.java" />
+        <option value="$PROJECT_DIR$/../../boofcv/main/ip/src/boofcv/struct/image/ImageFloat32.java" />
+        <option value="$PROJECT_DIR$/../../boofcv/main/ip/src/boofcv/struct/image/InterleavedF32.java" />
+        <option value="$PROJECT_DIR$/src/validate/trackrect/VisualizeResultsMilTrackData.java" />
+        <option value="$PROJECT_DIR$/src/validate/trackrect/GenerateDetectionsMilTrackData.java" />
+        <option value="$PROJECT_DIR$/../../boofcv/main/recognition/src/boofcv/alg/tracker/circulant/CirculantTracker.java" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="width" value="1920" />
-    <option name="height" value="1175" />
+    <option name="x" value="-3" />
+    <option name="width" value="1926" />
+    <option name="height" value="1057" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -333,26 +457,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="PackagesPane">
-        <subPane>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="boofcv validator" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
-      <pane id="Scope">
-        <subPane subId="Project Files">
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -445,6 +549,28 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="recognition" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="boofcv" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tracker" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="boofcv validator" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="boofcv" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -491,6 +617,26 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="PackagesPane">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="boofcv validator" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+      <pane id="Scope">
+        <subPane subId="Project Files">
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -505,7 +651,7 @@
     <property name="recentsLimit" value="5" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder1" value="1" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder0" value="0" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../bubo/core/BuboCore.ipr" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/boofcv validator.ipr" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth2" value="261" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth3" value="1055" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth3" value="1055" />
@@ -541,87 +687,7 @@
       <recent name="boofcv.alg.feature.detect.intensity.impl" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.PerformanceTldData">
-    <configuration default="false" name="GenerateDetectionsTldData" type="Application" factoryName="Application" temporary="true">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
-        <pattern>
-          <option name="PATTERN" value="validate.trackrect.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="MAIN_CLASS_NAME" value="validate.trackrect.GenerateDetectionsTldData" />
-      <option name="VM_PARAMETERS" />
-      <option name="PROGRAM_PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="ENABLE_SWING_INSPECTOR" value="false" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <module name="boofcv validator" />
-      <envs />
-      <RunnerSettings RunnerId="Debug">
-        <option name="DEBUG_PORT" value="" />
-        <option name="TRANSPORT" value="0" />
-        <option name="LOCAL" value="true" />
-      </RunnerSettings>
-      <RunnerSettings RunnerId="Run" />
-      <ConfigurationWrapper RunnerId="Debug" />
-      <ConfigurationWrapper RunnerId="Run" />
-      <method />
-    </configuration>
-    <configuration default="false" name="VisualizeResultsTldData" type="Application" factoryName="Application" temporary="true">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
-        <pattern>
-          <option name="PATTERN" value="validate.trackrect.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="MAIN_CLASS_NAME" value="validate.trackrect.VisualizeResultsTldData" />
-      <option name="VM_PARAMETERS" />
-      <option name="PROGRAM_PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="ENABLE_SWING_INSPECTOR" value="false" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <module name="boofcv validator" />
-      <envs />
-      <RunnerSettings RunnerId="Debug">
-        <option name="DEBUG_PORT" value="" />
-        <option name="TRANSPORT" value="0" />
-        <option name="LOCAL" value="true" />
-      </RunnerSettings>
-      <ConfigurationWrapper RunnerId="Debug" />
-      <method />
-    </configuration>
-    <configuration default="false" name="PerformanceTldData" type="Application" factoryName="Application" temporary="true">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
-        <pattern>
-          <option name="PATTERN" value="validate.trackrect.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="MAIN_CLASS_NAME" value="validate.trackrect.PerformanceTldData" />
-      <option name="VM_PARAMETERS" />
-      <option name="PROGRAM_PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="ENABLE_SWING_INSPECTOR" value="false" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <module name="boofcv validator" />
-      <envs />
-      <RunnerSettings RunnerId="Debug">
-        <option name="DEBUG_PORT" value="" />
-        <option name="TRANSPORT" value="0" />
-        <option name="LOCAL" value="true" />
-      </RunnerSettings>
-      <ConfigurationWrapper RunnerId="Debug" />
-      <method />
-    </configuration>
+  <component name="RunManager" selected="Application.GenerateDetectionsMilTrackData">
     <configuration default="false" name="DebugTldTrackerTldData" type="Application" factoryName="Application" temporary="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
         <pattern>
@@ -650,14 +716,14 @@
       <ConfigurationWrapper RunnerId="Run" />
       <method />
     </configuration>
-    <configuration default="false" name="VisualizeTldDetectionApp" type="Application" factoryName="Application" temporary="true">
+    <configuration default="false" name="DebugTrackerTldData" type="Application" factoryName="Application" temporary="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
         <pattern>
-          <option name="PATTERN" value="boofcv.gui.tracker.*" />
+          <option name="PATTERN" value="validate.trackrect.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="MAIN_CLASS_NAME" value="boofcv.gui.tracker.VisualizeTldDetectionApp" />
+      <option name="MAIN_CLASS_NAME" value="validate.trackrect.DebugTrackerTldData" />
       <option name="VM_PARAMETERS" />
       <option name="PROGRAM_PARAMETERS" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
@@ -666,7 +732,85 @@
       <option name="ENABLE_SWING_INSPECTOR" value="false" />
       <option name="ENV_VARIABLES" />
       <option name="PASS_PARENT_ENVS" value="true" />
-      <module name="BoofCV Visualize" />
+      <module name="boofcv validator" />
+      <envs />
+      <RunnerSettings RunnerId="Debug">
+        <option name="DEBUG_PORT" value="" />
+        <option name="TRANSPORT" value="0" />
+        <option name="LOCAL" value="true" />
+      </RunnerSettings>
+      <ConfigurationWrapper RunnerId="Debug" />
+      <method />
+    </configuration>
+    <configuration default="false" name="GenerateDetectionsMilTrackData" type="Application" factoryName="Application" temporary="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
+        <pattern>
+          <option name="PATTERN" value="validate.trackrect.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="MAIN_CLASS_NAME" value="validate.trackrect.GenerateDetectionsMilTrackData" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="boofcv validator" />
+      <envs />
+      <RunnerSettings RunnerId="Debug">
+        <option name="DEBUG_PORT" value="" />
+        <option name="TRANSPORT" value="0" />
+        <option name="LOCAL" value="true" />
+      </RunnerSettings>
+      <ConfigurationWrapper RunnerId="Debug" />
+      <method />
+    </configuration>
+    <configuration default="false" name="VisualizeResultsMilTrackData" type="Application" factoryName="Application" temporary="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
+        <pattern>
+          <option name="PATTERN" value="validate.trackrect.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="MAIN_CLASS_NAME" value="validate.trackrect.VisualizeResultsMilTrackData" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="boofcv validator" />
+      <envs />
+      <RunnerSettings RunnerId="Debug">
+        <option name="DEBUG_PORT" value="" />
+        <option name="TRANSPORT" value="0" />
+        <option name="LOCAL" value="true" />
+      </RunnerSettings>
+      <ConfigurationWrapper RunnerId="Debug" />
+      <method />
+    </configuration>
+    <configuration default="false" name="GenerateDetectionsTldData" type="Application" factoryName="Application" temporary="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
+        <pattern>
+          <option name="PATTERN" value="validate.trackrect.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="MAIN_CLASS_NAME" value="validate.trackrect.GenerateDetectionsTldData" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="boofcv validator" />
       <envs />
       <RunnerSettings RunnerId="Debug">
         <option name="DEBUG_PORT" value="" />
@@ -695,34 +839,6 @@
       <option name="VM_PARAMETERS" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" />
-      <method />
-    </configuration>
-    <configuration default="true" type="TestNG" factoryName="TestNG">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
-      <module name="" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="SUITE_NAME" />
-      <option name="PACKAGE_NAME" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="METHOD_NAME" />
-      <option name="GROUP_NAME" />
-      <option name="TEST_OBJECT" value="CLASS" />
-      <option name="VM_PARAMETERS" value="-ea" />
-      <option name="PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="OUTPUT_DIRECTORY" />
-      <option name="ANNOTATION_TYPE" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="moduleWithDependencies" />
-      </option>
-      <option name="USE_DEFAULT_REPORTERS" value="false" />
-      <option name="PROPERTIES_FILE" />
-      <envs />
-      <properties />
-      <listeners />
       <method />
     </configuration>
     <configuration default="true" type="Application" factoryName="Application">
@@ -762,19 +878,19 @@
       <method />
     </configuration>
     <list size="5">
-      <item index="0" class="java.lang.String" itemvalue="Application.GenerateDetectionsTldData" />
-      <item index="1" class="java.lang.String" itemvalue="Application.VisualizeResultsTldData" />
-      <item index="2" class="java.lang.String" itemvalue="Application.PerformanceTldData" />
-      <item index="3" class="java.lang.String" itemvalue="Application.DebugTldTrackerTldData" />
-      <item index="4" class="java.lang.String" itemvalue="Application.VisualizeTldDetectionApp" />
+      <item index="0" class="java.lang.String" itemvalue="Application.DebugTldTrackerTldData" />
+      <item index="1" class="java.lang.String" itemvalue="Application.DebugTrackerTldData" />
+      <item index="2" class="java.lang.String" itemvalue="Application.GenerateDetectionsMilTrackData" />
+      <item index="3" class="java.lang.String" itemvalue="Application.VisualizeResultsMilTrackData" />
+      <item index="4" class="java.lang.String" itemvalue="Application.GenerateDetectionsTldData" />
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="Application.PerformanceTldData" />
+        <item index="0" class="java.lang.String" itemvalue="Application.GenerateDetectionsMilTrackData" />
         <item index="1" class="java.lang.String" itemvalue="Application.GenerateDetectionsTldData" />
-        <item index="2" class="java.lang.String" itemvalue="Application.DebugTldTrackerTldData" />
-        <item index="3" class="java.lang.String" itemvalue="Application.VisualizeResultsTldData" />
-        <item index="4" class="java.lang.String" itemvalue="Application.VisualizeTldDetectionApp" />
+        <item index="2" class="java.lang.String" itemvalue="Application.VisualizeResultsMilTrackData" />
+        <item index="3" class="java.lang.String" itemvalue="Application.DebugTrackerTldData" />
+        <item index="4" class="java.lang.String" itemvalue="Application.DebugTldTrackerTldData" />
       </list>
     </recent_temporary>
     <configuration name="&lt;template&gt;" type="WebApp" default="true" selected="false">
@@ -887,34 +1003,34 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="0" width="1920" height="1175" extended-state="6" />
-    <editor active="true" />
+    <frame x="-3" y="0" width="1926" height="1057" extended-state="6" />
+    <editor active="false" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.37026238" sideWeight="0.49573106" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3264563" sideWeight="0.5008157" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.36853686" sideWeight="0.49573106" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3264563" sideWeight="0.5008157" order="12" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32929516" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.31681243" sideWeight="0.49347472" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="CDI" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32929516" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.31683168" sideWeight="0.49347472" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.23717949" sideWeight="0.45704845" order="1" side_tool="true" content_ui="tabs" />
-      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.23929337" sideWeight="0.2646086" order="1" side_tool="true" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.23959444" sideWeight="0.6297376" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.23906083" sideWeight="0.63146317" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32944608" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="CDI" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="combo" />
-      <window_info id="Data Sources" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Data Sources" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3265306" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32563257" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -1034,114 +1150,108 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="jar:///opt/jdk/jdk1.6.0_43/src.zip!/java/lang/Integer.java">
+    <entry file="file://$PROJECT_DIR$/src/validate/tracking/RefineHomographTransform.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="47" column="52" selection-start="1522" selection-end="1532" vertical-scroll-proportion="0.0" />
+        <state line="41" column="22" selection-start="1283" selection-end="1283" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../../boofcv/main/recognition/src/boofcv/alg/tracker/tld/TldDetection.java">
+    <entry file="file://$PROJECT_DIR$/src/validate/tracking/FitHomographyFunction.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="122" column="32" selection-start="3654" selection-end="3654" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="e#1876#1892#0" expanded="true" />
-          </folding>
-        </state>
+        <state line="60" column="50" selection-start="1595" selection-end="1595" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../../boofcv/main/recognition/src/boofcv/alg/tracker/tld/TldFernManager.java">
+    <entry file="file://$PROJECT_DIR$/src/validate/trackrect/EvaluateResultsTldData.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="31" column="18" selection-start="1062" selection-end="1076" vertical-scroll-proportion="0.0">
+        <state line="5" column="13" selection-start="74" selection-end="74" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../../boofcv/main/recognition/src/boofcv/alg/tracker/tld/TldFernClassifier.java">
+    <entry file="file://$PROJECT_DIR$/src/validate/trackrect/UtilTldData.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="339" column="31" selection-start="9745" selection-end="9745" vertical-scroll-proportion="0.0">
+        <state line="84" column="0" selection-start="2330" selection-end="2330" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../../boofcv/main/recognition/test/boofcv/abst/tracker/TestTld_to_TrackerObjectRectangle.java">
+    <entry file="file://$PROJECT_DIR$/src/validate/tracking/BatchEvaluateAveTolerance.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="14" column="47" selection-start="412" selection-end="412" vertical-scroll-proportion="0.0">
+        <state line="31" column="109" selection-start="1012" selection-end="1012" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../boofcv/main/ip/src/boofcv/struct/image/ImageFloat32.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="92" column="0" selection-start="2286" selection-end="2486" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../../boofcv/main/visualize/src/boofcv/gui/tracker/VisualizeTldTrackerApp.java">
+    <entry file="file://$PROJECT_DIR$/../../boofcv/main/ip/src/boofcv/struct/image/InterleavedF32.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="47" column="52" selection-start="1443" selection-end="1449" vertical-scroll-proportion="0.0">
+        <state line="150" column="54" selection-start="4068" selection-end="4068" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../../boofcv/main/visualize/src/boofcv/gui/tracker/VisualizeTldDetectionApp.java">
+    <entry file="file://$PROJECT_DIR$/../../boofcv/main/recognition/src/boofcv/abst/tracker/ConfigCirculantTracker.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="66" column="63" selection-start="2214" selection-end="2214" vertical-scroll-proportion="0.0">
+        <state line="53" column="11" selection-start="1617" selection-end="1617" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/validate/trackrect/DebugTrackerTldData.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="91" column="76" selection-start="2574" selection-end="2574" vertical-scroll-proportion="0.0">
+        <state line="96" column="42" selection-start="2917" selection-end="2917" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../../boofcv/main/recognition/src/boofcv/factory/tracker/FactoryTrackerObjectRectangle.java">
+    <entry file="file://$PROJECT_DIR$/src/validate/tracking/EvaluateTrackerRuntime.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="32" column="30" selection-start="1126" selection-end="1126" vertical-scroll-proportion="0.0">
+        <state line="37" column="131" selection-start="1145" selection-end="1145" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../../boofcv/main/recognition/src/boofcv/alg/tracker/tld/TldLearning.java">
+    <entry file="file://$PROJECT_DIR$/../../boofcv/main/ip/src/boofcv/alg/transform/fft/DiscreteFourierTransformOps.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="184" column="48" selection-start="6000" selection-end="6000" vertical-scroll-proportion="0.0">
+        <state line="458" column="23" selection-start="14842" selection-end="14842" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/validate/trackrect/DebugTldTrackerTldData.java">
+    <entry file="file://$PROJECT_DIR$/src/validate/vo/OutputForKITTI.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="96" column="62" selection-start="2628" selection-end="2628" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../boofcv/main/recognition/src/boofcv/alg/tracker/tld/TldConfig.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="160" column="34" selection-start="4707" selection-end="4707" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../boofcv/main/recognition/test/boofcv/alg/tracker/tld/TestTldLearning.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="149" column="0" selection-start="3638" selection-end="3638" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/validate/trackrect/PerformanceTldData.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="26" column="37" selection-start="668" selection-end="668" vertical-scroll-proportion="0.0">
+        <state line="45" column="77" selection-start="1619" selection-end="1619" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/validate/trackrect/GenerateDetectionsTldData.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="82" column="27" selection-start="2269" selection-end="2269" vertical-scroll-proportion="0.0">
+        <state line="37" column="0" selection-start="1149" selection-end="1149" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/BoofCV_performance.txt">
+    <entry file="file://$PROJECT_DIR$/src/validate/trackrect/VisualizeResultsMilTrackData.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="585" vertical-scroll-proportion="0.0">
+        <state line="82" column="32" selection-start="2413" selection-end="2413" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/validate/trackrect/GenerateDetectionsMilTrackData.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="39" column="34" selection-start="1292" selection-end="1292" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../boofcv/main/recognition/src/boofcv/alg/tracker/circulant/CirculantTracker.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="337" column="143" selection-start="11348" selection-end="11348" vertical-scroll-proportion="5.0924954">
           <folding />
         </state>
       </provider>
@@ -1187,7 +1297,7 @@
       </state>
       <state key="JdkListConfigurable.UI">
         <settings>
-          <last-edited>1.5</last-edited>
+          <last-edited>1.5 (64bit)</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>

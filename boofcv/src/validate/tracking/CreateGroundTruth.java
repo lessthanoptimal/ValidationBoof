@@ -4,7 +4,7 @@ import boofcv.abst.geo.RefineEpipolar;
 import boofcv.alg.distort.ImageDistort;
 import boofcv.alg.distort.LensDistortionOps;
 import boofcv.alg.distort.PointToPixelTransform_F32;
-import boofcv.alg.interpolate.InterpolatePixel;
+import boofcv.alg.interpolate.InterpolatePixelS;
 import boofcv.alg.sfm.robust.DistanceHomographySq;
 import boofcv.alg.sfm.robust.GenerateHomographyLinear;
 import boofcv.core.image.ConvertBufferedImage;
@@ -19,11 +19,13 @@ import boofcv.misc.BoofMiscOps;
 import boofcv.struct.calib.IntrinsicParameters;
 import boofcv.struct.distort.PointTransform_F32;
 import boofcv.struct.geo.AssociatedPair;
-import boofcv.struct.image.ImageDataType;
 import boofcv.struct.image.ImageFloat32;
+import boofcv.struct.image.ImageType;
+import georegression.fitting.homography.ModelManagerHomography2D_F64;
 import georegression.struct.homo.Homography2D_F64;
 import georegression.struct.homo.UtilHomography;
 import georegression.struct.point.Point2D_F64;
+import org.ddogleg.fitting.modelset.ModelManager;
 import org.ddogleg.fitting.modelset.ModelMatcher;
 import org.ddogleg.fitting.modelset.ransac.Ransac;
 import org.ejml.data.DenseMatrix64F;
@@ -64,10 +66,11 @@ public class CreateGroundTruth {
 	// TODO put more thought into which models and errors to use
 	DistanceHomographySq distance = new DistanceHomographySq();
 	GenerateHomographyLinear generatorH = new GenerateHomographyLinear(true);
+	ModelManager<Homography2D_F64> mm = new ModelManagerHomography2D_F64();
 
 	// Use RANSAC to estimate the Homography matrix
 	ModelMatcher<Homography2D_F64,AssociatedPair> robustH =
-			new Ransac<Homography2D_F64, AssociatedPair>(123123,generatorH,distance,7500,1);
+			new Ransac<Homography2D_F64, AssociatedPair>(123123,mm,generatorH,distance,7500,1);
 
 	RefineEpipolar refineH = FactoryMultiView.refineHomography(1e-8, 1000, EpipolarError.SAMPSON);
 
@@ -88,7 +91,7 @@ public class CreateGroundTruth {
 		// create distortion to remove lens distortion
 		// Adjust the distortion so that the undistorted image only shows image pixels
 		PointTransform_F32 allInside = LensDistortionOps.allInside(cameraParam, null);
-		InterpolatePixel<ImageFloat32> interp = FactoryInterpolation.bilinearPixel(ImageFloat32.class);
+		InterpolatePixelS<ImageFloat32> interp = FactoryInterpolation.bilinearPixelS(ImageFloat32.class);
 		removeLens = FactoryDistort.distort(interp, null, ImageFloat32.class);
 		removeLens.setModel(new PointToPixelTransform_F32(allInside));
 
@@ -204,10 +207,10 @@ public class CreateGroundTruth {
 		System.out.print(" inliers = "+robustH.getMatchSet().size()+" -- ");
 
 		DenseMatrix64F H_mat = new DenseMatrix64F(3,3);
-		UtilHomography.convert(robustH.getModel(),H_mat);
+		UtilHomography.convert(robustH.getModelParameters(),H_mat);
 		DenseMatrix64F H_refined = new DenseMatrix64F(3,3);
 
-		if( !refineH.process(H_mat,robustH.getMatchSet(),H_refined) )
+		if( !refineH.fitModel(robustH.getMatchSet(),H_mat,H_refined) )
 			throw new RuntimeException("Refine Point Failed");
 
 		return UtilHomography.convert(H_refined,(Homography2D_F64)null);
@@ -233,7 +236,7 @@ public class CreateGroundTruth {
 
 
 		SimpleImageSequence sequence =
-				DefaultMediaManager.INSTANCE.openVideo(pathToData+whichData+".mjpeg", ImageDataType.single(ImageFloat32.class));
+				DefaultMediaManager.INSTANCE.openVideo(pathToData+whichData+".mjpeg", ImageType.single(ImageFloat32.class));
 
 		IntrinsicParameters cameraParam = BoofMiscOps.loadXML("../data/intrinsic.xml");
 

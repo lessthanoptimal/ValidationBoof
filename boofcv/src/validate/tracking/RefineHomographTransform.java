@@ -1,7 +1,7 @@
 package validate.tracking;
 
 import boofcv.alg.filter.derivative.GImageDerivativeOps;
-import boofcv.alg.interpolate.InterpolatePixel;
+import boofcv.alg.interpolate.InterpolatePixelS;
 import boofcv.alg.transform.pyramid.PyramidOps;
 import boofcv.core.image.border.BorderType;
 import boofcv.factory.interpolate.FactoryInterpolation;
@@ -38,7 +38,7 @@ public class RefineHomographTransform<I extends ImageSingleBand, D extends Image
 
 	public RefineHomographTransform( int scales[], Class<I> imageType , Class<D> derivType ) {
 		this.derivType = derivType;
-		InterpolatePixel<I> interp = FactoryInterpolation.bilinearPixel(imageType);
+		InterpolatePixelS<I> interp = FactoryInterpolation.bilinearPixelS(imageType);
 
 		function = new FitHomographyFunction<I>(interp);
 		gradient = new FitHomographyGradient<I, D>(interp);

@@ -1,6 +1,6 @@
 package validate.tracking;
 
-import boofcv.alg.interpolate.InterpolatePixel;
+import boofcv.alg.interpolate.InterpolatePixelS;
 import boofcv.core.image.FactoryGImageSingleBand;
 import boofcv.core.image.GImageSingleBand;
 import boofcv.struct.image.ImageSingleBand;
@@ -18,9 +18,9 @@ public class FitHomographyGradient <I extends ImageSingleBand, D extends ImageSi
 	GImageSingleBand srcDerivX;
 	GImageSingleBand srcDerivY;
 
-	InterpolatePixel<I> dst;
+	InterpolatePixelS<I> dst;
 
-	public FitHomographyGradient(InterpolatePixel<I> interpolation ) {
+	public FitHomographyGradient(InterpolatePixelS<I> interpolation ) {
 		this.dst = interpolation;
 	}
 
@@ -64,9 +64,9 @@ public class FitHomographyGradient <I extends ImageSingleBand, D extends ImageSi
 				float distX = xx/zz;
 				float distY = yy/zz;
 
-				if( dst.isInSafeBounds(distX,distY)) {
+				if( dst.isInFastBounds(distX, distY)) {
 
-					float residual = dst.get_unsafe(distX,distY) - src.get(x,y).floatValue();
+					float residual = dst.get_fast(distX,distY) - src.get(x,y).floatValue();
 
 					float dx = srcDerivX.get(x,y).floatValue();
 					float dy = srcDerivY.get(x,y).floatValue();

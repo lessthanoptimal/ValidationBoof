@@ -3,9 +3,9 @@ package validate.tracking;
 import boofcv.gui.image.ImagePanel;
 import boofcv.io.image.SimpleImageSequence;
 import boofcv.io.wrapper.DefaultMediaManager;
-import boofcv.struct.image.ImageDataType;
 import boofcv.struct.image.ImageFloat32;
 import boofcv.struct.image.ImageSingleBand;
+import boofcv.struct.image.ImageType;
 import georegression.struct.homo.Homography2D_F64;
 import georegression.struct.point.Point2D_F64;
 import georegression.transform.homo.HomographyPointOps_F64;
@@ -274,7 +274,7 @@ public class EvaluateTrackerStability<T extends ImageSingleBand> {
 //		String whichData = "bricks/move_in";
 
 		SimpleImageSequence sequence =
-				DefaultMediaManager.INSTANCE.openVideo(pathToData+whichData+"_undistorted.mjpeg", ImageDataType.single(imageType));
+				DefaultMediaManager.INSTANCE.openVideo(pathToData+whichData+"_undistorted.mjpeg", ImageType.single(imageType));
 
 		List<Homography2D_F64> groundTruth = LogParseHomography.parse(pathToData+whichData+"_homography.txt");
 

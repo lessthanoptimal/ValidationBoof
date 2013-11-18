@@ -147,7 +147,7 @@ public class DebugTrackerVideo <T extends ImageSingleBand> implements MouseListe
 	}
 
 	private synchronized void processFrame() {
-		ConvertBufferedImage.convertFrom(data.getLeft(), inputLeft);
+		ConvertBufferedImage.convertFrom(data.getLeft(), inputLeft,true);
 		if( frame > 350 )
 		{
 		alg.process(inputLeft);

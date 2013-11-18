@@ -42,8 +42,8 @@ public class OutputForKITTI {
 		inputRight.reshape(data.getRight().getWidth(),data.getRight().getHeight());
 
 		do {
-			ConvertBufferedImage.convertFrom(data.getLeft(), inputLeft);
-			ConvertBufferedImage.convertFrom(data.getRight(), inputRight);
+			ConvertBufferedImage.convertFrom(data.getLeft(), inputLeft,true);
+			ConvertBufferedImage.convertFrom(data.getRight(), inputRight,true);
 
 			if( !alg.process(inputLeft,inputRight) ) {
 				throw new RuntimeException("Updated failed!??!");

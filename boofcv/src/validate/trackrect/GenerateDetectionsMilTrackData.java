@@ -1,7 +1,7 @@
 package validate.trackrect;
 
+import boofcv.abst.tracker.ConfigCirculantTracker;
 import boofcv.abst.tracker.TrackerObjectQuad;
-import boofcv.alg.tracker.tld.TldConfig;
 import boofcv.core.image.ConvertBufferedImage;
 import boofcv.factory.tracker.FactoryTrackerObjectQuad;
 import boofcv.io.image.UtilImageIO;
@@ -13,28 +13,45 @@ import georegression.struct.shapes.Quadrilateral_F64;
 import georegression.struct.shapes.RectangleCorner2D_F64;
 
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.PrintStream;
+import java.io.*;
 
 /**
  * @author Peter Abeles
  */
-public class GenerateDetectionsTldData<T extends ImageBase> {
-
+public class GenerateDetectionsMilTrackData<T extends ImageBase> {
 	T input;
 
 
-	public GenerateDetectionsTldData(ImageType<T> type) {
+	public GenerateDetectionsMilTrackData(ImageType<T> type) {
 		input = type.createImage(1,1);
+	}
+
+	public RectangleCorner2D_F64 readInitial( String fileName ) {
+		try {
+			BufferedReader reader = new BufferedReader(new FileReader(fileName));
+			String line = reader.readLine();
+			String words[] = line.split(",");
+
+			RectangleCorner2D_F64 ret = new RectangleCorner2D_F64();
+			ret.x0 = Double.parseDouble(words[0]);
+			ret.y0 = Double.parseDouble(words[1]);
+			ret.x1 = ret.x0 + 6;//Double.parseDouble(words[2]);
+			ret.y1 = ret.y0 + 5;//Double.parseDouble(words[3]);
+
+			return ret;
+		} catch (FileNotFoundException e) {
+			throw new RuntimeException(e);
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	public void evaluate( String dataName , String outputName , TrackerObjectQuad<T> tracker ) {
 		System.out.println("Processing "+dataName);
 
-		String path = "../data/track_rect/TLD/"+dataName;
+		String path = "../data/track_rect/MILTrack/"+dataName;
 		Quadrilateral_F64 initial = new Quadrilateral_F64();
-		RectangleCorner2D_F64 rect = UtilTldData.parseRectangle(path + "/init.txt");
+		RectangleCorner2D_F64 rect = readInitial(path + "/" + dataName + "_gt.txt");
 		UtilPolygons2D_F64.convert(rect, initial);
 		Quadrilateral_F64 found = new Quadrilateral_F64();
 		RectangleCorner2D_F64 bounding = new RectangleCorner2D_F64();
@@ -47,34 +64,35 @@ public class GenerateDetectionsTldData<T extends ImageBase> {
 			throw new RuntimeException(e);
 		}
 
-		String imageType = new File(path+"/00001.jpg").exists() ? "jpg" : "png";
 
 		int imageNum = 0;
 		while( true ) {
-			String imageName = String.format("%s/%05d.%s",path,imageNum+1,imageType);
+			String imageName = String.format("%s/imgs/img%05d.png",path,imageNum);
 			BufferedImage image = UtilImageIO.loadImage(imageName);
 			if( image == null )
 				break;
 
 			input.reshape(image.getWidth(),image.getHeight());
-			ConvertBufferedImage.convertFrom(image,input,true);
+			ConvertBufferedImage.convertFrom(image, input, true);
 
 			boolean detected;
 
 			if( imageNum == 0 ) {
 				detected = tracker.initialize(input,initial);
+				found.set(initial);
 			} else {
 				detected = tracker.process(input,found);
 			}
 
 			if( !detected ) {
-				System.out.print("-");
+//				System.out.print("-");
 				out.println("nan,nan,nan,nan");
 			} else {
 				UtilPolygons2D_F64.bounding(found,bounding);
-				System.out.print("+");
+//				System.out.print("+");
 				out.printf("%f,%f,%f,%f\n",bounding.x0,bounding.y0,bounding.x1,bounding.y1);
 			}
+			System.out.printf("%4d  %f %f\n",imageNum,bounding.x0,bounding.y0);
 
 			imageNum++;
 			if( imageNum % 50 == 0 )
@@ -87,10 +105,11 @@ public class GenerateDetectionsTldData<T extends ImageBase> {
 	public static void evaluate( String dataset ) {
 		Class imageType = ImageFloat32.class;
 
-		GenerateDetectionsTldData generator = new GenerateDetectionsTldData(ImageType.single(imageType));
+		GenerateDetectionsMilTrackData generator = new GenerateDetectionsMilTrackData(ImageType.single(imageType));
 
 		TrackerObjectQuad tracker =
-				FactoryTrackerObjectQuad.tld(new TldConfig(false, imageType));
+//				FactoryTrackerObjectQuad.tld(new TldConfig(false, imageType));
+				FactoryTrackerObjectQuad.circulant(new ConfigCirculantTracker(),imageType);
 
 		String name = "BoofCV";
 
@@ -98,16 +117,18 @@ public class GenerateDetectionsTldData<T extends ImageBase> {
 	}
 
 	public static void main(String[] args) {
-		evaluate("01_david");
-		evaluate("02_jumping");
-		evaluate("03_pedestrian1");
-		evaluate("04_pedestrian2");
-		evaluate("05_pedestrian3");
-		evaluate("06_car");
-		evaluate("07_motocross");
-		evaluate("08_volkswagen");
-		evaluate("09_carchase");
-		evaluate("10_panda");
+		evaluate("cliffbar");
+//		evaluate("coke11");
+//		evaluate("david");
+//		evaluate("dollar");
+//		evaluate("faceocc");
+//		evaluate("faceocc2");
+//		evaluate("girl");
+//		evaluate("surfer");
+//		evaluate("sylv");
+//		evaluate("tiger1");
+//		evaluate("tiger2");
+//		evaluate("twinnings");
 
 		System.out.println("DONE!");
 	}

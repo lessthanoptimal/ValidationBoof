@@ -232,8 +232,8 @@ public class DebugVisualOdometryStereo<T extends ImageSingleBand> implements Mou
 //			return;
 //		}
 
-		ConvertBufferedImage.convertFrom(data.getLeft(), inputLeft);
-		ConvertBufferedImage.convertFrom(data.getRight(), inputRight);
+		ConvertBufferedImage.convertFrom(data.getLeft(), inputLeft,true);
+		ConvertBufferedImage.convertFrom(data.getRight(), inputRight,true);
 
 		long before = System.nanoTime();
 		if( !data.isCalibrationFixed() )
@@ -316,7 +316,7 @@ public class DebugVisualOdometryStereo<T extends ImageSingleBand> implements Mou
 	}
 
 	private double rotationMatrixToRadian(DenseMatrix64F a) {
-		double angles[] = RotationMatrixGenerator.matrixToEulerXYZ(a);
+		double angles[] = RotationMatrixGenerator.matrixToEulerXYZ(a,null);
 
 		double sum = angles[0]*angles[0] + angles[1]*angles[1] + angles[1]*angles[1];
 

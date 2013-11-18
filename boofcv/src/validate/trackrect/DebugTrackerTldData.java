@@ -1,16 +1,18 @@
 package validate.trackrect;
 
-import boofcv.abst.tracker.TrackerObjectRectangle;
+import boofcv.abst.tracker.TrackerObjectQuad;
 import boofcv.alg.tracker.tld.TldConfig;
 import boofcv.core.image.ConvertBufferedImage;
-import boofcv.factory.tracker.FactoryTrackerObjectRectangle;
+import boofcv.factory.tracker.FactoryTrackerObjectQuad;
 import boofcv.gui.image.ImagePanel;
 import boofcv.gui.image.ShowImages;
 import boofcv.io.image.UtilImageIO;
 import boofcv.struct.image.ImageBase;
-import boofcv.struct.image.ImageDataType;
 import boofcv.struct.image.ImageFloat32;
+import boofcv.struct.image.ImageType;
 import boofcv.struct.image.ImageUInt8;
+import georegression.geometry.UtilPolygons2D_F64;
+import georegression.struct.shapes.Quadrilateral_F64;
 import georegression.struct.shapes.RectangleCorner2D_F64;
 
 import java.awt.*;
@@ -24,17 +26,19 @@ public class DebugTrackerTldData<T extends ImageBase> {
 
 	T input;
 
-	public DebugTrackerTldData(ImageDataType<T> type) {
+	public DebugTrackerTldData(ImageType<T> type) {
 		input = type.createImage(1,1);
 	}
 
-	public void evaluate( String dataName , String outputName , TrackerObjectRectangle<T> tracker ) {
+	public void evaluate( String dataName , TrackerObjectQuad<T> tracker ) {
 		System.out.println("Processing "+dataName);
 
 		String path = "../data/track_rect/TLD/"+dataName;
 
-		RectangleCorner2D_F64 initial = UtilTldData.parseRectangle(path + "/init.txt");
-		RectangleCorner2D_F64 found = new RectangleCorner2D_F64();
+		Quadrilateral_F64 initial = new Quadrilateral_F64();
+		RectangleCorner2D_F64 rect = UtilTldData.parseRectangle(path + "/init.txt");
+		UtilPolygons2D_F64.convert(rect,initial);
+		Quadrilateral_F64 found = new Quadrilateral_F64();
 
 		ImagePanel gui = null;
 
@@ -48,14 +52,14 @@ public class DebugTrackerTldData<T extends ImageBase> {
 				break;
 
 			input.reshape(image.getWidth(),image.getHeight());
-			ConvertBufferedImage.convertFrom(image,input);
+			ConvertBufferedImage.convertFrom(image,input,true);
 
 			boolean detected;
 
 			if( imageNum == 0 ) {
 				gui = new ImagePanel(image);
 				ShowImages.showWindow(gui,dataName);
-				detected = tracker.initialize(input,(int)initial.x0,(int)initial.y0,(int)initial.x1,(int)initial.y1);
+				detected = tracker.initialize(input,initial);
 			} else {
 				detected = tracker.process(input,found);
 			}
@@ -67,10 +71,10 @@ public class DebugTrackerTldData<T extends ImageBase> {
 
 				Graphics2D g2 = image.createGraphics();
 
-				int w = (int)found.getWidth();
-				int h = (int)found.getHeight();
-
-				g2.drawRect((int)found.x0,(int)found.y0,w,h);
+				g2.drawLine((int)found.a.x,(int)found.a.y,(int)found.b.x,(int)found.b.y);
+				g2.drawLine((int)found.b.x,(int)found.b.y,(int)found.c.x,(int)found.c.y);
+				g2.drawLine((int)found.c.x,(int)found.c.y,(int)found.d.x,(int)found.d.y);
+				g2.drawLine((int)found.d.x,(int)found.d.y,(int)found.a.x,(int)found.a.y);
 			}
 
 			gui.setBufferedImageSafe(image);
@@ -86,19 +90,20 @@ public class DebugTrackerTldData<T extends ImageBase> {
 	public static void evaluate( String dataset ) {
 		Class type = ImageUInt8.class;
 
-		DebugTrackerTldData generator = new DebugTrackerTldData(ImageDataType.single(type));
+		DebugTrackerTldData generator = new DebugTrackerTldData(ImageType.single(type));
 
-		TrackerObjectRectangle<ImageFloat32> tracker =
-				FactoryTrackerObjectRectangle.createTLD(new TldConfig(false,type));
+		TrackerObjectQuad<ImageFloat32> tracker =
+				FactoryTrackerObjectQuad.tld(new TldConfig(false, type));
+//				FactoryTrackerObjectQuad.sparseFlow(new SfotConfig(type));
+//				FactoryTrackerObjectQuad.meanShiftLikelihood(30,6,255, MeanShiftLikelihoodType.HISTOGRAM_INDEPENDENT_RGB_to_HSV,
+//						type);
 
-		String name = "TLD";
-
-		generator.evaluate(dataset,name,tracker);
+		generator.evaluate(dataset,tracker);
 	}
 
 	public static void main(String[] args) {
 //		evaluate("01_david");
-//		evaluate("02_jumping");
+		evaluate("02_jumping");
 //		evaluate("03_pedestrian1");
 //		evaluate("04_pedestrian2");
 //		evaluate("05_pedestrian3");

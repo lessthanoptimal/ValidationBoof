@@ -1,6 +1,6 @@
 package validate.tracking;
 
-import boofcv.alg.interpolate.InterpolatePixel;
+import boofcv.alg.interpolate.InterpolatePixelS;
 import boofcv.core.image.FactoryGImageSingleBand;
 import boofcv.core.image.GImageSingleBand;
 import boofcv.struct.image.ImageSingleBand;
@@ -16,9 +16,9 @@ public class FitHomographyFunction<T extends ImageSingleBand> implements Functio
 
 
 	GImageSingleBand src;
-	InterpolatePixel<T> dst;
+	InterpolatePixelS<T> dst;
 
-	public FitHomographyFunction(InterpolatePixel<T> dst) {
+	public FitHomographyFunction(InterpolatePixelS<T> dst) {
 		this.dst = dst;
 	}
 
@@ -56,8 +56,8 @@ public class FitHomographyFunction<T extends ImageSingleBand> implements Functio
 				float distX = xx/zz;
 				float distY = yy/zz;
 
-				if( dst.isInSafeBounds(distX,distY)  ) {
-					float residual = dst.get_unsafe(distX,distY) - src.get(x,y).floatValue();
+				if( dst.isInFastBounds(distX, distY)  ) {
+					float residual = dst.get_fast(distX,distY) - src.get(x,y).floatValue();
 //					System.out.println(distX+" "+distY+"  error "+residual);
 					total += residual*residual;
 					N++;

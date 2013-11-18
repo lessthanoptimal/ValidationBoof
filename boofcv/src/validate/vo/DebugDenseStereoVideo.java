@@ -104,8 +104,8 @@ public class DebugDenseStereoVideo<T extends ImageSingleBand> implements MouseLi
 	}
 
 	private void processFrame() {
-		ConvertBufferedImage.convertFrom(data.getLeft(), inputLeft);
-		ConvertBufferedImage.convertFrom(data.getRight(), inputRight);
+		ConvertBufferedImage.convertFrom(data.getLeft(), inputLeft,true);
+		ConvertBufferedImage.convertFrom(data.getRight(), inputRight,true);
 
 		StereoParameters param = data.getCalibration();
 
@@ -150,8 +150,8 @@ public class DebugDenseStereoVideo<T extends ImageSingleBand> implements MouseLi
 
 		BufferedImage visualized = VisualizeImageData.disparity(disparity, null, min,max, 0);
 
-		BufferedImage visualizedRectL = ConvertBufferedImage.convertTo(inputLeft,null);
-		BufferedImage visualizedRectR = ConvertBufferedImage.convertTo(inputRight,null);
+		BufferedImage visualizedRectL = ConvertBufferedImage.convertTo(inputLeft,null,true);
+		BufferedImage visualizedRectR = ConvertBufferedImage.convertTo(inputRight,null,true);
 
 
 		if( disparityView == null ) {
