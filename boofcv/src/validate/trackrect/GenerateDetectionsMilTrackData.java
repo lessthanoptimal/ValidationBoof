@@ -35,8 +35,8 @@ public class GenerateDetectionsMilTrackData<T extends ImageBase> {
 			RectangleCorner2D_F64 ret = new RectangleCorner2D_F64();
 			ret.x0 = Double.parseDouble(words[0]);
 			ret.y0 = Double.parseDouble(words[1]);
-			ret.x1 = ret.x0 + 6;//Double.parseDouble(words[2]);
-			ret.y1 = ret.y0 + 5;//Double.parseDouble(words[3]);
+			ret.x1 = ret.x0 + Double.parseDouble(words[2]);
+			ret.y1 = ret.y0 + Double.parseDouble(words[3]);
 
 			return ret;
 		} catch (FileNotFoundException e) {
@@ -66,18 +66,28 @@ public class GenerateDetectionsMilTrackData<T extends ImageBase> {
 
 
 		int imageNum = 0;
+		boolean firstImage = true;
+
 		while( true ) {
 			String imageName = String.format("%s/imgs/img%05d.png",path,imageNum);
 			BufferedImage image = UtilImageIO.loadImage(imageName);
-			if( image == null )
-				break;
+			if( image == null ) {
+				if( imageNum == 0 ) {
+					imageNum++;
+					// might start on index 1
+					continue;
+				} else {
+					break;
+				}
+			}
 
 			input.reshape(image.getWidth(),image.getHeight());
 			ConvertBufferedImage.convertFrom(image, input, true);
 
 			boolean detected;
 
-			if( imageNum == 0 ) {
+			if( firstImage ) {
+				firstImage = false;
 				detected = tracker.initialize(input,initial);
 				found.set(initial);
 			} else {
@@ -111,24 +121,24 @@ public class GenerateDetectionsMilTrackData<T extends ImageBase> {
 //				FactoryTrackerObjectQuad.tld(new TldConfig(false, imageType));
 				FactoryTrackerObjectQuad.circulant(new ConfigCirculantTracker(),imageType);
 
-		String name = "BoofCV";
+		String name = "BoofCV-Circulant";
 
 		generator.evaluate(dataset,name,tracker);
 	}
 
 	public static void main(String[] args) {
 		evaluate("cliffbar");
-//		evaluate("coke11");
-//		evaluate("david");
-//		evaluate("dollar");
-//		evaluate("faceocc");
-//		evaluate("faceocc2");
-//		evaluate("girl");
-//		evaluate("surfer");
-//		evaluate("sylv");
-//		evaluate("tiger1");
-//		evaluate("tiger2");
-//		evaluate("twinnings");
+		evaluate("coke11");
+		evaluate("david");
+		evaluate("dollar");
+		evaluate("faceocc");
+		evaluate("faceocc2");
+		evaluate("girl");
+		evaluate("surfer");
+		evaluate("sylv");
+		evaluate("tiger1");
+		evaluate("tiger2");
+		evaluate("twinings");
 
 		System.out.println("DONE!");
 	}

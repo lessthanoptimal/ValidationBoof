@@ -3,41 +3,20 @@
   <component name="ChangeListManager">
     <list default="true" readonly="true" id="5ae49738-03a7-49e6-8d41-9676d295fd24" name="Default" comment="- Added parser for KITTI dataset&#10;- Tweaks to VO metrics">
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../thirdparty/circulant/matlab/tracker_release.zip" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/validate/trackrect/GenerateDetectionsMilTrackData.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/validate/trackrect/VisualizeResultsMilTrackData.java" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../data/track_rect/MILTrack/notes.txt" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../data/track_rect/MILTrack/setup.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/validate/tracking/BatchEvaluateAveTolerance.java" afterPath="$PROJECT_DIR$/src/validate/tracking/BatchEvaluateAveTolerance.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/validate/tracking/BatchEvaluateSummaryAndTime.java" afterPath="$PROJECT_DIR$/src/validate/tracking/BatchEvaluateSummaryAndTime.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../boofcv/main/recognition/src/boofcv/alg/tracker/circulant/CirculantTracker.java" afterPath="$PROJECT_DIR$/../../boofcv/main/recognition/src/boofcv/alg/tracker/circulant/CirculantTracker.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/validate/tracking/CreateGroundTruth.java" afterPath="$PROJECT_DIR$/src/validate/tracking/CreateGroundTruth.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/validate/vo/DebugDenseStereoVideo.java" afterPath="$PROJECT_DIR$/src/validate/vo/DebugDenseStereoVideo.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/validate/trackrect/DebugTldTrackerTldData.java" afterPath="$PROJECT_DIR$/src/validate/trackrect/DebugTldTrackerTldData.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/validate/trackrect/DebugTrackerTldData.java" afterPath="$PROJECT_DIR$/src/validate/trackrect/DebugTrackerTldData.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/validate/vo/DebugTrackerVideo.java" afterPath="$PROJECT_DIR$/src/validate/vo/DebugTrackerVideo.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/validate/vo/DebugVisualOdometryStereo.java" afterPath="$PROJECT_DIR$/src/validate/vo/DebugVisualOdometryStereo.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/validate/tracking/EvaluateTrackerRuntime.java" afterPath="$PROJECT_DIR$/src/validate/tracking/EvaluateTrackerRuntime.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/validate/tracking/EvaluateTrackerStability.java" afterPath="$PROJECT_DIR$/src/validate/tracking/EvaluateTrackerStability.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/validate/tracking/FactoryEvaluationTrackers.java" afterPath="$PROJECT_DIR$/src/validate/tracking/FactoryEvaluationTrackers.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/validate/tracking/FitHomographyFunction.java" afterPath="$PROJECT_DIR$/src/validate/tracking/FitHomographyFunction.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/validate/tracking/FitHomographyGradient.java" afterPath="$PROJECT_DIR$/src/validate/tracking/FitHomographyGradient.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/validate/trackrect/GenerateDetectionsTldData.java" afterPath="$PROJECT_DIR$/src/validate/trackrect/GenerateDetectionsTldData.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../boofcv/main/ip/src/boofcv/struct/image/ImageFloat32.java" afterPath="$PROJECT_DIR$/../../boofcv/main/ip/src/boofcv/struct/image/ImageFloat32.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../boofcv/main/ip/src/boofcv/struct/image/InterleavedF32.java" afterPath="$PROJECT_DIR$/../../boofcv/main/ip/src/boofcv/struct/image/InterleavedF32.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/validate/vo/OutputForKITTI.java" afterPath="$PROJECT_DIR$/src/validate/vo/OutputForKITTI.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/validate/tracking/RefineHomographTransform.java" afterPath="$PROJECT_DIR$/src/validate/tracking/RefineHomographTransform.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../boofcv/main/recognition/test/boofcv/alg/tracker/circulant/TestCirculantTracker.java" afterPath="$PROJECT_DIR$/../../boofcv/main/recognition/test/boofcv/alg/tracker/circulant/TestCirculantTracker.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/validate/tracking/VisualDebugHomographyTruth.java" afterPath="$PROJECT_DIR$/src/validate/tracking/VisualDebugHomographyTruth.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/validate/tracking/WrapGenericDetectTracker.java" afterPath="$PROJECT_DIR$/src/validate/tracking/WrapGenericDetectTracker.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/boofcv validator.ipr" afterPath="$PROJECT_DIR$/boofcv validator.ipr" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/validate/trackrect/GenerateDetectionsMilTrackData.java" afterPath="$PROJECT_DIR$/src/validate/trackrect/GenerateDetectionsMilTrackData.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/validate/trackrect/VisualizeResultsMilTrackData.java" afterPath="$PROJECT_DIR$/src/validate/trackrect/VisualizeResultsMilTrackData.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/boofcv validator.iws" afterPath="$PROJECT_DIR$/boofcv validator.iws" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../boofcv/change.txt" afterPath="$PROJECT_DIR$/../../boofcv/change.txt" />
     </list>
     <list id="a1871b72-0229-4eb0-82fb-6085d307f536" name="Failed commit: Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../ejml/trunk/EJML.iws" afterPath="$PROJECT_DIR$/../../ejml/trunk/EJML.iws" />
     </list>
     <ignored path="boofcv validator.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1384800258538" ignored="false" />
+    <file path="/Dummy.txt" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1384899319530" ignored="false" />
     <file path="$PROJECT_DIR$/../../SURFPerformance/describe_stability_VLFeat_SIFT.txt" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1356626929203" ignored="false" />
     <file path="$PROJECT_DIR$/../../SURFPerformance/src/boofcv/benchmark/surf/BenchmarkRuntimeAllSurf.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1356627618037" ignored="false" />
     <file path="/FactoryEvaluationTrackers.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1384737768969" ignored="false" />
@@ -64,7 +43,7 @@
     <file path="/DetectFeaturePointApp.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1363275621336" ignored="false" />
     <file path="/GenerateResultsTldData.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1374632996817" ignored="false" />
     <file path="/a.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1384737981346" ignored="false" />
-    <file path="/fragment.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1384740392118" ignored="false" />
+    <file path="/fragment.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1384886798629" ignored="false" />
     <file path="/DebugTrackerTldData.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1384736215891" ignored="false" />
     <file path="/TldConfig.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1377354975041" ignored="false" />
     <file path="/TldTracker.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1378867286923" ignored="false" />
@@ -104,8 +83,23 @@
     <file path="/FitHomographyFunction.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1384738036551" ignored="false" />
     <file path="/EvaluateTrackerRuntime.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1384738091612" ignored="false" />
     <file path="/GenerateDetectionsMilTrackData.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1384739632937" ignored="false" />
-    <file path="/CirculantTracker.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1384780880448" ignored="false" />
-    <file path="/VisualizeResultsMilTrackData.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1384802476852" ignored="false" />
+    <file path="/CirculantTracker.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1384887077102" ignored="false" />
+    <file path="/VisualizeResultsMilTrackData.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1384887438924" ignored="false" />
+    <file path="$PROJECT_DIR$/src/validate/tracking/RefineHomographTransform.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1384811170295" ignored="false" />
+    <file path="$PROJECT_DIR$/src/validate/tracking/CreateGroundTruth.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1384811170295" ignored="false" />
+    <file path="$PROJECT_DIR$/src/validate/tracking/BatchEvaluateAveTolerance.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1384811170295" ignored="false" />
+    <file path="$PROJECT_DIR$/src/validate/tracking/FitHomographyFunction.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1384811170295" ignored="false" />
+    <file path="$PROJECT_DIR$/src/validate/tracking/FactoryEvaluationTrackers.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1384811170295" ignored="false" />
+    <file path="$PROJECT_DIR$/src/validate/tracking/BatchEvaluateSummaryAndTime.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1384811170295" ignored="false" />
+    <file path="$PROJECT_DIR$/src/validate/tracking/FitHomographyGradient.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1384811170295" ignored="false" />
+    <file path="$PROJECT_DIR$/src/validate/tracking/EvaluateTrackerStability.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1384811170296" ignored="false" />
+    <file path="/TestCirculantTracker.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1384816720594" ignored="false" />
+    <file path="/FactoryTrackerObjectQuad.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1384841844934" ignored="false" />
+    <file path="/ImplAverageResample.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1384833176502" ignored="false" />
+    <file path="/TestImplAverageResample.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1384839623798" ignored="false" />
+    <file path="/VisualizeCirculantTrackerApp.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1384873010581" ignored="false" />
+    <file path="/CirculantVisualizationPanel.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1384874589338" ignored="false" />
+    <file path="/Rectangle2D_F64.java" changelist="5ae49738-03a7-49e6-8d41-9676d295fd24" time="1384873218960" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -157,7 +151,23 @@
         <option name="LOG_MESSAGE" value="" />
       </breakpoint>
     </breakpoint_any>
-    <line_breakpoints default_suspend_policy="SuspendAll" default_condition_enabled="true" />
+    <line_breakpoints default_suspend_policy="SuspendAll" default_condition_enabled="true">
+      <breakpoint url="file://$PROJECT_DIR$/../../boofcv/main/ip/src/boofcv/alg/interpolate/impl/ImplBilinearPixel_F32.java" line="73" class="boofcv.alg.interpolate.impl.ImplBilinearPixel_F32" package="boofcv.alg.interpolate.impl">
+        <option name="ENABLED" value="true" />
+        <option name="LOG_ENABLED" value="false" />
+        <option name="LOG_EXPRESSION_ENABLED" value="false" />
+        <option name="REMOVE_AFTER_HIT" value="false" />
+        <option name="SUSPEND_POLICY" value="SuspendAll" />
+        <option name="SUSPEND" value="true" />
+        <option name="COUNT_FILTER_ENABLED" value="false" />
+        <option name="COUNT_FILTER" value="0" />
+        <option name="CONDITION_ENABLED" value="true" />
+        <option name="CLASS_FILTERS_ENABLED" value="false" />
+        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
+        <option name="CONDITION" value="" />
+        <option name="LOG_MESSAGE" value="" />
+      </breakpoint>
+    </line_breakpoints>
     <breakpoint_rules />
     <ui_properties />
   </component>
@@ -170,43 +180,16 @@
       <file leaf-file-name="GenerateDetectionsTldData.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/validate/trackrect/GenerateDetectionsTldData.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="37" column="0" selection-start="1149" selection-end="1149" vertical-scroll-proportion="0.0">
+            <state line="36" column="0" selection-start="1107" selection-end="1107" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="EvaluateTrackerRuntime.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/validate/tracking/EvaluateTrackerRuntime.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="37" column="131" selection-start="1145" selection-end="1145" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="VisualDebugHomographyTruth.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/validate/tracking/VisualDebugHomographyTruth.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="173" column="103" selection-start="5576" selection-end="5576" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="PerformanceTldData.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/validate/trackrect/PerformanceTldData.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="12" column="13" selection-start="248" selection-end="248" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="GenerateDetectionsMilTrackData.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="GenerateDetectionsMilTrackData.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/validate/trackrect/GenerateDetectionsMilTrackData.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="39" column="34" selection-start="1292" selection-end="1292" vertical-scroll-proportion="0.0">
+            <state line="89" column="35" selection-start="2621" selection-end="2621" vertical-scroll-proportion="0.7835951">
               <folding />
             </state>
           </provider>
@@ -215,52 +198,61 @@
       <file leaf-file-name="VisualizeResultsMilTrackData.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/validate/trackrect/VisualizeResultsMilTrackData.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="82" column="32" selection-start="2413" selection-end="2413" vertical-scroll-proportion="0.0">
+            <state line="38" column="0" selection-start="1055" selection-end="1083" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CirculantTracker.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="CirculantTracker.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../../boofcv/main/recognition/src/boofcv/alg/tracker/circulant/CirculantTracker.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="337" column="143" selection-start="11348" selection-end="11348" vertical-scroll-proportion="5.0924954">
+            <state line="312" column="70" selection-start="10232" selection-end="10232" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="DiscreteFourierTransformOps.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../../boofcv/main/ip/src/boofcv/alg/transform/fft/DiscreteFourierTransformOps.java">
+      <file leaf-file-name="ImplBilinearPixel_F32.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../../boofcv/main/ip/src/boofcv/alg/interpolate/impl/ImplBilinearPixel_F32.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="458" column="23" selection-start="14842" selection-end="14842" vertical-scroll-proportion="0.0">
+            <state line="73" column="0" selection-start="1925" selection-end="1925" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="InterleavedF32.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../../boofcv/main/ip/src/boofcv/struct/image/InterleavedF32.java">
+      <file leaf-file-name="BilinearPixel.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../../boofcv/main/ip/src/boofcv/alg/interpolate/BilinearPixel.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="150" column="54" selection-start="4068" selection-end="4068" vertical-scroll-proportion="0.0">
+            <state line="52" column="0" selection-start="1463" selection-end="1463" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ImageFloat32.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../../boofcv/main/ip/src/boofcv/struct/image/ImageFloat32.java">
+      <file leaf-file-name="ImageMiscOps.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../../boofcv/main/ip/src/boofcv/alg/misc/ImageMiscOps.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="92" column="0" selection-start="2286" selection-end="2486" vertical-scroll-proportion="0.0">
+            <state line="47" column="23" selection-start="1551" selection-end="1551" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="EvaluateResultsTldData.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/validate/trackrect/EvaluateResultsTldData.java">
+      <file leaf-file-name="TestCirculant_to_TrackerObjectQuad.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../../boofcv/main/recognition/test/boofcv/abst/tracker/TestCirculant_to_TrackerObjectQuad.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="5" column="13" selection-start="74" selection-end="74" vertical-scroll-proportion="0.0">
+            <state line="10" column="13" selection-start="232" selection-end="232" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TestCirculantTracker.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../../boofcv/main/recognition/test/boofcv/alg/tracker/circulant/TestCirculantTracker.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="283" column="20" selection-start="0" selection-end="9875" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -270,6 +262,24 @@
         <entry file="file://$PROJECT_DIR$/../../georegression/src/georegression/struct/shapes/RectangleCorner2D_F64.java">
           <provider selected="true" editor-type-id="text-editor">
             <state line="25" column="13" selection-start="1078" selection-end="1078" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Circulant_to_TrackerObjectQuad.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../../boofcv/main/recognition/src/boofcv/abst/tracker/Circulant_to_TrackerObjectQuad.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="55" column="23" selection-start="1776" selection-end="1776" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DiscreteFourierTransformOps.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../../boofcv/main/ip/src/boofcv/alg/transform/fft/DiscreteFourierTransformOps.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="458" column="23" selection-start="14842" selection-end="14842" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -287,7 +297,7 @@
       <file leaf-file-name="ConfigCirculantTracker.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../../boofcv/main/recognition/src/boofcv/abst/tracker/ConfigCirculantTracker.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="53" column="11" selection-start="1617" selection-end="1617" vertical-scroll-proportion="0.0">
+            <state line="57" column="11" selection-start="1681" selection-end="1681" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -341,7 +351,7 @@
       <file leaf-file-name="DebugTrackerTldData.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/validate/trackrect/DebugTrackerTldData.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="96" column="42" selection-start="2917" selection-end="2917" vertical-scroll-proportion="0.0">
+            <state line="97" column="42" selection-start="2948" selection-end="2948" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -355,7 +365,7 @@
     </FindUsagesManager>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../boofcv" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="GitLogSettings">
     <option name="myDateState">
@@ -365,8 +375,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/src/validate/tracking/FitHomographyGradient.java" />
-        <option value="$PROJECT_DIR$/src/validate/tracking/BatchEvaluateSummaryAndTime.java" />
         <option value="$PROJECT_DIR$/src/validate/tracking/EvaluateTrackerStability.java" />
         <option value="$PROJECT_DIR$/src/validate/tracking/FactoryEvaluationTrackers.java" />
         <option value="$PROJECT_DIR$/src/validate/tracking/CreateGroundTruth.java" />
@@ -378,9 +386,11 @@
         <option value="$PROJECT_DIR$/src/validate/tracking/VisualDebugHomographyTruth.java" />
         <option value="$PROJECT_DIR$/../../boofcv/main/ip/src/boofcv/struct/image/ImageFloat32.java" />
         <option value="$PROJECT_DIR$/../../boofcv/main/ip/src/boofcv/struct/image/InterleavedF32.java" />
+        <option value="$PROJECT_DIR$/../../boofcv/main/recognition/test/boofcv/alg/tracker/circulant/TestCirculantTracker.java" />
+        <option value="$PROJECT_DIR$/../../boofcv/main/ip/src/boofcv/alg/interpolate/impl/ImplBilinearPixel_F32.java" />
+        <option value="$PROJECT_DIR$/../../boofcv/main/recognition/src/boofcv/alg/tracker/circulant/CirculantTracker.java" />
         <option value="$PROJECT_DIR$/src/validate/trackrect/VisualizeResultsMilTrackData.java" />
         <option value="$PROJECT_DIR$/src/validate/trackrect/GenerateDetectionsMilTrackData.java" />
-        <option value="$PROJECT_DIR$/../../boofcv/main/recognition/src/boofcv/alg/tracker/circulant/CirculantTracker.java" />
       </list>
     </option>
   </component>
@@ -457,6 +467,16 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scope">
+        <subPane subId="Project Files">
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -627,29 +647,19 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope">
-        <subPane subId="Project Files">
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="project.structure.last.edited" value="Modules" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth0" value="256" />
-    <property name="project.structure.proportion" value="0.15" />
-    <property name="OverrideImplement.combined" value="true" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth1" value="257" />
+    <property name="OverrideImplement.combined" value="true" />
+    <property name="project.structure.proportion" value="0.15" />
     <property name="options.splitter.main.proportions" value="0.3" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth0" value="256" />
-    <property name="MemberChooser.sorted" value="false" />
-    <property name="recentsLimit" value="5" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder1" value="1" />
+    <property name="recentsLimit" value="5" />
+    <property name="MemberChooser.sorted" value="false" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth0" value="256" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder0" value="0" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/boofcv validator.ipr" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth2" value="261" />
@@ -664,17 +674,17 @@
     <property name="MemberChooser.showClasses" value="true" />
     <property name="GoToClass.includeLibraries" value="false" />
     <property name="options.splitter.details.proportions" value="0.2" />
-    <property name="last_directory_selection" value="$USER_HOME$/boofcv/main/feature/src/boofcv/alg/feature/detect/intensity" />
-    <property name="GoToFile.includeJavaFiles" value="false" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder0" value="0" />
+    <property name="GoToFile.includeJavaFiles" value="false" />
+    <property name="last_directory_selection" value="$USER_HOME$/boofcv/main/feature/src/boofcv/alg/feature/detect/intensity" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder3" value="3" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder1" value="1" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder2" value="2" />
     <property name="options.lastSelected" value="preferences.sourceCode.Java" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="MemberChooser.copyJavadoc" value="false" />
-    <property name="dynamic.classpath" value="false" />
     <property name="options.searchVisible" value="true" />
+    <property name="dynamic.classpath" value="false" />
   </component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
@@ -687,7 +697,7 @@
       <recent name="boofcv.alg.feature.detect.intensity.impl" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.GenerateDetectionsMilTrackData">
+  <component name="RunManager" selected="Application.VisualizeResultsMilTrackData">
     <configuration default="false" name="DebugTldTrackerTldData" type="Application" factoryName="Application" temporary="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
         <pattern>
@@ -886,9 +896,9 @@
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="Application.GenerateDetectionsMilTrackData" />
-        <item index="1" class="java.lang.String" itemvalue="Application.GenerateDetectionsTldData" />
-        <item index="2" class="java.lang.String" itemvalue="Application.VisualizeResultsMilTrackData" />
+        <item index="0" class="java.lang.String" itemvalue="Application.VisualizeResultsMilTrackData" />
+        <item index="1" class="java.lang.String" itemvalue="Application.GenerateDetectionsMilTrackData" />
+        <item index="2" class="java.lang.String" itemvalue="Application.GenerateDetectionsTldData" />
         <item index="3" class="java.lang.String" itemvalue="Application.DebugTrackerTldData" />
         <item index="4" class="java.lang.String" itemvalue="Application.DebugTldTrackerTldData" />
       </list>
@@ -999,7 +1009,11 @@
       <created>1377084455462</created>
       <updated>1377084455462</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="- updated for latest BoofCV&#10;- Added support for MILTrack datasets">
+      <created>1384811166512</created>
+      <updated>1384811166512</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -1013,7 +1027,7 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3264563" sideWeight="0.5008157" order="12" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32929516" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.31683168" sideWeight="0.49347472" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.31573159" sideWeight="0.49347472" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.23929337" sideWeight="0.2646086" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -1079,7 +1093,7 @@
     <option name="WRAP_WHEN_TYPING_REACHES_RIGHT_MARGIN" value="false" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="- More changes to trackrect evaluation code" />
+    <option name="LAST_COMMIT_MESSAGE" value="- updated for latest BoofCV&#10;- Added support for MILTrack datasets" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -1107,6 +1121,7 @@
     <MESSAGE value="- Updated code for recent changes to BoofCV's API.&#10;- Made sure FAST and trackers produce the same/comparable reslts" />
     <MESSAGE value="more improvements to trackrect" />
     <MESSAGE value="- More changes to trackrect evaluation code" />
+    <MESSAGE value="- updated for latest BoofCV&#10;- Added support for MILTrack datasets" />
   </component>
   <component name="VssConfiguration">
     <option name="CLIENT_PATH" value="" />
@@ -1150,16 +1165,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/validate/tracking/RefineHomographTransform.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="41" column="22" selection-start="1283" selection-end="1283" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/validate/tracking/FitHomographyFunction.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="60" column="50" selection-start="1595" selection-end="1595" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/validate/trackrect/EvaluateResultsTldData.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="5" column="13" selection-start="74" selection-end="74" vertical-scroll-proportion="0.0">
@@ -1167,16 +1172,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/validate/trackrect/UtilTldData.java">
+    <entry file="file://$PROJECT_DIR$/../../boofcv/main/recognition/src/boofcv/abst/tracker/Circulant_to_TrackerObjectQuad.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="84" column="0" selection-start="2330" selection-end="2330" vertical-scroll-proportion="0.0">
+        <state line="55" column="23" selection-start="1776" selection-end="1776" vertical-scroll-proportion="0.0">
           <folding />
         </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/validate/tracking/BatchEvaluateAveTolerance.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="31" column="109" selection-start="1012" selection-end="1012" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/../../boofcv/main/ip/src/boofcv/struct/image/ImageFloat32.java">
@@ -1186,30 +1186,58 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/../../boofcv/main/ip/src/boofcv/alg/misc/ImageMiscOps.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="47" column="23" selection-start="1551" selection-end="1551" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/../../boofcv/main/ip/src/boofcv/struct/image/InterleavedF32.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="150" column="54" selection-start="4068" selection-end="4068" vertical-scroll-proportion="0.0">
+        <state line="141" column="54" selection-start="3763" selection-end="3763" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../../boofcv/main/recognition/src/boofcv/abst/tracker/ConfigCirculantTracker.java">
+    <entry file="jar:///opt/jdk/jdk1.6.0_41/src.zip!/java/lang/Object.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="53" column="11" selection-start="1617" selection-end="1617" vertical-scroll-proportion="0.0">
+        <state line="364" column="29" selection-start="17894" selection-end="17894" vertical-scroll-proportion="0.33333334">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/validate/trackrect/DebugTrackerTldData.java">
+    <entry file="file://$PROJECT_DIR$/../../boofcv/main/recognition/src/boofcv/alg/tracker/tld/TldLearning.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="96" column="42" selection-start="2917" selection-end="2917" vertical-scroll-proportion="0.0">
+        <state line="66" column="12" selection-start="2235" selection-end="2235" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/validate/tracking/EvaluateTrackerRuntime.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="37" column="131" selection-start="1145" selection-end="1145" vertical-scroll-proportion="0.0">
+        <state line="36" column="131" selection-start="1103" selection-end="1103" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../boofcv/main/ip/src/boofcv/alg/interpolate/BilinearPixel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="52" column="0" selection-start="1463" selection-end="1463" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../boofcv/main/ip/src/boofcv/alg/interpolate/impl/ImplBilinearPixel_F32.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="73" column="0" selection-start="1925" selection-end="1925" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../boofcv/main/recognition/src/boofcv/alg/tracker/circulant/CirculantTracker.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="312" column="70" selection-start="10232" selection-end="10232" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
@@ -1221,37 +1249,30 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/validate/vo/OutputForKITTI.java">
+    <entry file="file://$PROJECT_DIR$/../../georegression/src/georegression/struct/shapes/RectangleCorner2D_F64.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="45" column="77" selection-start="1619" selection-end="1619" vertical-scroll-proportion="0.0">
+        <state line="25" column="13" selection-start="1078" selection-end="1078" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/validate/trackrect/GenerateDetectionsTldData.java">
+    <entry file="file://$PROJECT_DIR$/src/validate/trackrect/UtilTldData.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="37" column="0" selection-start="1149" selection-end="1149" vertical-scroll-proportion="0.0">
+        <state line="84" column="0" selection-start="2330" selection-end="2330" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/validate/trackrect/VisualizeResultsMilTrackData.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="82" column="32" selection-start="2413" selection-end="2413" vertical-scroll-proportion="0.0">
+        <state line="38" column="0" selection-start="1055" selection-end="1083" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/validate/trackrect/GenerateDetectionsMilTrackData.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="39" column="34" selection-start="1292" selection-end="1292" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../boofcv/main/recognition/src/boofcv/alg/tracker/circulant/CirculantTracker.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="337" column="143" selection-start="11348" selection-end="11348" vertical-scroll-proportion="5.0924954">
+        <state line="89" column="35" selection-start="2621" selection-end="2621" vertical-scroll-proportion="0.7835951">
           <folding />
         </state>
       </provider>

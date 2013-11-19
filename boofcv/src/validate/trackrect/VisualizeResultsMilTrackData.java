@@ -36,7 +36,7 @@ public class VisualizeResultsMilTrackData {
 		TldResults stats = new TldResults();
 
 		int imageNum = 0;
-
+		boolean firstImage = true;
 
 		while( true ) {
 			String imageName = String.format("%s/imgs/img%05d.png",path,imageNum);
@@ -44,7 +44,18 @@ public class VisualizeResultsMilTrackData {
 
 			BufferedImage image = UtilImageIO.loadImage(imageName);
 
-			if( imageNum == 0 ) {
+			if( image == null ) {
+				if( imageNum == 0 ) {
+					System.out.println("Skipping index 0");
+					imageNum++;
+					continue;
+				} else {
+					throw new RuntimeException("Can't load "+imageName);
+				}
+			}
+
+			if( firstImage ) {
+				firstImage = false;
 				output = new BufferedImage(image.getWidth(),image.getHeight(),BufferedImage.TYPE_INT_BGR);
 				output.createGraphics().drawImage(image,0,0,null);
 				gui = new ImagePanel(output);
@@ -91,9 +102,9 @@ public class VisualizeResultsMilTrackData {
 
 		VisualizeResultsMilTrackData visualizer = new VisualizeResultsMilTrackData();
 
-		String dataset = "cliffbar";
-//		String dataset = "02_jumping";
-//		String dataset = "03_pedestrian1";
+//		String dataset = "cliffbar";
+//		String dataset = "coke11";
+		String dataset = "david";
 //		String dataset = "04_pedestrian2";
 //		String dataset = "05_pedestrian3";
 //		String dataset = "06_car";
@@ -105,8 +116,8 @@ public class VisualizeResultsMilTrackData {
 //		String path = "../thirdparty/opentld_c";
 //		String library = "copentld";
 		String path = "./";
-		String library = "BoofCV";
-		String inputFile = path+"/"+library+"_"+dataset+".txt";
+		String library = "BoofCV-Circulant";
+		String inputFile = path+library+"_"+dataset+".txt";
 
 		visualizer.visualize(dataset,inputFile);
 
