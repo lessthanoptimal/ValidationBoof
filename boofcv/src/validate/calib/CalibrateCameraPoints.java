@@ -7,11 +7,16 @@ import boofcv.factory.calib.FactoryPlanarCalibrationTarget;
 import boofcv.struct.calib.IntrinsicParameters;
 import georegression.struct.point.Point2D_F64;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Computes calibration parameters using saved detected calibration points
+ *
  * @author Peter Abeles
  */
 public class CalibrateCameraPoints {

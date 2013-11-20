@@ -21,7 +21,7 @@ int main( int argc , char **argv )
   Mat view,viewGray;
   bool found;
 
-  const char *dir = "../images/stereo/Bumblebee2_Chess/";
+  const char *dir = "../../../data/calib/stereo/Bumblebee2_Chess/";
   int numImages = 11;
 
   for( int i = 0; i < numImages; i++ ) {

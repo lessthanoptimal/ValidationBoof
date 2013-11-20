@@ -16,7 +16,7 @@ import java.io.PrintStream;
 public class SaveTargetDescription {
 
 	public static void main( String args[] ) throws FileNotFoundException {
-		PlanarCalibrationTarget target = FactoryPlanarCalibrationTarget.gridChess(3, 4, 30);
+		PlanarCalibrationTarget target = FactoryPlanarCalibrationTarget.gridChess(5, 7, 30);
 
 		PrintStream out = new PrintStream(new FileOutputStream("target.txt"));
 		out.println(target.points.size());
