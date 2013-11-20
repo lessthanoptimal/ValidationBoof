@@ -24,7 +24,7 @@ import java.io.PrintStream;
  */
 public class DetectFast {
 	public static void main( String args[] ) throws FileNotFoundException {
-		ImageUInt8 raw = UtilImageIO.loadImage("../../images/outdoors_gray.png", ImageUInt8.class);
+		ImageUInt8 raw = UtilImageIO.loadImage("../data/outdoors_gray.png", ImageUInt8.class);
 
 		FastCornerIntensity<ImageUInt8> alg = new ImplFastIntensity9<ImageUInt8>(new ImplFastHelper_U8(20));
 		ImageFloat32 intensity = new ImageFloat32(raw.width,raw.height);

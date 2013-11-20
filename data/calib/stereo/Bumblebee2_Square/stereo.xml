@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<java version="1.6.0_30" class="java.beans.XMLDecoder"> 
+ <object class="boofcv.struct.calib.StereoParameters"> 
+  <void property="left"> 
+   <object class="boofcv.struct.calib.IntrinsicParameters"> 
+    <void property="cx"> 
+     <double>315.11126848439966</double> 
+    </void> 
+    <void property="cy"> 
+     <double>232.6750586285005</double> 
+    </void> 
+    <void property="fx"> 
+     <double>528.8144960431688</double> 
+    </void> 
+    <void property="fy"> 
+     <double>530.7700226182861</double> 
+    </void> 
+    <void property="height"> 
+     <int>480</int> 
+    </void> 
+    <void property="leftHanded"> 
+     <boolean>true</boolean> 
+    </void> 
+    <void property="radial"> 
+     <array class="double" length="2"> 
+      <void index="0"> 
+       <double>-0.372922058521234</double> 
+      </void> 
+      <void index="1"> 
+       <double>0.18797519601399412</double> 
+      </void> 
+     </array> 
+    </void> 
+    <void property="width"> 
+     <int>640</int> 
+    </void> 
+   </object> 
+  </void> 
+  <void property="right"> 
+   <object class="boofcv.struct.calib.IntrinsicParameters"> 
+    <void property="cx"> 
+     <double>317.20663322764193</double> 
+    </void> 
+    <void property="cy"> 
+     <double>230.17356503563045</double> 
+    </void> 
+    <void property="fx"> 
+     <double>530.8803156400016</double> 
+    </void> 
+    <void property="fy"> 
+     <double>532.2963156588125</double> 
+    </void> 
+    <void property="height"> 
+     <int>480</int> 
+    </void> 
+    <void property="leftHanded"> 
+     <boolean>true</boolean> 
+    </void> 
+    <void property="radial"> 
+     <array class="double" length="2"> 
+      <void index="0"> 
+       <double>-0.355697273383743</double> 
+      </void> 
+      <void index="1"> 
+       <double>0.1458992991785299</double> 
+      </void> 
+     </array> 
+    </void> 
+    <void property="width"> 
+     <int>640</int> 
+    </void> 
+   </object> 
+  </void> 
+  <void property="rightToLeft"> 
+   <object class="georegression.struct.se.Se3_F64"> 
+    <void property="r"> 
+     <void property="data"> 
+      <void index="0"> 
+       <double>0.9999979404918864</double> 
+      </void> 
+      <void index="1"> 
+       <double>0.0013894356184278268</double> 
+      </void> 
+      <void index="2"> 
+       <double>0.0014793514278541725</double> 
+      </void> 
+      <void index="3"> 
+       <double>-0.0013757501212682257</double> 
+      </void> 
+      <void index="4"> 
+       <double>0.9999566205477733</double> 
+      </void> 
+      <void index="5"> 
+       <double>-0.009212184012486913</double> 
+      </void> 
+      <void index="6"> 
+       <double>-0.0014920869909902275</double> 
+      </void> 
+      <void index="7"> 
+       <double>0.00921012982201258</double> 
+      </void> 
+      <void index="8"> 
+       <double>0.9999564726452217</double> 
+      </void> 
+     </void> 
+    </void> 
+    <void property="t"> 
+     <void property="x"> 
+      <double>119.47474751783886</double> 
+     </void> 
+     <void property="y"> 
+      <double>-1.4212733797035932</double> 
+     </void> 
+     <void property="z"> 
+      <double>-0.2759839876759429</double> 
+     </void> 
+    </void> 
+   </object> 
+  </void> 
+ </object> 
+</java> 

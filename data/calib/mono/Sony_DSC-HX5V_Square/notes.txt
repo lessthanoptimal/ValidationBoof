@@ -1,0 +1,12 @@
+Camera:          Sony Cyber-Shot DSC-Hx5V
+Date:            Feb. 7, 2012
+Orignal Format:  MP4 Video
+Converted:       ffmpeg -I video.mp4 -sameq "images%05.jpg"
+Zoom:            No optical zoom
+Image Size:      640x480
+
+Note:
+
+Taken while in video mode.  Frames were selected for minimal motion blur and orientation.  Calibration grid had some visible ripples and not totally flush against the table.
+
+- Peter Abeles
