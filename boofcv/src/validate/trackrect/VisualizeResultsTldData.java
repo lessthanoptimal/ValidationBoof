@@ -104,15 +104,16 @@ public class VisualizeResultsTldData{
 //		String dataset = "04_pedestrian2";
 //		String dataset = "05_pedestrian3";
 //		String dataset = "06_car";
-		String dataset = "07_motocross";
+//		String dataset = "07_motocross";
 //		String dataset = "08_volkswagen";
 //		String dataset = "09_carchase";
-//		String dataset = "10_panda";
+		String dataset = "10_panda";
 
 //		String path = "../thirdparty/opentld_c";
 //		String library = "copentld";
 		String path = "./";
-		String library = "BoofCV";
+//		String library = "BoofCV-TLD";
+		String library = "BoofCV-Circulant";
 		String inputFile = path+"/"+library+"_"+dataset+".txt";
 
 		visualizer.visualize(dataset,inputFile);

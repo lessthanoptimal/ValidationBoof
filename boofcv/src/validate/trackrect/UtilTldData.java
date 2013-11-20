@@ -97,4 +97,21 @@ public class UtilTldData {
 		rectangle.x1 = Double.parseDouble(tokens[2]);
 		rectangle.y1 = Double.parseDouble(tokens[3]);
 	}
+
+	public static void parseRectWH( String s , RectangleCorner2D_F64 rectangle ) {
+		String tokens[] = s.split(",");
+
+		if( tokens.length != 4 )
+			throw new RuntimeException("Unexpected number of tokens in rectangle file");
+
+		for( int i = 0; i < 4; i++ ) {
+			if(tokens[i].compareTo("nan") == 0 )
+				tokens[i] = "NaN";
+		}
+
+		rectangle.x0 = Double.parseDouble(tokens[0]);
+		rectangle.y0 = Double.parseDouble(tokens[1]);
+		rectangle.x1 = rectangle.x0 + Double.parseDouble(tokens[2]);
+		rectangle.y1 = rectangle.y0 + Double.parseDouble(tokens[3]);
+	}
 }

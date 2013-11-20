@@ -23,10 +23,10 @@ public class VisualizeResultsMilTrackData {
 
 		String path = "../data/track_rect/MILTrack/"+dataName;
 
-//		RectangleCorner2D_F64 expected = new RectangleCorner2D_F64();
+		RectangleCorner2D_F64 expected = new RectangleCorner2D_F64();
 		RectangleCorner2D_F64 found = new RectangleCorner2D_F64();
 
-//		BufferedReader readerTruth = new BufferedReader(new FileReader(path+"/"+dataName+"_gt.txt"));
+		BufferedReader readerTruth = new BufferedReader(new FileReader(path + "/" + dataName + "_gt.txt"));
 		BufferedReader readerRect = new BufferedReader(new FileReader(inputName));
 
 		ImagePanel gui = null;
@@ -40,7 +40,6 @@ public class VisualizeResultsMilTrackData {
 
 		while( true ) {
 			String imageName = String.format("%s/imgs/img%05d.png",path,imageNum);
-			System.out.println(imageNum);
 
 			BufferedImage image = UtilImageIO.loadImage(imageName);
 
@@ -50,7 +49,7 @@ public class VisualizeResultsMilTrackData {
 					imageNum++;
 					continue;
 				} else {
-					throw new RuntimeException("Can't load "+imageName);
+					break;
 				}
 			}
 
@@ -64,35 +63,40 @@ public class VisualizeResultsMilTrackData {
 				output.createGraphics().drawImage(image,0,0,null);
 			}
 
-//			UtilTldData.parseRect(readerTruth.readLine(),expected);
+			UtilTldData.parseRectWH(readerTruth.readLine(),expected);
 			UtilTldData.parseRect(readerRect.readLine(),found);
 
 			Graphics2D g2 = output.createGraphics();
 
-//			boolean isVisibleTruth = !Double.isNaN(expected.x0);
+			boolean hasTruth = !(expected.x0 == 0 && expected.y0 == 0 && expected.x1 == 0 && expected.y1 == 0);
+
 			boolean isVisibleFound = !Double.isNaN(found.x0);
-
-//			if( isVisibleTruth ) {
-//				g2.setColor(Color.RED);
-//				UtilTldData.drawRectangle(expected,g2);
-//			}
-
 			if( isVisibleFound ) {
 				g2.setStroke(new BasicStroke(3));
 				g2.setColor(Color.BLUE);
 				UtilTldData.drawRectangle(found,g2);
 			}
 
-//			UtilTldData.updateStatistics(expected,found,stats);
+			if( hasTruth ) {
+				boolean isVisibleTruth = !Double.isNaN(expected.x0);
 
-//			System.out.printf("  F = %6.3f      TP %5d TN %5d      FP %5d FN %5d\n",
-//					UtilTldData.computeFMeasure(stats),stats.truePositives,stats.trueNegatives,stats.falsePositives,stats.falseNegatives);
+				if( isVisibleTruth ) {
+					g2.setColor(Color.RED);
+					UtilTldData.drawRectangle(expected,g2);
+				}
+
+				UtilTldData.updateStatistics(expected,found,stats);
+
+				System.out.printf("  F = %6.3f      TP %5d TN %5d      FP %5d FN %5d\n",
+						UtilTldData.computeFMeasure(stats),stats.truePositives,stats.trueNegatives,stats.falsePositives,stats.falseNegatives);
+			}
 
 			gui.repaint();
 
 			imageNum++;
 			BoofMiscOps.pause(20);
 		}
+		System.out.println("F-measure: "+UtilTldData.computeFMeasure(stats));
 	}
 
 
@@ -102,9 +106,9 @@ public class VisualizeResultsMilTrackData {
 
 		VisualizeResultsMilTrackData visualizer = new VisualizeResultsMilTrackData();
 
-//		String dataset = "cliffbar";
+		String dataset = "cliffbar";
 //		String dataset = "coke11";
-		String dataset = "david";
+//		String dataset = "david";
 //		String dataset = "04_pedestrian2";
 //		String dataset = "05_pedestrian3";
 //		String dataset = "06_car";

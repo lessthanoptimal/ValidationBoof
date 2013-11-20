@@ -127,8 +127,8 @@ public class GenerateDetectionsMilTrackData<T extends ImageBase> {
 	}
 
 	public static void main(String[] args) {
-		evaluate("cliffbar");
-		evaluate("coke11");
+//		evaluate("cliffbar");
+//		evaluate("coke11");
 		evaluate("david");
 		evaluate("dollar");
 		evaluate("faceocc");
