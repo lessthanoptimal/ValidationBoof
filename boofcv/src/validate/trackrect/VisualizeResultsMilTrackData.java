@@ -106,9 +106,9 @@ public class VisualizeResultsMilTrackData {
 
 		VisualizeResultsMilTrackData visualizer = new VisualizeResultsMilTrackData();
 
-		String dataset = "cliffbar";
+//		String dataset = "cliffbar";
 //		String dataset = "coke11";
-//		String dataset = "david";
+		String dataset = "david";
 //		String dataset = "04_pedestrian2";
 //		String dataset = "05_pedestrian3";
 //		String dataset = "06_car";

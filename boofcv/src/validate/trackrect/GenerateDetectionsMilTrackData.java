@@ -19,8 +19,11 @@ import java.io.*;
  * @author Peter Abeles
  */
 public class GenerateDetectionsMilTrackData<T extends ImageBase> {
-	T input;
 
+	public static String[]videos = new String[]{"cliffbar","coke11","david","dollar","faceocc",
+			"faceocc2","girl","surfer","sylv","tiger1","tiger2","twinings"};
+
+	T input;
 
 	public GenerateDetectionsMilTrackData(ImageType<T> type) {
 		input = type.createImage(1,1);
@@ -127,8 +130,8 @@ public class GenerateDetectionsMilTrackData<T extends ImageBase> {
 	}
 
 	public static void main(String[] args) {
-//		evaluate("cliffbar");
-//		evaluate("coke11");
+		evaluate("cliffbar");
+		evaluate("coke11");
 		evaluate("david");
 		evaluate("dollar");
 		evaluate("faceocc");
