@@ -105,13 +105,13 @@ public class VisualizeResultsMilTrackData {
 //		String dataset = "cliffbar";
 //		String dataset = "coke11";
 		String dataset = "david";
-//		String dataset = "04_pedestrian2";
-//		String dataset = "05_pedestrian3";
-//		String dataset = "06_car";
-//		String dataset = "07_motocross";
-//		String dataset = "08_volkswagen";
-//		String dataset = "09_carchase";
-//		String dataset = "10_panda";
+//		String dataset = "faceocc";
+//		String dataset = "faceocc2";
+//		String dataset = "girl";
+//		String dataset = "surfer";
+//		String dataset = "tiger1";
+//		String dataset = "tiger2";
+//		String dataset = "twinings";
 
 //		String path = "../thirdparty/opentld_c";
 //		String library = "copentld";
