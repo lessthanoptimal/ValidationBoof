@@ -1,7 +1,7 @@
 package validate.trackrect;
 
+import boofcv.abst.tracker.ConfigCirculantTracker;
 import boofcv.abst.tracker.TrackerObjectQuad;
-import boofcv.alg.tracker.tld.TldConfig;
 import boofcv.core.image.ConvertBufferedImage;
 import boofcv.factory.tracker.FactoryTrackerObjectQuad;
 import boofcv.io.image.UtilImageIO;
@@ -90,9 +90,11 @@ public class GenerateDetectionsTldData<T extends ImageBase> {
 		GenerateDetectionsTldData generator = new GenerateDetectionsTldData(ImageType.single(imageType));
 
 		TrackerObjectQuad tracker =
-				FactoryTrackerObjectQuad.tld(new TldConfig(false, imageType));
+//				FactoryTrackerObjectQuad.tld(new TldConfig(false, imageType));
+				FactoryTrackerObjectQuad.circulant(new ConfigCirculantTracker(), imageType);
 
-		String name = "BoofCV";
+//		String name = "BoofCV-TLD";
+		String name = "BoofCV-Circulant";
 
 		generator.evaluate(dataset,name,tracker);
 	}
