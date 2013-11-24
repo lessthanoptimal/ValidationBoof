@@ -12,6 +12,8 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
+import static validate.trackrect.GenerateDetectionsMilTrackData.parseFramesFile;
+
 /**
  * @author Peter Abeles
  */
@@ -34,19 +36,22 @@ public class VisualizeResultsMilTrackData {
 		BufferedImage output = null;
 
 		TldResults stats = new TldResults();
+		FooResults statsFoo = new FooResults();
 
-		int imageNum = 0;
+		int frames[] = parseFramesFile(path + "/" + dataName + "_frames.txt");
+		int frameNum = frames[0];
 		boolean firstImage = true;
 
-		while( true ) {
-			String imageName = String.format("%s/imgs/img%05d.png",path,imageNum);
+		while( frameNum <= frames[1] ) {
+
+			String imageName = String.format("%s/imgs/img%05d.png",path,frameNum);
 
 			BufferedImage image = UtilImageIO.loadImage(imageName);
 
 			if( image == null ) {
-				if( imageNum == 0 ) {
+				if( frameNum == 0 ) {
 					System.out.println("Skipping index 0");
-					imageNum++;
+					frameNum++;
 					continue;
 				} else {
 					break;
@@ -63,8 +68,12 @@ public class VisualizeResultsMilTrackData {
 				output.createGraphics().drawImage(image,0,0,null);
 			}
 
-			UtilTldData.parseRectWH(readerTruth.readLine(),expected);
-			UtilTldData.parseRect(readerRect.readLine(),found);
+			String lineTruth = readerTruth.readLine();
+			if( lineTruth != null )
+				UtilTldData.parseRectWH(lineTruth,expected);
+			else
+				expected.set(0,0,0,0);
+			UtilTldData.parseFRect(readerRect.readLine(),found);
 
 			Graphics2D g2 = output.createGraphics();
 
@@ -86,6 +95,7 @@ public class VisualizeResultsMilTrackData {
 				}
 
 				UtilTldData.updateStatistics(expected,found,stats);
+				UtilTldData.updateStatistics(expected,found,statsFoo);
 
 				System.out.printf("  F = %6.3f      TP %5d TN %5d      FP %5d FN %5d\n",
 						UtilTldData.computeFMeasure(stats),stats.truePositives,stats.trueNegatives,stats.falsePositives,stats.falseNegatives);
@@ -93,14 +103,12 @@ public class VisualizeResultsMilTrackData {
 
 			gui.repaint();
 
-			imageNum++;
+			frameNum++;
 			BoofMiscOps.pause(20);
 		}
 		System.out.println("F-measure: "+UtilTldData.computeFMeasure(stats));
+		System.out.println("Average overlap "+(statsFoo.totalOverlap/statsFoo.truePositive));
 	}
-
-
-
 
 	public static void main(String[] args) throws IOException {
 
@@ -108,19 +116,24 @@ public class VisualizeResultsMilTrackData {
 
 //		String dataset = "cliffbar";
 //		String dataset = "coke11";
-		String dataset = "david";
-//		String dataset = "04_pedestrian2";
-//		String dataset = "05_pedestrian3";
-//		String dataset = "06_car";
-//		String dataset = "07_motocross";
-//		String dataset = "08_volkswagen";
-//		String dataset = "09_carchase";
-//		String dataset = "10_panda";
+//		String dataset = "david";
+//		String dataset = "dollar";
+//		String dataset = "faceocc";
+//		String dataset = "faceocc2";
+//		String dataset = "girl";
+		String dataset = "surfer";
+//		String dataset = "sylv";
+//		String dataset = "tiger1";
+//		String dataset = "tiger2";
+//		String dataset = "twinings";
 
 //		String path = "../thirdparty/opentld_c";
 //		String library = "copentld";
 		String path = "./";
+//		String library = "BoofCV-TLD";
 		String library = "BoofCV-Circulant";
+//		String library = "BoofCV-SFT";
+//		String library = "BoofCV-MeanShift";
 		String inputFile = path+library+"_"+dataset+".txt";
 
 		visualizer.visualize(dataset,inputFile);

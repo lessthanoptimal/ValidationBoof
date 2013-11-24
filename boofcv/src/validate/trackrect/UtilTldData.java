@@ -22,6 +22,29 @@ public class UtilTldData {
 		return 2.0*(precision*recall)/(precision + recall);
 	}
 
+	public static void updateStatistics( RectangleCorner2D_F64 expected , RectangleCorner2D_F64 found ,
+										 FooResults stats ) {
+		boolean isVisibleTruth = !Double.isNaN(expected.x0);
+		boolean isVisibleFound = !Double.isNaN(found.x0);
+
+		if( isVisibleTruth && isVisibleFound ) {
+
+
+			RectangleCorner2D_F64 i = new RectangleCorner2D_F64();
+			if( Intersection2D_F64.intersection(expected, found, i) ) {
+				double areaI = i.area();
+
+				double bottom = expected.area() + found.area() - areaI;
+
+				double overlap = areaI/ bottom;
+
+				stats.totalOverlap += overlap;
+				stats.truePositive++;
+			}
+		}
+		stats.total++;
+	}
+
 
 	public static void updateStatistics( RectangleCorner2D_F64 expected , RectangleCorner2D_F64 found ,
 										 TldResults stats ) {
@@ -96,6 +119,23 @@ public class UtilTldData {
 		rectangle.y0 = Double.parseDouble(tokens[1]);
 		rectangle.x1 = Double.parseDouble(tokens[2]);
 		rectangle.y1 = Double.parseDouble(tokens[3]);
+	}
+
+	public static void parseFRect( String s , RectangleCorner2D_F64 rectangle ) {
+		String tokens[] = s.split(",");
+
+		if( tokens.length != 5 )
+			throw new RuntimeException("Unexpected number of tokens in rectangle file");
+
+		for( int i = 0; i < 4; i++ ) {
+			if(tokens[i+1].compareTo("nan") == 0 )
+				tokens[i+1] = "NaN";
+		}
+
+		rectangle.x0 = Double.parseDouble(tokens[1]);
+		rectangle.y0 = Double.parseDouble(tokens[2]);
+		rectangle.x1 = Double.parseDouble(tokens[3]);
+		rectangle.y1 = Double.parseDouble(tokens[4]);
 	}
 
 	public static void parseRectWH( String s , RectangleCorner2D_F64 rectangle ) {

@@ -8,5 +8,4 @@ public class TldResults {
 	public int trueNegatives;
 	public int falsePositives;
 	public int falseNegatives;
-
 }

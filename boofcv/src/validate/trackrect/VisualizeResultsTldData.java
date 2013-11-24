@@ -3,7 +3,6 @@ package validate.trackrect;
 import boofcv.gui.image.ImagePanel;
 import boofcv.gui.image.ShowImages;
 import boofcv.io.image.UtilImageIO;
-import boofcv.misc.BoofMiscOps;
 import georegression.struct.shapes.RectangleCorner2D_F64;
 
 import java.awt.*;
@@ -83,7 +82,7 @@ public class VisualizeResultsTldData{
 			gui.repaint();
 
 			imageNum++;
-			BoofMiscOps.pause(30);
+//			BoofMiscOps.pause(30);
 		}
 
 		System.out.println("F-measure: "+UtilTldData.computeFMeasure(stats));
@@ -91,14 +90,11 @@ public class VisualizeResultsTldData{
 		System.out.println();
 	}
 
-
-
-
 	public static void main(String[] args) throws IOException {
 
 		VisualizeResultsTldData visualizer = new VisualizeResultsTldData();
 
-//		String dataset = "01_david";
+		String dataset = "01_david";
 //		String dataset = "02_jumping";
 //		String dataset = "03_pedestrian1";
 //		String dataset = "04_pedestrian2";
@@ -107,7 +103,7 @@ public class VisualizeResultsTldData{
 //		String dataset = "07_motocross";
 //		String dataset = "08_volkswagen";
 //		String dataset = "09_carchase";
-		String dataset = "10_panda";
+//		String dataset = "10_panda";
 
 //		String path = "../thirdparty/opentld_c";
 //		String library = "copentld";
