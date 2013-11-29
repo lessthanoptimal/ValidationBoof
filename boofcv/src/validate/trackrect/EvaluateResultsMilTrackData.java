@@ -52,7 +52,7 @@ public class EvaluateResultsMilTrackData {
 			frameNum++;
 		}
 		double averageOverlap = statsFoo.totalOverlap/statsFoo.truePositive;
-		out.printf("%s %6.3f %04d %04d %04d %04d %6.3f\n", dataName, UtilTldData.computeFMeasure(stats), stats.truePositives,
+		out.printf("%s %5.3f %04d %04d %04d %04d %5.3f\n", dataName, UtilTldData.computeFMeasure(stats), stats.truePositives,
 				stats.trueNegatives, stats.falsePositives, stats.falseNegatives, averageOverlap);
 	}
 
@@ -60,8 +60,8 @@ public class EvaluateResultsMilTrackData {
 
 		EvaluateResultsMilTrackData evaluator = new EvaluateResultsMilTrackData();
 
-//		String libraries[]=new String[]{"BoofCV-TLD","BoofCV-Circulant","BoofCV-CirculantOrig","BoofCV-SFT","BoofCV-Comaniciu"};
-		String libraries[]=new String[]{"BoofCV-CirculantOrig"};
+//		String libraries[]=new String[]{"BoofCV-TLD","BoofCV-Circulant","BoofCV-CirculantOrig","BoofCV-SFT","BoofCV-Comaniciu","PCirculant"};
+		String libraries[]=new String[]{"PCirculant"};
 
 		String path = "./";
 
