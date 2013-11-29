@@ -163,6 +163,17 @@ public class GenerateDetectionsMilTrackData<T extends ImageBase> {
 		generator.evaluate(dataset,"BoofCV-Circulant",tracker);
 	}
 
+	public static void evaluateCirculantOrig( String dataset ) {
+		Class imageClass = ImageFloat32.class;
+		ImageType imageType = ImageType.single(imageClass);
+
+		TrackerObjectQuad tracker =
+				FactoryTrackerObjectQuad.circulantOrig(new ConfigCirculantTracker(), imageClass);
+
+		GenerateDetectionsMilTrackData generator = new GenerateDetectionsMilTrackData(imageType);
+		generator.evaluate(dataset,"BoofCV-CirculantOrig",tracker);
+	}
+
 	public static void evaluateSFT( String dataset ) {
 		Class imageClass = ImageFloat32.class;
 		ImageType imageType = ImageType.single(imageClass);
@@ -174,7 +185,7 @@ public class GenerateDetectionsMilTrackData<T extends ImageBase> {
 		generator.evaluate(dataset,"BoofCV-SFT",tracker);
 	}
 
-	public static void evaluateMeanShift( String dataset ) {
+	public static void evaluateComaniciu(String dataset) {
 		Class imageClass = ImageFloat32.class;
 		ImageType imageType = ImageType.ms(3, imageClass);
 
@@ -182,33 +193,34 @@ public class GenerateDetectionsMilTrackData<T extends ImageBase> {
 				FactoryTrackerObjectQuad.meanShiftComaniciu2003(new ConfigComaniciu2003(imageType));
 
 		GenerateDetectionsMilTrackData generator = new GenerateDetectionsMilTrackData(imageType);
-		generator.evaluate(dataset,"BoofCV-MeanShift",tracker);
+		generator.evaluate(dataset,"BoofCV-Comaniciu",tracker);
 	}
 
 
 	public static void evaluate( String dataset ) {
-		evaluateTLD(dataset);
-		evaluateCirculant(dataset);
-		evaluateSFT(dataset);
-		evaluateMeanShift(dataset);
+//		evaluateTLD(dataset);
+//		evaluateCirculant(dataset);
+		evaluateCirculantOrig(dataset);
+//		evaluateSFT(dataset);
+//		evaluateComaniciu(dataset);
 	}
 
 	public static void main(String[] args) {
-		for( String m : videos )
-			evaluate(m);
+//		for( String m : videos )
+//			evaluate(m);
 
 //		evaluate("cliffbar");
 //		evaluate("coke11");
 //		evaluate("david");
 //		evaluate("dollar");
 //		evaluate("faceocc");
-//		evaluate("faceocc2");
-//		evaluate("girl");
-//		evaluate("surfer");
-//		evaluate("sylv");
-//		evaluate("tiger1");
-//		evaluate("tiger2");
-//		evaluate("twinings");
+		evaluate("faceocc2");
+		evaluate("girl");
+		evaluate("surfer");
+		evaluate("sylv");
+		evaluate("tiger1");
+		evaluate("tiger2");
+		evaluate("twinings");
 
 		System.out.println("DONE!");
 	}

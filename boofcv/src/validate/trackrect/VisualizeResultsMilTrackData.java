@@ -118,10 +118,10 @@ public class VisualizeResultsMilTrackData {
 //		String dataset = "coke11";
 //		String dataset = "david";
 //		String dataset = "dollar";
-//		String dataset = "faceocc";
+		String dataset = "faceocc";
 //		String dataset = "faceocc2";
 //		String dataset = "girl";
-		String dataset = "surfer";
+//		String dataset = "surfer";
 //		String dataset = "sylv";
 //		String dataset = "tiger1";
 //		String dataset = "tiger2";
@@ -131,7 +131,8 @@ public class VisualizeResultsMilTrackData {
 //		String library = "copentld";
 		String path = "./";
 //		String library = "BoofCV-TLD";
-		String library = "BoofCV-Circulant";
+//		String library = "BoofCV-Circulant";
+		String library = "BoofCV-CirculantOrig";
 //		String library = "BoofCV-SFT";
 //		String library = "BoofCV-MeanShift";
 		String inputFile = path+library+"_"+dataset+".txt";

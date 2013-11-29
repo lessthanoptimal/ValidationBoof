@@ -60,8 +60,8 @@ public class EvaluateResultsMilTrackData {
 
 		EvaluateResultsMilTrackData evaluator = new EvaluateResultsMilTrackData();
 
-		String libraries[]=new String[]{"BoofCV-TLD","BoofCV-Circulant","BoofCV-SFT","BoofCV-MeanShift"};
-//		String libraries[]=new String[]{"BoofCV-TLD"};
+//		String libraries[]=new String[]{"BoofCV-TLD","BoofCV-Circulant","BoofCV-CirculantOrig","BoofCV-SFT","BoofCV-Comaniciu"};
+		String libraries[]=new String[]{"BoofCV-CirculantOrig"};
 
 		String path = "./";
 
