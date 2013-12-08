@@ -1,0 +1,11 @@
+# F-measure TruePositive TrueNegative FalsePositive FalseNegative
+01_david             0.7987   506     0   255     0
+02_jumping           0.0856    14     0   299     0
+03_pedestrian1       0.1699    13     0   127     0
+04_pedestrian2       0.1170    21     0   317     0
+05_pedestrian3       0.4340    51     0   133     0
+06_car               0.7001   509     0   436     0
+07_motocross         0.0067     9     0  2656     0
+08_volkswagen        0.0014     6     0  8570     0
+09_carchase          0.0344   174     0  9754     0
+10_panda             0.1019   161     0  2839     0

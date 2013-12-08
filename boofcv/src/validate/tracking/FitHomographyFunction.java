@@ -28,7 +28,7 @@ public class FitHomographyFunction<T extends ImageSingleBand> implements Functio
 	}
 
 	@Override
-	public int getN() {
+	public int getNumOfInputsN() {
 		return 9;
 	}
 
