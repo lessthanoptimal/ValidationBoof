@@ -90,7 +90,7 @@ public class PerformanceTldData {
 		PerformanceTldData performance = new PerformanceTldData();
 
 //		performance.evaluateAll("../thirdparty/opentld_c","copentld");
-		performance.evaluateAll("./","BoofCV");
+		performance.evaluateAll("./","BoofCV-Circulant");
 
 		System.out.println("DONE!");
 	}

@@ -3,12 +3,12 @@ package validate.fast;
 import boofcv.abst.feature.detect.extract.ConfigExtract;
 import boofcv.abst.feature.detect.extract.NonMaxSuppression;
 import boofcv.alg.feature.detect.intensity.FastCornerIntensity;
-import boofcv.alg.feature.detect.intensity.impl.ImplFastHelper_U8;
-import boofcv.alg.feature.detect.intensity.impl.ImplFastIntensity9;
 import boofcv.factory.feature.detect.extract.FactoryFeatureExtractor;
+import boofcv.factory.feature.detect.intensity.FactoryIntensityPointAlg;
 import boofcv.io.image.UtilImageIO;
 import boofcv.struct.QueueCorner;
 import boofcv.struct.image.ImageFloat32;
+import boofcv.struct.image.ImageSingleBand;
 import boofcv.struct.image.ImageUInt8;
 import georegression.struct.point.Point2D_I16;
 
@@ -16,24 +16,27 @@ import java.io.FileNotFoundException;
 import java.io.PrintStream;
 
 /**
- *
+ * Detects fast features and compares against a text file containing
  *
  *
  *
  * @author Peter Abeles
  */
 public class DetectFast {
-	public static void main( String args[] ) throws FileNotFoundException {
-		ImageUInt8 raw = UtilImageIO.loadImage("../data/outdoors_gray.png", ImageUInt8.class);
 
-		FastCornerIntensity<ImageUInt8> alg = new ImplFastIntensity9<ImageUInt8>(new ImplFastHelper_U8(20));
+	public static final String FILE_NAME = "boofcv_fast.txt";
+
+	public static <T extends ImageSingleBand> void detect( String outputDirectory , Class<T> imageType ) throws FileNotFoundException {
+		T raw = UtilImageIO.loadImage("data/outdoors_gray.png", imageType);
+
+		FastCornerIntensity<T> alg = FactoryIntensityPointAlg.fast(20,9,imageType);
 		ImageFloat32 intensity = new ImageFloat32(raw.width,raw.height);
 
 		alg.process(raw,intensity);
 
 		QueueCorner found = alg.getCandidates();
 
-		PrintStream fos = new PrintStream("detected.txt");
+		PrintStream fos = new PrintStream(outputDirectory+FILE_NAME);
 
 		fos.println("# Detected FAST features using BoofCV");
 		fos.println(found.size);
@@ -50,5 +53,16 @@ public class DetectFast {
 		nonmax.process(intensity,null,found,null,peaks);
 
 		System.out.println("Nonmax "+peaks.size);
+	}
+
+	public static void main( String args[] ) throws FileNotFoundException {
+
+		String outputDirectory = "./";
+
+		if( args.length > 0 ) {
+			outputDirectory = args[0];
+		}
+
+		detect(outputDirectory,ImageUInt8.class);
 	}
 }

@@ -15,7 +15,7 @@ public class EvaluateResultsMilTrackData {
 	public void evaluate(String dataName, String inputName, PrintStream out) throws IOException {
 		System.out.println("Processing "+dataName);
 
-		String path = "../data/track_rect/MILTrack/"+dataName;
+		String path = "data/track_rect/MILTrack/"+dataName;
 
 		RectangleCorner2D_F64 expected = new RectangleCorner2D_F64();
 		RectangleCorner2D_F64 found = new RectangleCorner2D_F64();
@@ -56,25 +56,24 @@ public class EvaluateResultsMilTrackData {
 				stats.trueNegatives, stats.falsePositives, stats.falseNegatives, averageOverlap);
 	}
 
-	public static void main(String[] args) throws IOException {
-
+	public static void process( String path , String library ) throws IOException {
 		EvaluateResultsMilTrackData evaluator = new EvaluateResultsMilTrackData();
 
-//		String libraries[]=new String[]{"BoofCV-TLD","BoofCV-Circulant","BoofCV-CirculantOrig","BoofCV-SFT","BoofCV-Comaniciu","PCirculant"};
-		String libraries[]=new String[]{"PCirculant"};
+		System.out.println("------------ "+library+" ------------------");
+		PrintStream out = new PrintStream(path+"MILTrackData_"+library+".txt");
+		out.println("# F TP TN FP FN Overlap");
 
-		String path = "./";
-
-		for( String library : libraries ) {
-			System.out.println("------------ "+library+" ------------------");
-			PrintStream out = new PrintStream("MILTrackData_"+library+".txt");
-			out.println("# F TP TN FP FN Overlap");
-
-			for( String dataset : GenerateDetectionsMilTrackData.videos ){
-				String inputFile = path+library+"_"+dataset+".txt";
-				evaluator.evaluate(dataset, inputFile, out);
-			}
+		for( String dataset : GenerateDetectionsMilTrackData.videos ){
+			String inputFile = library+"_"+dataset+".txt";
+			evaluator.evaluate(dataset, inputFile, out);
 		}
+	}
+
+	public static void main(String[] args) throws IOException {
+
+//		String libraries[]=new String[]{"BoofCV-TLD","BoofCV-Circulant","BoofCV-CirculantOrig","BoofCV-SFT","BoofCV-Comaniciu","PCirculant"};
+
+		process("./", "BoofCV-Circulant");
 
 
 		System.out.println("DONE!");

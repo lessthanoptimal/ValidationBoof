@@ -104,7 +104,7 @@ public class VisualizeResultsMilTrackData {
 			gui.repaint();
 
 			frameNum++;
-			BoofMiscOps.pause(10);
+			BoofMiscOps.pause(30);
 		}
 		System.out.println("F-measure: "+UtilTldData.computeFMeasure(stats));
 		System.out.println("Average overlap "+(statsFoo.totalOverlap/statsFoo.truePositive));
@@ -120,19 +120,19 @@ public class VisualizeResultsMilTrackData {
 //		String dataset = "dollar";
 //		String dataset = "faceocc";
 //		String dataset = "faceocc2";
-		String dataset = "girl";
+//		String dataset = "girl";
 //		String dataset = "surfer";
 //		String dataset = "sylv";
 //		String dataset = "tiger1";
-//		String dataset = "tiger2";
+		String dataset = "tiger2";
 //		String dataset = "twinings";
 
 //		String path = "../thirdparty/opentld_c";
 //		String library = "copentld";
 		String path = "./";
 //		String library = "BoofCV-TLD";
-//		String library = "BoofCV-Circulant";
-		String library = "PCirculant";
+		String library = "BoofCV-Circulant";
+//		String library = "PCirculant";
 //		String library = "BoofCV-CirculantOrig";
 //		String library = "BoofCV-SFT";
 //		String library = "BoofCV-MeanShift";

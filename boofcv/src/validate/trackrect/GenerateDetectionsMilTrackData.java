@@ -1,15 +1,10 @@
 package validate.trackrect;
 
-import boofcv.abst.tracker.ConfigCirculantTracker;
-import boofcv.abst.tracker.ConfigComaniciu2003;
 import boofcv.abst.tracker.TrackerObjectQuad;
-import boofcv.alg.tracker.sfot.SfotConfig;
-import boofcv.alg.tracker.tld.TldConfig;
 import boofcv.core.image.ConvertBufferedImage;
-import boofcv.factory.tracker.FactoryTrackerObjectQuad;
 import boofcv.io.image.UtilImageIO;
 import boofcv.struct.image.ImageBase;
-import boofcv.struct.image.ImageFloat32;
+import boofcv.struct.image.ImageDataType;
 import boofcv.struct.image.ImageType;
 import georegression.geometry.UtilPolygons2D_F64;
 import georegression.struct.shapes.Quadrilateral_F64;
@@ -72,7 +67,7 @@ public class GenerateDetectionsMilTrackData<T extends ImageBase> {
 	public void evaluate( String dataName , String outputName , TrackerObjectQuad<T> tracker ) {
 		System.out.println("Processing "+dataName);
 
-		String path = "../data/track_rect/MILTrack/"+dataName;
+		String path = "data/track_rect/MILTrack/"+dataName;
 		Quadrilateral_F64 initial = new Quadrilateral_F64();
 		RectangleCorner2D_F64 rect = readInitial(path + "/" + dataName + "_gt.txt");
 		UtilPolygons2D_F64.convert(rect, initial);
@@ -141,61 +136,15 @@ public class GenerateDetectionsMilTrackData<T extends ImageBase> {
 		out.close();
 	}
 
-	public static void evaluateTLD( String dataset ) {
-		Class imageClass = ImageFloat32.class;
-		ImageType imageType = ImageType.single(imageClass);
+	public static <Input extends ImageBase>
+	void evaluate( String trackerName ,
+				   TrackerObjectQuad<Input> tracker , ImageType<Input> imageType ) {
 
-		TrackerObjectQuad tracker =
-				FactoryTrackerObjectQuad.tld(new TldConfig(false, imageClass));
+		GenerateDetectionsMilTrackData<Input> generator = new GenerateDetectionsMilTrackData(imageType);
 
-		GenerateDetectionsMilTrackData generator = new GenerateDetectionsMilTrackData(imageType);
-		generator.evaluate(dataset,"BoofCV-TLD",tracker);
-	}
-
-	public static void evaluateCirculant( String dataset ) {
-		Class imageClass = ImageFloat32.class;
-		ImageType imageType = ImageType.single(imageClass);
-
-		TrackerObjectQuad tracker =
-				FactoryTrackerObjectQuad.circulant(new ConfigCirculantTracker(), imageClass);
-
-		GenerateDetectionsMilTrackData generator = new GenerateDetectionsMilTrackData(imageType);
-		generator.evaluate(dataset,"BoofCV-Circulant",tracker);
-	}
-
-	public static void evaluateSFT( String dataset ) {
-		Class imageClass = ImageFloat32.class;
-		ImageType imageType = ImageType.single(imageClass);
-
-		TrackerObjectQuad tracker =
-				FactoryTrackerObjectQuad.sparseFlow(new SfotConfig(imageClass));
-
-		GenerateDetectionsMilTrackData generator = new GenerateDetectionsMilTrackData(imageType);
-		generator.evaluate(dataset,"BoofCV-SFT",tracker);
-	}
-
-	public static void evaluateComaniciu(String dataset) {
-		Class imageClass = ImageFloat32.class;
-		ImageType imageType = ImageType.ms(3, imageClass);
-
-		TrackerObjectQuad tracker =
-				FactoryTrackerObjectQuad.meanShiftComaniciu2003(new ConfigComaniciu2003(),imageType);
-
-		GenerateDetectionsMilTrackData generator = new GenerateDetectionsMilTrackData(imageType);
-		generator.evaluate(dataset,"BoofCV-Comaniciu",tracker);
-	}
-
-
-	public static void evaluate( String dataset ) {
-//		evaluateTLD(dataset);
-		evaluateCirculant(dataset);
-//		evaluateSFT(dataset);
-//		evaluateComaniciu(dataset);
-	}
-
-	public static void main(String[] args) {
-		for( String m : videos )
-			evaluate(m);
+		for( String m : videos ) {
+			generator.evaluate(m,trackerName,tracker);
+		}
 
 //		evaluate("cliffbar");
 //		evaluate("coke11");
@@ -209,6 +158,16 @@ public class GenerateDetectionsMilTrackData<T extends ImageBase> {
 //		evaluate("tiger1");
 //		evaluate("tiger2");
 //		evaluate("twinings");
+	}
+
+	public static void main(String[] args) {
+		FactoryEvaluationTrackerObjectQuad.Info info =
+				FactoryEvaluationTrackerObjectQuad.circulant(ImageDataType.F32);
+//		FactoryEvaluationTrackerObjectQuad.tld(ImageDataType.F32);
+//		FactoryEvaluationTrackerObjectQuad.meanShiftComaniciuNoScale(ImageDataType.F32);
+//		FactoryEvaluationTrackerObjectQuad.meanShiftComaniciuScale(ImageDataType.F32);
+
+		evaluate(info.name,info.tracker,info.imageType);
 
 		System.out.println("DONE!");
 	}

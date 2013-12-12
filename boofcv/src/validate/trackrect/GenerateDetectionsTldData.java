@@ -1,12 +1,10 @@
 package validate.trackrect;
 
-import boofcv.abst.tracker.ConfigCirculantTracker;
 import boofcv.abst.tracker.TrackerObjectQuad;
 import boofcv.core.image.ConvertBufferedImage;
-import boofcv.factory.tracker.FactoryTrackerObjectQuad;
 import boofcv.io.image.UtilImageIO;
 import boofcv.struct.image.ImageBase;
-import boofcv.struct.image.ImageFloat32;
+import boofcv.struct.image.ImageDataType;
 import boofcv.struct.image.ImageType;
 import georegression.geometry.UtilPolygons2D_F64;
 import georegression.struct.shapes.Quadrilateral_F64;
@@ -22,6 +20,9 @@ import java.io.PrintStream;
  */
 public class GenerateDetectionsTldData<T extends ImageBase> {
 
+	public static String[]videos = new String[]{"01_david","02_jumping","03_pedestrian1","04_pedestrian2","05_pedestrian3",
+			"06_car","07_motocross","08_volkswagen","09_carchase","10_panda"};
+
 	T input;
 
 
@@ -32,7 +33,7 @@ public class GenerateDetectionsTldData<T extends ImageBase> {
 	public void evaluate( String dataName , String outputName , TrackerObjectQuad<T> tracker ) {
 		System.out.println("Processing "+dataName);
 
-		String path = "../data/track_rect/TLD/"+dataName;
+		String path = "data/track_rect/TLD/"+dataName;
 		Quadrilateral_F64 initial = new Quadrilateral_F64();
 		RectangleCorner2D_F64 rect = UtilTldData.parseRectangle(path + "/init.txt");
 		UtilPolygons2D_F64.convert(rect, initial);
@@ -84,32 +85,36 @@ public class GenerateDetectionsTldData<T extends ImageBase> {
 		out.close();
 	}
 
-	public static void evaluate( String dataset ) {
-		Class imageType = ImageFloat32.class;
+	public static <Input extends ImageBase>
+	void evaluate( String trackerName ,
+				   TrackerObjectQuad<Input> tracker , ImageType<Input> imageType ) {
 
-		GenerateDetectionsTldData generator = new GenerateDetectionsTldData(ImageType.single(imageType));
+		GenerateDetectionsTldData<Input> generator = new GenerateDetectionsTldData(imageType);
 
-		TrackerObjectQuad tracker =
-//				FactoryTrackerObjectQuad.tld(new TldConfig(false, imageType));
-				FactoryTrackerObjectQuad.circulant(new ConfigCirculantTracker(), imageType);
+		for( String dataName : videos )
+			generator.evaluate(dataName,trackerName,tracker);
 
-//		String name = "BoofCV-TLD";
-		String name = "BoofCV-Circulant";
-
-		generator.evaluate(dataset,name,tracker);
+//		generator.evaluate("01_david",trackerName,tracker);
+//		generator.evaluate("02_jumping",trackerName,tracker);
+//		generator.evaluate("03_pedestrian1",trackerName,tracker);
+//		generator.evaluate("04_pedestrian2",trackerName,tracker);
+//		generator.evaluate("05_pedestrian3",trackerName,tracker);
+//		generator.evaluate("06_car",trackerName,tracker);
+//		generator.evaluate("07_motocross",trackerName,tracker);
+//		generator.evaluate("08_volkswagen",trackerName,tracker);
+//		generator.evaluate("09_carchase",trackerName,tracker);
+//		generator.evaluate("10_panda",trackerName,tracker);
 	}
 
 	public static void main(String[] args) {
-		evaluate("01_david");
-		evaluate("02_jumping");
-		evaluate("03_pedestrian1");
-		evaluate("04_pedestrian2");
-		evaluate("05_pedestrian3");
-		evaluate("06_car");
-		evaluate("07_motocross");
-		evaluate("08_volkswagen");
-		evaluate("09_carchase");
-		evaluate("10_panda");
+		FactoryEvaluationTrackerObjectQuad.Info info =
+				FactoryEvaluationTrackerObjectQuad.circulant(ImageDataType.F32);
+//		FactoryEvaluationTrackerObjectQuad.tld(ImageDataType.F32);
+//		FactoryEvaluationTrackerObjectQuad.meanShiftComaniciuNoScale(ImageDataType.F32);
+//		FactoryEvaluationTrackerObjectQuad.meanShiftComaniciuScale(ImageDataType.F32);
+
+
+		evaluate(info.name,info.tracker,info.imageType);
 
 		System.out.println("DONE!");
 	}
