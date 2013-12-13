@@ -1,0 +1,17 @@
+tolerance = 3.0
+# rows = Max Matches | Precision | Recall | F-measure
+
+---------- Directory: data/affinevgg/bikes/
+---------- Directory: data/affinevgg/boat/
+---------- Directory: data/affinevgg/graf/
+---------- Directory: data/affinevgg/leuven/
+---------- Directory: data/affinevgg/ubc/
+---------- Directory: data/affinevgg/trees/
+---------- Directory: data/affinevgg/wall/
+---------- Directory: data/affinevgg/bark/
+Summary Score:
+   num features  = 0
+   max matches   = 0
+   sumPrecision  = 0.0
+   sumRecall     = 0.0
+   sumFMeasure   = 0.0

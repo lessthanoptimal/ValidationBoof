@@ -19,12 +19,18 @@ public class RegressionManagerApp {
 	public static List<TextFileRegression> getRegressions() {
 		List<TextFileRegression> list = new ArrayList<TextFileRegression>();
 
-		list.add( new FeatureDetectorRegression());
-		// TODO add feature descriptors
-		list.add( new ObjectTrackingRegression());
+//		list.add( new CornerDetectorChangeRegression());
+		// TODO add corner feature intensity images
+		list.add( new DetectDescribeRegression());
+		// TODO add descriptor stability
+//		list.add( new ObjectTrackingRegression());
 		// TODO add point trackers
 		// TODO compute visual odometry
-		// TODO compute calibration
+		//      -- Stereo
+		//      -- Kinect
+		//      -- Mono-plane
+		// TODO Calibration key points change
+		// TODO Calibration optimization
 
 		return list;
 	}
@@ -40,6 +46,10 @@ public class RegressionManagerApp {
 		if( !contains(files,"regression"))
 			throw new RuntimeException("Can't find regression in working directory");
 
+		File tmp = new File("tmp");
+		if( tmp.exists() ) {
+			delete(tmp);
+		}
 
 		for( File f : files ) {
 			if( f.isDirectory() )

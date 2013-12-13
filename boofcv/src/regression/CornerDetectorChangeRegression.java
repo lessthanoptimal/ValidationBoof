@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * @author Peter Abeles
  */
-public class FeatureDetectorRegression implements TextFileRegression {
+public class CornerDetectorChangeRegression implements TextFileRegression {
 	String directory;
 
 	@Override
@@ -33,9 +33,9 @@ public class FeatureDetectorRegression implements TextFileRegression {
 
 	public static void main(String[] args) throws IOException {
 
-		FeatureDetectorRegression app = new FeatureDetectorRegression();
+		CornerDetectorChangeRegression app = new CornerDetectorChangeRegression();
 
-		app.setOutputDirectory(RegressionManagerApp.CURRENT_DIRECTORY+"/"+ImageDataType.U8);
+		app.setOutputDirectory(RegressionManagerApp.CURRENT_DIRECTORY+"/"+ImageDataType.U8+"/");
 		app.process(ImageDataType.U8);
 	}
 }

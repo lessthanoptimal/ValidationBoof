@@ -1,0 +1,15 @@
+tolerance = 1.5
+scaleTolerance = 0.25
+
+---------- Directory: data/affinevgg/bikes/
+---------- Directory: data/affinevgg/boat/
+---------- Directory: data/affinevgg/graf/
+---------- Directory: data/affinevgg/leuven/
+---------- Directory: data/affinevgg/ubc/
+---------- Directory: data/affinevgg/trees/
+---------- Directory: data/affinevgg/wall/
+---------- Directory: data/affinevgg/bark/
+Summary Score:
+   num matches     = 0
+   total correct   = 0.0
+   total ambiguous = 1.3732688354762237

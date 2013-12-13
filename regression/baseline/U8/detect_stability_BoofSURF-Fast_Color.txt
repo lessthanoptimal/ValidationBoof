@@ -1,0 +1,36 @@
+tolerance = 1.5
+scaleTolerance = 0.25
+
+---------- Directory: data/affinevgg/bikes/
+img2 img3 img4 img5 img6 
+5629 5663 5562 5609 5648 
+0.5189 0.4286 0.2790 0.1865 0.0823 
+---------- Directory: data/affinevgg/boat/
+---------- Directory: data/affinevgg/graf/
+img2 img3 img4 img5 img6 
+4604 4854 4690 4568 4710 
+0.2763 0.1568 0.0859 0.0486 0.0240 
+---------- Directory: data/affinevgg/leuven/
+img2 img3 img4 img5 img6 
+5096 5117 5123 5140 5120 
+0.5653 0.4815 0.4205 0.3457 0.2820 
+---------- Directory: data/affinevgg/ubc/
+img2 img3 img4 img5 img6 
+5228 5260 5285 5312 5336 
+0.7680 0.6555 0.5060 0.3163 0.1664 
+---------- Directory: data/affinevgg/trees/
+img2 img3 img4 img5 img6 
+7747 7799 7822 7835 7782 
+0.3463 0.2244 0.1470 0.1270 0.0713 
+---------- Directory: data/affinevgg/wall/
+img2 img3 img4 img5 img6 
+8212 8037 7602 7478 7078 
+0.3315 0.3765 0.1902 0.1089 0.0644 
+---------- Directory: data/affinevgg/bark/
+img2 img3 img4 img5 img6 
+3236 3066 3708 3708 3714 
+0.2478 0.0783 0.0628 0.0572 0.0242 
+Summary Score:
+   num matches     = 198378
+   total correct   = 9.052014847597734
+   total ambiguous = 0.6866344177381118

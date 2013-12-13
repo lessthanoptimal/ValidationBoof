@@ -1,0 +1,82 @@
+FAILED BoofSURF-Fast_Color on boat/
+java.lang.IllegalArgumentException: Expected 1 bands in dst not 3
+java.lang.IllegalArgumentException: Expected 1 bands in dst not 3
+	at boofcv.core.image.ConvertBufferedImage.convertFromMulti(ConvertBufferedImage.java:354)
+	at boofcv.core.image.ConvertBufferedImage.convertFrom(ConvertBufferedImage.java:199)
+	at validate.features.homography.CreateDetectDescribeFile.process(CreateDetectDescribeFile.java:114)
+	at validate.features.homography.CreateDetectDescribeFile.directory(CreateDetectDescribeFile.java:100)
+	at regression.DetectDescribeRegression.process(DetectDescribeRegression.java:91)
+	at regression.RegressionManagerApp.main(RegressionManagerApp.java:117)
+FAILED BoofSURF-Stable_Color on boat/
+java.lang.IllegalArgumentException: Expected 1 bands in dst not 3
+java.lang.IllegalArgumentException: Expected 1 bands in dst not 3
+	at boofcv.core.image.ConvertBufferedImage.convertFromMulti(ConvertBufferedImage.java:354)
+	at boofcv.core.image.ConvertBufferedImage.convertFrom(ConvertBufferedImage.java:199)
+	at validate.features.homography.CreateDetectDescribeFile.process(CreateDetectDescribeFile.java:114)
+	at validate.features.homography.CreateDetectDescribeFile.directory(CreateDetectDescribeFile.java:100)
+	at regression.DetectDescribeRegression.process(DetectDescribeRegression.java:91)
+	at regression.RegressionManagerApp.main(RegressionManagerApp.java:117)
+FAILED BoofSIFT on bikes/
+java.lang.ClassCastException: boofcv.struct.image.ImageUInt8 cannot be cast to boofcv.struct.image.ImageFloat32
+java.lang.ClassCastException: boofcv.struct.image.ImageUInt8 cannot be cast to boofcv.struct.image.ImageFloat32
+	at boofcv.abst.feature.detdesc.WrapDetectDescribeSift.detect(WrapDetectDescribeSift.java:31)
+	at validate.features.homography.CreateDetectDescribeFile.process(CreateDetectDescribeFile.java:116)
+	at validate.features.homography.CreateDetectDescribeFile.directory(CreateDetectDescribeFile.java:100)
+	at regression.DetectDescribeRegression.process(DetectDescribeRegression.java:91)
+	at regression.RegressionManagerApp.main(RegressionManagerApp.java:117)
+FAILED BoofSIFT on boat/
+java.lang.ClassCastException: boofcv.struct.image.ImageUInt8 cannot be cast to boofcv.struct.image.ImageFloat32
+java.lang.ClassCastException: boofcv.struct.image.ImageUInt8 cannot be cast to boofcv.struct.image.ImageFloat32
+	at boofcv.abst.feature.detdesc.WrapDetectDescribeSift.detect(WrapDetectDescribeSift.java:31)
+	at validate.features.homography.CreateDetectDescribeFile.process(CreateDetectDescribeFile.java:116)
+	at validate.features.homography.CreateDetectDescribeFile.directory(CreateDetectDescribeFile.java:100)
+	at regression.DetectDescribeRegression.process(DetectDescribeRegression.java:91)
+	at regression.RegressionManagerApp.main(RegressionManagerApp.java:117)
+FAILED BoofSIFT on graf/
+java.lang.ClassCastException: boofcv.struct.image.ImageUInt8 cannot be cast to boofcv.struct.image.ImageFloat32
+java.lang.ClassCastException: boofcv.struct.image.ImageUInt8 cannot be cast to boofcv.struct.image.ImageFloat32
+	at boofcv.abst.feature.detdesc.WrapDetectDescribeSift.detect(WrapDetectDescribeSift.java:31)
+	at validate.features.homography.CreateDetectDescribeFile.process(CreateDetectDescribeFile.java:116)
+	at validate.features.homography.CreateDetectDescribeFile.directory(CreateDetectDescribeFile.java:100)
+	at regression.DetectDescribeRegression.process(DetectDescribeRegression.java:91)
+	at regression.RegressionManagerApp.main(RegressionManagerApp.java:117)
+FAILED BoofSIFT on leuven/
+java.lang.ClassCastException: boofcv.struct.image.ImageUInt8 cannot be cast to boofcv.struct.image.ImageFloat32
+java.lang.ClassCastException: boofcv.struct.image.ImageUInt8 cannot be cast to boofcv.struct.image.ImageFloat32
+	at boofcv.abst.feature.detdesc.WrapDetectDescribeSift.detect(WrapDetectDescribeSift.java:31)
+	at validate.features.homography.CreateDetectDescribeFile.process(CreateDetectDescribeFile.java:116)
+	at validate.features.homography.CreateDetectDescribeFile.directory(CreateDetectDescribeFile.java:100)
+	at regression.DetectDescribeRegression.process(DetectDescribeRegression.java:91)
+	at regression.RegressionManagerApp.main(RegressionManagerApp.java:117)
+FAILED BoofSIFT on ubc/
+java.lang.ClassCastException: boofcv.struct.image.ImageUInt8 cannot be cast to boofcv.struct.image.ImageFloat32
+java.lang.ClassCastException: boofcv.struct.image.ImageUInt8 cannot be cast to boofcv.struct.image.ImageFloat32
+	at boofcv.abst.feature.detdesc.WrapDetectDescribeSift.detect(WrapDetectDescribeSift.java:31)
+	at validate.features.homography.CreateDetectDescribeFile.process(CreateDetectDescribeFile.java:116)
+	at validate.features.homography.CreateDetectDescribeFile.directory(CreateDetectDescribeFile.java:100)
+	at regression.DetectDescribeRegression.process(DetectDescribeRegression.java:91)
+	at regression.RegressionManagerApp.main(RegressionManagerApp.java:117)
+FAILED BoofSIFT on trees/
+java.lang.ClassCastException: boofcv.struct.image.ImageUInt8 cannot be cast to boofcv.struct.image.ImageFloat32
+java.lang.ClassCastException: boofcv.struct.image.ImageUInt8 cannot be cast to boofcv.struct.image.ImageFloat32
+	at boofcv.abst.feature.detdesc.WrapDetectDescribeSift.detect(WrapDetectDescribeSift.java:31)
+	at validate.features.homography.CreateDetectDescribeFile.process(CreateDetectDescribeFile.java:116)
+	at validate.features.homography.CreateDetectDescribeFile.directory(CreateDetectDescribeFile.java:100)
+	at regression.DetectDescribeRegression.process(DetectDescribeRegression.java:91)
+	at regression.RegressionManagerApp.main(RegressionManagerApp.java:117)
+FAILED BoofSIFT on wall/
+java.lang.ClassCastException: boofcv.struct.image.ImageUInt8 cannot be cast to boofcv.struct.image.ImageFloat32
+java.lang.ClassCastException: boofcv.struct.image.ImageUInt8 cannot be cast to boofcv.struct.image.ImageFloat32
+	at boofcv.abst.feature.detdesc.WrapDetectDescribeSift.detect(WrapDetectDescribeSift.java:31)
+	at validate.features.homography.CreateDetectDescribeFile.process(CreateDetectDescribeFile.java:116)
+	at validate.features.homography.CreateDetectDescribeFile.directory(CreateDetectDescribeFile.java:100)
+	at regression.DetectDescribeRegression.process(DetectDescribeRegression.java:91)
+	at regression.RegressionManagerApp.main(RegressionManagerApp.java:117)
+FAILED BoofSIFT on bark/
+java.lang.ClassCastException: boofcv.struct.image.ImageUInt8 cannot be cast to boofcv.struct.image.ImageFloat32
+java.lang.ClassCastException: boofcv.struct.image.ImageUInt8 cannot be cast to boofcv.struct.image.ImageFloat32
+	at boofcv.abst.feature.detdesc.WrapDetectDescribeSift.detect(WrapDetectDescribeSift.java:31)
+	at validate.features.homography.CreateDetectDescribeFile.process(CreateDetectDescribeFile.java:116)
+	at validate.features.homography.CreateDetectDescribeFile.directory(CreateDetectDescribeFile.java:100)
+	at regression.DetectDescribeRegression.process(DetectDescribeRegression.java:91)
+	at regression.RegressionManagerApp.main(RegressionManagerApp.java:117)
