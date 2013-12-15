@@ -1,0 +1,35 @@
+# Inlier Tolerance 5.0  Algorithm FhBrief
+# (File) (Skip) (F) (F all inside) (Precision) (Recall) (Recall all inside) (Tracks)
+./data/abeles2012/bricks/skew  1  0.422  0.548  0.725  0.310  0.443  189.0
+./data/abeles2012/bricks/skew  4  0.414  0.540  0.719  0.302  0.435  186.0
+./data/abeles2012/bricks/skew  8  0.412  0.541  0.723  0.299  0.434  185.0
+./data/abeles2012/bricks/rotate  1  0.311  0.333  0.410  0.253  0.281  300.0
+./data/abeles2012/bricks/rotate  4  0.313  0.334  0.413  0.253  0.282  299.0
+./data/abeles2012/bricks/rotate  8  0.309  0.331  0.410  0.250  0.278  297.0
+./data/abeles2012/bricks/move_out  1  0.168  0.168  0.323  0.116  0.116  161.0
+./data/abeles2012/bricks/move_out  4  0.171  0.171  0.329  0.118  0.118  161.0
+./data/abeles2012/bricks/move_out  8  0.168  0.168  0.328  0.115  0.115  159.0
+./data/abeles2012/bricks/move_in  1  0.264  0.335  0.414  0.196  0.294  233.0
+./data/abeles2012/bricks/move_in  4  0.285  0.363  0.439  0.213  0.323  238.0
+./data/abeles2012/bricks/move_in  8  0.282  0.361  0.436  0.211  0.322  239.0
+./data/abeles2012/carpet/skew  1  0.244  0.331  0.417  0.179  0.278  215.0
+./data/abeles2012/carpet/skew  4  0.267  0.366  0.442  0.199  0.317  227.0
+./data/abeles2012/carpet/skew  8  0.260  0.359  0.434  0.193  0.311  224.0
+./data/abeles2012/carpet/rotate  1  0.473  0.519  0.651  0.373  0.432  320.0
+./data/abeles2012/carpet/rotate  4  0.509  0.555  0.684  0.407  0.468  333.0
+./data/abeles2012/carpet/rotate  8  0.516  0.563  0.691  0.413  0.476  336.0
+./data/abeles2012/carpet/move_out  1  0.186  0.186  0.281  0.140  0.140  259.0
+./data/abeles2012/carpet/move_out  4  0.197  0.197  0.294  0.150  0.150  263.0
+./data/abeles2012/carpet/move_out  8  0.196  0.196  0.295  0.148  0.148  259.0
+./data/abeles2012/carpet/move_in  1  0.215  0.269  0.306  0.168  0.253  320.0
+./data/abeles2012/carpet/move_in  4  0.226  0.283  0.319  0.177  0.267  322.0
+./data/abeles2012/carpet/move_in  8  0.221  0.277  0.311  0.174  0.263  323.0
+./data/abeles2012/various/lighting  1  0.623  0.623  0.774  0.522  0.522  337.0
+./data/abeles2012/various/lighting  4  0.656  0.656  0.794  0.561  0.561  353.0
+./data/abeles2012/various/lighting  8  0.661  0.661  0.796  0.567  0.567  356.0
+./data/abeles2012/various/compressed  1  0.296  0.281  0.419  0.231  0.213  254.0
+./data/abeles2012/various/compressed  4  0.288  0.273  0.408  0.225  0.206  253.0
+./data/abeles2012/various/compressed  8  0.284  0.269  0.402  0.222  0.203  253.0
+./data/abeles2012/various/urban  1  0.487  0.555  0.690  0.379  0.466  249.0
+./data/abeles2012/various/urban  4  0.540  0.609  0.732  0.431  0.523  267.0
+./data/abeles2012/various/urban  8  0.541  0.609  0.731  0.433  0.523  268.0

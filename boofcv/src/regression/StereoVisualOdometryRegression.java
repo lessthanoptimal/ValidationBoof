@@ -10,12 +10,12 @@ import boofcv.abst.feature.detect.interest.ConfigGeneralDetector;
 import boofcv.abst.feature.detect.interest.DetectorInterestPointMulti;
 import boofcv.abst.feature.detect.interest.GeneralToInterestMulti;
 import boofcv.abst.feature.disparity.StereoDisparitySparse;
-import boofcv.abst.feature.tracker.PkltConfig;
 import boofcv.abst.feature.tracker.PointTracker;
 import boofcv.abst.feature.tracker.PointTrackerTwoPass;
 import boofcv.abst.sfm.d3.StereoVisualOdometry;
 import boofcv.alg.feature.detect.interest.GeneralFeatureDetector;
 import boofcv.alg.filter.derivative.GImageDerivativeOps;
+import boofcv.alg.tracker.klt.PkltConfig;
 import boofcv.factory.feature.describe.FactoryDescribeRegionPoint;
 import boofcv.factory.feature.detect.extract.FactoryFeatureExtractor;
 import boofcv.factory.feature.detect.intensity.FactoryIntensityPoint;
@@ -93,11 +93,12 @@ public class StereoVisualOdometryRegression implements TextFileRegression {
 		StereoDisparitySparse<ImageFloat32> disparity =
 				FactoryStereoDisparity.regionSparseWta(10, 120, 2, 2, 30, 0.1, true, bandType);
 
-		PkltConfig configKlt = PkltConfig.createDefault(bandType, derivType);
+		PkltConfig configKlt = new PkltConfig();
 		configKlt.pyramidScaling = new int[]{1, 2, 4, 8};
 		configKlt.templateRadius = 3;
 
-		PointTrackerTwoPass tracker = FactoryPointTrackerTwoPass.klt(configKlt, new ConfigGeneralDetector(600, 3, 1));
+		PointTrackerTwoPass tracker = FactoryPointTrackerTwoPass.klt(configKlt, new ConfigGeneralDetector(600, 3, 1),
+				bandType, derivType);
 
 		Info ret = new Info();
 		ret.name = "StereoDepth";
@@ -110,15 +111,15 @@ public class StereoVisualOdometryRegression implements TextFileRegression {
 	public static Info createDualTrackerPnP( Class bandType ) {
 		Class derivType = GImageDerivativeOps.getDerivativeType(bandType);
 
-		PkltConfig kltConfig = PkltConfig.createDefault(bandType, derivType);
+		PkltConfig kltConfig = new PkltConfig();
 		kltConfig.templateRadius = 3;
 		kltConfig.pyramidScaling =  new int[]{1, 2, 4, 8};
 		kltConfig.config.maxPerPixelError = 50;
 
 		ConfigGeneralDetector configDetector = new ConfigGeneralDetector(600,3,1);
 
-		PointTracker trackerLeft = FactoryPointTracker.klt(kltConfig, configDetector);
-		PointTracker trackerRight = FactoryPointTracker.klt(kltConfig, configDetector);
+		PointTracker trackerLeft = FactoryPointTracker.klt(kltConfig, configDetector, bandType, derivType);
+		PointTracker trackerRight = FactoryPointTracker.klt(kltConfig, configDetector, bandType, derivType);
 
 		DescribeRegionPoint describe = FactoryDescribeRegionPoint.surfFast(null, bandType);
 

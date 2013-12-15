@@ -4,20 +4,28 @@ import boofcv.abst.feature.associate.AssociateDescTo2D;
 import boofcv.abst.feature.associate.AssociateDescription;
 import boofcv.abst.feature.associate.AssociateDescription2D;
 import boofcv.abst.feature.associate.ScoreAssociation;
+import boofcv.abst.feature.describe.ConfigBrief;
 import boofcv.abst.feature.describe.DescribeRegionPoint;
 import boofcv.abst.feature.detect.extract.ConfigExtract;
 import boofcv.abst.feature.detect.extract.NonMaxSuppression;
 import boofcv.abst.feature.detect.intensity.GeneralFeatureIntensity;
+import boofcv.abst.feature.detect.interest.ConfigFastHessian;
+import boofcv.abst.feature.detect.interest.ConfigGeneralDetector;
 import boofcv.abst.feature.detect.interest.InterestPointDetector;
-import boofcv.abst.feature.detect.interest.WrapFHtoInterestPoint;
+import boofcv.abst.feature.orientation.OrientationImage;
+import boofcv.abst.feature.orientation.OrientationIntegral;
+import boofcv.abst.feature.orientation.OrientationIntegralToImage;
 import boofcv.abst.feature.tracker.PointTracker;
-import boofcv.alg.feature.detect.interest.FastHessianFeatureDetector;
 import boofcv.alg.feature.detect.interest.GeneralFeatureDetector;
 import boofcv.alg.filter.derivative.GImageDerivativeOps;
+import boofcv.alg.tracker.klt.PkltConfig;
+import boofcv.alg.transform.ii.GIntegralImageOps;
 import boofcv.factory.feature.associate.FactoryAssociation;
 import boofcv.factory.feature.describe.FactoryDescribeRegionPoint;
 import boofcv.factory.feature.detect.extract.FactoryFeatureExtractor;
 import boofcv.factory.feature.detect.intensity.FactoryIntensityPoint;
+import boofcv.factory.feature.detect.interest.FactoryInterestPoint;
+import boofcv.factory.feature.orientation.FactoryOrientationAlgs;
 import boofcv.factory.feature.tracker.FactoryPointTracker;
 import boofcv.io.image.SimpleImageSequence;
 import boofcv.io.wrapper.DefaultMediaManager;
@@ -44,8 +52,9 @@ public class PointTrackerRegression extends BaseTextFileRegression {
 
 	public static String pathToData = ValidationConstants.PATH_DATA+"abeles2012/";
 	public static double tolerance = 5;
-	String dataDirectories[] = new String[]{"bricks","carpet","various"};
+	String dataDirectories[] = new String[]{"bricks","carpet"};
 	String dataSets[] = new String[]{"skew","rotate","move_out","move_in"};
+	String variousSets[] = new String[]{"lighting","compressed","urban"};
 	int skips[] = new int[]{1,4,8};
 
 	@Override
@@ -54,7 +63,11 @@ public class PointTrackerRegression extends BaseTextFileRegression {
 		Class bandType = ImageDataType.typeToClass(type);
 
 		all.add( createDefaultKlt(bandType));
-		all.add( createShiBrief(bandType));
+		all.add( createHarrisNCC(bandType));
+		all.add( createShiNCC(bandType));
+		all.add( createFastNCC(bandType));
+		all.add( createFhBrief(bandType));
+		all.add( createFhKltSurf(bandType));
 
 		for( Info info : all ) {
 			try {
@@ -83,6 +96,15 @@ public class PointTrackerRegression extends BaseTextFileRegression {
 			}
 		}
 
+		for( String whichData : variousSets ) {
+			for( int skip : skips )  {
+				String path = pathToData+"various/"+whichData;
+
+				WrapPointTracker wrapped = new WrapPointTracker(info.tracker);
+				computeResults(bandType, wrapped, path, skip, outSummary, null);
+			}
+		}
+
 		outSummary.close();
 	}
 
@@ -106,24 +128,97 @@ public class PointTrackerRegression extends BaseTextFileRegression {
 				app.getMeanTrackCount());
 	}
 
-	// TODO trackers for Shi-Tomasi brief, harris NCC, FH-KLT-SURF
+	public Info createFhKltSurf( Class bandType ) {
 
-	public Info createShiBrief( Class bandType ) {
-		Class derivType = GImageDerivativeOps.getDerivativeType(bandType);
+		ConfigFastHessian configFH = new ConfigFastHessian();
+		configFH.maxFeaturesPerScale = 200;
+		configFH.extractRadius = 2;
+		configFH.detectThreshold = 1;
 
-		int radius = 3;
+		Info info = new Info();
+		info.name = "FhKltSurf";
+		info.imageType = ImageType.single(bandType);
+		info.tracker = FactoryPointTracker.combined_FH_SURF_KLT(null,200,configFH,null,null,bandType);
 
-		GeneralFeatureIntensity intensity = FactoryIntensityPoint.shiTomasi(radius,false,derivType);
-		NonMaxSuppression nonmax = FactoryFeatureExtractor.nonmax(new ConfigExtract(radius,10));
-		GeneralFeatureDetector detector = FactoryFeatureExtractor.general(intensity,nonmax,800);
+		return info;
+	}
 
-		DescribeRegionPoint describe = FactoryDescribeRegionPoint.brief(null,bandType);
+	public Info createFhBrief( Class bandType ) {
+		Class iiType = GIntegralImageOps.getIntegralType(bandType);
+
+		ConfigFastHessian configFH = new ConfigFastHessian();
+		configFH.maxFeaturesPerScale = 200;
+
+		InterestPointDetector detector = FactoryInterestPoint.fastHessian(configFH);
+		OrientationIntegral ori = FactoryOrientationAlgs.average_ii(null,iiType );
+		OrientationImage orientation = new OrientationIntegralToImage(ori,bandType,iiType);
+
+		DescribeRegionPoint describe = FactoryDescribeRegionPoint.brief(new ConfigBrief(false),bandType);
 		ScoreAssociation score = FactoryAssociation.defaultScore(describe.getDescriptionType());
 		AssociateDescription associate = FactoryAssociation.greedy(score,Double.MAX_VALUE,true);
 		AssociateDescription2D associate2D = new AssociateDescTo2D(associate);
 
 		Info info = new Info();
-		info.name = "ShiBrief";
+		info.name = "FhBrief";
+		info.imageType = ImageType.single(bandType);
+		info.tracker = FactoryPointTracker.dda(detector,orientation, describe , associate2D, false);
+
+		return info;
+	}
+
+	public Info createHarrisNCC( Class bandType ) {
+		Class derivType = GImageDerivativeOps.getDerivativeType(bandType);
+
+		GeneralFeatureIntensity intensity = FactoryIntensityPoint.harris(3, 0.04f, false, derivType);
+		NonMaxSuppression nonmax = FactoryFeatureExtractor.nonmax(new ConfigExtract(10,0.01f));
+		GeneralFeatureDetector detector = FactoryFeatureExtractor.general(intensity,nonmax,600);
+
+		DescribeRegionPoint describe = FactoryDescribeRegionPoint.pixelNCC(7,7,bandType);
+		ScoreAssociation score = FactoryAssociation.defaultScore(describe.getDescriptionType());
+		AssociateDescription associate = FactoryAssociation.greedy(score,Double.MAX_VALUE,true);
+		AssociateDescription2D associate2D = new AssociateDescTo2D(associate);
+
+		Info info = new Info();
+		info.name = "HarrisNCC";
+		info.imageType = ImageType.single(bandType);
+		info.tracker = FactoryPointTracker.dda(detector, describe , associate2D, 2,bandType);
+
+		return info;
+	}
+
+	public Info createShiNCC( Class bandType ) {
+		Class derivType = GImageDerivativeOps.getDerivativeType(bandType);
+
+		GeneralFeatureIntensity intensity = FactoryIntensityPoint.shiTomasi(3, false, derivType);
+		NonMaxSuppression nonmax = FactoryFeatureExtractor.nonmax(new ConfigExtract(10,0.01f));
+		GeneralFeatureDetector detector = FactoryFeatureExtractor.general(intensity,nonmax,600);
+
+		DescribeRegionPoint describe = FactoryDescribeRegionPoint.pixelNCC(7,7,bandType);
+		ScoreAssociation score = FactoryAssociation.defaultScore(describe.getDescriptionType());
+		AssociateDescription associate = FactoryAssociation.greedy(score,Double.MAX_VALUE,true);
+		AssociateDescription2D associate2D = new AssociateDescTo2D(associate);
+
+		Info info = new Info();
+		info.name = "ShiTomasiNCC";
+		info.imageType = ImageType.single(bandType);
+		info.tracker = FactoryPointTracker.dda(detector, describe , associate2D, 2,bandType);
+
+		return info;
+	}
+
+	public Info createFastNCC( Class bandType ) {
+
+		GeneralFeatureIntensity intensity = FactoryIntensityPoint.fast(6, 9, bandType);
+		NonMaxSuppression nonmax = FactoryFeatureExtractor.nonmax(new ConfigExtract(10,6));
+		GeneralFeatureDetector detector = FactoryFeatureExtractor.general(intensity, nonmax, 600);
+
+		DescribeRegionPoint describe = FactoryDescribeRegionPoint.pixelNCC(7,7,bandType);
+		ScoreAssociation score = FactoryAssociation.defaultScore(describe.getDescriptionType());
+		AssociateDescription associate = FactoryAssociation.greedy(score,Double.MAX_VALUE,true);
+		AssociateDescription2D associate2D = new AssociateDescTo2D(associate);
+
+		Info info = new Info();
+		info.name = "FastNCC";
 		info.imageType = ImageType.single(bandType);
 		info.tracker = FactoryPointTracker.dda(detector, describe , associate2D, 2,bandType);
 
@@ -131,29 +226,18 @@ public class PointTrackerRegression extends BaseTextFileRegression {
 	}
 
 	public Info createDefaultKlt(Class bandType) {
+
+		PkltConfig configKlt = new PkltConfig();
+		configKlt.pyramidScaling = new int[]{1,2,4,8};
+
+		ConfigGeneralDetector configDet = new ConfigGeneralDetector(800,8,1);
+
 		Info info = new Info();
 		info.name = "DefaultKLT";
 		info.imageType = ImageType.single(bandType);
-		info.tracker = FactoryPointTracker.klt(null, null);
+		info.tracker = FactoryPointTracker.klt(configKlt, configDet,bandType,null);
 
 		return info;
-	}
-
-	private InterestPointDetector createDetectorFH(Class bandType) {
-		float detectThreshold = 1;
-		int extractRadius = 2;
-		int maxFeaturesPerScale = 200;
-		int initialSampleSize = 1;
-		int initialSize = 9;
-		int numberScalesPerOctave = 4;
-		int numberOfOctaves = 4;
-
-		NonMaxSuppression extractor = FactoryFeatureExtractor.
-				nonmax(new ConfigExtract(extractRadius, detectThreshold, 5, true));
-		FastHessianFeatureDetector feature = new FastHessianFeatureDetector(extractor,maxFeaturesPerScale,
-				initialSampleSize, initialSize,numberScalesPerOctave,numberOfOctaves);
-
-		return new WrapFHtoInterestPoint(feature);
 	}
 
 	public static class Info {

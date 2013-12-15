@@ -6,28 +6,13 @@ import boofcv.struct.image.ImageDataType;
 import boofcv.struct.image.ImageType;
 import validate.trackrect.*;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.PrintStream;
 import java.util.List;
 
 /**
  * @author Peter Abeles
  */
-public class ObjectTrackingRegression implements TextFileRegression {
-
-	String directory;
-	PrintStream errorLog;
-
-	@Override
-	public void setOutputDirectory(String directory) {
-		this.directory = directory;
-		try {
-			errorLog = new PrintStream(directory+"ERRORLOG_ObjectTracking.txt");
-		} catch (FileNotFoundException e) {
-			throw new RuntimeException(e);
-		}
-	}
+public class ObjectTrackingRegression extends BaseTextFileRegression {
 
 	@Override
 	public void process( ImageDataType type ) throws IOException {

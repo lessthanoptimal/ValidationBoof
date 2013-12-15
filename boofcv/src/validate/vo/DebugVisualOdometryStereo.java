@@ -2,12 +2,12 @@ package validate.vo;
 
 import boofcv.abst.feature.detect.interest.ConfigGeneralDetector;
 import boofcv.abst.feature.disparity.StereoDisparitySparse;
-import boofcv.abst.feature.tracker.PkltConfig;
 import boofcv.abst.feature.tracker.PointTrackerTwoPass;
 import boofcv.abst.sfm.AccessPointTracks3D;
 import boofcv.abst.sfm.d3.StereoVisualOdometry;
 import boofcv.alg.filter.derivative.GImageDerivativeOps;
 import boofcv.alg.geo.PerspectiveOps;
+import boofcv.alg.tracker.klt.PkltConfig;
 import boofcv.factory.feature.disparity.FactoryStereoDisparity;
 import boofcv.factory.feature.tracker.FactoryPointTrackerTwoPass;
 import boofcv.gui.d3.Polygon3DSequenceViewer;
@@ -276,11 +276,12 @@ public class DebugVisualOdometryStereo<T extends ImageBase>
 		int selection = 0;
 
 		if( selection == 0 ) {
-			PkltConfig configKlt = PkltConfig.createDefault(bandType, derivType);
+			PkltConfig configKlt = new PkltConfig();
 			configKlt.pyramidScaling = new int[]{1, 2, 4, 8};
 			configKlt.templateRadius = 3;
 
-			tracker = FactoryPointTrackerTwoPass.klt(configKlt, new ConfigGeneralDetector(600, 3, 1));
+			tracker = FactoryPointTrackerTwoPass.klt(configKlt, new ConfigGeneralDetector(600, 3, 1),
+					bandType, derivType);
 		}
 
 		StereoVisualOdometry alg = StereoVisualOdometryRegression.createDualTrackerPnP(bandType).vo;

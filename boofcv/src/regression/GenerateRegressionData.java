@@ -24,7 +24,7 @@ public class GenerateRegressionData {
 		list.add( new DetectDescribeRegression());
 		// TODO add descriptor stability
 		list.add( new ObjectTrackingRegression());
-		// TODO add point trackers
+		list.add( new PointTrackerRegression());
 		list.add( new StereoVisualOdometryRegression());
 		// TODO compute visual odometry
 		//      -- Kinect

@@ -28,6 +28,7 @@ public class WrapPointTracker<I extends ImageSingleBand>
 		tracker.process(image);
 
 		if( first ) {
+			first = false;
 			tracker.spawnTracks();
 
 			List<PointTrack> tracks = tracker.getNewTracks(null);
@@ -42,6 +43,7 @@ public class WrapPointTracker<I extends ImageSingleBand>
 	@Override
 	public void reset() {
 		tracker.reset();
+		first = true;
 	}
 
 	@Override

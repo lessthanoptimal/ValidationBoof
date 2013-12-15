@@ -2,9 +2,9 @@ package validate.vo;
 
 import boofcv.abst.feature.detect.interest.ConfigGeneralDetector;
 import boofcv.abst.feature.disparity.StereoDisparitySparse;
-import boofcv.abst.feature.tracker.PkltConfig;
 import boofcv.abst.feature.tracker.PointTrackerTwoPass;
 import boofcv.abst.sfm.d3.StereoVisualOdometry;
+import boofcv.alg.tracker.klt.PkltConfig;
 import boofcv.core.image.ConvertBufferedImage;
 import boofcv.core.image.GeneralizedImageOps;
 import boofcv.factory.feature.disparity.FactoryStereoDisparity;
@@ -71,12 +71,13 @@ public class OutputForKITTI {
 		Class derivType = ImageFloat32.class;
 
 		for( int dataSet = 0; dataSet < 11; dataSet++ ) {
-			PkltConfig configKlt = PkltConfig.createDefault(imageType, derivType);
+			PkltConfig configKlt = new PkltConfig();
 			configKlt.pyramidScaling = new int[]{1, 2, 4, 8};
 			configKlt.templateRadius = 3;
 
 			PointTrackerTwoPass tracker =
-					FactoryPointTrackerTwoPass.klt(configKlt, new ConfigGeneralDetector(600, 3, 1));
+					FactoryPointTrackerTwoPass.klt(configKlt, new ConfigGeneralDetector(600, 3, 1),
+							imageType, derivType);
 
 			// TODO add stereo NCC error to handle
 			StereoDisparitySparse<ImageFloat32> disparity =

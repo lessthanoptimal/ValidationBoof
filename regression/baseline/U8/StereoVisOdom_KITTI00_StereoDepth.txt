@@ -1,0 +1,8 @@
+Average FPS 12.697636864187816
+Total Faults = 0
+Fraction with no update 0.0
+Ave per estimate:      distance 0.2033232  rotation 0.011411828
+Ave per distance:      distance  24.79022% deg/unit = 7.97e-01
+Ave Skip 20:           distance  14.14685% deg/unit = 4.20e-01
+Absolute:              location 1077.28339  rotation  60.52 degrees
+Integral per distance: distance  15.00181% deg/unit = 4.02e-01

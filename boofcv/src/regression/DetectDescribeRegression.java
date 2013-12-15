@@ -20,43 +20,21 @@ import validate.features.homography.BenchmarkFeatureDetectStability;
 import validate.features.homography.CreateDetectDescribeFile;
 import validate.features.homography.LoadHomographyBenchmarkFiles;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * @author Peter Abeles
  */
-public class DetectDescribeRegression implements TextFileRegression {
+public class DetectDescribeRegression extends BaseTextFileRegression {
 
 	public static final String path = "data/affinevgg/";
-
-	String directory;
-	PrintStream errorLog;
 
 	// association tolerance for detection score
 	double detectTolerance = 1.5;
 	// association tolerance for describe score
 	double describeTolerance = 3;
-
-	@Override
-	public void setOutputDirectory(String directory) {
-		this.directory = directory;
-		try {
-			errorLog = new PrintStream(directory+"ERRORLOG_DetectDescribeRegression.txt");
-		} catch (FileNotFoundException e) {
-			throw new RuntimeException(e);
-		}
-
-		File tmp = new File("tmp");
-		if( !tmp.exists() ) {
-			if( !tmp.mkdir() )
-				throw new RuntimeException("Can't create tmp directory");
-		}
-	}
 
 	public void process( ImageDataType type ) throws IOException {
 

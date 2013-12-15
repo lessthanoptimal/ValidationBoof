@@ -189,7 +189,7 @@ public class FactoryEvaluationTrackers<T extends ImageSingleBand> {
 	}
 
 	private PyramidKltForCombined<T, T> defaultFusedKlt() {
-		KltConfig kltConfig = KltConfig.createDefault();
+		KltConfig kltConfig = new KltConfig();
 		int scales[] = new int[]{1,2,4,8};
 		int featureRadius = 5;
 		kltConfig.maxPerPixelError = 10;
