@@ -268,9 +268,9 @@ public class EvaluateTrackerStability<T extends ImageSingleBand> {
 
 		Class imageType = ImageFloat32.class;
 
-//		String whichData = "bricks/skew";
+		String whichData = "bricks/skew";
 //		String whichData = "bricks/rotate2";
-		String whichData = "bricks/move_out";
+//		String whichData = "bricks/move_out";
 //		String whichData = "bricks/move_in";
 
 		SimpleImageSequence sequence =
@@ -278,7 +278,7 @@ public class EvaluateTrackerStability<T extends ImageSingleBand> {
 
 		List<Homography2D_F64> groundTruth = LogParseHomography.parse(pathToData+whichData+"_homography.txt");
 
-		EvaluateTrackerStability app = new EvaluateTrackerStability(5,16);
+		EvaluateTrackerStability app = new EvaluateTrackerStability(5,1);
 
 		FactoryEvaluationTrackers trackers = new FactoryEvaluationTrackers(imageType);
 //		EvaluationTracker tracker = trackers.createSurf(false);

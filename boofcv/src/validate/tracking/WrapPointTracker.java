@@ -18,6 +18,11 @@ public class WrapPointTracker<I extends ImageSingleBand>
 
 	boolean first = true;
 
+
+	public WrapPointTracker(PointTracker<I> tracker) {
+		this.tracker = tracker;
+	}
+
 	@Override
 	public void track(I image) {
 		tracker.process(image);

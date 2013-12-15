@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * @author Peter Abeles
  */
-public class RegressionManagerApp {
+public class GenerateRegressionData {
 
 	public static final String CURRENT_DIRECTORY = "regression/current/";
 	public static final String BASELINE_DIRECTORY = "regression/baseline/";
@@ -19,14 +19,14 @@ public class RegressionManagerApp {
 	public static List<TextFileRegression> getRegressions() {
 		List<TextFileRegression> list = new ArrayList<TextFileRegression>();
 
-//		list.add( new CornerDetectorChangeRegression());
+		list.add( new CornerDetectorChangeRegression());
 		// TODO add corner feature intensity images
 		list.add( new DetectDescribeRegression());
 		// TODO add descriptor stability
-//		list.add( new ObjectTrackingRegression());
+		list.add( new ObjectTrackingRegression());
 		// TODO add point trackers
+		list.add( new StereoVisualOdometryRegression());
 		// TODO compute visual odometry
-		//      -- Stereo
 		//      -- Kinect
 		//      -- Mono-plane
 		// TODO Calibration key points change

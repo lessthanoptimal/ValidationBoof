@@ -71,19 +71,6 @@ public class OutputForKITTI {
 		Class derivType = ImageFloat32.class;
 
 		for( int dataSet = 0; dataSet < 11; dataSet++ ) {
-//			PointTracker<ImageFloat32> tracker =
-//				FactoryPointTracker.dda_FAST_BRIEF(500, 200, 3, 9, 20, imageType);
-//		ImagePointTracker<ImageFloat32> tracker =
-//				FactoryPointSequentialTracker.dda_ShiTomasi_BRIEF(500,200,1,1,imageType,null);
-//		ImagePointTracker<ImageFloat32> tracker =
-//				FactoryPointSequentialTracker.dda_FH_SURF(500,2,200,1,true,imageType);
-//			ImagePointTracker<ImageFloat32> tracker =
-//					FactoryPointSequentialTracker.klt(2000, 500,new int[]{1, 2, 4, 8}, 3, 3, 3, 2, imageType, ImageFloat32.class);
-//		ImagePointTracker<ImageFloat32> tracker =
-//				FactoryPointSequentialTracker.combined_FH_SURF_KLT(500, 200,1,1,3,new int[]{1, 2, 4, 8}, 1000, false,imageType);
-//			ImagePointTracker<ImageFloat32> tracker =
-//					FactoryPointSequentialTracker.combined_ST_SURF_KLT(-1,3,500,3,new int[]{1, 2, 4, 8}, 80, true,imageType,null);
-
 			PkltConfig configKlt = PkltConfig.createDefault(imageType, derivType);
 			configKlt.pyramidScaling = new int[]{1, 2, 4, 8};
 			configKlt.templateRadius = 3;

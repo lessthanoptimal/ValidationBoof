@@ -9,7 +9,6 @@ import validate.trackrect.*;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintStream;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -80,25 +79,13 @@ public class ObjectTrackingRegression implements TextFileRegression {
 		}
 	}
 
-	@Override
-	public List<String> getFileNames() {
-		List<String> names = new ArrayList<String>();
-
-		String milLibraries[]=new String[]{"BoofCV-TLD","BoofCV-Circulant","BoofCV-Comaniciu"};
-		for( String s : milLibraries) {
-			names.add( "MILTrackData_"+s+".txt");
-		}
-
-		return names;
-	}
-
 	public static void main(String[] args) throws IOException {
 
 		ObjectTrackingRegression app = new ObjectTrackingRegression();
 
 		ImageDataType type = ImageDataType.F32;
 
-		app.setOutputDirectory(RegressionManagerApp.CURRENT_DIRECTORY+"/"+type+"/");
+		app.setOutputDirectory(GenerateRegressionData.CURRENT_DIRECTORY+"/"+type+"/");
 		app.process(type);
 	}
 }

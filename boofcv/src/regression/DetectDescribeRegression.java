@@ -15,7 +15,6 @@ import boofcv.struct.image.ImageDataType;
 import boofcv.struct.image.ImageFloat32;
 import boofcv.struct.image.ImageSingleBand;
 import boofcv.struct.image.ImageType;
-import validate.fast.DetectFast;
 import validate.features.homography.BenchmarkFeatureDescribeStability;
 import validate.features.homography.BenchmarkFeatureDetectStability;
 import validate.features.homography.CreateDetectDescribeFile;
@@ -100,15 +99,6 @@ public class DetectDescribeRegression implements TextFileRegression {
 		}
 	}
 
-	@Override
-	public List<String> getFileNames() {
-		List<String> names = new ArrayList<String>();
-
-		names.add(DetectFast.FILE_NAME);
-
-		return names;
-	}
-
 	public static <T extends ImageSingleBand>
 	Info surf( boolean stable , boolean color , Class<T> bandType  ) {
 
@@ -175,7 +165,7 @@ public class DetectDescribeRegression implements TextFileRegression {
 
 		DetectDescribeRegression app = new DetectDescribeRegression();
 
-		app.setOutputDirectory(RegressionManagerApp.CURRENT_DIRECTORY+"/"+ImageDataType.U8+"/");
+		app.setOutputDirectory(GenerateRegressionData.CURRENT_DIRECTORY+"/"+ImageDataType.U8+"/");
 		app.process(ImageDataType.U8);
 	}
 }
