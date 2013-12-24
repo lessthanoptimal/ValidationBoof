@@ -1,7 +1,6 @@
 package validate.trackrect;
 
 import boofcv.abst.tracker.TrackerObjectQuad;
-import boofcv.alg.tracker.tld.TldConfig;
 import boofcv.core.image.ConvertBufferedImage;
 import boofcv.factory.tracker.FactoryTrackerObjectQuad;
 import boofcv.gui.image.ImagePanel;
@@ -93,7 +92,7 @@ public class DebugTrackerTldData<T extends ImageBase> {
 		DebugTrackerTldData generator = new DebugTrackerTldData(ImageType.single(type));
 
 		TrackerObjectQuad<ImageFloat32> tracker =
-				FactoryTrackerObjectQuad.tld(new TldConfig(false, type));
+				FactoryTrackerObjectQuad.tld(null,type);
 //				FactoryTrackerObjectQuad.sparseFlow(new SfotConfig(type));
 //				FactoryTrackerObjectQuad.meanShiftLikelihood(30,6,255, MeanShiftLikelihoodType.HISTOGRAM_INDEPENDENT_RGB_to_HSV,
 //						type);

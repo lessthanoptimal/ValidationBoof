@@ -1,10 +1,6 @@
 package validate.trackrect;
 
-import boofcv.abst.tracker.ConfigCirculantTracker;
-import boofcv.abst.tracker.ConfigComaniciu2003;
-import boofcv.abst.tracker.MeanShiftLikelihoodType;
-import boofcv.abst.tracker.TrackerObjectQuad;
-import boofcv.alg.tracker.tld.TldConfig;
+import boofcv.abst.tracker.*;
 import boofcv.factory.tracker.FactoryTrackerObjectQuad;
 import boofcv.struct.image.ImageDataType;
 import boofcv.struct.image.ImageType;
@@ -35,7 +31,7 @@ public class FactoryEvaluationTrackerObjectQuad {
 		Info info = new Info();
 		info.name = "BoofCV-TLD";
 		info.imageType = new ImageType(ImageType.Family.SINGLE_BAND,dataType,1);
-		info.tracker = FactoryTrackerObjectQuad.tld(new TldConfig(false, ImageDataType.typeToClass(dataType)));
+		info.tracker = FactoryTrackerObjectQuad.tld(new ConfigTld(true),ImageDataType.typeToClass(dataType));
 		return info;
 	}
 

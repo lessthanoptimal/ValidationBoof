@@ -73,6 +73,6 @@ public class EvaluateResultsTldData {
 	}
 
 	public static void main(String[] args) throws IOException {
-
+		process("./","BoofCV-TLD");
 	}
 }

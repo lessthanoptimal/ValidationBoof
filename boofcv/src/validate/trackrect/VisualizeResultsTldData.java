@@ -20,7 +20,7 @@ public class VisualizeResultsTldData{
 	public void visualize(String dataName, String inputName) throws IOException {
 		System.out.println("Processing "+dataName);
 
-		String path = "../data/track_rect/TLD/"+dataName;
+		String path = "data/track_rect/TLD/"+dataName;
 
 		RectangleCorner2D_F64 expected = new RectangleCorner2D_F64();
 		RectangleCorner2D_F64 found = new RectangleCorner2D_F64();
@@ -94,11 +94,11 @@ public class VisualizeResultsTldData{
 
 		VisualizeResultsTldData visualizer = new VisualizeResultsTldData();
 
-		String dataset = "01_david";
+//		String dataset = "01_david";
 //		String dataset = "02_jumping";
 //		String dataset = "03_pedestrian1";
 //		String dataset = "04_pedestrian2";
-//		String dataset = "05_pedestrian3";
+		String dataset = "05_pedestrian3";
 //		String dataset = "06_car";
 //		String dataset = "07_motocross";
 //		String dataset = "08_volkswagen";
@@ -108,8 +108,8 @@ public class VisualizeResultsTldData{
 //		String path = "../thirdparty/opentld_c";
 //		String library = "copentld";
 		String path = "./";
-//		String library = "BoofCV-TLD";
-		String library = "BoofCV-Circulant";
+		String library = "BoofCV-TLD";
+//		String library = "BoofCV-Circulant";
 		String inputFile = path+"/"+library+"_"+dataset+".txt";
 
 		visualizer.visualize(dataset,inputFile);
