@@ -23,7 +23,7 @@ public class VisualizeResultsMilTrackData {
 	public void visualize(String dataName, String inputName) throws IOException {
 		System.out.println("Processing "+dataName);
 
-		String path = "../data/track_rect/MILTrack/"+dataName;
+		String path = "data/track_rect/MILTrack/"+dataName;
 
 		RectangleCorner2D_F64 expected = new RectangleCorner2D_F64();
 		RectangleCorner2D_F64 found = new RectangleCorner2D_F64();
@@ -130,8 +130,8 @@ public class VisualizeResultsMilTrackData {
 //		String path = "../thirdparty/opentld_c";
 //		String library = "copentld";
 		String path = "./";
-//		String library = "BoofCV-TLD";
-		String library = "BoofCV-Circulant";
+		String library = "BoofCV-TLD";
+//		String library = "BoofCV-Circulant";
 //		String library = "PCirculant";
 //		String library = "BoofCV-CirculantOrig";
 //		String library = "BoofCV-SFT";
