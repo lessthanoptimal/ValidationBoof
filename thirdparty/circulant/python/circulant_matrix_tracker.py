@@ -26,12 +26,11 @@ class CirculantMatrixTracker:
         self.response = None
 
     def initialize(self, image, pos , target_sz ):
-        if len(image.shape) == 3 and image.shape[2] > 1:
-            image = rgb2gray(image)
-        self.image = image
         if self.should_resize_image:
-            self.image = scipy.misc.imresize(self.image, 0.5)
-            self.image = self.image / 255.0
+            self.image = scipy.misc.imresize(image, 0.5)
+            self.image = self.image / 255.0 # hack around scipy
+        else:
+            self.image = image
 
         # window size, taking padding into account
         self.sz = pylab.floor(target_sz * (1 + self.padding))
@@ -64,12 +63,12 @@ class CirculantMatrixTracker:
         return
 
     def find(self, image):
-        if len(image.shape) == 3 and image.shape[2] > 1:
-            image = rgb2gray(image)
-        self.image = image
         if self.should_resize_image:
-            self.image = scipy.misc.imresize(self.image, 0.5)
-            self.image = self.image / 255.0
+            self.image = scipy.misc.imresize(image, 0.5)
+            self.image = self.image / 255.0 # hack around scipy
+        else:
+            self.image = image
+
 
         # get subwindow at current estimated target position,
         # to train classifer
@@ -111,11 +110,6 @@ class CirculantMatrixTracker:
         self.z = (1 - f) * self.z + f * new_z
 
         return
-
-def rgb2gray(rgb_image):
-    "Based on http://stackoverflow.com/questions/12201577"
-    # [0.299, 0.587, 0.144] normalized gives [0.29, 0.57, 0.14]
-    return pylab.dot(rgb_image[:, :, :3], [0.29, 0.57, 0.14])
 
 
 def get_subwindow(im, pos, sz, cos_window):
