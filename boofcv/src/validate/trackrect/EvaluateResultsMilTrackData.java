@@ -11,6 +11,7 @@ import static validate.trackrect.GenerateDetectionsMilTrackData.parseFramesFile;
  */
 public class EvaluateResultsMilTrackData {
 
+	public static boolean formatLatex = false;
 
 	public void evaluate(String dataName, String inputName, PrintStream out) throws IOException {
 		System.out.println("Processing "+dataName);
@@ -52,8 +53,14 @@ public class EvaluateResultsMilTrackData {
 			frameNum++;
 		}
 		double averageOverlap = statsFoo.totalOverlap/statsFoo.truePositive;
-		out.printf("%s %5.3f %04d %04d %04d %04d %5.3f\n", dataName, UtilTldData.computeFMeasure(stats), stats.truePositives,
-				stats.trueNegatives, stats.falsePositives, stats.falseNegatives, averageOverlap);
+		if( formatLatex ) {
+			out.println("\\hline");
+			out.printf("%s & %5.2f & %d & %d & %d & %d & %5.2f\\\\\n", dataName, UtilTldData.computeFMeasure(stats), stats.truePositives,
+					stats.trueNegatives, stats.falsePositives, stats.falseNegatives, averageOverlap);
+		} else {
+			out.printf("%s %5.3f %04d %04d %04d %04d %5.3f\n", dataName, UtilTldData.computeFMeasure(stats), stats.truePositives,
+					stats.trueNegatives, stats.falsePositives, stats.falseNegatives, averageOverlap);
+		}
 	}
 
 	public static void process( String path , String library ) throws IOException {
@@ -61,17 +68,32 @@ public class EvaluateResultsMilTrackData {
 
 		System.out.println("------------ "+library+" ------------------");
 		PrintStream out = new PrintStream(path+"MILTrackData_"+library+".txt");
-		out.println("# F TP TN FP FN Overlap");
+		if( formatLatex ) {
+			out.println("\\begin{tabular}{l|c|c|c|c|c|}");
+			out.println("\\hline");
+			out.println("\\multicolumn{7}{|c|}");
+			out.println("\\hline");
+			out.println("Scenario & F & TP & TN & FP & FN & Overlap \\\\");
+		} else {
+			out.println("# F TP TN FP FN Overlap");
+		}
 
 		for( String dataset : GenerateDetectionsMilTrackData.videos ){
 			String inputFile = library+"_"+dataset+".txt";
 			evaluator.evaluate(dataset, inputFile, out);
+		}
+
+		if( formatLatex ) {
+			out.println("\\hline");
+			out.println("\\end{tabular}");
 		}
 	}
 
 	public static void main(String[] args) throws IOException {
 
 //		String libraries[]=new String[]{"BoofCV-TLD","BoofCV-Circulant","BoofCV-CirculantOrig","BoofCV-SFT","BoofCV-Comaniciu","PCirculant"};
+
+		formatLatex = true;
 
 		process("./", "BoofCV-Circulant");
 

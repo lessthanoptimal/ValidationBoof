@@ -90,6 +90,10 @@ public class GenerateRegressionData {
 	}
 
 	public static void delete( File directory ) {
+		if( !directory.exists() ) {
+			return;
+		}
+
 		File[] files = directory.listFiles();
 
 		for( File f : files ) {

@@ -37,20 +37,7 @@ import java.util.List;
 /**
  * @author Peter Abeles
  */
-public class StereoVisualOdometryRegression implements TextFileRegression {
-
-	String directory;
-	PrintStream errorLog;
-
-	@Override
-	public void setOutputDirectory(String directory) {
-		this.directory = directory;
-		try {
-			errorLog = new PrintStream(directory+"ERRORLOG_StereoVisualOdometry.txt");
-		} catch (FileNotFoundException e) {
-			throw new RuntimeException(e);
-		}
-	}
+public class StereoVisualOdometryRegression extends BaseTextFileRegression {
 
 	@Override
 	public void process(ImageDataType type) throws IOException {
@@ -62,14 +49,19 @@ public class StereoVisualOdometryRegression implements TextFileRegression {
 		all.add( createDualTrackerPnP(bandType));
 		all.add( createQuadPnP(bandType));
 
-		SequenceStereoImages data;
 		for( Info a : all ) {
-			data = new WrapParseLeuven07(new ParseLeuven07("data/leuven07"));
-			evaluate(a,data,"Leuven07");
-			for( int i = 0; i < 1; i++ ) { // can do up to 11
-				String sequence = String.format("%02d",i);
-				data = new WrapParseKITTI("data/KITTI",sequence);
-				evaluate(a,data,"KITTI"+sequence);
+			try {
+				SequenceStereoImages data = new WrapParseLeuven07(new ParseLeuven07("data/leuven07"));
+				evaluate(a,data,"Leuven07");
+				for( int i = 0; i < 1; i++ ) { // can do up to 11
+					String sequence = String.format("%02d",i);
+					data = new WrapParseKITTI("data/KITTI",sequence);
+					evaluate(a,data,"KITTI"+sequence);
+				}
+			} catch( RuntimeException e ) {
+				errorLog.println("FAILED to process "+a.name);
+				e.printStackTrace(errorLog);
+				errorLog.println("---------------------------------------------------");
 			}
 		}
 	}
@@ -83,7 +75,9 @@ public class StereoVisualOdometryRegression implements TextFileRegression {
 			evaluator.initialize();
 			while( evaluator.nextFrame() ){}
 		} catch( RuntimeException e ) {
-			e.printStackTrace(out);
+			errorLog.println("FAILED "+vo.name+" on "+dataName);
+			e.printStackTrace(errorLog);
+			errorLog.println("---------------------------------------------------");
 		}
 	}
 
