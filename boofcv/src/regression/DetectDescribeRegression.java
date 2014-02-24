@@ -40,7 +40,7 @@ public class DetectDescribeRegression extends BaseTextFileRegression {
 
 		List<Info> all = new ArrayList<Info>();
 
-		Class bandType = ImageDataType.typeToClass(type);
+		Class bandType = ImageDataType.typeToSingleClass(type);
 
 		all.add(surf(false,false,bandType));
 		all.add(surf(false,true,bandType));

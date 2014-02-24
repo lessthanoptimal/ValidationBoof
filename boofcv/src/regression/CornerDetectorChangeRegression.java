@@ -12,7 +12,7 @@ public class CornerDetectorChangeRegression extends BaseTextFileRegression {
 
 	@Override
 	public void process( ImageDataType type ) throws IOException {
-		DetectFast.detect(directory,ImageDataType.typeToClass(type));
+		DetectFast.detect(directory,ImageDataType.typeToSingleClass(type));
 	}
 
 	public static void main(String[] args) throws IOException {

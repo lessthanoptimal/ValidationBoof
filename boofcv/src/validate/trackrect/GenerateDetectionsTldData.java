@@ -91,8 +91,13 @@ public class GenerateDetectionsTldData<T extends ImageBase> {
 
 		GenerateDetectionsTldData<Input> generator = new GenerateDetectionsTldData(imageType);
 
-		for( String dataName : videos )
-			generator.evaluate(dataName,trackerName,tracker);
+		for( String dataName : videos ) {
+			try {
+				generator.evaluate(dataName,trackerName,tracker);
+			} catch( RuntimeException e ) {
+				System.out.println("Skipping video "+dataName);
+			}
+		}
 
 //		generator.evaluate("01_david",trackerName,tracker);
 //		generator.evaluate("02_jumping",trackerName,tracker);
@@ -108,10 +113,13 @@ public class GenerateDetectionsTldData<T extends ImageBase> {
 
 	public static void main(String[] args) {
 		FactoryEvaluationTrackerObjectQuad.Info info =
-				FactoryEvaluationTrackerObjectQuad.circulant(ImageDataType.F32);
-//		FactoryEvaluationTrackerObjectQuad.tld(ImageDataType.F32);
-//		FactoryEvaluationTrackerObjectQuad.meanShiftComaniciuNoScale(ImageDataType.F32);
-//		FactoryEvaluationTrackerObjectQuad.meanShiftComaniciuScale(ImageDataType.F32);
+				FactoryEvaluationTrackerObjectQuad.sparseFlow(ImageDataType.F32);
+//				FactoryEvaluationTrackerObjectQuad.meanShiftLikelihoodHist(ImageDataType.F32);
+//				FactoryEvaluationTrackerObjectQuad.circulant(ImageDataType.F32);
+//				FactoryEvaluationTrackerObjectQuad.tld(ImageDataType.F32);
+//				FactoryEvaluationTrackerObjectQuad.meanShiftComaniciuNoScale(ImageDataType.F32);
+//				FactoryEvaluationTrackerObjectQuad.meanShiftComaniciuScale(ImageDataType.F32);
+//				FactoryEvaluationTrackerObjectQuad.meanShiftLikelihoodHist(ImageDataType.U8);
 
 
 		evaluate(info.name,info.tracker,info.imageType);

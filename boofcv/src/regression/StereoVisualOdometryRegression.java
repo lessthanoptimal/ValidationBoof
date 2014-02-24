@@ -43,7 +43,7 @@ public class StereoVisualOdometryRegression extends BaseTextFileRegression {
 	public void process(ImageDataType type) throws IOException {
 		List<Info> all = new ArrayList<Info>();
 
-		Class bandType = ImageDataType.typeToClass(type);
+		Class bandType = ImageDataType.typeToSingleClass(type);
 
 		all.add( createDepth(bandType));
 		all.add( createDualTrackerPnP(bandType));

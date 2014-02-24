@@ -54,6 +54,11 @@ public class EvaluateResultsMilTrackData {
 		}
 		double averageOverlap = statsFoo.totalOverlap/statsFoo.truePositive;
 		if( formatLatex ) {
+			if( dataName.contains("_")) {
+				String a[] =  dataName.split("_");
+				dataName = a[0] +"\\_"+ a[1];
+			}
+
 			out.println("\\hline");
 			out.printf("%s & %5.2f & %d & %d & %d & %d & %5.2f\\\\\n", dataName, UtilTldData.computeFMeasure(stats), stats.truePositives,
 					stats.trueNegatives, stats.falsePositives, stats.falseNegatives, averageOverlap);
@@ -69,9 +74,9 @@ public class EvaluateResultsMilTrackData {
 		System.out.println("------------ "+library+" ------------------");
 		PrintStream out = new PrintStream(path+"MILTrackData_"+library+".txt");
 		if( formatLatex ) {
-			out.println("\\begin{tabular}{l|c|c|c|c|c|}");
+			out.println("\\begin{tabular}{|l|c|c|c|c|c|c|}");
 			out.println("\\hline");
-			out.println("\\multicolumn{7}{|c|}");
+			out.println("\\multicolumn{7}{|c|}{MILTrack} \\\\");
 			out.println("\\hline");
 			out.println("Scenario & F & TP & TN & FP & FN & Overlap \\\\");
 		} else {
@@ -95,7 +100,8 @@ public class EvaluateResultsMilTrackData {
 
 		formatLatex = true;
 
-		process("./", "BoofCV-Circulant");
+//		process("./", "BoofCV-Comaniciu");
+		process("./", "BoofCV-SparseFlow");
 
 
 		System.out.println("DONE!");

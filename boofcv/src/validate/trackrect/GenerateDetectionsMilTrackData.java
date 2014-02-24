@@ -162,10 +162,12 @@ public class GenerateDetectionsMilTrackData<T extends ImageBase> {
 
 	public static void main(String[] args) {
 		FactoryEvaluationTrackerObjectQuad.Info info =
-				FactoryEvaluationTrackerObjectQuad.circulant(ImageDataType.F32);
-//		FactoryEvaluationTrackerObjectQuad.tld(ImageDataType.F32);
-//		FactoryEvaluationTrackerObjectQuad.meanShiftComaniciuNoScale(ImageDataType.F32);
-//		FactoryEvaluationTrackerObjectQuad.meanShiftComaniciuScale(ImageDataType.F32);
+//				FactoryEvaluationTrackerObjectQuad.circulant(ImageDataType.F32);
+//				FactoryEvaluationTrackerObjectQuad.tld(ImageDataType.F32);
+				FactoryEvaluationTrackerObjectQuad.sparseFlow(ImageDataType.F32);
+//				FactoryEvaluationTrackerObjectQuad.meanShiftComaniciuNoScale(ImageDataType.F32);
+//				FactoryEvaluationTrackerObjectQuad.meanShiftComaniciuScale(ImageDataType.F32);
+//				FactoryEvaluationTrackerObjectQuad.meanShiftLikelihoodHist(ImageDataType.U8);
 
 		evaluate(info.name,info.tracker,info.imageType);
 

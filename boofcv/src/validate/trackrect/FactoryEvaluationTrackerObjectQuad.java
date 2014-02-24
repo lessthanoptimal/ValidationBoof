@@ -23,6 +23,7 @@ public class FactoryEvaluationTrackerObjectQuad {
 		try { all.add(circulant(dataType)); } catch(  RuntimeException ignore ){}
 		try { all.add(meanShiftComaniciuNoScale(dataType)); } catch(  RuntimeException ignore ){}
 		try { all.add(meanShiftLikelihoodHist(dataType)); } catch(  RuntimeException ignore ){}
+		try { all.add(sparseFlow(dataType)); } catch(  RuntimeException ignore ){}
 
 		return all;
 	}
@@ -31,7 +32,7 @@ public class FactoryEvaluationTrackerObjectQuad {
 		Info info = new Info();
 		info.name = "BoofCV-TLD";
 		info.imageType = new ImageType(ImageType.Family.SINGLE_BAND,dataType,1);
-		info.tracker = FactoryTrackerObjectQuad.tld(new ConfigTld(true),ImageDataType.typeToClass(dataType));
+		info.tracker = FactoryTrackerObjectQuad.tld(new ConfigTld(true),ImageDataType.typeToSingleClass(dataType));
 		return info;
 	}
 
@@ -39,7 +40,7 @@ public class FactoryEvaluationTrackerObjectQuad {
 		Info info = new Info();
 		info.name = "BoofCV-Circulant";
 		info.imageType = new ImageType(ImageType.Family.SINGLE_BAND,dataType,1);
-		info.tracker = FactoryTrackerObjectQuad.circulant(new ConfigCirculantTracker(), ImageDataType.typeToClass(dataType));
+		info.tracker = FactoryTrackerObjectQuad.circulant(new ConfigCirculantTracker(), ImageDataType.typeToSingleClass(dataType));
 		return info;
 	}
 
@@ -71,6 +72,15 @@ public class FactoryEvaluationTrackerObjectQuad {
 
 		info.tracker = FactoryTrackerObjectQuad.meanShiftLikelihood(maxIterations,
 				numBins,maxPixelValue, modelType, info.imageType);
+		return info;
+	}
+
+	public static Info sparseFlow( ImageDataType dataType ) {
+		Info info = new Info();
+		info.name = "BoofCV-SparseFlow";
+		info.imageType = new ImageType(ImageType.Family.SINGLE_BAND,dataType,1);
+
+		info.tracker = FactoryTrackerObjectQuad.sparseFlow(null, ImageDataType.typeToSingleClass(dataType),null);
 		return info;
 	}
 

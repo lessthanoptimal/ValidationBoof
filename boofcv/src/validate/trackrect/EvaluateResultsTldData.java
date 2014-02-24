@@ -11,6 +11,9 @@ import java.io.PrintStream;
  * @author Peter Abeles
  */
 public class EvaluateResultsTldData {
+
+	public static boolean formatLatex = false;
+
 	public void evaluate(String dataName, String inputFile , PrintStream out ) throws IOException {
 		System.out.println("Processing "+dataName);
 
@@ -29,6 +32,7 @@ public class EvaluateResultsTldData {
 		}
 
 		TldResults stats = new TldResults();
+		FooResults statsFoo = new FooResults();
 
 		int imageNum = 0;
 
@@ -48,13 +52,25 @@ public class EvaluateResultsTldData {
 			UtilTldData.parseRect(foundString,found);
 
 			UtilTldData.updateStatistics(expected,found,stats);
+			UtilTldData.updateStatistics(expected,found,statsFoo);
 
 			System.out.println(imageNum+"  "+found.x0);
 			imageNum++;
 		}
 
-		out.printf("%s %5.3f %04d %04d %04d %04d\n", dataName, UtilTldData.computeFMeasure(stats), stats.truePositives,
-				stats.trueNegatives, stats.falsePositives, stats.falseNegatives);
+		double averageOverlap = statsFoo.totalOverlap/statsFoo.truePositive;
+		if( formatLatex ) {
+			if( dataName.contains("_")) {
+				String a[] =  dataName.split("_");
+				dataName = a[0] +"\\_"+ a[1];
+			}
+			out.println("\\hline");
+			out.printf("%s & %5.2f & %d & %d & %d & %d & %5.2f\\\\\n", dataName, UtilTldData.computeFMeasure(stats), stats.truePositives,
+					stats.trueNegatives, stats.falsePositives, stats.falseNegatives, averageOverlap);
+		} else {
+			out.printf("%s %5.3f %04d %04d %04d %04d %5.3f\n", dataName, UtilTldData.computeFMeasure(stats), stats.truePositives,
+					stats.trueNegatives, stats.falsePositives, stats.falseNegatives, averageOverlap);
+		}
 
 		System.out.println();
 	}
@@ -64,15 +80,30 @@ public class EvaluateResultsTldData {
 
 		System.out.println("------------ "+library+" ------------------");
 		PrintStream out = new PrintStream(path+"TldData_"+library+".txt");
-		out.println("# F TP TN FP FN");
+		if( formatLatex ) {
+			out.println("\\begin{tabular}{|l|c|c|c|c|c|c|}");
+			out.println("\\hline");
+			out.println("\\multicolumn{7}{|c|}{TLD Data} \\\\");
+			out.println("\\hline");
+			out.println("Scenario & F & TP & TN & FP & FN & Overlap \\\\");
+		} else {
+			out.println("# F TP TN FP FN Overlap");
+		}
 
 		for( String dataset : GenerateDetectionsTldData.videos ){
 			String inputFile = library+"_"+dataset+".txt";
 			evaluator.evaluate(dataset, inputFile, out);
 		}
+
+		if( formatLatex ) {
+			out.println("\\hline");
+			out.println("\\end{tabular}");
+		}
 	}
 
 	public static void main(String[] args) throws IOException {
-		process("./","BoofCV-TLD");
+		formatLatex = true;
+//		process("./","BoofCV-Comaniciu");
+		process("./","BoofCV-SparseFlow");
 	}
 }

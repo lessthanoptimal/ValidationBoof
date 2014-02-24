@@ -60,7 +60,7 @@ public class PointTrackerRegression extends BaseTextFileRegression {
 	@Override
 	public void process(ImageDataType type) throws IOException {
 		List<Info> all = new ArrayList<Info>();
-		Class bandType = ImageDataType.typeToClass(type);
+		Class bandType = ImageDataType.typeToSingleClass(type);
 
 		all.add( createDefaultKlt(bandType));
 		all.add( createHarrisNCC(bandType));
