@@ -1,0 +1,47 @@
+ext.libpath = file('./').absolutePath
+
+allprojects {
+    apply plugin: 'idea'
+
+    group = 'org.boofcv'
+    version = '0.17-SNAPSHOT'
+}
+
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'maven'
+
+    sourceCompatibility = 1.6
+
+    repositories {
+        mavenCentral()
+        mavenLocal()
+
+        maven {
+            url = "https://oss.sonatype.org/content/repositories/snapshots/"
+        }
+    }
+
+    sourceSets {
+        main {
+            java {
+                srcDir 'src'
+            }
+            resources {
+                srcDir 'resources/src'
+            }
+        }
+    }
+
+    dependencies {
+        testCompile group: 'junit', name: 'junit', version: '4.+'
+    }
+}
+
+idea {
+    project {
+        jdkName = '1.6 (64bit)'
+        languageLevel = '1.6'
+    }
+}
+

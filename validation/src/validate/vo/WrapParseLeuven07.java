@@ -4,7 +4,6 @@ import boofcv.alg.geo.PerspectiveOps;
 import boofcv.struct.calib.IntrinsicParameters;
 import boofcv.struct.calib.StereoParameters;
 import georegression.struct.se.Se3_F64;
-import org.ejml.data.DenseMatrix64F;
 
 import java.awt.image.BufferedImage;
 

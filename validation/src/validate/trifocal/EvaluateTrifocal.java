@@ -5,9 +5,11 @@ import boofcv.struct.geo.AssociatedTriple;
 import boofcv.struct.geo.TrifocalTensor;
 import org.ejml.data.DenseMatrix64F;
 import org.ejml.ops.SpecializedOps;
-import validate.trifocal.ComputeTrifocalTensor;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
