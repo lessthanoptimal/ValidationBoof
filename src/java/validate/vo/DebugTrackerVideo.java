@@ -291,8 +291,8 @@ public class DebugTrackerVideo <T extends ImageSingleBand> implements MouseListe
 	public void keyReleased(KeyEvent e) {}
 
 	public static void main( String args[] ) {
-//		SequenceStereoImages data = new WrapParseLeuven07(new ParseLeuven07("../data/leuven07"));
-		SequenceStereoImages data = new WrapParseKITTI("../data/KITTI","01");
+//		SequenceStereoImages data = new WrapParseLeuven07(new ParseLeuven07("data/leuven07"));
+		SequenceStereoImages data = new WrapParseKITTI("data/KITTI","01");
 
 		Class imageType = ImageFloat32.class;
 

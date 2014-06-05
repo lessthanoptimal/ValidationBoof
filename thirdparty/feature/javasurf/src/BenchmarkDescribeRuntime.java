@@ -50,6 +50,6 @@ public class BenchmarkDescribeRuntime {
 	}
 
 	public static void main( String args[] ) throws IOException {
-		benchmark("../../data/mikolajczk/boat",1,"FH");
+		benchmark("../data/mikolajczk/boat",1,"FH");
 	}
 }

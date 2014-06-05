@@ -45,6 +45,6 @@ public class BenchmarkDetectRuntime {
 	}
 
 	public static void main( String args[] ) throws IOException {
-		benchmark("../../data/mikolajczk/boat",1);
+		benchmark("../data/mikolajczk/boat",1);
 	}
 }

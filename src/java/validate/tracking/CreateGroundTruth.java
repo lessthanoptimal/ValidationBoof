@@ -12,10 +12,10 @@ import boofcv.factory.distort.FactoryDistort;
 import boofcv.factory.geo.EpipolarError;
 import boofcv.factory.geo.FactoryMultiView;
 import boofcv.factory.interpolate.FactoryInterpolation;
+import boofcv.io.UtilIO;
 import boofcv.io.image.SimpleImageSequence;
 import boofcv.io.image.UtilImageIO;
 import boofcv.io.wrapper.DefaultMediaManager;
-import boofcv.misc.BoofMiscOps;
 import boofcv.struct.calib.IntrinsicParameters;
 import boofcv.struct.distort.PointTransform_F32;
 import boofcv.struct.geo.AssociatedPair;
@@ -238,9 +238,9 @@ public class CreateGroundTruth {
 		SimpleImageSequence sequence =
 				DefaultMediaManager.INSTANCE.openVideo(pathToData+whichData+".mjpeg", ImageType.single(ImageFloat32.class));
 
-		IntrinsicParameters cameraParam = BoofMiscOps.loadXML("../data/intrinsic.xml");
+		IntrinsicParameters cameraParam = UtilIO.loadXML("data/intrinsic.xml");
 
-		String outputDir = "../data/temp";
+		String outputDir = "data/temp";
 
 		CreateGroundTruth alg = new CreateGroundTruth(cameraParam,outputDir);
 

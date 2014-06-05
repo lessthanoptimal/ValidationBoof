@@ -32,7 +32,7 @@ public class DebugTrackerTldData<T extends ImageBase> {
 	public void evaluate( String dataName , TrackerObjectQuad<T> tracker ) {
 		System.out.println("Processing "+dataName);
 
-		String path = "../data/track_rect/TLD/"+dataName;
+		String path = "data/track_rect/TLD/"+dataName;
 
 		Quadrilateral_F64 initial = new Quadrilateral_F64();
 		RectangleCorner2D_F64 rect = UtilTldData.parseRectangle(path + "/init.txt");

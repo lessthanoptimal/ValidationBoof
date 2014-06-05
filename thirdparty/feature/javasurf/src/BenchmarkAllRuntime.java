@@ -51,6 +51,6 @@ public class BenchmarkAllRuntime {
 	}
 
 	public static void main( String args[] ) throws IOException {
-		benchmark("../../data/graf",1);
+		benchmark("../data/graf",1);
 	}
 }

@@ -42,7 +42,7 @@ public class PerformanceTldData {
 
 		String inputFile = detectionPath +"/"+name+"_"+dataName+".txt";
 
-		String path = "../data/track_rect/TLD/"+dataName;
+		String path = "data/track_rect/TLD/"+dataName;
 
 		RectangleCorner2D_F64 expected = new RectangleCorner2D_F64();
 		RectangleCorner2D_F64 found = new RectangleCorner2D_F64();

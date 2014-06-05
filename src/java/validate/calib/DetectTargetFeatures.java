@@ -27,7 +27,7 @@ public class DetectTargetFeatures {
 		PlanarCalibrationDetector detector = FactoryPlanarCalibrationTarget.detectorChessboard(new ConfigChessboard(5, 7));
 
 		// load image list
-		String directory = "../data/calib/stereo/Bumblebee2_Chess";
+		String directory = "data/calib/stereo/Bumblebee2_Chess";
 		List<String> images = BoofMiscOps.directoryList(directory, "left");
 
 		PrintStream out = new PrintStream(new FileOutputStream("calib_pts.txt"));

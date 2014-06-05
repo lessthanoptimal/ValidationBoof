@@ -87,7 +87,7 @@ public class OutputForKITTI {
 
 			String dataID = String.format("%02d",dataSet);
 
-			SequenceStereoImages data = new WrapParseKITTI("../data/KITTI",dataID);
+			SequenceStereoImages data = new WrapParseKITTI("data/KITTI",dataID);
 			PrintStream output = new PrintStream(new FileOutputStream(dataID+".txt"));
 
 			computeOdometry(data,alg,imageType,output);

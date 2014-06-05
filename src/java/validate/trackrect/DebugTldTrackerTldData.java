@@ -33,7 +33,7 @@ public class DebugTldTrackerTldData<T extends ImageSingleBand> implements TldVis
 	public void evaluate( String dataName , TldTracker<T,?> tracker ) {
 		System.out.println("Processing "+dataName);
 
-		String path = "../data/track_rect/TLD/"+dataName;
+		String path = "data/track_rect/TLD/"+dataName;
 
 		RectangleCorner2D_F64 initial = UtilTldData.parseRectangle(path + "/init.txt");
 		RectangleCorner2D_F64 found = new RectangleCorner2D_F64();
