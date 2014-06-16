@@ -31,6 +31,8 @@ public class GenerateRegressionData {
 		//      -- Mono-plane
 		// TODO Calibration key points change
 		// TODO Calibration optimization
+		list.add( new DenseFlowRegression() );
+		// TODO Image Segmentation
 
 		return list;
 	}
