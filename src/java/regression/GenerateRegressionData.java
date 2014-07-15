@@ -41,7 +41,7 @@ public class GenerateRegressionData {
 		File files[] = new File(".").listFiles();
 
 		// sanity check the directory before it starts deleting shit
-		if( !contains(files,"boofcv"))
+		if( !contains(files,"src"))
 			throw new RuntimeException("Can't find boofcv in working directory");
 		if( !contains(files,"lib"))
 			throw new RuntimeException("Can't find lib in working directory");

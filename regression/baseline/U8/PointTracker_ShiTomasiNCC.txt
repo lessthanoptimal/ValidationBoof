@@ -27,7 +27,7 @@
 ./data/abeles2012/various/lighting  1  0.126  0.126  0.175  0.099  0.099  214.0
 ./data/abeles2012/various/lighting  4  0.142  0.142  0.196  0.112  0.112  217.0
 ./data/abeles2012/various/lighting  8  0.139  0.139  0.191  0.110  0.110  217.0
-./data/abeles2012/various/compressed  1  0.010  0.006  0.014  0.008  0.004  262.0
+./data/abeles2012/various/compressed  1  0.010  0.006  0.013  0.008  0.004  262.0
 ./data/abeles2012/various/compressed  4  0.008  0.005  0.011  0.007  0.004  265.0
 ./data/abeles2012/various/compressed  8  0.007  0.004  0.010  0.006  0.004  268.0
 ./data/abeles2012/various/urban  1  0.060  0.068  0.081  0.048  0.061  232.0
