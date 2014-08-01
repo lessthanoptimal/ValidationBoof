@@ -22,8 +22,8 @@ import boofcv.struct.geo.AssociatedPair;
 import boofcv.struct.image.ImageFloat32;
 import boofcv.struct.image.ImageType;
 import georegression.fitting.homography.ModelManagerHomography2D_F64;
-import georegression.struct.homo.Homography2D_F64;
-import georegression.struct.homo.UtilHomography;
+import georegression.struct.homography.Homography2D_F64;
+import georegression.struct.homography.UtilHomography;
 import georegression.struct.point.Point2D_F64;
 import org.ddogleg.fitting.modelset.ModelManager;
 import org.ddogleg.fitting.modelset.ModelMatcher;
@@ -52,7 +52,7 @@ public class CreateGroundTruth {
 	String outputDirectory;
 
 	// removes lens distortion
-	ImageDistort<ImageFloat32> removeLens;
+	ImageDistort<ImageFloat32,ImageFloat32> removeLens;
 
 	EvaluationTracker<ImageFloat32> tracker;
 

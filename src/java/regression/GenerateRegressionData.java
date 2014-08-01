@@ -33,6 +33,7 @@ public class GenerateRegressionData {
 		// TODO Calibration optimization
 		list.add( new DenseFlowRegression() );
 		// TODO Image Segmentation
+		list.add( new TextThresholdRegression() );
 
 		return list;
 	}

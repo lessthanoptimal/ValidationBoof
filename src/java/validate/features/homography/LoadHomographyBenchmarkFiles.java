@@ -22,7 +22,7 @@ package validate.features.homography;
 import boofcv.struct.feature.TupleDesc_F64;
 import bubo.io.serialization.SerializationDefinitionManager;
 import bubo.io.text.ReadCsvObjectSmart;
-import georegression.struct.homo.Homography2D_F64;
+import georegression.struct.homography.Homography2D_F64;
 import georegression.struct.point.Point2D_F64;
 import org.ejml.data.DenseMatrix64F;
 import org.ejml.ops.MatrixIO;

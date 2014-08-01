@@ -1,6 +1,6 @@
 package validate.tracking;
 
-import georegression.struct.homo.Homography2D_F64;
+import georegression.struct.homography.Homography2D_F64;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;

@@ -4,7 +4,7 @@ import boofcv.io.image.SimpleImageSequence;
 import boofcv.io.wrapper.DefaultMediaManager;
 import boofcv.struct.image.ImageFloat32;
 import boofcv.struct.image.ImageType;
-import georegression.struct.homo.Homography2D_F64;
+import georegression.struct.homography.Homography2D_F64;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;

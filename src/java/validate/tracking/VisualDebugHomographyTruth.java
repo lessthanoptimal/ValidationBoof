@@ -14,9 +14,9 @@ import boofcv.misc.BoofMiscOps;
 import boofcv.struct.image.ImageFloat32;
 import boofcv.struct.image.ImageSingleBand;
 import boofcv.struct.image.ImageType;
-import georegression.struct.homo.Homography2D_F64;
+import georegression.struct.homography.Homography2D_F64;
 import georegression.struct.point.Point2D_F64;
-import georegression.transform.homo.HomographyPointOps_F64;
+import georegression.transform.homography.HomographyPointOps_F64;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;

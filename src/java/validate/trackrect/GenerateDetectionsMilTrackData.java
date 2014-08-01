@@ -8,7 +8,7 @@ import boofcv.struct.image.ImageDataType;
 import boofcv.struct.image.ImageType;
 import georegression.geometry.UtilPolygons2D_F64;
 import georegression.struct.shapes.Quadrilateral_F64;
-import georegression.struct.shapes.RectangleCorner2D_F64;
+import georegression.struct.shapes.Rectangle2D_F64;
 
 import java.awt.image.BufferedImage;
 import java.io.*;
@@ -30,17 +30,17 @@ public class GenerateDetectionsMilTrackData<T extends ImageBase> {
 		input = type.createImage(1,1);
 	}
 
-	public RectangleCorner2D_F64 readInitial( String fileName ) {
+	public Rectangle2D_F64 readInitial( String fileName ) {
 		try {
 			BufferedReader reader = new BufferedReader(new FileReader(fileName));
 			String line = reader.readLine();
 			String words[] = line.split(",");
 
-			RectangleCorner2D_F64 ret = new RectangleCorner2D_F64();
-			ret.x0 = Double.parseDouble(words[0]);
-			ret.y0 = Double.parseDouble(words[1]);
-			ret.x1 = ret.x0 + Double.parseDouble(words[2]);
-			ret.y1 = ret.y0 + Double.parseDouble(words[3]);
+			Rectangle2D_F64 ret = new Rectangle2D_F64();
+			ret.p0.x = Double.parseDouble(words[0]);
+			ret.p0.y = Double.parseDouble(words[1]);
+			ret.p1.x = ret.p0.x + Double.parseDouble(words[2]);
+			ret.p1.y = ret.p0.y + Double.parseDouble(words[3]);
 
 			return ret;
 		} catch (FileNotFoundException e) {
@@ -69,10 +69,10 @@ public class GenerateDetectionsMilTrackData<T extends ImageBase> {
 
 		String path = "data/track_rect/MILTrack/"+dataName;
 		Quadrilateral_F64 initial = new Quadrilateral_F64();
-		RectangleCorner2D_F64 rect = readInitial(path + "/" + dataName + "_gt.txt");
+		Rectangle2D_F64 rect = readInitial(path + "/" + dataName + "_gt.txt");
 		UtilPolygons2D_F64.convert(rect, initial);
 		Quadrilateral_F64 found = new Quadrilateral_F64();
-		RectangleCorner2D_F64 bounding = new RectangleCorner2D_F64();
+		Rectangle2D_F64 bounding = new Rectangle2D_F64();
 
 		PrintStream out;
 
@@ -126,9 +126,9 @@ public class GenerateDetectionsMilTrackData<T extends ImageBase> {
 			} else {
 				UtilPolygons2D_F64.bounding(found,bounding);
 //				System.out.print("+");
-				out.printf("%05d,%f,%f,%f,%f\n",imageNum,bounding.x0,bounding.y0,bounding.x1,bounding.y1);
+				out.printf("%05d,%f,%f,%f,%f\n",imageNum,bounding.p0.x,bounding.p0.y,bounding.p1.x,bounding.p1.y);
 			}
-			System.out.printf("%4d  %f %f\n",imageNum,bounding.x0,bounding.y0);
+			System.out.printf("%4d  %f %f\n",imageNum,bounding.p0.x,bounding.p0.y);
 
 			imageNum++;
 		}

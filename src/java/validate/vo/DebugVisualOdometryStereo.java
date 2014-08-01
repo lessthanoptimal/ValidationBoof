@@ -174,7 +174,7 @@ public class DebugVisualOdometryStereo<T extends ImageBase>
 	}
 
 	private double rotationMatrixToRadian(DenseMatrix64F a) {
-		double angles[] = RotationMatrixGenerator.matrixToEulerXYZ(a,null);
+		double angles[] = RotationMatrixGenerator.matrixToEulerXYZ(a,(double[])null);
 
 		double sum = angles[0]*angles[0] + angles[1]*angles[1] + angles[1]*angles[1];
 

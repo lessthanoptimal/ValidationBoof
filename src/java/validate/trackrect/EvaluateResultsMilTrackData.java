@@ -1,6 +1,6 @@
 package validate.trackrect;
 
-import georegression.struct.shapes.RectangleCorner2D_F64;
+import georegression.struct.shapes.Rectangle2D_F64;
 
 import java.io.*;
 
@@ -18,8 +18,8 @@ public class EvaluateResultsMilTrackData {
 
 		String path = "data/track_rect/MILTrack/"+dataName;
 
-		RectangleCorner2D_F64 expected = new RectangleCorner2D_F64();
-		RectangleCorner2D_F64 found = new RectangleCorner2D_F64();
+		Rectangle2D_F64 expected = new Rectangle2D_F64();
+		Rectangle2D_F64 found = new Rectangle2D_F64();
 
 		File resultsFile = new File(inputName);
 
@@ -41,7 +41,7 @@ public class EvaluateResultsMilTrackData {
 			UtilTldData.parseRectWH(readerTruth.readLine(),expected);
 			UtilTldData.parseFRect(readerRect.readLine(), found);
 
-			boolean hasTruth = !(expected.x0 == 0 && expected.y0 == 0 && expected.x1 == 0 && expected.y1 == 0);
+			boolean hasTruth = !(expected.p0.x == 0 && expected.p0.y == 0 && expected.p1.x == 0 && expected.p1.y == 0);
 
 			if( hasTruth ) {
 				UtilTldData.updateStatistics(expected,found,stats);

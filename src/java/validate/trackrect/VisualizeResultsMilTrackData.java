@@ -4,7 +4,7 @@ import boofcv.gui.image.ImagePanel;
 import boofcv.gui.image.ShowImages;
 import boofcv.io.image.UtilImageIO;
 import boofcv.misc.BoofMiscOps;
-import georegression.struct.shapes.RectangleCorner2D_F64;
+import georegression.struct.shapes.Rectangle2D_F64;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -25,8 +25,8 @@ public class VisualizeResultsMilTrackData {
 
 		String path = "data/track_rect/MILTrack/"+dataName;
 
-		RectangleCorner2D_F64 expected = new RectangleCorner2D_F64();
-		RectangleCorner2D_F64 found = new RectangleCorner2D_F64();
+		Rectangle2D_F64 expected = new Rectangle2D_F64();
+		Rectangle2D_F64 found = new Rectangle2D_F64();
 
 		BufferedReader readerTruth = new BufferedReader(new FileReader(path + "/" + dataName + "_gt.txt"));
 		BufferedReader readerRect = new BufferedReader(new FileReader(inputName));
@@ -77,9 +77,9 @@ public class VisualizeResultsMilTrackData {
 
 			Graphics2D g2 = output.createGraphics();
 
-			boolean hasTruth = !(expected.x0 == 0 && expected.y0 == 0 && expected.x1 == 0 && expected.y1 == 0);
+			boolean hasTruth = !(expected.p0.x == 0 && expected.p0.y == 0 && expected.p1.x == 0 && expected.p1.y == 0);
 
-			boolean isVisibleFound = !Double.isNaN(found.x0);
+			boolean isVisibleFound = !Double.isNaN(found.p0.x);
 			if( isVisibleFound ) {
 				g2.setStroke(new BasicStroke(3));
 				g2.setColor(Color.BLUE);
@@ -87,7 +87,7 @@ public class VisualizeResultsMilTrackData {
 			}
 
 			if( hasTruth ) {
-				boolean isVisibleTruth = !Double.isNaN(expected.x0);
+				boolean isVisibleTruth = !Double.isNaN(expected.p0.x);
 
 				if( isVisibleTruth ) {
 					g2.setColor(Color.RED);

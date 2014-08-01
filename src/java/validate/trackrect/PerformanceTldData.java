@@ -1,6 +1,6 @@
 package validate.trackrect;
 
-import georegression.struct.shapes.RectangleCorner2D_F64;
+import georegression.struct.shapes.Rectangle2D_F64;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -44,8 +44,8 @@ public class PerformanceTldData {
 
 		String path = "data/track_rect/TLD/"+dataName;
 
-		RectangleCorner2D_F64 expected = new RectangleCorner2D_F64();
-		RectangleCorner2D_F64 found = new RectangleCorner2D_F64();
+		Rectangle2D_F64 expected = new Rectangle2D_F64();
+		Rectangle2D_F64 found = new Rectangle2D_F64();
 
 		BufferedReader readerTruth = new BufferedReader(new FileReader(path+"/gt.txt"));
 		BufferedReader readerRect = new BufferedReader(new FileReader(inputFile));
