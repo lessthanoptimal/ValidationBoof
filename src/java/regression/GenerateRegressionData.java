@@ -19,20 +19,21 @@ public class GenerateRegressionData {
 	public static List<TextFileRegression> getRegressions() {
 		List<TextFileRegression> list = new ArrayList<TextFileRegression>();
 
-		list.add( new CornerDetectorChangeRegression());
-		// TODO add corner feature intensity images
-		list.add( new DetectDescribeRegression());
-		// TODO add descriptor stability
-		list.add( new ObjectTrackingRegression());
-		list.add( new PointTrackerRegression());
-		list.add( new StereoVisualOdometryRegression());
-		// TODO compute visual odometry
-		//      -- Kinect
-		//      -- Mono-plane
-		// TODO Calibration key points change
-		// TODO Calibration optimization
-		list.add( new DenseFlowRegression() );
+//		list.add( new CornerDetectorChangeRegression());
+//		// TODO add corner feature intensity images
+//		list.add( new DetectDescribeRegression());
+//		// TODO add descriptor stability
+//		list.add( new ObjectTrackingRegression());
+//		list.add( new PointTrackerRegression());
+//		list.add( new StereoVisualOdometryRegression());
+//		// TODO compute visual odometry
+//		//      -- Kinect
+//		//      -- Mono-plane
+//		// TODO Calibration key points change
+//		// TODO Calibration optimization
+//		list.add( new DenseFlowRegression() );
 		// TODO Image Segmentation
+		list.add( new TextThresholdRegression() );
 
 		return list;
 	}
@@ -41,8 +42,8 @@ public class GenerateRegressionData {
 		File files[] = new File(".").listFiles();
 
 		// sanity check the directory before it starts deleting shit
-		if( !contains(files,"boofcv"))
-			throw new RuntimeException("Can't find boofcv in working directory");
+//		if( !contains(files,"boofcv"))
+//			throw new RuntimeException("Can't find boofcv in working directory");
 		if( !contains(files,"lib"))
 			throw new RuntimeException("Can't find lib in working directory");
 		if( !contains(files,"regression"))

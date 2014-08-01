@@ -12,7 +12,7 @@ import boofcv.struct.image.ImageType;
 import boofcv.struct.image.ImageUInt8;
 import georegression.geometry.UtilPolygons2D_F64;
 import georegression.struct.shapes.Quadrilateral_F64;
-import georegression.struct.shapes.RectangleCorner2D_F64;
+import georegression.struct.shapes.Rectangle2D_F64;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -35,7 +35,7 @@ public class DebugTrackerTldData<T extends ImageBase> {
 		String path = "data/track_rect/TLD/"+dataName;
 
 		Quadrilateral_F64 initial = new Quadrilateral_F64();
-		RectangleCorner2D_F64 rect = UtilTldData.parseRectangle(path + "/init.txt");
+		Rectangle2D_F64 rect = UtilTldData.parseRectangle(path + "/init.txt");
 		UtilPolygons2D_F64.convert(rect,initial);
 		Quadrilateral_F64 found = new Quadrilateral_F64();
 

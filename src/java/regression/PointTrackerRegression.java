@@ -31,7 +31,7 @@ import boofcv.io.image.SimpleImageSequence;
 import boofcv.io.wrapper.DefaultMediaManager;
 import boofcv.struct.image.ImageDataType;
 import boofcv.struct.image.ImageType;
-import georegression.struct.homo.Homography2D_F64;
+import georegression.struct.homography.Homography2D_F64;
 import validate.ValidationConstants;
 import validate.tracking.EvaluateTrackerStability;
 import validate.tracking.EvaluationTracker;

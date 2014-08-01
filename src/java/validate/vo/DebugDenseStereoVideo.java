@@ -129,9 +129,9 @@ public class DebugDenseStereoVideo<T extends ImageSingleBand> implements MouseLi
 		RectifyImageOps.fullViewLeft(param.left, rect1, rect2, rectK);
 
 		// undistorted and rectify images
-		ImageDistort<T> imageDistortLeft =
+		ImageDistort<T,T> imageDistortLeft =
 				RectifyImageOps.rectifyImage(param.getLeft(), rect1, imageType);
-		ImageDistort<T> imageDistortRight =
+		ImageDistort<T,T> imageDistortRight =
 				RectifyImageOps.rectifyImage(param.getRight(), rect2, imageType);
 
 		GImageMiscOps.fill(rectifiedLeft, 0);

@@ -8,7 +8,7 @@ import boofcv.struct.image.ImageDataType;
 import boofcv.struct.image.ImageType;
 import georegression.geometry.UtilPolygons2D_F64;
 import georegression.struct.shapes.Quadrilateral_F64;
-import georegression.struct.shapes.RectangleCorner2D_F64;
+import georegression.struct.shapes.Rectangle2D_F64;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -35,10 +35,10 @@ public class GenerateDetectionsTldData<T extends ImageBase> {
 
 		String path = "data/track_rect/TLD/"+dataName;
 		Quadrilateral_F64 initial = new Quadrilateral_F64();
-		RectangleCorner2D_F64 rect = UtilTldData.parseRectangle(path + "/init.txt");
+		Rectangle2D_F64 rect = UtilTldData.parseRectangle(path + "/init.txt");
 		UtilPolygons2D_F64.convert(rect, initial);
 		Quadrilateral_F64 found = new Quadrilateral_F64();
-		RectangleCorner2D_F64 bounding = new RectangleCorner2D_F64();
+		Rectangle2D_F64 bounding = new Rectangle2D_F64();
 
 		PrintStream out;
 
@@ -74,7 +74,7 @@ public class GenerateDetectionsTldData<T extends ImageBase> {
 			} else {
 				UtilPolygons2D_F64.bounding(found,bounding);
 				System.out.print("+");
-				out.printf("%f,%f,%f,%f\n",bounding.x0,bounding.y0,bounding.x1,bounding.y1);
+				out.printf("%f,%f,%f,%f\n",bounding.p0.x,bounding.p0.y,bounding.p1.x,bounding.p1.y);
 			}
 
 			imageNum++;

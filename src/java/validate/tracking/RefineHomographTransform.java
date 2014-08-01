@@ -8,7 +8,7 @@ import boofcv.factory.interpolate.FactoryInterpolation;
 import boofcv.factory.transform.pyramid.FactoryPyramid;
 import boofcv.struct.image.ImageSingleBand;
 import boofcv.struct.pyramid.PyramidDiscrete;
-import georegression.struct.homo.Homography2D_F64;
+import georegression.struct.homography.Homography2D_F64;
 import org.ddogleg.optimization.FactoryOptimization;
 import org.ddogleg.optimization.UnconstrainedMinimization;
 import org.ddogleg.optimization.UtilOptimize;

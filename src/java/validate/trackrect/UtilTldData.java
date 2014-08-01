@@ -1,7 +1,7 @@
 package validate.trackrect;
 
 import georegression.metric.Intersection2D_F64;
-import georegression.struct.shapes.RectangleCorner2D_F64;
+import georegression.struct.shapes.Rectangle2D_F64;
 
 import java.awt.*;
 import java.io.BufferedReader;
@@ -22,15 +22,15 @@ public class UtilTldData {
 		return 2.0*(precision*recall)/(precision + recall);
 	}
 
-	public static void updateStatistics( RectangleCorner2D_F64 expected , RectangleCorner2D_F64 found ,
+	public static void updateStatistics( Rectangle2D_F64 expected , Rectangle2D_F64 found ,
 										 FooResults stats ) {
-		boolean isVisibleTruth = !Double.isNaN(expected.x0);
-		boolean isVisibleFound = !Double.isNaN(found.x0);
+		boolean isVisibleTruth = !Double.isNaN(expected.p0.x);
+		boolean isVisibleFound = !Double.isNaN(found.p0.x);
 
 		if( isVisibleTruth && isVisibleFound ) {
 
 
-			RectangleCorner2D_F64 i = new RectangleCorner2D_F64();
+			Rectangle2D_F64 i = new Rectangle2D_F64();
 			if( Intersection2D_F64.intersection(expected, found, i) ) {
 				double areaI = i.area();
 
@@ -46,14 +46,14 @@ public class UtilTldData {
 	}
 
 
-	public static void updateStatistics( RectangleCorner2D_F64 expected , RectangleCorner2D_F64 found ,
+	public static void updateStatistics( Rectangle2D_F64 expected , Rectangle2D_F64 found ,
 										 TldResults stats ) {
-		boolean isVisibleTruth = !Double.isNaN(expected.x0);
-		boolean isVisibleFound = !Double.isNaN(found.x0);
+		boolean isVisibleTruth = !Double.isNaN(expected.p0.x);
+		boolean isVisibleFound = !Double.isNaN(found.p0.x);
 
 		if( isVisibleTruth && isVisibleFound ) {
 
-			RectangleCorner2D_F64 i = new RectangleCorner2D_F64();
+			Rectangle2D_F64 i = new Rectangle2D_F64();
 			if( !Intersection2D_F64.intersection(expected, found, i) ) {
 				stats.falsePositives++;
 			} else {
@@ -79,18 +79,18 @@ public class UtilTldData {
 		}
 	}
 
-	public static void drawRectangle( RectangleCorner2D_F64 rect , Graphics2D g2 ) {
+	public static void drawRectangle( Rectangle2D_F64 rect , Graphics2D g2 ) {
 		int w = (int)rect.getWidth();
 		int h = (int)rect.getHeight();
 
-		g2.drawRect((int)rect.x0,(int)rect.y0,w,h);
+		g2.drawRect((int)rect.p0.x,(int)rect.p0.y,w,h);
 	}
 
-	public static RectangleCorner2D_F64 parseRectangle( String fileName ) {
+	public static Rectangle2D_F64 parseRectangle( String fileName ) {
 		try {
 			BufferedReader reader = new BufferedReader(new FileReader(fileName));
 
-			RectangleCorner2D_F64 ret = new RectangleCorner2D_F64();
+			Rectangle2D_F64 ret = new Rectangle2D_F64();
 			parseRect( reader.readLine() , ret );
 
 			reader.close();
@@ -104,7 +104,7 @@ public class UtilTldData {
 		}
 	}
 
-	public static void parseRect( String s , RectangleCorner2D_F64 rectangle ) {
+	public static void parseRect( String s , Rectangle2D_F64 rectangle ) {
 		String tokens[] = s.split(",");
 
 		if( tokens.length != 4 )
@@ -115,13 +115,13 @@ public class UtilTldData {
 				tokens[i] = "NaN";
 		}
 
-		rectangle.x0 = Double.parseDouble(tokens[0]);
-		rectangle.y0 = Double.parseDouble(tokens[1]);
-		rectangle.x1 = Double.parseDouble(tokens[2]);
-		rectangle.y1 = Double.parseDouble(tokens[3]);
+		rectangle.p0.x = Double.parseDouble(tokens[0]);
+		rectangle.p0.y = Double.parseDouble(tokens[1]);
+		rectangle.p1.x = Double.parseDouble(tokens[2]);
+		rectangle.p1.y = Double.parseDouble(tokens[3]);
 	}
 
-	public static void parseFRect( String s , RectangleCorner2D_F64 rectangle ) {
+	public static void parseFRect( String s , Rectangle2D_F64 rectangle ) {
 		String tokens[] = s.split(",");
 
 		if( tokens.length != 5 )
@@ -132,13 +132,13 @@ public class UtilTldData {
 				tokens[i+1] = "NaN";
 		}
 
-		rectangle.x0 = Double.parseDouble(tokens[1]);
-		rectangle.y0 = Double.parseDouble(tokens[2]);
-		rectangle.x1 = Double.parseDouble(tokens[3]);
-		rectangle.y1 = Double.parseDouble(tokens[4]);
+		rectangle.p0.x = Double.parseDouble(tokens[1]);
+		rectangle.p0.y = Double.parseDouble(tokens[2]);
+		rectangle.p1.x = Double.parseDouble(tokens[3]);
+		rectangle.p1.y = Double.parseDouble(tokens[4]);
 	}
 
-	public static void parseRectWH( String s , RectangleCorner2D_F64 rectangle ) {
+	public static void parseRectWH( String s , Rectangle2D_F64 rectangle ) {
 		String tokens[] = s.split(",");
 
 		if( tokens.length != 4 )
@@ -149,9 +149,9 @@ public class UtilTldData {
 				tokens[i] = "NaN";
 		}
 
-		rectangle.x0 = Double.parseDouble(tokens[0]);
-		rectangle.y0 = Double.parseDouble(tokens[1]);
-		rectangle.x1 = rectangle.x0 + Double.parseDouble(tokens[2]);
-		rectangle.y1 = rectangle.y0 + Double.parseDouble(tokens[3]);
+		rectangle.p0.x = Double.parseDouble(tokens[0]);
+		rectangle.p0.y = Double.parseDouble(tokens[1]);
+		rectangle.p1.x = rectangle.p0.x + Double.parseDouble(tokens[2]);
+		rectangle.p1.y = rectangle.p0.y + Double.parseDouble(tokens[3]);
 	}
 }

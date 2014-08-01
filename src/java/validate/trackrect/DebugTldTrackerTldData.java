@@ -12,7 +12,7 @@ import boofcv.io.image.UtilImageIO;
 import boofcv.struct.image.ImageFloat32;
 import boofcv.struct.image.ImageSingleBand;
 import boofcv.struct.image.ImageType;
-import georegression.struct.shapes.RectangleCorner2D_F64;
+import georegression.struct.shapes.Rectangle2D_F64;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -35,8 +35,8 @@ public class DebugTldTrackerTldData<T extends ImageSingleBand> implements TldVis
 
 		String path = "data/track_rect/TLD/"+dataName;
 
-		RectangleCorner2D_F64 initial = UtilTldData.parseRectangle(path + "/init.txt");
-		RectangleCorner2D_F64 found = new RectangleCorner2D_F64();
+		Rectangle2D_F64 initial = UtilTldData.parseRectangle(path + "/init.txt");
+		Rectangle2D_F64 found = new Rectangle2D_F64();
 
 		TldVisualizationPanel gui = null;
 
@@ -59,7 +59,7 @@ public class DebugTldTrackerTldData<T extends ImageSingleBand> implements TldVis
 				gui.setFrame(image);
 				gui.setSelectRectangle(false);
 				ShowImages.showWindow(gui,dataName);
-				tracker.initialize(input,(int)initial.x0,(int)initial.y0,(int)initial.x1,(int)initial.y1);
+				tracker.initialize(input,(int)initial.p0.x,(int)initial.p0.y,(int)initial.p1.x,(int)initial.p1.y);
 				detected = true;
 			} else {
 				detected = tracker.track(input);
@@ -69,14 +69,14 @@ public class DebugTldTrackerTldData<T extends ImageSingleBand> implements TldVis
 			if( !detected ) {
 				System.out.println("No Detection");
 			} else {
-				System.out.printf("Detection: %f,%f,%f,%f\n",found.x0,found.y0,found.x1,found.y1);
+				System.out.printf("Detection: %f,%f,%f,%f\n",found.p0.x,found.p0.y,found.p1.x,found.p1.y);
 
 				Graphics2D g2 = image.createGraphics();
 
 				int w = (int)found.getWidth();
 				int h = (int)found.getHeight();
 
-				g2.drawRect((int)found.x0,(int)found.y0,w,h);
+				g2.drawRect((int)found.p0.x,(int)found.p0.y,w,h);
 			}
 
 			gui.setFrame(image);

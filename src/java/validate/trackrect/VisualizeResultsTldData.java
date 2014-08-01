@@ -3,7 +3,7 @@ package validate.trackrect;
 import boofcv.gui.image.ImagePanel;
 import boofcv.gui.image.ShowImages;
 import boofcv.io.image.UtilImageIO;
-import georegression.struct.shapes.RectangleCorner2D_F64;
+import georegression.struct.shapes.Rectangle2D_F64;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -22,8 +22,8 @@ public class VisualizeResultsTldData{
 
 		String path = "data/track_rect/TLD/"+dataName;
 
-		RectangleCorner2D_F64 expected = new RectangleCorner2D_F64();
-		RectangleCorner2D_F64 found = new RectangleCorner2D_F64();
+		Rectangle2D_F64 expected = new Rectangle2D_F64();
+		Rectangle2D_F64 found = new Rectangle2D_F64();
 
 		BufferedReader readerTruth = new BufferedReader(new FileReader(path+"/gt.txt"));
 		BufferedReader readerRect = new BufferedReader(new FileReader(inputName));
@@ -61,8 +61,8 @@ public class VisualizeResultsTldData{
 
 			Graphics2D g2 = output.createGraphics();
 
-			boolean isVisibleTruth = !Double.isNaN(expected.x0);
-			boolean isVisibleFound = !Double.isNaN(found.x0);
+			boolean isVisibleTruth = !Double.isNaN(expected.p0.x);
+			boolean isVisibleFound = !Double.isNaN(found.p0.x);
 
 			if( isVisibleTruth ) {
 				g2.setColor(Color.RED);
