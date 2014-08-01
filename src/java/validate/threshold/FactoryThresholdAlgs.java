@@ -63,7 +63,7 @@ public class FactoryThresholdAlgs {
 		return new ThresholdText() {
 			@Override
 			public void process(ImageFloat32 input, ImageUInt8 output) {
-				GThresholdImageOps.adaptiveSauvola(input, output, 15, 0.50f, true);//15 0.50 0.813
+				GThresholdImageOps.adaptiveSauvola(input, output, 15, 0.30f, true);//15 0.30 0.8895
 			}
 		};
 	}

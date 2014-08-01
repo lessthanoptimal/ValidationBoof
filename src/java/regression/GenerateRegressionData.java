@@ -19,19 +19,19 @@ public class GenerateRegressionData {
 	public static List<TextFileRegression> getRegressions() {
 		List<TextFileRegression> list = new ArrayList<TextFileRegression>();
 
-//		list.add( new CornerDetectorChangeRegression());
-//		// TODO add corner feature intensity images
-//		list.add( new DetectDescribeRegression());
-//		// TODO add descriptor stability
-//		list.add( new ObjectTrackingRegression());
-//		list.add( new PointTrackerRegression());
-//		list.add( new StereoVisualOdometryRegression());
-//		// TODO compute visual odometry
-//		//      -- Kinect
-//		//      -- Mono-plane
-//		// TODO Calibration key points change
-//		// TODO Calibration optimization
-//		list.add( new DenseFlowRegression() );
+		list.add( new CornerDetectorChangeRegression());
+		// TODO add corner feature intensity images
+		list.add( new DetectDescribeRegression());
+		// TODO add descriptor stability
+		list.add( new ObjectTrackingRegression());
+		list.add( new PointTrackerRegression());
+		list.add( new StereoVisualOdometryRegression());
+		// TODO compute visual odometry
+		//      -- Kinect
+		//      -- Mono-plane
+		// TODO Calibration key points change
+		// TODO Calibration optimization
+		list.add( new DenseFlowRegression() );
 		// TODO Image Segmentation
 		list.add( new TextThresholdRegression() );
 
