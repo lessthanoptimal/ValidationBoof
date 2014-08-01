@@ -1,9 +1,7 @@
 #!/usr/bin/python
 
-import sys
 import os
 from os import listdir
-from os.path import isfile, join
 from subprocess import call
 
 os.mkdir('2009')
