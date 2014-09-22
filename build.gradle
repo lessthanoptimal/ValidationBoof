@@ -3,7 +3,7 @@ apply plugin: 'java'
 apply plugin: 'maven'
 
 group = 'org.boofcv'
-version = '0.17-SNAPSHOT'
+version = '0.18'
 sourceCompatibility = 1.6
 
 repositories {
@@ -27,7 +27,7 @@ dependencies {
     compile files("lib/ProjectBUBO.jar")
 
     ['ip','io','calibration','geo','recognition','feature','sfm','visualize'].
-            each { String a -> compile group: 'org.boofcv', name: a, version: '0.18-SNAPSHOT' }
+            each { String a -> compile group: 'org.boofcv', name: a, version: '0.18' }
 
     compile group: 'com.google.guava', name: 'guava', version: '17.0'
 

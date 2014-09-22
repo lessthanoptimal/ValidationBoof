@@ -92,7 +92,7 @@ public class CreateGroundTruth {
 		// Adjust the distortion so that the undistorted image only shows image pixels
 		PointTransform_F32 allInside = LensDistortionOps.allInside(cameraParam, null);
 		InterpolatePixelS<ImageFloat32> interp = FactoryInterpolation.bilinearPixelS(ImageFloat32.class);
-		removeLens = FactoryDistort.distort(interp, null, ImageFloat32.class);
+		removeLens = FactoryDistort.distort(false,interp, null, ImageFloat32.class);
 		removeLens.setModel(new PointToPixelTransform_F32(allInside));
 
 		FactoryEvaluationTrackers<ImageFloat32> factory = new FactoryEvaluationTrackers<ImageFloat32>(ImageFloat32.class);
