@@ -1,3 +1,15 @@
+------------ New instructions
+
+The original website appears to be down and gone for good.  File has been uploaded to source forge here:
+
+http://sourceforge.net/projects/validationboof/files/leuven07.zip/download
+
+1) cd visual_odometry/leuven07
+2) unzip leuven07.zip
+3) mv leuven07/* .
+4) rmdir leuven07
+
+------------ Old instructions
 ** STEP ONE **
 
 You need to download two large files containg images from the left and rigtht camera from:
