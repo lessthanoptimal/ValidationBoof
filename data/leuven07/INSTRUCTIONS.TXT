@@ -4,10 +4,13 @@ The original website appears to be down and gone for good.  File has been upload
 
 http://sourceforge.net/projects/validationboof/files/leuven07.zip/download
 
+invoke "./setup.py" or do it the manual way below
+
 1) cd visual_odometry/leuven07
 2) unzip leuven07.zip
 3) mv leuven07/* .
 4) rmdir leuven07
+
 
 ------------ Old instructions
 ** STEP ONE **
