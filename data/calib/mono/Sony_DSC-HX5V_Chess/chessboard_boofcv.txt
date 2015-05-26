@@ -1,0 +1,5 @@
+# Describes the chessboard calibration target
+# The origin is specified relative to the bottom left corner.
+# origin at center would be at this coordinate = [ numCols*width/2,numRows*width/2 ] as a number not symbolic
+# (num rows) (num cols) (square width) (units) (origin x) (origin y)
+7 5 30 mm 75 105

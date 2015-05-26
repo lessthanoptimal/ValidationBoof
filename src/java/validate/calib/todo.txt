@@ -1,0 +1,17 @@
+ComputeTargetEdgeScore
+
+- Load targetToCamera transform
+- Inputs
+  * intrinsic
+  * rectified image and targetToCamera
+- visualize the line segments and CalibValidPoints in an image
+- compute score as average difference
+  * point on edge and point outside
+- Do this for square grid too
+
+
+Batch test:
+* calibrate image
+* compute calibration point reprojection error
+* undistort and save transforms and new intrinsic
+  - compute edge score
