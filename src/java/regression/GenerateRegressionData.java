@@ -16,6 +16,7 @@ public class GenerateRegressionData {
 	public static final String BASELINE_DIRECTORY = "regression/baseline/";
 
 
+	// TODO save info on the machine it was run on
 	public static List<TextFileRegression> getRegressions() {
 		List<TextFileRegression> list = new ArrayList<TextFileRegression>();
 
@@ -23,7 +24,7 @@ public class GenerateRegressionData {
 		// TODO add corner feature intensity images
 		list.add( new DetectDescribeRegression());
 		// TODO add descriptor stability
-		list.add( new ObjectTrackingRegression());
+		list.add( new ObjectTrackingRegression()); // todo add average FPS
 		list.add( new PointTrackerRegression());
 		list.add( new StereoVisualOdometryRegression());
 		// TODO compute visual odometry
