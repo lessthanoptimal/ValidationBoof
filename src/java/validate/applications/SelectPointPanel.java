@@ -69,20 +69,24 @@ public class SelectPointPanel extends ImageZoomPanel
 	public void mousePressed(MouseEvent e) {
 		Point2D_F64 p = pixelToPoint(e.getX(), e.getY());
 
-		double tol = 12/scale;
+		if( e.getButton() == MouseEvent.BUTTON2 ) {
+			centerView(p.x, p.y);
+		} else {
+			double tol = 12 / scale;
 
-		boolean found = false;
-		for (int i = 0; i < points.size(); i++) {
-			Point2D_F64 s = points.get(i);
-			if( s.distance(p) <= tol ) {
-				selected = i;
-				found = true;
-				break;
+			boolean found = false;
+			for (int i = 0; i < points.size(); i++) {
+				Point2D_F64 s = points.get(i);
+				if (s.distance(p) <= tol) {
+					selected = i;
+					found = true;
+					break;
+				}
 			}
-		}
-		if( !found ) {
-			selected = points.size();
-			points.add(p);
+			if (!found) {
+				selected = points.size();
+				points.add(p);
+			}
 		}
 		repaint();
 		panel.requestFocus();
@@ -176,4 +180,5 @@ public class SelectPointPanel extends ImageZoomPanel
 	public void setPoints(List<Point2D_F64> points) {
 		this.points = points;
 	}
+
 }

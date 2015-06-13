@@ -29,7 +29,7 @@ public class GenerateRegressionData {
 		// TODO compute visual odometry
 		//      -- Kinect
 		//      -- Mono-plane
-		// TODO Calibration key points change
+		list.add( new CalibrationDetectionRegression());
 		// TODO Calibration optimization
 		list.add( new DenseFlowRegression() );
 		// TODO Image Segmentation

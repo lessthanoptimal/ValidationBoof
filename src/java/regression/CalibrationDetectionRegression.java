@@ -38,6 +38,8 @@ public class CalibrationDetectionRegression extends BaseTextFileRegression{
 		squareDirectories.add("data/calib/stereo/Bumblebee2_Square");
 		squareDirectories.add("data/calib/mono/Sony_DSC-HX5V_Square");
 
+		addDetector("Default_Chess", FactoryPlanarCalibrationTarget.detectorChessboard(new ConfigChessboard(5, 7)), true);
+		addDetector("Default_Square", FactoryPlanarCalibrationTarget.detectorSquareGrid(new ConfigSquareGrid(5, 7)), false);
 	}
 
 	public void addDetector( String name , PlanarCalibrationDetector detector , boolean chess ) {
@@ -115,7 +117,7 @@ public class CalibrationDetectionRegression extends BaseTextFileRegression{
 						output.println(detectorName+" "+dataSetName+" "+e50+" "+e95);
 					}
 				} else {
-					errorLog.println(detectorName+" "+dataSetName+" detection failed");
+					output.println(detectorName+" "+dataSetName+" failed");
 				}
 			} catch( Exception e ) {
 				errorLog.println(detectorName+" "+dataSetName+" no ground truth");
@@ -152,8 +154,8 @@ public class CalibrationDetectionRegression extends BaseTextFileRegression{
 		CalibrationDetectionRegression app = new CalibrationDetectionRegression();
 
 
-		app.addDetector("Default_Chess",FactoryPlanarCalibrationTarget.detectorChessboard(new ConfigChessboard(5,7)),true);
-		app.addDetector("Default_Square",FactoryPlanarCalibrationTarget.detectorSquareGrid(new ConfigSquareGrid(5, 7)),false);
+//		app.addDetector("Default_Chess",FactoryPlanarCalibrationTarget.detectorChessboard(new ConfigChessboard(5,7)),true);
+//		app.addDetector("Default_Square",FactoryPlanarCalibrationTarget.detectorSquareGrid(new ConfigSquareGrid(5, 7)),false);
 
 		app.setOutputDirectory("./");
 		app.process(ImageDataType.F32);
