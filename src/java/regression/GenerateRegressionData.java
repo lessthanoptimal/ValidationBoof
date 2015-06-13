@@ -21,7 +21,6 @@ public class GenerateRegressionData {
 		List<TextFileRegression> list = new ArrayList<TextFileRegression>();
 
 		list.add( new CornerDetectorChangeRegression());
-		// TODO add corner feature intensity images
 		list.add( new DetectDescribeRegression());
 		// TODO add descriptor stability
 		list.add( new ObjectTrackingRegression()); // todo add average FPS

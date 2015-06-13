@@ -1,9 +1,10 @@
 package regression;
 
 import boofcv.struct.image.ImageDataType;
-import validate.fast.DetectFast;
+import validate.features.corner.ComparePreviousCorner;
 
 import java.io.IOException;
+import java.io.PrintStream;
 
 /**
  * @author Peter Abeles
@@ -12,7 +13,12 @@ public class CornerDetectorChangeRegression extends BaseTextFileRegression {
 
 	@Override
 	public void process( ImageDataType type ) throws IOException {
-		DetectFast.detect(directory,ImageDataType.typeToSingleClass(type));
+		PrintStream out = new PrintStream(directory+"/detect_corner_change.txt");
+		out.println("# Checks to change in the behavior of corner detectors");
+		out.println("# detector (change in total features) (difference in location)");
+		ComparePreviousCorner compare = new ComparePreviousCorner(out);
+
+		compare.generateAll(ImageDataType.typeToSingleClass(type));
 	}
 
 	public static void main(String[] args) throws IOException {
