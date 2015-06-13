@@ -37,7 +37,7 @@ public class InfoHandSelectPanel extends JPanel implements ChangeListener, Mouse
 		zoomSpinner.addChangeListener(this);
 		zoomSpinner.setFocusable(false);
 
-		resetZoomButton = new JButton("Reset");
+		resetZoomButton = new JButton("Home");
 		resetZoomButton.addActionListener(this);
 		saveButton = new JButton("Save");
 		saveButton.addActionListener(this);

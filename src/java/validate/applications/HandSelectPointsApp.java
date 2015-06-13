@@ -60,8 +60,8 @@ public class HandSelectPointsApp {
 	}
 
 	public static void main(String[] args) {
-		String imagePath = "data/calib/stereo/Bumblebee2_Chess/left07.jpg";
-//		String imagePath = "data/calib/stereo/Bumblebee2_Square/left02.jpg";
+//		String imagePath = "data/calib/mono/Sony_DSC-HX5V_Chess/frame14.jpg";
+		String imagePath = "data/calib/mono/Sony_DSC-HX5V_Square/frame12.jpg";
 
 		String outputName = new File(imagePath).getAbsolutePath();
 		outputName = outputName.substring(0,outputName.length()-4)+".txt";

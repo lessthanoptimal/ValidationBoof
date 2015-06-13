@@ -22,7 +22,6 @@ public class GenerateRegressionData {
 
 		list.add( new CornerDetectorChangeRegression());
 		list.add( new DetectDescribeRegression());
-		// TODO add descriptor stability
 		list.add( new ObjectTrackingRegression()); // todo add average FPS
 		list.add( new PointTrackerRegression());
 		list.add( new StereoVisualOdometryRegression());
@@ -34,6 +33,7 @@ public class GenerateRegressionData {
 		list.add( new DenseFlowRegression() );
 		// TODO Image Segmentation
 		list.add( new TextThresholdRegression() );
+		// TODO fiducials
 
 		return list;
 	}
