@@ -32,6 +32,9 @@ public class PointFileCodec {
 		}
 	}
 
+	public static List<Point2D_F64> load( File path ) {
+		return load(path.getAbsolutePath());
+	}
 	public static List<Point2D_F64> load( String path ) {
 		try {
 			BufferedReader reader = new BufferedReader(new FileReader(path));

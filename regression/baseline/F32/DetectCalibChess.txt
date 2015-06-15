@@ -1,0 +1,38 @@
+# (file name) (truth error 50%) (truth error 95%)
+data/calib/stereo/Bumblebee2_Chess/left01.jpg 0.8671217989089548 1.096214615332211
+data/calib/stereo/Bumblebee2_Chess/left02.jpg 0.8449518576514885 1.1133505834621473
+data/calib/stereo/Bumblebee2_Chess/left03.jpg 0.8061362653681625 0.9430697274787394
+data/calib/stereo/Bumblebee2_Chess/left04.jpg 0.8966442624265084 1.1665839272154133
+data/calib/stereo/Bumblebee2_Chess/left05.jpg 0.729413785717394 0.9151931855184614
+data/calib/stereo/Bumblebee2_Chess/left06.jpg 0.8601614856185908 1.097975843287077
+data/calib/stereo/Bumblebee2_Chess/left07.jpg 0.7181005902190317 0.9550396578467354
+data/calib/stereo/Bumblebee2_Chess/left08.jpg 0.7663367476158751 0.9751051762675591
+data/calib/stereo/Bumblebee2_Chess/left09.jpg 0.9097834193257974 1.0420219323034197
+data/calib/stereo/Bumblebee2_Chess/left10.jpg 0.8269155058820626 1.1133503173852666
+data/calib/stereo/Bumblebee2_Chess/left11.jpg 0.9584443844349516 1.0478339068444154
+data/calib/stereo/Bumblebee2_Chess/right01.jpg 0.861999459938591 1.0133535731193233
+data/calib/stereo/Bumblebee2_Chess/right02.jpg 0.8369153884766132 1.132987662313984
+data/calib/stereo/Bumblebee2_Chess/right03.jpg 0.899974941822408 1.228024478219356
+data/calib/stereo/Bumblebee2_Chess/right04.jpg 0.801024849632113 1.0099725402571549
+data/calib/stereo/Bumblebee2_Chess/right05.jpg 0.6761417488245979 0.8736494937339169
+data/calib/stereo/Bumblebee2_Chess/right06.jpg 0.7774018660534424 0.9900195858761242
+data/calib/stereo/Bumblebee2_Chess/right07.jpg 0.7890907073300333 1.060445196978603
+data/calib/stereo/Bumblebee2_Chess/right08.jpg 0.7872916109098057 0.9992402564471365
+data/calib/stereo/Bumblebee2_Chess/right09.jpg 0.7813325696263522 0.9097995639124125
+data/calib/stereo/Bumblebee2_Chess/right10.jpg 0.7674305338432689 1.0733167932351055
+data/calib/stereo/Bumblebee2_Chess/right11.jpg 0.9079398531829432 1.0634033053735723
+data/calib/mono/Sony_DSC-HX5V_Chess/frame01.jpg 0.8311761314048121 1.1546881193459153
+data/calib/mono/Sony_DSC-HX5V_Chess/frame02.jpg 0.9055404997959965 1.0728196444542237
+data/calib/mono/Sony_DSC-HX5V_Chess/frame03.jpg 0.9136862115603763 1.1778334682048741
+data/calib/mono/Sony_DSC-HX5V_Chess/frame04.jpg 0.8304722853382445 1.0659657598675438
+data/calib/mono/Sony_DSC-HX5V_Chess/frame05.jpg 0.8051907424208354 1.0537588334830472
+data/calib/mono/Sony_DSC-HX5V_Chess/frame06.jpg 0.8526074162039812 1.1369737878888542
+data/calib/mono/Sony_DSC-HX5V_Chess/frame07.jpg 0.8600270891524942 1.0601180109614066
+data/calib/mono/Sony_DSC-HX5V_Chess/frame08.jpg 0.7536436786788271 0.9397431930808122
+data/calib/mono/Sony_DSC-HX5V_Chess/frame09.jpg 0.8343530577921863 0.970031600032327
+data/calib/mono/Sony_DSC-HX5V_Chess/frame10.jpg 0.8776245311838404 0.9837864313304134
+data/calib/mono/Sony_DSC-HX5V_Chess/frame11.jpg 0.9541333532119464 1.2153982114894863
+data/calib/mono/Sony_DSC-HX5V_Chess/frame12.jpg 0.8462923044322392 1.079092002562557
+data/calib/mono/Sony_DSC-HX5V_Chess/frame13.jpg 0.9251249600670176 1.1659007590241914
+
+Summary: 50% = 0.8269155058820626  95% = 1.140593838527869
