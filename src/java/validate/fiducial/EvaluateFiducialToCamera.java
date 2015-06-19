@@ -63,23 +63,23 @@ public class EvaluateFiducialToCamera {
 
 	public void initialize( File baseDirectory ) {
 		this.baseDirectory = baseDirectory;
-		FiducialCommon.Scenario scenario = FiducialCommon.parseScenario(new File(baseDirectory, "fiducials.txt"));
-		fiducialWidth = scenario.width;
-		expected = scenario.expectedId;
-		knownMatched = new boolean[expected.length];
-
-		intrinsic = UtilIO.loadXML(new File(baseDirectory,"intrinsic.xml").toString());
+		fiducialWidth = FiducialCommon.parseWidth(new File(baseDirectory, "fiducials.txt"));
 
 		fiducialPts.add( new Point3D_F64(-fiducialWidth/2, fiducialWidth/2,0));
 		fiducialPts.add( new Point3D_F64( fiducialWidth/2, fiducialWidth/2,0));
 		fiducialPts.add( new Point3D_F64( fiducialWidth/2,-fiducialWidth/2,0));
 		fiducialPts.add( new Point3D_F64(-fiducialWidth/2,-fiducialWidth/2,0));
-
-		if( intrinsic.radial != null )
-			throw new IllegalArgumentException("Expected no distortion");
 	}
 
 	public void evaluate( File resultsDirectory , String dataset ) {
+		File dataSetDir = new File(baseDirectory,dataset);
+
+		expected = FiducialCommon.parseExpectedIds(new File(dataSetDir, "expected.txt"));
+		knownMatched = new boolean[expected.length];
+		intrinsic = UtilIO.loadXML(new File(dataSetDir,"intrinsic.xml").toString());
+		if( intrinsic.radial != null )
+			throw new IllegalArgumentException("Expected no distortion");
+
 		List<String> results = BoofMiscOps.directoryList(resultsDirectory.getAbsolutePath(),"csv");
 		Collections.sort(results);
 
@@ -90,7 +90,7 @@ public class EvaluateFiducialToCamera {
 		totalNoMatch = 0;
 		totalFalseNegative = 0;
 
-		outputResults.println("# maxPixelError = "+maxPixelError);
+		outputResults.println("# Data Set = "+dataset+" maxPixelError = "+maxPixelError);
 		outputResults.println("# (file) (detected ID) (matched id) (matched ori) (match pixel error)");
 
 		for (int i = 0; i < results.size(); i++) {
@@ -99,7 +99,7 @@ public class EvaluateFiducialToCamera {
 			String nameTruth = name.substring(0,name.length()-3) + "txt";
 
 			try {
-				List<Point2D_F64> truthCorners = PointFileCodec.load(new File(baseDirectory, dataset + "/" + nameTruth));
+				List<Point2D_F64> truthCorners = PointFileCodec.load(new File(dataSetDir, nameTruth));
 				List<Detected> detected = parseDetections(new File(resultPath));
 				evaluate(name,detected,truthCorners);
 			} catch( RuntimeException e ) {
@@ -205,10 +205,11 @@ public class EvaluateFiducialToCamera {
 			}
 		}
 
-		knownMatched[bestExpectedIndex] = true;
-		if( best.id >= 0 )
+
+		if( bestExpectedIndex >= 0 ) {
+			knownMatched[bestExpectedIndex] = true;
 			return best;
-		else
+		} else
 			return null;
 	}
 
@@ -250,7 +251,7 @@ public class EvaluateFiducialToCamera {
 	public static void main(String[] args) {
 		EvaluateFiducialToCamera app = new EvaluateFiducialToCamera();
 
-		app.initialize(new File("data/fiducials/binary"));
-		app.evaluate(new File("tmp"),"rotation");
+		app.initialize(new File("data/fiducials/image"));
+		app.evaluate(new File("tmp"),"distance_straight");
 	}
 }

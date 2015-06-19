@@ -33,7 +33,7 @@ public class GenerateRegressionData {
 		list.add( new DenseFlowRegression() );
 		// TODO Image Segmentation
 		list.add( new TextThresholdRegression() );
-		// TODO fiducials
+		list.add( new FiducialRegression() );
 
 		return list;
 	}

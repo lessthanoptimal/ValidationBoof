@@ -3,12 +3,32 @@ package validate.misc;
 import georegression.struct.se.Se3_F64;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 
 /**
  * @author Peter Abeles
  */
 public class ParseHelper {
+
+	public static void deleteRecursive( File file ) {
+		File[] files = file.listFiles();
+
+		for (int i = 0; i < files.length; i++) {
+			File f = files[i];
+
+			if( f.isDirectory() ) {
+				deleteRecursive(f);
+			} else if( f.isFile() ) {
+				if( !f.delete() ) {
+					System.err.println("Can't delete "+f.getPath());
+				}
+			}
+		}
+		if( !file.delete() ) {
+			System.err.println("Can't delete "+file.getPath());
+		}
+	}
 
 	public static String skipComments( BufferedReader reader ) throws IOException {
 		String line = reader.readLine();

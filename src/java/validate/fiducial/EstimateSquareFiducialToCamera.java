@@ -2,14 +2,11 @@ package validate.fiducial;
 
 import boofcv.abst.fiducial.FiducialDetector;
 import boofcv.core.image.ConvertBufferedImage;
-import boofcv.factory.fiducial.ConfigFiducialBinary;
-import boofcv.factory.fiducial.FactoryFiducial;
 import boofcv.io.UtilIO;
 import boofcv.io.image.UtilImageIO;
 import boofcv.misc.BoofMiscOps;
 import boofcv.struct.calib.IntrinsicParameters;
 import boofcv.struct.image.ImageBase;
-import boofcv.struct.image.ImageUInt8;
 import georegression.struct.point.Vector3D_F64;
 import georegression.struct.se.Se3_F64;
 import org.ejml.data.DenseMatrix64F;
@@ -27,38 +24,43 @@ import java.util.List;
  *
  * @author Peter Abeles
  */
-public class EstimateFiducialToCamera<T extends ImageBase> {
+public abstract class EstimateSquareFiducialToCamera<T extends ImageBase> {
 
 	File baseDirectory;
-	IntrinsicParameters intrinsic;
 	File outputDirectory = new File(".");
 	double fiducialWidth;
 
 	FiducialDetector<T> detector;
 
-	public EstimateFiducialToCamera(FiducialDetector<T> detector) {
+	public EstimateSquareFiducialToCamera(FiducialDetector<T> detector) {
 		this.detector = detector;
 	}
 
 	public void initialize( File baseDirectory ) {
 		this.baseDirectory = baseDirectory;
-		intrinsic = UtilIO.loadXML(new File(baseDirectory,"intrinsic.xml").getAbsolutePath());
-		FiducialCommon.Scenario scenario = FiducialCommon.parseScenario(new File(baseDirectory, "fiducials.txt"));
-		fiducialWidth = scenario.width;
+
+		fiducialWidth = readFiducialWidth();
+		configureDetector(baseDirectory);
 	}
 
 	public void setOutputDirectory(File outputDirectory) {
 		this.outputDirectory = outputDirectory;
 	}
 
+	public abstract double readFiducialWidth();
+
+	public abstract void configureDetector( File baseDirectory );
+
 	public void process( String dataset ) throws IOException {
 
-		List<String> files = BoofMiscOps.directoryList(new File(baseDirectory,dataset).getAbsolutePath(), "png");
+		File dataSetDir = new File(baseDirectory,dataset);
+		List<String> files = BoofMiscOps.directoryList(dataSetDir.getAbsolutePath(), "png");
 		if( files.size() == 0 ) {
 			throw new IllegalArgumentException("No images found.  paths correct?");
 		}
 		T image = detector.getInputType().createImage(1,1);
 
+		IntrinsicParameters intrinsic = UtilIO.loadXML(new File(dataSetDir,"intrinsic.xml").getAbsolutePath());
 		detector.setIntrinsic(intrinsic);
 		for( String path : files ) {
 
@@ -95,22 +97,6 @@ public class EstimateFiducialToCamera<T extends ImageBase> {
 			}
 			out.close();
 		}
-	}
-
-	public static void main(String[] args) throws IOException {
-
-		File outputDirectory = new File("tmp");
-		Class imageType = ImageUInt8.class;
-
-		FiducialDetector detector = FactoryFiducial.squareBinaryRobust(new ConfigFiducialBinary(1), 15, imageType);
-
-		outputDirectory.mkdirs();
-
-		EstimateFiducialToCamera app = new EstimateFiducialToCamera(detector);
-		app.initialize(new File("data/fiducials/binary"));
-		app.setOutputDirectory(outputDirectory);
-
-		app.process("rotation");
 	}
 
 }
