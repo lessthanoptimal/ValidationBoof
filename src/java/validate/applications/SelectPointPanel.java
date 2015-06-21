@@ -8,6 +8,8 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.Ellipse2D;
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,32 +35,40 @@ public class SelectPointPanel extends ImageZoomPanel
 
 		g2.setColor(Color.RED);
 		g2.setStroke(new BasicStroke(2));
+		g2.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, RenderingHints.VALUE_STROKE_PURE);
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-		int r = 5;
-		int w = 2*r+1;
+		int r = 6;
+
+		Ellipse2D.Double ellipse = new Ellipse2D.Double();
+		Rectangle2D.Double rect = new Rectangle2D.Double();
 
 		for (int i = 0; i < points.size(); i++) {
 			Point2D_F64 p = points.get(i);
 
-			int x = (int)Math.round(p.x * scale);
-			int y = (int)Math.round(p.y * scale);
+			double x = p.x * scale;
+			double y = p.y * scale;
 
-			g2.drawOval(x - r, y - r, w,w);
-			g2.drawRect(x,y,1,1);
-			g2.drawString(i+"",x+2*r,y);
+			ellipse.setFrame(x-r,y-r,2*r,2*r);
+			rect.setRect(x-0.5,y-0.5,1,1);
+
+			g2.draw(ellipse);
+			g2.draw(rect);
+//			g2.drawOval(x - r, y - r, w,w);
+//			g2.drawRect(x,y,1,1);
+			g2.drawString(i+"",(int)x+2*r,(int)y);
 		}
 
 		if( selected >= 0 ) {
 			Point2D_F64 p = points.get(selected);
-			int x = (int)Math.round(p.x * scale);
-			int y = (int)Math.round(p.y * scale);
+			double x = p.x * scale;
+			double y = p.y * scale;
 
 			g2.setColor(Color.BLUE);
-			r = 7;
-			w = 2*r+1;
+			r = 8;
 
-			g2.drawOval(x - r, y - r, w, w);
+			ellipse.setFrame(x-r,y-r,2*r,2*r);
+			g2.draw(ellipse);
 		}
 	}
 
