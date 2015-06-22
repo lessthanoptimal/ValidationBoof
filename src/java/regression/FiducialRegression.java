@@ -5,9 +5,9 @@ import boofcv.factory.fiducial.ConfigFiducialBinary;
 import boofcv.factory.fiducial.ConfigFiducialImage;
 import boofcv.factory.fiducial.FactoryFiducial;
 import boofcv.struct.image.ImageDataType;
+import validate.fiducial.BaseEstimateSquareFiducialToCamera;
 import validate.fiducial.EstimateBinaryFiducialToCamera;
 import validate.fiducial.EstimateImageFiducialToCamera;
-import validate.fiducial.EstimateSquareFiducialToCamera;
 import validate.fiducial.EvaluateFiducialToCamera;
 import validate.misc.ParseHelper;
 
@@ -37,12 +37,14 @@ public class FiducialRegression extends BaseTextFileRegression {
 		process( "ImageRobust", detector,"image");
 		detector = FactoryFiducial.squareImageFast(new ConfigFiducialImage(1), 80, imageType);
 		process( "ImageFast", detector,"image");
+		// TODO add static image
+		// TODO add blur image
 	}
 
 	private void process(String name, FiducialDetector detector, String type) throws IOException {
 		PrintStream out = new PrintStream(new File(directory,"Fiducial_"+name+".txt"));
 
-		EstimateSquareFiducialToCamera estimate;
+		BaseEstimateSquareFiducialToCamera estimate;
 
 		if( type.compareTo("binary") == 0) {
 			estimate = new EstimateBinaryFiducialToCamera(detector);

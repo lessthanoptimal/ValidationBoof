@@ -24,7 +24,7 @@ import java.util.List;
  *
  * @author Peter Abeles
  */
-public abstract class EstimateSquareFiducialToCamera<T extends ImageBase> {
+public abstract class BaseEstimateSquareFiducialToCamera<T extends ImageBase> {
 
 	File baseDirectory;
 	File outputDirectory = new File(".");
@@ -32,7 +32,7 @@ public abstract class EstimateSquareFiducialToCamera<T extends ImageBase> {
 
 	FiducialDetector<T> detector;
 
-	public EstimateSquareFiducialToCamera(FiducialDetector<T> detector) {
+	public BaseEstimateSquareFiducialToCamera(FiducialDetector<T> detector) {
 		this.detector = detector;
 	}
 

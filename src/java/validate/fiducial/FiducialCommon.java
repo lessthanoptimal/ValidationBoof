@@ -1,5 +1,6 @@
 package validate.fiducial;
 
+import georegression.struct.se.Se3_F64;
 import validate.misc.ParseHelper;
 
 import java.io.BufferedReader;
@@ -13,6 +14,29 @@ import java.util.List;
  * @author Peter Abeles
  */
 public class FiducialCommon {
+
+	public static List<Detected> parseDetections( File file ) {
+		try {
+			List<Detected> ret = new ArrayList<Detected>();
+
+			BufferedReader reader = new BufferedReader(new FileReader(file));
+
+			String line = ParseHelper.skipComments(reader);
+
+			while( line != null ) {
+				Detected detected = new Detected();
+				detected.id = Integer.parseInt(line);
+				detected.fiducialToCamera = ParseHelper.parseRigidBody(reader.readLine(),reader);
+				line = reader.readLine();
+				ret.add(detected);
+			}
+
+			return ret;
+
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+	}
 
 	public static int[] parseExpectedIds( File file , Scenario scenario ) {
 		try {
@@ -29,6 +53,8 @@ public class FiducialCommon {
 			int expected[] = new int[ lines.size() ];
 			for( int i = 0; i < lines.size(); i++ ) {
 				expected[i] = scenario.nameToID(lines.get(i));
+				if( expected[i] == -1 )
+					throw new RuntimeException("Unknown "+lines.get(i));
 			}
 
 			return expected;
@@ -140,5 +166,10 @@ public class FiducialCommon {
 		public int nameToID(String name) {
 			return names.indexOf(name);
 		}
+	}
+
+	public static class Detected {
+		int id;
+		Se3_F64 fiducialToCamera;
 	}
 }

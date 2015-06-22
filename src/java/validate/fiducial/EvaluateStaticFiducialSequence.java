@@ -1,0 +1,151 @@
+package validate.fiducial;
+
+import boofcv.misc.BoofMiscOps;
+import georegression.struct.point.Point2D_F64;
+import org.ddogleg.struct.GrowQueue_F64;
+import validate.misc.PointFileCodec;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
+import static validate.fiducial.FiducialCommon.parseDetections;
+
+/**
+ * @author Peter Abeles
+ */
+public class EvaluateStaticFiducialSequence extends BaseEvaluateFiducialToCamera {
+
+	public EvaluateStaticFiducialSequence() {
+		maxPixelError = 10;
+	}
+
+	public void evaluate( File resultsDirectory , String dataset )
+	{
+		File dataSetDir = initialize(dataset);
+
+		List<String> results = BoofMiscOps.directoryList(resultsDirectory.getAbsolutePath(), "csv");
+		Collections.sort(results);
+
+		outputResults.println("# Data Set = "+dataset+" maxPixelError = "+maxPixelError);
+		outputResults.println("# (file) (detected ID) (matched id) (matched ori) (match pixel error)");
+
+		// list of all detections for each fiducial.  used to compute precision
+		List<List<Point2D_F64>> allDetections[] = new ArrayList[expected.length];
+		for (int i = 0; i < allDetections.length; i++) {
+			allDetections[i] = new ArrayList<List<Point2D_F64>>();
+		}
+
+		// hand selected corners only in the first image
+		String nameFirst = new File(results.get(0)).getName();
+		String nameTruth = nameFirst.substring(0,nameFirst.length()-3) + "txt";
+		List<Point2D_F64> truthCorners = PointFileCodec.load(new File(dataSetDir, nameTruth));
+
+		for (int i = 0; i < results.size(); i++) {
+			String resultPath = results.get(i);
+			String name = new File(resultPath).getName();
+
+			try {
+
+				List<FiducialCommon.Detected> detected = parseDetections(new File(resultPath));
+				evaluate(name,detected,truthCorners);
+
+				for (int j = 0; j < expected.length; j++) {
+					if( detectedCorners[j] != null ) {
+						allDetections[j].add( detectedCorners[j]);
+					}
+				}
+
+			} catch( RuntimeException e ) {
+				e.printStackTrace(err);
+			}
+		}
+
+		Arrays.sort(errors.data, 0, errors.size);
+
+		double accuracy50 = errors.get( (int)(errors.size()*0.5));
+		double accuracy90 = errors.get( (int)(errors.size()*0.9));
+		double accuracy100 = errors.get( errors.size()-1);
+
+		GrowQueue_F64 precision = computePrecision(allDetections);
+		Arrays.sort(precision.data, 0, precision.size);
+
+		double precision50 = precision.get( (int)(precision.size()*0.5));
+		double precision90 = precision.get( (int)(precision.size()*0.9));
+		double precision100 = precision.get( precision.size()-1);
+
+		outputResults.println();
+		outputResults.println("Summary:");
+		outputResults.println(" correct            : " + totalCorrect);
+		outputResults.println(" wrong orientation  : " + totalWrongOrientation);
+		outputResults.println(" wrong ID           : " + totalWrongID);
+		outputResults.println(" duplicates         : " + totalDuplicates);
+		outputResults.println(" false positive     : " + totalFalsePositive);
+		outputResults.println(" false negative     : " + totalFalseNegative);
+		outputResults.println("Precision:");
+		outputResults.println(" errors 50%         : " + precision50);
+		outputResults.println(" errors 90%         : " + precision90);
+		outputResults.println(" errors 100%        : " + precision100);
+		outputResults.println("Accuracy:");
+		outputResults.println(" errors 50%         : " + accuracy50);
+		outputResults.println(" errors 90%         : " + accuracy90);
+		outputResults.println(" errors 100%        : " + accuracy100);
+	}
+
+	/**
+	 * Computes the precision by finding the average corner for each detection.  Then it computes
+	 * the error for all corners
+	 */
+	public static GrowQueue_F64 computePrecision( List<List<Point2D_F64>> allDetections[] ) {
+		GrowQueue_F64 errors = new GrowQueue_F64();
+
+		Point2D_F64 average[] = new Point2D_F64[4];
+		for (int i = 0; i < 4; i++) {
+			average[i] = new Point2D_F64();
+		}
+		for (int fid = 0; fid < allDetections.length; fid++) {
+			List<List<Point2D_F64>> detections = allDetections[fid];
+			if( detections.size() <= 2 )
+				continue;
+
+			for (int i = 0; i < 4; i++) {
+				average[i].set(0,0);
+			}
+
+			for( List<Point2D_F64> corners : detections ) {
+				for (int i = 0; i < 4; i++) {
+					Point2D_F64 p = corners.get(i);
+					Point2D_F64 a = average[i];
+
+					a.x += p.x;
+					a.y += p.y;
+				}
+			}
+
+			for (int i = 0; i < 4; i++) {
+				average[i].x /= detections.size();
+				average[i].y /= detections.size();
+			}
+
+			for( List<Point2D_F64> corners : detections ) {
+				for (int i = 0; i < 4; i++) {
+					Point2D_F64 p = corners.get(i);
+					Point2D_F64 a = average[i];
+
+					errors.add( p.distance(a) );
+				}
+			}
+		}
+
+		return errors;
+	}
+
+	public static void main(String[] args) {
+		EvaluateStaticFiducialSequence app = new EvaluateStaticFiducialSequence();
+
+		app.initialize(new File("data/fiducials/image"));
+		app.evaluate(new File("tmp"),"static_scene");
+	}
+}

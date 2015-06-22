@@ -20,7 +20,7 @@ import java.io.IOException;
  *
  * @author Peter Abeles
  */
-public class EstimateImageFiducialToCamera<T extends ImageSingleBand> extends EstimateSquareFiducialToCamera<T> {
+public class EstimateImageFiducialToCamera<T extends ImageSingleBand> extends BaseEstimateSquareFiducialToCamera<T> {
 
 
 	public EstimateImageFiducialToCamera(FiducialDetector<T> detector) {
@@ -54,17 +54,25 @@ public class EstimateImageFiducialToCamera<T extends ImageSingleBand> extends Es
 	public static void main(String[] args) throws IOException {
 
 		File outputDirectory = new File("tmp");
+		if( outputDirectory.exists() ) {
+			for( File f : outputDirectory.listFiles() ) {
+				if( !f.delete() ) {
+					throw new RuntimeException("Couldn't delete a file in tmp. "+f.getName());
+				}
+			}
+		} else {
+			outputDirectory.mkdirs();
+		}
+
 		Class imageType = ImageUInt8.class;
 
 		FiducialDetector detector = FactoryFiducial.squareImageRobust(new ConfigFiducialImage(1), 15, imageType);
-
-		outputDirectory.mkdirs();
 
 		EstimateImageFiducialToCamera app = new EstimateImageFiducialToCamera(detector);
 		app.initialize(new File("data/fiducials/image"));
 		app.setOutputDirectory(outputDirectory);
 
-		app.process("distance_straight");
+		app.process("static_scene");
 	}
 
 }

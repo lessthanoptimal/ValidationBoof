@@ -16,7 +16,7 @@ import java.io.IOException;
  *
  * @author Peter Abeles
  */
-public class EstimateBinaryFiducialToCamera<T extends ImageBase> extends EstimateSquareFiducialToCamera {
+public class EstimateBinaryFiducialToCamera<T extends ImageBase> extends BaseEstimateSquareFiducialToCamera {
 
 
 	public EstimateBinaryFiducialToCamera(FiducialDetector<T> detector) {
