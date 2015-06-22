@@ -18,11 +18,16 @@ import java.util.List;
 /**
  * Base class for evaluating fiducial assignments
  *
+ * True positives: Any detected fiducial which matched a hand selected one within tolerance.
+ *                 * correct: Correct ID and orientation
+ *                 * wrong orientation: Correct ID but had to be rotated to match
+ *                 * wrong ID: The wrong ID was assigned to it.  Orientation isn't considered
  * False Positive: A detected fiducial which did not match any labeled fiducials in the image.
+ * False Negative: No detected fiducial was found to be within tolerance.
  *
  * @author Peter Abeles
  */
-public class BaseEvaluateFiducialToCamera {
+public abstract class BaseEvaluateFiducialToCamera {
 	double maxPixelError = 5;
 
 	PrintStream outputResults = System.out;
@@ -108,6 +113,13 @@ public class BaseEvaluateFiducialToCamera {
 		totalFalseNegative = 0;
 	}
 
+	/**
+	 * Evaluates previously computed results in the specified directory using the specified dataset
+	 * @param resultsDirectory Directory containing results
+	 * @param dataset name of the data set being used
+	 */
+	public abstract void evaluate( File resultsDirectory , String dataset );
+
 	protected void evaluate( String fileName , List<FiducialCommon.Detected> detected , List<Point2D_F64> truthCorners ) {
 
 		for (int i = 0; i < expected.length; i++) {
@@ -133,8 +145,11 @@ public class BaseEvaluateFiducialToCamera {
 			}
 
 			if( match != null ) {
-				errors.add( match.error );
-				outputResults.println(fileName+" "+det.id + " " + match.id + " " + match.ori + " "+match.error);
+				for (int j = 0; j < 4; j++) {
+					errors.add( match.errors[j] );
+				}
+
+				outputResults.println(fileName+" "+det.id + " " + match.id + " " + match.ori + " "+match.meanError);
 			} else {
 				outputResults.println(fileName+" "+det.id +" false positive");
 			}
@@ -170,24 +185,26 @@ public class BaseEvaluateFiducialToCamera {
 	private Assignment findBestAssignment( List<Point2D_F64> corners , List<Point2D_F64> truthCorners ) {
 		Assignment best = new Assignment();
 		best.id = -1;
-		best.error = maxPixelError;
+		best.meanError = maxPixelError;
 
 		int bestExpectedIndex=-1;
 
+		double errors[] = new double[4];
 		for (int i = 0; i < truthCorners.size(); i += 4 ) {
 			for (int ori = 0; ori < 4; ori++) {
-				double error = 0;
+				double meanError = 0;
 				for (int k = 0; k < 4; k++) {
 					int index = (ori+k)%4;
-					double d = corners.get(k).distance(truthCorners.get(i+index));
-					error += d;
+					errors[k] = corners.get(k).distance(truthCorners.get(i+index));
+					meanError += errors[k];
 				}
-				error /= 4;
+				meanError /= 4;
 
-				if( error < best.error ) {
-					best.error = error;
+				if( meanError < best.meanError ) {
+					best.meanError = meanError;
 					best.ori = ori;
 					best.id = expected[i/4];
+					System.arraycopy(errors,0,best.errors,0,4);
 					bestExpectedIndex = i/4;
 				}
 			}
@@ -209,10 +226,15 @@ public class BaseEvaluateFiducialToCamera {
 			return null;
 	}
 
+	public void setMaxPixelError(double maxPixelError) {
+		this.maxPixelError = maxPixelError;
+	}
+
 	public static class Assignment
 	{
 		int id;
 		int ori;
-		double error;
+		double meanError;
+		double errors[] = new double[4];
 	}
 }

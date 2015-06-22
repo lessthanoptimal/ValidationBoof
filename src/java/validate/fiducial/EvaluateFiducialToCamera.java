@@ -27,7 +27,7 @@ public class EvaluateFiducialToCamera extends BaseEvaluateFiducialToCamera {
 		Collections.sort(results);
 
 		outputResults.println("# Data Set = "+dataset+" maxPixelError = "+maxPixelError);
-		outputResults.println("# (file) (detected ID) (matched id) (matched ori) (match pixel error)");
+		outputResults.println("# (file) (detected ID) (matched id) (matched ori) (match pixel mean error)");
 
 		for (int i = 0; i < results.size(); i++) {
 			String resultPath = results.get(i);
@@ -45,26 +45,29 @@ public class EvaluateFiducialToCamera extends BaseEvaluateFiducialToCamera {
 
 		Arrays.sort(errors.data,0,errors.size);
 
-		double error50 = errors.get( (int)(errors.size()*0.5));
-		double error90 = errors.get( (int)(errors.size()*0.9));
-		double error100 = errors.get( errors.size()-1);
+		double error50 = errors.size() == 0 ? 0 : errors.get( (int)(errors.size()*0.5));
+		double error90 = errors.size() == 0 ? 0 : errors.get( (int)(errors.size()*0.9));
+		double error100 = errors.size() == 0 ? 0 : errors.get( errors.size()-1);
 
 		outputResults.println();
 		outputResults.println("Summary:");
 		outputResults.println(" correct            : " + totalCorrect);
 		outputResults.println(" wrong orientation  : " + totalWrongOrientation);
 		outputResults.println(" wrong ID           : " + totalWrongID);
+		outputResults.println(" duplicates         : " + totalDuplicates);
 		outputResults.println(" false positives    : " + totalFalsePositive);
 		outputResults.println(" false negative     : " + totalFalseNegative);
-		outputResults.println(" errors 50%         : " + error50);
-		outputResults.println(" errors 90%         : " + error90);
-		outputResults.println(" errors 100%        : "+error100);
+		outputResults.println("Corner errors:");
+		outputResults.println(" precision 50%         : " + error50);
+		outputResults.println(" precision 90%         : " + error90);
+		outputResults.println(" precision 100%        : " + error100);
 	}
 
 	public static void main(String[] args) {
 		EvaluateFiducialToCamera app = new EvaluateFiducialToCamera();
 
+//		app.setMaxPixelError(10);
 		app.initialize(new File("data/fiducials/image"));
-		app.evaluate(new File("tmp"),"distance_straight");
+		app.evaluate(new File("tmp"),"motion_blur");
 	}
 }

@@ -19,7 +19,7 @@ public abstract class BaseTextFileRegression implements TextFileRegression {
 	public void setOutputDirectory(String directory) {
 		this.directory = directory;
 		try {
-			errorLog = new PrintStream(directory+"ERRORLOG_"+getClass().getSimpleName()+".txt");
+			errorLog = new PrintStream(new File(directory,"ERRORLOG_"+getClass().getSimpleName()+".txt"));
 		} catch (FileNotFoundException e) {
 			throw new RuntimeException(e);
 		}

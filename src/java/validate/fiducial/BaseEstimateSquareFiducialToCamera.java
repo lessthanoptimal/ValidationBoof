@@ -54,6 +54,11 @@ public abstract class BaseEstimateSquareFiducialToCamera<T extends ImageBase> {
 	public void process( String dataset ) throws IOException {
 
 		File dataSetDir = new File(baseDirectory,dataset);
+
+		if( !dataSetDir.exists() ) {
+			throw new RuntimeException("The data set directory doesn't exist. "+dataSetDir.getPath());
+		}
+
 		List<String> files = BoofMiscOps.directoryList(dataSetDir.getAbsolutePath(), "png");
 		if( files.size() == 0 ) {
 			throw new IllegalArgumentException("No images found.  paths correct?");

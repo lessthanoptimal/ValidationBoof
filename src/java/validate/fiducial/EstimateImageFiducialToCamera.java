@@ -66,13 +66,13 @@ public class EstimateImageFiducialToCamera<T extends ImageSingleBand> extends Ba
 
 		Class imageType = ImageUInt8.class;
 
-		FiducialDetector detector = FactoryFiducial.squareImageRobust(new ConfigFiducialImage(1), 15, imageType);
+		FiducialDetector detector = FactoryFiducial.squareImageRobust(new ConfigFiducialImage(1), 20, imageType);
 
 		EstimateImageFiducialToCamera app = new EstimateImageFiducialToCamera(detector);
 		app.initialize(new File("data/fiducials/image"));
 		app.setOutputDirectory(outputDirectory);
 
-		app.process("static_scene");
+		app.process("motion_blur");
 	}
 
 }
