@@ -34,9 +34,10 @@ public class EvaluateFiducialToCamera {
 
 	File baseDirectory;
 	IntrinsicParameters intrinsic;
-	double fiducialWidth;
 	int expected[];
 	boolean knownMatched[];
+
+	FiducialCommon.Scenario scenario;
 
 	List<Point3D_F64> fiducialPts = new ArrayList<Point3D_F64>();
 
@@ -63,7 +64,8 @@ public class EvaluateFiducialToCamera {
 
 	public void initialize( File baseDirectory ) {
 		this.baseDirectory = baseDirectory;
-		fiducialWidth = FiducialCommon.parseWidth(new File(baseDirectory, "fiducials.txt"));
+		scenario = FiducialCommon.parseScenario(new File(baseDirectory, "fiducials.txt"));
+		double fiducialWidth = scenario.getWidth();
 
 		fiducialPts.add( new Point3D_F64(-fiducialWidth/2, fiducialWidth/2,0));
 		fiducialPts.add( new Point3D_F64( fiducialWidth/2, fiducialWidth/2,0));
@@ -74,7 +76,7 @@ public class EvaluateFiducialToCamera {
 	public void evaluate( File resultsDirectory , String dataset ) {
 		File dataSetDir = new File(baseDirectory,dataset);
 
-		expected = FiducialCommon.parseExpectedIds(new File(dataSetDir, "expected.txt"));
+		expected = FiducialCommon.parseExpectedIds(new File(dataSetDir, "expected.txt"),scenario);
 		knownMatched = new boolean[expected.length];
 		intrinsic = UtilIO.loadXML(new File(dataSetDir,"intrinsic.xml").toString());
 		if( intrinsic.radial != null )

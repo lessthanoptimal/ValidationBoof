@@ -14,8 +14,7 @@ import java.util.List;
  */
 public class FiducialCommon {
 
-	public static int[] parseExpectedIds(File file) {
-		ScenarioBinary scenario = new ScenarioBinary();
+	public static int[] parseExpectedIds( File file , Scenario scenario ) {
 		try {
 			BufferedReader reader = new BufferedReader(new FileReader(file));
 
@@ -27,27 +26,23 @@ public class FiducialCommon {
 				line = reader.readLine();
 			}
 
-			int[] ret = new int[ lines.size() ];
-			for (int i = 0; i < lines.size(); i++) {
-				ret[i] = Integer.parseInt(lines.get(i));
+			int expected[] = new int[ lines.size() ];
+			for( int i = 0; i < lines.size(); i++ ) {
+				expected[i] = scenario.nameToID(lines.get(i));
 			}
-			return ret;
+
+			return expected;
 
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	public static double parseWidth(File file) {
-		ScenarioBinary scenario = new ScenarioBinary();
-		try {
-			BufferedReader reader = new BufferedReader(new FileReader(file));
-
-			String line = ParseHelper.skipComments(reader);
-
-			return Double.parseDouble(line);
-		} catch (IOException e) {
-			throw new RuntimeException(e);
+	public static Scenario parseScenario( File file ) {
+		if( file.getPath().contains("binary")) {
+			return parseScenarioBinary(file);
+		} else {
+			return parseScenarioImage(file);
 		}
 	}
 
@@ -100,15 +95,50 @@ public class FiducialCommon {
 		}
 	}
 
-	public static class ScenarioBinary
+	public static abstract class Scenario
 	{
 		double width;
-		int expectedId[];
+
+		public abstract int[] getKnownIds();
+
+		public abstract int nameToID( String name );
+
+		public double getWidth() {
+			return width;
+		}
 	}
 
-	public static class ScenarioImage
+	public static class ScenarioBinary extends Scenario
 	{
-		double width;
+		int expectedId[];
+
+		@Override
+		public int[] getKnownIds() {
+			return expectedId;
+		}
+
+		@Override
+		public int nameToID(String name) {
+			return Integer.parseInt(name);
+		}
+	}
+
+	public static class ScenarioImage extends Scenario
+	{
 		List<String> names = new ArrayList<String>();
+
+		@Override
+		public int[] getKnownIds() {
+			int[] expected = new int[names.size()];
+			for (int i = 0; i < names.size(); i++) {
+				expected[i] = i;
+			}
+			return expected;
+		}
+
+		@Override
+		public int nameToID(String name) {
+			return names.indexOf(name);
+		}
 	}
 }
