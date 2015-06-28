@@ -27,19 +27,14 @@ public class EstimateImageFiducialToCamera<T extends ImageSingleBand> extends Ba
 		super(detector);
 	}
 
-	@Override
-	public double readFiducialWidth() {
-		FiducialCommon.ScenarioImage scenario = FiducialCommon.parseScenarioImage(new File(baseDirectory, "fiducials.txt"));
-		return scenario.width;
-	}
 
 	@Override
-	public void configureDetector(File baseDirectory) {
-		FiducialCommon.ScenarioImage scenario = FiducialCommon.parseScenarioImage(new File(baseDirectory, "fiducials.txt"));
+	public void configureDetector(File datasetDirectory) {
+		FiducialCommon.Scenario scenario = FiducialCommon.parseScenario(new File(datasetDirectory, "expected.txt"));
 
 		SquareImage_to_FiducialDetector<T> detectorImage = (SquareImage_to_FiducialDetector)detector;
 
-		for( String name : scenario.names ) {
+		for( String name : scenario.getNames() ) {
 			File f = new File(baseDirectory,name);
 			BufferedImage image = UtilImageIO.loadImage(f.getAbsolutePath());
 			if( image == null )
@@ -51,18 +46,11 @@ public class EstimateImageFiducialToCamera<T extends ImageSingleBand> extends Ba
 		}
 	}
 
+
+
 	public static void main(String[] args) throws IOException {
 
-		File outputDirectory = new File("tmp");
-		if( outputDirectory.exists() ) {
-			for( File f : outputDirectory.listFiles() ) {
-				if( !f.delete() ) {
-					throw new RuntimeException("Couldn't delete a file in tmp. "+f.getName());
-				}
-			}
-		} else {
-			outputDirectory.mkdirs();
-		}
+		File outputDirectory = setupOutput();
 
 		Class imageType = ImageUInt8.class;
 
@@ -72,7 +60,7 @@ public class EstimateImageFiducialToCamera<T extends ImageSingleBand> extends Ba
 		app.initialize(new File("data/fiducials/image"));
 		app.setOutputDirectory(outputDirectory);
 
-		app.process("motion_blur");
+		app.process("static_front_close");
 	}
 
 }

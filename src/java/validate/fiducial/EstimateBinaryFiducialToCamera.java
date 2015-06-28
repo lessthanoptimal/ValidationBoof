@@ -24,24 +24,16 @@ public class EstimateBinaryFiducialToCamera<T extends ImageBase> extends BaseEst
 	}
 
 	@Override
-	public double readFiducialWidth() {
-		FiducialCommon.ScenarioBinary scenario = FiducialCommon.parseScenarioBinary(new File(baseDirectory, "fiducials.txt"));
-		return scenario.width;
-	}
-
-	@Override
 	public void configureDetector(File baseDirectory) {
 
 	}
 
 	public static void main(String[] args) throws IOException {
 
-		File outputDirectory = new File("tmp");
+		File outputDirectory = setupOutput();
 		Class imageType = ImageUInt8.class;
 
 		FiducialDetector detector = FactoryFiducial.squareBinaryRobust(new ConfigFiducialBinary(1), 15, imageType);
-
-		outputDirectory.mkdirs();
 
 		EstimateBinaryFiducialToCamera app = new EstimateBinaryFiducialToCamera(detector);
 		app.initialize(new File("data/fiducials/binary"));

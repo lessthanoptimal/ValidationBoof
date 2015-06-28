@@ -5,6 +5,7 @@ import boofcv.factory.fiducial.ConfigFiducialBinary;
 import boofcv.factory.fiducial.ConfigFiducialImage;
 import boofcv.factory.fiducial.FactoryFiducial;
 import boofcv.struct.image.ImageDataType;
+import validate.DataSetDoesNotExist;
 import validate.fiducial.*;
 import validate.misc.ParseHelper;
 
@@ -21,7 +22,7 @@ public class FiducialRegression extends BaseTextFileRegression {
 	File baseFiducial = new File("data/fiducials");
 	String dataSetsStandard[] = new String[]{"rotation","distance_straight","distance_angle"};
 	String dataSetsBlur[] = new String[]{"motion_blur"};
-	String dataSetsStatic[] = new String[]{"static_scene"};
+	String dataSetsStatic[] = new String[]{"static_scene","static_front_close","static_front_far"};
 
 	String infoString;
 
@@ -110,6 +111,9 @@ public class FiducialRegression extends BaseTextFileRegression {
 			try {
 				estimate.process(dataSet);
 				evaluate.evaluate(workDirectory, dataSet);
+			} catch( DataSetDoesNotExist e ) {
+				errorLog.println();
+				errorLog.println(e.getMessage());
 			} catch( RuntimeException e ) {
 				errorLog.println();
 				errorLog.println("ERROR in "+infoString+" processing data set "+dataSet);

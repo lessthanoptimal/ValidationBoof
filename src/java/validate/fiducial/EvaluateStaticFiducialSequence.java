@@ -1,7 +1,9 @@
 package validate.fiducial;
 
 import boofcv.misc.BoofMiscOps;
+import georegression.metric.UtilAngle;
 import georegression.struct.point.Point2D_F64;
+import georegression.struct.point.Vector3D_F64;
 import org.ddogleg.struct.GrowQueue_F64;
 import validate.misc.PointFileCodec;
 
@@ -17,6 +19,8 @@ import static validate.fiducial.FiducialCommon.parseDetections;
  * @author Peter Abeles
  */
 public class EvaluateStaticFiducialSequence extends BaseEvaluateFiducialToCamera {
+
+	Vector3D_F64 normalsPrev[];
 
 	public EvaluateStaticFiducialSequence() {
 		maxPixelError = 10;
@@ -43,19 +47,38 @@ public class EvaluateStaticFiducialSequence extends BaseEvaluateFiducialToCamera
 		String nameTruth = nameFirst.substring(0,nameFirst.length()-3) + "txt";
 		List<Point2D_F64> truthCorners = PointFileCodec.load(new File(dataSetDir, nameTruth));
 
+		normalsPrev = new Vector3D_F64[ expected.length ];
+		for (int i = 0; i < expected.length; i++) {
+			normalsPrev[i] = new Vector3D_F64();
+		}
+
+		GrowQueue_F64 errorNormals = new GrowQueue_F64();
+
 		for (int i = 0; i < results.size(); i++) {
 			String resultPath = results.get(i);
 			String name = new File(resultPath).getName();
 
-			try {
+			// mark them all as not observed
+			for (int j = 0; j < expected.length; j++) {
+				fiducialNormal[j].set(0,0,0);
+			}
 
+			try {
 				List<FiducialCommon.Detected> detected = parseDetections(new File(resultPath));
 				evaluate(name,detected,truthCorners);
 
 				for (int j = 0; j < expected.length; j++) {
 					if( detectedCorners[j] != null ) {
 						allDetections[j].add( detectedCorners[j]);
+
+						if( i > 0 ) {
+							if( normalsPrev[j].normSq() > 0 ) {
+								double angle = normalsPrev[j].acute(fiducialNormal[j]);
+								errorNormals.add(UtilAngle.radianToDegree(angle));
+							}
+						}
 					}
+					normalsPrev[j].set(fiducialNormal[j]);
 				}
 
 			} catch( RuntimeException e ) {
@@ -65,16 +88,22 @@ public class EvaluateStaticFiducialSequence extends BaseEvaluateFiducialToCamera
 
 		Arrays.sort(errors.data, 0, errors.size);
 
-		double accuracy50 = errors.get( (int)(errors.size()*0.5));
-		double accuracy90 = errors.get( (int)(errors.size()*0.9));
-		double accuracy100 = errors.get( errors.size()-1);
+		double accuracy50 = errors.size == 0 ? 0 : errors.get( (int)(errors.size()*0.5));
+		double accuracy90 = errors.size == 0 ? 0 :errors.get( (int)(errors.size()*0.9));
+		double accuracy100 = errors.size == 0 ? 0 :errors.get( errors.size()-1);
 
 		GrowQueue_F64 precision = computePrecision(allDetections);
 		Arrays.sort(precision.data, 0, precision.size);
 
-		double precision50 = precision.get( (int)(precision.size()*0.5));
-		double precision90 = precision.get( (int)(precision.size()*0.9));
-		double precision100 = precision.get( precision.size()-1);
+		double precision50 = precision.size ==0 ? 0 : precision.get( (int)(precision.size()*0.5));
+		double precision90 = precision.size ==0 ? 0 : precision.get( (int)(precision.size()*0.9));
+		double precision100 = precision.size ==0 ? 0 : precision.get( precision.size()-1);
+
+		// normal angles should not change much if stable
+		Arrays.sort(errorNormals.data, 0, errorNormals.size);
+		double normal50 = errorNormals.size ==0 ? 0 : errorNormals.get( (int)(errorNormals.size()*0.5));
+		double normal90 = errorNormals.size ==0 ? 0 : errorNormals.get( (int)(errorNormals.size()*0.9));
+		double normal100 = errorNormals.size ==0 ? 0 : errorNormals.get( errorNormals.size()-1);
 
 		outputResults.println();
 		outputResults.println("Summary:");
@@ -84,11 +113,15 @@ public class EvaluateStaticFiducialSequence extends BaseEvaluateFiducialToCamera
 		outputResults.println(" duplicates         : " + totalDuplicates);
 		outputResults.println(" false positive     : " + totalFalsePositive);
 		outputResults.println(" false negative     : " + totalFalseNegative);
-		outputResults.println("Precision:");
+		outputResults.println("Normal Angle (deg):     "+errorNormals.size);
+		outputResults.println(" errors 50%         : " + normal50);
+		outputResults.println(" errors 90%         : " + normal90);
+		outputResults.println(" errors 100%        : " + normal100);
+		outputResults.println("Precision:              "+precision.size);
 		outputResults.println(" errors 50%         : " + precision50);
 		outputResults.println(" errors 90%         : " + precision90);
 		outputResults.println(" errors 100%        : " + precision100);
-		outputResults.println("Accuracy:");
+		outputResults.println("Accuracy:               "+errors.size);
 		outputResults.println(" errors 50%         : " + accuracy50);
 		outputResults.println(" errors 90%         : " + accuracy90);
 		outputResults.println(" errors 100%        : " + accuracy100);
@@ -146,6 +179,6 @@ public class EvaluateStaticFiducialSequence extends BaseEvaluateFiducialToCamera
 		EvaluateStaticFiducialSequence app = new EvaluateStaticFiducialSequence();
 
 		app.initialize(new File("data/fiducials/image"));
-		app.evaluate(new File("tmp"),"static_scene");
+		app.evaluate(new File("tmp"),"static_front_close");
 	}
 }

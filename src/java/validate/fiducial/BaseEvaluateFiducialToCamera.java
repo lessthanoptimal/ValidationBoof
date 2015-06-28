@@ -5,6 +5,7 @@ import boofcv.io.UtilIO;
 import boofcv.struct.calib.IntrinsicParameters;
 import georegression.struct.point.Point2D_F64;
 import georegression.struct.point.Point3D_F64;
+import georegression.struct.point.Vector3D_F64;
 import georegression.struct.se.Se3_F64;
 import georegression.transform.se.SePointOps_F64;
 import org.ddogleg.struct.GrowQueue_F64;
@@ -39,6 +40,8 @@ public abstract class BaseEvaluateFiducialToCamera {
 	int expected[];
 	// The number of times a fiducial was detected.  This will include wrong ID's and orientations
 	int fiducialDetected[];
+	// normal vector for a specific truth
+	Vector3D_F64 fiducialNormal[];
 
 	// if a fiducial was detected it's quad is stored here.  If there are multiple detections
 	// the only the first detection is saved.
@@ -68,15 +71,24 @@ public abstract class BaseEvaluateFiducialToCamera {
 	// each count past one is counted twice
 	int totalDuplicates;
 
+	public BaseEvaluateFiducialToCamera() {
+		fiducialPts.add( new Point3D_F64());
+		fiducialPts.add( new Point3D_F64());
+		fiducialPts.add( new Point3D_F64());
+		fiducialPts.add( new Point3D_F64());
+	}
 
 	protected File initialize(String dataset) {
 		File dataSetDir = new File(baseDirectory,dataset);
+		scenario = FiducialCommon.parseScenario(new File(dataSetDir, "expected.txt"));
 
-		expected = FiducialCommon.parseExpectedIds(new File(dataSetDir, "expected.txt"), scenario);
+		expected = scenario.getKnownIds();
 		fiducialDetected = new int[expected.length];
 		detectedCorners = new ArrayList[expected.length];
+		fiducialNormal = new Vector3D_F64[expected.length];
 		for (int i = 0; i < expected.length; i++) {
 			detectedCorners[i] = new ArrayList<Point2D_F64>();
+			fiducialNormal[i] = new Vector3D_F64();
 		}
 		intrinsic = UtilIO.loadXML(new File(dataSetDir, "intrinsic.xml").toString());
 		if( intrinsic.radial != null )
@@ -94,13 +106,6 @@ public abstract class BaseEvaluateFiducialToCamera {
 
 	public void initialize( File baseDirectory ) {
 		this.baseDirectory = baseDirectory;
-		scenario = FiducialCommon.parseScenario(new File(baseDirectory, "fiducials.txt"));
-		double fiducialWidth = scenario.getWidth();
-
-		fiducialPts.add( new Point3D_F64(-fiducialWidth/2, fiducialWidth/2,0));
-		fiducialPts.add( new Point3D_F64( fiducialWidth/2, fiducialWidth/2,0));
-		fiducialPts.add( new Point3D_F64( fiducialWidth/2,-fiducialWidth/2,0));
-		fiducialPts.add( new Point3D_F64(-fiducialWidth/2,-fiducialWidth/2,0));
 	}
 
 	protected void resetStatistics() {
@@ -129,19 +134,27 @@ public abstract class BaseEvaluateFiducialToCamera {
 
 		for( int i = 0; i < detected.size(); i++ ) {
 			FiducialCommon.Detected det = detected.get(i);
-			List<Point2D_F64> corners = project(det.fiducialToCamera);
+			double fiducialWidth = scenario.getWidth(det.id);
+			List<Point2D_F64> corners = project(det.fiducialToCamera,fiducialWidth);
 
 			Assignment match = findBestAssignment(corners,truthCorners);
 			if( match == null ) {
 				falsePositiveIDs.add(det.id);
 				totalFalsePositive++;
-			} else if( match.id == det.id ) {
-				if( match.ori == 0 )
-					totalCorrect++;
-				else
-					totalWrongOrientation++;
 			} else {
-				totalWrongID++;
+				Vector3D_F64 normal = fiducialNormal[match.index];
+				normal.x = det.fiducialToCamera.getR().get(0,2);
+				normal.y = det.fiducialToCamera.getR().get(1,2);
+				normal.z = det.fiducialToCamera.getR().get(2,2);
+
+				if( match.id == det.id ) {
+					if( match.ori == 0 )
+						totalCorrect++;
+					else
+						totalWrongOrientation++;
+				} else {
+					totalWrongID++;
+				}
 			}
 
 			if( match != null ) {
@@ -164,8 +177,13 @@ public abstract class BaseEvaluateFiducialToCamera {
 		}
 	}
 
-	private List<Point2D_F64> project( Se3_F64 fiducialToCamera ) {
+	private List<Point2D_F64> project( Se3_F64 fiducialToCamera , double fiducialWidth ) {
 		List<Point2D_F64> pixels = new ArrayList<Point2D_F64>();
+
+		fiducialPts.get(0).set(-fiducialWidth / 2, fiducialWidth / 2, 0);
+		fiducialPts.get(1).set(fiducialWidth / 2, fiducialWidth / 2, 0);
+		fiducialPts.get(2).set(fiducialWidth / 2, -fiducialWidth / 2, 0);
+		fiducialPts.get(3).set(-fiducialWidth / 2, -fiducialWidth/2,0);
 
 		for (int i = 0; i < 4; i++) {
 			Point3D_F64 f = fiducialPts.get(i);
@@ -211,6 +229,7 @@ public abstract class BaseEvaluateFiducialToCamera {
 		}
 
 		if( bestExpectedIndex >= 0 ) {
+			best.index = bestExpectedIndex;
 			fiducialDetected[bestExpectedIndex]++;
 			if( fiducialDetected[bestExpectedIndex] == 1 ) {
 				// reorder the points to make comparision easier later on
@@ -232,6 +251,7 @@ public abstract class BaseEvaluateFiducialToCamera {
 
 	public static class Assignment
 	{
+		int index;
 		int id;
 		int ori;
 		double meanError;

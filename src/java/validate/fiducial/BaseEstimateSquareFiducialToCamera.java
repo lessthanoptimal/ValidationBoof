@@ -10,6 +10,7 @@ import boofcv.struct.image.ImageBase;
 import georegression.struct.point.Vector3D_F64;
 import georegression.struct.se.Se3_F64;
 import org.ejml.data.DenseMatrix64F;
+import validate.DataSetDoesNotExist;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -28,7 +29,6 @@ public abstract class BaseEstimateSquareFiducialToCamera<T extends ImageBase> {
 
 	File baseDirectory;
 	File outputDirectory = new File(".");
-	double fiducialWidth;
 
 	FiducialDetector<T> detector;
 
@@ -38,28 +38,30 @@ public abstract class BaseEstimateSquareFiducialToCamera<T extends ImageBase> {
 
 	public void initialize( File baseDirectory ) {
 		this.baseDirectory = baseDirectory;
-
-		fiducialWidth = readFiducialWidth();
-		configureDetector(baseDirectory);
 	}
 
 	public void setOutputDirectory(File outputDirectory) {
 		this.outputDirectory = outputDirectory;
 	}
 
-	public abstract double readFiducialWidth();
-
-	public abstract void configureDetector( File baseDirectory );
+	public abstract void configureDetector( File datasetDir );
 
 	public void process( String dataset ) throws IOException {
 
 		File dataSetDir = new File(baseDirectory,dataset);
-
 		if( !dataSetDir.exists() ) {
-			throw new RuntimeException("The data set directory doesn't exist. "+dataSetDir.getPath());
+			throw new DataSetDoesNotExist("The data set directory doesn't exist. "+dataSetDir.getPath());
 		}
 
+		configureDetector(dataSetDir);
+		FiducialCommon.Scenario scenario = FiducialCommon.parseScenario(new File(dataSetDir, "expected.txt"));
+
+
+
 		List<String> files = BoofMiscOps.directoryList(dataSetDir.getAbsolutePath(), "png");
+		if( files.size() == 0 ) {
+			files = BoofMiscOps.directoryList(dataSetDir.getAbsolutePath(), "jpg");
+		}
 		if( files.size() == 0 ) {
 			throw new IllegalArgumentException("No images found.  paths correct?");
 		}
@@ -85,7 +87,9 @@ public abstract class BaseEstimateSquareFiducialToCamera<T extends ImageBase> {
 			Se3_F64 fiducialToSensor = new Se3_F64();
 			for (int i = 0; i < detector.totalFound(); i++) {
 				int which = detector.getId(i);
+				double fiducialWidth = scenario.getWidth(which);
 				detector.getFiducialToWorld(i,fiducialToSensor);
+
 
 				DenseMatrix64F R = fiducialToSensor.getR();
 				Vector3D_F64 T = fiducialToSensor.getT();
@@ -102,6 +106,20 @@ public abstract class BaseEstimateSquareFiducialToCamera<T extends ImageBase> {
 			}
 			out.close();
 		}
+	}
+
+	protected static File setupOutput() {
+		File outputDirectory = new File("tmp");
+		if( outputDirectory.exists() ) {
+			for( File f : outputDirectory.listFiles() ) {
+				if( !f.delete() ) {
+					throw new RuntimeException("Couldn't delete a file in tmp. "+f.getName());
+				}
+			}
+		} else {
+			outputDirectory.mkdirs();
+		}
+		return outputDirectory;
 	}
 
 }

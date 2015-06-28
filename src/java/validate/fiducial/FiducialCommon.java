@@ -38,105 +38,74 @@ public class FiducialCommon {
 		}
 	}
 
-	public static int[] parseExpectedIds( File file , Scenario scenario ) {
-		try {
-			BufferedReader reader = new BufferedReader(new FileReader(file));
-
-			String line = ParseHelper.skipComments(reader);
-
-			List<String> lines = new ArrayList<String>();
-			while( line != null ) {
-				lines.add(line);
-				line = reader.readLine();
-			}
-
-			int expected[] = new int[ lines.size() ];
-			for( int i = 0; i < lines.size(); i++ ) {
-				expected[i] = scenario.nameToID(lines.get(i));
-				if( expected[i] == -1 )
-					throw new RuntimeException("Unknown "+lines.get(i));
-			}
-
-			return expected;
-
-		} catch (IOException e) {
-			throw new RuntimeException(e);
-		}
-	}
 
 	public static Scenario parseScenario( File file ) {
+		Scenario scenario;
 		if( file.getPath().contains("binary")) {
-			return parseScenarioBinary(file);
+			scenario = new ScenarioBinary();
 		} else {
-			return parseScenarioImage(file);
+			scenario = new ScenarioImage();
 		}
+		parseScenario(file,scenario);
+		return scenario;
 	}
 
-	public static ScenarioBinary parseScenarioBinary(File file) {
-		ScenarioBinary scenario = new ScenarioBinary();
+	public static void parseScenario(File file, Scenario scenario ) {
 		try {
 			BufferedReader reader = new BufferedReader(new FileReader(file));
 
 			String line = ParseHelper.skipComments(reader);
 
-			scenario.width = Double.parseDouble(line);
+			List<Double> widths = new ArrayList<Double>();
+			List<String> names = new ArrayList<String>();
 
-			List<Integer> ids = new ArrayList<Integer>();
-			line = reader.readLine();
 			while( line != null ) {
-				ids.add( Integer.parseInt(line));
+				String words[] = line.split(" ");
+				widths.add(Double.parseDouble(words[0]));
+				names.add(words[1]);
 				line = reader.readLine();
 			}
 
-			scenario.expectedId = new int[ ids.size() ];
-			for (int i = 0; i < ids.size(); i++) {
-				int value = ids.get(i);
-				scenario.expectedId[i] = value;
-			}
-
-			return scenario;
+			scenario.init(widths,names);
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	public static ScenarioImage parseScenarioImage(File file) {
-		ScenarioImage scenario = new ScenarioImage();
-		try {
-			BufferedReader reader = new BufferedReader(new FileReader(file));
 
-			String line = ParseHelper.skipComments(reader);
-
-			scenario.width = Double.parseDouble(line);
-
-			line = reader.readLine();
-			while( line != null ) {
-				scenario.names.add(line);
-				line = reader.readLine();
-			}
-
-			return scenario;
-		} catch (IOException e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	public static abstract class Scenario
+	public interface Scenario
 	{
-		double width;
+		void init( List<Double> widths, List<String> names );
 
-		public abstract int[] getKnownIds();
+		List<String> getNames();
 
-		public abstract int nameToID( String name );
+		int[] getKnownIds();
 
-		public double getWidth() {
-			return width;
-		}
+		int nameToID( String name );
+
+		double getWidth( int id );
 	}
 
-	public static class ScenarioBinary extends Scenario
+	public static class ScenarioBinary implements Scenario
 	{
 		int expectedId[];
+		double widths[];
+
+		@Override
+		public void init(List<Double> widths, List<String> names) {
+			this.widths = new double[widths.size()];
+			this.expectedId = new int[widths.size()];
+
+			for (int i = 0; i < widths.size(); i++) {
+				this.widths[i] = widths.get(i);
+				this.expectedId[i] = Integer.parseInt(names.get(i));
+			}
+		}
+
+		@Override
+		public List<String> getNames() {
+			return null;
+		}
 
 		@Override
 		public int[] getKnownIds() {
@@ -147,11 +116,36 @@ public class FiducialCommon {
 		public int nameToID(String name) {
 			return Integer.parseInt(name);
 		}
+
+		@Override
+		public double getWidth(int id) {
+			for (int i = 0; i < expectedId.length; i++) {
+				if( expectedId[i] == id)
+					return widths[i];
+			}
+			throw new RuntimeException("Unknown ID");
+		}
 	}
 
-	public static class ScenarioImage extends Scenario
+	public static class ScenarioImage implements Scenario
 	{
 		List<String> names = new ArrayList<String>();
+		double widths[];
+
+		@Override
+		public void init(List<Double> widths, List<String> names) {
+			this.names = names;
+			this.widths = new double[widths.size()];
+
+			for (int i = 0; i < widths.size(); i++) {
+				this.widths[i] = widths.get(i);
+			}
+		}
+
+		@Override
+		public List<String> getNames() {
+			return names;
+		}
 
 		@Override
 		public int[] getKnownIds() {
@@ -165,6 +159,11 @@ public class FiducialCommon {
 		@Override
 		public int nameToID(String name) {
 			return names.indexOf(name);
+		}
+
+		@Override
+		public double getWidth(int id) {
+			return widths[id];
 		}
 	}
 
