@@ -2,7 +2,6 @@ package validate.fiducial;
 
 import boofcv.abst.fiducial.FiducialDetector;
 import boofcv.core.image.ConvertBufferedImage;
-import boofcv.io.UtilIO;
 import boofcv.io.image.UtilImageIO;
 import boofcv.misc.BoofMiscOps;
 import boofcv.struct.calib.IntrinsicParameters;
@@ -56,8 +55,6 @@ public abstract class BaseEstimateSquareFiducialToCamera<T extends ImageBase> {
 		configureDetector(dataSetDir);
 		FiducialCommon.Scenario scenario = FiducialCommon.parseScenario(new File(dataSetDir, "expected.txt"));
 
-
-
 		List<String> files = BoofMiscOps.directoryList(dataSetDir.getAbsolutePath(), "png");
 		if( files.size() == 0 ) {
 			files = BoofMiscOps.directoryList(dataSetDir.getAbsolutePath(), "jpg");
@@ -67,7 +64,7 @@ public abstract class BaseEstimateSquareFiducialToCamera<T extends ImageBase> {
 		}
 		T image = detector.getInputType().createImage(1,1);
 
-		IntrinsicParameters intrinsic = UtilIO.loadXML(new File(dataSetDir,"intrinsic.xml").getAbsolutePath());
+		IntrinsicParameters intrinsic = FiducialCommon.parseIntrinsic(new File(dataSetDir,"intrinsic.txt"));
 		detector.setIntrinsic(intrinsic);
 		for( String path : files ) {
 

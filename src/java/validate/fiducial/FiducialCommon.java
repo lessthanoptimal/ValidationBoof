@@ -1,12 +1,10 @@
 package validate.fiducial;
 
+import boofcv.struct.calib.IntrinsicParameters;
 import georegression.struct.se.Se3_F64;
 import validate.misc.ParseHelper;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +12,46 @@ import java.util.List;
  * @author Peter Abeles
  */
 public class FiducialCommon {
+
+	public static void saveIntrinsic( IntrinsicParameters intrinsic , File file ) {
+		try {
+			PrintStream out = new PrintStream(new FileOutputStream(file));
+
+			out.printf("%.10f %.10f %.10f\n", intrinsic.fx, intrinsic.skew, intrinsic.cx);
+			out.printf("0 %.10f %.10f\n", intrinsic.fy, intrinsic.cy);
+			out.printf("0 0 1\n");
+			out.printf("%d %d\n",intrinsic.width,intrinsic.height);
+
+			out.close();
+		} catch( FileNotFoundException ignore ) {}
+	}
+
+	public static IntrinsicParameters parseIntrinsic( File file ) {
+		try {
+			BufferedReader reader = new BufferedReader(new FileReader(file));
+
+			List<String> words = new ArrayList<String>();
+			for (int i = 0; i < 4; i++) {
+				String w[] = reader.readLine().split(" ");
+				for (int j = 0; j < w.length; j++) {
+					words.add(w[j]);
+				}
+			}
+			reader.close();
+
+			IntrinsicParameters out = new IntrinsicParameters();
+			out.fx = Double.parseDouble(words.get(0));
+			out.skew = Double.parseDouble(words.get(1));
+			out.cx = Double.parseDouble(words.get(2));
+			out.fy = Double.parseDouble(words.get(4));
+			out.cy = Double.parseDouble(words.get(5));
+			out.width = Integer.parseInt(words.get(9));
+			out.height = Integer.parseInt(words.get(10));
+			return out;
+		} catch( IOException e ) {
+			throw new RuntimeException(e);
+		}
+	}
 
 	public static List<Detected> parseDetections( File file ) {
 		try {
@@ -38,7 +76,6 @@ public class FiducialCommon {
 		}
 	}
 
-
 	public static Scenario parseScenario( File file ) {
 		Scenario scenario;
 		if( file.getPath().contains("binary")) {
@@ -61,8 +98,12 @@ public class FiducialCommon {
 
 			while( line != null ) {
 				String words[] = line.split(" ");
-				widths.add(Double.parseDouble(words[0]));
-				names.add(words[1]);
+
+				// don't add the same fiducial twice
+				if( !names.contains(words[1])) {
+					names.add(words[1]);
+					widths.add(Double.parseDouble(words[0]));
+				}
 				line = reader.readLine();
 			}
 
