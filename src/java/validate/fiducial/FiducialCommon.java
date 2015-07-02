@@ -98,12 +98,8 @@ public class FiducialCommon {
 
 			while( line != null ) {
 				String words[] = line.split(" ");
-
-				// don't add the same fiducial twice
-				if( !names.contains(words[1])) {
-					names.add(words[1]);
-					widths.add(Double.parseDouble(words[0]));
-				}
+				names.add(words[1]);
+				widths.add(Double.parseDouble(words[0]));
 				line = reader.readLine();
 			}
 
@@ -192,7 +188,9 @@ public class FiducialCommon {
 		public int[] getKnownIds() {
 			int[] expected = new int[names.size()];
 			for (int i = 0; i < names.size(); i++) {
-				expected[i] = i;
+				// the ID for an image is the order in which it was added, so duplicates will have
+				// the ID of the first instance
+				expected[i] = names.indexOf(names.get(i));
 			}
 			return expected;
 		}

@@ -12,6 +12,8 @@ import boofcv.struct.image.ImageUInt8;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Estimates the location of fiducials in the input images.  Results are saved to the specified output directory.
@@ -34,7 +36,12 @@ public class EstimateImageFiducialToCamera<T extends ImageSingleBand> extends Ba
 
 		SquareImage_to_FiducialDetector<T> detectorImage = (SquareImage_to_FiducialDetector)detector;
 
+		List<String> loaded = new ArrayList<String>();
 		for( String name : scenario.getNames() ) {
+			if( loaded.contains(name))
+				continue;
+			else
+				loaded.add(name);
 			File f = new File(baseDirectory,name);
 			BufferedImage image = UtilImageIO.loadImage(f.getAbsolutePath());
 			if( image == null )

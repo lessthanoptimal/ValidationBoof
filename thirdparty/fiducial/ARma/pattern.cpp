@@ -88,7 +88,7 @@ namespace ARma {
 		}
 	}
 
-	void Pattern::getExtrinsics(int patternSize, const Mat& cameraMatrix, const Mat& distortions)
+	void Pattern::getExtrinsics(float patternWidth, const Mat& cameraMatrix, const Mat& distortions)
 	{
 
 		CvMat objectPts;//header for 3D points of pat3Dpts
@@ -110,15 +110,28 @@ namespace ARma {
 		pat3DPts[0].x = 0.0;
 		pat3DPts[0].y = 0.0;
 		pat3DPts[0].z = 0.0;
-		pat3DPts[1].x = patternSize;
+		pat3DPts[1].x = patternWidth;
 		pat3DPts[1].y = 0.0;
 		pat3DPts[1].z = 0.0;
-		pat3DPts[2].x = patternSize;
-		pat3DPts[2].y = patternSize;
+		pat3DPts[2].x = patternWidth;
+		pat3DPts[2].y = patternWidth;
 		pat3DPts[2].z = 0.0;
 		pat3DPts[3].x = 0.0;
-		pat3DPts[3].y = patternSize;
+		pat3DPts[3].y = patternWidth;
 		pat3DPts[3].z = 0.0;
+
+//		pat3DPts[0].x = -patternWidth/2;
+//		pat3DPts[0].y = -patternWidth/2;
+//		pat3DPts[0].z = 0.0;
+//		pat3DPts[1].x = patternWidth/2;
+//		pat3DPts[1].y = -patternWidth/2;
+//		pat3DPts[1].z = 0.0;
+//		pat3DPts[2].x = patternWidth/2;
+//		pat3DPts[2].y = patternWidth/2;
+//		pat3DPts[2].z = 0.0;
+//		pat3DPts[3].x = -patternWidth/2.0;
+//		pat3DPts[3].y = patternWidth/2;
+//		pat3DPts[3].z = 0.0;
 
 		cvInitMatHeader(&objectPts, 4, 3, CV_32FC1, pat3DPts);
 		cvInitMatHeader(&imagePts, 4, 2, CV_32FC1, pat2DPts);

@@ -26,7 +26,7 @@ class Pattern
 		~Pattern(){};
 		
 		//solves the exterior orientation problem between patten and camera
-		void getExtrinsics(int patternSize, const Mat& cameraMatrix, const Mat& distortions);
+		void getExtrinsics(float patternWidth, const Mat& cameraMatrix, const Mat& distortions);
 
 		//augments image with 3D cubes. It;s too simple augmentation jsut for checking
 		void draw(Mat& frame, const Mat& camMatrix, const Mat& distMatrix);

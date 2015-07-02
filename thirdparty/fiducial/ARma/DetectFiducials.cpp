@@ -66,7 +66,7 @@ void loadImageList( std::string dir_path , std::vector<string> &files ) {
     }
 }
 
-void loadConfigFile( std::string directory , std::vector<string> &names ) {
+void loadConfigFile( std::string directory , std::vector<string> &names , std::vector<double>& sizes ) {
     string config_name = string(directory+"/expected.txt");
 
     ifstream file(config_name.c_str());
@@ -87,6 +87,7 @@ void loadConfigFile( std::string directory , std::vector<string> &names ) {
         if (std::find(names.begin(), names.end(), name) == names.end())
         {
             names.push_back(name);
+            sizes.push_back(width);
         }
 
     }
@@ -105,12 +106,14 @@ int main(int argc, char** argv)
     string scenario_dir = string(argv[1]);
     string output_dir = string(argv[2]);
     vector<string> patternFiles;
-    loadConfigFile(scenario_dir,patternFiles);
+    std::vector<double> fiducialWidths;
+    loadConfigFile(scenario_dir,patternFiles,fiducialWidths);
 
     if ( !boost::filesystem::exists( output_dir ) )
     {
         std::cout << "output directory doesn't exist!" << std::endl;
         return -1;
+
     }
 
     // load all the patterns into ARma
@@ -171,13 +174,25 @@ int main(int argc, char** argv)
         for( size_t j = 0; j < detectedPattern.size(); j++ ) {
             Pattern &pattern = detectedPattern.at(j);
 
-            Mat &R = pattern.getRotationMatrix();
-            Mat &T = pattern.transVec;
+            if( pattern.id > 0 ) {
+                Mat &R = pattern.getRotationMatrix();
+                Mat &T = pattern.transVec;
 
-            file_out << pattern.id << endl;
-            file_out << R.at<float>(0,0) << " " << R.at<float>(0,1) << " " << R.at<float>(0,2) << " " << T.at<float>(0,0) << endl;
-            file_out << R.at<float>(1,0) << " " << R.at<float>(1,1) << " " << R.at<float>(1,2) << " " << T.at<float>(1,0) << endl;
-            file_out << R.at<float>(2,0) << " " << R.at<float>(2,1) << " " << R.at<float>(2,2) << " " << T.at<float>(2,0) << endl;
+                float patternWidth = (float)fiducialWidths.at((int)(pattern.id-1));
+
+                float X = (T.at<float>(0, 0))*patternWidth;
+                float Y = (T.at<float>(1, 0))*patternWidth;
+                float Z = T.at<float>(2, 0)*patternWidth;
+
+
+                file_out << (pattern.id-1) << endl;
+                file_out << R.at<float>(0, 0) << " " << R.at<float>(0, 1) << " " << R.at<float>(0, 2) << " " <<
+                        X << endl;
+                file_out << R.at<float>(1, 0) << " " << R.at<float>(1, 1) << " " << R.at<float>(1, 2) << " " <<
+                        Y << endl;
+                file_out << R.at<float>(2, 0) << " " << R.at<float>(2, 1) << " " << R.at<float>(2, 2) << " " <<
+                        Z << endl;
+            }
         }
 
 

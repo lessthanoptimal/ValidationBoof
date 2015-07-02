@@ -27,7 +27,8 @@ public class EvaluateFiducialToCamera extends BaseEvaluateFiducialToCamera {
 		Collections.sort(results);
 
 		outputResults.println("# Data Set = "+dataset+" maxPixelError = "+maxPixelError);
-		outputResults.println("# (file) (detected ID) (matched id) (matched ori) (match pixel mean error)");
+		if( !justSummary )
+			outputResults.println("# (file) (detected ID) (matched id) (matched ori) (match pixel mean error)");
 
 		for (int i = 0; i < results.size(); i++) {
 			String resultPath = results.get(i);
@@ -52,6 +53,7 @@ public class EvaluateFiducialToCamera extends BaseEvaluateFiducialToCamera {
 		outputResults.println();
 		outputResults.println("Summary:");
 		outputResults.println(" correct            : " + totalCorrect);
+		outputResults.println(" wrong Z direction  : " + totalWrongZ);
 		outputResults.println(" wrong orientation  : " + totalWrongOrientation);
 		outputResults.println(" wrong ID           : " + totalWrongID);
 		outputResults.println(" duplicates         : " + totalDuplicates);

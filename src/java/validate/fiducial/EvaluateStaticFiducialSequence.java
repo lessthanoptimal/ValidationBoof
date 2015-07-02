@@ -34,7 +34,8 @@ public class EvaluateStaticFiducialSequence extends BaseEvaluateFiducialToCamera
 		Collections.sort(results);
 
 		outputResults.println("# Data Set = "+dataset+" maxPixelError = "+maxPixelError);
-		outputResults.println("# (file) (detected ID) (matched id) (matched ori) (match pixel error)");
+		if( !justSummary )
+			outputResults.println("# (file) (detected ID) (matched id) (matched ori) (match pixel error)");
 
 		// list of all detections for each fiducial.  used to compute precision
 		List<List<Point2D_F64>> allDetections[] = new ArrayList[expected.length];
@@ -108,6 +109,7 @@ public class EvaluateStaticFiducialSequence extends BaseEvaluateFiducialToCamera
 		outputResults.println();
 		outputResults.println("Summary:");
 		outputResults.println(" correct            : " + totalCorrect);
+		outputResults.println(" wrong Z direction  : " + totalWrongZ);
 		outputResults.println(" wrong orientation  : " + totalWrongOrientation);
 		outputResults.println(" wrong ID           : " + totalWrongID);
 		outputResults.println(" duplicates         : " + totalDuplicates);

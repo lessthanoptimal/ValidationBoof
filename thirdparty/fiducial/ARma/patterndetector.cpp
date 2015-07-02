@@ -154,7 +154,7 @@ void PatternDetector::detect(const Mat& frame, const Mat& cameraMatrix, const Ma
 					}
 
 					//find the transformation (from camera CS to pattern CS)
-					patCand.getExtrinsics(patCand.size, cameraMatrix, distortions);
+					patCand.getExtrinsics(1.0f, cameraMatrix, distortions);
 					foundPatterns.push_back(patCand);
 
 				}

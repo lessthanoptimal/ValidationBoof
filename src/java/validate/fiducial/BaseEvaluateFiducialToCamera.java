@@ -57,10 +57,15 @@ public abstract class BaseEvaluateFiducialToCamera {
 	// Fiducial IDs that were assigned to false positive
 	GrowQueue_I32 falsePositiveIDs = new GrowQueue_I32();
 
+	// Only print the summary results
+	boolean justSummary = false;
+
 	// everything correct
 	int totalCorrect;
 	// correct ID and corners are good, but orientation is bad
 	int totalWrongOrientation;
+	// wrong z-direction
+	int totalWrongZ;
 	// corner match but ID doesn't
 	int totalWrongID;
 	// complete false positive
@@ -68,8 +73,12 @@ public abstract class BaseEvaluateFiducialToCamera {
 	// nothing was matched to a fiducial
 	int totalFalseNegative;
 	// total number of times a fiducial was detected two or more times in the same image
-	// each count past one is counted twice
+	// each count past one is counted twice.
+	// NOTE: Duplicate refers to physical fuducial not duplicate IDs
 	int totalDuplicates;
+	// transform from libraries fiducial coordinate system (prior to scaling by its width) into
+	// the standard one.  Which is +z up, origin at fiducial center. sides aligned along axises, +y top +x right
+	private Se3_F64 transformToStandard;
 
 	public BaseEvaluateFiducialToCamera() {
 		fiducialPts.add( new Point3D_F64());
@@ -125,6 +134,17 @@ public abstract class BaseEvaluateFiducialToCamera {
 	 */
 	public abstract void evaluate( File resultsDirectory , String dataset );
 
+	private Se3_F64 adjustCoordinate( Se3_F64 foundF2C , double width ) {
+		if( transformToStandard == null ) {
+			return foundF2C;
+		} else {
+			Se3_F64 fidToStandard = transformToStandard.copy();
+			fidToStandard.getT().scale(width);
+			Se3_F64 foundC2F = foundF2C.invert(null);
+			return foundC2F.concat(fidToStandard, null).invert(null);
+		}
+	}
+
 	protected void evaluate( String fileName , List<FiducialCommon.Detected> detected , List<Point2D_F64> truthCorners ) {
 
 		for (int i = 0; i < expected.length; i++) {
@@ -135,7 +155,7 @@ public abstract class BaseEvaluateFiducialToCamera {
 		for( int i = 0; i < detected.size(); i++ ) {
 			FiducialCommon.Detected det = detected.get(i);
 			double fiducialWidth = scenario.getWidth(det.id);
-			List<Point2D_F64> corners = project(det.fiducialToCamera,fiducialWidth);
+			List<Point2D_F64> corners = project(adjustCoordinate(det.fiducialToCamera,fiducialWidth),fiducialWidth);
 
 			Assignment match = findBestAssignment(corners,truthCorners);
 			if( match == null ) {
@@ -148,6 +168,8 @@ public abstract class BaseEvaluateFiducialToCamera {
 				normal.z = det.fiducialToCamera.getR().get(2,2);
 
 				if( match.id == det.id ) {
+					if( match.reverseOrder )
+						totalWrongZ++;
 					if( match.ori == 0 )
 						totalCorrect++;
 					else
@@ -162,15 +184,18 @@ public abstract class BaseEvaluateFiducialToCamera {
 					errors.add( match.errors[j] );
 				}
 
-				outputResults.println(fileName+" "+det.id + " " + match.id + " " + match.ori + " "+match.meanError);
+				if( !justSummary )
+					outputResults.println(fileName+" "+det.id + " " + match.id + " " + match.ori + " "+match.meanError);
 			} else {
-				outputResults.println(fileName+" "+det.id +" false positive");
+				if( !justSummary )
+					outputResults.println(fileName+" "+det.id +" false positive");
 			}
 		}
 
 		for (int i = 0; i < fiducialDetected.length; i++) {
 			if( fiducialDetected[i] == 0 ) {
-				outputResults.println(fileName+" false negative for ID "+expected[i]);
+				if( !justSummary )
+					outputResults.println(fileName+" false negative for ID "+expected[i]);
 				totalFalseNegative++;
 			}
 			totalDuplicates += Math.max(0,fiducialDetected[i]-1);
@@ -222,6 +247,28 @@ public abstract class BaseEvaluateFiducialToCamera {
 					best.meanError = meanError;
 					best.ori = ori;
 					best.id = expected[i/4];
+					best.reverseOrder = false;
+					System.arraycopy(errors,0,best.errors,0,4);
+					bestExpectedIndex = i/4;
+				}
+			}
+
+			// try going around in the different direction
+			for (int ori = 0; ori < 4; ori++) {
+				double meanError = 0;
+				for (int k = 0; k < 4; k++) {
+					int index = (ori-k)%4;
+					if( index < 0 ) index = 4 + index;
+					errors[k] = corners.get(k).distance(truthCorners.get(i+index));
+					meanError += errors[k];
+				}
+				meanError /= 4;
+
+				if( meanError < best.meanError ) {
+					best.meanError = meanError;
+					best.ori = ori;
+					best.id = expected[i/4];
+					best.reverseOrder = true;
 					System.arraycopy(errors,0,best.errors,0,4);
 					bestExpectedIndex = i/4;
 				}
@@ -249,11 +296,20 @@ public abstract class BaseEvaluateFiducialToCamera {
 		this.maxPixelError = maxPixelError;
 	}
 
+	public void setTransformToStandard(Se3_F64 transformToStandard) {
+		this.transformToStandard = transformToStandard;
+	}
+
+	public void setJustSummary(boolean justSummary) {
+		this.justSummary = justSummary;
+	}
+
 	public static class Assignment
 	{
 		int index;
 		int id;
 		int ori;
+		boolean reverseOrder;
 		double meanError;
 		double errors[] = new double[4];
 	}
