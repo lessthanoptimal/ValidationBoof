@@ -23,6 +23,10 @@ public class GenerateBenchmarkResults {
 
 	public void process( File benchmarkDir , String outputDir ) throws IOException {
 
+		if( !new File(outputDir).exists() ) {
+			new File(outputDir).mkdirs();
+		}
+
 		PrintStream out = new PrintStream(new File(outputDir,"libToStandard.txt"));
 		out.println("1 0 0 0");
 		out.println("0 1 0 0");

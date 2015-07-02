@@ -191,7 +191,7 @@ public abstract class BaseEvaluateFiducialToCamera {
 				}
 
 				if( !justSummary )
-					outputResults.println(fileName+" "+det.id + " " + match.id + " " + match.ori + " "+match.meanError);
+					outputResults.println(fileName+" "+det.id + " " + match.id + " " +match.reverseOrder+ " " + match.ori + " "+match.meanError);
 			} else {
 				if( !justSummary )
 					outputResults.println(fileName+" "+det.id +" false positive");

@@ -69,6 +69,10 @@ void loadImageList( std::string dir_path , std::vector<string> &files ) {
 void loadConfigFile( std::string directory , std::vector<string> &names , std::vector<double>& sizes ) {
     string config_name = string(directory+"/library.txt");
 
+    if ( !boost::filesystem::exists( config_name ) ) {
+        throw std::runtime_error("library file does not exist");
+    }
+
     ifstream file(config_name.c_str());
 
     std::string line;

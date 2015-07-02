@@ -14,7 +14,7 @@ import java.io.*;
  */
 public class BenchmarkFiducialImageLibrary {
 	File baseFiducial = new File("data/fiducials/image");
-	String dataSetsStandard[] = new String[]{"rotation","distance_straight","distance_angle"};
+	String dataSetsStandard[] = new String[]{"rotation","distance_straight","distance_angle","hard"};
 	String dataSetsBlur[] = new String[]{"motion_blur"};
 	String dataSetsStatic[] = new String[]{"static_scene","static_front_close","static_front_far"};
 
