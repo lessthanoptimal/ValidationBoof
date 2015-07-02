@@ -40,8 +40,8 @@ public class CalibrationDetectionRegression extends BaseTextFileRegression{
 		squareDirectories.add("data/calib/stereo/Bumblebee2_Square");
 		squareDirectories.add("data/calib/mono/Sony_DSC-HX5V_Square");
 
-		addDetector("DetectCalibChess", FactoryPlanarCalibrationTarget.detectorChessboard(new ConfigChessboard(5, 7)), true);
-		addDetector("DetectCalibSquare", FactoryPlanarCalibrationTarget.detectorSquareGrid(new ConfigSquareGrid(5, 7)), false);
+		addDetector("DetectCalibChess", FactoryPlanarCalibrationTarget.detectorChessboard(new ConfigChessboard(5, 7,30)), true);
+		addDetector("DetectCalibSquare", FactoryPlanarCalibrationTarget.detectorSquareGrid(new ConfigSquareGrid(5, 7,30,30)), false);
 	}
 
 	public void addDetector( String name , PlanarCalibrationDetector detector , boolean chess ) {
@@ -108,7 +108,7 @@ public class CalibrationDetectionRegression extends BaseTextFileRegression{
 				if( detector.process(image) ) {
 					double errors[] = new double[ groundTruth.size() ];
 
-					List<Point2D_F64> found = detector.getPoints();
+					List<Point2D_F64> found = detector.getDetectedPoints();
 					if( found.size() != groundTruth.size() ) {
 						errorLog.println(dataSetName+" different sizes. "+found.size()+" "+groundTruth.size());
 					} else {

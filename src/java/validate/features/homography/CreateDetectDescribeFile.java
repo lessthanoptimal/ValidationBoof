@@ -20,7 +20,7 @@
 package validate.features.homography;
 
 import boofcv.abst.feature.detdesc.DetectDescribePoint;
-import boofcv.core.image.ConvertBufferedImage;
+import boofcv.io.image.ConvertBufferedImage;
 import boofcv.io.image.UtilImageIO;
 import boofcv.struct.feature.TupleDesc_F64;
 import boofcv.struct.image.ImageBase;

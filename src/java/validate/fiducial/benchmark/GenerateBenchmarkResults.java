@@ -57,7 +57,7 @@ public class GenerateBenchmarkResults {
 		FactoryObject factory = new FactoryObject() {
 			@Override
 			public Object newInstance() {
-				return FactoryFiducial.squareImageRobust(new ConfigFiducialImage(1), 20, ImageUInt8.class);
+				return FactoryFiducial.squareImageRobust(new ConfigFiducialImage(), 20, ImageUInt8.class);
 			}
 		};
 

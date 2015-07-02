@@ -39,11 +39,11 @@ public class FiducialRegression extends BaseTextFileRegression {
 		process( "BinaryFast", factory,"binary");
 
 		factory = new FactoryObject() { @Override public Object newInstance()
-		{return FactoryFiducial.squareImageRobust(new ConfigFiducialImage(1), 20, imageType);}};
+		{return FactoryFiducial.squareImageRobust(new ConfigFiducialImage(), 20, imageType);}};
 		process( "ImageRobust", factory,"image");
 
 		factory = new FactoryObject() { @Override public Object newInstance()
-		{return FactoryFiducial.squareImageFast(new ConfigFiducialImage(1), 80, imageType);}};
+		{return FactoryFiducial.squareImageFast(new ConfigFiducialImage(), 80, imageType);}};
 		process( "ImageFast", factory,"image");
 	}
 

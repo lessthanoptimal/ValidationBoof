@@ -21,7 +21,7 @@ package validate.features.homography;
 
 
 import boofcv.abst.feature.detdesc.DetectDescribePoint;
-import boofcv.core.image.ConvertBufferedImage;
+import boofcv.io.image.ConvertBufferedImage;
 import boofcv.struct.feature.TupleDesc;
 import boofcv.struct.image.ImageSingleBand;
 

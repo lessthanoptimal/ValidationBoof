@@ -21,7 +21,7 @@ package validate.features.homography;
 
 
 import boofcv.abst.feature.detect.interest.InterestPointDetector;
-import boofcv.core.image.ConvertBufferedImage;
+import boofcv.io.image.ConvertBufferedImage;
 import boofcv.struct.image.ImageSingleBand;
 
 import javax.imageio.ImageIO;

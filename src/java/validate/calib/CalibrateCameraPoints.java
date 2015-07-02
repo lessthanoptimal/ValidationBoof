@@ -1,8 +1,9 @@
 package validate.calib;
 
+import boofcv.abst.calib.ConfigChessboard;
+import boofcv.abst.calib.PlanarCalibrationDetector;
 import boofcv.alg.geo.calibration.CalibrationPlanarGridZhang99;
-import boofcv.alg.geo.calibration.PlanarCalibrationTarget;
-import boofcv.alg.geo.calibration.Zhang99Parameters;
+import boofcv.alg.geo.calibration.Zhang99ParamAll;
 import boofcv.factory.calib.FactoryPlanarCalibrationTarget;
 import boofcv.struct.calib.IntrinsicParameters;
 import georegression.struct.point.Point2D_F64;
@@ -48,9 +49,9 @@ public class CalibrateCameraPoints {
 
 	public static void main( String args[] ) throws IOException {
 		// todo load file a file instead
-		PlanarCalibrationTarget targetDesc = FactoryPlanarCalibrationTarget.gridChess(5,7, 30);
+		PlanarCalibrationDetector targetDesc = FactoryPlanarCalibrationTarget.detectorChessboard(new ConfigChessboard(5,7, 30));
 		CalibrationPlanarGridZhang99 zhang99 =
-				new CalibrationPlanarGridZhang99(targetDesc,true,2);
+				new CalibrationPlanarGridZhang99(targetDesc.getLayout(),true,2,false);
 
 		List<List<Point2D_F64>>  observations = loadObservations("../results/calib/points_boofcv_chess_bumblebee2_left.txt");
 //		List<List<Point2D_F64>>  observations = loadObservations("../results/calib/points_opencv_chess_bumblebee2_left.txt");
@@ -60,7 +61,7 @@ public class CalibrateCameraPoints {
 			throw new RuntimeException("Calibration failed!");
 
 		// Get camera parameters and extrinsic target location in each image
-		Zhang99Parameters found = zhang99.getOptimized();
+		Zhang99ParamAll found = zhang99.getOptimized();
 
 		// Convenient function for converting from specialized Zhang99 format to generalized
 		IntrinsicParameters param = found.convertToIntrinsic();
@@ -71,12 +72,12 @@ public class CalibrateCameraPoints {
 		PrintStream writer = new PrintStream("boofcv_calib.txt");
 
 		writer.printf("%1.15f %1.15f %1.15f %1.15f %1.15f\n",found.a,found.b,found.c,found.x0,found.y0);
-		writer.printf("%d",found.distortion.length);
-		for( int i = 0; i < found.distortion.length; i++ )
-			writer.printf(" %1.15f",found.distortion[i]);
+		writer.printf("%d",found.radial.length);
+		for( int i = 0; i < found.radial.length; i++ )
+			writer.printf(" %1.15f",found.radial[i]);
 		writer.println();
 		writer.println(found.views.length);
-		for( Zhang99Parameters.View v : found.views ) {
+		for( Zhang99ParamAll.View v : found.views ) {
 			double rx = v.rotation.unitAxisRotation.x * v.rotation.theta;
 			double ry = v.rotation.unitAxisRotation.y * v.rotation.theta;
 			double rz = v.rotation.unitAxisRotation.z * v.rotation.theta;

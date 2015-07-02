@@ -1,7 +1,7 @@
 package validate.vo;
 
 import boofcv.abst.sfm.d3.StereoVisualOdometry;
-import boofcv.core.image.ConvertBufferedImage;
+import boofcv.io.image.ConvertBufferedImage;
 import boofcv.struct.image.ImageBase;
 import boofcv.struct.image.ImageType;
 import georegression.geometry.RotationMatrixGenerator;
@@ -116,7 +116,7 @@ public class EvaluateVisualOdometryStereo<T extends ImageBase> {
 
 	private void processFrame() {
 		ConvertBufferedImage.convertFrom(data.getLeft(), inputLeft, true);
-		ConvertBufferedImage.convertFrom(data.getRight(), inputRight,true);
+		ConvertBufferedImage.convertFrom(data.getRight(), inputRight, true);
 
 		long before = System.nanoTime();
 		if( !data.isCalibrationFixed() )

@@ -80,6 +80,6 @@ public class BenchmarkFiducialImageLibrary {
 	public static void main(String[] args) throws IOException {
 		BenchmarkFiducialImageLibrary app = new BenchmarkFiducialImageLibrary();
 
-		app.process("thirdparty/fiducial/output");
+		app.process("output");
 	}
 }

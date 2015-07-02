@@ -1,18 +1,19 @@
 package validate.tracking;
 
 import boofcv.abst.geo.RefineEpipolar;
+import boofcv.alg.distort.AdjustmentType;
 import boofcv.alg.distort.ImageDistort;
 import boofcv.alg.distort.LensDistortionOps;
 import boofcv.alg.distort.PointToPixelTransform_F32;
+import boofcv.alg.geo.robust.DistanceHomographySq;
+import boofcv.alg.geo.robust.GenerateHomographyLinear;
 import boofcv.alg.interpolate.InterpolatePixelS;
-import boofcv.alg.sfm.robust.DistanceHomographySq;
-import boofcv.alg.sfm.robust.GenerateHomographyLinear;
-import boofcv.core.image.ConvertBufferedImage;
 import boofcv.factory.distort.FactoryDistort;
 import boofcv.factory.geo.EpipolarError;
 import boofcv.factory.geo.FactoryMultiView;
 import boofcv.factory.interpolate.FactoryInterpolation;
 import boofcv.io.UtilIO;
+import boofcv.io.image.ConvertBufferedImage;
 import boofcv.io.image.SimpleImageSequence;
 import boofcv.io.image.UtilImageIO;
 import boofcv.io.wrapper.DefaultMediaManager;
@@ -90,7 +91,7 @@ public class CreateGroundTruth {
 
 		// create distortion to remove lens distortion
 		// Adjust the distortion so that the undistorted image only shows image pixels
-		PointTransform_F32 allInside = LensDistortionOps.allInside(cameraParam, null);
+		PointTransform_F32 allInside = LensDistortionOps.transform_F32(AdjustmentType.EXPAND,cameraParam, null,true);
 		InterpolatePixelS<ImageFloat32> interp = FactoryInterpolation.bilinearPixelS(ImageFloat32.class);
 		removeLens = FactoryDistort.distort(false,interp, null, ImageFloat32.class);
 		removeLens.setModel(new PointToPixelTransform_F32(allInside));

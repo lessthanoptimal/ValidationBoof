@@ -1,7 +1,7 @@
 package validate.fiducial;
 
 import boofcv.abst.fiducial.FiducialDetector;
-import boofcv.core.image.ConvertBufferedImage;
+import boofcv.io.image.ConvertBufferedImage;
 import boofcv.io.image.UtilImageIO;
 import boofcv.misc.BoofMiscOps;
 import boofcv.struct.calib.IntrinsicParameters;
@@ -82,7 +82,7 @@ public abstract class BaseEstimateSquareFiducialToCamera<T extends ImageBase> {
 			for (int i = 0; i < detector.totalFound(); i++) {
 				int which = detector.getId(i);
 				double fiducialWidth = library.getWidth(which);
-				detector.getFiducialToWorld(i,fiducialToSensor);
+				detector.getFiducialToCamera(i,fiducialToSensor);
 
 
 				DenseMatrix64F R = fiducialToSensor.getR();

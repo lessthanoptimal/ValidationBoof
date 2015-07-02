@@ -1,6 +1,7 @@
 package validate.calib;
 
-import boofcv.alg.geo.calibration.PlanarCalibrationTarget;
+import boofcv.abst.calib.ConfigChessboard;
+import boofcv.abst.calib.PlanarCalibrationDetector;
 import boofcv.factory.calib.FactoryPlanarCalibrationTarget;
 import georegression.struct.point.Point2D_F64;
 
@@ -16,12 +17,12 @@ import java.io.PrintStream;
 public class SaveTargetDescription {
 
 	public static void main( String args[] ) throws FileNotFoundException {
-		PlanarCalibrationTarget target = FactoryPlanarCalibrationTarget.gridChess(5, 7, 30);
+		PlanarCalibrationDetector target = FactoryPlanarCalibrationTarget.detectorChessboard(new ConfigChessboard(5, 7, 30));
 
 		PrintStream out = new PrintStream(new FileOutputStream("target.txt"));
-		out.println(target.points.size());
+		out.println(target.getLayout().size());
 
-		for(Point2D_F64 p : target.points ) {
+		for(Point2D_F64 p : target.getLayout() ) {
 			out.printf("%f %f\n",p.x,p.y);
 		}
 		System.out.println("Done");
