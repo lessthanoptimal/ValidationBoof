@@ -50,7 +50,8 @@ public abstract class BaseEvaluateFiducialToCamera {
 	// average errors for all 4 corners in a fiducial for each detected fiducials
 	GrowQueue_F64 errors = new GrowQueue_F64();
 
-	FiducialCommon.Scenario scenario;
+	FiducialCommon.Library library;
+	List<String> visible;
 
 	List<Point3D_F64> fiducialPts = new ArrayList<Point3D_F64>();
 
@@ -89,9 +90,14 @@ public abstract class BaseEvaluateFiducialToCamera {
 
 	protected File initialize(String dataset) {
 		File dataSetDir = new File(baseDirectory,dataset);
-		scenario = FiducialCommon.parseScenario(new File(dataSetDir, "expected.txt"));
+		library = FiducialCommon.parseScenario(new File(dataSetDir, "library.txt"));
+		List<String> visible = FiducialCommon.parseVisibleFile(new File(dataSetDir,"visible.txt"));
 
-		expected = scenario.getKnownIds();
+		expected = new int[visible.size()];
+		for( int i = 0; i < visible.size(); i++ ) {
+			expected[i] = library.nameToID(visible.get(i));
+		}
+
 		fiducialDetected = new int[expected.length];
 		detectedCorners = new ArrayList[expected.length];
 		fiducialNormal = new Vector3D_F64[expected.length];
@@ -154,7 +160,7 @@ public abstract class BaseEvaluateFiducialToCamera {
 
 		for( int i = 0; i < detected.size(); i++ ) {
 			FiducialCommon.Detected det = detected.get(i);
-			double fiducialWidth = scenario.getWidth(det.id);
+			double fiducialWidth = library.getWidth(det.id);
 			List<Point2D_F64> corners = project(adjustCoordinate(det.fiducialToCamera,fiducialWidth),fiducialWidth);
 
 			Assignment match = findBestAssignment(corners,truthCorners);

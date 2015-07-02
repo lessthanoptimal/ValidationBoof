@@ -8,6 +8,7 @@ import boofcv.factory.fiducial.FactoryFiducial;
 import boofcv.io.image.UtilImageIO;
 import boofcv.struct.image.ImageSingleBand;
 import boofcv.struct.image.ImageUInt8;
+import validate.FactoryObject;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -24,20 +25,20 @@ import java.util.List;
  */
 public class EstimateImageFiducialToCamera<T extends ImageSingleBand> extends BaseEstimateSquareFiducialToCamera<T> {
 
+	FactoryObject<SquareImage_to_FiducialDetector<T>> factory;
 
-	public EstimateImageFiducialToCamera(FiducialDetector<T> detector) {
-		super(detector);
+	public EstimateImageFiducialToCamera(FactoryObject<SquareImage_to_FiducialDetector<T>> factory) {
+		this.factory = factory;
 	}
 
-
 	@Override
-	public void configureDetector(File datasetDirectory) {
-		FiducialCommon.Scenario scenario = FiducialCommon.parseScenario(new File(datasetDirectory, "expected.txt"));
+	public FiducialDetector<T> createDetector(File datasetDirectory) {
+		FiducialCommon.Library library = FiducialCommon.parseScenario(new File(datasetDirectory, "library.txt"));
 
-		SquareImage_to_FiducialDetector<T> detectorImage = (SquareImage_to_FiducialDetector)detector;
+		SquareImage_to_FiducialDetector<T> detectorImage = factory.newInstance();
 
 		List<String> loaded = new ArrayList<String>();
-		for( String name : scenario.getNames() ) {
+		for( String name : library.getAllNames() ) {
 			if( loaded.contains(name))
 				continue;
 			else
@@ -46,24 +47,27 @@ public class EstimateImageFiducialToCamera<T extends ImageSingleBand> extends Ba
 			BufferedImage image = UtilImageIO.loadImage(f.getAbsolutePath());
 			if( image == null )
 				throw new RuntimeException("Can't load "+name);
-			T input = (T)detector.getInputType().createImage(image.getWidth(),image.getHeight());
+			T input = (T)detectorImage.getInputType().createImage(image.getWidth(),image.getHeight());
 			ConvertBufferedImage.convertFrom(image,input,true);
 
 			detectorImage.addTarget(input, 100);
 		}
+
+		return detectorImage;
 	}
-
-
 
 	public static void main(String[] args) throws IOException {
 
 		File outputDirectory = setupOutput();
 
-		Class imageType = ImageUInt8.class;
+		FactoryObject factory = new FactoryObject() {
+			@Override
+			public Object newInstance() {
+				return FactoryFiducial.squareImageRobust(new ConfigFiducialImage(1), 20, ImageUInt8.class);
+			}
+		};
 
-		FiducialDetector detector = FactoryFiducial.squareImageRobust(new ConfigFiducialImage(1), 20, imageType);
-
-		EstimateImageFiducialToCamera app = new EstimateImageFiducialToCamera(detector);
+		EstimateImageFiducialToCamera app = new EstimateImageFiducialToCamera(factory);
 		app.initialize(new File("data/fiducials/image"));
 		app.setOutputDirectory(outputDirectory);
 

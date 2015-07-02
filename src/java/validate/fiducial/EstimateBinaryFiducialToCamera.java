@@ -5,6 +5,7 @@ import boofcv.factory.fiducial.ConfigFiducialBinary;
 import boofcv.factory.fiducial.FactoryFiducial;
 import boofcv.struct.image.ImageBase;
 import boofcv.struct.image.ImageUInt8;
+import validate.FactoryObject;
 
 import java.io.File;
 import java.io.IOException;
@@ -19,27 +20,35 @@ import java.io.IOException;
 public class EstimateBinaryFiducialToCamera<T extends ImageBase> extends BaseEstimateSquareFiducialToCamera {
 
 
-	public EstimateBinaryFiducialToCamera(FiducialDetector<T> detector) {
-		super(detector);
+	FactoryObject<FiducialDetector<T>> factory;
+
+	public EstimateBinaryFiducialToCamera(FactoryObject<FiducialDetector<T>> factory) {
+		this.factory = factory;
 	}
 
 	@Override
-	public void configureDetector(File baseDirectory) {
-
+	public FiducialDetector createDetector(File datasetDir) {
+		return factory.newInstance();
 	}
+
 
 	public static void main(String[] args) throws IOException {
 
 		File outputDirectory = setupOutput();
-		Class imageType = ImageUInt8.class;
 
-		FiducialDetector detector = FactoryFiducial.squareBinaryRobust(new ConfigFiducialBinary(1), 15, imageType);
+		FactoryObject factory = new FactoryObject() {
+			@Override
+			public Object newInstance() {
+				return FactoryFiducial.squareBinaryRobust(new ConfigFiducialBinary(1), 15, ImageUInt8.class);
+			}
+		};
 
-		EstimateBinaryFiducialToCamera app = new EstimateBinaryFiducialToCamera(detector);
+		EstimateBinaryFiducialToCamera app = new EstimateBinaryFiducialToCamera(factory);
 		app.initialize(new File("data/fiducials/binary"));
 		app.setOutputDirectory(outputDirectory);
 
 		app.process("distance_straight");
 	}
+
 
 }

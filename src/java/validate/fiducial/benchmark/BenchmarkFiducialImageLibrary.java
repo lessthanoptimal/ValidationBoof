@@ -1,6 +1,8 @@
-package validate.fiducial;
+package validate.fiducial.benchmark;
 
 import georegression.struct.se.Se3_F64;
+import validate.fiducial.EvaluateFiducialToCamera;
+import validate.fiducial.EvaluateStaticFiducialSequence;
 import validate.misc.ParseHelper;
 
 import java.io.*;

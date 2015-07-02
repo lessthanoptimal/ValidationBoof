@@ -1,11 +1,11 @@
 package regression;
 
-import boofcv.abst.fiducial.FiducialDetector;
 import boofcv.factory.fiducial.ConfigFiducialBinary;
 import boofcv.factory.fiducial.ConfigFiducialImage;
 import boofcv.factory.fiducial.FactoryFiducial;
 import boofcv.struct.image.ImageDataType;
 import validate.DataSetDoesNotExist;
+import validate.FactoryObject;
 import validate.fiducial.*;
 import validate.misc.ParseHelper;
 
@@ -28,28 +28,34 @@ public class FiducialRegression extends BaseTextFileRegression {
 
 	@Override
 	public void process(ImageDataType type) throws IOException {
-		Class imageType = ImageDataType.typeToSingleClass(type);
+		final Class imageType = ImageDataType.typeToSingleClass(type);
 
-		FiducialDetector detector = FactoryFiducial.squareBinaryRobust(new ConfigFiducialBinary(1),20,imageType);
-		process( "BinaryRobust", detector,"binary");
-		detector = FactoryFiducial.squareBinaryFast(new ConfigFiducialBinary(1), 80, imageType);
-		process( "BinaryFast", detector,"binary");
+		FactoryObject factory = new FactoryObject() { @Override public Object newInstance()
+			{return FactoryFiducial.squareBinaryRobust(new ConfigFiducialBinary(1), 20, imageType);}};
+		process( "BinaryRobust", factory,"binary");
 
-		detector = FactoryFiducial.squareImageRobust(new ConfigFiducialImage(1), 20, imageType);
-		process( "ImageRobust", detector,"image");
-		detector = FactoryFiducial.squareImageFast(new ConfigFiducialImage(1), 80, imageType);
-		process( "ImageFast", detector,"image");
+		factory = new FactoryObject() { @Override public Object newInstance()
+		{return FactoryFiducial.squareBinaryFast(new ConfigFiducialBinary(1), 80, imageType);}};
+		process( "BinaryFast", factory,"binary");
+
+		factory = new FactoryObject() { @Override public Object newInstance()
+		{return FactoryFiducial.squareImageRobust(new ConfigFiducialImage(1), 20, imageType);}};
+		process( "ImageRobust", factory,"image");
+
+		factory = new FactoryObject() { @Override public Object newInstance()
+		{return FactoryFiducial.squareImageFast(new ConfigFiducialImage(1), 80, imageType);}};
+		process( "ImageFast", factory,"image");
 	}
 
-	private void process(String name, FiducialDetector detector, String type) throws IOException {
+	private void process(String name, FactoryObject factory, String type) throws IOException {
 
 
 		BaseEstimateSquareFiducialToCamera estimate;
 
 		if( type.compareTo("binary") == 0) {
-			estimate = new EstimateBinaryFiducialToCamera(detector);
+			estimate = new EstimateBinaryFiducialToCamera(factory);
 		} else {
-			estimate = new EstimateImageFiducialToCamera(detector);
+			estimate = new EstimateImageFiducialToCamera(factory);
 		}
 
 		infoString = name;

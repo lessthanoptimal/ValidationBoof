@@ -67,7 +67,7 @@ void loadImageList( std::string dir_path , std::vector<string> &files ) {
 }
 
 void loadConfigFile( std::string directory , std::vector<string> &names , std::vector<double>& sizes ) {
-    string config_name = string(directory+"/expected.txt");
+    string config_name = string(directory+"/library.txt");
 
     ifstream file(config_name.c_str());
 

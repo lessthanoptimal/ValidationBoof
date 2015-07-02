@@ -29,11 +29,9 @@ public abstract class BaseEstimateSquareFiducialToCamera<T extends ImageBase> {
 	File baseDirectory;
 	File outputDirectory = new File(".");
 
-	FiducialDetector<T> detector;
 
-	public BaseEstimateSquareFiducialToCamera(FiducialDetector<T> detector) {
-		this.detector = detector;
-	}
+
+	public abstract FiducialDetector<T> createDetector( File datasetDir );
 
 	public void initialize( File baseDirectory ) {
 		this.baseDirectory = baseDirectory;
@@ -43,7 +41,6 @@ public abstract class BaseEstimateSquareFiducialToCamera<T extends ImageBase> {
 		this.outputDirectory = outputDirectory;
 	}
 
-	public abstract void configureDetector( File datasetDir );
 
 	public void process( String dataset ) throws IOException {
 
@@ -52,8 +49,8 @@ public abstract class BaseEstimateSquareFiducialToCamera<T extends ImageBase> {
 			throw new DataSetDoesNotExist("The data set directory doesn't exist. "+dataSetDir.getPath());
 		}
 
-		configureDetector(dataSetDir);
-		FiducialCommon.Scenario scenario = FiducialCommon.parseScenario(new File(dataSetDir, "expected.txt"));
+		FiducialDetector<T> detector = createDetector(dataSetDir);
+		FiducialCommon.Library library = FiducialCommon.parseScenario(new File(dataSetDir, "library.txt"));
 
 		List<String> files = BoofMiscOps.directoryList(dataSetDir.getAbsolutePath(), "png");
 		if( files.size() == 0 ) {
@@ -84,7 +81,7 @@ public abstract class BaseEstimateSquareFiducialToCamera<T extends ImageBase> {
 			Se3_F64 fiducialToSensor = new Se3_F64();
 			for (int i = 0; i < detector.totalFound(); i++) {
 				int which = detector.getId(i);
-				double fiducialWidth = scenario.getWidth(which);
+				double fiducialWidth = library.getWidth(which);
 				detector.getFiducialToWorld(i,fiducialToSensor);
 
 

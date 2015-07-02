@@ -76,18 +76,37 @@ public class FiducialCommon {
 		}
 	}
 
-	public static Scenario parseScenario( File file ) {
-		Scenario scenario;
+	public static Library parseScenario( File file ) {
+		Library library;
 		if( file.getPath().contains("binary")) {
-			scenario = new ScenarioBinary();
+			library = new LibraryBinary();
 		} else {
-			scenario = new ScenarioImage();
+			library = new LibraryImage();
 		}
-		parseScenario(file,scenario);
-		return scenario;
+		parseScenario(file, library);
+		return library;
 	}
 
-	public static void parseScenario(File file, Scenario scenario ) {
+	public static List<String> parseVisibleFile( File file ) {
+		try {
+			BufferedReader reader = new BufferedReader(new FileReader(file));
+
+			List<String> visible = new ArrayList<String>();
+			String line = ParseHelper.skipComments(reader);
+
+			while( line != null ) {
+				visible.add(line);
+				line = reader.readLine();
+			}
+
+			reader.close();
+			return visible;
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	public static void parseScenario(File file, Library library) {
 		try {
 			BufferedReader reader = new BufferedReader(new FileReader(file));
 
@@ -103,27 +122,24 @@ public class FiducialCommon {
 				line = reader.readLine();
 			}
 
-			scenario.init(widths,names);
+			library.init(widths,names);
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-
-	public interface Scenario
+	public interface Library
 	{
 		void init( List<Double> widths, List<String> names );
 
-		List<String> getNames();
-
-		int[] getKnownIds();
+		List<String> getAllNames();
 
 		int nameToID( String name );
 
 		double getWidth( int id );
 	}
 
-	public static class ScenarioBinary implements Scenario
+	public static class LibraryBinary implements Library
 	{
 		int expectedId[];
 		double widths[];
@@ -140,13 +156,8 @@ public class FiducialCommon {
 		}
 
 		@Override
-		public List<String> getNames() {
+		public List<String> getAllNames() {
 			return null;
-		}
-
-		@Override
-		public int[] getKnownIds() {
-			return expectedId;
 		}
 
 		@Override
@@ -164,7 +175,7 @@ public class FiducialCommon {
 		}
 	}
 
-	public static class ScenarioImage implements Scenario
+	public static class LibraryImage implements Library
 	{
 		List<String> names = new ArrayList<String>();
 		double widths[];
@@ -180,19 +191,8 @@ public class FiducialCommon {
 		}
 
 		@Override
-		public List<String> getNames() {
+		public List<String> getAllNames() {
 			return names;
-		}
-
-		@Override
-		public int[] getKnownIds() {
-			int[] expected = new int[names.size()];
-			for (int i = 0; i < names.size(); i++) {
-				// the ID for an image is the order in which it was added, so duplicates will have
-				// the ID of the first instance
-				expected[i] = names.indexOf(names.get(i));
-			}
-			return expected;
 		}
 
 		@Override
