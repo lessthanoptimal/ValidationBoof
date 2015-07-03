@@ -1,7 +1,6 @@
 package validate.fiducial;
 
 import boofcv.alg.geo.PerspectiveOps;
-import boofcv.io.UtilIO;
 import boofcv.struct.calib.IntrinsicParameters;
 import georegression.struct.point.Point2D_F64;
 import georegression.struct.point.Point3D_F64;
@@ -105,7 +104,7 @@ public abstract class BaseEvaluateFiducialToCamera {
 			detectedCorners[i] = new ArrayList<Point2D_F64>();
 			fiducialNormal[i] = new Vector3D_F64();
 		}
-		intrinsic = UtilIO.loadXML(new File(dataSetDir, "intrinsic.xml").toString());
+		intrinsic = FiducialCommon.parseIntrinsic(new File(dataSetDir,"intrinsic.txt"));
 		if( intrinsic.radial != null )
 			throw new IllegalArgumentException("Expected no distortion");
 		return dataSetDir;

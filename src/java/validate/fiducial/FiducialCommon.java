@@ -171,7 +171,8 @@ public class FiducialCommon {
 				if( expectedId[i] == id)
 					return widths[i];
 			}
-			throw new RuntimeException("Unknown ID");
+			// just return the first one as a default.  In all the current datasets  everything is the same size
+			return widths[0];
 		}
 	}
 
@@ -202,7 +203,9 @@ public class FiducialCommon {
 
 		@Override
 		public double getWidth(int id) {
-			return widths[id];
+			if( id >= 0 && id < widths.length )
+				return widths[id];
+			return widths[0];
 		}
 	}
 
