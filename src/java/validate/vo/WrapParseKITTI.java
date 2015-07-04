@@ -41,8 +41,8 @@ public class WrapParseKITTI implements SequenceStereoImages {
 		DenseMatrix64F K_inv = new DenseMatrix64F(3,3);
 		CommonOps.invert(K,K_inv);
 
-		param.left = PerspectiveOps.matrixToParam(K,leftWidth,leftHeight,false,null);
-		param.right = PerspectiveOps.matrixToParam(K,rightWidth,rightHeight,false,null);
+		param.left = PerspectiveOps.matrixToParam(K,leftWidth,leftHeight,null);
+		param.right = PerspectiveOps.matrixToParam(K,rightWidth,rightHeight,null);
 		param.left.radial = new double[0];
 		param.right.radial = new double[0];
 

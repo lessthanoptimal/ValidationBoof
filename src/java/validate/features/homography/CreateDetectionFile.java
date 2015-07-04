@@ -21,7 +21,7 @@ package validate.features.homography;
 
 import boofcv.abst.feature.detect.interest.InterestPointDetector;
 import boofcv.abst.feature.orientation.OrientationImage;
-import boofcv.core.image.ConvertBufferedImage;
+import boofcv.io.image.ConvertBufferedImage;
 import boofcv.io.image.UtilImageIO;
 import boofcv.struct.image.ImageSingleBand;
 import georegression.struct.point.Point2D_F64;

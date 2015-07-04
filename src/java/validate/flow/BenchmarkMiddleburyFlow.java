@@ -1,8 +1,8 @@
 package validate.flow;
 
 import boofcv.abst.flow.DenseOpticalFlow;
-import boofcv.core.image.ConvertBufferedImage;
 import boofcv.factory.flow.FactoryDenseOpticalFlow;
+import boofcv.io.image.ConvertBufferedImage;
 import boofcv.io.image.UtilImageIO;
 import boofcv.struct.flow.ImageFlow;
 import boofcv.struct.image.ImageBase;

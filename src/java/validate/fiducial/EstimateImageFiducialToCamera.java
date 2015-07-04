@@ -2,9 +2,9 @@ package validate.fiducial;
 
 import boofcv.abst.fiducial.FiducialDetector;
 import boofcv.abst.fiducial.SquareImage_to_FiducialDetector;
-import boofcv.core.image.ConvertBufferedImage;
 import boofcv.factory.fiducial.ConfigFiducialImage;
 import boofcv.factory.fiducial.FactoryFiducial;
+import boofcv.io.image.ConvertBufferedImage;
 import boofcv.io.image.UtilImageIO;
 import boofcv.struct.image.ImageSingleBand;
 import boofcv.struct.image.ImageUInt8;
@@ -13,8 +13,6 @@ import validate.FactoryObject;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Estimates the location of fiducials in the input images.  Results are saved to the specified output directory.
@@ -37,12 +35,8 @@ public class EstimateImageFiducialToCamera<T extends ImageSingleBand> extends Ba
 
 		SquareImage_to_FiducialDetector<T> detectorImage = factory.newInstance();
 
-		List<String> loaded = new ArrayList<String>();
-		for( String name : library.getAllNames() ) {
-			if( loaded.contains(name))
-				continue;
-			else
-				loaded.add(name);
+		for( int i = 0; i < library.getAllNames().size(); i++ ) {
+			String name = library.getAllNames().get(i);
 			File f = new File(baseDirectory,name);
 			BufferedImage image = UtilImageIO.loadImage(f.getAbsolutePath());
 			if( image == null )
@@ -50,7 +44,7 @@ public class EstimateImageFiducialToCamera<T extends ImageSingleBand> extends Ba
 			T input = (T)detectorImage.getInputType().createImage(image.getWidth(),image.getHeight());
 			ConvertBufferedImage.convertFrom(image,input,true);
 
-			detectorImage.addTarget(input, 100);
+			detectorImage.addPattern(input, 100, 1.0);
 		}
 
 		return detectorImage;
@@ -63,7 +57,7 @@ public class EstimateImageFiducialToCamera<T extends ImageSingleBand> extends Ba
 		FactoryObject factory = new FactoryObject() {
 			@Override
 			public Object newInstance() {
-				return FactoryFiducial.squareImageRobust(new ConfigFiducialImage(1), 20, ImageUInt8.class);
+				return FactoryFiducial.squareImageRobust(new ConfigFiducialImage(), 20, ImageUInt8.class);
 			}
 		};
 

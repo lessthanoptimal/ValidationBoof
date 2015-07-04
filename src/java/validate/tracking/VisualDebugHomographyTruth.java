@@ -3,11 +3,11 @@ package validate.tracking;
 import boofcv.alg.distort.DistortImageOps;
 import boofcv.alg.distort.PixelTransformHomography_F32;
 import boofcv.alg.interpolate.TypeInterpolate;
-import boofcv.core.image.ConvertBufferedImage;
 import boofcv.core.image.GeneralizedImageOps;
 import boofcv.gui.feature.VisualizeFeatures;
 import boofcv.gui.image.ImagePanel;
 import boofcv.gui.image.ShowImages;
+import boofcv.io.image.ConvertBufferedImage;
 import boofcv.io.image.SimpleImageSequence;
 import boofcv.io.wrapper.DefaultMediaManager;
 import boofcv.misc.BoofMiscOps;
@@ -86,7 +86,7 @@ public class VisualDebugHomographyTruth<T extends ImageSingleBand> implements Mo
 
 			// render the transformed image
 			DistortImageOps.distortSingle(frame, workImage, new PixelTransformHomography_F32(H),
-					true, TypeInterpolate.BILINEAR);
+					null, TypeInterpolate.BILINEAR);
 
 			ConvertBufferedImage.convertTo(workImage,out,true);
 

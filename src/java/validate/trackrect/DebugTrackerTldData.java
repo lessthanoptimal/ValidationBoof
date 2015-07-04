@@ -1,10 +1,10 @@
 package validate.trackrect;
 
 import boofcv.abst.tracker.TrackerObjectQuad;
-import boofcv.core.image.ConvertBufferedImage;
 import boofcv.factory.tracker.FactoryTrackerObjectQuad;
 import boofcv.gui.image.ImagePanel;
 import boofcv.gui.image.ShowImages;
+import boofcv.io.image.ConvertBufferedImage;
 import boofcv.io.image.UtilImageIO;
 import boofcv.struct.image.ImageBase;
 import boofcv.struct.image.ImageFloat32;
