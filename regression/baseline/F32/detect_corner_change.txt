@@ -1,0 +1,12 @@
+# Checks to change in the behavior of corner detectors
+# detector (change in total features) (difference in location)
+FAST_F32.txt 0 0.0
+ShiTomasi_F32.txt 0 0.0
+ShiTomasiW_F32.txt 0 0.0
+Harris_F32.txt 0 0.0
+HarrisW_F32.txt 0 0.0
+KitRos_F32.txt 0 0.0
+Median_F32.txt 0 0.0
+HessianDet_F32.txt 0 0.0
+HessianTrace_F32.txt 0 0.0
+Laplacian_F32.txt 0 0.0

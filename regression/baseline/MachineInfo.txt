@@ -1,0 +1,112 @@
+Runtime.getRuntime().availableProcessors(): 4
+Runtime.getRuntime().freeMemory(): 224432200
+Runtime.getRuntime().totalMemory(): 387448832
+=========== java.runtime.name
+Java(TM) SE Runtime Environment
+=========== sun.boot.library.path
+/opt/jdk/jdk1.8.0_31/jre/lib/amd64
+=========== java.vm.version
+25.31-b07
+=========== java.vm.vendor
+Oracle Corporation
+=========== java.vendor.url
+http://java.oracle.com/
+=========== path.separator
+:
+=========== idea.launcher.port
+7534
+=========== java.vm.name
+Java HotSpot(TM) 64-Bit Server VM
+=========== file.encoding.pkg
+sun.io
+=========== user.country
+US
+=========== sun.java.launcher
+SUN_STANDARD
+=========== sun.os.patch.level
+unknown
+=========== java.vm.specification.name
+Java Virtual Machine Specification
+=========== user.dir
+/home/pja/projects/ValidationBoof
+=========== java.runtime.version
+1.8.0_31-b13
+=========== java.awt.graphicsenv
+sun.awt.X11GraphicsEnvironment
+=========== java.endorsed.dirs
+/opt/jdk/jdk1.8.0_31/jre/lib/endorsed
+=========== os.arch
+amd64
+=========== java.io.tmpdir
+/tmp
+=========== line.separator
+
+
+=========== java.vm.specification.vendor
+Oracle Corporation
+=========== os.name
+Linux
+=========== sun.jnu.encoding
+UTF-8
+=========== java.library.path
+/opt/idea/latest/bin::/usr/java/packages/lib/amd64:/usr/lib64:/lib64:/lib:/usr/lib
+=========== java.specification.name
+Java Platform API Specification
+=========== java.class.version
+52.0
+=========== sun.management.compiler
+HotSpot 64-Bit Tiered Compilers
+=========== os.version
+3.13.0-37-generic
+=========== user.home
+/home/pja
+=========== user.timezone
+America/Los_Angeles
+=========== java.awt.printerjob
+sun.print.PSPrinterJob
+=========== file.encoding
+UTF-8
+=========== idea.launcher.bin.path
+/opt/idea/idea-IU-141.1532.4/bin
+=========== java.specification.version
+1.8
+=========== java.class.path
+/opt/jdk/jdk1.8.0_31/jre/lib/jfxswt.jar:/opt/jdk/jdk1.8.0_31/jre/lib/jfr.jar:/opt/jdk/jdk1.8.0_31/jre/lib/resources.jar:/opt/jdk/jdk1.8.0_31/jre/lib/rt.jar:/opt/jdk/jdk1.8.0_31/jre/lib/charsets.jar:/opt/jdk/jdk1.8.0_31/jre/lib/jsse.jar:/opt/jdk/jdk1.8.0_31/jre/lib/management-agent.jar:/opt/jdk/jdk1.8.0_31/jre/lib/deploy.jar:/opt/jdk/jdk1.8.0_31/jre/lib/plugin.jar:/opt/jdk/jdk1.8.0_31/jre/lib/javaws.jar:/opt/jdk/jdk1.8.0_31/jre/lib/jce.jar:/opt/jdk/jdk1.8.0_31/jre/lib/ext/sunjce_provider.jar:/opt/jdk/jdk1.8.0_31/jre/lib/ext/sunec.jar:/opt/jdk/jdk1.8.0_31/jre/lib/ext/sunpkcs11.jar:/opt/jdk/jdk1.8.0_31/jre/lib/ext/cldrdata.jar:/opt/jdk/jdk1.8.0_31/jre/lib/ext/localedata.jar:/opt/jdk/jdk1.8.0_31/jre/lib/ext/dnsns.jar:/opt/jdk/jdk1.8.0_31/jre/lib/ext/jfxrt.jar:/opt/jdk/jdk1.8.0_31/jre/lib/ext/nashorn.jar:/opt/jdk/jdk1.8.0_31/jre/lib/ext/zipfs.jar:/home/pja/projects/ValidationBoof/build/classes/main:/home/pja/.gradle/caches/modules-2/files-2.1/com.google.guava/guava/17.0/9c6ef172e8de35fd8d4d8783e4821e57cdef7445/guava-17.0.jar:/home/pja/.gradle/caches/modules-2/files-2.1/com.thoughtworks.xstream/xstream/1.4.7/bce3282142b63068260f021fcbe48b72e8d71a1a/xstream-1.4.7.jar:/home/pja/.gradle/caches/modules-2/files-2.1/xmlpull/xmlpull/1.1.3.1/2b8e230d2ab644e4ecaa94db7cdedbc40c805dfa/xmlpull-1.1.3.1.jar:/home/pja/.gradle/caches/modules-2/files-2.1/xpp3/xpp3_min/1.1.4c/19d4e90b43059058f6e056f794f0ea4030d60b86/xpp3_min-1.1.4c.jar:/home/pja/projects/ValidationBoof/lib/ProjectBUBO.jar:/home/pja/.gradle/caches/modules-2/files-2.1/org.boofcv/ip/0.18/614ecb3d73499878b1f04be54330f0f919ea129c/ip-0.18.jar:/home/pja/.gradle/caches/modules-2/files-2.1/org.boofcv/io/0.18/338c0289ad13b3faeb3ba624290002b5d659a28/io-0.18.jar:/home/pja/.gradle/caches/modules-2/files-2.1/org.boofcv/calibration/0.18/9beb619549ef31c8f6a58d5a37756a485dca53c4/calibration-0.18.jar:/home/pja/.gradle/caches/modules-2/files-2.1/org.boofcv/geo/0.18/fbe35a3b9a6af1d19ca6a4afa6a88b0e55ece607/geo-0.18.jar:/home/pja/.gradle/caches/modules-2/files-2.1/org.boofcv/recognition/0.18/ca7d83ef414c799d75d9e01b0d57e374be9ea2be/recognition-0.18.jar:/home/pja/.gradle/caches/modules-2/files-2.1/org.boofcv/feature/0.18/8e58c2146cba9533278bbd50d3276b4c5a025de1/feature-0.18.jar:/home/pja/.gradle/caches/modules-2/files-2.1/org.boofcv/sfm/0.18/f1219801dced6ff9c4b47130d50a09e14ece8461/sfm-0.18.jar:/home/pja/.gradle/caches/modules-2/files-2.1/org.boofcv/visualize/0.18/e641b4e2d67158bb9ba77164179542d4b0f47a21/visualize-0.18.jar:/home/pja/.gradle/caches/modules-2/files-2.1/org.georegression/georegression/0.7/88c75ca9c5049afdcea41e9bd622ab22ef896a20/georegression-0.7.jar:/home/pja/.gradle/caches/modules-2/files-2.1/org.ddogleg/ddogleg/0.6/81cb8522ea1c4f594e5e1804f75351555a892629/ddogleg-0.6.jar:/home/pja/.gradle/caches/modules-2/files-2.1/com.googlecode.efficient-java-matrix-library/core/0.26/2df89c44ad92900f025a61e228bbbcd6abca3efd/core-0.26.jar:/opt/idea/idea-IU-141.1532.4/lib/idea_rt.jar
+=========== user.name
+pja
+=========== java.vm.specification.version
+1.8
+=========== sun.java.command
+com.intellij.rt.execution.application.AppMain regression.GenerateRegressionData
+=========== java.home
+/opt/jdk/jdk1.8.0_31/jre
+=========== sun.arch.data.model
+64
+=========== user.language
+en
+=========== java.specification.vendor
+Oracle Corporation
+=========== awt.toolkit
+sun.awt.X11.XToolkit
+=========== java.vm.info
+mixed mode
+=========== java.version
+1.8.0_31
+=========== java.ext.dirs
+/opt/jdk/jdk1.8.0_31/jre/lib/ext:/usr/java/packages/lib/ext
+=========== sun.boot.class.path
+/opt/jdk/jdk1.8.0_31/jre/lib/resources.jar:/opt/jdk/jdk1.8.0_31/jre/lib/rt.jar:/opt/jdk/jdk1.8.0_31/jre/lib/sunrsasign.jar:/opt/jdk/jdk1.8.0_31/jre/lib/jsse.jar:/opt/jdk/jdk1.8.0_31/jre/lib/jce.jar:/opt/jdk/jdk1.8.0_31/jre/lib/charsets.jar:/opt/jdk/jdk1.8.0_31/jre/lib/jfr.jar:/opt/jdk/jdk1.8.0_31/jre/classes
+=========== java.vendor
+Oracle Corporation
+=========== file.separator
+/
+=========== java.vendor.url.bug
+http://bugreport.sun.com/bugreport/
+=========== sun.font.fontmanager
+sun.awt.X11FontManager
+=========== sun.io.unicode.encoding
+UnicodeLittle
+=========== sun.cpu.endian
+little
+=========== sun.cpu.isalist
+

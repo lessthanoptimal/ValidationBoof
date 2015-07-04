@@ -1,0 +1,75 @@
+# Data Set = static_scene maxPixelError = 5.0
+
+Summary:
+ correct            : 0
+ wrong Z direction  : 0
+ wrong orientation  : 2188
+ wrong ID           : 0
+ duplicates         : 0
+ false positive     : 181
+ false negative     : 1508
+Normal Angle (deg):     2118
+ errors 50%         : 0.6656634533293485
+ errors 90%         : 1.7867458336388142
+ errors 100%        : 6.635809119042108
+Precision:              8752
+ errors 50%         : 1.1040168605991338
+ errors 90%         : 2.8555321096233355
+ errors 100%        : 9.1071573473292
+Accuracy:               8752
+ errors 50%         : 3.153038988572365
+ errors 90%         : 5.93970628499983
+ errors 100%        : 9.854974833612088
+
+---------------------------------------------------
+
+# Data Set = static_front_close maxPixelError = 5.0
+
+Summary:
+ correct            : 0
+ wrong Z direction  : 0
+ wrong orientation  : 2381
+ wrong ID           : 0
+ duplicates         : 0
+ false positive     : 181
+ false negative     : 1508
+Normal Angle (deg):     192
+ errors 50%         : 0.03509245071293264
+ errors 90%         : 0.08367182266125842
+ errors 100%        : 0.1317756586672739
+Precision:              772
+ errors 50%         : 0.4240691788635131
+ errors 90%         : 1.2184405175803512
+ errors 100%        : 2.6050389150713644
+Accuracy:               9524
+ errors 50%         : 2.977064326023415
+ errors 90%         : 5.855466001704331
+ errors 100%        : 9.854974833612088
+
+---------------------------------------------------
+
+# Data Set = static_front_far maxPixelError = 5.0
+
+Summary:
+ correct            : 0
+ wrong Z direction  : 0
+ wrong orientation  : 2481
+ wrong ID           : 0
+ duplicates         : 0
+ false positive     : 181
+ false negative     : 1508
+Normal Angle (deg):     99
+ errors 50%         : 3.9653566882637565
+ errors 90%         : 7.994841182189365
+ errors 100%        : 13.863684455540604
+Precision:              400
+ errors 50%         : 0.2947322703503941
+ errors 90%         : 0.5850518097575915
+ errors 100%        : 0.9999983338018466
+Accuracy:               9924
+ errors 50%         : 2.8946160022289336
+ errors 90%         : 5.810232846229027
+ errors 100%        : 9.854974833612088
+
+---------------------------------------------------
+

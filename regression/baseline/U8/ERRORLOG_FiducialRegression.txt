@@ -1,0 +1,4 @@
+
+The data set directory doesn't exist. data/fiducials/binary/hard
+
+The data set directory doesn't exist. data/fiducials/binary/hard
