@@ -1,7 +1,5 @@
 package validate.calib;
 
-import boofcv.abst.calib.CalibrateMonoPlanar;
-import boofcv.abst.calib.ImageResults;
 import boofcv.alg.geo.calibration.Zhang99Parameters;
 import georegression.struct.point.Point2D_F64;
 
@@ -85,12 +83,12 @@ public class ComputeErrorStatistics {
 		String fileCalib = "../results/calib/calib_opencv_pts_opencv_chess_bumblebee2_left.txt";
 		String fileCalibPoints = "../results/calib/chess.txt";
 
-		List<List<Point2D_F64>> obs = CalibrateCameraPoints.loadObservations(fileObservation);
-		Zhang99Parameters param = loadCalibration(fileCalib);
-		List<Point2D_F64> grid = loadCalibPoints(fileCalibPoints);
-
-		List<ImageResults> results = CalibrateMonoPlanar.computeErrors(obs, param, grid);
-
-		CalibrateMonoPlanar.printErrors(results);
+//		List<List<Point2D_F64>> obs = CalibrateCameraPoints.loadObservations(fileObservation);
+//		Zhang99Parameters param = loadCalibration(fileCalib);
+//		List<Point2D_F64> grid = loadCalibPoints(fileCalibPoints);
+//
+//		List<ImageResults> results = CalibrateMonoPlanar.computeErrors(obs, param, grid);
+//
+//		CalibrateMonoPlanar.printErrors(results);
 	}
 }

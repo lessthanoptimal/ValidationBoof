@@ -77,6 +77,7 @@ public class FiducialRegression extends BaseTextFileRegression {
 		PrintStream out = new PrintStream(new File(directory,outName));
 
 		EvaluateFiducialToCamera evaluate = new EvaluateFiducialToCamera();
+		evaluate.setJustSummary(true);
 		evaluate.setMaxPixelError(maxPixelError);
 		evaluate.initialize(new File(baseFiducial,type));
 		evaluate.setErrorStream(errorLog);
@@ -94,6 +95,7 @@ public class FiducialRegression extends BaseTextFileRegression {
 		PrintStream out = new PrintStream(new File(directory,outName));
 
 		EvaluateStaticFiducialSequence evaluate = new EvaluateStaticFiducialSequence();
+		evaluate.setJustSummary(true);
 		evaluate.setMaxPixelError(maxPixelError);
 		evaluate.initialize(new File(baseFiducial,type));
 		evaluate.setErrorStream(errorLog);

@@ -10,9 +10,11 @@ import boofcv.struct.image.ImageFloat32;
 import georegression.struct.point.Point2D_F64;
 
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -28,7 +30,9 @@ public class DetectTargetFeatures {
 
 		// load image list
 		String directory = "data/calib/stereo/Bumblebee2_Chess";
-		List<String> images = BoofMiscOps.directoryList(directory, "left");
+		List<String> images = BoofMiscOps.directoryList(directory, "jpg");
+
+		Collections.sort(images);
 
 		PrintStream out = new PrintStream(new FileOutputStream("calib_pts.txt"));
 
@@ -39,11 +43,11 @@ public class DetectTargetFeatures {
 			ConvertBufferedImage.convertFrom(orig,input);
 
 			if( detector.process(input) ) {
-				System.out.println("Found!");
+				System.out.println("Found! "+name);
 
 				List<Point2D_F64> points = detector.getPoints();
 
-				out.printf("%d ",points.size());
+				out.printf("%s %d ",new File(name).getName(),points.size());
 				for( Point2D_F64 p : points ) {
 					out.printf("%f %f ",p.x,p.y);
 				}

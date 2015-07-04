@@ -3,9 +3,13 @@ package regression;
 import boofcv.struct.image.ImageDataType;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
+import java.util.Set;
 
 /**
  * @author Peter Abeles
@@ -16,8 +20,7 @@ public class GenerateRegressionData {
 	public static final String BASELINE_DIRECTORY = "regression/baseline/";
 
 
-	// TODO save info on the machine it was run on
-	public static List<TextFileRegression> getRegressions() {
+	public static List<TextFileRegression> getRegressionsImage() {
 		List<TextFileRegression> list = new ArrayList<TextFileRegression>();
 
 		list.add( new CornerDetectorChangeRegression());
@@ -29,11 +32,18 @@ public class GenerateRegressionData {
 		//      -- Kinect
 		//      -- Mono-plane
 		list.add( new CalibrationDetectionRegression());
-		// TODO Calibration optimization
 		list.add( new DenseFlowRegression() );
 		// TODO Image Segmentation
 		list.add( new TextThresholdRegression() );
 		list.add( new FiducialRegression() );
+
+		return list;
+	}
+
+	public static List<TextFileRegression> getRegressionsOther() {
+		List<TextFileRegression> list = new ArrayList<TextFileRegression>();
+
+		list.add( new CalibrationIntrinsicChangeRegression());
 
 		return list;
 	}
@@ -86,10 +96,32 @@ public class GenerateRegressionData {
 		delete( new File(CURRENT_DIRECTORY));
 		if( !new File(CURRENT_DIRECTORY).mkdir() )
 			throw new RuntimeException("Can't create directory");
+		if( !new File(CURRENT_DIRECTORY+"other").mkdir() )
+			throw new RuntimeException("Can't create directory");
 		if( !new File(CURRENT_DIRECTORY+"U8").mkdir() )
 			throw new RuntimeException("Can't create directory");
 		if( !new File(CURRENT_DIRECTORY+"F32").mkdir() )
 			throw new RuntimeException("Can't create directory");
+	}
+
+	public static void saveMachineInfo() {
+		try {
+			PrintStream out = new PrintStream(new File(CURRENT_DIRECTORY,"MachineInfo.txt"));
+
+			out.println("Runtime.getRuntime().availableProcessors(): " +Runtime.getRuntime().availableProcessors());
+			out.println("Runtime.getRuntime().freeMemory(): " +Runtime.getRuntime().freeMemory());
+			out.println("Runtime.getRuntime().totalMemory(): " + Runtime.getRuntime().totalMemory());
+
+			Properties properties = System.getProperties();
+			Set<Object> keys = properties.keySet();
+			for( Object key : keys ) {
+				out.println("=========== "+key.toString());
+				out.println(properties.getProperty(key.toString()));
+			}
+
+		} catch (FileNotFoundException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	public static void delete( File directory ) {
@@ -115,15 +147,26 @@ public class GenerateRegressionData {
 	public static void main(String[] args) {
 		clearCurrentDirectory();
 
-		List<TextFileRegression> tests = getRegressions();
+		List<TextFileRegression> imageTests = getRegressionsImage();
+		List<TextFileRegression> otherTests = getRegressionsOther();
 
 		ImageDataType[] dataTypes = new ImageDataType[]{ImageDataType.U8,ImageDataType.F32};
 
-		// TODO clear the regression current directory
+		clearWorkDirectory();
+		saveMachineInfo();
+		for( TextFileRegression t : otherTests ) {
+			t.setOutputDirectory(CURRENT_DIRECTORY+"/other/");
+			try {
+				t.process(null);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 
 		for( ImageDataType dataType : dataTypes ) {
 			clearWorkDirectory();
-			for( TextFileRegression t : tests ) {
+			saveMachineInfo();
+			for( TextFileRegression t : imageTests ) {
 				t.setOutputDirectory(CURRENT_DIRECTORY+"/"+dataType+"/");
 				try {
 					t.process(dataType);

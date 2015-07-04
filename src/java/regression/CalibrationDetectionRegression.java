@@ -56,7 +56,7 @@ public class CalibrationDetectionRegression extends BaseTextFileRegression{
 	public void process(ImageDataType type) throws IOException {
 
 		if( type != ImageDataType.F32 ) {
-			throw new RuntimeException("Only supports floating point images");
+			throw new IOException("Only supports floating point images");
 		}
 
 		for( DetectorInfo d : chessDetectors ) {
