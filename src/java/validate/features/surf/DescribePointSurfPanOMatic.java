@@ -19,8 +19,8 @@
 
 package validate.features.surf;
 
+import boofcv.alg.descriptor.UtilFeature;
 import boofcv.alg.feature.describe.DescribePointSurf;
-import boofcv.alg.feature.describe.SurfDescribeOps;
 import boofcv.factory.filter.kernel.FactoryKernelGaussian;
 import boofcv.struct.feature.SurfFeature;
 import boofcv.struct.image.ImageSingleBand;
@@ -113,7 +113,7 @@ public class DescribePointSurfPanOMatic<II extends ImageSingleBand> extends Desc
 
 		// normalize feature vector to have an Euclidean length of 1
 		// adds light invariance
-		SurfDescribeOps.normalizeFeatures(ret.value);
+		UtilFeature.normalizeL2(ret);
 
 		// Laplacian's sign
 		ret.laplacianPositive = computeLaplaceSign((int) Math.round(c_x),(int) Math.round(c_y), scale);

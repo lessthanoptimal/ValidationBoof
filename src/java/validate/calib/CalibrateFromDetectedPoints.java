@@ -1,10 +1,11 @@
 package validate.calib;
 
 import boofcv.abst.calib.CalibrateMonoPlanar;
+import boofcv.abst.calib.ConfigChessboard;
 import boofcv.abst.calib.ImageResults;
+import boofcv.abst.calib.PlanarCalibrationDetector;
 import boofcv.alg.geo.calibration.CalibrationPlanarGridZhang99;
-import boofcv.alg.geo.calibration.PlanarCalibrationTarget;
-import boofcv.alg.geo.calibration.Zhang99Parameters;
+import boofcv.alg.geo.calibration.Zhang99ParamAll;
 import boofcv.factory.calib.FactoryPlanarCalibrationTarget;
 import boofcv.struct.calib.IntrinsicParameters;
 import georegression.struct.point.Point2D_F64;
@@ -24,8 +25,9 @@ public class CalibrateFromDetectedPoints {
 	PrintStream err = System.err;
 
 	public void processStereo( File stereoDetections ) throws IOException {
-		PlanarCalibrationTarget targetDesc = FactoryPlanarCalibrationTarget.gridChess(5,7, 30);
-		CalibrationPlanarGridZhang99 zhang99 = new CalibrationPlanarGridZhang99(targetDesc,true,2);
+		PlanarCalibrationDetector targetDesc = FactoryPlanarCalibrationTarget.detectorChessboard(new ConfigChessboard(5,7, 30));
+		CalibrationPlanarGridZhang99 zhang99 =
+				new CalibrationPlanarGridZhang99(targetDesc.getLayout(),true,2,false);
 
 		List<List<Point2D_F64>> left = new ArrayList<List<Point2D_F64>>();
 		List<List<Point2D_F64>> right = new ArrayList<List<Point2D_F64>>();
@@ -35,12 +37,12 @@ public class CalibrateFromDetectedPoints {
 		outputResults.println("=================================================================");
 		outputResults.println("FILE: " + stereoDetections);
 		outputResults.println("LEFT");
-		Zhang99Parameters params = calibrate(zhang99, left);
-		printErrors(params,left,targetDesc.points);
+		Zhang99ParamAll params = calibrate(zhang99, left);
+		printErrors(params,left,targetDesc.getLayout());
 		outputResults.println();
 		outputResults.println("RIGHT");
 		params = calibrate(zhang99, right);
-		printErrors(params, right, targetDesc.points);
+		printErrors(params, right, targetDesc.getLayout());
 	}
 
 	public void setOutputResults(PrintStream outputResults) {
@@ -79,14 +81,14 @@ public class CalibrateFromDetectedPoints {
 		}
 	}
 
-	private Zhang99Parameters calibrate(CalibrationPlanarGridZhang99 zhang99, List<List<Point2D_F64>> observations )
+	private Zhang99ParamAll calibrate(CalibrationPlanarGridZhang99 zhang99, List<List<Point2D_F64>> observations )
 			throws FileNotFoundException
 	{
 		if( !zhang99.process(observations) )
 			throw new RuntimeException("Calibration failed!");
 
 		// Get camera parameters and extrinsic target location in each image
-		Zhang99Parameters found = zhang99.getOptimized();
+		Zhang99ParamAll found = zhang99.getOptimized();
 
 		// Convenient function for converting from specialized Zhang99 format to generalized
 		IntrinsicParameters param = found.convertToIntrinsic();
@@ -97,12 +99,14 @@ public class CalibrateFromDetectedPoints {
 		outputResults.println("# Intrinsic matrix");
 		outputResults.printf("%1.15f %1.15f %1.15f %1.15f %1.15f\n", found.a, found.b, found.c, found.x0, found.y0);
 		outputResults.println("# Radial Distortion");
-		outputResults.printf("%d", found.distortion.length);
-		for( int i = 0; i < found.distortion.length; i++ )
-			outputResults.printf(" %1.15f",found.distortion[i]);
+		outputResults.printf("%d", found.radial.length);
+		for( int i = 0; i < found.radial.length; i++ )
+			outputResults.printf(" %1.15f",found.radial[i]);
 		outputResults.println();
+		outputResults.println("# Tangential Distortion");
+		outputResults.printf("%1.15f %1.15f\n",found.t1,found.t2);
 		outputResults.println(found.views.length);
-		for( Zhang99Parameters.View v : found.views ) {
+		for( Zhang99ParamAll.View v : found.views ) {
 			double rx = v.rotation.unitAxisRotation.x * v.rotation.theta;
 			double ry = v.rotation.unitAxisRotation.y * v.rotation.theta;
 			double rz = v.rotation.unitAxisRotation.z * v.rotation.theta;
@@ -113,7 +117,7 @@ public class CalibrateFromDetectedPoints {
 		return found;
 	}
 
-	private void printErrors( Zhang99Parameters param ,
+	private void printErrors( Zhang99ParamAll param ,
 							  List<List<Point2D_F64>> observations, List<Point2D_F64> grid )
 	{
 		List<ImageResults> results = CalibrateMonoPlanar.computeErrors(observations, param, grid);

@@ -44,7 +44,7 @@ public class EstimateImageFiducialToCamera<T extends ImageSingleBand> extends Ba
 			T input = (T)detectorImage.getInputType().createImage(image.getWidth(),image.getHeight());
 			ConvertBufferedImage.convertFrom(image,input,true);
 
-			detectorImage.addPattern(input, 100, 1.0);
+			detectorImage.addPatternImage(input, 100, 1.0);
 		}
 
 		return detectorImage;
