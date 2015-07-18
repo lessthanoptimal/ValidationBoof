@@ -1,8 +1,8 @@
 package validate.features.corner;
 
 import boofcv.abst.filter.derivative.AnyImageDerivative;
+import boofcv.alg.filter.derivative.DerivativeType;
 import boofcv.alg.filter.derivative.GImageDerivativeOps;
-import boofcv.core.image.inst.FactoryImageGenerator;
 import boofcv.io.image.UtilImageIO;
 import boofcv.struct.QueueCorner;
 import boofcv.struct.image.ImageDataType;
@@ -48,8 +48,8 @@ public class ComparePreviousCorner {
 
 		List<AlgInfo> detectors = createAlgorithms(imageType,derivType);
 
-		AnyImageDerivative anyDeriv = GImageDerivativeOps.createDerivatives(
-				imageType, FactoryImageGenerator.create(derivType));
+		AnyImageDerivative anyDeriv = GImageDerivativeOps.createAnyDerivatives(DerivativeType.THREE,
+				imageType, derivType);
 
 		for (int i = 0; i < detectors.size(); i++) {
 			ImageSingleBand input = UtilImageIO.loadImage(GenerateCornerFeatureFiles.ImagePath, imageType);

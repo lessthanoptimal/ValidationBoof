@@ -41,6 +41,7 @@ public abstract class BaseEvaluateFiducialToCamera {
 	int fiducialDetected[];
 	// normal vector for a specific truth
 	Vector3D_F64 fiducialNormal[];
+	Se3_F64 fiducialPose[];
 
 	// if a fiducial was detected it's quad is stored here.  If there are multiple detections
 	// the only the first detection is saved.
@@ -100,9 +101,11 @@ public abstract class BaseEvaluateFiducialToCamera {
 		fiducialDetected = new int[expected.length];
 		detectedCorners = new ArrayList[expected.length];
 		fiducialNormal = new Vector3D_F64[expected.length];
+		fiducialPose = new Se3_F64[expected.length];
 		for (int i = 0; i < expected.length; i++) {
 			detectedCorners[i] = new ArrayList<Point2D_F64>();
 			fiducialNormal[i] = new Vector3D_F64();
+			fiducialPose[i] = new Se3_F64();
 		}
 		intrinsic = FiducialCommon.parseIntrinsic(new File(dataSetDir,"intrinsic.txt"));
 		if( intrinsic.radial != null )
@@ -171,6 +174,7 @@ public abstract class BaseEvaluateFiducialToCamera {
 				normal.x = det.fiducialToCamera.getR().get(0,2);
 				normal.y = det.fiducialToCamera.getR().get(1,2);
 				normal.z = det.fiducialToCamera.getR().get(2,2);
+				fiducialPose[match.index].set(det.fiducialToCamera);
 
 				if( match.id == det.id ) {
 					if( match.reverseOrder )

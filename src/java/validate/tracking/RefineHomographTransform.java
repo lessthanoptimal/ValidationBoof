@@ -1,5 +1,6 @@
 package validate.tracking;
 
+import boofcv.alg.filter.derivative.DerivativeType;
 import boofcv.alg.filter.derivative.GImageDerivativeOps;
 import boofcv.alg.interpolate.InterpolatePixelS;
 import boofcv.alg.transform.pyramid.PyramidOps;
@@ -57,7 +58,7 @@ public class RefineHomographTransform<I extends ImageSingleBand, D extends Image
 			D dx = srcDericX[i];
 			D dy = srcDericY[i];
 
-			GImageDerivativeOps.sobel(this.src.getLayer(i),dx,dy, BorderType.EXTENDED);
+			GImageDerivativeOps.gradient(DerivativeType.SOBEL,this.src.getLayer(i), dx, dy, BorderType.EXTENDED);
 		}
 	}
 

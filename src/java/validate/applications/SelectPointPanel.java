@@ -1,5 +1,6 @@
 package validate.applications;
 
+import boofcv.gui.image.ImageZoomPanel;
 import georegression.struct.point.Point2D_F64;
 
 import java.awt.*;

@@ -1,75 +1,87 @@
 # Data Set = static_scene maxPixelError = 5.0
 
 Summary:
- correct            : 0
+ correct            : 1212
  wrong Z direction  : 0
- wrong orientation  : 805
+ wrong orientation  : 0
  wrong ID           : 0
  duplicates         : 0
- false positive     : 2
- false negative     : 407
-Normal Angle (deg):     795
- errors 50%         : 0.43150309050699664
- errors 90%         : 1.2585890180873889
- errors 100%        : 3.079518047070663
-Precision:              3220
- errors 50%         : 0.29789387133527057
- errors 90%         : 0.6448614852106994
- errors 100%        : 1.8539631096344193
-Accuracy:               3220
- errors 50%         : 1.671870224648499
- errors 90%         : 3.245016390132226
- errors 100%        : 6.3387693198217265
+ false positive     : 1
+ false negative     : 0
+Normal Angle (deg):     1200
+ errors 50%         : 0.019276334978433337
+ errors 90%         : 0.04206634396599436
+ errors 100%        : 0.10375448359837
+Location            : 1200
+ errors 50%         : 0.007831940169815917
+ errors 90%         : 0.028703551517476427
+ errors 100%        : 0.1361955091231733
+Precision:              4848
+ errors 50%         : 0.01863586323905469
+ errors 90%         : 0.04009610342534384
+ errors 100%        : 0.11753363383782868
+Accuracy:               4848
+ errors 50%         : 0.3206213040826437
+ errors 90%         : 0.6383057036987069
+ errors 100%        : 0.8228582695379034
 
 ---------------------------------------------------
 
 # Data Set = static_front_close maxPixelError = 5.0
 
 Summary:
- correct            : 0
+ correct            : 1313
  wrong Z direction  : 0
- wrong orientation  : 906
+ wrong orientation  : 0
  wrong ID           : 0
  duplicates         : 0
- false positive     : 2
- false negative     : 407
+ false positive     : 1
+ false negative     : 0
 Normal Angle (deg):     100
- errors 50%         : 0.020468824501904764
- errors 90%         : 0.035929843514313727
- errors 100%        : 0.05229250930236378
+ errors 50%         : 0.010919778002330677
+ errors 90%         : 0.02208500614927959
+ errors 100%        : 0.04042267452061735
+Location            : 100
+ errors 50%         : 4.921694385878046E-4
+ errors 90%         : 8.82260201220507E-4
+ errors 100%        : 0.0014224578285689468
 Precision:              404
- errors 50%         : 0.025388503128739894
- errors 90%         : 0.05543562464225043
- errors 100%        : 0.10938534595766444
-Accuracy:               3624
- errors 50%         : 1.5449515681812815
- errors 90%         : 3.1735819766951345
- errors 100%        : 6.3387693198217265
+ errors 50%         : 0.02384912091262158
+ errors 90%         : 0.043621356957656406
+ errors 100%        : 0.07050891707215351
+Accuracy:               5252
+ errors 50%         : 0.3419588035955613
+ errors 90%         : 0.7099170263843605
+ errors 100%        : 1.6004844686626714
 
 ---------------------------------------------------
 
 # Data Set = static_front_far maxPixelError = 5.0
 
 Summary:
- correct            : 0
+ correct            : 1413
  wrong Z direction  : 0
- wrong orientation  : 982
+ wrong orientation  : 0
  wrong ID           : 0
  duplicates         : 0
- false positive     : 7
- false negative     : 431
-Normal Angle (deg):     66
- errors 50%         : 1.4613240270196324
- errors 90%         : 1.9545254855283272
- errors 100%        : 3.3260764427150944
-Precision:              304
- errors 50%         : 0.2543747012149917
- errors 90%         : 0.49281302188558135
- errors 100%        : 0.7891967517791219
-Accuracy:               3928
- errors 50%         : 1.6640053086266615
- errors 90%         : 3.759336239975894
- errors 100%        : 6.582931310428643
+ false positive     : 1
+ false negative     : 0
+Normal Angle (deg):     99
+ errors 50%         : 0.1660386429573653
+ errors 90%         : 0.3618851571104992
+ errors 100%        : 0.4931643805797276
+Location            : 99
+ errors 50%         : 0.10311824138848295
+ errors 90%         : 0.2754764100505025
+ errors 100%        : 0.43700587824973314
+Precision:              400
+ errors 50%         : 0.05869423474438493
+ errors 90%         : 0.1141076948853368
+ errors 100%        : 0.20924348425181347
+Accuracy:               5652
+ errors 50%         : 0.34232565711707086
+ errors 90%         : 0.7037402145258111
+ errors 100%        : 1.6004844686626714
 
 ---------------------------------------------------
 

@@ -1,51 +1,51 @@
 # Data Set = rotation maxPixelError = 5.0
 
 Summary:
- correct            : 0
+ correct            : 20
  wrong Z direction  : 0
- wrong orientation  : 19
+ wrong orientation  : 0
  wrong ID           : 0
  duplicates         : 0
  false positives    : 0
- false negative     : 5
+ false negative     : 4
 Corner errors:
- precision 50%         : 1.6230133430020655
- precision 90%         : 2.939433685668614
- precision 100%        : 4.183129373100282
+ precision 50%         : 0.675561660721151
+ precision 90%         : 1.1702395637242666
+ precision 100%        : 2.243713842069174
 
 ---------------------------------------------------
 
 # Data Set = distance_straight maxPixelError = 5.0
 
 Summary:
- correct            : 0
+ correct            : 35
  wrong Z direction  : 0
- wrong orientation  : 31
+ wrong orientation  : 0
  wrong ID           : 0
  duplicates         : 0
  false positives    : 0
- false negative     : 13
+ false negative     : 9
 Corner errors:
- precision 50%         : 1.4584906732511231
- precision 90%         : 2.685284691711668
- precision 100%        : 4.183129373100282
+ precision 50%         : 0.4848015012670089
+ precision 90%         : 1.075910451640494
+ precision 100%        : 2.243713842069174
 
 ---------------------------------------------------
 
 # Data Set = distance_angle maxPixelError = 5.0
 
 Summary:
- correct            : 0
+ correct            : 49
  wrong Z direction  : 0
- wrong orientation  : 39
+ wrong orientation  : 0
  wrong ID           : 0
  duplicates         : 0
  false positives    : 0
- false negative     : 25
+ false negative     : 15
 Corner errors:
- precision 50%         : 1.4451127676426168
- precision 90%         : 2.5783535285600605
- precision 100%        : 4.183129373100282
+ precision 50%         : 0.4557196534567543
+ precision 90%         : 0.9523130168183036
+ precision 100%        : 2.243713842069174
 
 ---------------------------------------------------
 

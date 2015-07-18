@@ -5,8 +5,8 @@ import boofcv.abst.feature.detect.interest.ConfigGeneralDetector;
 import boofcv.abst.filter.derivative.AnyImageDerivative;
 import boofcv.alg.feature.detect.intensity.HessianBlobIntensity;
 import boofcv.alg.feature.detect.interest.GeneralFeatureDetector;
+import boofcv.alg.filter.derivative.DerivativeType;
 import boofcv.alg.filter.derivative.GImageDerivativeOps;
-import boofcv.core.image.inst.FactoryImageGenerator;
 import boofcv.factory.feature.detect.intensity.FactoryIntensityPoint;
 import boofcv.factory.feature.detect.interest.FactoryDetectPoint;
 import boofcv.io.image.UtilImageIO;
@@ -51,8 +51,8 @@ public class GenerateCornerFeatureFiles {
 
 		List<AlgInfo> detectors = createAlgorithms(imageType,derivType);
 
-		AnyImageDerivative anyDeriv = GImageDerivativeOps.createDerivatives(
-				imageType, FactoryImageGenerator.create(derivType));
+		AnyImageDerivative anyDeriv = GImageDerivativeOps.createAnyDerivatives(DerivativeType.THREE,
+				imageType, derivType);
 
 		for (int i = 0; i < detectors.size(); i++) {
 			ImageSingleBand input = UtilImageIO.loadImage(ImagePath,imageType);

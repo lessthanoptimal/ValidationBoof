@@ -1,7 +1,7 @@
 FAILED BoofCV-Comaniciu on 08_volkswagen
 java.lang.IllegalArgumentException: Expected 1 bands in dst not 3
-	at boofcv.core.image.ConvertBufferedImage.convertFromMulti(ConvertBufferedImage.java:382)
-	at boofcv.core.image.ConvertBufferedImage.convertFrom(ConvertBufferedImage.java:199)
+	at boofcv.io.image.ConvertBufferedImage.convertFromMulti(ConvertBufferedImage.java:383)
+	at boofcv.io.image.ConvertBufferedImage.convertFrom(ConvertBufferedImage.java:200)
 	at validate.trackrect.GenerateDetectionsTldData.evaluate(GenerateDetectionsTldData.java:61)
 	at regression.ObjectTrackingRegression.performTLD(ObjectTrackingRegression.java:58)
 	at regression.ObjectTrackingRegression.process(ObjectTrackingRegression.java:28)

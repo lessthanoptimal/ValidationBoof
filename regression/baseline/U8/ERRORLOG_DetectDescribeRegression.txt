@@ -1,8 +1,8 @@
 FAILED BoofSURF-Fast_Color on boat/
 java.lang.IllegalArgumentException: Expected 1 bands in dst not 3
 java.lang.IllegalArgumentException: Expected 1 bands in dst not 3
-	at boofcv.core.image.ConvertBufferedImage.convertFromMulti(ConvertBufferedImage.java:382)
-	at boofcv.core.image.ConvertBufferedImage.convertFrom(ConvertBufferedImage.java:199)
+	at boofcv.io.image.ConvertBufferedImage.convertFromMulti(ConvertBufferedImage.java:383)
+	at boofcv.io.image.ConvertBufferedImage.convertFrom(ConvertBufferedImage.java:200)
 	at validate.features.homography.CreateDetectDescribeFile.process(CreateDetectDescribeFile.java:112)
 	at validate.features.homography.CreateDetectDescribeFile.directory(CreateDetectDescribeFile.java:98)
 	at regression.DetectDescribeRegression.process(DetectDescribeRegression.java:68)
@@ -15,8 +15,8 @@ java.lang.IllegalArgumentException: Expected 1 bands in dst not 3
 FAILED BoofSURF-Stable_Color on boat/
 java.lang.IllegalArgumentException: Expected 1 bands in dst not 3
 java.lang.IllegalArgumentException: Expected 1 bands in dst not 3
-	at boofcv.core.image.ConvertBufferedImage.convertFromMulti(ConvertBufferedImage.java:382)
-	at boofcv.core.image.ConvertBufferedImage.convertFrom(ConvertBufferedImage.java:199)
+	at boofcv.io.image.ConvertBufferedImage.convertFromMulti(ConvertBufferedImage.java:383)
+	at boofcv.io.image.ConvertBufferedImage.convertFrom(ConvertBufferedImage.java:200)
 	at validate.features.homography.CreateDetectDescribeFile.process(CreateDetectDescribeFile.java:112)
 	at validate.features.homography.CreateDetectDescribeFile.directory(CreateDetectDescribeFile.java:98)
 	at regression.DetectDescribeRegression.process(DetectDescribeRegression.java:68)
