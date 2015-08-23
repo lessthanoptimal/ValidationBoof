@@ -36,9 +36,11 @@ public class CalibrationDetectionRegression extends BaseTextFileRegression{
 
 		chessDirectories.add("data/calib/stereo/Bumblebee2_Chess");
 		chessDirectories.add("data/calib/mono/Sony_DSC-HX5V_Chess");
+		chessDirectories.add("data/calib/mono/large_chessboard");
 
 		squareDirectories.add("data/calib/stereo/Bumblebee2_Square");
 		squareDirectories.add("data/calib/mono/Sony_DSC-HX5V_Square");
+		squareDirectories.add("data/calib/mono/large_square");
 
 		addDetector("DetectCalibChess", FactoryPlanarCalibrationTarget.detectorChessboard(new ConfigChessboard(5, 7,30)), true);
 		addDetector("DetectCalibSquare", FactoryPlanarCalibrationTarget.detectorSquareGrid(new ConfigSquareGrid(5, 7,30,30)), false);

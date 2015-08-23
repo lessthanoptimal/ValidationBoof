@@ -40,6 +40,17 @@ public class HandSelectPointsApp {
 
 		imagePanel.addMouseWheelListener(infoPanel);
 
+		// scale the image if it's huge
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+
+		double scaleX = screenSize.getWidth()/(double)image.getWidth();
+		double scaleY = screenSize.getHeight()/(double)image.getHeight();
+		double scale = Math.min(scaleX,scaleY);
+		if( scale < 1) {
+			infoPanel.setScale(scale);
+			setScale(scale);
+		}
+
 		ShowImages.showWindow(gui,"Point Selector").setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 	}
 
@@ -60,7 +71,7 @@ public class HandSelectPointsApp {
 	}
 
 	public static void main(String[] args) {
-		String imagePath = "/home/pja/projects/ValidationBoof/data/fiducials/image/static_front_far/frame0000.jpg";
+		String imagePath = "data/calib/mono/large_square/large04.jpg";
 
 		String outputName = new File(imagePath).getAbsolutePath();
 		outputName = outputName.substring(0,outputName.length()-4)+".txt";

@@ -16,7 +16,7 @@ public class InfoHandSelectPanel extends JPanel implements ChangeListener, Mouse
 		ActionListener
 {
 	private static double MAX = 20;
-	private static double MIN = 1;
+	private static double MIN = 0.1;
 	private static double INC = 0.1;
 
 	HandSelectPointsApp owner;
@@ -32,7 +32,7 @@ public class InfoHandSelectPanel extends JPanel implements ChangeListener, Mouse
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
 
-		SpinnerModel model = new SpinnerNumberModel(MIN, MIN,MAX,0.1);
+		SpinnerModel model = new SpinnerNumberModel(1.0, MIN,MAX,0.1);
 		zoomSpinner = new JSpinner(model);
 		zoomSpinner.addChangeListener(this);
 		zoomSpinner.setFocusable(false);
@@ -67,12 +67,7 @@ public class InfoHandSelectPanel extends JPanel implements ChangeListener, Mouse
 		else
 			curr /= 1.1;
 
-		// round to nearest 0.1
-		curr = INC*((int)(curr/INC+0.5));
-		if( curr < MIN ) curr = MIN;
-		if( curr > MAX ) curr = MAX;
-
-		zoomSpinner.setValue(curr);
+		setScale(curr);
 	}
 
 	@Override
@@ -85,5 +80,19 @@ public class InfoHandSelectPanel extends JPanel implements ChangeListener, Mouse
 		} else if( e.getSource() == clearButton ) {
 			owner.clearPoints();
 		}
+	}
+
+	public void setScale(double scale) {
+		double curr;
+
+		if( scale >= 1 ) {
+			curr = INC * ((int) (scale / INC + 0.5));
+		} else {
+			curr = scale;
+		}
+		if( curr < MIN ) curr = MIN;
+		if( curr > MAX ) curr = MAX;
+
+		zoomSpinner.setValue(curr);
 	}
 }
