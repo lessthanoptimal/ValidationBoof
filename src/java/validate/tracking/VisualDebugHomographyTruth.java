@@ -4,6 +4,7 @@ import boofcv.alg.distort.DistortImageOps;
 import boofcv.alg.distort.PixelTransformHomography_F32;
 import boofcv.alg.interpolate.TypeInterpolate;
 import boofcv.core.image.GeneralizedImageOps;
+import boofcv.core.image.border.BorderType;
 import boofcv.gui.feature.VisualizeFeatures;
 import boofcv.gui.image.ImagePanel;
 import boofcv.gui.image.ShowImages;
@@ -86,7 +87,7 @@ public class VisualDebugHomographyTruth<T extends ImageSingleBand> implements Mo
 
 			// render the transformed image
 			DistortImageOps.distortSingle(frame, workImage, new PixelTransformHomography_F32(H),
-					null, TypeInterpolate.BILINEAR);
+					TypeInterpolate.BILINEAR, BorderType.EXTENDED);
 
 			ConvertBufferedImage.convertTo(workImage,out,true);
 

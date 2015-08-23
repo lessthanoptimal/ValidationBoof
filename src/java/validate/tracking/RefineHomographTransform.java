@@ -39,7 +39,7 @@ public class RefineHomographTransform<I extends ImageSingleBand, D extends Image
 
 	public RefineHomographTransform( int scales[], Class<I> imageType , Class<D> derivType ) {
 		this.derivType = derivType;
-		InterpolatePixelS<I> interp = FactoryInterpolation.bilinearPixelS(imageType);
+		InterpolatePixelS<I> interp = FactoryInterpolation.bilinearPixelS(imageType,BorderType.EXTENDED);
 
 		function = new FitHomographyFunction<I>(interp);
 		gradient = new FitHomographyGradient<I, D>(interp);

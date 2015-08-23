@@ -7,6 +7,7 @@ import boofcv.alg.geo.RectifyImageOps;
 import boofcv.alg.geo.rectify.RectifyCalibrated;
 import boofcv.alg.misc.GImageMiscOps;
 import boofcv.core.image.GeneralizedImageOps;
+import boofcv.core.image.border.BorderType;
 import boofcv.factory.feature.disparity.DisparityAlgorithms;
 import boofcv.factory.feature.disparity.FactoryStereoDisparity;
 import boofcv.gui.image.ImagePanel;
@@ -130,9 +131,9 @@ public class DebugDenseStereoVideo<T extends ImageSingleBand> implements MouseLi
 
 		// undistorted and rectify images
 		ImageDistort<T,T> imageDistortLeft =
-				RectifyImageOps.rectifyImage(param.getLeft(), rect1, imageType);
+				RectifyImageOps.rectifyImage(param.getLeft(), rect1, BorderType.VALUE, imageType);
 		ImageDistort<T,T> imageDistortRight =
-				RectifyImageOps.rectifyImage(param.getRight(), rect2, imageType);
+				RectifyImageOps.rectifyImage(param.getRight(), rect2, BorderType.VALUE, imageType);
 
 		GImageMiscOps.fill(rectifiedLeft, 0);
 		GImageMiscOps.fill(rectifiedRight,0);

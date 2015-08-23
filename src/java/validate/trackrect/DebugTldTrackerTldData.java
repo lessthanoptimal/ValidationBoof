@@ -3,6 +3,7 @@ package validate.trackrect;
 import boofcv.abst.filter.derivative.ImageGradient;
 import boofcv.alg.interpolate.InterpolatePixelS;
 import boofcv.alg.tracker.tld.TldTracker;
+import boofcv.core.image.border.BorderType;
 import boofcv.factory.filter.derivative.FactoryDerivative;
 import boofcv.factory.interpolate.FactoryInterpolation;
 import boofcv.gui.image.ShowImages;
@@ -99,7 +100,7 @@ public class DebugTldTrackerTldData<T extends ImageSingleBand> implements TldVis
 
 		DebugTldTrackerTldData generator = new DebugTldTrackerTldData(ImageType.single(type));
 
-		InterpolatePixelS interpolate = FactoryInterpolation.bilinearPixelS(type);
+		InterpolatePixelS interpolate = FactoryInterpolation.bilinearPixelS(type, BorderType.EXTENDED);
 		ImageGradient gradient =  FactoryDerivative.sobel(type, type);
 
 		TldTracker tracker = new TldTracker(null,interpolate,gradient,type,type);

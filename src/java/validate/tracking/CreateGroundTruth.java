@@ -8,6 +8,7 @@ import boofcv.alg.distort.PointToPixelTransform_F32;
 import boofcv.alg.geo.robust.DistanceHomographySq;
 import boofcv.alg.geo.robust.GenerateHomographyLinear;
 import boofcv.alg.interpolate.InterpolatePixelS;
+import boofcv.core.image.border.BorderType;
 import boofcv.factory.distort.FactoryDistort;
 import boofcv.factory.geo.EpipolarError;
 import boofcv.factory.geo.FactoryMultiView;
@@ -92,8 +93,8 @@ public class CreateGroundTruth {
 		// create distortion to remove lens distortion
 		// Adjust the distortion so that the undistorted image only shows image pixels
 		PointTransform_F32 allInside = LensDistortionOps.transform_F32(AdjustmentType.EXPAND,cameraParam, null,true);
-		InterpolatePixelS<ImageFloat32> interp = FactoryInterpolation.bilinearPixelS(ImageFloat32.class);
-		removeLens = FactoryDistort.distort(false,interp, null, ImageFloat32.class);
+		InterpolatePixelS<ImageFloat32> interp = FactoryInterpolation.bilinearPixelS(ImageFloat32.class, BorderType.EXTENDED);
+		removeLens = FactoryDistort.distortSB(false,interp, ImageFloat32.class);
 		removeLens.setModel(new PointToPixelTransform_F32(allInside));
 
 		FactoryEvaluationTrackers<ImageFloat32> factory = new FactoryEvaluationTrackers<ImageFloat32>(ImageFloat32.class);

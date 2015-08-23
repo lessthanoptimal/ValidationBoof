@@ -1,7 +1,7 @@
 FAILED BoofCV-Comaniciu on 08_volkswagen
 java.lang.IllegalArgumentException: Expected 1 bands in dst not 3
-	at boofcv.io.image.ConvertBufferedImage.convertFromMulti(ConvertBufferedImage.java:383)
-	at boofcv.io.image.ConvertBufferedImage.convertFrom(ConvertBufferedImage.java:200)
+	at boofcv.io.image.ConvertBufferedImage.convertFromMulti(ConvertBufferedImage.java:400)
+	at boofcv.io.image.ConvertBufferedImage.convertFrom(ConvertBufferedImage.java:201)
 	at validate.trackrect.GenerateDetectionsTldData.evaluate(GenerateDetectionsTldData.java:61)
 	at regression.ObjectTrackingRegression.performTLD(ObjectTrackingRegression.java:58)
 	at regression.ObjectTrackingRegression.process(ObjectTrackingRegression.java:28)
@@ -13,8 +13,8 @@ java.lang.IllegalArgumentException: Expected 1 bands in dst not 3
 	at com.intellij.rt.execution.application.AppMain.main(AppMain.java:140)
 FAILED BoofCV-MeanShiftHist on 08_volkswagen
 java.lang.IllegalArgumentException: Expected 1 bands in dst not 3
-	at boofcv.io.image.ConvertBufferedImage.convertFromMulti(ConvertBufferedImage.java:383)
-	at boofcv.io.image.ConvertBufferedImage.convertFrom(ConvertBufferedImage.java:200)
+	at boofcv.io.image.ConvertBufferedImage.convertFromMulti(ConvertBufferedImage.java:400)
+	at boofcv.io.image.ConvertBufferedImage.convertFrom(ConvertBufferedImage.java:201)
 	at validate.trackrect.GenerateDetectionsTldData.evaluate(GenerateDetectionsTldData.java:61)
 	at regression.ObjectTrackingRegression.performTLD(ObjectTrackingRegression.java:58)
 	at regression.ObjectTrackingRegression.process(ObjectTrackingRegression.java:28)
