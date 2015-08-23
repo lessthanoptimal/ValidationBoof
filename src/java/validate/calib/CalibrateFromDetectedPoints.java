@@ -24,10 +24,9 @@ public class CalibrateFromDetectedPoints {
 	PrintStream outputResults = System.out;
 	PrintStream err = System.err;
 
-	public void processStereo( File stereoDetections ) throws IOException {
+	public void processStereo( File stereoDetections , boolean tangential ) throws IOException {
 		PlanarCalibrationDetector targetDesc = FactoryPlanarCalibrationTarget.detectorChessboard(new ConfigChessboard(5,7, 30));
-		CalibrationPlanarGridZhang99 zhang99 =
-				new CalibrationPlanarGridZhang99(targetDesc.getLayout(),true,2,false);
+		CalibrationPlanarGridZhang99 zhang99 = new CalibrationPlanarGridZhang99(targetDesc.getLayout(),true,2,tangential);
 
 		List<List<Point2D_F64>> left = new ArrayList<List<Point2D_F64>>();
 		List<List<Point2D_F64>> right = new ArrayList<List<Point2D_F64>>();
@@ -133,7 +132,7 @@ public class CalibrateFromDetectedPoints {
 	public static void main( String args[] ) throws IOException {
 		CalibrateFromDetectedPoints app = new CalibrateFromDetectedPoints();
 
-		app.processStereo(new File("data/calib/stereo/points/bumblebee2_chess.txt"));
+		app.processStereo(new File("data/calib/stereo/points/bumblebee2_chess.txt"),false);
 
 	}
 }

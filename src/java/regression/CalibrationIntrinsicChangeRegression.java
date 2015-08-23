@@ -25,6 +25,7 @@ public class CalibrationIntrinsicChangeRegression extends BaseTextFileRegression
 		alg.setErrorStream(errorLog);
 		alg.setOutputResults(new PrintStream(new File(directory, "estimated_calibration.txt")));
 
-		alg.processStereo(new File("data/calib/stereo/points/bumblebee2_chess.txt"));
+		alg.processStereo(new File("data/calib/stereo/points/bumblebee2_chess.txt"), false);
+		alg.processStereo(new File("data/calib/stereo/points/bumblebee2_chess.txt"), true);
 	}
 }
