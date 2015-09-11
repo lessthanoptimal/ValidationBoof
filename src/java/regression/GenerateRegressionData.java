@@ -36,6 +36,7 @@ public class GenerateRegressionData {
 		// TODO Image Segmentation
 		list.add( new TextThresholdRegression() );
 		list.add( new FiducialRegression() );
+		list.add( new DetectPolygonRegression() );
 
 		return list;
 	}

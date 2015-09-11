@@ -1,5 +1,5 @@
 # Describes which points belong to which shapes
-square 0 1 2 4
+square 0 1 2 3
 quadrilateral 4 5 6 7
 triangle 8 9 10
 pentagon 11 12 13 14 15

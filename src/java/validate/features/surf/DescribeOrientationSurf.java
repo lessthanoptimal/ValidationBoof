@@ -93,6 +93,11 @@ public class DescribeOrientationSurf<T extends ImageSingleBand, II extends Image
 	}
 
 	@Override
+	public double getCanonicalWidth() {
+		return describe.getCanonicalWidth();
+	}
+
+	@Override
 	public Class<SurfFeature> getDescriptionType() {
 		return SurfFeature.class;
 	}

@@ -106,6 +106,11 @@ public class DescribeOrientationSurfColor<T extends ImageSingleBand, II extends 
 	}
 
 	@Override
+	public double getCanonicalWidth() {
+		return describe.getDescribe().getCanonicalWidth();
+	}
+
+	@Override
 	public Class<SurfFeature> getDescriptionType() {
 		return SurfFeature.class;
 	}

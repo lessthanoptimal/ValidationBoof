@@ -117,6 +117,11 @@ public class DescribeOrientationSift
 	}
 
 	@Override
+	public double getCanonicalWidth() {
+		throw new RuntimeException("Implement");
+	}
+
+	@Override
 	public Class<SurfFeature> getDescriptionType() {
 		return SurfFeature.class;
 	}
