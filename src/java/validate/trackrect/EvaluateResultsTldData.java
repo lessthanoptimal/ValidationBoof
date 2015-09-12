@@ -91,7 +91,7 @@ public class EvaluateResultsTldData {
 		}
 
 		for( String dataset : GenerateDetectionsTldData.videos ){
-			String inputFile = library+"_"+dataset+".txt";
+			String inputFile = "tmp/"+library+"_"+dataset+".txt";
 			evaluator.evaluate(dataset, inputFile, out);
 		}
 

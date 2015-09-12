@@ -5,7 +5,7 @@ java.lang.IllegalArgumentException: Expected 1 bands in dst not 3
 	at validate.trackrect.GenerateDetectionsTldData.evaluate(GenerateDetectionsTldData.java:61)
 	at regression.ObjectTrackingRegression.performTLD(ObjectTrackingRegression.java:58)
 	at regression.ObjectTrackingRegression.process(ObjectTrackingRegression.java:28)
-	at regression.GenerateRegressionData.main(GenerateRegressionData.java:172)
+	at regression.GenerateRegressionData.main(GenerateRegressionData.java:173)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)

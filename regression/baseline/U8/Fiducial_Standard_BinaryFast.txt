@@ -9,43 +9,43 @@ Summary:
  false positives    : 0
  false negative     : 4
 Corner errors:
- precision 50%         : 0.6771309424693713
- precision 90%         : 1.1722807193027984
- precision 100%        : 2.244974662682857
+ precision 50%         : 0.6792797531499166
+ precision 90%         : 1.1729026527286757
+ precision 100%        : 2.2782204998685294
 
 ---------------------------------------------------
 
 # Data Set = distance_straight maxPixelError = 5.0
 
 Summary:
- correct            : 37
+ correct            : 38
  wrong Z direction  : 0
  wrong orientation  : 0
  wrong ID           : 0
  duplicates         : 0
  false positives    : 0
- false negative     : 7
+ false negative     : 6
 Corner errors:
- precision 50%         : 0.47514168217228137
- precision 90%         : 1.0381231112009381
- precision 100%        : 2.244974662682857
+ precision 50%         : 0.4760180126662282
+ precision 90%         : 1.009781296894877
+ precision 100%        : 2.2782204998685294
 
 ---------------------------------------------------
 
 # Data Set = distance_angle maxPixelError = 5.0
 
 Summary:
- correct            : 51
+ correct            : 54
  wrong Z direction  : 0
  wrong orientation  : 0
  wrong ID           : 0
  duplicates         : 0
  false positives    : 0
- false negative     : 13
+ false negative     : 10
 Corner errors:
- precision 50%         : 0.42997462291358324
- precision 90%         : 0.9170765101115499
- precision 100%        : 2.244974662682857
+ precision 50%         : 0.4248454357887733
+ precision 90%         : 0.9140688604499164
+ precision 100%        : 2.2782204998685294
 
 ---------------------------------------------------
 

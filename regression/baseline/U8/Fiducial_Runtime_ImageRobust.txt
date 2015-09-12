@@ -1,0 +1,8 @@
+data/fiducials/image/hard 300  50.176
+data/fiducials/image/static_front_close 300  90.361
+data/fiducials/image/distance_straight 300  61.450
+data/fiducials/image/static_front_far 300  91.047
+data/fiducials/image/motion_blur 300  68.182
+data/fiducials/image/static_scene 300  67.981
+data/fiducials/image/distance_angle 300  60.741
+data/fiducials/image/rotation 300  51.733

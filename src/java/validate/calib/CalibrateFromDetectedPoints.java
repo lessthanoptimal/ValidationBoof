@@ -93,7 +93,7 @@ public class CalibrateFromDetectedPoints {
 		IntrinsicParameters param = found.convertToIntrinsic();
 
 		// print the results to standard out
-		param.print();
+//		param.print();
 
 		outputResults.println("# Intrinsic matrix");
 		outputResults.printf("%1.15f %1.15f %1.15f %1.15f %1.15f\n", found.a, found.b, found.c, found.x0, found.y0);

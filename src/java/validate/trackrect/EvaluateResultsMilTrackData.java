@@ -72,7 +72,7 @@ public class EvaluateResultsMilTrackData {
 		EvaluateResultsMilTrackData evaluator = new EvaluateResultsMilTrackData();
 
 		System.out.println("------------ "+library+" ------------------");
-		PrintStream out = new PrintStream(path+"MILTrackData_"+library+".txt");
+		PrintStream out = new PrintStream(new File(path,"MILTrackData_"+library+".txt"));
 		if( formatLatex ) {
 			out.println("\\begin{tabular}{|l|c|c|c|c|c|c|}");
 			out.println("\\hline");
@@ -100,8 +100,8 @@ public class EvaluateResultsMilTrackData {
 
 		formatLatex = true;
 
-//		process("./", "BoofCV-Comaniciu");
-		process("./", "BoofCV-SparseFlow");
+//		process("./tmp", "BoofCV-Comaniciu");
+		process("./tmp", "BoofCV-SparseFlow");
 
 
 		System.out.println("DONE!");

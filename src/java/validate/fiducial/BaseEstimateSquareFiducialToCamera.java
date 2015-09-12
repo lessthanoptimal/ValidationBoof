@@ -64,7 +64,7 @@ public abstract class BaseEstimateSquareFiducialToCamera<T extends ImageBase> {
 		detector.setIntrinsic(intrinsic);
 		for( String path : files ) {
 
-			System.out.println("processing "+path);
+//			System.out.println("processing "+path);
 			BufferedImage orig = UtilImageIO.loadImage(path);
 			image.reshape(orig.getWidth(),orig.getHeight());
 			ConvertBufferedImage.convertFrom(orig,image,true);

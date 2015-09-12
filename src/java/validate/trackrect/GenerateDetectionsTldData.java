@@ -25,13 +25,21 @@ public class GenerateDetectionsTldData<T extends ImageBase> {
 
 	T input;
 
+	File outputDirectory = new File("./tmp");
 
 	public GenerateDetectionsTldData(ImageType<T> type) {
 		input = type.createImage(1,1);
 	}
 
+	public void setOutputDirectory(File outputDirectory) {
+		this.outputDirectory = outputDirectory;
+	}
+
 	public void evaluate( String dataName , String outputName , TrackerObjectQuad<T> tracker ) {
 		System.out.println("Processing "+dataName);
+
+		if( !outputDirectory.exists() )
+			outputDirectory.mkdirs();
 
 		String path = "data/track_rect/TLD/"+dataName;
 		Quadrilateral_F64 initial = new Quadrilateral_F64();
@@ -43,7 +51,7 @@ public class GenerateDetectionsTldData<T extends ImageBase> {
 		PrintStream out;
 
 		try {
-			out = new PrintStream(outputName+"_"+dataName+".txt");
+			out = new PrintStream(new File(outputDirectory,outputName+"_"+dataName+".txt"));
 		} catch (FileNotFoundException e) {
 			throw new RuntimeException(e);
 		}

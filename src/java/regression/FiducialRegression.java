@@ -1,5 +1,6 @@
 package regression;
 
+import boofcv.abst.fiducial.FiducialDetector;
 import boofcv.factory.fiducial.ConfigFiducialBinary;
 import boofcv.factory.fiducial.ConfigFiducialImage;
 import boofcv.factory.fiducial.FactoryFiducial;
@@ -63,9 +64,24 @@ public class FiducialRegression extends BaseTextFileRegression {
 		estimate.setOutputDirectory(workDirectory);
 		estimate.initialize(new File(baseFiducial,type));
 
+		computeRuntimeMetrics(type,"Fiducial_Runtime_"+name+".txt",factory);
 		computeStandardMetrics(type, "Fiducial_Standard_" + name + ".txt", estimate, 5, dataSetsStandard);
 		computeStandardMetrics(type, "Fiducial_Blur_"+name+".txt", estimate,10,dataSetsBlur);
-		computeStaticMetrics(type, "Fiducial_Static_"+name+".txt", estimate, 5,dataSetsStatic);
+		computeStaticMetrics(type, "Fiducial_Static_" + name + ".txt", estimate, 5, dataSetsStatic);
+	}
+
+	private void computeRuntimeMetrics(String type, String outName, FactoryObject factory )
+			throws IOException
+	{
+		PrintStream out = new PrintStream(new File(directory,outName));
+
+		RuntimePerformanceFiducialToCamera benchmark =
+				new RuntimePerformanceFiducialToCamera((FiducialDetector)factory.newInstance());
+
+		benchmark.setErrorStream(errorLog);
+		benchmark.setOutputResults(out);
+
+		benchmark.evaluate(new File("data/fiducials/"+type));
 	}
 
 	private void computeStandardMetrics(String type, String outName,

@@ -9,9 +9,9 @@ Summary:
  false positives    : 0
  false negative     : 4
 Corner errors:
- precision 50%         : 0.675561660721151
- precision 90%         : 1.1702395637242666
- precision 100%        : 2.24371228260822
+ precision 50%         : 0.6783957255502437
+ precision 90%         : 1.1716768650895997
+ precision 100%        : 2.2318501817547123
 
 ---------------------------------------------------
 
@@ -26,26 +26,26 @@ Summary:
  false positives    : 0
  false negative     : 9
 Corner errors:
- precision 50%         : 0.4847692146661192
- precision 90%         : 1.060191177641241
- precision 100%        : 2.24371228260822
+ precision 50%         : 0.49324968542952274
+ precision 90%         : 1.0503636556590719
+ precision 100%        : 2.2318501817547123
 
 ---------------------------------------------------
 
 # Data Set = distance_angle maxPixelError = 5.0
 
 Summary:
- correct            : 49
+ correct            : 51
  wrong Z direction  : 0
  wrong orientation  : 0
  wrong ID           : 0
  duplicates         : 0
- false positives    : 0
- false negative     : 15
+ false positives    : 2
+ false negative     : 13
 Corner errors:
- precision 50%         : 0.44079259488283373
- precision 90%         : 0.921360784960831
- precision 100%        : 2.24371228260822
+ precision 50%         : 0.4334350917876764
+ precision 90%         : 0.9173277660831819
+ precision 100%        : 2.2318501817547123
 
 ---------------------------------------------------
 
