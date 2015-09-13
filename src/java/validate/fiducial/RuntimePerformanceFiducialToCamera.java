@@ -13,6 +13,8 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.PrintStream;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -32,7 +34,8 @@ public class RuntimePerformanceFiducialToCamera< T extends ImageBase> {
 	}
 
 	public void evaluate( File inputDirectory ) {
-		File[] files = inputDirectory.listFiles();
+		List<File> files = Arrays.asList(inputDirectory.listFiles());
+		Collections.sort(files);
 
 		for( File f : files ) {
 			if( f.isDirectory() ) {
