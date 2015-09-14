@@ -64,7 +64,7 @@ Summary:
  wrong orientation  : 0
  wrong ID           : 0
  duplicates         : 0
- false positive     : 1
+ false positive     : 0
  false negative     : 217
 Normal Angle (deg):     99
  errors 50%         : 0.24926796046211586

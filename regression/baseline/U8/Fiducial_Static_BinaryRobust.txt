@@ -6,7 +6,7 @@ Summary:
  wrong orientation  : 0
  wrong ID           : 0
  duplicates         : 0
- false positive     : 1
+ false positive     : 0
  false negative     : 1
 Normal Angle (deg):     1198
  errors 50%         : 0.02120106496271452
@@ -35,7 +35,7 @@ Summary:
  wrong orientation  : 0
  wrong ID           : 0
  duplicates         : 0
- false positive     : 1
+ false positive     : 0
  false negative     : 1
 Normal Angle (deg):     100
  errors 50%         : 0.010935730496345743
@@ -64,7 +64,7 @@ Summary:
  wrong orientation  : 0
  wrong ID           : 0
  duplicates         : 0
- false positive     : 1
+ false positive     : 0
  false negative     : 1
 Normal Angle (deg):     99
  errors 50%         : 0.22909394697795712

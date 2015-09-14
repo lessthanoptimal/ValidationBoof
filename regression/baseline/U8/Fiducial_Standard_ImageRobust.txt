@@ -6,7 +6,7 @@ Summary:
  wrong orientation  : 0
  wrong ID           : 0
  duplicates         : 0
- false positives    : 3
+ false positives    : 0
  false negative     : 9
 Corner errors:
  precision 50%         : 0.40559959723185673
@@ -23,7 +23,7 @@ Summary:
  wrong orientation  : 0
  wrong ID           : 0
  duplicates         : 0
- false positives    : 4
+ false positives    : 0
  false negative     : 13
 Corner errors:
  precision 50%         : 0.3582357930204505
@@ -40,7 +40,7 @@ Summary:
  wrong orientation  : 0
  wrong ID           : 0
  duplicates         : 0
- false positives    : 5
+ false positives    : 0
  false negative     : 20
 Corner errors:
  precision 50%         : 0.34313185824869447
@@ -57,7 +57,7 @@ Summary:
  wrong orientation  : 23
  wrong ID           : 12
  duplicates         : 0
- false positives    : 6
+ false positives    : 0
  false negative     : 37
 Corner errors:
  precision 50%         : 0.3372306362921116
