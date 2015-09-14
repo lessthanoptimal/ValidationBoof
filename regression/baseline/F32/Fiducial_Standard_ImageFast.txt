@@ -55,10 +55,10 @@ Summary:
  correct            : 134
  wrong Z direction  : 0
  wrong orientation  : 26
- wrong ID           : 13
+ wrong ID           : 12
  duplicates         : 0
- false positives    : 12
- false negative     : 21
+ false positives    : 9
+ false negative     : 22
 Corner errors:
  precision 50%         : 0.336223795449401
  precision 90%         : 0.625374041564027

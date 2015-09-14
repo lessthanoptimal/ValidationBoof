@@ -6,7 +6,7 @@ Summary:
  wrong orientation  : 0
  wrong ID           : 6
  duplicates         : 0
- false positives    : 1
+ false positives    : 0
  false negative     : 30
 Corner errors:
  precision 50%         : 0.4622131791955184
