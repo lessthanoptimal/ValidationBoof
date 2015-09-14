@@ -1,26 +1,26 @@
 # Data Set = static_scene maxPixelError = 5.0
 
 Summary:
- correct            : 1211
+ correct            : 1212
  wrong Z direction  : 0
  wrong orientation  : 0
  wrong ID           : 0
  duplicates         : 0
  false positive     : 0
- false negative     : 1
-Normal Angle (deg):     1198
- errors 50%         : 0.02120106496271452
+ false negative     : 0
+Normal Angle (deg):     1200
+ errors 50%         : 0.021234825428992115
  errors 90%         : 0.04649670443278297
  errors 100%        : 0.1067329682729901
-Location            : 1198
- errors 50%         : 0.008568026643831602
+Location            : 1200
+ errors 50%         : 0.008537177273432915
  errors 90%         : 0.027844881139144642
  errors 100%        : 0.10014008908857311
-Precision:              4844
- errors 50%         : 0.019732597924139044
+Precision:              4848
+ errors 50%         : 0.01974171452988648
  errors 90%         : 0.04156389037919023
  errors 100%        : 0.12061737137385208
-Accuracy:               4844
+Accuracy:               4848
  errors 50%         : 0.32143382272421395
  errors 90%         : 0.6263704119313602
  errors 100%        : 0.7946222867428132
@@ -30,13 +30,13 @@ Accuracy:               4844
 # Data Set = static_front_close maxPixelError = 5.0
 
 Summary:
- correct            : 1312
+ correct            : 1313
  wrong Z direction  : 0
  wrong orientation  : 0
  wrong ID           : 0
  duplicates         : 0
  false positive     : 0
- false negative     : 1
+ false negative     : 0
 Normal Angle (deg):     100
  errors 50%         : 0.010935730496345743
  errors 90%         : 0.021000896766239802
@@ -49,9 +49,9 @@ Precision:              404
  errors 50%         : 0.02198460977248691
  errors 90%         : 0.04530970158168395
  errors 100%        : 0.10120003789990956
-Accuracy:               5248
+Accuracy:               5252
  errors 50%         : 0.33549716823995585
- errors 90%         : 0.7043387720365853
+ errors 90%         : 0.7042728456221097
  errors 100%        : 1.5821982202489815
 
 ---------------------------------------------------
@@ -59,13 +59,13 @@ Accuracy:               5248
 # Data Set = static_front_far maxPixelError = 5.0
 
 Summary:
- correct            : 1412
+ correct            : 1413
  wrong Z direction  : 0
  wrong orientation  : 0
  wrong ID           : 0
  duplicates         : 0
  false positive     : 0
- false negative     : 1
+ false negative     : 0
 Normal Angle (deg):     99
  errors 50%         : 0.22909394697795712
  errors 90%         : 0.5937959406297375
@@ -78,9 +78,9 @@ Precision:              400
  errors 50%         : 0.040735723744822545
  errors 90%         : 0.08837872808499352
  errors 100%        : 0.25061388272320806
-Accuracy:               5648
+Accuracy:               5652
  errors 50%         : 0.3361461005890254
- errors 90%         : 0.6958948757037743
+ errors 90%         : 0.6958647837065023
  errors 100%        : 1.5821982202489815
 
 ---------------------------------------------------

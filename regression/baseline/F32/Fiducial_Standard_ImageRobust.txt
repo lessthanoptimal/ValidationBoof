@@ -1,68 +1,68 @@
 # Data Set = rotation maxPixelError = 5.0
 
 Summary:
- correct            : 17
+ correct            : 18
  wrong Z direction  : 0
  wrong orientation  : 0
  wrong ID           : 0
  duplicates         : 0
- false positives    : 0
- false negative     : 9
+ false positives    : 4
+ false negative     : 8
 Corner errors:
- precision 50%         : 0.3896962399517156
+ precision 50%         : 0.41252844173814535
  precision 90%         : 0.8156676380269798
- precision 100%        : 1.1310717631858864
+ precision 100%        : 1.4353421099925552
 
 ---------------------------------------------------
 
 # Data Set = distance_straight maxPixelError = 5.0
 
 Summary:
- correct            : 31
+ correct            : 34
  wrong Z direction  : 0
  wrong orientation  : 0
  wrong ID           : 0
  duplicates         : 0
- false positives    : 0
- false negative     : 13
+ false positives    : 4
+ false negative     : 10
 Corner errors:
- precision 50%         : 0.35939368060933097
- precision 90%         : 0.7162002977392113
- precision 100%        : 1.1310717631858864
+ precision 50%         : 0.3561914584817263
+ precision 90%         : 0.7189473497991863
+ precision 100%        : 1.4353421099925552
 
 ---------------------------------------------------
 
 # Data Set = distance_angle maxPixelError = 5.0
 
 Summary:
- correct            : 42
+ correct            : 47
  wrong Z direction  : 0
  wrong orientation  : 0
  wrong ID           : 0
  duplicates         : 0
- false positives    : 0
- false negative     : 20
+ false positives    : 5
+ false negative     : 15
 Corner errors:
- precision 50%         : 0.3373767067254909
+ precision 50%         : 0.3356315324562773
  precision 90%         : 0.6806313430762833
- precision 100%        : 1.1310717631858864
+ precision 100%        : 1.4353421099925552
 
 ---------------------------------------------------
 
 # Data Set = hard maxPixelError = 5.0
 
 Summary:
- correct            : 123
+ correct            : 133
  wrong Z direction  : 0
- wrong orientation  : 22
- wrong ID           : 12
+ wrong orientation  : 26
+ wrong ID           : 13
  duplicates         : 0
- false positives    : 5
- false negative     : 37
+ false positives    : 13
+ false negative     : 22
 Corner errors:
- precision 50%         : 0.33777688986322896
- precision 90%         : 0.6323624853180227
- precision 100%        : 1.1310717631858864
+ precision 50%         : 0.33308598082534624
+ precision 90%         : 0.6275586274848374
+ precision 100%        : 1.4353421099925552
 
 ---------------------------------------------------
 
