@@ -1,10 +1,10 @@
 # Image (multiple) (false positives) (false negative) (average error)
- image00000.jpg  0  1  0  0.4473
- image00001.jpg  0  0  0  0.3808
- image00002.jpg  0  0  0  0.3721
- image00003.jpg  0  1  0  0.3741
- image00004.jpg  0  0  0  0.3505
- image00005.jpg  0  5  0  0.2933
- image00006.jpg  0  0  0  0.3927
- image00007.jpg  0  4  3  0.5075
- image00008.jpg  0  1  2  0.3646
+ image00000.jpg  0  1  0  0.4506
+ image00001.jpg  0  0  0  0.3807
+ image00002.jpg  0  0  0  0.3717
+ image00003.jpg  0  1  0  0.3787
+ image00004.jpg  0  0  0  0.3449
+ image00005.jpg  0  5  0  0.2868
+ image00006.jpg  0  0  0  0.3967
+ image00007.jpg  0  4  3  0.4843
+ image00008.jpg  0  1  2  0.3513

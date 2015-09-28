@@ -9,60 +9,60 @@ Summary:
  false positives    : 0
  false negative     : 8
 Corner errors:
- precision 50%         : 0.3896962399517156
- precision 90%         : 0.8215598958358536
- precision 100%        : 1.3416935163093606
+ precision 50%         : 0.4020580471645207
+ precision 90%         : 0.8153123368904901
+ precision 100%        : 1.309601589818853
 
 ---------------------------------------------------
 
 # Data Set = distance_straight maxPixelError = 5.0
 
 Summary:
- correct            : 35
+ correct            : 34
  wrong Z direction  : 0
  wrong orientation  : 0
  wrong ID           : 0
  duplicates         : 0
  false positives    : 0
- false negative     : 9
+ false negative     : 10
 Corner errors:
- precision 50%         : 0.3561914584817263
- precision 90%         : 0.6995181117906437
- precision 100%        : 1.3416935163093606
+ precision 50%         : 0.3472395507218865
+ precision 90%         : 0.7179608479405037
+ precision 100%        : 1.309601589818853
 
 ---------------------------------------------------
 
 # Data Set = distance_angle maxPixelError = 5.0
 
 Summary:
- correct            : 48
+ correct            : 47
  wrong Z direction  : 0
  wrong orientation  : 0
  wrong ID           : 0
  duplicates         : 0
  false positives    : 0
- false negative     : 14
+ false negative     : 15
 Corner errors:
- precision 50%         : 0.3363168110844688
- precision 90%         : 0.6662131056648828
- precision 100%        : 1.3416935163093606
+ precision 50%         : 0.33610189964298415
+ precision 90%         : 0.6692660797647464
+ precision 100%        : 1.309601589818853
 
 ---------------------------------------------------
 
 # Data Set = hard maxPixelError = 5.0
 
 Summary:
- correct            : 135
+ correct            : 134
  wrong Z direction  : 0
  wrong orientation  : 26
  wrong ID           : 12
  duplicates         : 0
- false positives    : 6
- false negative     : 21
+ false positives    : 7
+ false negative     : 22
 Corner errors:
- precision 50%         : 0.3363738098542925
- precision 90%         : 0.6270090239401901
- precision 100%        : 1.3416935163093606
+ precision 50%         : 0.33636619830255
+ precision 90%         : 0.6300056932970947
+ precision 100%        : 1.309601589818853
 
 ---------------------------------------------------
 

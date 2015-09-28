@@ -9,9 +9,9 @@ Summary:
  false positives    : 1
  false negative     : 39
 Corner errors:
- precision 50%         : 0.4443302641532605
- precision 90%         : 0.9457833330534129
- precision 100%        : 2.1329884644897974
+ precision 50%         : 0.43912686609885987
+ precision 90%         : 0.9554267269437123
+ precision 100%        : 2.1328479762909076
 
 ---------------------------------------------------
 
