@@ -13,4 +13,16 @@
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 
+,idea
+
+#Data directory stuff
+data/abeles2012
+data/affinevgg
+data/denseflow
+data/DIBCO
+data/fiducials
+data/KITTI
+data/leuven07
+data/track_rect
+
 
