@@ -8,3 +8,23 @@
  image00006.jpg  0  0  0  0.7464
  image00007.jpg  0  4  3  0.4760
  image00008.jpg  0  0  2  0.3835
+# Image (multiple) (false positives) (false negative) (average error)
+ image00000.jpg  0  1  1  0.7582
+ image00001.jpg  0  1  1  0.6275
+ image00002.jpg  0  0  0  0.7659
+ image00003.jpg  0  2  3  0.9114
+ image00004.jpg  0  0  0  0.8797
+ image00005.jpg  0  2  2  0.6331
+ image00006.jpg  0  2  3  0.6459
+ image00007.jpg  0  4  5  1.2694
+ image00008.jpg  0  0  2  0.6840
+# Image (multiple) (false positives) (false negative) (average error)
+ image00000.jpg  0  5  8  6.7706
+ image00001.jpg  0  5  7  7.8267
+ image00002.jpg  0  1  6  4.2828
+ image00003.jpg  0  9 10     NaN
+ image00004.jpg  0  7  8  7.9990
+ image00005.jpg  0  7  9  4.5074
+ image00006.jpg  0  8  9  6.6668
+ image00007.jpg  0  1  9  6.6053
+ image00008.jpg  0  7  9  6.9472

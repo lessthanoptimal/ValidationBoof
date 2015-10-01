@@ -18,7 +18,7 @@ public class DetectPolygonRegression extends BaseTextFileRegression {
 
 	File workDirectory = new File("./tmp");
 	File baseDataSetDirectory = new File("data/shape");
-	String dataSetsStandard[] = new String[]{"set01"};
+	String dataSetsStandard[] = new String[]{"set01","set02","set03"};
 
 	String infoString;
 
