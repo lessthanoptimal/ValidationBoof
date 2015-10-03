@@ -71,7 +71,7 @@ public class HandSelectPointsApp {
 	}
 
 	public static void main(String[] args) {
-		String imagePath = "data/shape/set01/image00008.jpg";
+		String imagePath = "data/shape/set04/image03.png";
 
 		String outputName = new File(imagePath).getAbsolutePath();
 		outputName = outputName.substring(0,outputName.length()-4)+".txt";

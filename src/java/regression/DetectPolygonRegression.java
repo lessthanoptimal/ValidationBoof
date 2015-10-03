@@ -10,6 +10,9 @@ import validate.shape.UtilShapeDetector;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * @author Peter Abeles
@@ -18,7 +21,6 @@ public class DetectPolygonRegression extends BaseTextFileRegression {
 
 	File workDirectory = new File("./tmp");
 	File baseDataSetDirectory = new File("data/shape");
-	String dataSetsStandard[] = new String[]{"set01","set02","set03"};
 
 	String infoString;
 
@@ -45,13 +47,18 @@ public class DetectPolygonRegression extends BaseTextFileRegression {
 		PrintStream output = new PrintStream(new File(directory,outputName));
 		evaluator.setOutputResults(output);
 
-		for( String dataset : dataSetsStandard ) {
-			File inputDir = new File(baseDataSetDirectory,dataset);
-			detection.processDirectory(inputDir, workDirectory);
+		List<File> files = Arrays.asList(baseDataSetDirectory.listFiles());
+		Collections.sort(files);
 
-			evaluator.evaluate(inputDir, workDirectory);
+		for( File f : files  ) {
+			if( !f.isDirectory() )
+				continue;
+			output.println("# Data Set = "+f.getName());
+			detection.processDirectory(f, workDirectory);
+			evaluator.evaluate(f, workDirectory);
 			output.println();
 		}
+
 		output.close();
 	}
 

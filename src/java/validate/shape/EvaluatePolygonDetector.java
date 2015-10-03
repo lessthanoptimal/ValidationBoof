@@ -44,7 +44,7 @@ public class EvaluatePolygonDetector {
 		Collections.sort(files);
 
 		for( File f : files ) {
-			if( !f.getName().endsWith("jpg"))
+			if( !(f.getName().endsWith("jpg")||f.getName().endsWith("png")))
 				continue;
 
 			String nameResults = UtilShapeDetector.imageToDetectedName(f.getName());
