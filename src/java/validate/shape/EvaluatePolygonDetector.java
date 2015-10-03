@@ -24,7 +24,7 @@ public class EvaluatePolygonDetector {
 	/**
 	 * Maximum number of pixels away two points can be to be matched
 	 */
-	public static final double MATCH_TOLERANCE = 10.0;
+	public static final double MATCH_TOLERANCE = 20.0;
 
 	public void setOutputResults(PrintStream outputResults) {
 		this.outputResults = outputResults;
@@ -35,6 +35,7 @@ public class EvaluatePolygonDetector {
 	}
 
 	public void evaluate( File dataDir , File resultsDir ) {
+		outputResults.println("# Match Tolerance in Pixels = "+MATCH_TOLERANCE);
 		outputResults.println("# Image (multiple) (false positives) (false negative) (average error)");
 		descriptions = UtilShapeDetector.loadDescription(new File(dataDir,"description.txt"));
 

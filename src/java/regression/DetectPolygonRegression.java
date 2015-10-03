@@ -50,6 +50,7 @@ public class DetectPolygonRegression extends BaseTextFileRegression {
 			detection.processDirectory(inputDir, workDirectory);
 
 			evaluator.evaluate(inputDir, workDirectory);
+			output.println();
 		}
 		output.close();
 	}

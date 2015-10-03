@@ -146,6 +146,8 @@ public class GenerateRegressionData {
 	}
 
 	public static void main(String[] args) {
+		long startTime = System.currentTimeMillis();
+
 		clearCurrentDirectory();
 
 		List<TextFileRegression> imageTests = getRegressionsImage();
@@ -179,6 +181,21 @@ public class GenerateRegressionData {
 			}
 		}
 
-		// TODO print summary of results
+		// print how long the test took
+		long stopTime = System.currentTimeMillis();
+		long elapsedTime = stopTime-startTime;
+
+		double elapsedSeconds = elapsedTime/1000.0;
+
+		double secondsPerDay = 24*60*60;
+		double secondsPerHour = 60*60;
+		double secondsPerMinute = 60;
+
+		int days = (int)(elapsedSeconds/secondsPerDay);
+		int hours = (int)((elapsedSeconds-days*secondsPerDay)/secondsPerHour);
+		int minute = (int)((elapsedSeconds-days*secondsPerDay-hours*secondsPerHour)/secondsPerMinute);
+		double seconds = elapsedSeconds-days*secondsPerDay-hours*secondsPerHour-minute*secondsPerMinute;
+
+		System.out.printf("Days %d Hours %02d Minutes %02d Seconds %6.2f",days,hours,minute,seconds);
 	}
 }
