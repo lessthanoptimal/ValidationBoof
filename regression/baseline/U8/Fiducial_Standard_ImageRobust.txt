@@ -9,9 +9,9 @@ Summary:
  false positives    : 0
  false negative     : 8
 Corner errors:
- precision 50%         : 0.42195458425648186
+ precision 50%         : 0.4064222081968148
  precision 90%         : 0.8094496331701138
- precision 100%        : 1.31093470971853
+ precision 100%        : 1.3408814889457434
 
 ---------------------------------------------------
 
@@ -26,9 +26,9 @@ Summary:
  false positives    : 0
  false negative     : 10
 Corner errors:
- precision 50%         : 0.341154015089392
- precision 90%         : 0.7094601623584756
- precision 100%        : 1.31093470971853
+ precision 50%         : 0.35276702529277537
+ precision 90%         : 0.6995569175737046
+ precision 100%        : 1.3408814889457434
 
 ---------------------------------------------------
 
@@ -40,29 +40,29 @@ Summary:
  wrong orientation  : 0
  wrong ID           : 0
  duplicates         : 0
- false positives    : 2
+ false positives    : 1
  false negative     : 15
 Corner errors:
- precision 50%         : 0.33361664813896735
- precision 90%         : 0.672193469601678
- precision 100%        : 1.31093470971853
+ precision 50%         : 0.3404486965533608
+ precision 90%         : 0.6725045552401119
+ precision 100%        : 1.3408814889457434
 
 ---------------------------------------------------
 
 # Data Set = hard maxPixelError = 5.0
 
 Summary:
- correct            : 131
+ correct            : 135
  wrong Z direction  : 0
- wrong orientation  : 27
- wrong ID           : 13
+ wrong orientation  : 26
+ wrong ID           : 11
  duplicates         : 0
- false positives    : 2
- false negative     : 23
+ false positives    : 1
+ false negative     : 22
 Corner errors:
- precision 50%         : 0.3345295919095862
- precision 90%         : 0.6398917179285277
- precision 100%        : 1.31093470971853
+ precision 50%         : 0.33768531630890625
+ precision 90%         : 0.634875931316697
+ precision 100%        : 1.3408814889457434
 
 ---------------------------------------------------
 

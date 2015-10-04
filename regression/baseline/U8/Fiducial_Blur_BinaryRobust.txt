@@ -4,14 +4,14 @@ Summary:
  correct            : 74
  wrong Z direction  : 0
  wrong orientation  : 0
- wrong ID           : 6
+ wrong ID           : 5
  duplicates         : 0
  false positives    : 0
- false negative     : 28
+ false negative     : 29
 Corner errors:
- precision 50%         : 0.48223664498911495
- precision 90%         : 1.0447910891371588
- precision 100%        : 5.151371259043044
+ precision 50%         : 0.4988176865408632
+ precision 90%         : 1.0180262677244971
+ precision 100%        : 5.122106712691453
 
 ---------------------------------------------------
 

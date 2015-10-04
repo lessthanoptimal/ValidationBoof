@@ -2,13 +2,13 @@
 # Match Tolerance in Pixels = 20.0
 # Image (multiple) (false positives) (false negative) (average error)
  image00000.jpg  0  1  0  0.4370
- image00001.jpg  0  0  0  0.4232
+ image00001.jpg  0  1  0  0.4232
  image00002.jpg  0  0  0  0.3782
  image00003.jpg  0  0  0  0.5225
- image00004.jpg  0  0  0  0.5798
- image00005.jpg  0  2  0  0.2875
- image00006.jpg  0  1  1  0.8938
- image00007.jpg  0  0  2  0.4471
+ image00004.jpg  0  1  0  0.5798
+ image00005.jpg  0  4  0  0.2875
+ image00006.jpg  0  2  1  0.8938
+ image00007.jpg  0  0  0  0.5386
  image00008.jpg  0  0  0  0.5149
 
 # Data Set = set02
@@ -29,7 +29,7 @@
 # Image (multiple) (false positives) (false negative) (average error)
  image00000.jpg  0  0  0  8.7211
  image00001.jpg  0  1  1  8.4969
- image00002.jpg  0  0  3  5.0413
+ image00002.jpg  0  1  3  5.0413
  image00003.jpg  0  1  1 10.7147
  image00004.jpg  0  2  2 10.3380
  image00005.jpg  0  0  2 10.4441
@@ -43,11 +43,11 @@
     image01.png  0  0  3  1.8019
     image02.png  0  0  4  1.9243
     image03.png  0  1  1  3.3370
-    image04.png  0  0  2  1.2375
+    image04.png  0  1  2  1.2375
     image05.png  0  1  3  1.3762
     image06.png  0  0  1  4.8398
-    image07.png  0  1  5  2.1594
-    image08.png  0  1  3  1.7210
+    image07.png  0  1  4  1.9597
+    image08.png  0  1  2  1.6603
     image09.png  0  0  2  1.6922
     image10.png  0  0  2  1.6848
 

@@ -1,16 +1,16 @@
 # Data Set = motion_blur maxPixelError = 10.0
 
 Summary:
- correct            : 36
+ correct            : 34
  wrong Z direction  : 0
  wrong orientation  : 0
- wrong ID           : 3
+ wrong ID           : 5
  duplicates         : 0
  false positives    : 0
  false negative     : 57
 Corner errors:
- precision 50%         : 0.9898015357359126
- precision 90%         : 2.1746001796685706
+ precision 50%         : 1.0650530573826467
+ precision 90%         : 2.4851330738221633
  precision 100%        : 5.7372315113156604
 
 ---------------------------------------------------
