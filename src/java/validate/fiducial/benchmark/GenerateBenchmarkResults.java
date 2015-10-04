@@ -21,10 +21,11 @@ public class GenerateBenchmarkResults {
 		this.factoryDetector = factoryDectector;
 	}
 
-	public void process( File benchmarkDir , String outputDir ) throws IOException {
 
-		if( !new File(outputDir).exists() ) {
-			new File(outputDir).mkdirs();
+	public void process( File benchmarkDir , File outputDir ) throws IOException {
+
+		if( !outputDir.exists() ) {
+			outputDir.mkdirs();
 		}
 
 		PrintStream out = new PrintStream(new File(outputDir,"libToStandard.txt"));
@@ -47,7 +48,7 @@ public class GenerateBenchmarkResults {
 
 				estimator.setOutputDirectory(scenarioOutput);
 				estimator.initialize(benchmarkDir);
-				estimator.process(scenarioName);
+				estimator.process(scenarioOutput);
 			}
 		}
 	}
@@ -63,6 +64,6 @@ public class GenerateBenchmarkResults {
 
 		GenerateBenchmarkResults app = new GenerateBenchmarkResults(factory);
 
-		app.process(new File("data/fiducials/image"),"./output");
+//		app.process(new File("data/fiducials/image"),"./output");
 	}
 }

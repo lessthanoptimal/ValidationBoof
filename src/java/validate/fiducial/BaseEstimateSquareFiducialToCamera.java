@@ -39,9 +39,8 @@ public abstract class BaseEstimateSquareFiducialToCamera<T extends ImageBase> {
 		this.outputDirectory = outputDirectory;
 	}
 
-	public void process( String dataset ) throws IOException {
+	public void process( File dataSetDir ) throws IOException {
 
-		File dataSetDir = new File(baseDirectory,dataset);
 		if( !dataSetDir.exists() ) {
 			throw new DataSetDoesNotExist("The data set directory doesn't exist. "+dataSetDir.getPath());
 		}

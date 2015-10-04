@@ -1,4 +1,65 @@
-# Data Set = static_scene maxPixelError = 5.0
+# Data Set = static_front_close
+# maxPixelError = 5.0
+
+Summary:
+ correct            : 193
+ wrong Z direction  : 0
+ wrong orientation  : 0
+ wrong ID           : 0
+ duplicates         : 0
+ false positive     : 0
+ false negative     : 0
+Normal Angle (deg):     192
+ errors 50%         : 0.025993621655381285
+ errors 90%         : 0.046851738471948956
+ errors 100%        : 0.0865881383976855
+Location            : 192
+ errors 50%         : 0.004090217410701932
+ errors 90%         : 0.008847521697148891
+ errors 100%        : 0.025883445412990026
+Precision:              772
+ errors 50%         : 0.4224402286229664
+ errors 90%         : 1.1992758810186774
+ errors 100%        : 2.540546033302284
+Accuracy:               772
+ errors 50%         : 1.1447770004961257
+ errors 90%         : 2.0714260977277412
+ errors 100%        : 3.337644182275435
+
+---------------------------------------------------
+
+# Data Set = static_front_far
+# maxPixelError = 5.0
+
+Summary:
+ correct            : 100
+ wrong Z direction  : 0
+ wrong orientation  : 0
+ wrong ID           : 0
+ duplicates         : 0
+ false positive     : 0
+ false negative     : 0
+Normal Angle (deg):     99
+ errors 50%         : 0.40198165238653216
+ errors 90%         : 0.8840922035494219
+ errors 100%        : 1.3187871237939859
+Location            : 99
+ errors 50%         : 0.07257509717454554
+ errors 90%         : 0.4203148769324286
+ errors 100%        : 0.5499585030656069
+Precision:              400
+ errors 50%         : 0.14948556414687436
+ errors 90%         : 0.3180115500077112
+ errors 100%        : 0.4903555098197208
+Accuracy:               400
+ errors 50%         : 0.5421612412036014
+ errors 90%         : 1.0188554381273767
+ errors 100%        : 1.2306787071030556
+
+---------------------------------------------------
+
+# Data Set = static_scene
+# maxPixelError = 5.0
 
 Summary:
  correct            : 3684
@@ -23,64 +84,6 @@ Precision:              14736
 Accuracy:               14736
  errors 50%         : 2.662199581176961
  errors 90%         : 3.289514008279893
- errors 100%        : 3.911858785701733
-
----------------------------------------------------
-
-# Data Set = static_front_close maxPixelError = 5.0
-
-Summary:
- correct            : 3877
- wrong Z direction  : 0
- wrong orientation  : 0
- wrong ID           : 0
- duplicates         : 0
- false positive     : 0
- false negative     : 12
-Normal Angle (deg):     192
- errors 50%         : 0.025993621655381285
- errors 90%         : 0.046851738471948956
- errors 100%        : 0.0865881383976855
-Location            : 192
- errors 50%         : 0.004090217410701932
- errors 90%         : 0.008847521697148891
- errors 100%        : 0.025883445412990026
-Precision:              772
- errors 50%         : 0.4224402286229664
- errors 90%         : 1.1992758810186774
- errors 100%        : 2.540546033302284
-Accuracy:               15508
- errors 50%         : 2.615561987233064
- errors 90%         : 3.2798669332296906
- errors 100%        : 3.911858785701733
-
----------------------------------------------------
-
-# Data Set = static_front_far maxPixelError = 5.0
-
-Summary:
- correct            : 3977
- wrong Z direction  : 0
- wrong orientation  : 0
- wrong ID           : 0
- duplicates         : 0
- false positive     : 0
- false negative     : 12
-Normal Angle (deg):     99
- errors 50%         : 0.40198165238653216
- errors 90%         : 0.8840922035494219
- errors 100%        : 1.3187871237939859
-Location            : 99
- errors 50%         : 0.07257509717454554
- errors 90%         : 0.4203148769324286
- errors 100%        : 0.5499585030656069
-Precision:              400
- errors 50%         : 0.14948556414687436
- errors 90%         : 0.3180115500077112
- errors 100%        : 0.4903555098197208
-Accuracy:               15908
- errors 50%         : 2.5870512749774224
- errors 90%         : 3.274837695966823
  errors 100%        : 3.911858785701733
 
 ---------------------------------------------------

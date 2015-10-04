@@ -2,17 +2,17 @@
 # maxPixelError = 5.0
 
 Summary:
- correct            : 16
+ correct            : 3
  wrong Z direction  : 0
  wrong orientation  : 0
  wrong ID           : 0
  duplicates         : 0
  false positives    : 0
- false negative     : 4
+ false negative     : 3
 Corner errors:
- precision 50%         : 0.31580585590924587
- precision 90%         : 0.6534581760639828
- precision 100%        : 1.008175517701425
+ precision 50%         : 0.2444849194031768
+ precision 90%         : 0.4529291731798491
+ precision 100%        : 0.5115681994342293
 
 ---------------------------------------------------
 
@@ -20,17 +20,17 @@ Corner errors:
 # maxPixelError = 5.0
 
 Summary:
- correct            : 19
+ correct            : 4
  wrong Z direction  : 0
  wrong orientation  : 0
  wrong ID           : 0
  duplicates         : 0
  false positives    : 0
- false negative     : 1
+ false negative     : 4
 Corner errors:
- precision 50%         : 0.29996315996105083
- precision 90%         : 0.49719293130659864
- precision 100%        : 0.616673917294734
+ precision 50%         : 0.30848640949937944
+ precision 90%         : 0.4812880349004753
+ precision 100%        : 0.5375549358484535
 
 ---------------------------------------------------
 
@@ -38,17 +38,17 @@ Corner errors:
 # maxPixelError = 5.0
 
 Summary:
- correct            : 70
+ correct            : 1
  wrong Z direction  : 0
  wrong orientation  : 0
  wrong ID           : 0
  duplicates         : 0
- false positives    : 1
- false negative     : 38
+ false positives    : 0
+ false negative     : 12
 Corner errors:
- precision 50%         : 0.4467948960574668
- precision 90%         : 0.9879669030134338
- precision 100%        : 2.1328479762909076
+ precision 50%         : 1.6088497002476945
+ precision 90%         : 2.501900938774626
+ precision 100%        : 2.501900938774626
 
 ---------------------------------------------------
 
@@ -56,17 +56,17 @@ Corner errors:
 # maxPixelError = 5.0
 
 Summary:
- correct            : 22
+ correct            : 6
  wrong Z direction  : 0
  wrong orientation  : 0
  wrong ID           : 0
  duplicates         : 0
  false positives    : 0
- false negative     : 2
+ false negative     : 1
 Corner errors:
- precision 50%         : 0.7079977839042254
- precision 90%         : 1.171101188995176
- precision 100%        : 2.2445278403042113
+ precision 50%         : 0.2907942449392413
+ precision 90%         : 0.5149854512774743
+ precision 100%        : 0.6428609836252627
 
 ---------------------------------------------------
 

@@ -65,7 +65,7 @@ public class EstimateImageFiducialToCamera<T extends ImageSingleBand> extends Ba
 		app.initialize(new File("data/fiducials/image"));
 		app.setOutputDirectory(outputDirectory);
 
-		app.process("static_front_close");
+//		app.process("static_front_close");
 	}
 
 }

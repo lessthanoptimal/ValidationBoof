@@ -31,8 +31,15 @@ public class RuntimePerformanceFiducialToCamera< T extends ImageBase> {
 		this.factory = factory;
 	}
 
-	public void evaluate( File inputDirectory ) {
-		List<File> files = Arrays.asList(inputDirectory.listFiles());
+	public void evaluate( File baseDirectory ) {
+
+		List<File> files = new ArrayList<File>();
+		for( File f : baseDirectory.listFiles() ) {
+			if( f.isDirectory() ) {
+				files.addAll( Arrays.asList(f.listFiles()));
+			}
+		}
+
 		Collections.sort(files);
 
 		for( File f : files ) {

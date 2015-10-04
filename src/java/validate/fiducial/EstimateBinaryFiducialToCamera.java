@@ -47,7 +47,7 @@ public class EstimateBinaryFiducialToCamera<T extends ImageBase> extends BaseEst
 		app.initialize(new File("data/fiducials/binary"));
 		app.setOutputDirectory(outputDirectory);
 
-		app.process("distance_straight");
+//		app.process("distance_straight");
 	}
 
 

@@ -33,7 +33,6 @@ public abstract class BaseEvaluateFiducialToCamera {
 	PrintStream outputResults = System.out;
 	PrintStream err = System.err;
 
-	File baseDirectory;
 	IntrinsicParameters intrinsic;
 	// ID's of the detected fiducials
 	int expected[];
@@ -83,8 +82,7 @@ public abstract class BaseEvaluateFiducialToCamera {
 	public BaseEvaluateFiducialToCamera() {
 	}
 
-	protected File initialize(String dataset) {
-		File dataSetDir = new File(baseDirectory,dataset);
+	protected void initializeEvaluate(File dataSetDir) {
 		library = FiducialCommon.parseScenario(new File(dataSetDir, "library.txt"));
 		List<String> visible = FiducialCommon.parseVisibleFile(new File(dataSetDir,"visible.txt"));
 
@@ -105,7 +103,6 @@ public abstract class BaseEvaluateFiducialToCamera {
 		intrinsic = FiducialCommon.parseIntrinsic(new File(dataSetDir,"intrinsic.txt"));
 		if( intrinsic.radial != null )
 			throw new IllegalArgumentException("Expected no distortion");
-		return dataSetDir;
 	}
 
 	public void setOutputResults(PrintStream outputResults) {
@@ -114,10 +111,6 @@ public abstract class BaseEvaluateFiducialToCamera {
 
 	public void setErrorStream(PrintStream err) {
 		this.err = err;
-	}
-
-	public void initialize( File baseDirectory ) {
-		this.baseDirectory = baseDirectory;
 	}
 
 	protected void resetStatistics() {
@@ -137,7 +130,7 @@ public abstract class BaseEvaluateFiducialToCamera {
 	 * @param resultsDirectory Directory containing results
 	 * @param dataset name of the data set being used
 	 */
-	public abstract void evaluate( File resultsDirectory , String dataset );
+	public abstract void evaluate( File resultsDirectory , File dataset );
 
 	private Se3_F64 adjustCoordinate( Se3_F64 foundF2C ) {
 		if( transformToStandard == null ) {

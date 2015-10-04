@@ -57,7 +57,7 @@ public class EstimateChessboardToCamera <T extends ImageSingleBand> extends Base
 		app.initialize(new File("data/fiducials/chessboard"));
 		app.setOutputDirectory(outputDirectory);
 
-		app.process("distance_straight");
+//		app.process("distance_straight");
 	}
 
 

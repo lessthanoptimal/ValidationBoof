@@ -1,4 +1,65 @@
-# Data Set = static_scene maxPixelError = 5.0
+# Data Set = static_front_close
+# maxPixelError = 5.0
+
+Summary:
+ correct            : 101
+ wrong Z direction  : 0
+ wrong orientation  : 0
+ wrong ID           : 0
+ duplicates         : 0
+ false positive     : 0
+ false negative     : 0
+Normal Angle (deg):     100
+ errors 50%         : 0.009983011592010187
+ errors 90%         : 0.021898126189438902
+ errors 100%        : 0.04438249501686674
+Location            : 100
+ errors 50%         : 4.413487664451404E-4
+ errors 90%         : 9.982416735474732E-4
+ errors 100%        : 0.005361744819324096
+Precision:              404
+ errors 50%         : 0.021679241019635365
+ errors 90%         : 0.04544953031714835
+ errors 100%        : 0.11988847687186488
+Accuracy:               404
+ errors 50%         : 1.1475495340600066
+ errors 90%         : 1.5475302975700185
+ errors 100%        : 1.5801064372017382
+
+---------------------------------------------------
+
+# Data Set = static_front_far
+# maxPixelError = 5.0
+
+Summary:
+ correct            : 100
+ wrong Z direction  : 0
+ wrong orientation  : 0
+ wrong ID           : 0
+ duplicates         : 0
+ false positive     : 0
+ false negative     : 0
+Normal Angle (deg):     99
+ errors 50%         : 0.34024474102413216
+ errors 90%         : 0.9224030859490295
+ errors 100%        : 1.2831480012658636
+Location            : 99
+ errors 50%         : 0.05871418160868435
+ errors 90%         : 0.2514779898360575
+ errors 100%        : 0.4864433289930109
+Precision:              400
+ errors 50%         : 0.06768231263171269
+ errors 90%         : 0.1444367988657056
+ errors 100%        : 0.29077875983572415
+Accuracy:               400
+ errors 50%         : 0.3651849593674699
+ errors 90%         : 0.620966002717672
+ errors 100%        : 0.7133782479351252
+
+---------------------------------------------------
+
+# Data Set = static_scene
+# maxPixelError = 5.0
 
 Summary:
  correct            : 1212
@@ -24,64 +85,6 @@ Accuracy:               4848
  errors 50%         : 0.3317489891994975
  errors 90%         : 0.626102489757158
  errors 100%        : 0.9796252398689111
-
----------------------------------------------------
-
-# Data Set = static_front_close maxPixelError = 5.0
-
-Summary:
- correct            : 1313
- wrong Z direction  : 0
- wrong orientation  : 0
- wrong ID           : 0
- duplicates         : 0
- false positive     : 4
- false negative     : 0
-Normal Angle (deg):     100
- errors 50%         : 0.009983011592010187
- errors 90%         : 0.021898126189438902
- errors 100%        : 0.04438249501686674
-Location            : 100
- errors 50%         : 4.413487664451404E-4
- errors 90%         : 9.982416735474732E-4
- errors 100%        : 0.005361744819324096
-Precision:              404
- errors 50%         : 0.021679241019635365
- errors 90%         : 0.04544953031714835
- errors 100%        : 0.11988847687186488
-Accuracy:               5252
- errors 50%         : 0.34570017278489396
- errors 90%         : 0.7136642322671696
- errors 100%        : 1.5801064372017382
-
----------------------------------------------------
-
-# Data Set = static_front_far maxPixelError = 5.0
-
-Summary:
- correct            : 1413
- wrong Z direction  : 0
- wrong orientation  : 0
- wrong ID           : 0
- duplicates         : 0
- false positive     : 4
- false negative     : 0
-Normal Angle (deg):     99
- errors 50%         : 0.34024474102413216
- errors 90%         : 0.9224030859490295
- errors 100%        : 1.2831480012658636
-Location            : 99
- errors 50%         : 0.05871418160868435
- errors 90%         : 0.2514779898360575
- errors 100%        : 0.4864433289930109
-Precision:              400
- errors 50%         : 0.06768231263171269
- errors 90%         : 0.1444367988657056
- errors 100%        : 0.29077875983572415
-Accuracy:               5652
- errors 50%         : 0.34704133019581407
- errors 90%         : 0.7050087561137098
- errors 100%        : 1.5801064372017382
 
 ---------------------------------------------------
 

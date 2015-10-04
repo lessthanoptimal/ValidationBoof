@@ -29,14 +29,17 @@ public class EvaluateStaticFiducialSequence extends BaseEvaluateFiducialToCamera
 		maxPixelError = 10;
 	}
 
-	public void evaluate( File resultsDirectory , String dataset )
+	@Override
+	public void evaluate( File resultsDirectory , File dataSetDir )
 	{
-		File dataSetDir = initialize(dataset);
+		initializeEvaluate(dataSetDir);
 
 		List<String> results = BoofMiscOps.directoryList(resultsDirectory.getAbsolutePath(), "csv");
 		Collections.sort(results);
 
-		outputResults.println("# Data Set = "+dataset+" maxPixelError = "+maxPixelError);
+		outputResults.println("# Data Set = " + dataSetDir.getName());
+		outputResults.println("# maxPixelError = "+maxPixelError);
+
 		if( !justSummary )
 			outputResults.println("# (file) (detected ID) (matched id) (matched ori) (match pixel error)");
 
@@ -61,6 +64,7 @@ public class EvaluateStaticFiducialSequence extends BaseEvaluateFiducialToCamera
 		GrowQueue_F64 errorNormals = new GrowQueue_F64();
 		GrowQueue_F64 errorLocation = new GrowQueue_F64();
 
+		resetStatistics();
 		for (int i = 0; i < results.size(); i++) {
 			String resultPath = results.get(i);
 			String name = new File(resultPath).getName();
@@ -200,7 +204,7 @@ public class EvaluateStaticFiducialSequence extends BaseEvaluateFiducialToCamera
 	public static void main(String[] args) {
 		EvaluateStaticFiducialSequence app = new EvaluateStaticFiducialSequence();
 
-		app.initialize(new File("data/fiducials/image"));
-		app.evaluate(new File("tmp"),"static_front_close");
+//		app.initialize(new File("data/fiducials/image"));
+//		app.evaluate(new File("tmp"),"static_front_close");
 	}
 }

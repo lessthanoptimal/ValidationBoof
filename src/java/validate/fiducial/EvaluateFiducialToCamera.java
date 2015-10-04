@@ -21,13 +21,16 @@ import static validate.fiducial.FiducialCommon.parseLandmarks;
  */
 public class EvaluateFiducialToCamera extends BaseEvaluateFiducialToCamera {
 
-	public void evaluate( File resultsDirectory , String dataset ) {
-		File dataSetDir = initialize(dataset);
+	@Override
+	public void evaluate( File resultsDirectory , File dataSetDir ) {
+		initializeEvaluate(dataSetDir);
 
 		List<String> results = BoofMiscOps.directoryList(resultsDirectory.getAbsolutePath(),"csv");
 		Collections.sort(results);
 
-		outputResults.println("# Data Set = "+dataset+" maxPixelError = "+maxPixelError);
+		outputResults.println("# "+dataSetDir.getName());
+		outputResults.println("# maxPixelError = "+maxPixelError);
+
 		if( !justSummary )
 			outputResults.println("# (file) (detected ID) (matched id) (matched ori) (match pixel mean error)");
 
@@ -74,7 +77,7 @@ public class EvaluateFiducialToCamera extends BaseEvaluateFiducialToCamera {
 		EvaluateFiducialToCamera app = new EvaluateFiducialToCamera();
 
 //		app.setMaxPixelError(10);
-		app.initialize(new File("data/fiducials/image"));
-		app.evaluate(new File("tmp"),"motion_blur");
+//		app.initialize(new File("data/fiducials/image"));
+//		app.evaluate(new File("tmp"),"motion_blur");
 	}
 }
