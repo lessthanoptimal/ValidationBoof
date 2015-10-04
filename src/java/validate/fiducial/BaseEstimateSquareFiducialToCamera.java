@@ -29,8 +29,6 @@ public abstract class BaseEstimateSquareFiducialToCamera<T extends ImageBase> {
 	File baseDirectory;
 	File outputDirectory = new File(".");
 
-
-
 	public abstract FiducialDetector<T> createDetector( File datasetDir );
 
 	public void initialize( File baseDirectory ) {
@@ -63,7 +61,6 @@ public abstract class BaseEstimateSquareFiducialToCamera<T extends ImageBase> {
 		IntrinsicParameters intrinsic = FiducialCommon.parseIntrinsic(new File(dataSetDir,"intrinsic.txt"));
 		detector.setIntrinsic(intrinsic);
 		for( String path : files ) {
-
 //			System.out.println("processing "+path);
 			BufferedImage orig = UtilImageIO.loadImage(path);
 			image.reshape(orig.getWidth(),orig.getHeight());
@@ -80,7 +77,7 @@ public abstract class BaseEstimateSquareFiducialToCamera<T extends ImageBase> {
 			Se3_F64 fiducialToSensor = new Se3_F64();
 			for (int i = 0; i < detector.totalFound(); i++) {
 				int which = detector.getId(i);
-				double fiducialWidth = library.getWidth(which);
+				double fiducialWidth = library != null ? library.getWidth(which) : 1;
 				detector.getFiducialToCamera(i,fiducialToSensor);
 
 

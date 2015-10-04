@@ -10,6 +10,7 @@ import java.util.Collections;
 import java.util.List;
 
 import static validate.fiducial.FiducialCommon.parseDetections;
+import static validate.fiducial.FiducialCommon.parseLandmarks;
 
 /**
  * Uses previously computed transforms from fiducial to camera to reproject corner points back onto the image.
@@ -30,6 +31,10 @@ public class EvaluateFiducialToCamera extends BaseEvaluateFiducialToCamera {
 		if( !justSummary )
 			outputResults.println("# (file) (detected ID) (matched id) (matched ori) (match pixel mean error)");
 
+
+		List<FiducialCommon.Landmarks> landmarks = parseLandmarks(new File(dataSetDir,"landmarks.txt"));
+
+		resetStatistics();
 		for (int i = 0; i < results.size(); i++) {
 			String resultPath = results.get(i);
 			String name = new File(resultPath).getName();
@@ -38,7 +43,7 @@ public class EvaluateFiducialToCamera extends BaseEvaluateFiducialToCamera {
 			try {
 				List<Point2D_F64> truthCorners = PointFileCodec.load(new File(dataSetDir, nameTruth));
 				List<FiducialCommon.Detected> detected = parseDetections(new File(resultPath));
-				evaluate(name,detected,truthCorners);
+				evaluate(name,detected,truthCorners,landmarks);
 			} catch( RuntimeException e ) {
 				e.printStackTrace(err);
 			}

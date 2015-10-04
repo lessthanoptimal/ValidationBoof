@@ -15,6 +15,7 @@ import java.util.Collections;
 import java.util.List;
 
 import static validate.fiducial.FiducialCommon.parseDetections;
+import static validate.fiducial.FiducialCommon.parseLandmarks;
 
 /**
  * @author Peter Abeles
@@ -71,7 +72,8 @@ public class EvaluateStaticFiducialSequence extends BaseEvaluateFiducialToCamera
 
 			try {
 				List<FiducialCommon.Detected> detected = parseDetections(new File(resultPath));
-				evaluate(name,detected,truthCorners);
+				List<FiducialCommon.Landmarks> landmarks = parseLandmarks(new File(dataSetDir, "landmarks.txt"));
+				evaluate(name,detected,truthCorners,landmarks);
 
 				for (int j = 0; j < expected.length; j++) {
 					if( detectedCorners[j] != null ) {

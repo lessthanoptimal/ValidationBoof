@@ -1,6 +1,5 @@
 package regression;
 
-import boofcv.abst.fiducial.FiducialDetector;
 import boofcv.factory.fiducial.ConfigFiducialBinary;
 import boofcv.factory.fiducial.ConfigFiducialImage;
 import boofcv.factory.fiducial.FactoryFiducial;
@@ -33,50 +32,44 @@ public class FiducialRegression extends BaseTextFileRegression {
 
 		FactoryObject factory = new FactoryObject() { @Override public Object newInstance()
 			{return FactoryFiducial.squareBinaryRobust(new ConfigFiducialBinary(1), 20, imageType);}};
-		process( "BinaryRobust", factory,"binary");
+		process( "BinaryRobust", new EstimateBinaryFiducialToCamera(factory),"binary");
 
 		factory = new FactoryObject() { @Override public Object newInstance()
 		{return FactoryFiducial.squareBinaryFast(new ConfigFiducialBinary(1), 80, imageType);}};
-		process( "BinaryFast", factory,"binary");
+		process("BinaryFast", new EstimateBinaryFiducialToCamera(factory), "binary");
 
 		factory = new FactoryObject() { @Override public Object newInstance()
 		{return FactoryFiducial.squareImageRobust(new ConfigFiducialImage(), 20, imageType);}};
-		process( "ImageRobust", factory,"image");
+		process("ImageRobust", new EstimateImageFiducialToCamera(factory), "image");
 
 		factory = new FactoryObject() { @Override public Object newInstance()
 		{return FactoryFiducial.squareImageFast(new ConfigFiducialImage(), 80, imageType);}};
-		process( "ImageFast", factory,"image");
+		process("ImageFast", new EstimateImageFiducialToCamera(factory), "image");
+
+		process("Chessboard", new EstimateChessboardToCamera(imageType), "chessboard");
 	}
 
-	private void process(String name, FactoryObject factory, String type) throws IOException {
-
-
-		BaseEstimateSquareFiducialToCamera estimate;
-
-		if( type.compareTo("binary") == 0) {
-			estimate = new EstimateBinaryFiducialToCamera(factory);
-		} else {
-			estimate = new EstimateImageFiducialToCamera(factory);
-		}
+	private void process(String name, BaseEstimateSquareFiducialToCamera estimate, String type) throws IOException {
 
 		infoString = name;
 
 		estimate.setOutputDirectory(workDirectory);
-		estimate.initialize(new File(baseFiducial,type));
+		estimate.initialize(new File(baseFiducial, type));
 
-		computeRuntimeMetrics(type,"Fiducial_Runtime_"+name+".txt",factory);
+		computeRuntimeMetrics(type, "Fiducial_Runtime_" + name + ".txt", estimate);
 		computeStandardMetrics(type, "Fiducial_Standard_" + name + ".txt", estimate, 5, dataSetsStandard);
 		computeStandardMetrics(type, "Fiducial_Blur_"+name+".txt", estimate,10,dataSetsBlur);
 		computeStaticMetrics(type, "Fiducial_Static_" + name + ".txt", estimate, 5, dataSetsStatic);
 	}
 
-	private void computeRuntimeMetrics(String type, String outName, FactoryObject factory )
+	private void computeRuntimeMetrics(String type, String outName, BaseEstimateSquareFiducialToCamera factory )
 			throws IOException
 	{
 		PrintStream out = new PrintStream(new File(directory,outName));
 
+
 		RuntimePerformanceFiducialToCamera benchmark =
-				new RuntimePerformanceFiducialToCamera((FiducialDetector)factory.newInstance());
+				new RuntimePerformanceFiducialToCamera(factory);
 
 		benchmark.setErrorStream(errorLog);
 		benchmark.setOutputResults(out);

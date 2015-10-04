@@ -1,8 +1,8 @@
-data/fiducials/image/distance_angle 300  66.269
-data/fiducials/image/distance_straight 300  67.249
-data/fiducials/image/hard 300  49.694
-data/fiducials/image/motion_blur 300  68.934
-data/fiducials/image/rotation 300  51.142
-data/fiducials/image/static_front_close 300  84.364
-data/fiducials/image/static_front_far 300  92.336
-data/fiducials/image/static_scene 300  61.000
+data/fiducials/image/distance_angle 300  67.522
+data/fiducials/image/distance_straight 300  67.310
+data/fiducials/image/hard 300  47.695
+data/fiducials/image/motion_blur 300  67.981
+data/fiducials/image/rotation 300  52.210
+data/fiducials/image/static_front_close 300  85.985
+data/fiducials/image/static_front_far 300  92.966
+data/fiducials/image/static_scene 300  60.716

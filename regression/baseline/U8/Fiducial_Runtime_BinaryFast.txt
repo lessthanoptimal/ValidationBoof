@@ -1,7 +1,7 @@
-data/fiducials/binary/distance_angle 300 234.742
-data/fiducials/binary/distance_straight 300 254.022
-data/fiducials/binary/motion_blur 300 108.735
-data/fiducials/binary/rotation 300 246.103
-data/fiducials/binary/static_front_close 300 374.065
-data/fiducials/binary/static_front_far 300 398.936
-data/fiducials/binary/static_scene 300 126.050
+data/fiducials/binary/distance_angle 300 239.617
+data/fiducials/binary/distance_straight 300 259.965
+data/fiducials/binary/motion_blur 300 112.150
+data/fiducials/binary/rotation 300 277.521
+data/fiducials/binary/static_front_close 300 383.142
+data/fiducials/binary/static_front_far 300 405.954
+data/fiducials/binary/static_scene 300 128.370

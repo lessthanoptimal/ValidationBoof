@@ -1,24 +1,7 @@
 # Data Set = rotation maxPixelError = 5.0
 
 Summary:
- correct            : 22
- wrong Z direction  : 0
- wrong orientation  : 0
- wrong ID           : 0
- duplicates         : 0
- false positives    : 0
- false negative     : 2
-Corner errors:
- precision 50%         : 0.7105369085209875
- precision 90%         : 1.169104791150608
- precision 100%        : 2.244031816595748
-
----------------------------------------------------
-
-# Data Set = distance_straight maxPixelError = 5.0
-
-Summary:
- correct            : 19
+ correct            : 6
  wrong Z direction  : 0
  wrong orientation  : 0
  wrong ID           : 0
@@ -26,26 +9,43 @@ Summary:
  false positives    : 0
  false negative     : 1
 Corner errors:
- precision 50%         : 0.2969451402999765
- precision 90%         : 0.4966583704323963
- precision 100%        : 0.6169428744267605
+ precision 50%         : 0.29865244372492405
+ precision 90%         : 0.5227110071496326
+ precision 100%        : 0.6383236538893324
+
+---------------------------------------------------
+
+# Data Set = distance_straight maxPixelError = 5.0
+
+Summary:
+ correct            : 5
+ wrong Z direction  : 0
+ wrong orientation  : 0
+ wrong ID           : 0
+ duplicates         : 0
+ false positives    : 0
+ false negative     : 3
+Corner errors:
+ precision 50%         : 0.28208550413169914
+ precision 90%         : 0.48299274343853593
+ precision 100%        : 0.538795789064026
 
 ---------------------------------------------------
 
 # Data Set = distance_angle maxPixelError = 5.0
 
 Summary:
- correct            : 16
+ correct            : 3
  wrong Z direction  : 0
  wrong orientation  : 0
  wrong ID           : 0
  duplicates         : 0
  false positives    : 0
- false negative     : 4
+ false negative     : 3
 Corner errors:
- precision 50%         : 0.31397198495700246
- precision 90%         : 0.6544755734580086
- precision 100%        : 1.0080119038663438
+ precision 50%         : 0.2438283635756875
+ precision 90%         : 0.45325917653926534
+ precision 100%        : 0.5164432417827765
 
 ---------------------------------------------------
 

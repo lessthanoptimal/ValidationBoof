@@ -53,7 +53,6 @@ public abstract class BaseEvaluateFiducialToCamera {
 	FiducialCommon.Library library;
 	List<String> visible;
 
-	List<Point3D_F64> fiducialPts = new ArrayList<Point3D_F64>();
 
 	// Fiducial IDs that were assigned to false positive
 	GrowQueue_I32 falsePositiveIDs = new GrowQueue_I32();
@@ -82,10 +81,6 @@ public abstract class BaseEvaluateFiducialToCamera {
 	private Se3_F64 transformToStandard;
 
 	public BaseEvaluateFiducialToCamera() {
-		fiducialPts.add( new Point3D_F64());
-		fiducialPts.add( new Point3D_F64());
-		fiducialPts.add( new Point3D_F64());
-		fiducialPts.add( new Point3D_F64());
 	}
 
 	protected File initialize(String dataset) {
@@ -128,11 +123,13 @@ public abstract class BaseEvaluateFiducialToCamera {
 	protected void resetStatistics() {
 		errors.reset();
 		falsePositiveIDs.reset();
-		totalFalsePositive = 0;
+		totalCorrect = 0;
 		totalWrongOrientation = 0;
+		totalWrongZ = 0;
 		totalWrongID = 0;
 		totalFalsePositive = 0;
 		totalFalseNegative = 0;
+		totalDuplicates = 0;
 	}
 
 	/**
@@ -142,18 +139,18 @@ public abstract class BaseEvaluateFiducialToCamera {
 	 */
 	public abstract void evaluate( File resultsDirectory , String dataset );
 
-	private Se3_F64 adjustCoordinate( Se3_F64 foundF2C , double width ) {
+	private Se3_F64 adjustCoordinate( Se3_F64 foundF2C ) {
 		if( transformToStandard == null ) {
 			return foundF2C;
 		} else {
 			Se3_F64 fidToStandard = transformToStandard.copy();
-			fidToStandard.getT().scale(width);
 			Se3_F64 foundC2F = foundF2C.invert(null);
 			return foundC2F.concat(fidToStandard, null).invert(null);
 		}
 	}
 
-	protected void evaluate( String fileName , List<FiducialCommon.Detected> detected , List<Point2D_F64> truthCorners ) {
+	protected void evaluate( String fileName , List<FiducialCommon.Detected> detected ,
+							 List<Point2D_F64> truthCorners, List<FiducialCommon.Landmarks> landmarks ) {
 
 		for (int i = 0; i < expected.length; i++) {
 			fiducialDetected[i] = 0;
@@ -162,8 +159,8 @@ public abstract class BaseEvaluateFiducialToCamera {
 
 		for( int i = 0; i < detected.size(); i++ ) {
 			FiducialCommon.Detected det = detected.get(i);
-			double fiducialWidth = library.getWidth(det.id);
-			List<Point2D_F64> corners = project(adjustCoordinate(det.fiducialToCamera,fiducialWidth),fiducialWidth);
+			FiducialCommon.Landmarks landmark = lookupLandmark(landmarks,det.id);
+			List<Point2D_F64> corners = project(adjustCoordinate(det.fiducialToCamera),landmark);
 
 			Assignment match = findBestAssignment(corners,truthCorners);
 			if( match == null ) {
@@ -211,17 +208,21 @@ public abstract class BaseEvaluateFiducialToCamera {
 		}
 	}
 
-	private List<Point2D_F64> project( Se3_F64 fiducialToCamera , double fiducialWidth ) {
+	private static FiducialCommon.Landmarks lookupLandmark( List<FiducialCommon.Landmarks> landmarks, int id ) {
+		for( FiducialCommon.Landmarks landmark : landmarks ) {
+			if( landmark.id == id )
+				return landmark;
+		}
+		// unknown, use the default
+		return landmarks.get(0);
+	}
+
+	private List<Point2D_F64> project( Se3_F64 fiducialToCamera , FiducialCommon.Landmarks landmark ) {
 		List<Point2D_F64> pixels = new ArrayList<Point2D_F64>();
 
-		fiducialPts.get(0).set(-fiducialWidth / 2, fiducialWidth / 2, 0);
-		fiducialPts.get(1).set(fiducialWidth / 2, fiducialWidth / 2, 0);
-		fiducialPts.get(2).set(fiducialWidth / 2, -fiducialWidth / 2, 0);
-		fiducialPts.get(3).set(-fiducialWidth / 2, -fiducialWidth/2,0);
-
-		for (int i = 0; i < 4; i++) {
-			Point3D_F64 f = fiducialPts.get(i);
-			Point3D_F64 c = new Point3D_F64();
+		Point3D_F64 c = new Point3D_F64();
+		for (int i = 0; i < landmark.points.size(); i++) {
+			Point3D_F64 f = landmark.points.get(i);
 
 			SePointOps_F64.transform(fiducialToCamera, f, c);
 

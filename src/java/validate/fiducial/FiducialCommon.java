@@ -1,6 +1,7 @@
 package validate.fiducial;
 
 import boofcv.struct.calib.IntrinsicParameters;
+import georegression.struct.point.Point3D_F64;
 import georegression.struct.se.Se3_F64;
 import validate.misc.ParseHelper;
 
@@ -122,10 +123,47 @@ public class FiducialCommon {
 				line = reader.readLine();
 			}
 
-			library.init(widths,names);
+			library.init(widths, names);
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	public static List<Landmarks> parseLandmarks(File file ) {
+		try {
+			BufferedReader reader = new BufferedReader(new FileReader(file));
+
+			String line = ParseHelper.skipComments(reader);
+
+			List<Landmarks> landmarks = new ArrayList<Landmarks>();
+
+			while( line != null ) {
+				Landmarks landmark = new Landmarks();
+				String words[] = line.split(" ");
+				landmark.id = Integer.parseInt(words[0]);
+
+				for (int i = 1; i < words.length; i +=2 ) {
+					Point3D_F64 p = new Point3D_F64();
+					p.x = Double.parseDouble(words[i]);
+					p.y = Double.parseDouble(words[i+1]);
+					landmark.points.add(p);
+				}
+
+				landmarks.add(landmark);
+
+				line = reader.readLine();
+			}
+
+			return landmarks;
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	public static class Landmarks
+	{
+		int id;
+		List<Point3D_F64> points = new ArrayList<Point3D_F64>();
 	}
 
 	public interface Library

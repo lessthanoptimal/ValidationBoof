@@ -1,13 +1,10 @@
 package validate.fiducial;
 
 import boofcv.abst.fiducial.FiducialDetector;
-import boofcv.factory.fiducial.ConfigFiducialImage;
-import boofcv.factory.fiducial.FactoryFiducial;
 import boofcv.io.image.ConvertBufferedImage;
 import boofcv.io.image.UtilImageIO;
 import boofcv.struct.calib.IntrinsicParameters;
 import boofcv.struct.image.ImageBase;
-import boofcv.struct.image.ImageUInt8;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -27,10 +24,11 @@ public class RuntimePerformanceFiducialToCamera< T extends ImageBase> {
 
 	int numFrames = 300;
 
-	FiducialDetector<T> detector;
+	BaseEstimateSquareFiducialToCamera<T> factory;
 
-	public RuntimePerformanceFiducialToCamera(FiducialDetector<T> detector) {
-		this.detector = detector;
+
+	public RuntimePerformanceFiducialToCamera(BaseEstimateSquareFiducialToCamera<T> factory) {
+		this.factory = factory;
 	}
 
 	public void evaluate( File inputDirectory ) {
@@ -49,6 +47,8 @@ public class RuntimePerformanceFiducialToCamera< T extends ImageBase> {
 		List<T> frames = new ArrayList<T>();
 
 		IntrinsicParameters intrinsic = FiducialCommon.parseIntrinsic(new File(inputDirectory,"intrinsic.txt"));
+
+		FiducialDetector<T> detector = factory.createDetector(inputDirectory);
 		detector.setIntrinsic(intrinsic);
 
 		File[] files = inputDirectory.listFiles();
@@ -80,13 +80,4 @@ public class RuntimePerformanceFiducialToCamera< T extends ImageBase> {
 		this.err = err;
 	}
 
-	public static void main(String[] args) {
-		FiducialDetector<ImageUInt8> detector =
-				FactoryFiducial.squareImageRobust(new ConfigFiducialImage(), 20, ImageUInt8.class);
-
-		RuntimePerformanceFiducialToCamera<ImageUInt8> benchmark =
-				new RuntimePerformanceFiducialToCamera<ImageUInt8>(detector);
-
-		benchmark.evaluate(new File("data/fiducials/image"));
-	}
 }
