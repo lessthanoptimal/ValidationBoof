@@ -2,61 +2,7 @@
 # maxPixelError = 5.0
 
 Summary:
- correct            : 16
- wrong Z direction  : 0
- wrong orientation  : 0
- wrong ID           : 0
- duplicates         : 0
- false positives    : 0
- false negative     : 4
-Corner errors:
- precision 50%         : 0.31309649994853
- precision 90%         : 0.6530898011895065
- precision 100%        : 1.0114372007103054
-
----------------------------------------------------
-
-# distance_straight
-# maxPixelError = 5.0
-
-Summary:
- correct            : 19
- wrong Z direction  : 0
- wrong orientation  : 0
- wrong ID           : 0
- duplicates         : 0
- false positives    : 0
- false negative     : 1
-Corner errors:
- precision 50%         : 0.3057182513838636
- precision 90%         : 0.4909899356676208
- precision 100%        : 0.5822844510259056
-
----------------------------------------------------
-
-# motion_blur
-# maxPixelError = 5.0
-
-Summary:
- correct            : 73
- wrong Z direction  : 0
- wrong orientation  : 0
- wrong ID           : 4
- duplicates         : 0
- false positives    : 0
- false negative     : 31
-Corner errors:
- precision 50%         : 0.4646817868544373
- precision 90%         : 0.9525670123948269
- precision 100%        : 3.379456413857623
-
----------------------------------------------------
-
-# rotation
-# maxPixelError = 5.0
-
-Summary:
- correct            : 22
+ correct            : 4
  wrong Z direction  : 0
  wrong orientation  : 0
  wrong ID           : 0
@@ -64,9 +10,63 @@ Summary:
  false positives    : 0
  false negative     : 2
 Corner errors:
- precision 50%         : 0.7062595686239209
- precision 90%         : 1.1954966362048047
- precision 100%        : 2.3153153145679743
+ precision 50%         : 0.31695116809370355
+ precision 90%         : 0.4897127102621075
+ precision 100%        : 0.5133608601547611
+
+---------------------------------------------------
+
+# distance_straight
+# maxPixelError = 5.0
+
+Summary:
+ correct            : 5
+ wrong Z direction  : 0
+ wrong orientation  : 0
+ wrong ID           : 0
+ duplicates         : 0
+ false positives    : 0
+ false negative     : 2
+Corner errors:
+ precision 50%         : 0.3104054868103966
+ precision 90%         : 0.6666712299122984
+ precision 100%        : 0.7900079052357785
+
+---------------------------------------------------
+
+# motion_blur
+# maxPixelError = 5.0
+
+Summary:
+ correct            : 4
+ wrong Z direction  : 0
+ wrong orientation  : 0
+ wrong ID           : 0
+ duplicates         : 0
+ false positives    : 4
+ false negative     : 4
+Corner errors:
+ precision 50%         : 3.773391139831227
+ precision 90%         : 5.56641916558036
+ precision 100%        : 6.673460520847515
+
+---------------------------------------------------
+
+# rotation
+# maxPixelError = 5.0
+
+Summary:
+ correct            : 6
+ wrong Z direction  : 0
+ wrong orientation  : 0
+ wrong ID           : 0
+ duplicates         : 0
+ false positives    : 0
+ false negative     : 1
+Corner errors:
+ precision 50%         : 0.23178872553704977
+ precision 90%         : 0.4661546319708347
+ precision 100%        : 0.6643830158851477
 
 ---------------------------------------------------
 

@@ -71,7 +71,7 @@ public class HandSelectPointsApp {
 	}
 
 	public static void main(String[] args) {
-		String imagePath = "data/fiducials/chessboard/distance_straight/image03.jpg";
+		String imagePath = "data/fiducials/square_grid/standard/rotation/image00029.png";
 
 		String outputName = new File(imagePath).getAbsolutePath();
 		outputName = outputName.substring(0,outputName.length()-4)+".txt";

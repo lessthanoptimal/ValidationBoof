@@ -68,7 +68,7 @@ public class DetectPolygonsSaveToFile<T extends ImageSingleBand> {
 		inputToBinary.process(gray, binary);
 		detector.process(gray, binary);
 
-		FastQueue<Polygon2D_F64> found = detector.getFound();
+		FastQueue<Polygon2D_F64> found = detector.getFoundPolygons();
 //		System.out.println("Found = "+found.size);
 
 		UtilShapeDetector.saveResults(found.toList(),outputFile);

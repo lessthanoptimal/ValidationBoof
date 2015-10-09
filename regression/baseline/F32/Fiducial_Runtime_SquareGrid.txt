@@ -1,0 +1,4 @@
+data/fiducials/square_grid/standard/distance_angle 300  67.431
+data/fiducials/square_grid/standard/distance_straight 300  62.644
+data/fiducials/square_grid/standard/motion_blur 300  77.121
+data/fiducials/square_grid/standard/rotation 300  63.145

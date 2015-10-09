@@ -12,7 +12,7 @@ Summary:
 Corner errors:
  precision 50%         : 0.3193090883587118
  precision 90%         : 0.5443841070203012
- precision 100%        : 0.7372191909319
+ precision 100%        : 0.6910223944438637
 
 ---------------------------------------------------
 
@@ -28,9 +28,9 @@ Summary:
  false positives    : 0
  false negative     : 2
 Corner errors:
- precision 50%         : 0.3099097217721971
- precision 90%         : 0.5839843705841851
- precision 100%        : 1.0744524225849368
+ precision 50%         : 0.29716021854417984
+ precision 90%         : 0.523659353790618
+ precision 100%        : 0.9375764796893054
 
 ---------------------------------------------------
 
@@ -46,9 +46,9 @@ Summary:
  false positives    : 0
  false negative     : 9
 Corner errors:
- precision 50%         : 0.3348257874147199
- precision 90%         : 0.6149352263673105
- precision 100%        : 1.1487271668775492
+ precision 50%         : 0.3347338026258649
+ precision 90%         : 0.6216110623786969
+ precision 100%        : 1.135127760438856
 
 ---------------------------------------------------
 
@@ -56,16 +56,16 @@ Corner errors:
 # maxPixelError = 5.0
 
 Summary:
- correct            : 34
+ correct            : 35
  wrong Z direction  : 0
  wrong orientation  : 0
  wrong ID           : 5
  duplicates         : 0
  false positives    : 0
- false negative     : 57
+ false negative     : 56
 Corner errors:
- precision 50%         : 1.0650530573826467
- precision 90%         : 2.4851330738221633
+ precision 50%         : 0.9955449821923603
+ precision 90%         : 2.3555518674597784
  precision 100%        : 5.7372315113156604
 
 ---------------------------------------------------
@@ -82,9 +82,9 @@ Summary:
  false positives    : 0
  false negative     : 8
 Corner errors:
- precision 50%         : 0.4160446318859245
- precision 90%         : 0.8136880786776656
- precision 100%        : 1.3325603836613464
+ precision 50%         : 0.4075579130094578
+ precision 90%         : 0.8120891662990144
+ precision 100%        : 1.321027282499465
 
 ---------------------------------------------------
 

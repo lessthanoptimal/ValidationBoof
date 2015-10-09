@@ -3,6 +3,8 @@ package validate.fiducial;
 import boofcv.abst.fiducial.FiducialDetector;
 import boofcv.factory.fiducial.ConfigFiducialBinary;
 import boofcv.factory.fiducial.FactoryFiducial;
+import boofcv.factory.filter.binary.ConfigThreshold;
+import boofcv.factory.filter.binary.ThresholdType;
 import boofcv.struct.image.ImageBase;
 import boofcv.struct.image.ImageUInt8;
 import validate.FactoryObject;
@@ -39,7 +41,8 @@ public class EstimateBinaryFiducialToCamera<T extends ImageBase> extends BaseEst
 		FactoryObject factory = new FactoryObject() {
 			@Override
 			public Object newInstance() {
-				return FactoryFiducial.squareBinaryRobust(new ConfigFiducialBinary(1), 15, ImageUInt8.class);
+				return FactoryFiducial.squareBinary(new ConfigFiducialBinary(1),
+						ConfigThreshold.local(ThresholdType.LOCAL_SQUARE, 15), ImageUInt8.class);
 			}
 		};
 

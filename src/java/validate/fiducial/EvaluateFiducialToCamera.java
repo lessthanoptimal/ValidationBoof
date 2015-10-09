@@ -48,6 +48,7 @@ public class EvaluateFiducialToCamera extends BaseEvaluateFiducialToCamera {
 				List<FiducialCommon.Detected> detected = parseDetections(new File(resultPath));
 				evaluate(name,detected,truthCorners,landmarks);
 			} catch( RuntimeException e ) {
+				err.println("Error evaluating "+resultPath+"  in data set "+dataSetDir.getName());
 				e.printStackTrace(err);
 			}
 		}

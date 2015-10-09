@@ -10,9 +10,9 @@ Summary:
  false positives    : 0
  false negative     : 5
 Corner errors:
- precision 50%         : 0.3188655286686052
+ precision 50%         : 0.31814247995123657
  precision 90%         : 0.5429074810053218
- precision 100%        : 0.7366229582170735
+ precision 100%        : 0.7047836375089809
 
 ---------------------------------------------------
 
@@ -28,9 +28,9 @@ Summary:
  false positives    : 0
  false negative     : 2
 Corner errors:
- precision 50%         : 0.3101471888246513
- precision 90%         : 0.5930393332565271
- precision 100%        : 1.0743462635687093
+ precision 50%         : 0.2964166920566472
+ precision 90%         : 0.5214259956079265
+ precision 100%        : 0.9439622860888623
 
 ---------------------------------------------------
 
@@ -46,9 +46,9 @@ Summary:
  false positives    : 6
  false negative     : 8
 Corner errors:
- precision 50%         : 0.33636619830255
- precision 90%         : 0.6001367084294621
- precision 100%        : 1.1480023904229988
+ precision 50%         : 0.33453445860989117
+ precision 90%         : 0.6171485366354577
+ precision 100%        : 1.1363794584889622
 
 ---------------------------------------------------
 
@@ -56,16 +56,16 @@ Corner errors:
 # maxPixelError = 5.0
 
 Summary:
- correct            : 35
+ correct            : 36
  wrong Z direction  : 0
  wrong orientation  : 0
- wrong ID           : 6
+ wrong ID           : 5
  duplicates         : 0
  false positives    : 0
  false negative     : 55
 Corner errors:
- precision 50%         : 1.0065040463836894
- precision 90%         : 2.610068228856524
+ precision 50%         : 0.9807367606545023
+ precision 90%         : 2.304529889595586
  precision 100%        : 5.7407915394542925
 
 ---------------------------------------------------
@@ -82,9 +82,9 @@ Summary:
  false positives    : 0
  false negative     : 8
 Corner errors:
- precision 50%         : 0.4233913217502707
+ precision 50%         : 0.40228911039825926
  precision 90%         : 0.8153123368904901
- precision 100%        : 1.292032630855458
+ precision 100%        : 1.3114820427996636
 
 ---------------------------------------------------
 

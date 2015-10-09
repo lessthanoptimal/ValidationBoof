@@ -4,6 +4,8 @@ import boofcv.abst.fiducial.FiducialDetector;
 import boofcv.abst.fiducial.SquareImage_to_FiducialDetector;
 import boofcv.factory.fiducial.ConfigFiducialImage;
 import boofcv.factory.fiducial.FactoryFiducial;
+import boofcv.factory.filter.binary.ConfigThreshold;
+import boofcv.factory.filter.binary.ThresholdType;
 import boofcv.io.image.ConvertBufferedImage;
 import boofcv.io.image.UtilImageIO;
 import boofcv.struct.image.ImageSingleBand;
@@ -57,7 +59,9 @@ public class EstimateImageFiducialToCamera<T extends ImageSingleBand> extends Ba
 		FactoryObject factory = new FactoryObject() {
 			@Override
 			public Object newInstance() {
-				return FactoryFiducial.squareImageRobust(new ConfigFiducialImage(), 20, ImageUInt8.class);
+				return FactoryFiducial.squareImage(
+						new ConfigFiducialImage(),
+						ConfigThreshold.local(ThresholdType.LOCAL_SQUARE,20), ImageUInt8.class);
 			}
 		};
 
