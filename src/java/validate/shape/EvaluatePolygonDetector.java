@@ -22,9 +22,11 @@ public class EvaluatePolygonDetector {
 	PrintStream err = System.err;
 
 	/**
-	 * Maximum number of pixels away two points can be to be matched
+	 * Fraction of contour size a corner needs to be within to be considered a match
 	 */
-	public static final double MATCH_TOLERANCE = 20.0;
+	public static final double MATCH_TOLERANCE = 0.1;
+
+	public static final double MATCH_BIAS_PIXELS = 2.0;
 
 	public void setOutputResults(PrintStream outputResults) {
 		this.outputResults = outputResults;
@@ -35,8 +37,11 @@ public class EvaluatePolygonDetector {
 	}
 
 	public void evaluate( File dataDir , File resultsDir ) {
-		outputResults.println("# Match Tolerance in Pixels = "+MATCH_TOLERANCE);
-		outputResults.println("# Image (multiple) (false positives) (false negative) (average error)");
+
+
+		outputResults.println("# Match Tolerance in contour fraction = "+MATCH_TOLERANCE);
+		outputResults.println("# Match Tolerance bias pixels         = "+MATCH_BIAS_PIXELS);
+		outputResults.println("# Image (expected) (detected) (multiple) (miss matched) (false positives) (false negative) (average error)");
 		descriptions = UtilShapeDetector.loadDescription(new File(dataDir,"description.txt"));
 
 		List<File> files = Arrays.asList(dataDir.listFiles());
@@ -61,6 +66,7 @@ public class EvaluatePolygonDetector {
 
 	private void evaluateFile(String fileName, List<Polygon2D_F64> truth, List<Polygon2D_F64> found) {
 		int numMultiple = 0;
+		int numMissMatched = 0;
 		int falsePositives = 0;
 
 		boolean matchedFound[] = new boolean[found.size()];
@@ -69,31 +75,45 @@ public class EvaluatePolygonDetector {
 		int totalTruthMatched = 0;
 
 		for( Polygon2D_F64 t : truth ) {
-			int numMatch = 0;
-			double bestError = MATCH_TOLERANCE;
+			double tolerancePixels = size(t)*MATCH_TOLERANCE+MATCH_BIAS_PIXELS;
 
+			List<Polygon2D_F64> matches = new ArrayList<Polygon2D_F64>();
+
+			int minMatches = t.size()/2 + 1;
 			for( int i = 0; i < found.size(); i++ ) {
 				Polygon2D_F64 f = found.get(i);
 
-				if( t.size() == f.size() ) {
-					double error = error(t,f);
-					if( error < MATCH_TOLERANCE ) {
-						matchedFound[i] = true;
-						numMatch++;
-						if (error < bestError) {
-							bestError = error;
-						}
-					}
+				if( countMatchedCorners(t,f,tolerancePixels) >= minMatches ) {
+					matches.add(f);
+					matchedFound[i] = true;
 				}
 			}
 
-			if( numMatch > 1 ) {
-				numMultiple += numMatch-1;
+			boolean missMatched = true;
+			double bestError = Double.MAX_VALUE;
+			for( Polygon2D_F64 p : matches ) {
+				if( p.size() == t.size() ) {
+					missMatched = false;
+				}
+
+				double error = computeError(t,p,tolerancePixels);
+				if( error < bestError ) {
+					bestError = error;
+				}
 			}
-			if( numMatch > 0 ) {
+
+			if( matches.size() > 1 ) {
+				numMultiple += matches.size()-1;
+			}
+			if( matches.size() > 0 ) {
 				totalError += bestError;
 				totalTruthMatched++;
 			}
+
+			if( matches.size()>0 && missMatched ) {
+				numMissMatched++;
+			}
+
 		}
 
 		for (int i = 0; i < matchedFound.length; i++) {
@@ -105,26 +125,78 @@ public class EvaluatePolygonDetector {
 		totalError /= totalTruthMatched;
 		int numFalseNegative = truth.size()-totalTruthMatched;
 
-		outputResults.printf("%15s %2d %2d %2d %7.4f\n",fileName,numMultiple,falsePositives,numFalseNegative,totalError);
+		outputResults.printf("%15s %2d %2d %2d %2d %2d %2d %7.4f\n",fileName,truth.size(),found.size(),
+				numMultiple,numMissMatched,falsePositives,numFalseNegative,totalError);
 	}
 
-	protected double error( Polygon2D_F64 a , Polygon2D_F64 b ) {
+	private static double size( Polygon2D_F64 p ) {
+		double total = 0;
+		for (int i = 0,j = p.size()-1; i < p.size();j=i, i++) {
+			total += p.get(i).distance(p.get(j));
+		}
+		return total;
+	}
+
+	protected int countMatchedCorners( Polygon2D_F64 a , Polygon2D_F64 b , double tol ) {
 		b = b.copy();
 
 		// make sure they are both rotating the same way
 		if( a.isCCW() != b.isCCW() )
 			b.flip();
 
-		double bestError = Double.MAX_VALUE;
-		for (int offset = 0; offset < a.size(); offset++) {
-			double totalError = 0;
-			for (int i = 0; i < a.size(); i++) {
-				int j = (i+offset)%a.size();
+		if( b.size() < a.size() ) {
+			Polygon2D_F64 tmp = a;
+			a = b;
+			b = tmp;
+		}
 
-				totalError += a.get(i).distance(b.get(j));
+		int bestTotal = 0;
+		for (int offset = 0; offset < b.size(); offset++) {
+			int total = 0;
+			for (int i = 0; i < a.size(); i++) {
+				int j = (i+offset)%b.size();
+
+				if( a.get(i).distance(b.get(j)) <= tol ) {
+					total++;
+				}
 			}
-			if( totalError < bestError )
+			if( total > bestTotal )
+				bestTotal = total;
+		}
+		return bestTotal;
+	}
+
+	protected double computeError( Polygon2D_F64 a , Polygon2D_F64 b , double tol ) {
+		b = b.copy();
+
+		// make sure they are both rotating the same way
+		if( a.isCCW() != b.isCCW() )
+			b.flip();
+
+		if( b.size() < a.size() ) {
+			Polygon2D_F64 tmp = a;
+			a = b;
+			b = tmp;
+		}
+
+		int bestMatched = 0;
+		double bestError = 0;
+		for (int offset = 0; offset < b.size(); offset++) {
+			double totalError = 0;
+			int totalMatched = 0;
+			for (int i = 0; i < a.size(); i++) {
+				int j = (i+offset)%b.size();
+
+				double distance = a.get(i).distance(b.get(j));
+				if( distance <= tol ) {
+					totalMatched++;
+					totalError += distance;
+				}
+			}
+			if( totalMatched > bestMatched ) {
+				bestMatched = totalMatched;
 				bestError = totalError;
+			}
 		}
 		return bestError/a.size();
 	}
