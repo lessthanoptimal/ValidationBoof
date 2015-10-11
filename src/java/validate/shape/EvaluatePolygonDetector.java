@@ -138,67 +138,42 @@ public class EvaluatePolygonDetector {
 	}
 
 	protected int countMatchedCorners( Polygon2D_F64 a , Polygon2D_F64 b , double tol ) {
-		b = b.copy();
 
-		// make sure they are both rotating the same way
-		if( a.isCCW() != b.isCCW() )
-			b.flip();
+		int totalMatched=0;
+		for (int i = 0; i < a.size(); i++) {
+			Point2D_F64 pt_a = a.get(i);
+			for (int j = 0; j < b.size(); j++) {
+				Point2D_F64 pt_b = b.get(j);
 
-		if( b.size() < a.size() ) {
-			Polygon2D_F64 tmp = a;
-			a = b;
-			b = tmp;
-		}
-
-		int bestTotal = 0;
-		for (int offset = 0; offset < b.size(); offset++) {
-			int total = 0;
-			for (int i = 0; i < a.size(); i++) {
-				int j = (i+offset)%b.size();
-
-				if( a.get(i).distance(b.get(j)) <= tol ) {
-					total++;
+				if( pt_a.distance(pt_b) <= tol ) {
+					totalMatched++;
+					break;
 				}
 			}
-			if( total > bestTotal )
-				bestTotal = total;
 		}
-		return bestTotal;
+
+		return totalMatched;
 	}
 
 	protected double computeError( Polygon2D_F64 a , Polygon2D_F64 b , double tol ) {
-		b = b.copy();
 
-		// make sure they are both rotating the same way
-		if( a.isCCW() != b.isCCW() )
-			b.flip();
+		int totalMatched=0;
+		double totalError=0;
+		for (int i = 0; i < a.size(); i++) {
+			Point2D_F64 pt_a = a.get(i);
+			for (int j = 0; j < b.size(); j++) {
+				Point2D_F64 pt_b = b.get(j);
 
-		if( b.size() < a.size() ) {
-			Polygon2D_F64 tmp = a;
-			a = b;
-			b = tmp;
-		}
-
-		int bestMatched = 0;
-		double bestError = 0;
-		for (int offset = 0; offset < b.size(); offset++) {
-			double totalError = 0;
-			int totalMatched = 0;
-			for (int i = 0; i < a.size(); i++) {
-				int j = (i+offset)%b.size();
-
-				double distance = a.get(i).distance(b.get(j));
-				if( distance <= tol ) {
+				double error = pt_a.distance(pt_b);
+				if( error <= tol ) {
+					totalError += error;
 					totalMatched++;
-					totalError += distance;
+					break;
 				}
 			}
-			if( totalMatched > bestMatched ) {
-				bestMatched = totalMatched;
-				bestError = totalError;
-			}
 		}
-		return bestError/a.size();
+
+		return totalError/totalMatched;
 	}
 
 	protected List<Polygon2D_F64> loadTruth( File fileTruth ) {

@@ -63,7 +63,7 @@ public class FiducialRegression extends BaseTextFileRegression {
 		estimate.setOutputDirectory(workDirectory);
 		estimate.initialize(new File(baseFiducial, type));
 
-		computeRuntimeMetrics(type, "Fiducial_Runtime_" + name + ".txt", estimate);
+//		computeRuntimeMetrics(type, "Fiducial_Runtime_" + name + ".txt", estimate);
 		computeStandardMetrics(type, "Fiducial_Standard_" + name + ".txt", estimate, 5);
 		computeStaticMetrics(type, "Fiducial_Static_" + name + ".txt", estimate, 5);
 	}
