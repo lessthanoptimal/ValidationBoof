@@ -35,19 +35,31 @@ public class FiducialRegression extends BaseTextFileRegression {
 		final ConfigThreshold robust = ConfigThreshold.local(ThresholdType.LOCAL_SQUARE,20);
 		final ConfigThreshold fast = ConfigThreshold.fixed(80);
 
-		FactoryObject factory = new FactoryObject() { @Override public Object newInstance()
+		FactoryObject factory = new FactoryObject() {
+			@Override public void configure(File file) {}
+
+			@Override public Object newInstance()
 			{return FactoryFiducial.squareBinary(new ConfigFiducialBinary(1), robust, imageType);}};
 		process( "BinaryRobust", new EstimateBinaryFiducialToCamera(factory),"binary");
 
-		factory = new FactoryObject() { @Override public Object newInstance()
+		factory = new FactoryObject() {
+			@Override public void configure(File file) {}
+
+			@Override public Object newInstance()
 		{return FactoryFiducial.squareBinary(new ConfigFiducialBinary(1), fast, imageType);}};
 		process("BinaryFast", new EstimateBinaryFiducialToCamera(factory), "binary");
 
-		factory = new FactoryObject() { @Override public Object newInstance()
+		factory = new FactoryObject() {
+			@Override public void configure(File file) {}
+
+			@Override public Object newInstance()
 		{return FactoryFiducial.squareImage(new ConfigFiducialImage(), robust, imageType);}};
 		process("ImageRobust", new EstimateImageFiducialToCamera(factory), "image");
 
-		factory = new FactoryObject() { @Override public Object newInstance()
+		factory = new FactoryObject() {
+			@Override public void configure(File file) {}
+
+			@Override public Object newInstance()
 		{return FactoryFiducial.squareImage(new ConfigFiducialImage(), fast, imageType);}};
 		process("ImageFast", new EstimateImageFiducialToCamera(factory), "image");
 
@@ -63,7 +75,7 @@ public class FiducialRegression extends BaseTextFileRegression {
 		estimate.setOutputDirectory(workDirectory);
 		estimate.initialize(new File(baseFiducial, type));
 
-//		computeRuntimeMetrics(type, "Fiducial_Runtime_" + name + ".txt", estimate);
+		computeRuntimeMetrics(type, "Fiducial_Runtime_" + name + ".txt", estimate);
 		computeStandardMetrics(type, "Fiducial_Standard_" + name + ".txt", estimate, 5);
 		computeStaticMetrics(type, "Fiducial_Static_" + name + ".txt", estimate, 5);
 	}

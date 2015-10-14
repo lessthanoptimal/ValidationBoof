@@ -6,6 +6,7 @@ import boofcv.factory.filter.binary.ConfigThreshold;
 import boofcv.factory.filter.binary.ThresholdType;
 import boofcv.struct.image.ImageUInt8;
 import validate.FactoryObject;
+import validate.FactoryObjectAbstract;
 import validate.fiducial.EstimateImageFiducialToCamera;
 
 import java.io.File;
@@ -57,7 +58,7 @@ public class GenerateBenchmarkResults {
 
 	public static void main(String[] args) throws IOException {
 
-		FactoryObject factory = new FactoryObject() {
+		FactoryObject factory = new FactoryObjectAbstract() {
 			@Override
 			public Object newInstance() {
 				return FactoryFiducial.squareImage(new ConfigFiducialImage(),

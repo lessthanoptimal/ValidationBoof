@@ -1,11 +1,11 @@
 package regression;
 
-import boofcv.alg.shapes.polygon.BinaryPolygonConvexDetector;
+import boofcv.alg.shapes.polygon.BinaryPolygonDetector;
 import boofcv.struct.image.ImageDataType;
 import validate.FactoryObject;
 import validate.shape.DetectPolygonsSaveToFile;
 import validate.shape.EvaluatePolygonDetector;
-import validate.shape.UtilShapeDetector;
+import validate.shape.FactoryBinaryPolygon;
 
 import java.io.File;
 import java.io.IOException;
@@ -28,20 +28,15 @@ public class DetectPolygonRegression extends BaseTextFileRegression {
 	public void process(ImageDataType type) throws IOException {
 		final Class imageType = ImageDataType.typeToSingleClass(type);
 
-		FactoryObject factory = new FactoryObject() { @Override public Object newInstance()
-			{return UtilShapeDetector.createPolygonLine(imageType);}};
-		process("PolygonLine", factory);
-
-		factory = new FactoryObject() { @Override public Object newInstance()
-		{return UtilShapeDetector.createPolygonCorner(imageType);}};
-		process("PolygonCorner", factory);
+		process("PolygonLine", new FactoryBinaryPolygon(true,imageType));
+		process("PolygonCorner", new FactoryBinaryPolygon(false,imageType));
 	}
 
-	private void process(String name, FactoryObject<BinaryPolygonConvexDetector> factory) throws IOException {
+	private void process(String name, FactoryObject<BinaryPolygonDetector> factory) throws IOException {
 
 		String outputName = "ShapeDetector_"+name+".txt";
 
-		DetectPolygonsSaveToFile detection = new DetectPolygonsSaveToFile(factory.newInstance());
+
 		EvaluatePolygonDetector evaluator = new EvaluatePolygonDetector();
 
 		PrintStream output = new PrintStream(new File(directory,outputName));
@@ -54,6 +49,11 @@ public class DetectPolygonRegression extends BaseTextFileRegression {
 			if( !f.isDirectory() )
 				continue;
 			output.println("# Data Set = "+f.getName());
+
+			factory.configure(new File(f,"detector.txt"));
+
+			DetectPolygonsSaveToFile detection = new DetectPolygonsSaveToFile(factory.newInstance());
+
 			detection.processDirectory(f, workDirectory);
 			evaluator.evaluate(f, workDirectory);
 			output.println();

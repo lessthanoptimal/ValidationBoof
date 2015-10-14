@@ -1,7 +1,7 @@
 package validate.shape;
 
 import boofcv.abst.filter.binary.InputToBinary;
-import boofcv.alg.shapes.polygon.BinaryPolygonConvexDetector;
+import boofcv.alg.shapes.polygon.BinaryPolygonDetector;
 import boofcv.core.image.GeneralizedImageOps;
 import boofcv.factory.filter.binary.FactoryThresholdBinary;
 import boofcv.io.image.ConvertBufferedImage;
@@ -21,13 +21,13 @@ import java.io.File;
  */
 public class DetectPolygonsSaveToFile<T extends ImageSingleBand> {
 
-	BinaryPolygonConvexDetector<T> detector;
+	BinaryPolygonDetector<T> detector;
 	InputToBinary<T> inputToBinary;
 
 	T gray;
 	ImageUInt8 binary = new ImageUInt8(1,1);
 
-	public DetectPolygonsSaveToFile( BinaryPolygonConvexDetector<T> detector) {
+	public DetectPolygonsSaveToFile( BinaryPolygonDetector<T> detector) {
 
 		this.detector = detector;
 
@@ -76,11 +76,11 @@ public class DetectPolygonsSaveToFile<T extends ImageSingleBand> {
 
 	public static void main(String[] args) {
 
-		Class imageType = ImageUInt8.class;
-		BinaryPolygonConvexDetector detector = UtilShapeDetector.createPolygonLine(imageType);
-
-		DetectPolygonsSaveToFile app = new DetectPolygonsSaveToFile(detector);
-
-		app.processDirectory(new File("data/shape/set01"),new File("./tmp"));
+//		Class imageType = ImageUInt8.class;
+//		BinaryPolygonDetector detector = UtilShapeDetector.createPolygonLine(imageType);
+//
+//		DetectPolygonsSaveToFile app = new DetectPolygonsSaveToFile(detector);
+//
+//		app.processDirectory(new File("data/shape/set01"),new File("./tmp"));
 	}
 }

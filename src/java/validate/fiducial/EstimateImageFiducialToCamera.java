@@ -58,6 +58,9 @@ public class EstimateImageFiducialToCamera<T extends ImageSingleBand> extends Ba
 
 		FactoryObject factory = new FactoryObject() {
 			@Override
+			public void configure(File file) {}
+
+			@Override
 			public Object newInstance() {
 				return FactoryFiducial.squareImage(
 						new ConfigFiducialImage(),

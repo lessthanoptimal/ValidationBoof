@@ -8,6 +8,7 @@ import boofcv.factory.filter.binary.ThresholdType;
 import boofcv.struct.image.ImageBase;
 import boofcv.struct.image.ImageUInt8;
 import validate.FactoryObject;
+import validate.FactoryObjectAbstract;
 
 import java.io.File;
 import java.io.IOException;
@@ -38,7 +39,7 @@ public class EstimateBinaryFiducialToCamera<T extends ImageBase> extends BaseEst
 
 		File outputDirectory = setupOutput();
 
-		FactoryObject factory = new FactoryObject() {
+		FactoryObject factory = new FactoryObjectAbstract() {
 			@Override
 			public Object newInstance() {
 				return FactoryFiducial.squareBinary(new ConfigFiducialBinary(1),

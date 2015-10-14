@@ -1,0 +1,5 @@
+# Specifies specific settings for the detector which will override default settings
+convex false
+min_sides 3
+max_sides 20
+image_border false

@@ -1,11 +1,11 @@
 # Describes which points belong to which shapes
-triangle 0 1 2
-triangle 3 4 5
-triangle 6 7 8
-triangle 9 10 11
-triangle 12 13 14
-triangle 15 16 17
-triangle 18 19 20
-triangle 21 22 23
-triangle 24 25 26
-triangle 27 28 29
+triangle 3
+triangle 3
+triangle 3
+triangle 3
+triangle 3
+triangle 3
+triangle 3
+triangle 3
+triangle 3
+triangle 3

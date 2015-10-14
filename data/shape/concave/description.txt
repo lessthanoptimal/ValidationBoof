@@ -1,0 +1,5 @@
+# Name and number of sides for each shape
+top 12
+middle 5
+F 10
+bottom_right 6

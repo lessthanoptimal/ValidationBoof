@@ -1,3 +1,15 @@
+# Data Set = concave
+# Match Tolerance in contour fraction = 0.1
+# Match Tolerance bias pixels         = 2.0
+# Image (expected) (detected) (multiple) (miss matched) (false positives) (false negative) (average error)
+ image00000.jpg  4  4  0  1  0  0 15.2859
+ image00001.jpg  4  4  0  1  0  0 18.5893
+ image00002.jpg  4  4  1  1  0  0 32.3334
+ image00003.jpg  4  4  0  2  0  0 21.2842
+ image00004.jpg  4  4  0  0  0  0 11.5406
+ image00005.jpg  4  4  0  1  0  0 13.7207
+ image00006.jpg  4  4  0  2  0  0  9.2264
+
 # Data Set = set01
 # Match Tolerance in contour fraction = 0.1
 # Match Tolerance bias pixels         = 2.0
