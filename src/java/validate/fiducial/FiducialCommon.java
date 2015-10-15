@@ -79,7 +79,7 @@ public class FiducialCommon {
 
 	public static Library parseScenario( File file ) {
 		Library library;
-		if( file.getPath().contains("binary")) {
+		if( file.getPath().contains("binary") || file.getPath().contains("chessboard")) {
 			library = new LibraryBinary();
 		} else {
 			library = new LibraryImage();
@@ -116,7 +116,7 @@ public class FiducialCommon {
 			List<Double> widths = new ArrayList<Double>();
 			List<String> names = new ArrayList<String>();
 
-			while( line != null ) {
+			while( line != null && line.length() != 0) {
 				String words[] = line.split(" ");
 				names.add(words[1]);
 				widths.add(Double.parseDouble(words[0]));
@@ -195,7 +195,11 @@ public class FiducialCommon {
 
 		@Override
 		public List<String> getAllNames() {
-			return null;
+			List<String> names = new ArrayList<String>();
+			for (int i = 0; i < expectedId.length; i++) {
+				names.add(""+expectedId[i]);
+			}
+			return names;
 		}
 
 		@Override

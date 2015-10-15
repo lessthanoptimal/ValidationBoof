@@ -78,6 +78,7 @@ public class FiducialRegression extends BaseTextFileRegression {
 		computeRuntimeMetrics(type, "Fiducial_Runtime_" + name + ".txt", estimate);
 		computeStandardMetrics(type, "Fiducial_Standard_" + name + ".txt", estimate, 5);
 		computeStaticMetrics(type, "Fiducial_Static_" + name + ".txt", estimate, 5);
+		computeAlwaysVisibleMetrics(type, "Fiducial_AlwaysVisible_" + name + ".txt", estimate);
 	}
 
 	private void computeRuntimeMetrics(String type, String outName, BaseEstimateSquareFiducialToCamera factory )
@@ -127,11 +128,29 @@ public class FiducialRegression extends BaseTextFileRegression {
 		processDataSets(estimate, new File(new File(baseFiducial,type),"static"), out, evaluate);
 	}
 
-	private void processDataSets(BaseEstimateSquareFiducialToCamera estimate, File dataSetsRoot,
-								 PrintStream out,
-								 BaseEvaluateFiducialToCamera evaluate)
+	private void computeAlwaysVisibleMetrics(String type, String outName,
+											 BaseEstimateSquareFiducialToCamera estimate)
 			throws IOException
 	{
+		PrintStream out = new PrintStream(new File(directory,outName));
+
+		EvaluateAlwaysVisibleSequence evaluate = new EvaluateAlwaysVisibleSequence();
+		evaluate.setErrorStream(errorLog);
+		evaluate.setOutputResults(out);
+
+		processDataSets(estimate, new File(new File(baseFiducial,type),"always_visible"), out, evaluate);
+	}
+
+	private void processDataSets(BaseEstimateSquareFiducialToCamera estimate, File dataSetsRoot,
+								 PrintStream out,
+								 FiducialEvaluateInterface evaluate)
+			throws IOException
+	{
+		if( !dataSetsRoot.exists() ) {
+			errorLog.println("Can't compute \"always visible\" metrics.  Doesn't exist. "+dataSetsRoot.getPath());
+			return;
+		}
+
 		List<File> directories = Arrays.asList(dataSetsRoot.listFiles());
 		Collections.sort(directories);
 

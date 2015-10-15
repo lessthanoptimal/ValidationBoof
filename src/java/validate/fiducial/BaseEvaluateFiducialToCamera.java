@@ -27,7 +27,7 @@ import java.util.List;
  *
  * @author Peter Abeles
  */
-public abstract class BaseEvaluateFiducialToCamera {
+public abstract class BaseEvaluateFiducialToCamera implements FiducialEvaluateInterface {
 	double maxPixelError = 5;
 
 	PrintStream outputResults = System.out;
