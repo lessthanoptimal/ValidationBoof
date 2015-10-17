@@ -1,0 +1,9 @@
+# set01   sequence with known always visible targets
+total frames 373
+false positives 0
+ fiducial id | visible | multiple 
+00284           359            0
+00634           373            0
+
+---------------------------------------------------
+

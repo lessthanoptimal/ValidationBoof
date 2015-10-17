@@ -24,16 +24,16 @@ public class EvaluateAlwaysVisibleSequence implements FiducialEvaluateInterface 
 		outputResults.println("# "+dataset.getName()+"   sequence with known always visible targets");
 
 		FiducialCommon.Library library = FiducialCommon.parseScenario(new File(dataset, "library.txt"));
+		List<String> visible = FiducialCommon.parseVisibleFile(new File(dataset, "visible.txt"));
 
 		List<String> results = BoofMiscOps.directoryList(resultsDirectory.getAbsolutePath(), "csv");
 		Collections.sort(results);
 
 		Map<Integer,Tally> map = new HashMap<Integer,Tally>();
 
-		List<String> names = library.getAllNames();
-		for( String name : names ) {
+		for( String name : visible ) {
 			int id = library.nameToID(name);
-			map.put( id , new Tally());
+			map.put( id , new Tally(id));
 		}
 
 		int numFalsePositive = 0;
@@ -52,9 +52,9 @@ public class EvaluateAlwaysVisibleSequence implements FiducialEvaluateInterface 
 				t.currentFrame++;
 			}
 
-			if(detected.size() == 0 ) {
-				System.out.println(results.get(i));
-			}
+//			if(detected.size() == 0 ) {
+//				System.out.println(results.get(i));
+//			}
 
 			for( Tally t : map.values() ) {
 				if( t.currentFrame >= 1 ) {
@@ -111,5 +111,9 @@ public class EvaluateAlwaysVisibleSequence implements FiducialEvaluateInterface 
 
 		// number of times it was visible this frame
 		public int currentFrame;
+
+		public Tally(int id) {
+			this.id = id;
+		}
 	}
 }

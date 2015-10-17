@@ -1,0 +1,58 @@
+# Data Set = front_close
+# maxPixelError = 5.0
+
+Summary:
+ correct            : 200
+ wrong order        : 0
+ wrong ID           : 0
+ duplicates         : 0
+ false positive     : 0
+ false negative     : 0
+Normal Angle (deg):     199
+ errors 50%         : 0.02023016076181554
+ errors 90%         : 0.03941502713222791
+ errors 100%        : 0.11324881853816544
+Location            : 199
+ errors 50%         : 4.814643048962598E-4
+ errors 90%         : 0.0011607009865133803
+ errors 100%        : 0.004284062246525489
+Precision:              9600
+ errors 50%         : 0.056205469529410336
+ errors 90%         : 0.17831811152175184
+ errors 100%        : 0.28522175235612307
+Accuracy:               9600
+ errors 50%         : 0.5201512618149463
+ errors 90%         : 0.9596014147423363
+ errors 100%        : 1.3883321515282465
+
+---------------------------------------------------
+
+# Data Set = front_far
+# maxPixelError = 5.0
+
+Summary:
+ correct            : 200
+ wrong order        : 0
+ wrong ID           : 0
+ duplicates         : 0
+ false positive     : 0
+ false negative     : 0
+Normal Angle (deg):     199
+ errors 50%         : 0.21932232286397313
+ errors 90%         : 0.4731018926834649
+ errors 100%        : 1.0997269857123138
+Location            : 199
+ errors 50%         : 0.005675919543194853
+ errors 90%         : 0.016268767703881602
+ errors 100%        : 0.04313661632506738
+Precision:              9600
+ errors 50%         : 0.01308179337210051
+ errors 90%         : 0.026636445474732814
+ errors 100%        : 0.08108678430907752
+Accuracy:               9600
+ errors 50%         : 0.4155574397590225
+ errors 90%         : 0.7032505383761746
+ errors 100%        : 0.8703474230396078
+
+---------------------------------------------------
+

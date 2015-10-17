@@ -3,8 +3,7 @@
 
 Summary:
  correct            : 13
- wrong Z direction  : 0
- wrong orientation  : 0
+ wrong order        : 0
  wrong ID           : 0
  duplicates         : 0
  false positives    : 0
@@ -21,8 +20,7 @@ Corner errors:
 
 Summary:
  correct            : 16
- wrong Z direction  : 0
- wrong orientation  : 0
+ wrong order        : 0
  wrong ID           : 0
  duplicates         : 0
  false positives    : 0
@@ -39,8 +37,7 @@ Corner errors:
 
 Summary:
  correct            : 88
- wrong Z direction  : 0
- wrong orientation  : 26
+ wrong order        : 26
  wrong ID           : 10
  duplicates         : 0
  false positives    : 6
@@ -57,8 +54,7 @@ Corner errors:
 
 Summary:
  correct            : 36
- wrong Z direction  : 0
- wrong orientation  : 0
+ wrong order        : 26
  wrong ID           : 5
  duplicates         : 0
  false positives    : 0
@@ -75,8 +71,7 @@ Corner errors:
 
 Summary:
  correct            : 18
- wrong Z direction  : 0
- wrong orientation  : 0
+ wrong order        : 26
  wrong ID           : 0
  duplicates         : 0
  false positives    : 0

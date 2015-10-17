@@ -3,8 +3,7 @@
 
 Summary:
  correct            : 101
- wrong Z direction  : 0
- wrong orientation  : 0
+ wrong order        : 0
  wrong ID           : 0
  duplicates         : 0
  false positive     : 0
@@ -33,8 +32,7 @@ Accuracy:               404
 
 Summary:
  correct            : 100
- wrong Z direction  : 0
- wrong orientation  : 0
+ wrong order        : 0
  wrong ID           : 0
  duplicates         : 0
  false positive     : 0
@@ -63,8 +61,7 @@ Accuracy:               400
 
 Summary:
  correct            : 1212
- wrong Z direction  : 0
- wrong orientation  : 0
+ wrong order        : 0
  wrong ID           : 0
  duplicates         : 0
  false positive     : 6

@@ -8,6 +8,7 @@ import boofcv.factory.filter.binary.ThresholdType;
 import boofcv.struct.image.ImageDataType;
 import validate.DataSetDoesNotExist;
 import validate.FactoryObject;
+import validate.FactoryObjectAbstract;
 import validate.fiducial.*;
 import validate.misc.ParseHelper;
 
@@ -35,30 +36,22 @@ public class FiducialRegression extends BaseTextFileRegression {
 		final ConfigThreshold robust = ConfigThreshold.local(ThresholdType.LOCAL_SQUARE,20);
 		final ConfigThreshold fast = ConfigThreshold.fixed(80);
 
-		FactoryObject factory = new FactoryObject() {
-			@Override public void configure(File file) {}
-
+		FactoryObject factory = new FactoryObjectAbstract() {
 			@Override public Object newInstance()
 			{return FactoryFiducial.squareBinary(new ConfigFiducialBinary(1), robust, imageType);}};
 		process( "BinaryRobust", new EstimateBinaryFiducialToCamera(factory),"binary");
 
-		factory = new FactoryObject() {
-			@Override public void configure(File file) {}
-
+		factory = new FactoryObjectAbstract() {
 			@Override public Object newInstance()
 		{return FactoryFiducial.squareBinary(new ConfigFiducialBinary(1), fast, imageType);}};
 		process("BinaryFast", new EstimateBinaryFiducialToCamera(factory), "binary");
 
-		factory = new FactoryObject() {
-			@Override public void configure(File file) {}
-
+		factory = new FactoryObjectAbstract() {
 			@Override public Object newInstance()
 		{return FactoryFiducial.squareImage(new ConfigFiducialImage(), robust, imageType);}};
 		process("ImageRobust", new EstimateImageFiducialToCamera(factory), "image");
 
-		factory = new FactoryObject() {
-			@Override public void configure(File file) {}
-
+		factory = new FactoryObjectAbstract() {
 			@Override public Object newInstance()
 		{return FactoryFiducial.squareImage(new ConfigFiducialImage(), fast, imageType);}};
 		process("ImageFast", new EstimateImageFiducialToCamera(factory), "image");
