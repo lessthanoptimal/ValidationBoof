@@ -23,6 +23,18 @@ public class FiducialCommon {
 			out.printf("0 0 1\n");
 			out.printf("%d %d\n",intrinsic.width,intrinsic.height);
 
+			if( intrinsic.radial != null ) {
+				out.print("radial");
+				for (int i = 0; i < intrinsic.radial.length; i++) {
+					out.print(" "+intrinsic.radial[i]);
+				}
+				out.println();
+			}
+
+			if( intrinsic.t1 != 0 && intrinsic.t2 != 0 ) {
+				out.println("tangential " + intrinsic.t1 + " " + intrinsic.t2);
+			}
+
 			out.close();
 		} catch( FileNotFoundException ignore ) {}
 	}
@@ -38,8 +50,6 @@ public class FiducialCommon {
 					words.add(w[j]);
 				}
 			}
-			reader.close();
-
 			IntrinsicParameters out = new IntrinsicParameters();
 			out.fx = Double.parseDouble(words.get(0));
 			out.skew = Double.parseDouble(words.get(1));
@@ -48,6 +58,25 @@ public class FiducialCommon {
 			out.cy = Double.parseDouble(words.get(5));
 			out.width = Integer.parseInt(words.get(9));
 			out.height = Integer.parseInt(words.get(10));
+
+
+			String line = reader.readLine();
+			while( line != null ) {
+				String w[] = line.split(" ");
+				if( w[0].equalsIgnoreCase("radial")) {
+					int N = w.length-1;
+					out.radial = new double[N];
+					for (int i = 0; i < N; i++) {
+						out.radial[i] = Double.parseDouble(w[i+1]);
+					}
+				} else if( w[0].equalsIgnoreCase("tangential")) {
+					out.t1 = Double.parseDouble(w[1]);
+					out.t2 = Double.parseDouble(w[2]);
+				}
+				line = reader.readLine();
+			}
+
+			reader.close();
 			return out;
 		} catch( IOException e ) {
 			throw new RuntimeException(e);

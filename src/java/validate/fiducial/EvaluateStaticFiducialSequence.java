@@ -41,7 +41,7 @@ public class EvaluateStaticFiducialSequence extends BaseEvaluateFiducialToCamera
 		outputResults.println("# maxPixelError = "+maxPixelError);
 
 		if( !justSummary )
-			outputResults.println("# (file) (detected ID) (matched id) (matched ori) (match pixel error)");
+			outputResults.println("# (file) (detected ID) (matched id) (out of order) (match pixel error)");
 
 		// list of all detections for each fiducial.  used to compute precision
 		List<List<Point2D_F64>> allDetections[] = new ArrayList[expected.length];
@@ -105,7 +105,7 @@ public class EvaluateStaticFiducialSequence extends BaseEvaluateFiducialToCamera
 		Arrays.sort(errors.data, 0, errors.size);
 
 		double accuracy50 = errors.size == 0 ? 0 : errors.get( (int)(errors.size()*0.5));
-		double accuracy90 = errors.size == 0 ? 0 :errors.get( (int)(errors.size()*0.9));
+		double accuracy90 = errors.size == 0 ? 0 : errors.get( (int)(errors.size()*0.9));
 		double accuracy100 = errors.size == 0 ? 0 :errors.get( errors.size()-1);
 
 		GrowQueue_F64 precision = computePrecision(allDetections);
@@ -129,8 +129,7 @@ public class EvaluateStaticFiducialSequence extends BaseEvaluateFiducialToCamera
 		outputResults.println();
 		outputResults.println("Summary:");
 		outputResults.println(" correct            : " + totalCorrect);
-		outputResults.println(" wrong Z direction  : " + totalWrongZ);
-		outputResults.println(" wrong orientation  : " + totalWrongOrientation);
+		outputResults.println(" wrong order        : " + totalWrongOrder);
 		outputResults.println(" wrong ID           : " + totalWrongID);
 		outputResults.println(" duplicates         : " + totalDuplicates);
 		outputResults.println(" false positive     : " + totalFalsePositive);
@@ -160,8 +159,10 @@ public class EvaluateStaticFiducialSequence extends BaseEvaluateFiducialToCamera
 	public static GrowQueue_F64 computePrecision( List<List<Point2D_F64>> allDetections[] ) {
 		GrowQueue_F64 errors = new GrowQueue_F64();
 
-		Point2D_F64 average[] = new Point2D_F64[4];
-		for (int i = 0; i < 4; i++) {
+		int numPoints = allDetections[0].get(0).size();
+
+		Point2D_F64 average[] = new Point2D_F64[numPoints];
+		for (int i = 0; i < numPoints; i++) {
 			average[i] = new Point2D_F64();
 		}
 		for (int fid = 0; fid < allDetections.length; fid++) {
@@ -169,12 +170,12 @@ public class EvaluateStaticFiducialSequence extends BaseEvaluateFiducialToCamera
 			if( detections.size() <= 2 )
 				continue;
 
-			for (int i = 0; i < 4; i++) {
+			for (int i = 0; i < numPoints; i++) {
 				average[i].set(0,0);
 			}
 
 			for( List<Point2D_F64> corners : detections ) {
-				for (int i = 0; i < 4; i++) {
+				for (int i = 0; i < numPoints; i++) {
 					Point2D_F64 p = corners.get(i);
 					Point2D_F64 a = average[i];
 
@@ -183,13 +184,13 @@ public class EvaluateStaticFiducialSequence extends BaseEvaluateFiducialToCamera
 				}
 			}
 
-			for (int i = 0; i < 4; i++) {
+			for (int i = 0; i < numPoints; i++) {
 				average[i].x /= detections.size();
 				average[i].y /= detections.size();
 			}
 
 			for( List<Point2D_F64> corners : detections ) {
-				for (int i = 0; i < 4; i++) {
+				for (int i = 0; i < numPoints; i++) {
 					Point2D_F64 p = corners.get(i);
 					Point2D_F64 a = average[i];
 

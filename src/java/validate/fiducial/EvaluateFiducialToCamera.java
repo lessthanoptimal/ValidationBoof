@@ -62,8 +62,7 @@ public class EvaluateFiducialToCamera extends BaseEvaluateFiducialToCamera {
 		outputResults.println();
 		outputResults.println("Summary:");
 		outputResults.println(" correct            : " + totalCorrect);
-		outputResults.println(" wrong Z direction  : " + totalWrongZ);
-		outputResults.println(" wrong orientation  : " + totalWrongOrientation);
+		outputResults.println(" wrong order        : " + totalWrongOrder);
 		outputResults.println(" wrong ID           : " + totalWrongID);
 		outputResults.println(" duplicates         : " + totalDuplicates);
 		outputResults.println(" false positives    : " + totalFalsePositive);

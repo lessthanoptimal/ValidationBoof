@@ -25,7 +25,7 @@ public class CreateCalibrationFiducialLandmarkFiles {
 
 		out.println("# locations of point landmarks on the fiducial\n" +
 				"# (fiducial ID) (x y coordinate for each landmark)\n" +
-				"# first one is the fault that's used if an unknown ID is detected");
+				"# first one is the default that's used if an unknown ID is detected");
 
 		out.print("-1");
 		for( Point2D_F64 p : points ) {

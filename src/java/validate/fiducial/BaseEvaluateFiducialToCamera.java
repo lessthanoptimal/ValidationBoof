@@ -1,12 +1,12 @@
 package validate.fiducial;
 
 import boofcv.alg.geo.PerspectiveOps;
+import boofcv.alg.geo.WorldToCameraToPixel;
 import boofcv.struct.calib.IntrinsicParameters;
 import georegression.struct.point.Point2D_F64;
 import georegression.struct.point.Point3D_F64;
 import georegression.struct.point.Vector3D_F64;
 import georegression.struct.se.Se3_F64;
-import georegression.transform.se.SePointOps_F64;
 import org.ddogleg.struct.GrowQueue_F64;
 import org.ddogleg.struct.GrowQueue_I32;
 
@@ -61,10 +61,8 @@ public abstract class BaseEvaluateFiducialToCamera implements FiducialEvaluateIn
 
 	// everything correct
 	int totalCorrect;
-	// correct ID and corners are good, but orientation is bad
-	int totalWrongOrientation;
-	// wrong z-direction
-	int totalWrongZ;
+	// correct ID and corners are good, but order of the corners is bad
+	int totalWrongOrder;
 	// corner match but ID doesn't
 	int totalWrongID;
 	// complete false positive
@@ -101,8 +99,6 @@ public abstract class BaseEvaluateFiducialToCamera implements FiducialEvaluateIn
 			fiducialPose[i] = new Se3_F64();
 		}
 		intrinsic = FiducialCommon.parseIntrinsic(new File(dataSetDir,"intrinsic.txt"));
-		if( intrinsic.radial != null )
-			throw new IllegalArgumentException("Expected no distortion");
 	}
 
 	public void setOutputResults(PrintStream outputResults) {
@@ -117,8 +113,6 @@ public abstract class BaseEvaluateFiducialToCamera implements FiducialEvaluateIn
 		errors.reset();
 		falsePositiveIDs.reset();
 		totalCorrect = 0;
-		totalWrongOrientation = 0;
-		totalWrongZ = 0;
 		totalWrongID = 0;
 		totalFalsePositive = 0;
 		totalFalseNegative = 0;
@@ -150,12 +144,14 @@ public abstract class BaseEvaluateFiducialToCamera implements FiducialEvaluateIn
 			detectedCorners[i] = null;
 		}
 
+		List<List<Point2D_F64>> truthFiducialCorners = extractIndividual(truthCorners,expected.length );
+
 		for( int i = 0; i < detected.size(); i++ ) {
 			FiducialCommon.Detected det = detected.get(i);
 			FiducialCommon.Landmarks landmark = lookupLandmark(landmarks,det.id);
 			List<Point2D_F64> corners = project(adjustCoordinate(det.fiducialToCamera),landmark);
 
-			Assignment match = findBestAssignment(corners,truthCorners);
+			Assignment match = findBestAssignment(corners,truthFiducialCorners);
 			if( match == null ) {
 				falsePositiveIDs.add(det.id);
 				totalFalsePositive++;
@@ -167,24 +163,22 @@ public abstract class BaseEvaluateFiducialToCamera implements FiducialEvaluateIn
 				fiducialPose[match.index].set(det.fiducialToCamera);
 
 				if( match.id == det.id ) {
-					if( match.reverseOrder )
-						totalWrongZ++;
-					if( match.ori == 0 )
-						totalCorrect++;
+					if( match.outOfOrder )
+						totalWrongOrder++;
 					else
-						totalWrongOrientation++;
+						totalCorrect++;
 				} else {
 					totalWrongID++;
 				}
 			}
 
 			if( match != null ) {
-				for (int j = 0; j < 4; j++) {
+				for (int j = 0; j < match.errors.length; j++) {
 					errors.add( match.errors[j] );
 				}
 
 				if( !justSummary )
-					outputResults.println(fileName+" "+det.id + " " + match.id + " " +match.reverseOrder+ " " + match.ori + " "+match.meanError);
+					outputResults.println(fileName+" "+det.id + " " + match.id + " " +match.outOfOrder+ " "+match.meanError);
 			} else {
 				if( !justSummary )
 					outputResults.println(fileName+" "+det.id +" false positive");
@@ -201,6 +195,22 @@ public abstract class BaseEvaluateFiducialToCamera implements FiducialEvaluateIn
 		}
 	}
 
+	protected List<List<Point2D_F64>> extractIndividual(List<Point2D_F64> truthCorners, int totalFiducials) {
+		List<List<Point2D_F64>> ret = new ArrayList<List<Point2D_F64>>();
+
+		int N = truthCorners.size()/totalFiducials;
+
+		for (int i = 0; i < truthCorners.size(); i += N) {
+			List<Point2D_F64> list = new ArrayList<Point2D_F64>();
+			for (int j = 0; j < N; j++) {
+				list.add( truthCorners.get(i+j));
+			}
+
+			ret.add(list);
+		}
+		return ret;
+	}
+
 	private static FiducialCommon.Landmarks lookupLandmark( List<FiducialCommon.Landmarks> landmarks, int id ) {
 		for( FiducialCommon.Landmarks landmark : landmarks ) {
 			if( landmark.id == id )
@@ -213,86 +223,105 @@ public abstract class BaseEvaluateFiducialToCamera implements FiducialEvaluateIn
 	private List<Point2D_F64> project( Se3_F64 fiducialToCamera , FiducialCommon.Landmarks landmark ) {
 		List<Point2D_F64> pixels = new ArrayList<Point2D_F64>();
 
-		Point3D_F64 c = new Point3D_F64();
+		WorldToCameraToPixel worldToPixel = PerspectiveOps.createWorldToPixel(intrinsic, fiducialToCamera);
+
 		for (int i = 0; i < landmark.points.size(); i++) {
 			Point3D_F64 f = landmark.points.get(i);
 
-			SePointOps_F64.transform(fiducialToCamera, f, c);
-
-			Point2D_F64 p = new Point2D_F64();
-			PerspectiveOps.convertNormToPixel(intrinsic, c.x / c.z, c.y / c.z, p);
-
-			pixels.add(p);
+			pixels.add(worldToPixel.transform(f));
 		}
 
 		return pixels;
 	}
 
-	private Assignment findBestAssignment( List<Point2D_F64> corners , List<Point2D_F64> truthCorners ) {
+	private Assignment findBestAssignment( List<Point2D_F64> corners , List<List<Point2D_F64>> truthFiducials ) {
 		Assignment best = new Assignment();
 		best.id = -1;
 		best.meanError = maxPixelError;
+		best.errors = new double[ corners.size() ];
 
-		int bestExpectedIndex=-1;
+		double errorsInOrder[] = new double[ corners.size() ];
+		double errorsOutOfOrder[] = new double[ corners.size() ];
 
-		double errors[] = new double[4];
-		for (int i = 0; i < truthCorners.size(); i += 4 ) {
-			for (int ori = 0; ori < 4; ori++) {
-				double meanError = 0;
-				for (int k = 0; k < 4; k++) {
-					int index = (ori+k)%4;
-					errors[k] = corners.get(k).distance(truthCorners.get(i+index));
-					meanError += errors[k];
-				}
-				meanError /= 4;
+		List<Point2D_F64> reordered = new ArrayList<Point2D_F64>();
+		List<Point2D_F64> bestOrdered = new ArrayList<Point2D_F64>();
 
-				if( meanError < best.meanError ) {
-					best.meanError = meanError;
-					best.ori = ori;
-					best.id = expected[i/4];
-					best.reverseOrder = false;
-					System.arraycopy(errors,0,best.errors,0,4);
-					bestExpectedIndex = i/4;
-				}
+		for (int i = 0; i < truthFiducials.size(); i++) {
+			double errorInOrder = scoreInOrder(corners,truthFiducials.get(i),errorsInOrder);
+			double errorOutOfOrder = scoreOutOfOrder(corners,truthFiducials.get(i),reordered,errorsOutOfOrder);
+
+			if( errorInOrder > best.meanError && errorOutOfOrder > best.meanError ) {
+				continue;
 			}
 
-			// try going around in the different direction
-			for (int ori = 0; ori < 4; ori++) {
-				double meanError = 0;
-				for (int k = 0; k < 4; k++) {
-					int index = (ori-k)%4;
-					if( index < 0 ) index = 4 + index;
-					errors[k] = corners.get(k).distance(truthCorners.get(i+index));
-					meanError += errors[k];
-				}
-				meanError /= 4;
-
-				if( meanError < best.meanError ) {
-					best.meanError = meanError;
-					best.ori = ori;
-					best.id = expected[i/4];
-					best.reverseOrder = true;
-					System.arraycopy(errors,0,best.errors,0,4);
-					bestExpectedIndex = i/4;
-				}
+			if( errorOutOfOrder*1.5 < errorInOrder ) {
+				best.index = i;
+				best.id = expected[i];
+				best.meanError = errorOutOfOrder;
+				best.outOfOrder = true;
+				bestOrdered.clear();
+				bestOrdered.addAll(reordered);
+				System.arraycopy(errorsOutOfOrder,0,best.errors,0,corners.size());
+			} else if( errorInOrder < best.meanError ) {
+				best.index = i;
+				best.id = expected[i];
+				best.meanError = errorInOrder;
+				best.outOfOrder = false;
+				bestOrdered.clear();
+				bestOrdered.addAll(corners);
+				System.arraycopy(errorsInOrder,0,best.errors,0,corners.size());
 			}
 		}
 
-		if( bestExpectedIndex >= 0 ) {
-			best.index = bestExpectedIndex;
-			fiducialDetected[bestExpectedIndex]++;
-			if( fiducialDetected[bestExpectedIndex] == 1 ) {
-				// reorder the points to make comparision easier later on
-				List<Point2D_F64> reordered = new ArrayList<Point2D_F64>();
-				for (int i = 0; i < 4; i++) {
-					int index = (best.ori+i)%4;
-					reordered.add(corners.get(index));
+		if( best.id != -1 ) {
+			fiducialDetected[best.index]++;
+			if( fiducialDetected[best.index] == 1 ) {
+				List<Point2D_F64> detected = new ArrayList<Point2D_F64>();
+				for (int i = 0; i < bestOrdered.size(); i++) {
+					detected.add( bestOrdered.get(i).copy() );
 				}
-				detectedCorners[bestExpectedIndex] = reordered;
+
+				detectedCorners[best.index] = detected;
 			}
 			return best;
-		} else
+		} else {
 			return null;
+		}
+	}
+
+	public double scoreInOrder( List<Point2D_F64> found , List<Point2D_F64> truth , double errors[] ) {
+		double meanError = 0;
+		if( truth.size() != found.size() ) {
+			System.out.println("Egads.  Incorrect number of fiducials in visible file?");
+		}
+		for (int i = 0; i < found.size(); i++) {
+			Point2D_F64 c = found.get(i);
+			Point2D_F64 t = truth.get(i);
+
+			meanError += errors[i] = c.distance(t);
+		}
+		return meanError / found.size();
+	}
+
+	public double scoreOutOfOrder( List<Point2D_F64> found , List<Point2D_F64> truth , List<Point2D_F64> reordered, double errors[] ) {
+		reordered.clear();
+		double outOfOrderError = 0;
+		for (int j = 0; j < truth.size(); j++) {
+			Point2D_F64 t = truth.get(j);
+
+			double bestMatch = Double.MAX_VALUE;
+			Point2D_F64 matched = null;
+			for (int i = 0; i < found.size(); i++) {
+				double d = found.get(i).distance(t);
+				if( d < bestMatch ) {
+					bestMatch = d;
+					matched = found.get(i);
+				}
+			}
+			reordered.add(matched);
+			outOfOrderError += errors[j] = bestMatch;
+		}
+		return outOfOrderError / truth.size();
 	}
 
 	public void setMaxPixelError(double maxPixelError) {
@@ -311,9 +340,8 @@ public abstract class BaseEvaluateFiducialToCamera implements FiducialEvaluateIn
 	{
 		int index;
 		int id;
-		int ori;
-		boolean reverseOrder;
+		boolean outOfOrder;
 		double meanError;
-		double errors[] = new double[4];
+		double errors[];
 	}
 }
