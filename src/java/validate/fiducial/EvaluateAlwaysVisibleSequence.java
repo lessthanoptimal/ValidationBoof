@@ -18,6 +18,9 @@ public class EvaluateAlwaysVisibleSequence implements FiducialEvaluateInterface 
 	PrintStream outputResults = System.out;
 	PrintStream err = System.err;
 
+	int totalExpected;
+	int totalCorrect;
+
 	@Override
 	public void evaluate(File resultsDirectory, File dataset) {
 
@@ -84,17 +87,30 @@ public class EvaluateAlwaysVisibleSequence implements FiducialEvaluateInterface 
 			}
 		});
 
+		totalCorrect = 0;
 		outputResults.println(" fiducial id | visible | multiple ");
 		for( Tally t : list ) {
 			outputResults.printf("%05d          %4d         %4d\n", t.id, t.numVisible, t.numMultiple);
+			totalCorrect += t.numVisible;
 		}
 		outputResults.flush();
 
+		totalExpected = visible.size()*results.size();
 	}
 
 	@Override
 	public void setErrorStream(PrintStream errorLog) {
 		this.err = errorLog;
+	}
+
+	@Override
+	public int getTotalExpected() {
+		return totalExpected;
+	}
+
+	@Override
+	public int getTotalCorrect() {
+		return totalCorrect;
 	}
 
 	@Override

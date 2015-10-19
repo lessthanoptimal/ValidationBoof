@@ -1,6 +1,9 @@
 package validate.shape;
 
 import boofcv.factory.shape.ConfigPolygonDetector;
+import boofcv.factory.shape.ConfigRefinePolygonCornersToImage;
+import boofcv.factory.shape.ConfigRefinePolygonLineToImage;
+import boofcv.struct.Configuration;
 import georegression.struct.point.Point2D_F64;
 import georegression.struct.shapes.Polygon2D_F64;
 import validate.misc.ParseHelper;
@@ -50,13 +53,18 @@ public class UtilShapeDetector {
 		}
 
 		ConfigPolygonDetector config = new ConfigPolygonDetector(3,4,5,6);
-		config.refineWithCorners = !fitLines;
-		config.refineWithLines = fitLines;
+		Configuration configRefine = null;
+		if( fitLines ) {
+			configRefine = new ConfigRefinePolygonLineToImage();
+		} else {
+			configRefine = new ConfigRefinePolygonCornersToImage();
+		}
 
 		int sides[] = new int[maxSides - minSides+1];
 		for (int i = 0; i < sides.length; i++) {
 			sides[i] = i + minSides;
 		}
+		config.refine = configRefine;
 		config.numberOfSides = sides;
 		config.convex = convex;
 //			config.border = border; TODO not implemented yet

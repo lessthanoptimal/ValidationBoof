@@ -13,4 +13,7 @@ public interface FiducialEvaluateInterface {
 	void setOutputResults(PrintStream outputResults);
 
 	void setErrorStream(PrintStream err);
+
+	int getTotalExpected();
+	int getTotalCorrect();
 }

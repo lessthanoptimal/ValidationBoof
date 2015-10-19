@@ -32,7 +32,7 @@ public class EvaluateFiducialToCamera extends BaseEvaluateFiducialToCamera {
 		outputResults.println("# maxPixelError = "+maxPixelError);
 
 		if( !justSummary )
-			outputResults.println("# (file) (detected ID) (matched id) (matched ori) (match pixel mean error)");
+			outputResults.println("# (file) (detected ID) (matched id) (out of order) (match pixel mean error)");
 
 
 		List<FiducialCommon.Landmarks> landmarks = parseLandmarks(new File(dataSetDir,"landmarks.txt"));
@@ -61,7 +61,7 @@ public class EvaluateFiducialToCamera extends BaseEvaluateFiducialToCamera {
 
 		outputResults.println();
 		outputResults.println("Summary:");
-		outputResults.println(" correct            : " + totalCorrect);
+		outputResults.printf (" correct            : %4d / %4d\n",totalCorrect,totalExpected);
 		outputResults.println(" wrong order        : " + totalWrongOrder);
 		outputResults.println(" wrong ID           : " + totalWrongID);
 		outputResults.println(" duplicates         : " + totalDuplicates);

@@ -147,6 +147,9 @@ public class FiducialRegression extends BaseTextFileRegression {
 		List<File> directories = Arrays.asList(dataSetsRoot.listFiles());
 		Collections.sort(directories);
 
+		int totalExpected = 0;
+		int totalCorrect = 0;
+
 		for( File dataSet : directories) {
 			if( workDirectory.exists() ) {
 				ParseHelper.deleteRecursive(workDirectory);
@@ -157,6 +160,8 @@ public class FiducialRegression extends BaseTextFileRegression {
 			try {
 				estimate.process(dataSet);
 				evaluate.evaluate(workDirectory, dataSet);
+				totalExpected += evaluate.getTotalExpected();
+				totalCorrect += evaluate.getTotalCorrect();
 			} catch( DataSetDoesNotExist e ) {
 				errorLog.println();
 				errorLog.println(e.getMessage());
@@ -169,6 +174,9 @@ public class FiducialRegression extends BaseTextFileRegression {
 			out.println("---------------------------------------------------");
 			out.println();
 		}
+
+		out.println("---------------------------------------------------");
+		out.printf("total correct / total expected = %4d /%4d", totalCorrect,totalExpected);
 	}
 
 	public static void main(String[] args) throws IOException {

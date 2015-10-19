@@ -38,6 +38,17 @@ public abstract class BaseEvaluateFiducialToCamera implements FiducialEvaluateIn
 	int expected[];
 	// The number of times a fiducial was detected.  This will include wrong ID's and orientations
 	int fiducialDetected[];
+
+	@Override
+	public int getTotalExpected() {
+		return totalExpected;
+	}
+
+	@Override
+	public int getTotalCorrect() {
+		return totalCorrect;
+	}
+
 	// normal vector for a specific truth
 	Vector3D_F64 fiducialNormal[];
 	Se3_F64 fiducialPose[];
@@ -59,8 +70,10 @@ public abstract class BaseEvaluateFiducialToCamera implements FiducialEvaluateIn
 	// Only print the summary results
 	boolean justSummary = false;
 
+	// expected number of fiducials
+	public int totalExpected;
 	// everything correct
-	int totalCorrect;
+	public int totalCorrect;
 	// correct ID and corners are good, but order of the corners is bad
 	int totalWrongOrder;
 	// corner match but ID doesn't
@@ -112,6 +125,7 @@ public abstract class BaseEvaluateFiducialToCamera implements FiducialEvaluateIn
 	protected void resetStatistics() {
 		errors.reset();
 		falsePositiveIDs.reset();
+		totalExpected = 0;
 		totalCorrect = 0;
 		totalWrongID = 0;
 		totalFalsePositive = 0;
@@ -139,6 +153,7 @@ public abstract class BaseEvaluateFiducialToCamera implements FiducialEvaluateIn
 	protected void evaluate( String fileName , List<FiducialCommon.Detected> detected ,
 							 List<Point2D_F64> truthCorners, List<FiducialCommon.Landmarks> landmarks ) {
 
+		totalExpected += expected.length;
 		for (int i = 0; i < expected.length; i++) {
 			fiducialDetected[i] = 0;
 			detectedCorners[i] = null;

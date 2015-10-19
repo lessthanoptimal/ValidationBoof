@@ -79,6 +79,10 @@ public class EvaluateStaticFiducialSequence extends BaseEvaluateFiducialToCamera
 				List<FiducialCommon.Landmarks> landmarks = parseLandmarks(new File(dataSetDir, "landmarks.txt"));
 				evaluate(name,detected,truthCorners,landmarks);
 
+//				if( detected.size() == 0 ) {
+//					System.out.println("no detection "+resultPath);
+//				}
+
 				for (int j = 0; j < expected.length; j++) {
 					if( detectedCorners[j] != null ) {
 						allDetections[j].add( detectedCorners[j]);
