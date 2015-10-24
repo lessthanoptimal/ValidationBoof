@@ -2,8 +2,10 @@
 total frames 373
 false positives 0
  fiducial id | visible | multiple 
-00284           358            0
+00284           373            0
 00634           373            0
 
 ---------------------------------------------------
 
+---------------------------------------------------
+total correct / total expected =  746 / 746

@@ -1,6 +1,6 @@
 Runtime.getRuntime().availableProcessors(): 4
-Runtime.getRuntime().freeMemory(): 124968760
-Runtime.getRuntime().totalMemory(): 348651520
+Runtime.getRuntime().freeMemory(): 279158848
+Runtime.getRuntime().totalMemory(): 354418688
 =========== java.runtime.name
 Java(TM) SE Runtime Environment
 =========== sun.boot.library.path
@@ -14,7 +14,7 @@ http://java.oracle.com/
 =========== path.separator
 :
 =========== idea.launcher.port
-7544
+7533
 =========== java.vm.name
 Java HotSpot(TM) 64-Bit Server VM
 =========== file.encoding.pkg

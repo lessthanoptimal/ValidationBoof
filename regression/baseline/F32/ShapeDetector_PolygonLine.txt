@@ -2,68 +2,68 @@
 # Match Tolerance in contour fraction = 0.1
 # Match Tolerance bias pixels         = 2.0
 # Image (expected) (detected) (multiple) (miss matched) (false positives) (false negative) (average error)
- image00000.jpg  4  4  0  1  0  0 15.2880
- image00001.jpg  4  4  0  1  0  0 18.5898
- image00002.jpg  4  4  1  1  0  0 32.3326
- image00003.jpg  4  4  0  2  0  0 21.2745
- image00004.jpg  4  4  0  0  0  0 13.1314
- image00005.jpg  4  4  0  1  0  0 13.7214
- image00006.jpg  4  4  0  1  0  0  9.0947
+ image00000.jpg  4  4  0  0  0  0 15.7155
+ image00001.jpg  4  4  0  0  0  0 18.5207
+ image00002.jpg  4  4  1  0  0  0 28.1501
+ image00003.jpg  4  4  0  0  0  0 20.5065
+ image00004.jpg  4  4  0  0  0  0 12.1354
+ image00005.jpg  4  4  0  0  0  0 13.3988
+ image00006.jpg  4  4  0  0  0  0  8.3476
 
 # Data Set = set01
 # Match Tolerance in contour fraction = 0.1
 # Match Tolerance bias pixels         = 2.0
 # Image (expected) (detected) (multiple) (miss matched) (false positives) (false negative) (average error)
- image00000.jpg  4  5  0  0  1  0  0.4495
- image00001.jpg  4  5  0  0  1  0  0.3809
- image00002.jpg  4  4  0  0  0  0  0.3692
- image00003.jpg  4  4  0  0  0  0  0.3752
- image00004.jpg  4  5  0  0  1  0  0.3458
- image00005.jpg  4  9  0  0  5  0  0.2939
- image00006.jpg  4  4  0  1  0  0  0.4924
- image00007.jpg  4  4  0  0  0  0  0.4190
- image00008.jpg  4  4  0  0  0  0  0.4246
+ image00000.jpg  4  5  0  0  1  0  0.4649
+ image00001.jpg  4  4  0  0  0  0  0.3758
+ image00002.jpg  4  4  0  0  0  0  0.3467
+ image00003.jpg  4  5  0  0  1  0  0.3722
+ image00004.jpg  4  4  0  0  0  0  0.3382
+ image00005.jpg  4  5  0  0  1  0  0.2863
+ image00006.jpg  4  4  0  0  0  0  0.3686
+ image00007.jpg  4  4  0  1  0  0  1.5382
+ image00008.jpg  4  5  0  0  1  0  0.4222
 
 # Data Set = set02
 # Match Tolerance in contour fraction = 0.1
 # Match Tolerance bias pixels         = 2.0
 # Image (expected) (detected) (multiple) (miss matched) (false positives) (false negative) (average error)
- image00000.jpg 10 10  1  0  0  0  0.4538
- image00001.jpg 10 10  1  0  0  0  0.5805
- image00002.jpg 10 10  1  0  0  0  0.4629
- image00003.jpg 10 10  0  0  0  0  1.0271
- image00004.jpg 10  9  1  0  0  1  0.7234
- image00005.jpg 10 10  1  0  0  0  0.3820
- image00006.jpg 10 10  0  0  0  0  0.5696
- image00007.jpg 10 10  0  0  0  0  0.8079
- image00008.jpg 10 10  1  0  1  1  0.4103
+ image00000.jpg 10 10  1  0  0  0  0.4976
+ image00001.jpg 10 10  1  0  0  0  0.5072
+ image00002.jpg 10 10  1  0  0  0  0.5644
+ image00003.jpg 10 10  0  0  0  0  1.0526
+ image00004.jpg 10 10  1  0  0  0  0.8658
+ image00005.jpg 10 10  1  0  0  0  0.4026
+ image00006.jpg 10 10  0  0  0  0  0.6487
+ image00007.jpg 10 10  0  0  0  0  0.7182
+ image00008.jpg 10  9  1  0  0  1  0.4102
 
 # Data Set = set03
 # Match Tolerance in contour fraction = 0.1
 # Match Tolerance bias pixels         = 2.0
 # Image (expected) (detected) (multiple) (miss matched) (false positives) (false negative) (average error)
- image00000.jpg 10 10  0  0  0  0  1.3318
- image00001.jpg 10 10  0  0  0  0  1.1393
- image00002.jpg 10  7  0  0  0  3  1.3517
- image00003.jpg 10 10  0  1  0  0  3.7714
- image00004.jpg 10 10  0  2  0  0  2.4873
- image00005.jpg 10  8  0  0  0  2  3.0053
- image00006.jpg 10 10  0  2  0  0  2.9006
- image00007.jpg 10  8  0  0  1  3  2.1283
- image00008.jpg 10 10  0  1  0  0  2.2516
+ image00000.jpg 10 10  0  1  0  0  1.4653
+ image00001.jpg 10 10  0  1  0  0  1.3053
+ image00002.jpg 10  7  0  0  0  3  1.4233
+ image00003.jpg 10 10  0  3  0  0  4.0505
+ image00004.jpg 10 10  0  2  0  0  2.5668
+ image00005.jpg 10  9  0  2  0  1  3.2337
+ image00006.jpg 10  9  0  3  0  1  3.2529
+ image00007.jpg 10  6  0  1  0  4  2.2494
+ image00008.jpg 10 10  0  1  0  0  2.2470
 
 # Data Set = set04
 # Match Tolerance in contour fraction = 0.1
 # Match Tolerance bias pixels         = 2.0
 # Image (expected) (detected) (multiple) (miss matched) (false positives) (false negative) (average error)
-    image01.png  6  3  0  0  0  3  2.0875
-    image02.png  6  2  0  0  0  4  2.5858
-    image03.png  6  6  0  1  0  0  1.2650
-    image04.png  6  5  0  1  0  1  1.3270
-    image05.png  6  4  0  1  0  2  1.7408
-    image06.png  6  5  0  1  0  1  2.1084
-    image07.png  6  3  0  1  0  3  2.4868
-    image08.png  6  6  0  2  0  0  2.4796
-    image09.png  6  4  0  0  0  2  0.3265
-    image10.png  6  4  0  0  0  2  1.9404
+    image01.png  6  5  0  1  0  1  2.1614
+    image02.png  6  2  0  0  0  4  0.3863
+    image03.png  6  6  0  1  0  0  1.2412
+    image04.png  6  6  0  1  0  0  0.9871
+    image05.png  6  5  0  1  0  1  1.4547
+    image06.png  6  6  0  0  0  0  1.5157
+    image07.png  6  2  0  0  0  4  0.5642
+    image08.png  6  5  0  0  0  1  1.5081
+    image09.png  6  6  0  1  0  0  1.0592
+    image10.png  6  3  0  0  0  3  2.0805
 

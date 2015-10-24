@@ -3,6 +3,7 @@ package regression;
 import boofcv.abst.calib.ConfigChessboard;
 import boofcv.abst.calib.ConfigSquareGrid;
 import boofcv.abst.calib.PlanarCalibrationDetector;
+import boofcv.alg.geo.calibration.CalibrationObservation;
 import boofcv.factory.calib.FactoryPlanarCalibrationTarget;
 import boofcv.io.image.UtilImageIO;
 import boofcv.struct.image.ImageDataType;
@@ -112,12 +113,12 @@ public class CalibrationDetectionRegression extends BaseTextFileRegression{
 				if( detector.process(image) ) {
 					double errors[] = new double[ groundTruth.size() ];
 
-					List<Point2D_F64> found = detector.getDetectedPoints();
+					CalibrationObservation found = detector.getDetectedPoints();
 					if( found.size() != groundTruth.size() ) {
 						errorLog.println(dataSetName+" different sizes. "+found.size()+" "+groundTruth.size());
 					} else {
 						for (int i = 0; i < found.size(); i++) {
-							errors[i] = distanceFromClosest(found.get(i),groundTruth);
+							errors[i] = distanceFromClosest(found.observations.get(i),groundTruth);
 							allErrors.add(errors[i]);
 						}
 

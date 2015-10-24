@@ -2,6 +2,7 @@ package validate.calib;
 
 import boofcv.abst.calib.ConfigChessboard;
 import boofcv.abst.calib.PlanarCalibrationDetector;
+import boofcv.alg.geo.calibration.CalibrationObservation;
 import boofcv.factory.calib.FactoryPlanarCalibrationTarget;
 import boofcv.io.image.ConvertBufferedImage;
 import boofcv.io.image.UtilImageIO;
@@ -45,10 +46,10 @@ public class DetectTargetFeatures {
 			if( detector.process(input) ) {
 				System.out.println("Found! "+name);
 
-				List<Point2D_F64> points = detector.getDetectedPoints();
+				CalibrationObservation points = detector.getDetectedPoints();
 
 				out.printf("%s %d ",new File(name).getName(),points.size());
-				for( Point2D_F64 p : points ) {
+				for( Point2D_F64 p : points.observations ) {
 					out.printf("%f %f ",p.x,p.y);
 				}
 				out.println();

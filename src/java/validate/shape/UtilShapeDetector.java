@@ -52,7 +52,7 @@ public class UtilShapeDetector {
 			throw new RuntimeException(e);
 		}
 
-		ConfigPolygonDetector config = new ConfigPolygonDetector(3,4,5,6);
+		ConfigPolygonDetector config = new ConfigPolygonDetector(3,6);
 		Configuration configRefine = null;
 		if( fitLines ) {
 			configRefine = new ConfigRefinePolygonLineToImage();
@@ -60,12 +60,9 @@ public class UtilShapeDetector {
 			configRefine = new ConfigRefinePolygonCornersToImage();
 		}
 
-		int sides[] = new int[maxSides - minSides+1];
-		for (int i = 0; i < sides.length; i++) {
-			sides[i] = i + minSides;
-		}
 		config.refine = configRefine;
-		config.numberOfSides = sides;
+		config.minimumSides = minSides;
+		config.maximumSides = maxSides;
 		config.convex = convex;
 //			config.border = border; TODO not implemented yet
 

@@ -2,8 +2,10 @@
 total frames 411
 false positives 0
  fiducial id | visible | multiple 
-00003           410            0
-00009           382            0
+00003           411            0
+00009           411            0
 
 ---------------------------------------------------
 
+---------------------------------------------------
+total correct / total expected =  822 / 822

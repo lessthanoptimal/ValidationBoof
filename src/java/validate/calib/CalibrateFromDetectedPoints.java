@@ -4,6 +4,7 @@ import boofcv.abst.calib.CalibrateMonoPlanar;
 import boofcv.abst.calib.ConfigChessboard;
 import boofcv.abst.calib.ImageResults;
 import boofcv.abst.calib.PlanarCalibrationDetector;
+import boofcv.alg.geo.calibration.CalibrationObservation;
 import boofcv.alg.geo.calibration.CalibrationPlanarGridZhang99;
 import boofcv.alg.geo.calibration.Zhang99ParamAll;
 import boofcv.factory.calib.FactoryPlanarCalibrationTarget;
@@ -28,8 +29,8 @@ public class CalibrateFromDetectedPoints {
 		PlanarCalibrationDetector targetDesc = FactoryPlanarCalibrationTarget.detectorChessboard(new ConfigChessboard(5,7, 30));
 		CalibrationPlanarGridZhang99 zhang99 = new CalibrationPlanarGridZhang99(targetDesc.getLayout(),true,2,tangential);
 
-		List<List<Point2D_F64>> left = new ArrayList<List<Point2D_F64>>();
-		List<List<Point2D_F64>> right = new ArrayList<List<Point2D_F64>>();
+		List<CalibrationObservation> left = new ArrayList<CalibrationObservation>();
+		List<CalibrationObservation> right = new ArrayList<CalibrationObservation>();
 
 		loadObservations(stereoDetections, left, right);
 
@@ -52,14 +53,14 @@ public class CalibrateFromDetectedPoints {
 		this.err = err;
 	}
 
-	public static void loadObservations( File file , List<List<Point2D_F64>> left , List<List<Point2D_F64>> right )
+	public static void loadObservations( File file , List<CalibrationObservation> left , List<CalibrationObservation> right )
 			throws IOException
 	{
 		BufferedReader reader = new BufferedReader(new FileReader(file));
 
 		String line;
 		while( (line = reader.readLine()) != null ) {
-			List<Point2D_F64> target = new ArrayList<Point2D_F64>();
+			CalibrationObservation target = new CalibrationObservation();
 
 			String s[] = line.split(" ");
 			String fileName = s[0];
@@ -68,7 +69,8 @@ public class CalibrateFromDetectedPoints {
 			for( int i = 0; i < N; i++ ) {
 				float x = Float.parseFloat(s[i*2+2]);
 				float y = Float.parseFloat(s[i*2+3]);
-				target.add( new Point2D_F64(x,y));
+				target.observations.add(new Point2D_F64(x, y));
+				target.indexes.add(i);
 			}
 
 			if( fileName.contains("left"))
@@ -80,7 +82,7 @@ public class CalibrateFromDetectedPoints {
 		}
 	}
 
-	private Zhang99ParamAll calibrate(CalibrationPlanarGridZhang99 zhang99, List<List<Point2D_F64>> observations )
+	private Zhang99ParamAll calibrate(CalibrationPlanarGridZhang99 zhang99, List<CalibrationObservation> observations )
 			throws FileNotFoundException
 	{
 		if( !zhang99.process(observations) )
@@ -117,7 +119,7 @@ public class CalibrateFromDetectedPoints {
 	}
 
 	private void printErrors( Zhang99ParamAll param ,
-							  List<List<Point2D_F64>> observations, List<Point2D_F64> grid )
+							  List<CalibrationObservation> observations, List<Point2D_F64> grid )
 	{
 		List<ImageResults> results = CalibrateMonoPlanar.computeErrors(observations, param, grid);
 
