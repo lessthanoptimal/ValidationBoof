@@ -35,9 +35,9 @@ public abstract class BaseEvaluateFiducialToCamera implements FiducialEvaluateIn
 
 	IntrinsicParameters intrinsic;
 	// ID's of the detected fiducials
-	int expected[];
+	long expected[];
 	// The number of times a fiducial was detected.  This will include wrong ID's and orientations
-	int fiducialDetected[];
+	long fiducialDetected[];
 
 	@Override
 	public int getTotalExpected() {
@@ -97,12 +97,12 @@ public abstract class BaseEvaluateFiducialToCamera implements FiducialEvaluateIn
 		library = FiducialCommon.parseScenario(new File(dataSetDir, "library.txt"));
 		List<String> visible = FiducialCommon.parseVisibleFile(new File(dataSetDir,"visible.txt"));
 
-		expected = new int[visible.size()];
+		expected = new long[visible.size()];
 		for( int i = 0; i < visible.size(); i++ ) {
 			expected[i] = library.nameToID(visible.get(i));
 		}
 
-		fiducialDetected = new int[expected.length];
+		fiducialDetected = new long[expected.length];
 		detectedCorners = new ArrayList[expected.length];
 		fiducialNormal = new Vector3D_F64[expected.length];
 		fiducialPose = new Se3_F64[expected.length];
@@ -354,7 +354,7 @@ public abstract class BaseEvaluateFiducialToCamera implements FiducialEvaluateIn
 	public static class Assignment
 	{
 		int index;
-		int id;
+		long id;
 		boolean outOfOrder;
 		double meanError;
 		double errors[];

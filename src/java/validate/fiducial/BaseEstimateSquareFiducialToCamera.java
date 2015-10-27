@@ -75,7 +75,7 @@ public abstract class BaseEstimateSquareFiducialToCamera<T extends ImageBase> {
 			out.println("# 4 lines for each detection. line 1 = detected fiducial.  lines 2-4 = rigid body transform, row major");
 			Se3_F64 fiducialToSensor = new Se3_F64();
 			for (int i = 0; i < detector.totalFound(); i++) {
-				int which = detector.getId(i);
+				long which = detector.getId(i);
 				double fiducialWidth = library != null ? library.getWidth(which) : 1;
 				detector.getFiducialToCamera(i,fiducialToSensor);
 

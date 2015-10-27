@@ -32,10 +32,10 @@ public class EvaluateAlwaysVisibleSequence implements FiducialEvaluateInterface 
 		List<String> results = BoofMiscOps.directoryList(resultsDirectory.getAbsolutePath(), "csv");
 		Collections.sort(results);
 
-		Map<Integer,Tally> map = new HashMap<Integer,Tally>();
+		Map<Long,Tally> map = new HashMap<Long,Tally>();
 
 		for( String name : visible ) {
-			int id = library.nameToID(name);
+			long id = library.nameToID(name);
 			map.put( id , new Tally(id));
 		}
 
@@ -46,7 +46,7 @@ public class EvaluateAlwaysVisibleSequence implements FiducialEvaluateInterface 
 			List<FiducialCommon.Detected> detected = parseDetections(new File(results.get(i)));
 
 			for( FiducialCommon.Detected d : detected ) {
-				Tally t = map.get(d.id);
+				Tally t = map.get((long)d.id);
 				if( t == null ) {
 					numFalsePositive++;
 					continue;
@@ -119,7 +119,7 @@ public class EvaluateAlwaysVisibleSequence implements FiducialEvaluateInterface 
 	}
 
 	protected static class Tally {
-		public int id;
+		public long id;
 		// number of frames it was visible at least once
 		public int numVisible;
 		// number of frames it was seem multiple times
@@ -128,7 +128,7 @@ public class EvaluateAlwaysVisibleSequence implements FiducialEvaluateInterface 
 		// number of times it was visible this frame
 		public int currentFrame;
 
-		public Tally(int id) {
+		public Tally(long id) {
 			this.id = id;
 		}
 	}

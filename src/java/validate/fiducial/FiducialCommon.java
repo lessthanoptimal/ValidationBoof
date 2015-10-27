@@ -201,9 +201,9 @@ public class FiducialCommon {
 
 		List<String> getAllNames();
 
-		int nameToID( String name );
+		long nameToID( String name );
 
-		double getWidth( int id );
+		double getWidth( long id );
 	}
 
 	public static class LibraryBinary implements Library
@@ -232,12 +232,12 @@ public class FiducialCommon {
 		}
 
 		@Override
-		public int nameToID(String name) {
+		public long nameToID(String name) {
 			return Integer.parseInt(name);
 		}
 
 		@Override
-		public double getWidth(int id) {
+		public double getWidth(long id) {
 			for (int i = 0; i < expectedId.length; i++) {
 				if( expectedId[i] == id)
 					return widths[i];
@@ -268,14 +268,14 @@ public class FiducialCommon {
 		}
 
 		@Override
-		public int nameToID(String name) {
+		public long nameToID(String name) {
 			return names.indexOf(name);
 		}
 
 		@Override
-		public double getWidth(int id) {
+		public double getWidth(long id) {
 			if( id >= 0 && id < widths.length )
-				return widths[id];
+				return widths[(int)id];
 			return widths[0];
 		}
 	}
