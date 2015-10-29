@@ -36,14 +36,14 @@ Corner errors:
 # maxPixelError = 5.0
 
 Summary:
- correct            :   71 /  108
+ correct            :   73 /  108
  wrong order        : 0
  wrong ID           : 0
  duplicates         : 0
  false positives    : 1
- false negative     : 37
+ false negative     : 35
 Corner errors:
- precision 50%         : 0.44923555929192205
+ precision 50%         : 0.45546930411641695
  precision 90%         : 0.9632733546281611
  precision 100%        : 2.114390140753064
 
@@ -67,4 +67,4 @@ Corner errors:
 ---------------------------------------------------
 
 ---------------------------------------------------
-total correct / total expected =  126 / 172
+total correct / total expected =  128 / 172

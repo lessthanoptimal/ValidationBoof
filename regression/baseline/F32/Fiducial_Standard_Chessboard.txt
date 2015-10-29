@@ -9,9 +9,9 @@ Summary:
  false positives    : 0
  false negative     : 1
 Corner errors:
- precision 50%         : 0.2077022428609027
- precision 90%         : 0.3835657615702385
- precision 100%        : 0.6003109519731191
+ precision 50%         : 0.20622448752156147
+ precision 90%         : 0.3827365711398546
+ precision 100%        : 0.5976150600813805
 
 ---------------------------------------------------
 
@@ -26,9 +26,9 @@ Summary:
  false positives    : 0
  false negative     : 1
 Corner errors:
- precision 50%         : 0.21317021314710077
- precision 90%         : 0.3960988121108006
- precision 100%        : 0.6469496788413978
+ precision 50%         : 0.21388317926193068
+ precision 90%         : 0.39781930402901583
+ precision 100%        : 0.6493204971104769
 
 ---------------------------------------------------
 
@@ -43,9 +43,9 @@ Summary:
  false positives    : 0
  false negative     : 0
 Corner errors:
- precision 50%         : 0.1912144812218611
- precision 90%         : 0.3349730221445191
- precision 100%        : 0.6895377408822685
+ precision 50%         : 0.19087485385035116
+ precision 90%         : 0.33430516856075204
+ precision 100%        : 0.689881870127417
 
 ---------------------------------------------------
 
@@ -53,16 +53,16 @@ Corner errors:
 # maxPixelError = 5.0
 
 Summary:
- correct            :    5 /   13
+ correct            :    6 /   13
  wrong order        : 0
  wrong ID           : 0
  duplicates         : 0
  false positives    : 0
- false negative     : 8
+ false negative     : 7
 Corner errors:
- precision 50%         : 1.2920079013382337
- precision 90%         : 2.58300762731421
- precision 100%        : 4.181554420366892
+ precision 50%         : 1.3760896197742627
+ precision 90%         : 2.653758984973815
+ precision 100%        : 4.182375292148012
 
 ---------------------------------------------------
 
@@ -77,11 +77,11 @@ Summary:
  false positives    : 0
  false negative     : 0
 Corner errors:
- precision 50%         : 0.23273797800612325
- precision 90%         : 0.4576898111083345
- precision 100%        : 0.6678308651314906
+ precision 50%         : 0.23530361035488898
+ precision 90%         : 0.46038718130863965
+ precision 100%        : 0.6689029020120644
 
 ---------------------------------------------------
 
 ---------------------------------------------------
-total correct / total expected =   31 /  41
+total correct / total expected =   32 /  41
