@@ -1,14 +1,13 @@
 package validate.calib;
 
 import boofcv.abst.fiducial.calib.ConfigChessboard;
-import boofcv.abst.geo.calibration.PlanarCalibrationDetector;
+import boofcv.abst.geo.calibration.CalibrationDetector;
 import boofcv.alg.geo.calibration.CalibrationObservation;
 import boofcv.factory.calib.FactoryPlanarCalibrationTarget;
 import boofcv.io.image.ConvertBufferedImage;
 import boofcv.io.image.UtilImageIO;
 import boofcv.misc.BoofMiscOps;
 import boofcv.struct.image.ImageFloat32;
-import georegression.struct.point.Point2D_F64;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -27,7 +26,7 @@ public class DetectTargetFeatures {
 
 	public static void main( String args[] ) throws FileNotFoundException {
 		// detects the calibration target points
-		PlanarCalibrationDetector detector = FactoryPlanarCalibrationTarget.detectorChessboard(new ConfigChessboard(5, 7, 30));
+		CalibrationDetector detector = FactoryPlanarCalibrationTarget.detectorChessboard(new ConfigChessboard(5, 7, 30));
 
 		// load image list
 		String directory = "data/calib/stereo/Bumblebee2_Chess";
@@ -49,8 +48,8 @@ public class DetectTargetFeatures {
 				CalibrationObservation points = detector.getDetectedPoints();
 
 				out.printf("%s %d ",new File(name).getName(),points.size());
-				for( Point2D_F64 p : points.observations ) {
-					out.printf("%f %f ",p.x,p.y);
+				for( CalibrationObservation.Point p : points.points ) {
+					out.printf("%f %f ",p.pixel.x,p.pixel.y);
 				}
 				out.println();
 

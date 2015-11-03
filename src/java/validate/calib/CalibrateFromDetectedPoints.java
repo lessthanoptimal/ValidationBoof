@@ -2,8 +2,8 @@ package validate.calib;
 
 import boofcv.abst.fiducial.calib.ConfigChessboard;
 import boofcv.abst.geo.calibration.CalibrateMonoPlanar;
+import boofcv.abst.geo.calibration.CalibrationDetector;
 import boofcv.abst.geo.calibration.ImageResults;
-import boofcv.abst.geo.calibration.PlanarCalibrationDetector;
 import boofcv.alg.geo.calibration.CalibrationObservation;
 import boofcv.alg.geo.calibration.CalibrationPlanarGridZhang99;
 import boofcv.alg.geo.calibration.Zhang99ParamAll;
@@ -26,7 +26,7 @@ public class CalibrateFromDetectedPoints {
 	PrintStream err = System.err;
 
 	public void processStereo( File stereoDetections , boolean tangential ) throws IOException {
-		PlanarCalibrationDetector targetDesc = FactoryPlanarCalibrationTarget.detectorChessboard(new ConfigChessboard(5, 7, 30));
+		CalibrationDetector targetDesc = FactoryPlanarCalibrationTarget.detectorChessboard(new ConfigChessboard(5, 7, 30));
 		CalibrationPlanarGridZhang99 zhang99 = new CalibrationPlanarGridZhang99(targetDesc.getLayout(),true,2,tangential);
 
 		List<CalibrationObservation> left = new ArrayList<CalibrationObservation>();
@@ -69,8 +69,7 @@ public class CalibrateFromDetectedPoints {
 			for( int i = 0; i < N; i++ ) {
 				float x = Float.parseFloat(s[i*2+2]);
 				float y = Float.parseFloat(s[i*2+3]);
-				target.observations.add(new Point2D_F64(x, y));
-				target.indexes.add(i);
+				target.add(new Point2D_F64(x, y), i);
 			}
 
 			if( fileName.contains("left"))

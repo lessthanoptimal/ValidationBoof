@@ -2,7 +2,7 @@ package regression;
 
 import boofcv.abst.fiducial.calib.ConfigChessboard;
 import boofcv.abst.fiducial.calib.ConfigSquareGrid;
-import boofcv.abst.geo.calibration.PlanarCalibrationDetector;
+import boofcv.abst.geo.calibration.CalibrationDetector;
 import boofcv.alg.geo.calibration.CalibrationObservation;
 import boofcv.factory.calib.FactoryPlanarCalibrationTarget;
 import boofcv.io.image.UtilImageIO;
@@ -49,7 +49,7 @@ public class CalibrationDetectionRegression extends BaseTextFileRegression{
 		addDetector("DetectCalibSquare", FactoryPlanarCalibrationTarget.detectorSquareGrid(new ConfigSquareGrid(5, 7,30,30)), false);
 	}
 
-	public void addDetector( String name , PlanarCalibrationDetector detector , boolean chess ) {
+	public void addDetector( String name , CalibrationDetector detector , boolean chess ) {
 		if( chess) {
 			chessDetectors.add(new DetectorInfo(name,detector));
 		} else {
@@ -95,7 +95,7 @@ public class CalibrationDetectionRegression extends BaseTextFileRegression{
 		output.close();
 	}
 
-	private void evaluate(PlanarCalibrationDetector detector, String detectorName, GrowQueue_F64 allErrors,
+	private void evaluate(CalibrationDetector detector, String detectorName, GrowQueue_F64 allErrors,
 						  PrintStream output, List<File> files) {
 		for( File f : files ) {
 			if( !f.getName().endsWith("jpg") )
@@ -118,7 +118,7 @@ public class CalibrationDetectionRegression extends BaseTextFileRegression{
 						errorLog.println(dataSetName+" different sizes. "+found.size()+" "+groundTruth.size());
 					} else {
 						for (int i = 0; i < found.size(); i++) {
-							errors[i] = distanceFromClosest(found.observations.get(i),groundTruth);
+							errors[i] = distanceFromClosest(found.points.get(i).pixel,groundTruth);
 							allErrors.add(errors[i]);
 						}
 
@@ -155,9 +155,9 @@ public class CalibrationDetectionRegression extends BaseTextFileRegression{
 	private class DetectorInfo
 	{
 		String name;
-		PlanarCalibrationDetector detector;
+		CalibrationDetector detector;
 
-		public DetectorInfo(String name, PlanarCalibrationDetector detector) {
+		public DetectorInfo(String name, CalibrationDetector detector) {
 			this.name = name;
 			this.detector = detector;
 		}

@@ -6,10 +6,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintStream;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Properties;
-import java.util.Set;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * @author Peter Abeles
@@ -196,6 +195,9 @@ public class GenerateRegressionData {
 		int minute = (int)((elapsedSeconds-days*secondsPerDay-hours*secondsPerHour)/secondsPerMinute);
 		double seconds = elapsedSeconds-days*secondsPerDay-hours*secondsPerHour-minute*secondsPerMinute;
 
-		System.out.printf("Days %d Hours %02d Minutes %02d Seconds %6.2f",days,hours,minute,seconds);
+		System.out.printf("Days %d Hours %02d Minutes %02d Seconds %6.2f\n",days,hours,minute,seconds);
+		System.out.println();
+		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		System.out.println(dateFormat.format(new Date()));
 	}
 }

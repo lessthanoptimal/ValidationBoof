@@ -45,7 +45,7 @@ public class FactoryThresholdAlgs {
 		return new ThresholdText() {
 			@Override
 			public void process(ImageFloat32 input, ImageUInt8 output) {
-				GThresholdImageOps.adaptiveSquare(input, output, 30, 0, true, null, null);
+				GThresholdImageOps.localSquare(input, output, 30, 1.0, true, null, null);
 			}
 		};
 	}
@@ -54,7 +54,7 @@ public class FactoryThresholdAlgs {
 		return new ThresholdText() {
 			@Override
 			public void process(ImageFloat32 input, ImageUInt8 output) {
-				GThresholdImageOps.adaptiveGaussian(input, output, 35, 0, true, null, null);
+				GThresholdImageOps.localGaussian(input, output, 35, 1.0, true, null, null);
 			}
 		};
 	}

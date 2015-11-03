@@ -1,7 +1,7 @@
 package validate.fiducial;
 
+import boofcv.abst.fiducial.calib.CalibrationDetectorSquareGrid;
 import boofcv.abst.fiducial.calib.ConfigSquareGrid;
-import boofcv.abst.fiducial.calib.PlanarDetectorSquareGrid;
 import boofcv.factory.calib.FactoryPlanarCalibrationTarget;
 import georegression.struct.point.Point2D_F64;
 
@@ -17,7 +17,7 @@ public class CreateCalibrationFiducialLandmarkFiles {
 //		ConfigChessboard config = new ConfigChessboard(5,7,1);
 //		PlanarDetectorChessboard detector = FactoryPlanarCalibrationTarget.detectorChessboard(config);
 		ConfigSquareGrid config = new ConfigSquareGrid(5,7,1,1);
-		PlanarDetectorSquareGrid detector = FactoryPlanarCalibrationTarget.detectorSquareGrid(config);
+		CalibrationDetectorSquareGrid detector = FactoryPlanarCalibrationTarget.detectorSquareGrid(config);
 
 		List<Point2D_F64> points = detector.getLayout();
 
