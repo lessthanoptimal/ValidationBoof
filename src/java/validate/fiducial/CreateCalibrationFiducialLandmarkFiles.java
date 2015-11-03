@@ -1,7 +1,7 @@
 package validate.fiducial;
 
-import boofcv.abst.calib.ConfigSquareGrid;
-import boofcv.abst.calib.PlanarDetectorSquareGrid;
+import boofcv.abst.fiducial.calib.ConfigSquareGrid;
+import boofcv.abst.fiducial.calib.PlanarDetectorSquareGrid;
 import boofcv.factory.calib.FactoryPlanarCalibrationTarget;
 import georegression.struct.point.Point2D_F64;
 

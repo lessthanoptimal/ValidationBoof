@@ -1,7 +1,7 @@
 package validate.calib;
 
-import boofcv.abst.calib.ConfigChessboard;
-import boofcv.abst.calib.PlanarCalibrationDetector;
+import boofcv.abst.fiducial.calib.ConfigChessboard;
+import boofcv.abst.geo.calibration.PlanarCalibrationDetector;
 import boofcv.factory.calib.FactoryPlanarCalibrationTarget;
 import georegression.struct.point.Point2D_F64;
 

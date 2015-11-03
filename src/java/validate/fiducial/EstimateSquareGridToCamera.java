@@ -1,7 +1,7 @@
 package validate.fiducial;
 
-import boofcv.abst.calib.ConfigSquareGrid;
 import boofcv.abst.fiducial.FiducialDetector;
+import boofcv.abst.fiducial.calib.ConfigSquareGrid;
 import boofcv.factory.fiducial.FactoryFiducial;
 import boofcv.struct.image.ImageSingleBand;
 import boofcv.struct.image.ImageUInt8;
