@@ -125,8 +125,8 @@ public class EvaluatePolygonDetector {
 		totalError /= totalTruthMatched;
 		int numFalseNegative = truth.size()-totalTruthMatched;
 
-		outputResults.printf("%15s %2d %2d %2d %2d %2d %2d %7.4f\n",fileName,truth.size(),found.size(),
-				numMultiple,numMissMatched,falsePositives,numFalseNegative,totalError);
+		outputResults.printf("%15s %2d %2d %2d %2d %2d %2d %7.4f\n", fileName, truth.size(), found.size(),
+				numMultiple, numMissMatched, falsePositives, numFalseNegative, totalError);
 	}
 
 	private static double size( Polygon2D_F64 p ) {
@@ -161,15 +161,19 @@ public class EvaluatePolygonDetector {
 		double totalError=0;
 		for (int i = 0; i < a.size(); i++) {
 			Point2D_F64 pt_a = a.get(i);
+
+			double bestError = Double.MAX_VALUE;
 			for (int j = 0; j < b.size(); j++) {
 				Point2D_F64 pt_b = b.get(j);
 
 				double error = pt_a.distance(pt_b);
-				if( error <= tol ) {
-					totalError += error;
-					totalMatched++;
-					break;
+				if( error < bestError ) {
+					bestError = error;
 				}
+			}
+			if( bestError <= tol ) {
+				totalError += bestError;
+				totalMatched++;
 			}
 		}
 
@@ -199,7 +203,7 @@ public class EvaluatePolygonDetector {
 	public static void main(String[] args) {
 		EvaluatePolygonDetector app = new EvaluatePolygonDetector();
 
-		File dataDir = new File("data/shape/set01");
+		File dataDir = new File("data/shape/concave/");
 		File resultsDir = new File("tmp");
 
 		app.evaluate(dataDir,resultsDir);

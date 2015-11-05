@@ -4,6 +4,8 @@ import boofcv.abst.filter.binary.InputToBinary;
 import boofcv.alg.shapes.polygon.BinaryPolygonDetector;
 import boofcv.core.image.GeneralizedImageOps;
 import boofcv.factory.filter.binary.FactoryThresholdBinary;
+import boofcv.factory.shape.ConfigPolygonDetector;
+import boofcv.factory.shape.FactoryShapeDetector;
 import boofcv.io.image.ConvertBufferedImage;
 import boofcv.io.image.UtilImageIO;
 import boofcv.struct.image.ImageSingleBand;
@@ -76,11 +78,13 @@ public class DetectPolygonsSaveToFile<T extends ImageSingleBand> {
 
 	public static void main(String[] args) {
 
-//		Class imageType = ImageUInt8.class;
-//		BinaryPolygonDetector detector = UtilShapeDetector.createPolygonLine(imageType);
-//
-//		DetectPolygonsSaveToFile app = new DetectPolygonsSaveToFile(detector);
-//
-//		app.processDirectory(new File("data/shape/set01"),new File("./tmp"));
+		File file = new File("data/shape/concave/detector.txt");
+		Class imageType = ImageUInt8.class;
+		ConfigPolygonDetector config = UtilShapeDetector.configure(true,file);
+		BinaryPolygonDetector detector = FactoryShapeDetector.polygon(config,imageType);
+
+		DetectPolygonsSaveToFile app = new DetectPolygonsSaveToFile(detector);
+
+		app.processDirectory(new File("data/shape/concave/"),new File("./tmp"));
 	}
 }

@@ -64,7 +64,7 @@ public class UtilShapeDetector {
 		config.minimumSides = minSides;
 		config.maximumSides = maxSides;
 		config.convex = convex;
-//			config.border = border; TODO not implemented yet
+		config.canTouchBorder = border;
 
 		return config;
 	}
