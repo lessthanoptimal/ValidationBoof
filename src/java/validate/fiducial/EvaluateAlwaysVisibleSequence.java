@@ -24,6 +24,7 @@ public class EvaluateAlwaysVisibleSequence implements FiducialEvaluateInterface 
 	@Override
 	public void evaluate(File resultsDirectory, File dataset) {
 
+//		System.out.println("dataset = "+dataset.getPath());
 		outputResults.println("# "+dataset.getName()+"   sequence with known always visible targets");
 
 		FiducialCommon.Library library = FiducialCommon.parseScenario(new File(dataset, "library.txt"));
