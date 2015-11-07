@@ -1,12 +1,12 @@
 Runtime.getRuntime().availableProcessors(): 4
-Runtime.getRuntime().freeMemory(): 279158848
-Runtime.getRuntime().totalMemory(): 354418688
+Runtime.getRuntime().freeMemory(): 110997360
+Runtime.getRuntime().totalMemory(): 295698432
 =========== java.runtime.name
 Java(TM) SE Runtime Environment
 =========== sun.boot.library.path
-/opt/jdk/jdk1.8.0_31/jre/lib/amd64
+/opt/jdk/jdk1.8.0_65/jre/lib/amd64
 =========== java.vm.version
-25.31-b07
+25.65-b01
 =========== java.vm.vendor
 Oracle Corporation
 =========== java.vendor.url
@@ -14,7 +14,7 @@ http://java.oracle.com/
 =========== path.separator
 :
 =========== idea.launcher.port
-7533
+7572
 =========== java.vm.name
 Java HotSpot(TM) 64-Bit Server VM
 =========== file.encoding.pkg
@@ -30,11 +30,11 @@ Java Virtual Machine Specification
 =========== user.dir
 /home/pja/projects/ValidationBoof
 =========== java.runtime.version
-1.8.0_31-b13
+1.8.0_65-b17
 =========== java.awt.graphicsenv
 sun.awt.X11GraphicsEnvironment
 =========== java.endorsed.dirs
-/opt/jdk/jdk1.8.0_31/jre/lib/endorsed
+/opt/jdk/jdk1.8.0_65/jre/lib/endorsed
 =========== os.arch
 amd64
 =========== java.io.tmpdir
@@ -61,7 +61,7 @@ HotSpot 64-Bit Tiered Compilers
 =========== user.home
 /home/pja
 =========== user.timezone
-America/Los_Angeles
+
 =========== java.awt.printerjob
 sun.print.PSPrinterJob
 =========== file.encoding
@@ -71,7 +71,7 @@ UTF-8
 =========== java.specification.version
 1.8
 =========== java.class.path
-/opt/jdk/jdk1.8.0_31/jre/lib/jfxswt.jar:/opt/jdk/jdk1.8.0_31/jre/lib/jfr.jar:/opt/jdk/jdk1.8.0_31/jre/lib/resources.jar:/opt/jdk/jdk1.8.0_31/jre/lib/rt.jar:/opt/jdk/jdk1.8.0_31/jre/lib/charsets.jar:/opt/jdk/jdk1.8.0_31/jre/lib/jsse.jar:/opt/jdk/jdk1.8.0_31/jre/lib/management-agent.jar:/opt/jdk/jdk1.8.0_31/jre/lib/deploy.jar:/opt/jdk/jdk1.8.0_31/jre/lib/plugin.jar:/opt/jdk/jdk1.8.0_31/jre/lib/javaws.jar:/opt/jdk/jdk1.8.0_31/jre/lib/jce.jar:/opt/jdk/jdk1.8.0_31/jre/lib/ext/sunjce_provider.jar:/opt/jdk/jdk1.8.0_31/jre/lib/ext/sunec.jar:/opt/jdk/jdk1.8.0_31/jre/lib/ext/sunpkcs11.jar:/opt/jdk/jdk1.8.0_31/jre/lib/ext/cldrdata.jar:/opt/jdk/jdk1.8.0_31/jre/lib/ext/localedata.jar:/opt/jdk/jdk1.8.0_31/jre/lib/ext/dnsns.jar:/opt/jdk/jdk1.8.0_31/jre/lib/ext/jfxrt.jar:/opt/jdk/jdk1.8.0_31/jre/lib/ext/nashorn.jar:/opt/jdk/jdk1.8.0_31/jre/lib/ext/zipfs.jar:/home/pja/projects/ValidationBoof/build/classes/main:/home/pja/.gradle/caches/modules-2/files-2.1/com.google.guava/guava/17.0/9c6ef172e8de35fd8d4d8783e4821e57cdef7445/guava-17.0.jar:/home/pja/.gradle/caches/modules-2/files-2.1/com.thoughtworks.xstream/xstream/1.4.7/bce3282142b63068260f021fcbe48b72e8d71a1a/xstream-1.4.7.jar:/home/pja/.gradle/caches/modules-2/files-2.1/xmlpull/xmlpull/1.1.3.1/2b8e230d2ab644e4ecaa94db7cdedbc40c805dfa/xmlpull-1.1.3.1.jar:/home/pja/.gradle/caches/modules-2/files-2.1/xpp3/xpp3_min/1.1.4c/19d4e90b43059058f6e056f794f0ea4030d60b86/xpp3_min-1.1.4c.jar:/home/pja/projects/ValidationBoof/lib/ProjectBUBO.jar:/home/pja/.m2/repository/org/boofcv/all/0.20-SNAPSHOT/all-0.20-SNAPSHOT.jar:/home/pja/.m2/repository/org/georegression/georegression/0.9-SNAPSHOT/georegression-0.9-SNAPSHOT.jar:/home/pja/.m2/repository/org/boofcv/io/0.20-SNAPSHOT/io-0.20-SNAPSHOT.jar:/home/pja/.m2/repository/org/boofcv/learning/0.20-SNAPSHOT/learning-0.20-SNAPSHOT.jar:/home/pja/.m2/repository/org/boofcv/recognition/0.20-SNAPSHOT/recognition-0.20-SNAPSHOT.jar:/home/pja/.m2/repository/org/boofcv/ip/0.20-SNAPSHOT/ip-0.20-SNAPSHOT.jar:/home/pja/.m2/repository/org/boofcv/sfm/0.20-SNAPSHOT/sfm-0.20-SNAPSHOT.jar:/home/pja/.m2/repository/org/boofcv/geo/0.20-SNAPSHOT/geo-0.20-SNAPSHOT.jar:/home/pja/.m2/repository/org/boofcv/calibration/0.20-SNAPSHOT/calibration-0.20-SNAPSHOT.jar:/home/pja/.m2/repository/org/boofcv/visualize/0.20-SNAPSHOT/visualize-0.20-SNAPSHOT.jar:/home/pja/.m2/repository/org/boofcv/feature/0.20-SNAPSHOT/feature-0.20-SNAPSHOT.jar:/home/pja/.m2/repository/org/ddogleg/ddogleg/0.8-SNAPSHOT/ddogleg-0.8-SNAPSHOT.jar:/home/pja/.gradle/caches/modules-2/files-2.1/org.ejml/dense64/0.28/b79609796212567ed4e6f361c6f30cffd009e4a3/dense64-0.28.jar:/home/pja/.gradle/caches/modules-2/files-2.1/org.ejml/simple/0.28/9ed74a2da17f469fc35f6bdb99f44888cf46eb4e/simple-0.28.jar:/home/pja/.gradle/caches/modules-2/files-2.1/org.ejml/core/0.28/d02bf881401f8a005a58b91e87198d18b77347dc/core-0.28.jar:/home/pja/.gradle/caches/modules-2/files-2.1/org.ejml/equation/0.28/1eecb7fdf79cdf91a49da24af70984ced2138914/equation-0.28.jar:/opt/idea/idea-IU-141.2735.5/lib/idea_rt.jar
+/opt/jdk/jdk1.8.0_65/jre/lib/jfxswt.jar:/opt/jdk/jdk1.8.0_65/jre/lib/jfr.jar:/opt/jdk/jdk1.8.0_65/jre/lib/resources.jar:/opt/jdk/jdk1.8.0_65/jre/lib/rt.jar:/opt/jdk/jdk1.8.0_65/jre/lib/charsets.jar:/opt/jdk/jdk1.8.0_65/jre/lib/jsse.jar:/opt/jdk/jdk1.8.0_65/jre/lib/management-agent.jar:/opt/jdk/jdk1.8.0_65/jre/lib/deploy.jar:/opt/jdk/jdk1.8.0_65/jre/lib/plugin.jar:/opt/jdk/jdk1.8.0_65/jre/lib/javaws.jar:/opt/jdk/jdk1.8.0_65/jre/lib/jce.jar:/opt/jdk/jdk1.8.0_65/jre/lib/ext/sunjce_provider.jar:/opt/jdk/jdk1.8.0_65/jre/lib/ext/sunec.jar:/opt/jdk/jdk1.8.0_65/jre/lib/ext/sunpkcs11.jar:/opt/jdk/jdk1.8.0_65/jre/lib/ext/cldrdata.jar:/opt/jdk/jdk1.8.0_65/jre/lib/ext/localedata.jar:/opt/jdk/jdk1.8.0_65/jre/lib/ext/dnsns.jar:/opt/jdk/jdk1.8.0_65/jre/lib/ext/jaccess.jar:/opt/jdk/jdk1.8.0_65/jre/lib/ext/jfxrt.jar:/opt/jdk/jdk1.8.0_65/jre/lib/ext/nashorn.jar:/opt/jdk/jdk1.8.0_65/jre/lib/ext/zipfs.jar:/home/pja/projects/ValidationBoof/build/classes/main:/home/pja/.gradle/caches/modules-2/files-2.1/com.google.guava/guava/17.0/9c6ef172e8de35fd8d4d8783e4821e57cdef7445/guava-17.0.jar:/home/pja/.gradle/caches/modules-2/files-2.1/com.thoughtworks.xstream/xstream/1.4.7/bce3282142b63068260f021fcbe48b72e8d71a1a/xstream-1.4.7.jar:/home/pja/.gradle/caches/modules-2/files-2.1/xmlpull/xmlpull/1.1.3.1/2b8e230d2ab644e4ecaa94db7cdedbc40c805dfa/xmlpull-1.1.3.1.jar:/home/pja/.gradle/caches/modules-2/files-2.1/xpp3/xpp3_min/1.1.4c/19d4e90b43059058f6e056f794f0ea4030d60b86/xpp3_min-1.1.4c.jar:/home/pja/projects/ValidationBoof/lib/ProjectBUBO.jar:/home/pja/.m2/repository/org/boofcv/all/0.20-SNAPSHOT/all-0.20-SNAPSHOT.jar:/home/pja/.m2/repository/org/georegression/georegression/0.9-SNAPSHOT/georegression-0.9-SNAPSHOT.jar:/home/pja/.m2/repository/org/boofcv/io/0.20-SNAPSHOT/io-0.20-SNAPSHOT.jar:/home/pja/.m2/repository/org/boofcv/learning/0.20-SNAPSHOT/learning-0.20-SNAPSHOT.jar:/home/pja/.m2/repository/org/boofcv/recognition/0.20-SNAPSHOT/recognition-0.20-SNAPSHOT.jar:/home/pja/.m2/repository/org/boofcv/ip/0.20-SNAPSHOT/ip-0.20-SNAPSHOT.jar:/home/pja/.m2/repository/org/boofcv/sfm/0.20-SNAPSHOT/sfm-0.20-SNAPSHOT.jar:/home/pja/.m2/repository/org/boofcv/geo/0.20-SNAPSHOT/geo-0.20-SNAPSHOT.jar:/home/pja/.m2/repository/org/boofcv/calibration/0.20-SNAPSHOT/calibration-0.20-SNAPSHOT.jar:/home/pja/.m2/repository/org/boofcv/visualize/0.20-SNAPSHOT/visualize-0.20-SNAPSHOT.jar:/home/pja/.m2/repository/org/boofcv/feature/0.20-SNAPSHOT/feature-0.20-SNAPSHOT.jar:/home/pja/.m2/repository/org/ddogleg/ddogleg/0.8-SNAPSHOT/ddogleg-0.8-SNAPSHOT.jar:/home/pja/.gradle/caches/modules-2/files-2.1/org.ejml/dense64/0.28/b79609796212567ed4e6f361c6f30cffd009e4a3/dense64-0.28.jar:/home/pja/.gradle/caches/modules-2/files-2.1/org.ejml/simple/0.28/9ed74a2da17f469fc35f6bdb99f44888cf46eb4e/simple-0.28.jar:/home/pja/.gradle/caches/modules-2/files-2.1/org.ejml/core/0.28/d02bf881401f8a005a58b91e87198d18b77347dc/core-0.28.jar:/home/pja/.gradle/caches/modules-2/files-2.1/org.ejml/equation/0.28/1eecb7fdf79cdf91a49da24af70984ced2138914/equation-0.28.jar:/opt/idea/idea-IU-141.2735.5/lib/idea_rt.jar
 =========== user.name
 pja
 =========== java.vm.specification.version
@@ -79,7 +79,7 @@ pja
 =========== sun.java.command
 com.intellij.rt.execution.application.AppMain regression.GenerateRegressionData
 =========== java.home
-/opt/jdk/jdk1.8.0_31/jre
+/opt/jdk/jdk1.8.0_65/jre
 =========== sun.arch.data.model
 64
 =========== user.language
@@ -91,11 +91,11 @@ sun.awt.X11.XToolkit
 =========== java.vm.info
 mixed mode
 =========== java.version
-1.8.0_31
+1.8.0_65
 =========== java.ext.dirs
-/opt/jdk/jdk1.8.0_31/jre/lib/ext:/usr/java/packages/lib/ext
+/opt/jdk/jdk1.8.0_65/jre/lib/ext:/usr/java/packages/lib/ext
 =========== sun.boot.class.path
-/opt/jdk/jdk1.8.0_31/jre/lib/resources.jar:/opt/jdk/jdk1.8.0_31/jre/lib/rt.jar:/opt/jdk/jdk1.8.0_31/jre/lib/sunrsasign.jar:/opt/jdk/jdk1.8.0_31/jre/lib/jsse.jar:/opt/jdk/jdk1.8.0_31/jre/lib/jce.jar:/opt/jdk/jdk1.8.0_31/jre/lib/charsets.jar:/opt/jdk/jdk1.8.0_31/jre/lib/jfr.jar:/opt/jdk/jdk1.8.0_31/jre/classes
+/opt/jdk/jdk1.8.0_65/jre/lib/resources.jar:/opt/jdk/jdk1.8.0_65/jre/lib/rt.jar:/opt/jdk/jdk1.8.0_65/jre/lib/sunrsasign.jar:/opt/jdk/jdk1.8.0_65/jre/lib/jsse.jar:/opt/jdk/jdk1.8.0_65/jre/lib/jce.jar:/opt/jdk/jdk1.8.0_65/jre/lib/charsets.jar:/opt/jdk/jdk1.8.0_65/jre/lib/jfr.jar:/opt/jdk/jdk1.8.0_65/jre/classes
 =========== java.vendor
 Oracle Corporation
 =========== file.separator

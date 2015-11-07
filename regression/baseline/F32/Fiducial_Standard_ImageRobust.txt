@@ -11,7 +11,7 @@ Summary:
 Corner errors:
  precision 50%         : 0.3181399783882849
  precision 90%         : 0.5340188430136087
- precision 100%        : 0.7144725185842513
+ precision 100%        : 0.7182741720147635
 
 ---------------------------------------------------
 
@@ -36,15 +36,15 @@ Corner errors:
 # maxPixelError = 5.0
 
 Summary:
- correct            :   88 /  132
- wrong order        : 26
+ correct            :   89 /  132
+ wrong order        : 25
  wrong ID           : 11
  duplicates         : 0
  false positives    : 6
  false negative     : 7
 Corner errors:
- precision 50%         : 0.3320944862590124
- precision 90%         : 0.6170279893914363
+ precision 50%         : 0.33513068138688407
+ precision 90%         : 0.618144259533944
  precision 100%        : 1.1329797185712047
 
 ---------------------------------------------------
@@ -53,16 +53,16 @@ Corner errors:
 # maxPixelError = 5.0
 
 Summary:
- correct            :   40 /   96
- wrong order        : 26
- wrong ID           : 4
+ correct            :   38 /   96
+ wrong order        : 25
+ wrong ID           : 3
  duplicates         : 0
  false positives    : 0
- false negative     : 52
+ false negative     : 55
 Corner errors:
- precision 50%         : 0.9057415916783378
- precision 90%         : 2.2002513312274714
- precision 100%        : 5.010880862202998
+ precision 50%         : 0.8660155761099635
+ precision 90%         : 1.9510255225376283
+ precision 100%        : 4.110546879283041
 
 ---------------------------------------------------
 
@@ -71,17 +71,17 @@ Corner errors:
 
 Summary:
  correct            :   18 /   26
- wrong order        : 26
+ wrong order        : 25
  wrong ID           : 0
  duplicates         : 0
  false positives    : 0
  false negative     : 8
 Corner errors:
- precision 50%         : 0.4110003849371016
+ precision 50%         : 0.42168939163258407
  precision 90%         : 0.8508902943292141
  precision 100%        : 1.2830708853502306
 
 ---------------------------------------------------
 
 ---------------------------------------------------
-total correct / total expected =  175 / 290
+total correct / total expected =  174 / 290
