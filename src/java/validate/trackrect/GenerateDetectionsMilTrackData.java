@@ -145,30 +145,6 @@ public class GenerateDetectionsMilTrackData<T extends ImageBase> {
 		out.close();
 	}
 
-	public static <Input extends ImageBase>
-	void evaluate( String trackerName ,
-				   TrackerObjectQuad<Input> tracker , ImageType<Input> imageType ) {
-
-		GenerateDetectionsMilTrackData<Input> generator = new GenerateDetectionsMilTrackData(imageType);
-
-		for( String m : videos ) {
-			generator.evaluate(m,trackerName,tracker);
-		}
-
-//		evaluate("cliffbar");
-//		evaluate("coke11");
-//		evaluate("david");
-//		evaluate("dollar");
-//		evaluate("faceocc");
-//		evaluate("faceocc2");
-//		evaluate("girl");
-//		evaluate("surfer");
-//		evaluate("sylv");
-//		evaluate("tiger1");
-//		evaluate("tiger2");
-//		evaluate("twinings");
-	}
-
 	public static void main(String[] args) {
 		FactoryEvaluationTrackerObjectQuad.Info info =
 //				FactoryEvaluationTrackerObjectQuad.circulant(ImageDataType.F32);
@@ -177,8 +153,6 @@ public class GenerateDetectionsMilTrackData<T extends ImageBase> {
 //				FactoryEvaluationTrackerObjectQuad.meanShiftComaniciuNoScale(ImageDataType.F32);
 //				FactoryEvaluationTrackerObjectQuad.meanShiftComaniciuScale(ImageDataType.F32);
 //				FactoryEvaluationTrackerObjectQuad.meanShiftLikelihoodHist(ImageDataType.U8);
-
-		evaluate(info.name,info.tracker,info.imageType);
 
 		System.out.println("DONE!");
 	}

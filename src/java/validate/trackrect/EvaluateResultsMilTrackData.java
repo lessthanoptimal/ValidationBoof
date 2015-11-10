@@ -68,11 +68,11 @@ public class EvaluateResultsMilTrackData {
 		}
 	}
 
-	public static void process( String path , String library ) throws IOException {
+	public static void process( String metricsOutputPath , String library , File trackingOutputDir ) throws IOException {
 		EvaluateResultsMilTrackData evaluator = new EvaluateResultsMilTrackData();
 
 		System.out.println("------------ "+library+" ------------------");
-		PrintStream out = new PrintStream(new File(path,"MILTrackData_"+library+".txt"));
+		PrintStream out = new PrintStream(new File(metricsOutputPath,"MILTrackData_"+library+".txt"));
 		if( formatLatex ) {
 			out.println("\\begin{tabular}{|l|c|c|c|c|c|c|}");
 			out.println("\\hline");
@@ -85,7 +85,7 @@ public class EvaluateResultsMilTrackData {
 
 		for( String dataset : GenerateDetectionsMilTrackData.videos ){
 			String inputFile = library+"_"+dataset+".txt";
-			evaluator.evaluate(dataset, inputFile, out);
+			evaluator.evaluate(dataset, new File(trackingOutputDir,inputFile).getPath(), out);
 		}
 
 		if( formatLatex ) {
@@ -101,8 +101,7 @@ public class EvaluateResultsMilTrackData {
 		formatLatex = true;
 
 //		process("./tmp", "BoofCV-Comaniciu");
-		process("./tmp", "BoofCV-SparseFlow");
-
+		process("./tmp", "BoofCV-SparseFlow",new File("."));
 
 		System.out.println("DONE!");
 		System.exit(0);

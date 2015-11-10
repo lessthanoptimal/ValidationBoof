@@ -2,10 +2,7 @@ package validate.trackrect;
 
 import georegression.struct.shapes.Rectangle2D_F64;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.PrintStream;
+import java.io.*;
 
 /**
  * @author Peter Abeles
@@ -75,7 +72,7 @@ public class EvaluateResultsTldData {
 		System.out.println();
 	}
 
-	public static void process( String path , String library ) throws IOException {
+	public static void process( String path , String library , File trackingOutputDir) throws IOException {
 		EvaluateResultsTldData evaluator = new EvaluateResultsTldData();
 
 		System.out.println("------------ "+library+" ------------------");
@@ -91,7 +88,7 @@ public class EvaluateResultsTldData {
 		}
 
 		for( String dataset : GenerateDetectionsTldData.videos ){
-			String inputFile = "tmp/"+library+"_"+dataset+".txt";
+			String inputFile = new File(trackingOutputDir,library+"_"+dataset+".txt").getPath();
 			evaluator.evaluate(dataset, inputFile, out);
 		}
 
@@ -104,6 +101,6 @@ public class EvaluateResultsTldData {
 	public static void main(String[] args) throws IOException {
 		formatLatex = true;
 //		process("./","BoofCV-Comaniciu");
-		process("./","BoofCV-SparseFlow");
+		process("./","BoofCV-SparseFlow", new File("."));
 	}
 }

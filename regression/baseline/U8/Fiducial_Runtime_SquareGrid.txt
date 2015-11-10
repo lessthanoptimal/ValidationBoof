@@ -1,7 +1,7 @@
-data/fiducials/square_grid/standard/distance_angle 300  86.705
-data/fiducials/square_grid/standard/distance_straight 300  88.968
-data/fiducials/square_grid/standard/distant 300  47.416
-data/fiducials/square_grid/standard/motion_blur 300 181.269
-data/fiducials/square_grid/standard/rotation 300  97.245
-data/fiducials/square_grid/static/front_close 300  99.536
-data/fiducials/square_grid/static/front_far 300  76.007
+data/fiducials/square_grid/standard/distance_angle 300  85.690
+data/fiducials/square_grid/standard/distance_straight 300  87.873
+data/fiducials/square_grid/standard/distant 300  46.809
+data/fiducials/square_grid/standard/motion_blur 300 179.533
+data/fiducials/square_grid/standard/rotation 300  97.182
+data/fiducials/square_grid/static/front_close 300  99.437
+data/fiducials/square_grid/static/front_far 300  75.586
