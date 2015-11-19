@@ -121,13 +121,13 @@ public class CreateDetectionFile<T extends ImageSingleBand> {
 			if( Double.isNaN(pt.x) || Double.isNaN(pt.y))
 				throw new IllegalArgumentException("NaN detected in location");
 
-			double scale = alg.getScale(i);
+			double radius = alg.getRadius(i);
 			double yaw = 0;
 			if( orientation != null ) {
-				orientation.setScale(scale);
+				orientation.setObjectRadius(radius);
 				yaw = orientation.compute(pt.getX(),pt.getY());
 			}
-			out.printf("%.3f %.3f %.5f %.5f\n",pt.getX(),pt.getY(),scale,yaw);
+			out.printf("%.3f %.3f %.5f %.5f\n",pt.getX(),pt.getY(),radius,yaw);
 		}
 		out.close();
 	}

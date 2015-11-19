@@ -122,13 +122,13 @@ public class CreateDetectDescribeFile<T extends ImageBase, D extends TupleDesc_F
 
 		for( int i = 0; i < alg.getNumberOfFeatures(); i++ ) {
 			Point2D_F64 pt = alg.getLocation(i);
-			double scale = alg.getScale(i);
+			double radius = alg.getRadius(i);
 			double yaw = alg.getOrientation(i);
 
 			if( Double.isNaN(pt.x) || Double.isNaN(pt.y))
 				throw new IllegalArgumentException("NaN detected in location");
 
-			outDetect.printf("%.3f %.3f %.5f %.5f\n", pt.getX(), pt.getY(), scale, yaw);
+			outDetect.printf("%.3f %.3f %.5f %.5f\n", pt.getX(), pt.getY(), radius, yaw);
 
 			desc = alg.getDescription(i);
 			outDescribe.printf("%.3f %.3f %f",pt.getX(), pt.getY(),yaw);

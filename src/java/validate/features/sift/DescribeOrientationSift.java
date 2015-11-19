@@ -20,6 +20,7 @@
 package validate.features.sift;
 
 import boofcv.abst.feature.describe.DescribeRegionPoint;
+import boofcv.abst.feature.detect.interest.WrapSiftDetector;
 import boofcv.alg.feature.describe.DescribePointSift;
 import boofcv.alg.feature.detect.interest.SiftImageScaleSpace;
 import boofcv.alg.feature.orientation.OrientationHistogramSift;
@@ -67,8 +68,9 @@ public class DescribeOrientationSift
 	}
 
 	@Override
-	public boolean process(double x, double y, double angle, double scale, SurfFeature ret) {
+	public boolean process(double x, double y, double angle, double radius, SurfFeature ret) {
 
+		double scale = radius/WrapSiftDetector.SCALE_TO_RADUS;
 		orientation.process(x,y,scale);
 
 		angle = orientation.getPeakOrientation();
@@ -102,7 +104,7 @@ public class DescribeOrientationSift
 	}
 
 	@Override
-	public boolean requiresScale() {
+	public boolean requiresRadius() {
 		return true;
 	}
 

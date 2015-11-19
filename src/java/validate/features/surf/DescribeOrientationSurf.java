@@ -20,6 +20,7 @@
 package validate.features.surf;
 
 import boofcv.abst.feature.describe.DescribeRegionPoint;
+import boofcv.abst.feature.detect.interest.WrapFHtoInterestPoint;
 import boofcv.abst.feature.orientation.OrientationIntegral;
 import boofcv.alg.feature.describe.DescribePointSurf;
 import boofcv.alg.transform.ii.GIntegralImageOps;
@@ -68,9 +69,10 @@ public class DescribeOrientationSurf<T extends ImageSingleBand, II extends Image
 	}
 
 	@Override
-	public boolean process(double x, double y, double angle, double scale, SurfFeature ret) {
+	public boolean process(double x, double y, double angle, double radius, SurfFeature ret) {
 
-		orientation.setScale(scale);
+		double scale = radius/WrapFHtoInterestPoint.SCALE_TO_RADIUS;
+		orientation.setObjectRadius(radius);
 		angle = orientation.compute(x,y);
 		describe.describe(x,y, angle, scale, ret);
 
@@ -78,7 +80,7 @@ public class DescribeOrientationSurf<T extends ImageSingleBand, II extends Image
 	}
 
 	@Override
-	public boolean requiresScale() {
+	public boolean requiresRadius() {
 		return false;
 	}
 

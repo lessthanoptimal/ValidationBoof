@@ -43,10 +43,10 @@ public class DetectDescribeRegression extends BaseTextFileRegression {
 		Class bandType = ImageDataType.typeToSingleClass(type);
 
 		all.add(surf(false,false,bandType));
-		all.add(surf(false,true,bandType));
+//		all.add(surf(false,true,bandType));
 		all.add(surf(true,false,bandType));
-		all.add(surf(true,true,bandType));
-		all.add(sift(bandType));
+//		all.add(surf(true,true,bandType));
+//		all.add(sift(bandType));
 
 		ScoreAssociation score = new ScoreAssociateEuclideanSq_F64();
 		AssociateDescription<TupleDesc_F64> assoc = FactoryAssociation.greedy(score, Double.MAX_VALUE, true);
