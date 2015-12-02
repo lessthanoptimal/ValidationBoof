@@ -20,7 +20,7 @@
 package validate.features.sift;
 
 import boofcv.abst.feature.detdesc.DetectDescribePoint;
-import boofcv.struct.feature.SurfFeature;
+import boofcv.struct.feature.BrightFeature;
 import boofcv.struct.image.ImageFloat32;
 import boofcv.struct.image.ImageType;
 import validate.features.homography.CreateDetectDescribeFile;
@@ -35,11 +35,11 @@ public class CreateDetectDescribeFiles {
 
 		ImageType<ImageFloat32> imageType = ImageType.single(ImageFloat32.class);
 
-		DetectDescribePoint<ImageFloat32,SurfFeature> alg =
+		DetectDescribePoint<ImageFloat32,BrightFeature> alg =
 				FactorySift.detectDescribe();
 
-		CreateDetectDescribeFile<ImageFloat32,SurfFeature> cdf =
-				new CreateDetectDescribeFile<ImageFloat32,SurfFeature>(alg,imageType,"BOOFCV_SIFTN");
+		CreateDetectDescribeFile<ImageFloat32,BrightFeature> cdf =
+				new CreateDetectDescribeFile<ImageFloat32,BrightFeature>(alg,imageType,"BOOFCV_SIFTN");
 
 		cdf.directory(directory,"./");
 	}

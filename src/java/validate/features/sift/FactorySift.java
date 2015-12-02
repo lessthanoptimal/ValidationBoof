@@ -19,18 +19,17 @@
 
 package validate.features.sift;
 
-import boofcv.abst.feature.describe.ConfigSiftScaleSpace;
 import boofcv.abst.feature.describe.DescribeRegionPoint;
 import boofcv.abst.feature.detdesc.DetectDescribePoint;
-import boofcv.abst.feature.detect.interest.ConfigSiftDetector;
 import boofcv.abst.feature.detect.interest.InterestPointDetector;
 import boofcv.alg.feature.describe.DescribePointSift;
-import boofcv.alg.feature.detect.interest.SiftImageScaleSpace;
+import boofcv.alg.feature.detect.interest.SiftScaleSpace;
 import boofcv.alg.feature.orientation.OrientationHistogramSift;
 import boofcv.factory.feature.describe.FactoryDescribePointAlgs;
 import boofcv.factory.feature.detdesc.FactoryDetectDescribe;
 import boofcv.factory.feature.detect.interest.FactoryInterestPoint;
-import boofcv.struct.feature.SurfFeature;
+import boofcv.factory.feature.orientation.FactoryOrientationAlgs;
+import boofcv.struct.feature.BrightFeature;
 import boofcv.struct.image.ImageFloat32;
 
 /**
@@ -38,24 +37,22 @@ import boofcv.struct.image.ImageFloat32;
  */
 public class FactorySift {
 
-	public static DescribeRegionPoint<ImageFloat32,SurfFeature>
+	public static DescribeRegionPoint<ImageFloat32,BrightFeature>
 	createDescriptor() {
-		SiftImageScaleSpace ss = new SiftImageScaleSpace(1.6f, 6, 5, false);
-		OrientationHistogramSift orientation = new OrientationHistogramSift(32,2.5,1.5);
-		DescribePointSift sift = FactoryDescribePointAlgs.sift(null);
+		SiftScaleSpace ss = new SiftScaleSpace(-1,5,3,2.75f);
+		OrientationHistogramSift orientation = FactoryOrientationAlgs.sift(null,ImageFloat32.class);
+		DescribePointSift sift = FactoryDescribePointAlgs.sift(null,ImageFloat32.class);
 
 		return new DescribeOrientationSift(orientation,sift,ss);
 	}
 
 	public static InterestPointDetector<ImageFloat32>
 	createDetector() {
-		return FactoryInterestPoint.siftDetector(null,new ConfigSiftDetector(3,5, -1, 10));
+		return FactoryInterestPoint.sift(null,null,ImageFloat32.class);
 	}
 
-	public static DetectDescribePoint<ImageFloat32,SurfFeature>
+	public static DetectDescribePoint<ImageFloat32,BrightFeature>
 	detectDescribe() {
-		ConfigSiftScaleSpace confSS = new ConfigSiftScaleSpace(1.6f,5,4,false);
-
-		return FactoryDetectDescribe.sift(confSS,new ConfigSiftDetector(3,10, -1, 32),null,null);
+		return FactoryDetectDescribe.sift(null);
 	}
 }

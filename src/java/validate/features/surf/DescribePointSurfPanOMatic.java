@@ -22,7 +22,7 @@ package validate.features.surf;
 import boofcv.alg.descriptor.UtilFeature;
 import boofcv.alg.feature.describe.DescribePointSurf;
 import boofcv.factory.filter.kernel.FactoryKernelGaussian;
-import boofcv.struct.feature.SurfFeature;
+import boofcv.struct.feature.BrightFeature;
 import boofcv.struct.image.ImageSingleBand;
 import boofcv.struct.sparse.GradientValue;
 
@@ -74,7 +74,7 @@ public class DescribePointSurfPanOMatic<II extends ImageSingleBand> extends Desc
 	@Override
 	public void describe(double c_x, double c_y,
 						 double angle, double radius,
-						 SurfFeature ret)
+						 BrightFeature ret)
 	{
 
 		double c = Math.cos(angle);
@@ -82,7 +82,7 @@ public class DescribePointSurfPanOMatic<II extends ImageSingleBand> extends Desc
 
 		// declare the feature if needed
 		if( ret == null )
-			ret = new SurfFeature(featureDOF);
+			ret = new BrightFeature(featureDOF);
 		else if( ret.value.length != featureDOF )
 			throw new IllegalArgumentException("Provided feature must have "+featureDOF+" values");
 

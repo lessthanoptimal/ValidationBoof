@@ -20,13 +20,13 @@
 package validate.features.surf;
 
 import boofcv.abst.feature.describe.DescribeRegionPoint;
-import boofcv.abst.feature.detect.interest.WrapFHtoInterestPoint;
 import boofcv.abst.feature.orientation.OrientationIntegral;
 import boofcv.alg.feature.describe.DescribePointSurfMultiSpectral;
 import boofcv.alg.transform.ii.GIntegralImageOps;
 import boofcv.core.image.GConvertImage;
 import boofcv.core.image.GeneralizedImageOps;
-import boofcv.struct.feature.SurfFeature;
+import boofcv.struct.BoofDefaults;
+import boofcv.struct.feature.BrightFeature;
 import boofcv.struct.image.ImageSingleBand;
 import boofcv.struct.image.ImageType;
 import boofcv.struct.image.MultiSpectral;
@@ -37,7 +37,7 @@ import boofcv.struct.image.MultiSpectral;
  * @author Peter Abeles
  */
 public class DescribeOrientationSurfColor<T extends ImageSingleBand, II extends ImageSingleBand>
-		implements DescribeRegionPoint<MultiSpectral<T>,SurfFeature>
+		implements DescribeRegionPoint<MultiSpectral<T>,BrightFeature>
 {
 	private OrientationIntegral<II> orientation;
 	private DescribePointSurfMultiSpectral<II> describe;
@@ -77,14 +77,14 @@ public class DescribeOrientationSurfColor<T extends ImageSingleBand, II extends 
 	}
 
 	@Override
-	public SurfFeature createDescription() {
+	public BrightFeature createDescription() {
 		return describe.createDescription();
 	}
 
 	@Override
-	public boolean process(double x, double y, double angle, double radius, SurfFeature ret) {
+	public boolean process(double x, double y, double angle, double radius, BrightFeature ret) {
 
-		double scale = radius/WrapFHtoInterestPoint.SCALE_TO_RADIUS;
+		double scale = radius/ BoofDefaults.SURF_SCALE_TO_RADIUS;
 		orientation.setObjectRadius(radius);
 		angle = orientation.compute(x,y);
 		describe.describe(x,y, angle, scale, ret);
@@ -113,7 +113,7 @@ public class DescribeOrientationSurfColor<T extends ImageSingleBand, II extends 
 	}
 
 	@Override
-	public Class<SurfFeature> getDescriptionType() {
-		return SurfFeature.class;
+	public Class<BrightFeature> getDescriptionType() {
+		return BrightFeature.class;
 	}
 }

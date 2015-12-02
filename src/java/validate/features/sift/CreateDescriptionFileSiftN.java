@@ -19,7 +19,7 @@
 
 package validate.features.sift;
 
-import boofcv.struct.feature.SurfFeature;
+import boofcv.struct.feature.BrightFeature;
 import boofcv.struct.image.ImageFloat32;
 import boofcv.struct.image.ImageType;
 import validate.features.homography.CreateDescriptionFile;
@@ -31,7 +31,7 @@ import java.util.List;
 /**
  * @author Peter Abeles
  */
-public class CreateDescriptionFileSiftN extends CreateDescriptionFile<ImageFloat32,SurfFeature> {
+public class CreateDescriptionFileSiftN extends CreateDescriptionFile<ImageFloat32,BrightFeature> {
 	/**
 	 * Defines the set of images and detection files that are to be processed.
 	 *
@@ -48,7 +48,7 @@ public class CreateDescriptionFileSiftN extends CreateDescriptionFile<ImageFloat
 
 		DescribeOrientationSift sift = (DescribeOrientationSift)describe;
 
-		List<SurfFeature> found = sift.process(x,y,scale);
+		List<BrightFeature> found = sift.process(x,y,scale);
 
 		for( int i = 0; i < found.size(); i++ ) {
 			Description d = new Description();

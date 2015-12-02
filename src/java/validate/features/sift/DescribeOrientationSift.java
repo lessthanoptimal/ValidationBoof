@@ -20,11 +20,12 @@
 package validate.features.sift;
 
 import boofcv.abst.feature.describe.DescribeRegionPoint;
-import boofcv.abst.feature.detect.interest.WrapSiftDetector;
 import boofcv.alg.feature.describe.DescribePointSift;
-import boofcv.alg.feature.detect.interest.SiftImageScaleSpace;
+import boofcv.alg.feature.detect.interest.SiftScaleSpace;
+import boofcv.alg.feature.detect.interest.UnrollSiftScaleSpaceGradient;
 import boofcv.alg.feature.orientation.OrientationHistogramSift;
-import boofcv.struct.feature.SurfFeature;
+import boofcv.struct.BoofDefaults;
+import boofcv.struct.feature.BrightFeature;
 import boofcv.struct.image.ImageFloat32;
 import boofcv.struct.image.ImageType;
 import org.ddogleg.struct.GrowQueue_F64;
@@ -38,64 +39,67 @@ import java.util.List;
  * @author Peter Abeles
  */
 public class DescribeOrientationSift
-		implements DescribeRegionPoint<ImageFloat32,SurfFeature>
+		implements DescribeRegionPoint<ImageFloat32,BrightFeature>
 {
-	SiftImageScaleSpace ss;
+	UnrollSiftScaleSpaceGradient ss;
 
 	OrientationHistogramSift orientation;
 	DescribePointSift describe;
 
 	public DescribeOrientationSift(OrientationHistogramSift orientation,
 								   DescribePointSift describe,
-								   SiftImageScaleSpace ss) {
+								   SiftScaleSpace ss ) {
 		this.orientation = orientation;
 		this.describe = describe;
-		this.ss = ss;
+		this.ss = new UnrollSiftScaleSpaceGradient(ss);
 	}
 
 	@Override
 	public void setImage(ImageFloat32 image) {
-		ss.constructPyramid(image);
-		ss.computeDerivatives();
-
-		orientation.setScaleSpace(ss);
-		describe.setScaleSpace(ss);
+		ss.setImage(image);
 	}
 
 	@Override
-	public SurfFeature createDescription() {
-		return new SurfFeature(describe.getDescriptorLength());
+	public BrightFeature createDescription() {
+		return new BrightFeature(describe.getDescriptorLength());
 	}
 
 	@Override
-	public boolean process(double x, double y, double angle, double radius, SurfFeature ret) {
+	public boolean process(double x, double y, double angle, double radius, BrightFeature ret) {
 
-		double scale = radius/WrapSiftDetector.SCALE_TO_RADUS;
-		orientation.process(x,y,scale);
+		double sigma = radius / BoofDefaults.SIFT_SCALE_TO_RADIUS;
+
+		UnrollSiftScaleSpaceGradient.ImageScale image = ss.lookup(sigma);
+
+		orientation.setImageGradient(image.derivX,image.derivY);
+		describe.setImageGradient(image.derivX,image.derivY);
+
+		orientation.process(x,y,sigma);
 
 		angle = orientation.getPeakOrientation();
-		describe.process(x,y,scale,angle,
-				orientation.getImageIndex(),orientation.getPixelScale(), ret);
-
-//		describe.process(x,y,scale,-angle, ret);
+		describe.process(x,y,sigma,angle,ret);
 		return true;
 	}
 
-	public List<SurfFeature> process( double x , double y , double scale ) {
+	public List<BrightFeature> process( double x , double y , double radius ) {
 
-		List<SurfFeature> ret = new ArrayList<SurfFeature>();
+		double sigma = radius / BoofDefaults.SIFT_SCALE_TO_RADIUS;
 
-		orientation.process(x,y,scale);
+		UnrollSiftScaleSpaceGradient.ImageScale image = ss.lookup(sigma);
+
+		orientation.setImageGradient(image.derivX,image.derivY);
+		describe.setImageGradient(image.derivX,image.derivY);
+
+		orientation.process(x,y,sigma);
+
 		GrowQueue_F64 found = orientation.getOrientations();
 
-		int imageIndex = orientation.getImageIndex();
-		double pixelScale = orientation.getPixelScale();
-
+		List<BrightFeature> ret = new ArrayList<BrightFeature>();
 		for( int i = 0; i < found.size; i++ ) {
 			double angle = found.get(i);
 
-			SurfFeature f = createDescription();
-			describe.process(x,y,scale,angle,imageIndex,pixelScale,f);
+			BrightFeature f = createDescription();
+			describe.process(x,y,sigma,angle,f);
 
 			ret.add(f);
 		}
@@ -124,7 +128,7 @@ public class DescribeOrientationSift
 	}
 
 	@Override
-	public Class<SurfFeature> getDescriptionType() {
-		return SurfFeature.class;
+	public Class<BrightFeature> getDescriptionType() {
+		return BrightFeature.class;
 	}
 }

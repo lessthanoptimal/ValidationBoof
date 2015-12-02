@@ -20,7 +20,7 @@
 package validate.features.surf;
 
 import boofcv.abst.feature.describe.DescribeRegionPoint;
-import boofcv.struct.feature.SurfFeature;
+import boofcv.struct.feature.BrightFeature;
 import boofcv.struct.image.ImageFloat32;
 import boofcv.struct.image.ImageSingleBand;
 import boofcv.struct.image.ImageType;
@@ -34,17 +34,17 @@ import java.io.FileNotFoundException;
 public class CreateDescriptionFileSurf {
 	public static <T extends ImageSingleBand>
 	void doStuff( String directory , String imageSuffix , ImageType<T> imageType ) throws FileNotFoundException {
-		DescribeRegionPoint<T,SurfFeature> alg;
-		CreateDescriptionFile<T,SurfFeature> cdf;
+		DescribeRegionPoint<T,BrightFeature> alg;
+		CreateDescriptionFile<T,BrightFeature> cdf;
 
 		String suffix = imageType.getFamily() == ImageType.Family.SINGLE_BAND ? "" : "_COLOR";
 
 		alg = FactorySurf.surf(true, imageType);
-		cdf = new CreateDescriptionFile<T,SurfFeature>(alg,imageType,"BoofCV_MSURF"+suffix);
+		cdf = new CreateDescriptionFile<T,BrightFeature>(alg,imageType,"BoofCV_MSURF"+suffix);
 		cdf.directory(directory,imageSuffix,"SURF_COMMON.txt");
 
 //		alg = FactorySurf.surf(false, imageType);
-//		cdf = new CreateDescriptionFile<T,SurfFeature>(alg,imageType,"BoofCV_SURF"+suffix);
+//		cdf = new CreateDescriptionFile<T,BrightFeature>(alg,imageType,"BoofCV_SURF"+suffix);
 //		cdf.directory(directory,imageSuffix,"SURF_COMMON.txt");
 	}
 

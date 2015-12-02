@@ -3,16 +3,15 @@ package regression;
 import boofcv.abst.feature.associate.AssociateDescription;
 import boofcv.abst.feature.associate.ScoreAssociateEuclideanSq_F64;
 import boofcv.abst.feature.associate.ScoreAssociation;
-import boofcv.abst.feature.describe.ConfigSiftScaleSpace;
+import boofcv.abst.feature.detdesc.ConfigCompleteSift;
 import boofcv.abst.feature.detdesc.DetectDescribePoint;
 import boofcv.abst.feature.detect.interest.ConfigFastHessian;
 import boofcv.abst.feature.detect.interest.ConfigSiftDetector;
 import boofcv.factory.feature.associate.FactoryAssociation;
 import boofcv.factory.feature.detdesc.FactoryDetectDescribe;
-import boofcv.struct.feature.SurfFeature;
+import boofcv.struct.feature.BrightFeature;
 import boofcv.struct.feature.TupleDesc_F64;
 import boofcv.struct.image.ImageDataType;
-import boofcv.struct.image.ImageFloat32;
 import boofcv.struct.image.ImageSingleBand;
 import boofcv.struct.image.ImageType;
 import validate.features.homography.BenchmarkFeatureDescribeStability;
@@ -43,10 +42,10 @@ public class DetectDescribeRegression extends BaseTextFileRegression {
 		Class bandType = ImageDataType.typeToSingleClass(type);
 
 		all.add(surf(false,false,bandType));
-//		all.add(surf(false,true,bandType));
+		all.add(surf(false,true,bandType));
 		all.add(surf(true,false,bandType));
-//		all.add(surf(true,true,bandType));
-//		all.add(sift(bandType));
+		all.add(surf(true,true,bandType));
+		all.add(sift(bandType));
 
 		ScoreAssociation score = new ScoreAssociateEuclideanSq_F64();
 		AssociateDescription<TupleDesc_F64> assoc = FactoryAssociation.greedy(score, Double.MAX_VALUE, true);
@@ -84,7 +83,7 @@ public class DetectDescribeRegression extends BaseTextFileRegression {
 
 		ImageType imageType;
 		String variant;
-		DetectDescribePoint<T,SurfFeature> detdesc;
+		DetectDescribePoint<T,BrightFeature> detdesc;
 
 		if( stable )
 			variant="Stable";
@@ -120,10 +119,17 @@ public class DetectDescribeRegression extends BaseTextFileRegression {
 
 		ImageType imageType = ImageType.single(bandType);
 
-		ConfigSiftScaleSpace confSS = new ConfigSiftScaleSpace(1.6f,5,4,false);
+		ConfigCompleteSift config = new ConfigCompleteSift();
+//		ConfigSiftScaleSpace configSS = config.scaleSpace;
+		ConfigSiftDetector configDet = config.detector;
+		configDet.extract.radius = 3;
+		configDet.extract.threshold = 0f;
+		configDet.maxFeaturesPerScale = 3500;
 
-		DetectDescribePoint<ImageFloat32,SurfFeature> sift =
-				FactoryDetectDescribe.sift(confSS, new ConfigSiftDetector(3, 10, -1, 32), null, null);
+//		ConfigSiftOrientation configOri = config.orientation;
+//		ConfigSiftDescribe configDesc = config.describe;
+
+		DetectDescribePoint<T,BrightFeature> sift = FactoryDetectDescribe.sift(config);
 
 		Info ret = new Info();
 		ret.name = "BoofSIFT";

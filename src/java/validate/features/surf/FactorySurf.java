@@ -31,7 +31,7 @@ import boofcv.alg.transform.ii.GIntegralImageOps;
 import boofcv.factory.feature.describe.FactoryDescribePointAlgs;
 import boofcv.factory.feature.detdesc.FactoryDetectDescribe;
 import boofcv.factory.feature.orientation.FactoryOrientationAlgs;
-import boofcv.struct.feature.SurfFeature;
+import boofcv.struct.feature.BrightFeature;
 import boofcv.struct.image.ImageBase;
 import boofcv.struct.image.ImageSingleBand;
 import boofcv.struct.image.ImageType;
@@ -44,7 +44,7 @@ public class FactorySurf {
 	 * Java port of Pan-o-Matic's descriptor to make examing its behavior easier.
 	 */
 	public static <T extends ImageSingleBand, II extends ImageSingleBand>
-	DescribeRegionPoint<T,SurfFeature> surfPanOMaticInBoofCV(boolean isOriented, Class<T> imageType) {
+	DescribeRegionPoint<T,BrightFeature> surfPanOMaticInBoofCV(boolean isOriented, Class<T> imageType) {
 		OrientationIntegral<II> orientation = null;
 
 		Class<II> integralType = GIntegralImageOps.getIntegralType(imageType);
@@ -61,7 +61,7 @@ public class FactorySurf {
 	 * Creates a BoofCV SURF descriptor
 	 */
 	public static <T extends ImageBase, II extends ImageSingleBand>
-	DescribeRegionPoint<T,SurfFeature> surf( boolean stable , ImageType<T> imageType )
+	DescribeRegionPoint<T,BrightFeature> surf( boolean stable , ImageType<T> imageType )
 	{
 		Class bandType = imageType.getDataType().getDataType();
 		Class integralType = GIntegralImageOps.getIntegralType(bandType);
@@ -88,7 +88,7 @@ public class FactorySurf {
 	}
 
 	public static <T extends ImageSingleBand>
-	DetectDescribePoint<T,SurfFeature> detectDescribe( boolean stable , boolean color , Class<T> imageType  ) {
+	DetectDescribePoint<T,BrightFeature> detectDescribe( boolean stable , boolean color , Class<T> imageType  ) {
 
 		ConfigFastHessian configDetect = new ConfigFastHessian(58,3, -1,1, 9, 4, 4);
 
