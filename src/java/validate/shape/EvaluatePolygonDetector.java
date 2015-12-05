@@ -16,8 +16,6 @@ import java.util.List;
  */
 public class EvaluatePolygonDetector {
 
-	List<PolygonTruthIndexes> descriptions;
-
 	PrintStream outputResults = System.out;
 	PrintStream err = System.err;
 
@@ -42,7 +40,6 @@ public class EvaluatePolygonDetector {
 		outputResults.println("# Match Tolerance in contour fraction = "+MATCH_TOLERANCE);
 		outputResults.println("# Match Tolerance bias pixels         = "+MATCH_BIAS_PIXELS);
 		outputResults.println("# Image (expected) (detected) (multiple) (miss matched) (false positives) (false negative) (average error)");
-		descriptions = UtilShapeDetector.loadDescription(new File(dataDir,"description.txt"));
 
 		List<File> files = Arrays.asList(dataDir.listFiles());
 
@@ -181,17 +178,17 @@ public class EvaluatePolygonDetector {
 	}
 
 	protected List<Polygon2D_F64> loadTruth( File fileTruth ) {
-		List<Point2D_F64> points = PointFileCodec.load(fileTruth);
+		List<List<Point2D_F64>> sets = PointFileCodec.loadSets(fileTruth.getPath());
 
 		List<Polygon2D_F64> polygons = new ArrayList<Polygon2D_F64>();
 
-		for (int i = 0; i < descriptions.size(); i++) {
-			int[] indexes = descriptions.get(i).indexes;
+		for (int i = 0; i < sets.size(); i++) {
+			List<Point2D_F64> set = sets.get(i);
 
-			Polygon2D_F64 p = new Polygon2D_F64(indexes.length);
+			Polygon2D_F64 p = new Polygon2D_F64(set.size());
 
 			for (int j = 0; j < p.size(); j++) {
-				p.vertexes.data[j] = points.get(indexes[j]);
+				p.vertexes.data[j] = set.get(j);
 			}
 
 			polygons.add(p);

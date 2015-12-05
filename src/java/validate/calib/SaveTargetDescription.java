@@ -2,7 +2,7 @@ package validate.calib;
 
 import boofcv.abst.fiducial.calib.ConfigChessboard;
 import boofcv.abst.geo.calibration.CalibrationDetector;
-import boofcv.factory.calib.FactoryPlanarCalibrationTarget;
+import boofcv.factory.calib.FactoryCalibrationTarget;
 import georegression.struct.point.Point2D_F64;
 
 import java.io.FileNotFoundException;
@@ -17,7 +17,7 @@ import java.io.PrintStream;
 public class SaveTargetDescription {
 
 	public static void main( String args[] ) throws FileNotFoundException {
-		CalibrationDetector target = FactoryPlanarCalibrationTarget.detectorChessboard(new ConfigChessboard(5, 7, 30));
+		CalibrationDetector target = FactoryCalibrationTarget.detectorChessboard(new ConfigChessboard(5, 7, 30));
 
 		PrintStream out = new PrintStream(new FileOutputStream("target.txt"));
 		out.println(target.getLayout().size());

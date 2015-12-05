@@ -28,11 +28,14 @@ public class DetectPolygonRegression extends BaseTextFileRegression {
 	public void process(ImageDataType type) throws IOException {
 		final Class imageType = ImageDataType.typeToSingleClass(type);
 
-		process("PolygonLine", new FactoryBinaryPolygon(true,imageType));
-		process("PolygonCorner", new FactoryBinaryPolygon(false,imageType));
+		process("PolygonLineGlobal", false, new FactoryBinaryPolygon(true,imageType));
+		process("PolygonLineLocal", true, new FactoryBinaryPolygon(true,imageType));
+		process("PolygonCornerGlobal", false, new FactoryBinaryPolygon(false,imageType));
+		process("PolygonCornerLocal", true, new FactoryBinaryPolygon(false,imageType));
 	}
 
-	private void process(String name, FactoryObject<BinaryPolygonDetector> factory) throws IOException {
+	private void process(String name, boolean localBinary , FactoryObject<BinaryPolygonDetector> factory)
+			throws IOException {
 
 		String outputName = "ShapeDetector_"+name+".txt";
 
@@ -52,7 +55,7 @@ public class DetectPolygonRegression extends BaseTextFileRegression {
 
 			factory.configure(new File(f,"detector.txt"));
 
-			DetectPolygonsSaveToFile detection = new DetectPolygonsSaveToFile(factory.newInstance());
+			DetectPolygonsSaveToFile detection = new DetectPolygonsSaveToFile(factory.newInstance(),localBinary);
 
 			detection.processDirectory(f, workDirectory);
 			evaluator.evaluate(f, workDirectory);

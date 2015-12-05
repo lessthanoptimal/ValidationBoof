@@ -2,7 +2,7 @@ package validate.fiducial;
 
 import boofcv.abst.fiducial.calib.CalibrationDetectorSquareGrid;
 import boofcv.abst.fiducial.calib.ConfigSquareGrid;
-import boofcv.factory.calib.FactoryPlanarCalibrationTarget;
+import boofcv.factory.calib.FactoryCalibrationTarget;
 import georegression.struct.point.Point2D_F64;
 
 import java.io.FileNotFoundException;
@@ -15,9 +15,9 @@ import java.util.List;
 public class CreateCalibrationFiducialLandmarkFiles {
 	public static void main(String[] args) throws FileNotFoundException {
 //		ConfigChessboard config = new ConfigChessboard(5,7,1);
-//		PlanarDetectorChessboard detector = FactoryPlanarCalibrationTarget.detectorChessboard(config);
+//		PlanarDetectorChessboard detector = FactoryCalibrationTarget.detectorChessboard(config);
 		ConfigSquareGrid config = new ConfigSquareGrid(5,7,1,1);
-		CalibrationDetectorSquareGrid detector = FactoryPlanarCalibrationTarget.detectorSquareGrid(config);
+		CalibrationDetectorSquareGrid detector = FactoryCalibrationTarget.detectorSquareGrid(config);
 
 		List<Point2D_F64> points = detector.getLayout();
 

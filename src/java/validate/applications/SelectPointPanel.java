@@ -20,11 +20,11 @@ import java.util.List;
 public class SelectPointPanel extends ImageZoomPanel
 	implements MouseListener, KeyListener
 {
-
-
 	// list of points selected by the user
-	List<Point2D_F64> points = new ArrayList<Point2D_F64>();
-	int selected = -1;
+	List<List<Point2D_F64>> pointSets = new ArrayList<List<Point2D_F64>>();
+	List<Point2D_F64> activeSet = new ArrayList<Point2D_F64>();
+
+	Point2D_F64 selected = null;
 
 	public SelectPointPanel() {
 		panel.addMouseListener(this);
@@ -44,26 +44,30 @@ public class SelectPointPanel extends ImageZoomPanel
 		Ellipse2D.Double ellipse = new Ellipse2D.Double();
 		Rectangle2D.Double rect = new Rectangle2D.Double();
 
-		for (int i = 0; i < points.size(); i++) {
-			Point2D_F64 p = points.get(i);
+		synchronized (pointSets) {
+			for (List<Point2D_F64> set : pointSets) {
+				for (int i = 0; i < set.size(); i++) {
+					Point2D_F64 p = set.get(i);
 
-			double x = p.x * scale;
-			double y = p.y * scale;
+					double x = p.x * scale;
+					double y = p.y * scale;
 
-			ellipse.setFrame(x-r,y-r,2*r,2*r);
-			rect.setRect(x-0.5,y-0.5,1,1);
+					ellipse.setFrame(x - r, y - r, 2 * r, 2 * r);
+					rect.setRect(x - 0.5, y - 0.5, 1, 1);
 
-			g2.draw(ellipse);
-			g2.draw(rect);
+					g2.draw(ellipse);
+					g2.draw(rect);
 //			g2.drawOval(x - r, y - r, w,w);
 //			g2.drawRect(x,y,1,1);
-			g2.drawString(i+"",(int)x+2*r,(int)y);
+					g2.drawString(i + "", (int) x + 2 * r, (int) y);
+				}
+			}
 		}
 
-		if( selected >= 0 ) {
-			Point2D_F64 p = points.get(selected);
-			double x = p.x * scale;
-			double y = p.y * scale;
+
+		if( selected != null ) {
+			double x = selected.x * scale;
+			double y = selected.y * scale;
 
 			g2.setColor(Color.BLUE);
 			r = 8;
@@ -83,20 +87,28 @@ public class SelectPointPanel extends ImageZoomPanel
 		if( e.getButton() == MouseEvent.BUTTON3 ) {
 			centerView(p.x, p.y);
 		} else {
-			double tol = 12 / scale;
+			synchronized (pointSets) {
+				double tol = 12 / scale;
 
-			boolean found = false;
-			for (int i = 0; i < points.size(); i++) {
-				Point2D_F64 s = points.get(i);
-				if (s.distance(p) <= tol) {
-					selected = i;
-					found = true;
-					break;
+				boolean found = false;
+				for (List<Point2D_F64> set : pointSets) {
+					for (int i = 0; i < set.size(); i++) {
+						Point2D_F64 s = set.get(i);
+						if (s.distance(p) <= tol) {
+							activeSet = set;
+							selected = s;
+							found = true;
+							break;
+						}
+					}
 				}
-			}
-			if (!found) {
-				selected = points.size();
-				points.add(p);
+				if (!found) {
+					selected = p;
+					activeSet.add(p);
+					if (activeSet.size() == 1) {
+						pointSets.add(activeSet);
+					}
+				}
 			}
 		}
 		repaint();
@@ -123,16 +135,24 @@ public class SelectPointPanel extends ImageZoomPanel
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		if( selected < 0 )
+		if( selected == null )
 			return;
 
 //		System.out.println("Key event "+e.getKeyCode()+"  0x"+Integer.toHexString(e.getKeyCode()));
 
-		Point2D_F64 p = points.get(selected);
+		Point2D_F64 p = selected;
 
 		double delta = 0.05;
 
 		switch( e.getKeyCode() ) {
+			case KeyEvent.VK_S:
+				activeSet = new ArrayList<Point2D_F64>();
+				break;
+
+			case KeyEvent.VK_T:
+				splitAtSelected();
+				break;
+
 			case KeyEvent.VK_NUMPAD4:
 			case KeyEvent.VK_KP_LEFT:
 				p.x -= delta;
@@ -155,8 +175,12 @@ public class SelectPointPanel extends ImageZoomPanel
 
 			case KeyEvent.VK_DELETE:
 			case KeyEvent.VK_BACK_SPACE:
-				points.remove(selected);
-				selected = -1;
+				for( List<Point2D_F64> set : pointSets ) {
+					if( set.remove(selected)) {
+						break;
+					}
+				}
+				selected = null;
 				break;
 
 			case KeyEvent.VK_NUMPAD7:
@@ -188,13 +212,47 @@ public class SelectPointPanel extends ImageZoomPanel
 
 	}
 
-	public List<Point2D_F64> getSelectedPoints() {
-		return points;
+	public List<List<Point2D_F64>> getSelectedPoints() {
+		return pointSets;
 	}
 
-	public void setPoints(List<Point2D_F64> points) {
-		this.points = points;
-		selected = -1;
+	private void splitAtSelected() {
+		if( selected == null )
+			return;
+
+		synchronized (pointSets) {
+			for (List<Point2D_F64> set : pointSets) {
+				if (set.contains(selected)) {
+					int index = set.indexOf(selected);
+					List<Point2D_F64> split = new ArrayList<Point2D_F64>();
+					for (int i = index; i <set.size(); i++) {
+						split.add(set.get(i));
+					}
+					while( set.size() > index ) {
+						set.remove(index);
+					}
+					pointSets.add(split);
+					activeSet = split;
+					return;
+				}
+			}
+		}
+		throw new RuntimeException("BUG");
 	}
 
+	public void addPointSet(List<Point2D_F64> points) {
+		pointSets.add(points);
+		activeSet = points;
+		selected = null;
+	}
+
+	public void clearPoints() {
+		pointSets = new ArrayList<List<Point2D_F64>>();
+		activeSet = new ArrayList<Point2D_F64>();
+		selected = null;
+	}
+
+	public void setSets(List<List<Point2D_F64>> sets) {
+		this.pointSets = sets;
+	}
 }

@@ -4,7 +4,7 @@ import boofcv.abst.fiducial.calib.ConfigChessboard;
 import boofcv.abst.fiducial.calib.ConfigSquareGrid;
 import boofcv.abst.geo.calibration.CalibrationDetector;
 import boofcv.alg.geo.calibration.CalibrationObservation;
-import boofcv.factory.calib.FactoryPlanarCalibrationTarget;
+import boofcv.factory.calib.FactoryCalibrationTarget;
 import boofcv.io.image.UtilImageIO;
 import boofcv.struct.image.ImageDataType;
 import boofcv.struct.image.ImageFloat32;
@@ -46,8 +46,8 @@ public class CalibrationDetectionRegression extends BaseTextFileRegression{
 		squareDirectories.add("data/calib/mono/square_grid/large");
 		squareDirectories.add("data/calib/mono/square_grid/distant");
 
-		addDetector("DetectCalibChess", FactoryPlanarCalibrationTarget.detectorChessboard(new ConfigChessboard(5, 7,30)), true);
-		addDetector("DetectCalibSquare", FactoryPlanarCalibrationTarget.detectorSquareGrid(new ConfigSquareGrid(5, 7,30,30)), false);
+		addDetector("DetectCalibChess", FactoryCalibrationTarget.detectorChessboard(new ConfigChessboard(5, 7,30)), true);
+		addDetector("DetectCalibSquare", FactoryCalibrationTarget.detectorSquareGrid(new ConfigSquareGrid(5, 7,30,30)), false);
 	}
 
 	public void addDetector( String name , CalibrationDetector detector , boolean chess ) {
@@ -168,8 +168,8 @@ public class CalibrationDetectionRegression extends BaseTextFileRegression{
 		CalibrationDetectionRegression app = new CalibrationDetectionRegression();
 
 
-//		app.addDetector("Default_Chess",FactoryPlanarCalibrationTarget.detectorChessboard(new ConfigChessboard(5,7)),true);
-//		app.addDetector("Default_Square",FactoryPlanarCalibrationTarget.detectorSquareGrid(new ConfigSquareGrid(5, 7)),false);
+//		app.addDetector("Default_Chess",FactoryCalibrationTarget.detectorChessboard(new ConfigChessboard(5,7)),true);
+//		app.addDetector("Default_Square",FactoryCalibrationTarget.detectorSquareGrid(new ConfigSquareGrid(5, 7)),false);
 
 		app.setOutputDirectory("./");
 		app.process(ImageDataType.F32);

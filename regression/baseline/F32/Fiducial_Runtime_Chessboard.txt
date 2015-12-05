@@ -1,7 +1,7 @@
-data/fiducials/chessboard/standard/distance_angle 300  90.992
-data/fiducials/chessboard/standard/distance_straight 300  86.982
-data/fiducials/chessboard/standard/distant 300  78.513
-data/fiducials/chessboard/standard/motion_blur 300 142.857
-data/fiducials/chessboard/standard/rotation 300  88.287
-data/fiducials/chessboard/static/front_close 300 129.702
-data/fiducials/chessboard/static/front_far 300 111.029
+data/fiducials/chessboard/standard/distance_angle 300  89.579
+data/fiducials/chessboard/standard/distance_straight 300  85.251
+data/fiducials/chessboard/standard/distant 300  77.121
+data/fiducials/chessboard/standard/motion_blur 300 138.889
+data/fiducials/chessboard/standard/rotation 300  87.899
+data/fiducials/chessboard/static/front_close 300 126.743
+data/fiducials/chessboard/static/front_far 300 109.170

@@ -183,7 +183,7 @@ public class FactoryEvaluationTrackers<T extends ImageSingleBand> {
 		NonMaxSuppression extractor = FactoryFeatureExtractor.
 				nonmax(new ConfigExtract(extractRadius, detectThreshold, 5, true));
 		FastHessianFeatureDetector<T> feature = new FastHessianFeatureDetector<T>(extractor,maxFeaturesPerScale,
-				initialSampleSize, initialSize,numberScalesPerOctave,numberOfOctaves);
+				initialSampleSize, initialSize,numberScalesPerOctave,numberOfOctaves,6);
 
 		return new WrapFHtoInterestPoint(feature);
 	}

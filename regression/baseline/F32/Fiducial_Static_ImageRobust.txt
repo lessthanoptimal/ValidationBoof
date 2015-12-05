@@ -60,30 +60,30 @@ Accuracy:               400
 # maxPixelError = 5.0
 
 Summary:
- correct            : 3692
+ correct            : 3696
  wrong order        : 0
  wrong ID           : 0
  duplicates         : 0
- false positive     : 1
- false negative     : 4
-Normal Angle (deg):     3677
- errors 50%         : 0.021563699706594927
+ false positive     : 0
+ false negative     : 0
+Normal Angle (deg):     3684
+ errors 50%         : 0.021583399796126338
  errors 90%         : 0.058115908181285876
  errors 100%        : 0.2000777053961685
-Location            : 3677
- errors 50%         : 0.006014263601881096
+Location            : 3684
+ errors 50%         : 0.006016414161805501
  errors 90%         : 0.022379789747893043
  errors 100%        : 0.11314943700258284
-Precision:              14768
- errors 50%         : 0.7270054628663986
- errors 90%         : 1.9701640923351558
+Precision:              14784
+ errors 50%         : 0.7305114179999252
+ errors 90%         : 1.9798066564385928
  errors 100%        : 3.2894589624964423
-Accuracy:               14768
- errors 50%         : 2.6537686008740136
- errors 90%         : 3.297147415099937
+Accuracy:               14784
+ errors 50%         : 2.652970626734083
+ errors 90%         : 3.2970820666601837
  errors 100%        : 3.845987591726515
 
 ---------------------------------------------------
 
 ---------------------------------------------------
-total correct / total expected = 3985 /3989
+total correct / total expected = 3989 /3989

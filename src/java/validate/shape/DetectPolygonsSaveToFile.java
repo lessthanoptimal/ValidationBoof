@@ -3,7 +3,9 @@ package validate.shape;
 import boofcv.abst.filter.binary.InputToBinary;
 import boofcv.alg.shapes.polygon.BinaryPolygonDetector;
 import boofcv.core.image.GeneralizedImageOps;
+import boofcv.factory.filter.binary.ConfigThreshold;
 import boofcv.factory.filter.binary.FactoryThresholdBinary;
+import boofcv.factory.filter.binary.ThresholdType;
 import boofcv.factory.shape.ConfigPolygonDetector;
 import boofcv.factory.shape.FactoryShapeDetector;
 import boofcv.io.image.ConvertBufferedImage;
@@ -29,13 +31,17 @@ public class DetectPolygonsSaveToFile<T extends ImageSingleBand> {
 	T gray;
 	ImageUInt8 binary = new ImageUInt8(1,1);
 
-	public DetectPolygonsSaveToFile( BinaryPolygonDetector<T> detector) {
+	public DetectPolygonsSaveToFile( BinaryPolygonDetector<T> detector , boolean binaryLocal) {
 
 		this.detector = detector;
 
-		inputToBinary = FactoryThresholdBinary.globalOtsu(0, 255, true, detector.getInputType());
-//		inputToBinary = FactoryThresholdBinary.adaptiveSquare(10,0,true,detector.getInputType());
-
+		ConfigThreshold config;
+		if( binaryLocal ) {
+			config = ConfigThreshold.local(ThresholdType.LOCAL_SQUARE,10);
+		} else {
+			config = ConfigThreshold.global(ThresholdType.GLOBAL_OTSU);
+		}
+		inputToBinary = FactoryThresholdBinary.threshold(config,detector.getInputType());
 		gray = GeneralizedImageOps.createSingleBand(detector.getInputType(), 1, 1);
 	}
 
@@ -83,7 +89,7 @@ public class DetectPolygonsSaveToFile<T extends ImageSingleBand> {
 		ConfigPolygonDetector config = UtilShapeDetector.configure(true,file);
 		BinaryPolygonDetector detector = FactoryShapeDetector.polygon(config,imageType);
 
-		DetectPolygonsSaveToFile app = new DetectPolygonsSaveToFile(detector);
+		DetectPolygonsSaveToFile app = new DetectPolygonsSaveToFile(detector, false);
 
 		app.processDirectory(new File("data/shape/concave/"),new File("./tmp"));
 	}

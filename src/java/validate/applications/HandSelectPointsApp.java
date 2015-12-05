@@ -9,7 +9,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -29,7 +28,12 @@ public class HandSelectPointsApp {
 
 	public HandSelectPointsApp( BufferedImage image , String outputName ) {
 		if( new File(outputName).exists() ) {
-			imagePanel.setPoints(PointFileCodec.load(outputName));
+			List<List<Point2D_F64>> sets = PointFileCodec.loadSets(outputName);
+			if( sets == null ) {
+				imagePanel.addPointSet(PointFileCodec.load(outputName));
+			} else {
+				imagePanel.setSets(sets);
+			}
 		}
 
 		this.outputName = outputName;
@@ -55,10 +59,15 @@ public class HandSelectPointsApp {
 	}
 
 	public void save() {
-		List<Point2D_F64> points = imagePanel.getSelectedPoints();
+		List<List<Point2D_F64>> points = imagePanel.getSelectedPoints();
 
-		PointFileCodec.save(outputName,"list of hand selected 2D points",points);
-		System.out.println("Saved to "+outputName);
+		if( points.size() == 1 ) {
+			PointFileCodec.save(outputName, "list of hand selected 2D points", points.get(0));
+			System.out.println("Saved to " + outputName);
+		} else if( points.size() > 1 ){
+			PointFileCodec.saveSets(outputName, "list of hand selected 2D points", points);
+			System.out.println("Saved to " + outputName);
+		}
 	}
 
 	public void setScale( double scale ) {
@@ -66,12 +75,12 @@ public class HandSelectPointsApp {
 	}
 
 	public void clearPoints() {
-		imagePanel.setPoints(new ArrayList<Point2D_F64>());
+		imagePanel.clearPoints();
 		imagePanel.repaint();
 	}
 
 	public static void main(String[] args) {
-		String imagePath = "data/fiducials/square_grid/standard/rotation/image00029.png";
+		String imagePath = "data/shape/border01/image00000.jpg";
 
 		String outputName = new File(imagePath).getAbsolutePath();
 		outputName = outputName.substring(0,outputName.length()-4)+".txt";
