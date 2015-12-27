@@ -46,8 +46,8 @@ public class CalibrationDetectionRegression extends BaseTextFileRegression{
 		squareDirectories.add("data/calib/mono/square_grid/large");
 		squareDirectories.add("data/calib/mono/square_grid/distant");
 
-		addDetector("DetectCalibChess", FactoryCalibrationTarget.detectorChessboard(new ConfigChessboard(5, 7,30)), true);
-		addDetector("DetectCalibSquare", FactoryCalibrationTarget.detectorSquareGrid(new ConfigSquareGrid(5, 7,30,30)), false);
+		addDetector("DetectCalibChess", FactoryCalibrationTarget.detectorChessboard(new ConfigChessboard(7, 5,30)), true);
+		addDetector("DetectCalibSquare", FactoryCalibrationTarget.detectorSquareGrid(new ConfigSquareGrid(7, 5,30,30)), false);
 	}
 
 	public void addDetector( String name , CalibrationDetector detector , boolean chess ) {
@@ -108,9 +108,15 @@ public class CalibrationDetectionRegression extends BaseTextFileRegression{
 
 			ImageFloat32 image = UtilImageIO.loadImage(f.getAbsolutePath(), ImageFloat32.class);
 
+			List<Point2D_F64> groundTruth;
 			try {
-				List<Point2D_F64> groundTruth = PointFileCodec.load(pathTruth);
+				groundTruth = PointFileCodec.load(pathTruth);
+			} catch( Exception e ) {
+				errorLog.println(detectorName+" "+dataSetName+" no ground truth. "+e.getMessage());
+				continue;
+			}
 
+			try {
 				if( detector.process(image) ) {
 					double errors[] = new double[ groundTruth.size() ];
 
@@ -134,7 +140,7 @@ public class CalibrationDetectionRegression extends BaseTextFileRegression{
 					output.println(detectorName+" "+dataSetName+" failed");
 				}
 			} catch( Exception e ) {
-				errorLog.println(detectorName+" "+dataSetName+" no ground truth");
+				errorLog.println(detectorName+" "+dataSetName+" detector threw exception. "+e.getMessage());
 			}
 		}
 	}
