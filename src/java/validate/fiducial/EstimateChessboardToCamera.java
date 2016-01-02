@@ -43,7 +43,7 @@ public class EstimateChessboardToCamera <T extends ImageSingleBand> extends Base
 			throw new RuntimeException(e);
 		}
 
-		ConfigChessboard config = new ConfigChessboard(numCols,numRows,1);
+		ConfigChessboard config = new ConfigChessboard(numRows,numCols,1);
 
 		return FactoryFiducial.calibChessboard(config, imageType);
 	}

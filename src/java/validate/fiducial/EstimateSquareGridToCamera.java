@@ -46,7 +46,7 @@ public class EstimateSquareGridToCamera<T extends ImageSingleBand> extends BaseE
 			throw new RuntimeException(e);
 		}
 
-		ConfigSquareGrid config = new ConfigSquareGrid(numCols,numRows,square,space);
+		ConfigSquareGrid config = new ConfigSquareGrid(numRows,numCols,square,space);
 
 		return FactoryFiducial.calibSquareGrid(config, imageType);
 	}

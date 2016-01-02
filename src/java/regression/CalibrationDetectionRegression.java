@@ -47,7 +47,7 @@ public class CalibrationDetectionRegression extends BaseTextFileRegression{
 		squareDirectories.add("data/calib/mono/square_grid/distant");
 
 		addDetector("DetectCalibChess", FactoryCalibrationTarget.detectorChessboard(new ConfigChessboard(7, 5,30)), true);
-		addDetector("DetectCalibSquare", FactoryCalibrationTarget.detectorSquareGrid(new ConfigSquareGrid(7, 5,30,30)), false);
+		addDetector("DetectCalibSquare", FactoryCalibrationTarget.detectorSquareGrid(new ConfigSquareGrid(4, 3,30,30)), false);
 	}
 
 	public void addDetector( String name , CalibrationDetector detector , boolean chess ) {
