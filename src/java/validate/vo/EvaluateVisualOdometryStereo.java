@@ -4,8 +4,9 @@ import boofcv.abst.sfm.d3.StereoVisualOdometry;
 import boofcv.io.image.ConvertBufferedImage;
 import boofcv.struct.image.ImageBase;
 import boofcv.struct.image.ImageType;
-import georegression.geometry.RotationMatrixGenerator;
+import georegression.geometry.ConvertRotation3D_F64;
 import georegression.metric.UtilAngle;
+import georegression.struct.EulerType;
 import georegression.struct.se.Se3_F64;
 import org.ejml.data.DenseMatrix64F;
 
@@ -217,7 +218,7 @@ public class EvaluateVisualOdometryStereo<T extends ImageBase> {
 	}
 
 	private double rotationMatrixToRadian(DenseMatrix64F a) {
-		double angles[] = RotationMatrixGenerator.matrixToEulerXYZ(a,(double[]) null);
+		double angles[] = ConvertRotation3D_F64.matrixToEuler(a,EulerType.XYZ,null);
 
 		double sum = angles[0]*angles[0] + angles[1]*angles[1] + angles[1]*angles[1];
 

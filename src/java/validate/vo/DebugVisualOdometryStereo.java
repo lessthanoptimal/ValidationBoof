@@ -18,7 +18,8 @@ import boofcv.struct.calib.StereoParameters;
 import boofcv.struct.image.ImageBase;
 import boofcv.struct.image.ImageFloat32;
 import boofcv.struct.image.ImageType;
-import georegression.geometry.RotationMatrixGenerator;
+import georegression.geometry.ConvertRotation3D_F64;
+import georegression.struct.EulerType;
 import georegression.struct.point.Point2D_F64;
 import georegression.struct.point.Point3D_F64;
 import georegression.struct.se.Se3_F64;
@@ -174,7 +175,7 @@ public class DebugVisualOdometryStereo<T extends ImageBase>
 	}
 
 	private double rotationMatrixToRadian(DenseMatrix64F a) {
-		double angles[] = RotationMatrixGenerator.matrixToEulerXYZ(a,(double[])null);
+		double angles[] = ConvertRotation3D_F64.matrixToEuler(a, EulerType.XYZ,null);
 
 		double sum = angles[0]*angles[0] + angles[1]*angles[1] + angles[1]*angles[1];
 

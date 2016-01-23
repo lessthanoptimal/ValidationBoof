@@ -2,7 +2,8 @@ package validate.trifocal;
 
 import boofcv.alg.geo.PerspectiveOps;
 import boofcv.struct.geo.AssociatedTriple;
-import georegression.geometry.RotationMatrixGenerator;
+import georegression.geometry.ConvertRotation3D_F64;
+import georegression.struct.EulerType;
 import georegression.struct.point.Point3D_F64;
 import georegression.struct.point.Vector3D_F64;
 import georegression.struct.se.Se3_F64;
@@ -35,11 +36,11 @@ public class GenerateTrifocalObservations {
 
 		Se3_F64 se2 = new Se3_F64();
 		Se3_F64 se3 = new Se3_F64();
-		RotationMatrixGenerator.eulerXYZ(
+		ConvertRotation3D_F64.eulerToMatrix(EulerType.XYZ,
 				rand.nextGaussian() * 0.1, rand.nextGaussian() * 0.1, -rand.nextGaussian() * 0.1, se2.R);
 		se2.getT().set(0.3,0,0.05);
 
-		RotationMatrixGenerator.eulerXYZ(
+		ConvertRotation3D_F64.eulerToMatrix(EulerType.XYZ,
 				rand.nextGaussian()*0.1, rand.nextGaussian()*0.1, -rand.nextGaussian()*0.1, se3.R);
 		se3.getT().set(0.6, 0.2, -0.02);
 
