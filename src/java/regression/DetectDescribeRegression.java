@@ -3,13 +3,24 @@ package regression;
 import boofcv.abst.feature.associate.AssociateDescription;
 import boofcv.abst.feature.associate.ScoreAssociateEuclideanSq_F64;
 import boofcv.abst.feature.associate.ScoreAssociation;
+import boofcv.abst.feature.describe.ConfigBrief;
+import boofcv.abst.feature.describe.DescribeRegionPoint;
 import boofcv.abst.feature.detdesc.ConfigCompleteSift;
 import boofcv.abst.feature.detdesc.DetectDescribePoint;
 import boofcv.abst.feature.detect.interest.ConfigFastHessian;
 import boofcv.abst.feature.detect.interest.ConfigSiftDetector;
+import boofcv.abst.feature.detect.interest.InterestPointDetector;
+import boofcv.abst.feature.orientation.OrientationImage;
+import boofcv.abst.feature.orientation.OrientationIntegral;
+import boofcv.abst.feature.orientation.OrientationIntegralToImage;
+import boofcv.alg.transform.ii.GIntegralImageOps;
 import boofcv.factory.feature.associate.FactoryAssociation;
+import boofcv.factory.feature.describe.FactoryDescribeRegionPoint;
 import boofcv.factory.feature.detdesc.FactoryDetectDescribe;
+import boofcv.factory.feature.detect.interest.FactoryInterestPoint;
+import boofcv.factory.feature.orientation.FactoryOrientationAlgs;
 import boofcv.struct.feature.BrightFeature;
+import boofcv.struct.feature.TupleDesc_B;
 import boofcv.struct.feature.TupleDesc_F64;
 import boofcv.struct.image.ImageDataType;
 import boofcv.struct.image.ImageSingleBand;
@@ -45,6 +56,7 @@ public class DetectDescribeRegression extends BaseTextFileRegression {
 		all.add(surf(false,true,bandType));
 		all.add(surf(true,false,bandType));
 		all.add(surf(true,true,bandType));
+		all.add(briefSoFH(bandType));
 		all.add(sift(bandType));
 
 		ScoreAssociation score = new ScoreAssociateEuclideanSq_F64();
@@ -110,6 +122,30 @@ public class DetectDescribeRegression extends BaseTextFileRegression {
 		ret.name = "BoofSURF-"+variant;
 		ret.detdesc = detdesc;
 		ret.imageType = imageType;
+
+		return ret;
+	}
+
+	public static <T extends ImageSingleBand>
+	Info briefSoFH( Class<T> bandType  ) {
+
+		ConfigFastHessian configDetect = new ConfigFastHessian(3, 2, -1,1, 9, 4, 4);
+		ConfigBrief configDesc = new ConfigBrief(false);
+
+		InterestPointDetector<T> detector = FactoryInterestPoint.fastHessian(configDetect);
+		DescribeRegionPoint<T,TupleDesc_B> describe = FactoryDescribeRegionPoint.brief(configDesc,bandType);
+
+		Class iiType = GIntegralImageOps.getIntegralType(bandType);
+		OrientationIntegral ori = FactoryOrientationAlgs.average_ii(null,iiType );
+		OrientationImage<T> orientation = new OrientationIntegralToImage(ori,bandType,iiType);
+
+		DetectDescribePoint<T,TupleDesc_B> detdesc =
+				FactoryDetectDescribe.fuseTogether(detector,orientation,describe);
+
+		Info ret = new Info();
+		ret.name = "BriefSO-FastHess";
+		ret.detdesc = detdesc;
+		ret.imageType = ImageType.single(bandType);
 
 		return ret;
 	}
