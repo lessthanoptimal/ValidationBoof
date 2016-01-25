@@ -7,7 +7,7 @@
  image00002.jpg  4  4  0  0  0  0  0.6117
  image00003.jpg  3  2  0  0  0  1  0.3692
  image00004.jpg  2  1  0  0  0  1  0.7574
- image00005.jpg  4  1  0  0  0  3  0.5605
+ image00005.jpg  4  4  0  0  0  0  0.6178
  image00006.jpg 12 10  0  1  0  2  0.7714
 
 # Data Set = border02
@@ -70,21 +70,21 @@
  image00004.jpg 10 10  0  1  2  2  7.3088
  image00005.jpg 10  9  0  1  1  2  6.8813
  image00006.jpg 10 10  0  2  1  1  8.0539
- image00007.jpg 10  7  0  1  1  4  5.4534
+ image00007.jpg 10  8  0  1  2  4  5.4534
  image00008.jpg 10 10  0  0  2  2  7.1651
 
 # Data Set = set04
 # Match Tolerance in contour fraction = 0.1
 # Match Tolerance bias pixels         = 2.0
 # Image (expected) (detected) (multiple) (miss matched) (false positives) (false negative) (average error)
-    image01.png  6  2  0  0  0  4  1.3225
+    image01.png  6  3  0  0  0  3  1.4270
     image02.png  6  1  0  0  0  5  1.1629
-    image03.png  6  4  0  1  0  2  1.3725
+    image03.png  6  5  0  1  0  1  1.4533
     image04.png  6  6  0  1  0  0  1.4638
     image05.png  6  5  0  1  0  1  1.4946
     image06.png  6  5  0  0  0  1  1.5021
     image07.png  6  1  0  0  0  5  1.3329
-    image08.png  6  4  0  0  0  2  1.2280
+    image08.png  6  5  0  1  0  1  1.3773
     image09.png  6  5  0  1  0  1  1.5323
     image10.png  6  3  0  0  0  3  1.2571
 

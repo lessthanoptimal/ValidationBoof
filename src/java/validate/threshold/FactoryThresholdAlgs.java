@@ -11,7 +11,7 @@ import boofcv.struct.image.ImageUInt8;
  */
 public class FactoryThresholdAlgs {
 
-	public static ThresholdText mean() {
+	public static ThresholdText globalMean() {
 		return new ThresholdText() {
 			@Override
 			public void process(ImageFloat32 input, ImageUInt8 output) {
@@ -21,7 +21,7 @@ public class FactoryThresholdAlgs {
 		};
 	}
 
-	public static ThresholdText otsu() {
+	public static ThresholdText globalOtsu() {
 		return new ThresholdText() {
 			@Override
 			public void process(ImageFloat32 input, ImageUInt8 output) {
@@ -31,7 +31,7 @@ public class FactoryThresholdAlgs {
 		};
 	}
 
-	public static ThresholdText entropy() {
+	public static ThresholdText globalEntropy() {
 		return new ThresholdText() {
 			@Override
 			public void process(ImageFloat32 input, ImageUInt8 output) {
@@ -59,7 +59,7 @@ public class FactoryThresholdAlgs {
 		};
 	}
 
-	public static ThresholdText adaptiveSauvola() {
+	public static ThresholdText localSauvola() {
 		return new ThresholdText() {
 			@Override
 			public void process(ImageFloat32 input, ImageUInt8 output) {
@@ -68,4 +68,12 @@ public class FactoryThresholdAlgs {
 		};
 	}
 
+	public static ThresholdText localBlockMinMax() {
+		return new ThresholdText() {
+			@Override
+			public void process(ImageFloat32 input, ImageUInt8 output) {
+				GThresholdImageOps.localBlockMinMax(input, output, 15, 1.0, true,15);
+			}
+		};
+	}
 }

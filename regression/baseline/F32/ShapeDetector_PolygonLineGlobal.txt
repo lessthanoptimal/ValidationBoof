@@ -6,9 +6,9 @@
  image00001.jpg 12 11  0  2  1  2  1.6070
  image00002.jpg  4  4  0  0  0  0  0.5916
  image00003.jpg  3  2  0  0  0  1  0.3382
- image00004.jpg  2  1  0  0  0  1  0.6371
- image00005.jpg  4  1  0  0  0  3  0.5387
- image00006.jpg 12 10  0  1  0  2  0.7360
+ image00004.jpg  2  2  0  0  1  1  0.6371
+ image00005.jpg  4  4  0  0  0  0  0.7729
+ image00006.jpg 12 11  0  1  1  2  0.7360
 
 # Data Set = border02
 # Match Tolerance in contour fraction = 0.1
@@ -16,8 +16,8 @@
 # Image (expected) (detected) (multiple) (miss matched) (false positives) (false negative) (average error)
  image00007.jpg  4  4  0  2  0  0  4.8346
  image00008.jpg  4  4  1  1  0  0  8.9426
- image00009.jpg  3  3  0  2  0  0  1.9503
- image00010.jpg  3  3  0  0  0  0  1.4981
+ image00009.jpg  3  4  0  2  1  0  1.9503
+ image00010.jpg  3  4  0  0  1  0  1.4981
 
 # Data Set = concave
 # Match Tolerance in contour fraction = 0.1
@@ -70,7 +70,7 @@
  image00004.jpg 10 10  0  2  0  0  2.6540
  image00005.jpg 10  8  0  1  0  2  3.2998
  image00006.jpg 10 10  0  3  0  0  3.1170
- image00007.jpg 10  6  0  1  0  4  2.0573
+ image00007.jpg 10  7  0  1  1  4  2.0573
  image00008.jpg 10 10  0  1  0  0  2.2407
 
 # Data Set = set04
@@ -84,7 +84,7 @@
     image05.png  6  5  0  1  0  1  1.1983
     image06.png  6  6  0  0  0  0  1.0131
     image07.png  6  2  0  0  0  4  0.5642
-    image08.png  6  4  0  0  0  2  1.0435
+    image08.png  6  5  0  1  0  1  1.3747
     image09.png  6  5  0  1  0  1  0.7148
     image10.png  6  3  0  0  0  3  1.0391
 

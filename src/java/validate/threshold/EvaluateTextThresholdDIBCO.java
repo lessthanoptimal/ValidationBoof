@@ -107,9 +107,9 @@ public class EvaluateTextThresholdDIBCO {
 			double recall = totalTP/(totalTP+totalFN);
 			double F = 2.0*(precision*recall)/(precision+recall);
 
-			System.out.println(alg.name+" F = "+F+" P = "+precision+" R = "+recall);
+			System.out.printf("%25s F = %7f P = %7f R = %7f\n",alg.name,F,precision,recall);
 			if( out != null)
-				out.println(alg.name+" F = "+F+" P = "+precision+" R = "+recall);
+				out.printf("%25s F = %7f P = %7f R = %7f\n",alg.name,F,precision,recall);
 		}
 
 		if( out != null) {
@@ -137,12 +137,13 @@ public class EvaluateTextThresholdDIBCO {
 	public static void main(String[] args) {
 		EvaluateTextThresholdDIBCO app = new EvaluateTextThresholdDIBCO();
 
-		app.addAlgorithm(FactoryThresholdAlgs.mean(),"mean");
-		app.addAlgorithm(FactoryThresholdAlgs.otsu(),"otsu");
-		app.addAlgorithm(FactoryThresholdAlgs.entropy(),"entropy");
+		app.addAlgorithm(FactoryThresholdAlgs.globalMean(),"mean");
+		app.addAlgorithm(FactoryThresholdAlgs.globalOtsu(),"otsu");
+		app.addAlgorithm(FactoryThresholdAlgs.globalEntropy(),"entropy");
 		app.addAlgorithm(FactoryThresholdAlgs.localSquare(),"local square");
 		app.addAlgorithm(FactoryThresholdAlgs.localGaussian(),"local gaussian");
-		app.addAlgorithm(FactoryThresholdAlgs.adaptiveSauvola(),"Sauvola");
+		app.addAlgorithm(FactoryThresholdAlgs.localSauvola(),"Sauvola");
+		app.addAlgorithm(FactoryThresholdAlgs.localBlockMinMax(),"Block Min-Max");
 
 		app.evaluate();
 	}

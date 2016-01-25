@@ -56,7 +56,7 @@ public class DetectDescribeRegression extends BaseTextFileRegression {
 		all.add(surf(false,true,bandType));
 		all.add(surf(true,false,bandType));
 		all.add(surf(true,true,bandType));
-		all.add(briefSoFH(bandType));
+//		all.add(briefSoFH(bandType));
 		all.add(sift(bandType));
 
 		ScoreAssociation score = new ScoreAssociateEuclideanSq_F64();

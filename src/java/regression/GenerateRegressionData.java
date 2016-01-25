@@ -32,10 +32,13 @@ public class GenerateRegressionData {
 //		//      -- Mono-plane
 		list.add( new CalibrationDetectionRegression());
 		list.add( new DenseFlowRegression() );
-//		// TODO Image Segmentation
+		// TODO Image Segmentation
 		list.add( new TextThresholdRegression() );
 		list.add( new FiducialRegression() );
 		list.add( new DetectPolygonRegression() );
+		// TODO Dense Image Features
+		//--- Test invariant to lighting, noise, uniqueness in different scenes?
+		// TODO scene recogition
 
 		return list;
 	}

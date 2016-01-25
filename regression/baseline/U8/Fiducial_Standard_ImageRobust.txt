@@ -36,8 +36,8 @@ Corner errors:
 # maxPixelError = 5.0
 
 Summary:
- correct            :   80 /  132
- wrong order        : 28
+ correct            :   82 /  132
+ wrong order        : 26
  wrong ID           : 24
  duplicates         : 0
  false positives    : 14
@@ -54,7 +54,7 @@ Corner errors:
 
 Summary:
  correct            :   51 /   96
- wrong order        : 28
+ wrong order        : 26
  wrong ID           : 17
  duplicates         : 0
  false positives    : 0
@@ -71,7 +71,7 @@ Corner errors:
 
 Summary:
  correct            :   18 /   26
- wrong order        : 28
+ wrong order        : 26
  wrong ID           : 0
  duplicates         : 0
  false positives    : 0
@@ -84,4 +84,4 @@ Corner errors:
 ---------------------------------------------------
 
 ---------------------------------------------------
-total correct / total expected =  178 / 290
+total correct / total expected =  180 / 290

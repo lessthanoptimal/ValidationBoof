@@ -16,12 +16,13 @@ public class TextThresholdRegression extends BaseTextFileRegression {
 
 		app.setOutputDirectory(directory);
 
-		app.addAlgorithm(FactoryThresholdAlgs.mean(),"mean");
-		app.addAlgorithm(FactoryThresholdAlgs.otsu(),"otsu");
-		app.addAlgorithm(FactoryThresholdAlgs.entropy(),"entropy");
-		app.addAlgorithm(FactoryThresholdAlgs.localSquare(),"local square");
-		app.addAlgorithm(FactoryThresholdAlgs.localGaussian(),"local gaussian");
-		app.addAlgorithm(FactoryThresholdAlgs.adaptiveSauvola(),"Sauvola");
+		app.addAlgorithm(FactoryThresholdAlgs.globalMean(),"global Mean");
+		app.addAlgorithm(FactoryThresholdAlgs.globalOtsu(),"global Otsu");
+		app.addAlgorithm(FactoryThresholdAlgs.globalEntropy(),"global Entropy");
+		app.addAlgorithm(FactoryThresholdAlgs.localSquare(),"local Square");
+		app.addAlgorithm(FactoryThresholdAlgs.localGaussian(),"local Gaussian");
+		app.addAlgorithm(FactoryThresholdAlgs.localSauvola(),"local Sauvola");
+		app.addAlgorithm(FactoryThresholdAlgs.localBlockMinMax(),"local Block Min-Max");
 
 		app.evaluate();
 	}

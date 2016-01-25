@@ -26,7 +26,7 @@ public class CalibrateFromDetectedPoints {
 	PrintStream err = System.err;
 
 	public void processStereo( File stereoDetections , boolean tangential ) throws IOException {
-		CalibrationDetector targetDesc = FactoryCalibrationTarget.detectorChessboard(new ConfigChessboard(5, 7, 30));
+		CalibrationDetector targetDesc = FactoryCalibrationTarget.detectorChessboard(new ConfigChessboard(7, 5, 30));
 		CalibrationPlanarGridZhang99 zhang99 = new CalibrationPlanarGridZhang99(targetDesc.getLayout(),true,2,tangential);
 
 		List<CalibrationObservation> left = new ArrayList<CalibrationObservation>();
