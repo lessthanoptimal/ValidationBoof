@@ -41,6 +41,7 @@ public class EvalauteDescribeImageDense<T extends ImageBase>
 	PrintStream out = System.out;
 
 	List<TupleDesc_F64> original;
+	GrowQueue_F64 magnitude = new GrowQueue_F64();
 
 	public EvalauteDescribeImageDense( List<String> images , ImageType<T> imageType ) {
 		this.images = images;
@@ -58,6 +59,18 @@ public class EvalauteDescribeImageDense<T extends ImageBase>
 
 			alg.process(input);
 			original = copy(alg.getDescriptions());
+
+			// precompute the norm for original descriptors.  Used later to normalize the scale of a descriptor
+			magnitude.reset();
+			for (int j = 0; j < original.size(); j++) {
+				TupleDesc_F64 t = original.get(j);
+				// Compute and add to the list the Euclidean norm for the descriptor vector
+				double total = 0;
+				for (int k = 0; k < t.size(); k++) {
+					total += t.value[k]*t.value[k];
+				}
+				magnitude.add(Math.sqrt(total));
+			}
 
 			out.println("======================================================================");
 			out.println(images.get(i));
@@ -91,7 +104,7 @@ public class EvalauteDescribeImageDense<T extends ImageBase>
 		out.println();
 		out.printf("%8s ","error");
 		for (int i = 0; i < m.error.size; i++) {
-			out.printf("%8.2e ",m.error.get(i));
+			out.printf("%8.5f ",m.error.get(i));
 		}
 	}
 
@@ -107,7 +120,7 @@ public class EvalauteDescribeImageDense<T extends ImageBase>
 
 			List<TupleDesc_F64> descriptions = alg.getDescriptions();
 
-			double error = computeError(original, descriptions);
+			double error = computeError( descriptions);
 
 			metric.error.add(error);
 			metric.parameter.add(scale);
@@ -126,7 +139,7 @@ public class EvalauteDescribeImageDense<T extends ImageBase>
 
 			List<TupleDesc_F64> descriptions = alg.getDescriptions();
 
-			double error = computeError(original, descriptions);
+			double error = computeError( descriptions);
 
 			metric.error.add(error);
 			metric.parameter.add(i);
@@ -148,7 +161,7 @@ public class EvalauteDescribeImageDense<T extends ImageBase>
 			alg.process(workImage);
 			List<TupleDesc_F64> descriptions = alg.getDescriptions();
 
-			double error = computeError(original, descriptions);
+			double error = computeError( descriptions);
 
 			metric.error.add(error);
 			metric.parameter.add(sigma);
@@ -185,7 +198,7 @@ public class EvalauteDescribeImageDense<T extends ImageBase>
 				alg.process(workImage);
 				List<TupleDesc_F64> descriptions = alg.getDescriptions();
 
-				double error = computeError(original, descriptions);
+				double error = computeError( descriptions);
 
 				total += error;
 			}
@@ -202,7 +215,7 @@ public class EvalauteDescribeImageDense<T extends ImageBase>
 		Metric metric = new Metric();
 
 		for (int i = -4; i <= 8; i++) {
-			double scale = Math.pow(10.0, i / 40.0);
+			double scale = Math.pow(3.0, i / 40.0);
 
 			// keep it centered
 			double offX = input.width*(1.0-scale)/2.0;
@@ -213,7 +226,7 @@ public class EvalauteDescribeImageDense<T extends ImageBase>
 			alg.process(workImage);
 			List<TupleDesc_F64> descriptions = alg.getDescriptions();
 
-			double error = computeError(original, descriptions);
+			double error = computeError( descriptions);
 
 			metric.error.add(error);
 			metric.parameter.add(scale);
@@ -221,13 +234,23 @@ public class EvalauteDescribeImageDense<T extends ImageBase>
 		return metric;
 	}
 
-	private double computeError(List<TupleDesc_F64> original, List<TupleDesc_F64> descriptions) {
-		double error = 0;
+	/**
+	 * Computes the average fractional error across all descriptions in the image.
+	 */
+	private double computeError( List<TupleDesc_F64> descriptions) {
+		double totalError = 0;
+		int count = 0;
 		for (int j = 0; j < descriptions.size(); j++) {
-			error += DescriptorDistance.euclidean(original.get(j),descriptions.get(j));
+			double e = DescriptorDistance.euclidean(original.get(j),descriptions.get(j));
+			double m = magnitude.get(j);
+			if( m != 0 ) {
+				totalError += e / m;
+				count++;
+			}
 		}
-		error /= (original.size()*original.get(0).size());
-		return error;
+		totalError /= count;
+
+		return totalError;
 	}
 
 	private List<TupleDesc_F64> copy( List<TupleDesc_F64> input ) {
