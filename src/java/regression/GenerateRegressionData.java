@@ -36,8 +36,7 @@ public class GenerateRegressionData {
 		list.add( new TextThresholdRegression() );
 		list.add( new FiducialRegression() );
 		list.add( new DetectPolygonRegression() );
-		// TODO Dense Image Features
-		//--- Test invariant to lighting, noise, uniqueness in different scenes?
+		list.add( new DescribeImageDenseRegression() );
 		// TODO scene recogition
 
 		return list;
