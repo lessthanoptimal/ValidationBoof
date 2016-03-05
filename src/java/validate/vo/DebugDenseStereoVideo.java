@@ -28,6 +28,7 @@ import java.awt.image.BufferedImage;
 /**
  * @author Peter Abeles
  */
+@SuppressWarnings("unchecked")
 public class DebugDenseStereoVideo<T extends ImageSingleBand> implements MouseListener {
 
 	SequenceStereoImages data;
@@ -131,9 +132,9 @@ public class DebugDenseStereoVideo<T extends ImageSingleBand> implements MouseLi
 
 		// undistorted and rectify images
 		ImageDistort<T,T> imageDistortLeft =
-				RectifyImageOps.rectifyImage(param.getLeft(), rect1, BorderType.VALUE, imageType);
+				RectifyImageOps.rectifyImage(param.getLeft(), rect1, BorderType.VALUE, inputLeft.getImageType());
 		ImageDistort<T,T> imageDistortRight =
-				RectifyImageOps.rectifyImage(param.getRight(), rect2, BorderType.VALUE, imageType);
+				RectifyImageOps.rectifyImage(param.getRight(), rect2, BorderType.VALUE, inputRight.getImageType());
 
 		GImageMiscOps.fill(rectifiedLeft, 0);
 		GImageMiscOps.fill(rectifiedRight,0);
