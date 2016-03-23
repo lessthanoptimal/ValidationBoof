@@ -21,7 +21,7 @@ import boofcv.io.wrapper.DefaultMediaManager;
 import boofcv.struct.calib.IntrinsicParameters;
 import boofcv.struct.distort.PointTransform_F32;
 import boofcv.struct.geo.AssociatedPair;
-import boofcv.struct.image.ImageFloat32;
+import boofcv.struct.image.GrayF32;
 import boofcv.struct.image.ImageType;
 import georegression.fitting.homography.ModelManagerHomography2D_F64;
 import georegression.struct.homography.Homography2D_F64;
@@ -54,9 +54,9 @@ public class CreateGroundTruth {
 	String outputDirectory;
 
 	// removes lens distortion
-	ImageDistort<ImageFloat32,ImageFloat32> removeLens;
+	ImageDistort<GrayF32,GrayF32> removeLens;
 
-	EvaluationTracker<ImageFloat32> tracker;
+	EvaluationTracker<GrayF32> tracker;
 
 	// transform from the keyframe to the global frame
 	Homography2D_F64 globalToKey;
@@ -77,14 +77,14 @@ public class CreateGroundTruth {
 	RefineEpipolar refineH = FactoryMultiView.refineHomography(1e-8, 1000, EpipolarError.SAMPSON);
 
 	// Refines the initial estimate of the Homography matrix
-	RefineHomographTransform<ImageFloat32,ImageFloat32> refinePyramidH =
-			new RefineHomographTransform<ImageFloat32,ImageFloat32>(new int[]{1,2,4,8},ImageFloat32.class,ImageFloat32.class);
+	RefineHomographTransform<GrayF32,GrayF32> refinePyramidH =
+			new RefineHomographTransform<GrayF32,GrayF32>(new int[]{1,2,4,8},GrayF32.class,GrayF32.class);
 
 	// working space when saving images
 	BufferedImage storage;
 
 	// features in the key frame
-	ImageFloat32 keyFrame;
+	GrayF32 keyFrame;
 
 	public CreateGroundTruth( IntrinsicParameters cameraParam , String outputDirectory ) {
 
@@ -93,16 +93,16 @@ public class CreateGroundTruth {
 		// create distortion to remove lens distortion
 		// Adjust the distortion so that the undistorted image only shows image pixels
 		PointTransform_F32 allInside = LensDistortionOps.transform_F32(AdjustmentType.EXPAND,cameraParam, null,true);
-		InterpolatePixelS<ImageFloat32> interp = FactoryInterpolation.bilinearPixelS(ImageFloat32.class, BorderType.EXTENDED);
-		removeLens = FactoryDistort.distortSB(false,interp, ImageFloat32.class);
+		InterpolatePixelS<GrayF32> interp = FactoryInterpolation.bilinearPixelS(GrayF32.class, BorderType.EXTENDED);
+		removeLens = FactoryDistort.distortSB(false,interp, GrayF32.class);
 		removeLens.setModel(new PointToPixelTransform_F32(allInside));
 
-		FactoryEvaluationTrackers<ImageFloat32> factory = new FactoryEvaluationTrackers<ImageFloat32>(ImageFloat32.class);
+		FactoryEvaluationTrackers<GrayF32> factory = new FactoryEvaluationTrackers<GrayF32>(GrayF32.class);
 
 		tracker = factory.createFhSurfKlt();
 	}
 
-	public void process( SimpleImageSequence<ImageFloat32> sequence ) throws FileNotFoundException {
+	public void process( SimpleImageSequence<GrayF32> sequence ) throws FileNotFoundException {
 
 		int frameNumber = 0;
 		int resetFraction = 2;
@@ -123,7 +123,7 @@ public class CreateGroundTruth {
 
 		saveImage(keyFrame, frameNumber++);
 		while( sequence.hasNext() ) {
-			ImageFloat32 current = undistort( sequence.next() );
+			GrayF32 current = undistort( sequence.next() );
 
 			Homography2D_F64 H = computeHomography( current );
 
@@ -157,7 +157,7 @@ public class CreateGroundTruth {
 	/**
 	 * Saves the image to disk using a lossless image format
 	 */
-	private void saveImage( ImageFloat32 image , int frameNumber ) {
+	private void saveImage( GrayF32 image , int frameNumber ) {
 		ConvertBufferedImage.convertTo(image,storage);
 		UtilImageIO.saveImage(storage, String.format("%s/frame%06d.png", outputDirectory, frameNumber));
 	}
@@ -165,8 +165,8 @@ public class CreateGroundTruth {
 	/**
 	 * Removes lens distortion from the input image.  Returns undistorted image.
 	 */
-	private ImageFloat32 undistort( ImageFloat32 input ) {
-		ImageFloat32 ret = new ImageFloat32(input.width,input.height);
+	private GrayF32 undistort( GrayF32 input ) {
+		GrayF32 ret = new GrayF32(input.width,input.height);
 		removeLens.apply(input, ret);
 		return ret;
 	}
@@ -175,7 +175,7 @@ public class CreateGroundTruth {
 	 * Computes the homography transform between the key frame and the current frame using a two step process.
 	 * First RANSAC is used to provide an initial estimate followed by non-linear refinement
 	 */
-	private Homography2D_F64 computeHomography( ImageFloat32 dst ) {
+	private Homography2D_F64 computeHomography( GrayF32 dst ) {
 		System.out.print("  initial estimate of H");
 		Homography2D_F64 H_approx = initialEstimate(dst);
 		System.out.println(" refining estimate of H");
@@ -187,7 +187,7 @@ public class CreateGroundTruth {
 	 * Creates an initial estimate of the Homography using sparse features detected
 	 * inside the image
 	 */
-	private Homography2D_F64 initialEstimate( ImageFloat32 dst ) {
+	private Homography2D_F64 initialEstimate( GrayF32 dst ) {
 		tracker.track(dst);
 		List<Point2D_F64> initial = tracker.getInitial();
 		List<Point2D_F64> current = tracker.getCurrent();
@@ -218,7 +218,7 @@ public class CreateGroundTruth {
 		return UtilHomography.convert(H_refined,(Homography2D_F64)null);
 	}
 
-	private Homography2D_F64 refineEstimate( ImageFloat32 dst ,
+	private Homography2D_F64 refineEstimate( GrayF32 dst ,
 											 Homography2D_F64 initial )
 	{
 		// minimize errors using non-linear optimization
@@ -238,7 +238,7 @@ public class CreateGroundTruth {
 
 
 		SimpleImageSequence sequence =
-				DefaultMediaManager.INSTANCE.openVideo(pathToData+whichData+".mjpeg", ImageType.single(ImageFloat32.class));
+				DefaultMediaManager.INSTANCE.openVideo(pathToData+whichData+".mjpeg", ImageType.single(GrayF32.class));
 
 		IntrinsicParameters cameraParam = UtilIO.loadXML("data/intrinsic.xml");
 

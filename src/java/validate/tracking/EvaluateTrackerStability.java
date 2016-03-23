@@ -3,8 +3,8 @@ package validate.tracking;
 import boofcv.gui.image.ImagePanel;
 import boofcv.io.image.SimpleImageSequence;
 import boofcv.io.wrapper.DefaultMediaManager;
-import boofcv.struct.image.ImageFloat32;
-import boofcv.struct.image.ImageSingleBand;
+import boofcv.struct.image.GrayF32;
+import boofcv.struct.image.ImageGray;
 import boofcv.struct.image.ImageType;
 import georegression.struct.homography.Homography2D_F64;
 import georegression.struct.point.Point2D_F64;
@@ -22,7 +22,7 @@ import static validate.tracking.BatchEvaluateSummaryAndTime.pathToData;
 /**
  * @author Peter Abeles
  */
-public class EvaluateTrackerStability<T extends ImageSingleBand> {
+public class EvaluateTrackerStability<T extends ImageGray> {
 
 	// list of tracks that have never gone outside the image's FOV
 	List<Point2D_F64> alwaysInside;
@@ -266,7 +266,7 @@ public class EvaluateTrackerStability<T extends ImageSingleBand> {
 
 	public static void main( String args[] ) throws FileNotFoundException {
 
-		Class imageType = ImageFloat32.class;
+		Class imageType = GrayF32.class;
 
 		String whichData = "bricks/skew";
 //		String whichData = "bricks/rotate2";

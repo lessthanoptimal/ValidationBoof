@@ -1,6 +1,6 @@
 package validate.tracking;
 
-import boofcv.struct.image.ImageSingleBand;
+import boofcv.struct.image.ImageGray;
 import georegression.struct.point.Point2D_F64;
 
 import java.util.List;
@@ -10,7 +10,7 @@ import java.util.List;
  *
  * @author Peter Abeles
  */
-public interface EvaluationTracker<T extends ImageSingleBand> {
+public interface EvaluationTracker<T extends ImageGray> {
 
 	/**
 	 * Updates tracks locations

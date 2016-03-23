@@ -21,7 +21,7 @@ package validate.features.sift;
 
 import boofcv.abst.feature.detdesc.DetectDescribePoint;
 import boofcv.struct.feature.BrightFeature;
-import boofcv.struct.image.ImageFloat32;
+import boofcv.struct.image.GrayF32;
 import validate.features.homography.BenchmarkFeatureAllRuntime;
 
 import java.io.IOException;
@@ -32,11 +32,11 @@ import java.io.IOException;
 public class BenchmarkRuntimeAllSift {
 	public static void main( String args[] ) throws IOException {
 
-		DetectDescribePoint<ImageFloat32,BrightFeature>
+		DetectDescribePoint<GrayF32,BrightFeature>
 				alg = FactorySift.detectDescribe();
 
-		BenchmarkFeatureAllRuntime<ImageFloat32,BrightFeature> benchmark =
-				new BenchmarkFeatureAllRuntime<ImageFloat32,BrightFeature>(ImageFloat32.class,alg);
+		BenchmarkFeatureAllRuntime<GrayF32,BrightFeature> benchmark =
+				new BenchmarkFeatureAllRuntime<GrayF32,BrightFeature>(GrayF32.class,alg);
 
 		benchmark.benchmark("data/graf", 1);
 	}

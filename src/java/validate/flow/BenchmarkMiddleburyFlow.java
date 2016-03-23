@@ -5,8 +5,8 @@ import boofcv.factory.flow.FactoryDenseOpticalFlow;
 import boofcv.io.image.ConvertBufferedImage;
 import boofcv.io.image.UtilImageIO;
 import boofcv.struct.flow.ImageFlow;
+import boofcv.struct.image.GrayF32;
 import boofcv.struct.image.ImageBase;
-import boofcv.struct.image.ImageFloat32;
 import org.ddogleg.struct.GrowQueue_F64;
 
 import java.awt.image.BufferedImage;
@@ -94,12 +94,12 @@ public class BenchmarkMiddleburyFlow<T extends ImageBase> {
 	}
 
 	public static void main(String[] args) throws IOException {
-		DenseOpticalFlow<ImageFloat32> denseFlow =
-				FactoryDenseOpticalFlow.flowKlt(null, 6, ImageFloat32.class, null);
-//				FactoryDenseOpticalFlow.region(null, ImageFloat32.class);
-//				FactoryDenseOpticalFlow.hornSchunck(20, 1000, ImageFloat32.class);
-//				FactoryDenseOpticalFlow.hornSchunckPyramid(null,ImageFloat32.class);
-//				FactoryDenseOpticalFlow.broxWarping(null, ImageFloat32.class);
+		DenseOpticalFlow<GrayF32> denseFlow =
+				FactoryDenseOpticalFlow.flowKlt(null, 6, GrayF32.class, null);
+//				FactoryDenseOpticalFlow.region(null, GrayF32.class);
+//				FactoryDenseOpticalFlow.hornSchunck(20, 1000, GrayF32.class);
+//				FactoryDenseOpticalFlow.hornSchunckPyramid(null,GrayF32.class);
+//				FactoryDenseOpticalFlow.broxWarping(null, GrayF32.class);
 
 		BenchmarkMiddleburyFlow benchmark = new BenchmarkMiddleburyFlow("data/denseflow",denseFlow,System.out);
 

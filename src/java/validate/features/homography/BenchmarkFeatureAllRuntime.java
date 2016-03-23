@@ -23,7 +23,7 @@ package validate.features.homography;
 import boofcv.abst.feature.detdesc.DetectDescribePoint;
 import boofcv.io.image.ConvertBufferedImage;
 import boofcv.struct.feature.TupleDesc;
-import boofcv.struct.image.ImageSingleBand;
+import boofcv.struct.image.ImageGray;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -35,7 +35,7 @@ import java.io.IOException;
  *
  * @author Peter Abeles
  */
-public class BenchmarkFeatureAllRuntime<T extends ImageSingleBand, D extends TupleDesc> {
+public class BenchmarkFeatureAllRuntime<T extends ImageGray, D extends TupleDesc> {
 
 	Class<T> imageType;
 	DetectDescribePoint<T,D> alg;

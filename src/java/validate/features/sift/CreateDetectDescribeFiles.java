@@ -21,7 +21,7 @@ package validate.features.sift;
 
 import boofcv.abst.feature.detdesc.DetectDescribePoint;
 import boofcv.struct.feature.BrightFeature;
-import boofcv.struct.image.ImageFloat32;
+import boofcv.struct.image.GrayF32;
 import boofcv.struct.image.ImageType;
 import validate.features.homography.CreateDetectDescribeFile;
 
@@ -33,13 +33,13 @@ import java.io.FileNotFoundException;
 public class CreateDetectDescribeFiles {
 	public static void doStuff(String directory) throws FileNotFoundException {
 
-		ImageType<ImageFloat32> imageType = ImageType.single(ImageFloat32.class);
+		ImageType<GrayF32> imageType = ImageType.single(GrayF32.class);
 
-		DetectDescribePoint<ImageFloat32,BrightFeature> alg =
+		DetectDescribePoint<GrayF32,BrightFeature> alg =
 				FactorySift.detectDescribe();
 
-		CreateDetectDescribeFile<ImageFloat32,BrightFeature> cdf =
-				new CreateDetectDescribeFile<ImageFloat32,BrightFeature>(alg,imageType,"BOOFCV_SIFTN");
+		CreateDetectDescribeFile<GrayF32,BrightFeature> cdf =
+				new CreateDetectDescribeFile<GrayF32,BrightFeature>(alg,imageType,"BOOFCV_SIFTN");
 
 		cdf.directory(directory,"./");
 	}

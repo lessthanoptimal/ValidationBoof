@@ -10,8 +10,8 @@ import boofcv.gui.image.ShowImages;
 import boofcv.gui.tracker.TldVisualizationPanel;
 import boofcv.io.image.ConvertBufferedImage;
 import boofcv.io.image.UtilImageIO;
-import boofcv.struct.image.ImageFloat32;
-import boofcv.struct.image.ImageSingleBand;
+import boofcv.struct.image.GrayF32;
+import boofcv.struct.image.ImageGray;
 import boofcv.struct.image.ImageType;
 import georegression.struct.shapes.Rectangle2D_F64;
 
@@ -22,7 +22,7 @@ import java.io.File;
 /**
  * @author Peter Abeles
  */
-public class DebugTldTrackerTldData<T extends ImageSingleBand> implements TldVisualizationPanel.Listener {
+public class DebugTldTrackerTldData<T extends ImageGray> implements TldVisualizationPanel.Listener {
 
 	T input;
 	boolean paused = false;
@@ -96,7 +96,7 @@ public class DebugTldTrackerTldData<T extends ImageSingleBand> implements TldVis
 	}
 
 	public static void evaluate( String dataset ) {
-		Class type = ImageFloat32.class;
+		Class type = GrayF32.class;
 
 		DebugTldTrackerTldData generator = new DebugTldTrackerTldData(ImageType.single(type));
 

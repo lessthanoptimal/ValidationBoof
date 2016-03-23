@@ -2,8 +2,8 @@ package validate.threshold;
 
 import boofcv.alg.filter.binary.ThresholdImageOps;
 import boofcv.io.image.UtilImageIO;
-import boofcv.struct.image.ImageFloat32;
-import boofcv.struct.image.ImageUInt8;
+import boofcv.struct.image.GrayF32;
+import boofcv.struct.image.GrayU8;
 
 import java.io.FileNotFoundException;
 import java.io.PrintStream;
@@ -16,8 +16,8 @@ import java.util.List;
 public class EvaluateTextThresholdDIBCO {
 	public static String directory = "data/DIBCO/2009/";
 
-	List<ImageFloat32> input = new ArrayList<ImageFloat32>();
-	List<ImageUInt8> truth = new ArrayList<ImageUInt8>();
+	List<GrayF32> input = new ArrayList<GrayF32>();
+	List<GrayU8> truth = new ArrayList<GrayU8>();
 
 	List<Alg> algorithms = new ArrayList<Alg>();
 
@@ -49,15 +49,15 @@ public class EvaluateTextThresholdDIBCO {
 	}
 
 	public void evaluate() {
-		ImageUInt8 found = new ImageUInt8(1,1);
+		GrayU8 found = new GrayU8(1,1);
 		for( Alg alg : algorithms ) {
 
 			totalTP=totalFP=totalTN=totalFN=0;
 
 			for (int i = 0; i < input.size(); i++) {
 
-				ImageFloat32 in = input.get(i);
-				ImageUInt8 expected = truth.get(i);
+				GrayF32 in = input.get(i);
+				GrayU8 expected = truth.get(i);
 				found.reshape(in.width,in.height);
 
 				alg.alg.process(in.clone(), found);
@@ -119,8 +119,8 @@ public class EvaluateTextThresholdDIBCO {
 	}
 
 	protected void load( String fileIn , String fileTruth ) {
-		input.add(UtilImageIO.loadImage(directory+fileIn,ImageFloat32.class));
-		ImageFloat32 img = UtilImageIO.loadImage(directory+fileTruth,ImageFloat32.class);
+		input.add(UtilImageIO.loadImage(directory+fileIn,GrayF32.class));
+		GrayF32 img = UtilImageIO.loadImage(directory+fileTruth,GrayF32.class);
 		truth.add(ThresholdImageOps.threshold(img, null, 100, true));
 	}
 

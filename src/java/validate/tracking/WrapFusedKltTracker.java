@@ -8,7 +8,7 @@ import boofcv.alg.tracker.klt.PyramidKltFeature;
 import boofcv.alg.transform.pyramid.PyramidOps;
 import boofcv.factory.filter.derivative.FactoryDerivative;
 import boofcv.factory.transform.pyramid.FactoryPyramid;
-import boofcv.struct.image.ImageSingleBand;
+import boofcv.struct.image.ImageGray;
 import boofcv.struct.pyramid.PyramidDiscrete;
 import georegression.struct.point.Point2D_F64;
 
@@ -18,7 +18,7 @@ import java.util.List;
 /**
  * @author Peter Abeles
  */
-public class WrapFusedKltTracker <I extends ImageSingleBand, D extends ImageSingleBand>
+public class WrapFusedKltTracker <I extends ImageGray, D extends ImageGray>
 		implements EvaluationTracker<I>
 {
 	InterestPointDetector<I> detector;

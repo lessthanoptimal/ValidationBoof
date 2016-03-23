@@ -16,8 +16,8 @@ import boofcv.gui.image.VisualizeImageData;
 import boofcv.gui.stereo.RectifiedPairPanel;
 import boofcv.io.image.ConvertBufferedImage;
 import boofcv.struct.calib.StereoParameters;
-import boofcv.struct.image.ImageFloat32;
-import boofcv.struct.image.ImageSingleBand;
+import boofcv.struct.image.GrayF32;
+import boofcv.struct.image.ImageGray;
 import georegression.struct.se.Se3_F64;
 import org.ejml.data.DenseMatrix64F;
 
@@ -29,10 +29,10 @@ import java.awt.image.BufferedImage;
  * @author Peter Abeles
  */
 @SuppressWarnings("unchecked")
-public class DebugDenseStereoVideo<T extends ImageSingleBand> implements MouseListener {
+public class DebugDenseStereoVideo<T extends ImageGray> implements MouseListener {
 
 	SequenceStereoImages data;
-	StereoDisparity<T,ImageFloat32> alg;
+	StereoDisparity<T,GrayF32> alg;
 
 	ImagePanel imageLeft;
 	ImagePanel imageRight;
@@ -50,7 +50,7 @@ public class DebugDenseStereoVideo<T extends ImageSingleBand> implements MouseLi
 	ImagePanel disparityView;
 	RectifiedPairPanel rectifiedView;
 
-	public DebugDenseStereoVideo(StereoDisparity<T, ImageFloat32> alg,
+	public DebugDenseStereoVideo(StereoDisparity<T, GrayF32> alg,
 								 SequenceStereoImages data) {
 		this.alg = alg;
 		this.data = data;
@@ -145,7 +145,7 @@ public class DebugDenseStereoVideo<T extends ImageSingleBand> implements MouseLi
 		alg.process(rectifiedLeft,rectifiedRight);
 
 
-		ImageFloat32 disparity = alg.getDisparity();
+		GrayF32 disparity = alg.getDisparity();
 
 		int min = alg.getMinDisparity();
 		int max = alg.getMaxDisparity();
@@ -190,7 +190,7 @@ public class DebugDenseStereoVideo<T extends ImageSingleBand> implements MouseLi
 //		SequenceStereoImages data = new WrapParseLeuven07(new ParseLeuven07("data/leuven07"));
 		SequenceStereoImages data = new WrapParseKITTI("data/KITTI","00");
 
-		Class imageType = ImageFloat32.class;
+		Class imageType = GrayF32.class;
 
 		StereoDisparity alg = FactoryStereoDisparity.regionSubpixelWta(DisparityAlgorithms.RECT,
 				10, 120, 2, 2, 30, 0, 0.1, imageType);

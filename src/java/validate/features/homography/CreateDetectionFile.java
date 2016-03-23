@@ -23,7 +23,7 @@ import boofcv.abst.feature.detect.interest.InterestPointDetector;
 import boofcv.abst.feature.orientation.OrientationImage;
 import boofcv.io.image.ConvertBufferedImage;
 import boofcv.io.image.UtilImageIO;
-import boofcv.struct.image.ImageSingleBand;
+import boofcv.struct.image.ImageGray;
 import georegression.struct.point.Point2D_F64;
 
 import java.awt.image.BufferedImage;
@@ -40,7 +40,7 @@ import java.io.PrintStream;
  * @author Peter Abeles
  */
 @SuppressWarnings("unchecked")
-public class CreateDetectionFile<T extends ImageSingleBand> {
+public class CreateDetectionFile<T extends ImageGray> {
 
 	// algorithm that detects the features
 	InterestPointDetector<T> alg;

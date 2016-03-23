@@ -10,9 +10,9 @@ import boofcv.factory.feature.dense.ConfigDenseHoG;
 import boofcv.factory.feature.dense.FactoryDescribeImageDense;
 import boofcv.io.image.UtilImageIO;
 import boofcv.struct.feature.TupleDesc_F64;
+import boofcv.struct.image.GrayU8;
 import boofcv.struct.image.ImageBase;
 import boofcv.struct.image.ImageType;
-import boofcv.struct.image.ImageUInt8;
 import org.ddogleg.struct.GrowQueue_F64;
 
 import java.io.File;
@@ -274,12 +274,12 @@ public class EvalauteDescribeImageDense<T extends ImageBase>
 		images.add("data/fiducials/image/standard/distance_angle/image00001.png");
 		images.add("data/calib/mono/chessboard/distant/image00000.jpg");
 
-		ImageType<ImageUInt8> imageType = ImageType.single(ImageUInt8.class);
+		ImageType<GrayU8> imageType = ImageType.single(GrayU8.class);
 
-		EvalauteDescribeImageDense<ImageUInt8> evaluator =
-				new EvalauteDescribeImageDense<ImageUInt8>(images,imageType );
+		EvalauteDescribeImageDense<GrayU8> evaluator =
+				new EvalauteDescribeImageDense<GrayU8>(images,imageType );
 
-		DescribeImageDense<ImageUInt8,TupleDesc_F64> alg = FactoryDescribeImageDense.hog(new ConfigDenseHoG(),imageType);
+		DescribeImageDense<GrayU8,TupleDesc_F64> alg = FactoryDescribeImageDense.hog(new ConfigDenseHoG(),imageType);
 		evaluator.evaluate(alg);
 	}
 

@@ -8,7 +8,7 @@ import boofcv.alg.transform.pyramid.PyramidOps;
 import boofcv.factory.filter.derivative.FactoryDerivative;
 import boofcv.factory.transform.pyramid.FactoryPyramid;
 import boofcv.struct.feature.TupleDesc;
-import boofcv.struct.image.ImageSingleBand;
+import boofcv.struct.image.ImageGray;
 import boofcv.struct.pyramid.PyramidDiscrete;
 import georegression.struct.point.Point2D_F64;
 
@@ -21,7 +21,7 @@ import java.util.List;
  * @author Peter Abeles
  */
 public class WrapFusedTracker
-		<I extends ImageSingleBand, D extends ImageSingleBand, TD extends TupleDesc>
+		<I extends ImageGray, D extends ImageGray, TD extends TupleDesc>
 	implements EvaluationTracker<I>
 {
 

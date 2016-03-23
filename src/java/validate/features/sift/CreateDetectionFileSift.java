@@ -20,7 +20,7 @@
 package validate.features.sift;
 
 import boofcv.abst.feature.detect.interest.InterestPointDetector;
-import boofcv.struct.image.ImageFloat32;
+import boofcv.struct.image.GrayF32;
 import validate.features.homography.CreateDetectionFile;
 
 import java.io.FileNotFoundException;
@@ -30,10 +30,10 @@ import java.io.FileNotFoundException;
  */
 public class CreateDetectionFileSift {
 	public static void doStuff( String directory , String suffix ) throws FileNotFoundException {
-		InterestPointDetector<ImageFloat32> alg = FactorySift.createDetector();
+		InterestPointDetector<GrayF32> alg = FactorySift.createDetector();
 
-		CreateDetectionFile<ImageFloat32> cdf =
-				new CreateDetectionFile<ImageFloat32>(alg,null,ImageFloat32.class,"BOOFCV_SIFT");
+		CreateDetectionFile<GrayF32> cdf =
+				new CreateDetectionFile<GrayF32>(alg,null,GrayF32.class,"BOOFCV_SIFT");
 		cdf.directory(directory,suffix);
 	}
 

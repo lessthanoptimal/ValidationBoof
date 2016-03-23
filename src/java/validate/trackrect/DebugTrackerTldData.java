@@ -6,10 +6,10 @@ import boofcv.gui.image.ImagePanel;
 import boofcv.gui.image.ShowImages;
 import boofcv.io.image.ConvertBufferedImage;
 import boofcv.io.image.UtilImageIO;
+import boofcv.struct.image.GrayF32;
+import boofcv.struct.image.GrayU8;
 import boofcv.struct.image.ImageBase;
-import boofcv.struct.image.ImageFloat32;
 import boofcv.struct.image.ImageType;
-import boofcv.struct.image.ImageUInt8;
 import georegression.geometry.UtilPolygons2D_F64;
 import georegression.struct.shapes.Quadrilateral_F64;
 import georegression.struct.shapes.Rectangle2D_F64;
@@ -87,11 +87,11 @@ public class DebugTrackerTldData<T extends ImageBase> {
 	}
 
 	public static void evaluate( String dataset ) {
-		Class type = ImageUInt8.class;
+		Class type = GrayU8.class;
 
 		DebugTrackerTldData generator = new DebugTrackerTldData(ImageType.single(type));
 
-		TrackerObjectQuad<ImageFloat32> tracker =
+		TrackerObjectQuad<GrayF32> tracker =
 				FactoryTrackerObjectQuad.tld(null,type);
 //				FactoryTrackerObjectQuad.sparseFlow(new SfotConfig(type));
 //				FactoryTrackerObjectQuad.meanShiftLikelihood(30,6,255, MeanShiftLikelihoodType.HISTOGRAM_INDEPENDENT_RGB_to_HSV,

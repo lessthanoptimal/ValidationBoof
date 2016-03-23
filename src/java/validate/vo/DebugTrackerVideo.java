@@ -9,8 +9,8 @@ import boofcv.gui.feature.VisualizeFeatures;
 import boofcv.gui.image.ImagePanel;
 import boofcv.gui.image.ShowImages;
 import boofcv.io.image.ConvertBufferedImage;
-import boofcv.struct.image.ImageFloat32;
-import boofcv.struct.image.ImageSingleBand;
+import boofcv.struct.image.GrayF32;
+import boofcv.struct.image.ImageGray;
 import georegression.struct.point.Point2D_F64;
 
 import java.awt.*;
@@ -26,7 +26,7 @@ import java.util.List;
  * @author Peter Abeles
  */
 // TODO improve synchronization
-public class DebugTrackerVideo <T extends ImageSingleBand> implements MouseListener, KeyListener {
+public class DebugTrackerVideo <T extends ImageGray> implements MouseListener, KeyListener {
 
 	int KEY_FRAME_PERIOD = 10;
 
@@ -294,13 +294,13 @@ public class DebugTrackerVideo <T extends ImageSingleBand> implements MouseListe
 //		SequenceStereoImages data = new WrapParseLeuven07(new ParseLeuven07("data/leuven07"));
 		SequenceStereoImages data = new WrapParseKITTI("data/KITTI","01");
 
-		Class imageType = ImageFloat32.class;
+		Class imageType = GrayF32.class;
 
-//		ImagePointTracker<ImageFloat32> tracker = FactoryPointSequentialTracker.dda_ST_BRIEF(-1,200,5,500,imageType,null);
-//		ImagePointTracker<ImageFloat32> tracker =
+//		ImagePointTracker<GrayF32> tracker = FactoryPointSequentialTracker.dda_ST_BRIEF(-1,200,5,500,imageType,null);
+//		ImagePointTracker<GrayF32> tracker =
 //				FactoryPointSequentialTracker.dda_FH_SURF(500,2,200,1,true,imageType);
-		PointTracker<ImageFloat32> tracker =
-				FactoryPointTracker.klt(new int[]{1, 2, 4, 8}, new ConfigGeneralDetector(-2,5,300),3, imageType, ImageFloat32.class);
+		PointTracker<GrayF32> tracker =
+				FactoryPointTracker.klt(new int[]{1, 2, 4, 8}, new ConfigGeneralDetector(-2,5,300),3, imageType, GrayF32.class);
 
 		DebugTrackerVideo app = new DebugTrackerVideo(tracker,data,imageType);
 		app.processSequence();

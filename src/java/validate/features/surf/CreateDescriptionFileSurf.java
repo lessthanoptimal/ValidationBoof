@@ -21,8 +21,8 @@ package validate.features.surf;
 
 import boofcv.abst.feature.describe.DescribeRegionPoint;
 import boofcv.struct.feature.BrightFeature;
-import boofcv.struct.image.ImageFloat32;
-import boofcv.struct.image.ImageSingleBand;
+import boofcv.struct.image.GrayF32;
+import boofcv.struct.image.ImageGray;
 import boofcv.struct.image.ImageType;
 import validate.features.homography.CreateDescriptionFile;
 
@@ -32,12 +32,12 @@ import java.io.FileNotFoundException;
  * @author Peter Abeles
  */
 public class CreateDescriptionFileSurf {
-	public static <T extends ImageSingleBand>
+	public static <T extends ImageGray>
 	void doStuff( String directory , String imageSuffix , ImageType<T> imageType ) throws FileNotFoundException {
 		DescribeRegionPoint<T,BrightFeature> alg;
 		CreateDescriptionFile<T,BrightFeature> cdf;
 
-		String suffix = imageType.getFamily() == ImageType.Family.SINGLE_BAND ? "" : "_COLOR";
+		String suffix = imageType.getFamily() == ImageType.Family.GRAY ? "" : "_COLOR";
 
 		alg = FactorySurf.surf(true, imageType);
 		cdf = new CreateDescriptionFile<T,BrightFeature>(alg,imageType,"BoofCV_MSURF"+suffix);
@@ -49,10 +49,10 @@ public class CreateDescriptionFileSurf {
 	}
 
 	public static void main( String args[] ) throws FileNotFoundException {
-//		ImageType type = ImageType.single(ImageFloat32.class);
-		ImageType type = ImageType.ms(3,ImageFloat32.class);
+//		ImageType type = ImageType.single(GrayF32.class);
+		ImageType type = ImageType.pl(3,GrayF32.class);
 
-		boolean gray = type.getFamily() == ImageType.Family.SINGLE_BAND;
+		boolean gray = type.getFamily() == ImageType.Family.GRAY;
 
 		if( gray ) {
 			doStuff("data/bikes/",".png",type);

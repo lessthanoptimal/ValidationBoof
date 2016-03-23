@@ -23,8 +23,8 @@ import boofcv.factory.feature.disparity.FactoryStereoDisparity;
 import boofcv.factory.feature.tracker.FactoryPointTracker;
 import boofcv.factory.feature.tracker.FactoryPointTrackerTwoPass;
 import boofcv.factory.sfm.FactoryVisualOdometry;
+import boofcv.struct.image.GrayF32;
 import boofcv.struct.image.ImageDataType;
-import boofcv.struct.image.ImageFloat32;
 import boofcv.struct.image.ImageType;
 import validate.vo.*;
 
@@ -84,7 +84,7 @@ public class StereoVisualOdometryRegression extends BaseTextFileRegression {
 	public static Info createDepth( Class bandType ) {
 		Class derivType = GImageDerivativeOps.getDerivativeType(bandType);
 
-		StereoDisparitySparse<ImageFloat32> disparity =
+		StereoDisparitySparse<GrayF32> disparity =
 				FactoryStereoDisparity.regionSparseWta(10, 120, 2, 2, 30, 0.1, true, bandType);
 
 		PkltConfig configKlt = new PkltConfig();

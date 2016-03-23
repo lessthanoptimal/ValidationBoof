@@ -10,8 +10,8 @@ import boofcv.factory.shape.ConfigPolygonDetector;
 import boofcv.factory.shape.FactoryShapeDetector;
 import boofcv.io.image.ConvertBufferedImage;
 import boofcv.io.image.UtilImageIO;
-import boofcv.struct.image.ImageSingleBand;
-import boofcv.struct.image.ImageUInt8;
+import boofcv.struct.image.GrayU8;
+import boofcv.struct.image.ImageGray;
 import georegression.struct.shapes.Polygon2D_F64;
 import org.ddogleg.struct.FastQueue;
 
@@ -23,13 +23,13 @@ import java.io.File;
  *
  * @author Peter Abeles
  */
-public class DetectPolygonsSaveToFile<T extends ImageSingleBand> {
+public class DetectPolygonsSaveToFile<T extends ImageGray> {
 
 	BinaryPolygonDetector<T> detector;
 	InputToBinary<T> inputToBinary;
 
 	T gray;
-	ImageUInt8 binary = new ImageUInt8(1,1);
+	GrayU8 binary = new GrayU8(1,1);
 
 	public DetectPolygonsSaveToFile( BinaryPolygonDetector<T> detector , boolean binaryLocal) {
 
@@ -85,7 +85,7 @@ public class DetectPolygonsSaveToFile<T extends ImageSingleBand> {
 	public static void main(String[] args) {
 
 		File file = new File("data/shape/concave/detector.txt");
-		Class imageType = ImageUInt8.class;
+		Class imageType = GrayU8.class;
 		ConfigPolygonDetector config = UtilShapeDetector.configure(true,file);
 		BinaryPolygonDetector detector = FactoryShapeDetector.polygon(config,imageType);
 

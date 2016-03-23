@@ -23,7 +23,7 @@ import boofcv.struct.feature.BrightFeature;
 import boofcv.struct.feature.TupleDesc_B;
 import boofcv.struct.feature.TupleDesc_F64;
 import boofcv.struct.image.ImageDataType;
-import boofcv.struct.image.ImageSingleBand;
+import boofcv.struct.image.ImageGray;
 import boofcv.struct.image.ImageType;
 import validate.features.homography.BenchmarkFeatureDescribeStability;
 import validate.features.homography.BenchmarkFeatureDetectStability;
@@ -88,7 +88,7 @@ public class DetectDescribeRegression extends BaseTextFileRegression {
 		}
 	}
 
-	public static <T extends ImageSingleBand>
+	public static <T extends ImageGray>
 	Info surf( boolean stable , boolean color , Class<T> bandType  ) {
 
 		ConfigFastHessian configDetect = new ConfigFastHessian(3, 2, -1,1, 9, 4, 4);
@@ -105,7 +105,7 @@ public class DetectDescribeRegression extends BaseTextFileRegression {
 			variant+="_Color";
 
 		if( color ) {
-			imageType = ImageType.ms(3,bandType);
+			imageType = ImageType.pl(3,bandType);
 			if( stable )
 				detdesc = FactoryDetectDescribe.surfColorStable(configDetect, null, null, imageType);
 			else
@@ -126,7 +126,7 @@ public class DetectDescribeRegression extends BaseTextFileRegression {
 		return ret;
 	}
 
-	public static <T extends ImageSingleBand>
+	public static <T extends ImageGray>
 	Info briefSoFH( Class<T> bandType  ) {
 
 		ConfigFastHessian configDetect = new ConfigFastHessian(3, 2, -1,1, 9, 4, 4);
@@ -150,7 +150,7 @@ public class DetectDescribeRegression extends BaseTextFileRegression {
 		return ret;
 	}
 
-	public static <T extends ImageSingleBand>
+	public static <T extends ImageGray>
 	Info sift( Class<T> bandType  ) {
 
 		ImageType imageType = ImageType.single(bandType);

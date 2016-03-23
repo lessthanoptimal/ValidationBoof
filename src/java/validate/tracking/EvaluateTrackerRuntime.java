@@ -2,8 +2,8 @@ package validate.tracking;
 
 import boofcv.io.image.SimpleImageSequence;
 import boofcv.io.wrapper.DefaultMediaManager;
-import boofcv.struct.image.ImageFloat32;
-import boofcv.struct.image.ImageSingleBand;
+import boofcv.struct.image.GrayF32;
+import boofcv.struct.image.ImageGray;
 import boofcv.struct.image.ImageType;
 
 import java.io.BufferedReader;
@@ -16,7 +16,7 @@ import static validate.tracking.BatchEvaluateSummaryAndTime.pathToData;
 /**
  * @author Peter Abeles
  */
-public class EvaluateTrackerRuntime<T extends ImageSingleBand> implements Serializable {
+public class EvaluateTrackerRuntime<T extends ImageGray> implements Serializable {
 
 	public double meanTimeMS;
 	EvaluatedAlgorithm alg;
@@ -153,7 +153,7 @@ public class EvaluateTrackerRuntime<T extends ImageSingleBand> implements Serial
 			return;
 		}
 
-		Class imageType = ImageFloat32.class;
+		Class imageType = GrayF32.class;
 
 		String dirs[] = new String[]{"bricks","carpet"};
 		String dataSets[] = new String[]{"skew","rotate","move_out","move_in"};

@@ -2,7 +2,7 @@ package validate.tracking;
 
 import boofcv.io.image.SimpleImageSequence;
 import boofcv.io.wrapper.DefaultMediaManager;
-import boofcv.struct.image.ImageFloat32;
+import boofcv.struct.image.GrayF32;
 import boofcv.struct.image.ImageType;
 import georegression.struct.homography.Homography2D_F64;
 import validate.ValidationConstants;
@@ -68,7 +68,7 @@ public class BatchEvaluateSummaryAndTime {
 		String dataSets[] = new String[]{"skew","rotate","move_out","move_in"};
 //		String dataSets[] = new String[]{"urban"};
 
-		Class imageType = ImageFloat32.class;
+		Class imageType = GrayF32.class;
 
 		createDirectories(dir);
 

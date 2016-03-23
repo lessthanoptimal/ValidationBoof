@@ -4,7 +4,7 @@ import boofcv.factory.fiducial.ConfigFiducialImage;
 import boofcv.factory.fiducial.FactoryFiducial;
 import boofcv.factory.filter.binary.ConfigThreshold;
 import boofcv.factory.filter.binary.ThresholdType;
-import boofcv.struct.image.ImageUInt8;
+import boofcv.struct.image.GrayU8;
 import validate.FactoryObject;
 import validate.FactoryObjectAbstract;
 import validate.fiducial.EstimateImageFiducialToCamera;
@@ -63,7 +63,7 @@ public class GenerateBenchmarkResults {
 			public Object newInstance() {
 				return FactoryFiducial.squareImage(new ConfigFiducialImage(),
 						ConfigThreshold.local(ThresholdType.LOCAL_SQUARE, 20),
-						ImageUInt8.class);
+						GrayU8.class);
 			}
 		};
 

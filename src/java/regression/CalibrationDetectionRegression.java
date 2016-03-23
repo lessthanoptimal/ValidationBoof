@@ -6,8 +6,8 @@ import boofcv.abst.geo.calibration.CalibrationDetector;
 import boofcv.alg.geo.calibration.CalibrationObservation;
 import boofcv.factory.calib.FactoryCalibrationTarget;
 import boofcv.io.image.UtilImageIO;
+import boofcv.struct.image.GrayF32;
 import boofcv.struct.image.ImageDataType;
-import boofcv.struct.image.ImageFloat32;
 import georegression.struct.point.Point2D_F64;
 import org.ddogleg.struct.GrowQueue_F64;
 import validate.misc.PointFileCodec;
@@ -107,7 +107,7 @@ public class CalibrationDetectionRegression extends BaseTextFileRegression{
 			String path = f.getAbsolutePath();
 			String pathTruth = path.substring(0,path.length()-3) + "txt";
 
-			ImageFloat32 image = UtilImageIO.loadImage(f.getAbsolutePath(), ImageFloat32.class);
+			GrayF32 image = UtilImageIO.loadImage(f.getAbsolutePath(), GrayF32.class);
 
 			List<Point2D_F64> groundTruth;
 			try {

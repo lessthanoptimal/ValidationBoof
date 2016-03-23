@@ -21,48 +21,48 @@ package validate.features.surf;
 
 import boofcv.abst.feature.describe.DescribeRegionPoint;
 import boofcv.abst.feature.orientation.OrientationIntegral;
-import boofcv.alg.feature.describe.DescribePointSurfMultiSpectral;
+import boofcv.alg.feature.describe.DescribePointSurfPlanar;
 import boofcv.alg.transform.ii.GIntegralImageOps;
 import boofcv.core.image.GConvertImage;
 import boofcv.core.image.GeneralizedImageOps;
 import boofcv.struct.BoofDefaults;
 import boofcv.struct.feature.BrightFeature;
-import boofcv.struct.image.ImageSingleBand;
+import boofcv.struct.image.ImageGray;
 import boofcv.struct.image.ImageType;
-import boofcv.struct.image.MultiSpectral;
+import boofcv.struct.image.Planar;
 
 /**
  * Adds orientation estimation to SURF description calculation.
  *
  * @author Peter Abeles
  */
-public class DescribeOrientationSurfColor<T extends ImageSingleBand, II extends ImageSingleBand>
-		implements DescribeRegionPoint<MultiSpectral<T>,BrightFeature>
+public class DescribeOrientationSurfColor<T extends ImageGray, II extends ImageGray>
+		implements DescribeRegionPoint<Planar<T>,BrightFeature>
 {
 	private OrientationIntegral<II> orientation;
-	private DescribePointSurfMultiSpectral<II> describe;
+	private DescribePointSurfPlanar<II> describe;
 
 	T gray;
 	II grayII;
-	MultiSpectral<II> bandII;
+	Planar<II> bandII;
 
-	ImageType<MultiSpectral<T>> imageType;
+	ImageType<Planar<T>> imageType;
 
 	public DescribeOrientationSurfColor(OrientationIntegral<II> orientation,
-										DescribePointSurfMultiSpectral<II> describe,
+										DescribePointSurfPlanar<II> describe,
 										Class<T> imageType, Class<II> integralType ) {
 		this.orientation = orientation;
 		this.describe = describe;
 
 		gray = GeneralizedImageOps.createSingleBand(imageType, 1, 1);
 		grayII = GeneralizedImageOps.createSingleBand(integralType,1,1);
-		bandII = new MultiSpectral<II>(integralType,1,1,describe.getNumBands());
+		bandII = new Planar<II>(integralType,1,1,describe.getNumBands());
 
-		this.imageType = ImageType.ms(describe.getNumBands(), imageType);
+		this.imageType = ImageType.pl(describe.getNumBands(), imageType);
 	}
 
 	@Override
-	public void setImage(MultiSpectral<T> image) {
+	public void setImage(Planar<T> image) {
 		gray.reshape(image.width,image.height);
 		grayII.reshape(image.width,image.height);
 		bandII.reshape(image.width,image.height);
@@ -103,7 +103,7 @@ public class DescribeOrientationSurfColor<T extends ImageSingleBand, II extends 
 	}
 
 	@Override
-	public ImageType<MultiSpectral<T>> getImageType() {
+	public ImageType<Planar<T>> getImageType() {
 		return imageType;
 	}
 

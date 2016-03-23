@@ -2,7 +2,7 @@ package validate.dft;
 
 import boofcv.alg.transform.fft.DiscreteFourierTransformOps;
 import boofcv.alg.transform.fft.GeneralPurposeFFT_F32_2D;
-import boofcv.struct.image.ImageFloat32;
+import boofcv.struct.image.GrayF32;
 import boofcv.struct.image.InterleavedF32;
 
 import java.util.Random;
@@ -15,7 +15,7 @@ public class CompareToJTransforms {
 	public static void main( String args[] ) {
 		Random rand = new Random(234);
 
-		ImageFloat32 image = new ImageFloat32(768,323);
+		GrayF32 image = new GrayF32(768,323);
 		for( int i = 0; i < image.data.length; i++ ) {
 			image.data[i] = rand.nextInt(255);
 		}

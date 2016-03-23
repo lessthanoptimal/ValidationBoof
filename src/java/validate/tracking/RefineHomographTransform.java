@@ -7,7 +7,7 @@ import boofcv.alg.transform.pyramid.PyramidOps;
 import boofcv.core.image.border.BorderType;
 import boofcv.factory.interpolate.FactoryInterpolation;
 import boofcv.factory.transform.pyramid.FactoryPyramid;
-import boofcv.struct.image.ImageSingleBand;
+import boofcv.struct.image.ImageGray;
 import boofcv.struct.pyramid.PyramidDiscrete;
 import georegression.struct.homography.Homography2D_F64;
 import org.ddogleg.optimization.FactoryOptimization;
@@ -20,7 +20,7 @@ import org.ddogleg.optimization.UtilOptimize;
  *
  * @author Peter Abeles
  */
-public class RefineHomographTransform<I extends ImageSingleBand, D extends ImageSingleBand> {
+public class RefineHomographTransform<I extends ImageGray, D extends ImageGray> {
 
 	PyramidDiscrete<I> src;
 	D[] srcDericX;

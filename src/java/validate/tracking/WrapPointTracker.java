@@ -2,7 +2,7 @@ package validate.tracking;
 
 import boofcv.abst.feature.tracker.PointTrack;
 import boofcv.abst.feature.tracker.PointTracker;
-import boofcv.struct.image.ImageSingleBand;
+import boofcv.struct.image.ImageGray;
 import georegression.struct.point.Point2D_F64;
 
 import java.util.ArrayList;
@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * @author Peter Abeles
  */
-public class WrapPointTracker<I extends ImageSingleBand>
+public class WrapPointTracker<I extends ImageGray>
 	implements EvaluationTracker<I>
 {
 	PointTracker<I> tracker;

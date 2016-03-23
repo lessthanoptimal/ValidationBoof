@@ -7,7 +7,7 @@ import boofcv.factory.calib.FactoryCalibrationTarget;
 import boofcv.io.image.ConvertBufferedImage;
 import boofcv.io.image.UtilImageIO;
 import boofcv.misc.BoofMiscOps;
-import boofcv.struct.image.ImageFloat32;
+import boofcv.struct.image.GrayF32;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -39,7 +39,7 @@ public class DetectTargetFeatures {
 		// process and saves results
 		for( String name : images ) {
 			BufferedImage orig = UtilImageIO.loadImage(name);
-			ImageFloat32 input = new ImageFloat32(orig.getWidth(),orig.getHeight());
+			GrayF32 input = new GrayF32(orig.getWidth(),orig.getHeight());
 			ConvertBufferedImage.convertFrom(orig,input);
 
 			if( detector.process(input) ) {

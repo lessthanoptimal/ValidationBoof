@@ -7,9 +7,9 @@ import boofcv.factory.feature.detect.extract.FactoryFeatureExtractor;
 import boofcv.factory.feature.detect.intensity.FactoryIntensityPointAlg;
 import boofcv.io.image.UtilImageIO;
 import boofcv.struct.QueueCorner;
-import boofcv.struct.image.ImageFloat32;
-import boofcv.struct.image.ImageSingleBand;
-import boofcv.struct.image.ImageUInt8;
+import boofcv.struct.image.GrayF32;
+import boofcv.struct.image.GrayU8;
+import boofcv.struct.image.ImageGray;
 import georegression.struct.point.Point2D_I16;
 
 import java.io.FileNotFoundException;
@@ -26,11 +26,11 @@ public class DetectFast {
 
 	public static final String FILE_NAME = "boofcv_fast.txt";
 
-	public static <T extends ImageSingleBand> void detect( String outputDirectory , Class<T> imageType ) throws FileNotFoundException {
+	public static <T extends ImageGray> void detect( String outputDirectory , Class<T> imageType ) throws FileNotFoundException {
 		T raw = UtilImageIO.loadImage("data/outdoors_gray.png", imageType);
 
 		FastCornerIntensity<T> alg = FactoryIntensityPointAlg.fast(20,9,imageType);
-		ImageFloat32 intensity = new ImageFloat32(raw.width,raw.height);
+		GrayF32 intensity = new GrayF32(raw.width,raw.height);
 
 		alg.process(raw,intensity);
 
@@ -63,6 +63,6 @@ public class DetectFast {
 			outputDirectory = args[0];
 		}
 
-		detect(outputDirectory,ImageUInt8.class);
+		detect(outputDirectory,GrayU8.class);
 	}
 }

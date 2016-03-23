@@ -22,7 +22,7 @@ package validate.features.surf;
 import boofcv.abst.feature.detect.interest.ConfigFastHessian;
 import boofcv.abst.feature.detect.interest.InterestPointDetector;
 import boofcv.factory.feature.detect.interest.FactoryInterestPoint;
-import boofcv.struct.image.ImageFloat32;
+import boofcv.struct.image.GrayF32;
 import validate.features.homography.BenchmarkFeatureDetectRuntime;
 
 import java.io.IOException;
@@ -33,12 +33,12 @@ import java.io.IOException;
 public class BenchmarkRuntimeDetectSurf {
 	public static void main( String args[] ) throws IOException {
 
-		InterestPointDetector<ImageFloat32> alg = FactoryInterestPoint.
+		InterestPointDetector<GrayF32> alg = FactoryInterestPoint.
 				fastHessian(new ConfigFastHessian(100, 2, -1, 1, 9, 4, 4));
 
 
-		BenchmarkFeatureDetectRuntime<ImageFloat32> benchmark =
-				new BenchmarkFeatureDetectRuntime<ImageFloat32>(ImageFloat32.class,alg);
+		BenchmarkFeatureDetectRuntime<GrayF32> benchmark =
+				new BenchmarkFeatureDetectRuntime<GrayF32>(GrayF32.class,alg);
 
 		benchmark.benchmark("data/boat", 1);
 	}

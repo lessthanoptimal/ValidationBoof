@@ -29,14 +29,14 @@ import boofcv.factory.feature.orientation.FactoryOrientation;
 import boofcv.factory.feature.orientation.FactoryOrientationAlgs;
 import boofcv.struct.feature.BrightFeature;
 import boofcv.struct.feature.TupleDesc_B;
-import boofcv.struct.image.ImageSingleBand;
+import boofcv.struct.image.ImageGray;
 
 /**
  * Creates algorithms for evaluation
  *
  * @author Peter Abeles
  */
-public class FactoryEvaluationTrackers<T extends ImageSingleBand> {
+public class FactoryEvaluationTrackers<T extends ImageGray> {
 
 	Class<T> imageType;
 

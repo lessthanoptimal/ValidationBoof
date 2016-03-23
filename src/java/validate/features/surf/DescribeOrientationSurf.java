@@ -25,7 +25,7 @@ import boofcv.alg.feature.describe.DescribePointSurf;
 import boofcv.alg.transform.ii.GIntegralImageOps;
 import boofcv.struct.BoofDefaults;
 import boofcv.struct.feature.BrightFeature;
-import boofcv.struct.image.ImageSingleBand;
+import boofcv.struct.image.ImageGray;
 import boofcv.struct.image.ImageType;
 
 /**
@@ -33,7 +33,7 @@ import boofcv.struct.image.ImageType;
  *
  * @author Peter Abeles
  */
-public class DescribeOrientationSurf<T extends ImageSingleBand, II extends ImageSingleBand>
+public class DescribeOrientationSurf<T extends ImageGray, II extends ImageGray>
 		implements DescribeRegionPoint<T,BrightFeature>
 {
 	private OrientationIntegral<II> orientation;

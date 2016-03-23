@@ -12,8 +12,8 @@ import boofcv.io.image.ConvertBufferedImage;
 import boofcv.io.image.SimpleImageSequence;
 import boofcv.io.wrapper.DefaultMediaManager;
 import boofcv.misc.BoofMiscOps;
-import boofcv.struct.image.ImageFloat32;
-import boofcv.struct.image.ImageSingleBand;
+import boofcv.struct.image.GrayF32;
+import boofcv.struct.image.ImageGray;
 import boofcv.struct.image.ImageType;
 import georegression.struct.homography.Homography2D_F64;
 import georegression.struct.point.Point2D_F64;
@@ -36,7 +36,7 @@ import static validate.tracking.BatchEvaluateSummaryAndTime.pathToData;
  * @author Peter Abeles
  */
 // TODO compute pixel error weighted by edges
-public class VisualDebugHomographyTruth<T extends ImageSingleBand> implements MouseListener {
+public class VisualDebugHomographyTruth<T extends ImageGray> implements MouseListener {
 
 	T workImage;
 
@@ -162,7 +162,7 @@ public class VisualDebugHomographyTruth<T extends ImageSingleBand> implements Mo
 	public void mouseExited(MouseEvent e) {}
 
 	public static void main( String args[] ) throws FileNotFoundException {
-		Class imageType = ImageFloat32.class;
+		Class imageType = GrayF32.class;
 
 		String whichData = "various/urban";
 //		String whichData = "carpet/skew";

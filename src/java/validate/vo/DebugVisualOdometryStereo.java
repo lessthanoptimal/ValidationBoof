@@ -15,8 +15,8 @@ import boofcv.gui.feature.VisualizeFeatures;
 import boofcv.gui.image.ImageGridPanel;
 import boofcv.gui.image.ShowImages;
 import boofcv.struct.calib.StereoParameters;
+import boofcv.struct.image.GrayF32;
 import boofcv.struct.image.ImageBase;
-import boofcv.struct.image.ImageFloat32;
 import boofcv.struct.image.ImageType;
 import georegression.geometry.ConvertRotation3D_F64;
 import georegression.struct.EulerType;
@@ -265,11 +265,11 @@ public class DebugVisualOdometryStereo<T extends ImageBase>
 //		SequenceStereoImages data = new WrapParseLeuven07(new ParseLeuven07("data/leuven07"));
 		SequenceStereoImages data = new WrapParseKITTI("data/KITTI","02");
 
-		Class bandType = ImageFloat32.class;
+		Class bandType = GrayF32.class;
 		ImageType imageType = ImageType.single(bandType);
 		Class derivType = GImageDerivativeOps.getDerivativeType(bandType);
 
-		StereoDisparitySparse<ImageFloat32> disparity =
+		StereoDisparitySparse<GrayF32> disparity =
 				FactoryStereoDisparity.regionSparseWta(10, 120, 2, 2, 30, 0.1, true, bandType);
 
 		PointTrackerTwoPass tracker = null;

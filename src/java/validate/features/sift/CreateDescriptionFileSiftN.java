@@ -20,7 +20,7 @@
 package validate.features.sift;
 
 import boofcv.struct.feature.BrightFeature;
-import boofcv.struct.image.ImageFloat32;
+import boofcv.struct.image.GrayF32;
 import boofcv.struct.image.ImageType;
 import validate.features.homography.CreateDescriptionFile;
 
@@ -31,14 +31,14 @@ import java.util.List;
 /**
  * @author Peter Abeles
  */
-public class CreateDescriptionFileSiftN extends CreateDescriptionFile<ImageFloat32,BrightFeature> {
+public class CreateDescriptionFileSiftN extends CreateDescriptionFile<GrayF32,BrightFeature> {
 	/**
 	 * Defines the set of images and detection files that are to be processed.
 	 *
 	 * @param descriptionName The name of the description algorithm.  This name is appended to output files.
 	 */
 	public CreateDescriptionFileSiftN(String descriptionName) {
-		super(FactorySift.createDescriptor(), ImageType.single(ImageFloat32.class), descriptionName);
+		super(FactorySift.createDescriptor(), ImageType.single(GrayF32.class), descriptionName);
 	}
 
 	@Override

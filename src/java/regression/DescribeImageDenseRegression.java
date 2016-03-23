@@ -29,7 +29,7 @@ public class DescribeImageDenseRegression extends BaseTextFileRegression {
 		DenseSampling sampling = new DenseSampling(10,10);
 
 		algs.add(new Info("HOG-SB-"+type, FactoryDescribeImageDense.hog(new ConfigDenseHoG(),ImageType.single(imageType))));
-		algs.add(new Info("HOG-MS-"+type, FactoryDescribeImageDense.hog(new ConfigDenseHoG(),ImageType.ms(3,imageType))));
+		algs.add(new Info("HOG-MS-"+type, FactoryDescribeImageDense.hog(new ConfigDenseHoG(),ImageType.pl(3,imageType))));
 		algs.add(new Info("SURF-F-"+type, FactoryDescribeImageDense.surfFast(new ConfigDenseSurfFast(sampling),imageType)));
 		algs.add(new Info("SURF-S-"+type, FactoryDescribeImageDense.surfStable(new ConfigDenseSurfStable(sampling),imageType)));
 		algs.add(new Info("SIFT-"+type, FactoryDescribeImageDense.sift(new ConfigDenseSift(sampling),imageType)));

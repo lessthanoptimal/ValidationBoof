@@ -1,9 +1,9 @@
 package validate.tracking;
 
 import boofcv.alg.interpolate.InterpolatePixelS;
-import boofcv.core.image.FactoryGImageSingleBand;
-import boofcv.core.image.GImageSingleBand;
-import boofcv.struct.image.ImageSingleBand;
+import boofcv.core.image.FactoryGImageGray;
+import boofcv.core.image.GImageGray;
+import boofcv.struct.image.ImageGray;
 import org.ddogleg.optimization.functions.FunctionNtoS;
 
 /**
@@ -12,10 +12,10 @@ import org.ddogleg.optimization.functions.FunctionNtoS;
  *
  * @author Peter Abeles
  */
-public class FitHomographyFunction<T extends ImageSingleBand> implements FunctionNtoS {
+public class FitHomographyFunction<T extends ImageGray> implements FunctionNtoS {
 
 
-	GImageSingleBand src;
+	GImageGray src;
 	InterpolatePixelS<T> dst;
 
 	public FitHomographyFunction(InterpolatePixelS<T> dst) {
@@ -23,7 +23,7 @@ public class FitHomographyFunction<T extends ImageSingleBand> implements Functio
 	}
 
 	public void setInputs( T imageSrc , T imageDst ) {
-		this.src = FactoryGImageSingleBand.wrap(imageSrc);
+		this.src = FactoryGImageGray.wrap(imageSrc);
 		dst.setImage(imageDst);
 	}
 

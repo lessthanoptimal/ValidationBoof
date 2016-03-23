@@ -30,28 +30,28 @@ import boofcv.factory.feature.detdesc.FactoryDetectDescribe;
 import boofcv.factory.feature.detect.interest.FactoryInterestPoint;
 import boofcv.factory.feature.orientation.FactoryOrientationAlgs;
 import boofcv.struct.feature.BrightFeature;
-import boofcv.struct.image.ImageFloat32;
+import boofcv.struct.image.GrayF32;
 
 /**
  * @author Peter Abeles
  */
 public class FactorySift {
 
-	public static DescribeRegionPoint<ImageFloat32,BrightFeature>
+	public static DescribeRegionPoint<GrayF32,BrightFeature>
 	createDescriptor() {
 		SiftScaleSpace ss = new SiftScaleSpace(-1,5,3,2.75f);
-		OrientationHistogramSift orientation = FactoryOrientationAlgs.sift(null,ImageFloat32.class);
-		DescribePointSift sift = FactoryDescribePointAlgs.sift(null,ImageFloat32.class);
+		OrientationHistogramSift orientation = FactoryOrientationAlgs.sift(null,GrayF32.class);
+		DescribePointSift sift = FactoryDescribePointAlgs.sift(null,GrayF32.class);
 
 		return new DescribeOrientationSift(orientation,sift,ss);
 	}
 
-	public static InterestPointDetector<ImageFloat32>
+	public static InterestPointDetector<GrayF32>
 	createDetector() {
-		return FactoryInterestPoint.sift(null,null,ImageFloat32.class);
+		return FactoryInterestPoint.sift(null,null,GrayF32.class);
 	}
 
-	public static DetectDescribePoint<ImageFloat32,BrightFeature>
+	public static DetectDescribePoint<GrayF32,BrightFeature>
 	detectDescribe() {
 		return FactoryDetectDescribe.sift(null);
 	}

@@ -21,7 +21,7 @@ package validate.features.surf;
 
 import boofcv.abst.feature.describe.DescribeRegionPoint;
 import boofcv.struct.feature.BrightFeature;
-import boofcv.struct.image.ImageFloat32;
+import boofcv.struct.image.GrayF32;
 import boofcv.struct.image.ImageType;
 import validate.features.homography.BenchmarkFeatureDescribeRuntime;
 
@@ -35,11 +35,11 @@ import static validate.features.surf.FactorySurf.surf;
 public class BenchmarkRuntimeDescribeSurf {
 	public static void main( String args[] ) throws IOException {
 
-		DescribeRegionPoint<ImageFloat32,BrightFeature> alg =
-				surf(false, ImageType.single(ImageFloat32.class));
+		DescribeRegionPoint<GrayF32,BrightFeature> alg =
+				surf(false, ImageType.single(GrayF32.class));
 
-		BenchmarkFeatureDescribeRuntime<ImageFloat32,BrightFeature> benchmark =
-				new BenchmarkFeatureDescribeRuntime<ImageFloat32,BrightFeature>(ImageFloat32.class,alg);
+		BenchmarkFeatureDescribeRuntime<GrayF32,BrightFeature> benchmark =
+				new BenchmarkFeatureDescribeRuntime<GrayF32,BrightFeature>(GrayF32.class,alg);
 
 		benchmark.benchmark("data/boat", 1, "FH");
 	}

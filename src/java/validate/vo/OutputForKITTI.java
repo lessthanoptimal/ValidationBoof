@@ -10,8 +10,8 @@ import boofcv.factory.feature.disparity.FactoryStereoDisparity;
 import boofcv.factory.feature.tracker.FactoryPointTrackerTwoPass;
 import boofcv.factory.sfm.FactoryVisualOdometry;
 import boofcv.io.image.ConvertBufferedImage;
-import boofcv.struct.image.ImageFloat32;
-import boofcv.struct.image.ImageSingleBand;
+import boofcv.struct.image.GrayF32;
+import boofcv.struct.image.ImageGray;
 import georegression.struct.se.Se3_F64;
 
 import java.io.FileNotFoundException;
@@ -23,7 +23,7 @@ import java.io.PrintStream;
 */
 public class OutputForKITTI {
 
-	public static <T extends ImageSingleBand>
+	public static <T extends ImageGray>
 	void computeOdometry( SequenceStereoImages data,
 						  StereoVisualOdometry<T> alg ,
 						  Class<T> imageType ,
@@ -67,8 +67,8 @@ public class OutputForKITTI {
 
 	public static void main( String args[] ) throws FileNotFoundException {
 
-		Class imageType = ImageFloat32.class;
-		Class derivType = ImageFloat32.class;
+		Class imageType = GrayF32.class;
+		Class derivType = GrayF32.class;
 
 		for( int dataSet = 0; dataSet < 11; dataSet++ ) {
 			PkltConfig configKlt = new PkltConfig();
@@ -80,7 +80,7 @@ public class OutputForKITTI {
 							imageType, derivType);
 
 			// TODO add stereo NCC error to handle
-			StereoDisparitySparse<ImageFloat32> disparity =
+			StereoDisparitySparse<GrayF32> disparity =
 					FactoryStereoDisparity.regionSparseWta(10, 120, 2, 2, 30, 0.1, true, imageType);
 
 			StereoVisualOdometry alg = FactoryVisualOdometry.stereoDepth(1.5,120, 2,200,50,false,disparity, tracker,imageType);

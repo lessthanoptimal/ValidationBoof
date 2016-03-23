@@ -26,14 +26,14 @@ import boofcv.abst.feature.detect.interest.ConfigFastHessian;
 import boofcv.abst.feature.orientation.ConfigSlidingIntegral;
 import boofcv.abst.feature.orientation.OrientationIntegral;
 import boofcv.alg.feature.describe.DescribePointSurf;
-import boofcv.alg.feature.describe.DescribePointSurfMultiSpectral;
+import boofcv.alg.feature.describe.DescribePointSurfPlanar;
 import boofcv.alg.transform.ii.GIntegralImageOps;
 import boofcv.factory.feature.describe.FactoryDescribePointAlgs;
 import boofcv.factory.feature.detdesc.FactoryDetectDescribe;
 import boofcv.factory.feature.orientation.FactoryOrientationAlgs;
 import boofcv.struct.feature.BrightFeature;
 import boofcv.struct.image.ImageBase;
-import boofcv.struct.image.ImageSingleBand;
+import boofcv.struct.image.ImageGray;
 import boofcv.struct.image.ImageType;
 
 /**
@@ -43,7 +43,7 @@ public class FactorySurf {
 	/**
 	 * Java port of Pan-o-Matic's descriptor to make examing its behavior easier.
 	 */
-	public static <T extends ImageSingleBand, II extends ImageSingleBand>
+	public static <T extends ImageGray, II extends ImageGray>
 	DescribeRegionPoint<T,BrightFeature> surfPanOMaticInBoofCV(boolean isOriented, Class<T> imageType) {
 		OrientationIntegral<II> orientation = null;
 
@@ -60,7 +60,7 @@ public class FactorySurf {
 	/**
 	 * Creates a BoofCV SURF descriptor
 	 */
-	public static <T extends ImageBase, II extends ImageSingleBand>
+	public static <T extends ImageBase, II extends ImageGray>
 	DescribeRegionPoint<T,BrightFeature> surf( boolean stable , ImageType<T> imageType )
 	{
 		Class bandType = imageType.getDataType().getDataType();
@@ -79,21 +79,21 @@ public class FactorySurf {
 			describe = FactoryDescribePointAlgs.surfSpeed(null,integralType);
 		}
 
-		if( ImageType.Family.SINGLE_BAND == imageType.getFamily() )
+		if( ImageType.Family.GRAY == imageType.getFamily() )
 			return new DescribeOrientationSurf(orientation,describe);
 		else {
-			DescribePointSurfMultiSpectral descColor = new DescribePointSurfMultiSpectral(describe,3);
+			DescribePointSurfPlanar descColor = new DescribePointSurfPlanar(describe,3);
 			return new DescribeOrientationSurfColor(orientation,descColor,bandType,integralType);
 		}
 	}
 
-	public static <T extends ImageSingleBand>
+	public static <T extends ImageGray>
 	DetectDescribePoint<T,BrightFeature> detectDescribe( boolean stable , boolean color , Class<T> imageType  ) {
 
 		ConfigFastHessian configDetect = new ConfigFastHessian(58,3, -1,1, 9, 4, 4);
 
 		if( color ) {
-			ImageType typeMS = ImageType.ms(3,imageType);
+			ImageType typeMS = ImageType.pl(3,imageType);
 			if( stable )
 				return FactoryDetectDescribe.surfColorStable(configDetect,null,null,typeMS);
 			else

@@ -5,8 +5,8 @@ import boofcv.factory.fiducial.ConfigFiducialBinary;
 import boofcv.factory.fiducial.FactoryFiducial;
 import boofcv.factory.filter.binary.ConfigThreshold;
 import boofcv.factory.filter.binary.ThresholdType;
+import boofcv.struct.image.GrayU8;
 import boofcv.struct.image.ImageBase;
-import boofcv.struct.image.ImageUInt8;
 import validate.FactoryObject;
 import validate.FactoryObjectAbstract;
 
@@ -43,7 +43,7 @@ public class EstimateBinaryFiducialToCamera<T extends ImageBase> extends BaseEst
 			@Override
 			public Object newInstance() {
 				return FactoryFiducial.squareBinary(new ConfigFiducialBinary(1),
-						ConfigThreshold.local(ThresholdType.LOCAL_SQUARE, 15), ImageUInt8.class);
+						ConfigThreshold.local(ThresholdType.LOCAL_SQUARE, 15), GrayU8.class);
 			}
 		};
 

@@ -1,9 +1,9 @@
 package validate.tracking;
 
 import boofcv.alg.interpolate.InterpolatePixelS;
-import boofcv.core.image.FactoryGImageSingleBand;
-import boofcv.core.image.GImageSingleBand;
-import boofcv.struct.image.ImageSingleBand;
+import boofcv.core.image.FactoryGImageGray;
+import boofcv.core.image.GImageGray;
+import boofcv.struct.image.ImageGray;
 import org.ddogleg.optimization.functions.FunctionNtoN;
 
 /**
@@ -11,12 +11,12 @@ import org.ddogleg.optimization.functions.FunctionNtoN;
  *
  * @author Peter Abeles
  */
-public class FitHomographyGradient <I extends ImageSingleBand, D extends ImageSingleBand>
+public class FitHomographyGradient <I extends ImageGray, D extends ImageGray>
 		implements FunctionNtoN {
 
-	GImageSingleBand src;
-	GImageSingleBand srcDerivX;
-	GImageSingleBand srcDerivY;
+	GImageGray src;
+	GImageGray srcDerivX;
+	GImageGray srcDerivY;
 
 	InterpolatePixelS<I> dst;
 
@@ -26,10 +26,10 @@ public class FitHomographyGradient <I extends ImageSingleBand, D extends ImageSi
 
 	public void setInputs( I imageSrc , I imageDst ,
 						   D srcDerivX , D srcDerivY ) {
-		this.src = FactoryGImageSingleBand.wrap(imageSrc);
+		this.src = FactoryGImageGray.wrap(imageSrc);
 		dst.setImage(imageDst);
-		this.srcDerivX = FactoryGImageSingleBand.wrap(srcDerivX);
-		this.srcDerivY = FactoryGImageSingleBand.wrap(srcDerivY);
+		this.srcDerivX = FactoryGImageGray.wrap(srcDerivX);
+		this.srcDerivY = FactoryGImageGray.wrap(srcDerivY);
 	}
 
 	@Override

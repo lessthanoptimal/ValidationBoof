@@ -23,7 +23,7 @@ package validate.features.homography;
 import boofcv.abst.feature.describe.DescribeRegionPoint;
 import boofcv.io.image.ConvertBufferedImage;
 import boofcv.struct.feature.TupleDesc;
-import boofcv.struct.image.ImageSingleBand;
+import boofcv.struct.image.ImageGray;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -37,7 +37,7 @@ import java.util.List;
  *
  * @author Peter Abeles
  */
-public class BenchmarkFeatureDescribeRuntime<T extends ImageSingleBand, D extends TupleDesc> {
+public class BenchmarkFeatureDescribeRuntime<T extends ImageGray, D extends TupleDesc> {
 
 	Class<T> imageType;
 	DescribeRegionPoint<T,D> alg;

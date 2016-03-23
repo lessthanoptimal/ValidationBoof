@@ -26,7 +26,7 @@ import boofcv.alg.feature.detect.interest.UnrollSiftScaleSpaceGradient;
 import boofcv.alg.feature.orientation.OrientationHistogramSift;
 import boofcv.struct.BoofDefaults;
 import boofcv.struct.feature.BrightFeature;
-import boofcv.struct.image.ImageFloat32;
+import boofcv.struct.image.GrayF32;
 import boofcv.struct.image.ImageType;
 import org.ddogleg.struct.GrowQueue_F64;
 
@@ -39,7 +39,7 @@ import java.util.List;
  * @author Peter Abeles
  */
 public class DescribeOrientationSift
-		implements DescribeRegionPoint<ImageFloat32,BrightFeature>
+		implements DescribeRegionPoint<GrayF32,BrightFeature>
 {
 	UnrollSiftScaleSpaceGradient ss;
 
@@ -55,7 +55,7 @@ public class DescribeOrientationSift
 	}
 
 	@Override
-	public void setImage(ImageFloat32 image) {
+	public void setImage(GrayF32 image) {
 		ss.setImage(image);
 	}
 
@@ -118,7 +118,7 @@ public class DescribeOrientationSift
 	}
 
 	@Override
-	public ImageType<ImageFloat32> getImageType() {
+	public ImageType<GrayF32> getImageType() {
 		return null;
 	}
 

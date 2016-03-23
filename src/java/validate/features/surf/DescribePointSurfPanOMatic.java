@@ -23,10 +23,10 @@ import boofcv.alg.descriptor.UtilFeature;
 import boofcv.alg.feature.describe.DescribePointSurf;
 import boofcv.factory.filter.kernel.FactoryKernelGaussian;
 import boofcv.struct.feature.BrightFeature;
-import boofcv.struct.image.ImageSingleBand;
+import boofcv.struct.image.ImageGray;
 import boofcv.struct.sparse.GradientValue;
 
-public class DescribePointSurfPanOMatic<II extends ImageSingleBand> extends DescribePointSurf<II> {
+public class DescribePointSurfPanOMatic<II extends ImageGray> extends DescribePointSurf<II> {
 
 	double _cmp[][][];
 	int iVecLen = 4;

@@ -3,8 +3,8 @@ package validate.fiducial;
 import boofcv.abst.fiducial.FiducialDetector;
 import boofcv.abst.fiducial.calib.ConfigChessboard;
 import boofcv.factory.fiducial.FactoryFiducial;
-import boofcv.struct.image.ImageSingleBand;
-import boofcv.struct.image.ImageUInt8;
+import boofcv.struct.image.GrayU8;
+import boofcv.struct.image.ImageGray;
 import validate.misc.ParseHelper;
 
 import java.io.*;
@@ -12,7 +12,7 @@ import java.io.*;
 /**
  * @author Peter Abeles
  */
-public class EstimateChessboardToCamera <T extends ImageSingleBand> extends BaseEstimateSquareFiducialToCamera<T> {
+public class EstimateChessboardToCamera <T extends ImageGray> extends BaseEstimateSquareFiducialToCamera<T> {
 
 	Class<T> imageType;
 
@@ -53,7 +53,7 @@ public class EstimateChessboardToCamera <T extends ImageSingleBand> extends Base
 
 		File outputDirectory = setupOutput();
 
-		EstimateChessboardToCamera app = new EstimateChessboardToCamera(ImageUInt8.class);
+		EstimateChessboardToCamera app = new EstimateChessboardToCamera(GrayU8.class);
 		app.initialize(new File("data/fiducials/chessboard"));
 		app.setOutputDirectory(outputDirectory);
 

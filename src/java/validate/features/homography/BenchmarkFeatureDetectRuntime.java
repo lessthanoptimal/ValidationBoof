@@ -22,7 +22,7 @@ package validate.features.homography;
 
 import boofcv.abst.feature.detect.interest.InterestPointDetector;
 import boofcv.io.image.ConvertBufferedImage;
-import boofcv.struct.image.ImageSingleBand;
+import boofcv.struct.image.ImageGray;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -34,7 +34,7 @@ import java.io.IOException;
  *
  * @author Peter Abeles
  */
-public class BenchmarkFeatureDetectRuntime<T extends ImageSingleBand> {
+public class BenchmarkFeatureDetectRuntime<T extends ImageGray> {
 
 	Class<T> imageType;
 	InterestPointDetector<T> alg;

@@ -2,7 +2,7 @@ package validate.tracking;
 
 import boofcv.io.image.SimpleImageSequence;
 import boofcv.io.wrapper.DefaultMediaManager;
-import boofcv.struct.image.ImageFloat32;
+import boofcv.struct.image.GrayF32;
 import boofcv.struct.image.ImageType;
 import georegression.struct.homography.Homography2D_F64;
 
@@ -55,7 +55,7 @@ public class BatchEvaluateAveTolerance {
 //		String dataSets[] = new String[]{"skew","rotate2","move_out","move_in"};
 		String dataSets[] = new String[]{"move_in"};
 
-		Class imageType = ImageFloat32.class;
+		Class imageType = GrayF32.class;
 
 		for( String whichData : dataSets ) {
 			for( int skip : skips )  {

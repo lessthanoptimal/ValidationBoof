@@ -8,8 +8,8 @@ import boofcv.factory.filter.binary.ConfigThreshold;
 import boofcv.factory.filter.binary.ThresholdType;
 import boofcv.io.image.ConvertBufferedImage;
 import boofcv.io.image.UtilImageIO;
-import boofcv.struct.image.ImageSingleBand;
-import boofcv.struct.image.ImageUInt8;
+import boofcv.struct.image.GrayU8;
+import boofcv.struct.image.ImageGray;
 import validate.FactoryObject;
 
 import java.awt.image.BufferedImage;
@@ -23,7 +23,7 @@ import java.io.IOException;
  *
  * @author Peter Abeles
  */
-public class EstimateImageFiducialToCamera<T extends ImageSingleBand> extends BaseEstimateSquareFiducialToCamera<T> {
+public class EstimateImageFiducialToCamera<T extends ImageGray> extends BaseEstimateSquareFiducialToCamera<T> {
 
 	FactoryObject<SquareImage_to_FiducialDetector<T>> factory;
 
@@ -64,7 +64,7 @@ public class EstimateImageFiducialToCamera<T extends ImageSingleBand> extends Ba
 			public Object newInstance() {
 				return FactoryFiducial.squareImage(
 						new ConfigFiducialImage(),
-						ConfigThreshold.local(ThresholdType.LOCAL_SQUARE,20), ImageUInt8.class);
+						ConfigThreshold.local(ThresholdType.LOCAL_SQUARE,20), GrayU8.class);
 			}
 		};
 

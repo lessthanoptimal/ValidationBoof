@@ -22,8 +22,8 @@ package validate.features.surf;
 import boofcv.abst.feature.detect.interest.ConfigFastHessian;
 import boofcv.abst.feature.detect.interest.InterestPointDetector;
 import boofcv.factory.feature.detect.interest.FactoryInterestPoint;
-import boofcv.struct.image.ImageFloat32;
-import boofcv.struct.image.ImageSingleBand;
+import boofcv.struct.image.GrayF32;
+import boofcv.struct.image.ImageGray;
 import validate.features.homography.CreateDetectionFile;
 
 import java.io.FileNotFoundException;
@@ -33,7 +33,7 @@ import java.io.FileNotFoundException;
  */
 public class CreateDetectionFileSurf {
 
-	public static <T extends ImageSingleBand>
+	public static <T extends ImageGray>
 	void doStuff( String directory , String suffix , Class<T> imageType ) throws FileNotFoundException {
 		// below are the settings used for detect stability test
 		// graf image 1 with 2000 features
@@ -46,7 +46,7 @@ public class CreateDetectionFileSurf {
 	}
 
 	public static void main( String args[] ) throws FileNotFoundException {
-		Class imageType = ImageFloat32.class;
+		Class imageType = GrayF32.class;
 
 		doStuff("data/bikes/",".png",imageType);
 		doStuff("data/boat/",".png",imageType);

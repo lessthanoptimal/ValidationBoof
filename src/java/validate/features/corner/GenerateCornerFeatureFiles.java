@@ -12,7 +12,7 @@ import boofcv.factory.feature.detect.interest.FactoryDetectPoint;
 import boofcv.io.image.UtilImageIO;
 import boofcv.struct.QueueCorner;
 import boofcv.struct.image.ImageDataType;
-import boofcv.struct.image.ImageSingleBand;
+import boofcv.struct.image.ImageGray;
 import georegression.struct.point.Point2D_F64;
 import georegression.struct.point.Point2D_I16;
 import validate.misc.PointFileCodec;
@@ -55,13 +55,13 @@ public class GenerateCornerFeatureFiles {
 				imageType, derivType);
 
 		for (int i = 0; i < detectors.size(); i++) {
-			ImageSingleBand input = UtilImageIO.loadImage(ImagePath,imageType);
+			ImageGray input = UtilImageIO.loadImage(ImagePath,imageType);
 			anyDeriv.setInput(input);
-			ImageSingleBand derivX = anyDeriv.getDerivative(true);
-			ImageSingleBand derivY = anyDeriv.getDerivative(false);
-			ImageSingleBand derivXX = anyDeriv.getDerivative(true, true);
-			ImageSingleBand derivYY = anyDeriv.getDerivative(false, false);
-			ImageSingleBand derivXY = anyDeriv.getDerivative(true, false);
+			ImageGray derivX = anyDeriv.getDerivative(true);
+			ImageGray derivY = anyDeriv.getDerivative(false);
+			ImageGray derivXX = anyDeriv.getDerivative(true, true);
+			ImageGray derivYY = anyDeriv.getDerivative(false, false);
+			ImageGray derivXY = anyDeriv.getDerivative(true, false);
 
 			AlgInfo info = detectors.get(i);
 			info.detector.process(input, derivX, derivY, derivXX, derivYY, derivXY);
