@@ -37,7 +37,6 @@ public class GenerateRegressionData {
 		list.add( new TextThresholdRegression() );
 		list.add( new FiducialRegression() );
 		list.add( new DetectPolygonRegression() );
-		list.add( new DescribeImageDenseRegression() );
 		// TODO scene recogition
 
 		return list;
