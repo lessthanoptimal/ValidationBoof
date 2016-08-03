@@ -132,9 +132,9 @@ public class DebugDenseStereoVideo<T extends ImageGray> implements MouseListener
 
 		// undistorted and rectify images
 		ImageDistort<T,T> imageDistortLeft =
-				RectifyImageOps.rectifyImage(param.getLeft(), rect1, BorderType.VALUE, inputLeft.getImageType());
+				RectifyImageOps.rectifyImage(param.getLeft(), rect1, BorderType.ZERO, inputLeft.getImageType());
 		ImageDistort<T,T> imageDistortRight =
-				RectifyImageOps.rectifyImage(param.getRight(), rect2, BorderType.VALUE, inputRight.getImageType());
+				RectifyImageOps.rectifyImage(param.getRight(), rect2, BorderType.ZERO, inputRight.getImageType());
 
 		GImageMiscOps.fill(rectifiedLeft, 0);
 		GImageMiscOps.fill(rectifiedRight,0);

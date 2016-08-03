@@ -1,12 +1,9 @@
 package validate.applications;
 
-import boofcv.gui.image.ShowImages;
 import boofcv.io.image.UtilImageIO;
 import georegression.struct.point.Point2D_F64;
 import validate.misc.PointFileCodec;
 
-import javax.swing.*;
-import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.List;
@@ -16,17 +13,14 @@ import java.util.List;
  *
  * @author Peter Abeles
  */
-public class HandSelectPointsApp {
+public class HandSelectPointsApp extends HandSelectBase {
 
-
-	String outputName;
-
-	JPanel gui = new JPanel();
 
 	SelectPointPanel imagePanel = new SelectPointPanel();
-	InfoHandSelectPanel infoPanel = new InfoHandSelectPanel(this);
 
 	public HandSelectPointsApp( BufferedImage image , String outputName ) {
+		super(outputName);
+
 		if( new File(outputName).exists() ) {
 			List<List<Point2D_F64>> sets = PointFileCodec.loadSets(outputName);
 			if( sets == null ) {
@@ -35,29 +29,11 @@ public class HandSelectPointsApp {
 				imagePanel.setSets(sets);
 			}
 		}
-
-		this.outputName = outputName;
 		imagePanel.setBufferedImage(image);
-		gui.setLayout(new BorderLayout());
-		gui.add(imagePanel,BorderLayout.CENTER);
-		gui.add(infoPanel, BorderLayout.EAST);
-
-		imagePanel.addMouseWheelListener(infoPanel);
-
-		// scale the image if it's huge
-		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-
-		double scaleX = screenSize.getWidth()/(double)image.getWidth();
-		double scaleY = screenSize.getHeight()/(double)image.getHeight();
-		double scale = Math.min(scaleX,scaleY);
-		if( scale < 1) {
-			infoPanel.setScale(scale);
-			setScale(scale);
-		}
-
-		ShowImages.showWindow(gui,"Point Selector").setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+		initGui(image.getWidth(),image.getHeight(),imagePanel);
 	}
 
+	@Override
 	public void save() {
 		List<List<Point2D_F64>> points = imagePanel.getSelectedPoints();
 
@@ -70,10 +46,17 @@ public class HandSelectPointsApp {
 		}
 	}
 
+	@Override
+	public String getApplicationName() {
+		return "Select Point Features";
+	}
+
+	@Override
 	public void setScale( double scale ) {
 		imagePanel.setScale(scale);
 	}
 
+	@Override
 	public void clearPoints() {
 		imagePanel.clearPoints();
 		imagePanel.repaint();

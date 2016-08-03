@@ -19,14 +19,14 @@ public class InfoHandSelectPanel extends JPanel implements ChangeListener, Mouse
 	private static double MIN = 0.1;
 	private static double INC = 0.1;
 
-	HandSelectPointsApp owner;
+	HandSelectBase owner;
 
 	protected JSpinner zoomSpinner;
 	protected JButton resetZoomButton;
 	protected JButton saveButton;
 	protected JButton clearButton;
 
-	public InfoHandSelectPanel(HandSelectPointsApp owner) {
+	public InfoHandSelectPanel(HandSelectBase owner) {
 		this.owner = owner;
 
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
