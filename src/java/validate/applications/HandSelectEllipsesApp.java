@@ -1,6 +1,7 @@
 package validate.applications;
 
 import boofcv.io.image.UtilImageIO;
+import validate.misc.EllipseFileCodec;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -12,11 +13,14 @@ import java.io.File;
  */
 public class HandSelectEllipsesApp extends HandSelectBase {
 
-
 	SelectEllipsePanel imagePanel = new SelectEllipsePanel();
 
 	public HandSelectEllipsesApp(BufferedImage image , String outputName ) {
 		super(outputName);
+
+		if( new File(outputName).exists() ) {
+			imagePanel.list.addAll(EllipseFileCodec.load(outputName));
+		}
 
 		imagePanel.setBufferedImage(image);
 		initGui(image.getWidth(),image.getHeight(),imagePanel);
@@ -24,7 +28,7 @@ public class HandSelectEllipsesApp extends HandSelectBase {
 
 	@Override
 	public void save() {
-
+		EllipseFileCodec.save(outputName," rotated ellipses. x y a b phi",imagePanel.list);
 	}
 
 	@Override
@@ -44,7 +48,7 @@ public class HandSelectEllipsesApp extends HandSelectBase {
 	}
 
 	public static void main(String[] args) {
-		String imagePath = "data/shape/border01/image00000.jpg";
+		String imagePath = "data/fiducials/acircle_grid/standard/cardboard/image00000.png";
 
 		String outputName = new File(imagePath).getAbsolutePath();
 		outputName = outputName.substring(0,outputName.length()-4)+".txt";

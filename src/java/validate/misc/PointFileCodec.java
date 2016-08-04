@@ -6,6 +6,8 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static validate.misc.ParseHelper.skipComments;
+
 /**
  * For reading and writing simple list of points
  *
@@ -137,13 +139,4 @@ public class PointFileCodec {
 		}
 	}
 
-	private static String skipComments(BufferedReader reader) throws IOException {
-		String line = reader.readLine();
-		while( line != null && line.length() >= 1 ) {
-			if( line.charAt(0) != '#')
-				break;
-			line = reader.readLine();
-		}
-		return line;
-	}
 }

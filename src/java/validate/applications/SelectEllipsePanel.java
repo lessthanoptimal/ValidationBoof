@@ -48,8 +48,6 @@ public class SelectEllipsePanel extends ImageZoomPanel
 		g2.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, RenderingHints.VALUE_STROKE_PURE);
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-
-
 		synchronized (list) {
 			for (int i = 0; i < list.size(); i++) {
 				EllipseRotated_F64 ellipse = list.get(i);
@@ -57,8 +55,8 @@ public class SelectEllipsePanel extends ImageZoomPanel
 				renderEllipse(g2, ellipse);
 
 				g2.setColor(Color.PINK);
-				float x = (float)(ellipse.center.x);
-				float y = (float)(ellipse.center.y - ellipse.a) - 5;
+				float x = (float)(scale*(ellipse.center.x));
+				float y = (float)(scale*((ellipse.center.y - ellipse.a) - 5));
 
 				g2.drawString(String.format("%d",i),x,y);
 
@@ -175,8 +173,10 @@ public class SelectEllipsePanel extends ImageZoomPanel
 
 		if( a0.distance(p) <= tol || a1.distance(p) <= tol ) {
 			mode = Mode.ADJUST_MAJOR;
+			prevAngle = Math.atan2( p.y - selected.center.y , p.x - selected.center.x );
 		} else if( b0.distance(p) <= tol || b1.distance(p) <= tol) {
 			mode = Mode.ADJUST_MINOR;
+			prevAngle = Math.atan2( p.y - selected.center.y , p.x - selected.center.x );
 		} else if( selected.center.distance(p) <= tol ) {
 			mode = Mode.TRANSLATE;
 		} else if(Distance2D_F64.distance(selected,p) <= tol ) {
@@ -198,6 +198,12 @@ public class SelectEllipsePanel extends ImageZoomPanel
 					list.remove(selected);
 				}
 				selected = null;
+				repaint();
+			} else if( selected.a < selected.b ) {
+				double tmp = selected.b;
+				selected.b = selected.a;
+				selected.a = tmp;
+				selected.phi = UtilAngle.boundHalf(selected.phi + Math.PI/2.0);
 				repaint();
 			}
 		}
@@ -311,21 +317,26 @@ public class SelectEllipsePanel extends ImageZoomPanel
 			repaint();
 		} else if( mode == Mode.ADJUST_MAJOR ) {
 			selected.a = selected.center.distance(p);
-
+			adjustAngle(p);
 			repaint();
 		} else if( mode == Mode.ADJUST_MINOR ) {
 			selected.b = selected.center.distance(p);
+			adjustAngle(p);
 			repaint();
 		} else if( mode == Mode.TRANSLATE ) {
 			selected.center.set(p);
 			repaint();
 		} else if( mode == Mode.ROTATE ) {
-			double angle = Math.atan2( p.y - selected.center.y , p.x - selected.center.x );
-			double delta = UtilAngle.minus(angle,prevAngle);
-			selected.phi = UtilAngle.boundHalf(selected.phi+delta);
-			prevAngle = angle;
+			adjustAngle(p);
 			repaint();
 		}
+	}
+
+	private void adjustAngle(Point2D_F64 p) {
+		double angle = Math.atan2( p.y - selected.center.y , p.x - selected.center.x );
+		double delta = UtilAngle.minus(angle,prevAngle);
+		selected.phi = UtilAngle.boundHalf(selected.phi+delta);
+		prevAngle = angle;
 	}
 
 	@Override
