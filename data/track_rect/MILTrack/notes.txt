@@ -1,4 +1,11 @@
 
 test data for MILTrack
 
-http://vision.ucsd.edu/~bbabenko/project_miltrack.shtml
+Original Source:
+* http://vision.ucsd.edu/~bbabenko/project_miltrack.shtml
+* No longer available there
+
+New Source and Instructions:
+* cd track_rect/MILTraack
+* wget http://pilotfiber.dl.sourceforge.net/project/validationboof/miltrack_data.zip
+* unzip miltrack_data.zip
