@@ -1,5 +1,6 @@
 package validate.shape;
 
+import boofcv.factory.shape.ConfigEllipseDetector;
 import boofcv.factory.shape.ConfigPolygonDetector;
 import boofcv.factory.shape.ConfigRefinePolygonCornersToImage;
 import boofcv.factory.shape.ConfigRefinePolygonLineToImage;
@@ -17,7 +18,7 @@ import java.util.List;
  */
 public class UtilShapeDetector {
 
-	public static ConfigPolygonDetector configure( boolean fitLines , File file ) {
+	public static ConfigPolygonDetector configurePolygon(boolean fitLines , File file ) {
 
 		int minSides=3,maxSides=6;
 		boolean convex = true;
@@ -65,6 +66,12 @@ public class UtilShapeDetector {
 		config.maximumSides = maxSides;
 		config.convex = convex;
 		config.canTouchBorder = border;
+
+		return config;
+	}
+
+	public static ConfigEllipseDetector configureEllipse() {
+		ConfigEllipseDetector config = new ConfigEllipseDetector();
 
 		return config;
 	}

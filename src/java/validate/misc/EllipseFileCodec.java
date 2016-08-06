@@ -20,6 +20,8 @@ public class EllipseFileCodec {
 
 			if( header != null)
 				out.println("# "+header);
+			out.println("# center.x center.y a b phi");
+			out.println("# coordinates in pixels and angle in radians");
 
 			for (int i = 0; i < ellipses.size(); i++) {
 				EllipseRotated_F64 e = ellipses.get(i);

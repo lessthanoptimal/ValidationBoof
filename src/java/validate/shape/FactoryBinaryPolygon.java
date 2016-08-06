@@ -25,7 +25,7 @@ public class FactoryBinaryPolygon<T extends ImageGray>
 
 	@Override
 	public void configure(File file) {
-		config = UtilShapeDetector.configure(fitLines,file);
+		config = UtilShapeDetector.configurePolygon(fitLines,file);
 	}
 
 	@Override

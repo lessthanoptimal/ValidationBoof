@@ -48,7 +48,7 @@ public class HandSelectEllipsesApp extends HandSelectBase {
 	}
 
 	public static void main(String[] args) {
-		String imagePath = "data/fiducials/acircle_grid/standard/cardboard/image00000.png";
+		String imagePath = "data/fiducials/acircle_grid/standard/cardboard/image00005.png";
 
 		String outputName = new File(imagePath).getAbsolutePath();
 		outputName = outputName.substring(0,outputName.length()-4)+".txt";

@@ -122,7 +122,7 @@ public class EvaluatePolygonDetector {
 		totalError /= totalTruthMatched;
 		int numFalseNegative = truth.size()-totalTruthMatched;
 
-		outputResults.printf("%15s %2d %2d %2d %2d %2d %2d %7.4f\n", fileName, truth.size(), found.size(),
+		outputResults.printf("%-15s %2d %2d %2d %2d %2d %2d %7.4f\n", fileName, truth.size(), found.size(),
 				numMultiple, numMissMatched, falsePositives, numFalseNegative, totalError);
 	}
 
