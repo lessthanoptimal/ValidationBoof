@@ -70,8 +70,11 @@ public class UtilShapeDetector {
 		return config;
 	}
 
-	public static ConfigEllipseDetector configureEllipse() {
+	public static ConfigEllipseDetector configureEllipse( boolean subpixel ) {
 		ConfigEllipseDetector config = new ConfigEllipseDetector();
+
+		if( !subpixel )
+			config.maxIterations = 0;
 
 		return config;
 	}

@@ -86,7 +86,7 @@ public class DetectEllipseSaveToFile<T extends ImageGray> {
 	public static void main(String[] args) {
 
 		Class imageType = GrayU8.class;
-		ConfigEllipseDetector config = UtilShapeDetector.configureEllipse();
+		ConfigEllipseDetector config = UtilShapeDetector.configureEllipse(true);
 		BinaryEllipseDetector detector = FactoryShapeDetector.ellipse(config,imageType);
 
 		DetectEllipseSaveToFile app = new DetectEllipseSaveToFile(detector, false);

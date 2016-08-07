@@ -26,8 +26,9 @@ public class DetectEllipseRegression extends BaseTextFileRegression {
 	public void process(ImageDataType type) throws IOException {
 		final Class imageType = ImageDataType.typeToSingleClass(type);
 
-		process("EllipseGlobal", false, new FactoryBinaryEllipse(imageType));
-		process("EllipseLocal", true, new FactoryBinaryEllipse(imageType));
+		process("EllipseGlobal", false, new FactoryBinaryEllipse(true,imageType));
+		process("EllipseLocal", true, new FactoryBinaryEllipse(true,imageType));
+		process("EllipseLocalPixel", true, new FactoryBinaryEllipse(false,imageType));
 	}
 
 	private void process(String name, boolean localBinary , FactoryObject<BinaryEllipseDetector> factory)
