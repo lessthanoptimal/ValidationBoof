@@ -28,8 +28,16 @@ public class DescribeImageDenseRegression extends BaseTextFileRegression {
 
 		DenseSampling sampling = new DenseSampling(10,10);
 
-		algs.add(new Info("HOG-SB-"+type, FactoryDescribeImageDense.hog(new ConfigDenseHoG(),ImageType.single(imageType))));
-		algs.add(new Info("HOG-MS-"+type, FactoryDescribeImageDense.hog(new ConfigDenseHoG(),ImageType.pl(3,imageType))));
+		ConfigDenseHoG hogFast = new ConfigDenseHoG();
+		hogFast.fastVariant = true;
+		ConfigDenseHoG hogOrig = new ConfigDenseHoG();
+		hogOrig.fastVariant = false;
+
+
+		algs.add(new Info("HOG-SB-"+type, FactoryDescribeImageDense.hog(hogOrig,ImageType.single(imageType))));
+		algs.add(new Info("HOG-MS-"+type, FactoryDescribeImageDense.hog(hogOrig,ImageType.pl(3,imageType))));
+		algs.add(new Info("HOG-F-SB-"+type, FactoryDescribeImageDense.hog(hogFast,ImageType.single(imageType))));
+		algs.add(new Info("HOG-F-MS-"+type, FactoryDescribeImageDense.hog(hogFast,ImageType.pl(3,imageType))));
 		algs.add(new Info("SURF-F-"+type, FactoryDescribeImageDense.surfFast(new ConfigDenseSurfFast(sampling),imageType)));
 		algs.add(new Info("SURF-S-"+type, FactoryDescribeImageDense.surfStable(new ConfigDenseSurfStable(sampling),imageType)));
 		algs.add(new Info("SIFT-"+type, FactoryDescribeImageDense.sift(new ConfigDenseSift(sampling),imageType)));
