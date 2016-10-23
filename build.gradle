@@ -4,7 +4,7 @@ apply plugin: 'maven'
 
 group = 'org.boofcv'
 version = '0.25'
-sourceCompatibility = 1.6
+sourceCompatibility = 1.8
 
 repositories {
     mavenCentral()
@@ -40,8 +40,8 @@ dependencies {
 
 idea {
     project {
-        jdkName = '1.6 (64bit)'
-        languageLevel = '1.6'
+        jdkName = '1.8 (64bit)'
+        languageLevel = '1.8'
     }
 
     module {

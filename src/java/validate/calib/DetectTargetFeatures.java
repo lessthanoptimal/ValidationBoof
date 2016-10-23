@@ -7,6 +7,7 @@ import boofcv.factory.calib.FactoryCalibrationTarget;
 import boofcv.io.image.ConvertBufferedImage;
 import boofcv.io.image.UtilImageIO;
 import boofcv.misc.BoofMiscOps;
+import boofcv.struct.geo.PointIndex2D_F64;
 import boofcv.struct.image.GrayF32;
 
 import java.awt.image.BufferedImage;
@@ -48,8 +49,8 @@ public class DetectTargetFeatures {
 				CalibrationObservation points = detector.getDetectedPoints();
 
 				out.printf("%s %d ",new File(name).getName(),points.size());
-				for( CalibrationObservation.Point p : points.points ) {
-					out.printf("%f %f ",p.pixel.x,p.pixel.y);
+				for( PointIndex2D_F64 p : points.points ) {
+					out.printf("%f %f ",p.x,p.y);
 				}
 				out.println();
 

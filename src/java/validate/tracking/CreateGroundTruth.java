@@ -18,8 +18,8 @@ import boofcv.io.image.ConvertBufferedImage;
 import boofcv.io.image.SimpleImageSequence;
 import boofcv.io.image.UtilImageIO;
 import boofcv.io.wrapper.DefaultMediaManager;
-import boofcv.struct.calib.IntrinsicParameters;
-import boofcv.struct.distort.PointTransform_F32;
+import boofcv.struct.calib.CameraPinholeRadial;
+import boofcv.struct.distort.Point2Transform2_F32;
 import boofcv.struct.geo.AssociatedPair;
 import boofcv.struct.image.GrayF32;
 import boofcv.struct.image.ImageType;
@@ -86,13 +86,13 @@ public class CreateGroundTruth {
 	// features in the key frame
 	GrayF32 keyFrame;
 
-	public CreateGroundTruth( IntrinsicParameters cameraParam , String outputDirectory ) {
+	public CreateGroundTruth( CameraPinholeRadial cameraParam , String outputDirectory ) {
 
 		this.outputDirectory = outputDirectory;
 
 		// create distortion to remove lens distortion
 		// Adjust the distortion so that the undistorted image only shows image pixels
-		PointTransform_F32 allInside = LensDistortionOps.transform_F32(AdjustmentType.EXPAND,cameraParam, null,true);
+		Point2Transform2_F32 allInside = LensDistortionOps.transform_F32(AdjustmentType.EXPAND,cameraParam, null,true);
 		InterpolatePixelS<GrayF32> interp = FactoryInterpolation.bilinearPixelS(GrayF32.class, BorderType.EXTENDED);
 		removeLens = FactoryDistort.distortSB(false,interp, GrayF32.class);
 		removeLens.setModel(new PointToPixelTransform_F32(allInside));
@@ -240,7 +240,7 @@ public class CreateGroundTruth {
 		SimpleImageSequence sequence =
 				DefaultMediaManager.INSTANCE.openVideo(pathToData+whichData+".mjpeg", ImageType.single(GrayF32.class));
 
-		IntrinsicParameters cameraParam = UtilIO.loadXML("data/intrinsic.xml");
+		CameraPinholeRadial cameraParam = UtilIO.loadXML("data/intrinsic.xml");
 
 		String outputDir = "data/temp";
 

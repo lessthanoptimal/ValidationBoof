@@ -1,9 +1,10 @@
 package validate.fiducial;
 
 import boofcv.abst.fiducial.FiducialDetector;
+import boofcv.alg.distort.radtan.LensDistortionRadialTangential;
 import boofcv.io.image.ConvertBufferedImage;
 import boofcv.io.image.UtilImageIO;
-import boofcv.struct.calib.IntrinsicParameters;
+import boofcv.struct.calib.CameraPinholeRadial;
 import boofcv.struct.image.ImageBase;
 
 import java.awt.image.BufferedImage;
@@ -53,10 +54,10 @@ public class RuntimePerformanceFiducialToCamera< T extends ImageBase> {
 
 		List<T> frames = new ArrayList<T>();
 
-		IntrinsicParameters intrinsic = FiducialCommon.parseIntrinsic(new File(inputDirectory,"intrinsic.txt"));
+		CameraPinholeRadial intrinsic = FiducialCommon.parseIntrinsic(new File(inputDirectory,"intrinsic.txt"));
 
 		FiducialDetector<T> detector = factory.createDetector(inputDirectory);
-		detector.setIntrinsic(intrinsic);
+		detector.setLensDistortion(new LensDistortionRadialTangential(intrinsic));
 
 		File[] files = inputDirectory.listFiles();
 		for( File f : files ) {

@@ -1,6 +1,6 @@
 package validate.fiducial;
 
-import boofcv.struct.calib.IntrinsicParameters;
+import boofcv.struct.calib.CameraPinholeRadial;
 import georegression.struct.point.Point3D_F64;
 import georegression.struct.se.Se3_F64;
 import validate.misc.ParseHelper;
@@ -14,7 +14,7 @@ import java.util.List;
  */
 public class FiducialCommon {
 
-	public static void saveIntrinsic( IntrinsicParameters intrinsic , File file ) {
+	public static void saveIntrinsic( CameraPinholeRadial intrinsic , File file ) {
 		try {
 			PrintStream out = new PrintStream(new FileOutputStream(file));
 
@@ -39,7 +39,7 @@ public class FiducialCommon {
 		} catch( FileNotFoundException ignore ) {}
 	}
 
-	public static IntrinsicParameters parseIntrinsic( File file ) {
+	public static CameraPinholeRadial parseIntrinsic( File file ) {
 		try {
 			BufferedReader reader = new BufferedReader(new FileReader(file));
 
@@ -50,7 +50,7 @@ public class FiducialCommon {
 					words.add(w[j]);
 				}
 			}
-			IntrinsicParameters out = new IntrinsicParameters();
+			CameraPinholeRadial out = new CameraPinholeRadial();
 			out.fx = Double.parseDouble(words.get(0));
 			out.skew = Double.parseDouble(words.get(1));
 			out.cx = Double.parseDouble(words.get(2));

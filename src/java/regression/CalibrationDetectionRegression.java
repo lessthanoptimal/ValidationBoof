@@ -26,8 +26,8 @@ import java.util.List;
  */
 public class CalibrationDetectionRegression extends BaseTextFileRegression{
 
-	List<String> chessDirectories = new ArrayList<String>();
-	List<String> squareDirectories = new ArrayList<String>();
+	List<String> chessDirectories = new ArrayList<>();
+	List<String> squareDirectories = new ArrayList<>();
 
 	List<DetectorInfo> chessDetectors = new ArrayList<DetectorInfo>();
 	List<DetectorInfo> squareDetectors = new ArrayList<DetectorInfo>();
@@ -126,7 +126,7 @@ public class CalibrationDetectionRegression extends BaseTextFileRegression{
 						errorLog.println(dataSetName+" different sizes. "+found.size()+" "+groundTruth.size());
 					} else {
 						for (int i = 0; i < found.size(); i++) {
-							errors[i] = distanceFromClosest(found.points.get(i).pixel,groundTruth);
+							errors[i] = distanceFromClosest(found.points.get(i),groundTruth);
 							allErrors.add(errors[i]);
 						}
 

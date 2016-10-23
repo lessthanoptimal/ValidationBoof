@@ -8,7 +8,7 @@ import boofcv.alg.geo.calibration.CalibrationObservation;
 import boofcv.alg.geo.calibration.CalibrationPlanarGridZhang99;
 import boofcv.alg.geo.calibration.Zhang99ParamAll;
 import boofcv.factory.calib.FactoryCalibrationTarget;
-import boofcv.struct.calib.IntrinsicParameters;
+import boofcv.struct.calib.CameraPinholeRadial;
 import georegression.struct.point.Point2D_F64;
 
 import java.io.*;
@@ -91,7 +91,7 @@ public class CalibrateFromDetectedPoints {
 		Zhang99ParamAll found = zhang99.getOptimized();
 
 		// Convenient function for converting from specialized Zhang99 format to generalized
-		IntrinsicParameters param = found.convertToIntrinsic();
+		CameraPinholeRadial param = found.convertToIntrinsic();
 
 		// print the results to standard out
 //		param.print();
