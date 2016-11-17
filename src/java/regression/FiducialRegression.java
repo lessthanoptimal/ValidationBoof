@@ -1,6 +1,7 @@
 package regression;
 
 import boofcv.factory.fiducial.ConfigFiducialBinary;
+import boofcv.factory.fiducial.ConfigFiducialImage;
 import boofcv.factory.fiducial.FactoryFiducial;
 import boofcv.factory.filter.binary.ConfigThreshold;
 import boofcv.factory.filter.binary.ThresholdType;
@@ -45,19 +46,21 @@ public class FiducialRegression extends BaseTextFileRegression {
 		{return FactoryFiducial.squareBinary(new ConfigFiducialBinary(1), fast, imageType);}};
 		process("BinaryFast", new EstimateBinaryFiducialToCamera(factory), "binary");
 
-//		factory = new FactoryObjectAbstract() {
-//			@Override public Object newInstance()
-//		{return FactoryFiducial.squareImage(new ConfigFiducialImage(), robust, imageType);}};
-//		process("ImageRobust", new EstimateImageFiducialToCamera(factory), "image");
-//
-//		factory = new FactoryObjectAbstract() {
-//			@Override public Object newInstance()
-//		{return FactoryFiducial.squareImage(new ConfigFiducialImage(), fast, imageType);}};
-//		process("ImageFast", new EstimateImageFiducialToCamera(factory), "image");
-//
-//		process("Chessboard", new EstimateChessboardToCamera(imageType), "chessboard");
-//
-//		process("SquareGrid", new EstimateSquareGridToCamera(imageType), "square_grid");
+		factory = new FactoryObjectAbstract() {
+			@Override public Object newInstance()
+		{return FactoryFiducial.squareImage(new ConfigFiducialImage(), robust, imageType);}};
+		process("ImageRobust", new EstimateImageFiducialToCamera(factory), "image");
+
+		factory = new FactoryObjectAbstract() {
+			@Override public Object newInstance()
+		{return FactoryFiducial.squareImage(new ConfigFiducialImage(), fast, imageType);}};
+		process("ImageFast", new EstimateImageFiducialToCamera(factory), "image");
+
+		process("Chessboard", new EstimateChessboardToCamera(imageType), "chessboard");
+
+		process("SquareGrid", new EstimateSquareGridToCamera(imageType), "square_grid");
+
+		process("CircleAsymmetric", new EstimateCircleAsymmetricToCamera(imageType), "circle_asymmetric");
 	}
 
 	private void process(String name, BaseEstimateSquareFiducialToCamera estimate, String type) throws IOException {
