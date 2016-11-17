@@ -1,6 +1,6 @@
 package validate.calib;
 
-import boofcv.abst.fiducial.calib.ConfigChessboard;
+import boofcv.abst.fiducial.calib.ConfigCircleAsymmetricGrid;
 import boofcv.abst.geo.calibration.DetectorFiducialCalibration;
 import boofcv.alg.geo.calibration.CalibrationObservation;
 import boofcv.factory.fiducial.FactoryFiducialCalibration;
@@ -27,18 +27,21 @@ public class DetectTargetFeatures {
 
 	public static void main( String args[] ) throws FileNotFoundException {
 		// detects the calibration target points
-		DetectorFiducialCalibration detector = FactoryFiducialCalibration.chessboard(new ConfigChessboard(5, 7, 30));
+		DetectorFiducialCalibration detector = FactoryFiducialCalibration.
+//				chessboard(new ConfigChessboard(5, 7, 30));
+				circleAsymmGrid(new ConfigCircleAsymmetricGrid(8, 5, 1, 6));
 
 		// load image list
-		String directory = "data/calib/stereo/Bumblebee2_Chess";
+		String directory = "data/calib/mono/circle_asymmetric/Sony_DSC-HX5V";
 		List<String> images = BoofMiscOps.directoryList(directory, "jpg");
 
 		Collections.sort(images);
 
-		PrintStream out = new PrintStream(new FileOutputStream("calib_pts.txt"));
-
 		// process and saves results
 		for( String name : images ) {
+			PrintStream out = new PrintStream(new FileOutputStream(name.substring(0,name.length()-4)+".txt"));
+			out.println("# Automatically selected points in file "+new File(name).getName());
+
 			BufferedImage orig = UtilImageIO.loadImage(name);
 			GrayF32 input = new GrayF32(orig.getWidth(),orig.getHeight());
 			ConvertBufferedImage.convertFrom(orig,input);
@@ -48,15 +51,16 @@ public class DetectTargetFeatures {
 
 				CalibrationObservation points = detector.getDetectedPoints();
 
-				out.printf("%s %d ",new File(name).getName(),points.size());
+//				out.printf("%s %d ",new File(name).getName(),points.size());
 				for( PointIndex2D_F64 p : points.points ) {
-					out.printf("%f %f ",p.x,p.y);
+					out.printf("%f %f\n",p.x,p.y);
 				}
-				out.println();
 
 			} else {
 				System.out.println("Failed: "+name);
 			}
+
+			out.close();
 		}
 	}
 }

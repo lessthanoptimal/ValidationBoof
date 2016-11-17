@@ -1,6 +1,8 @@
 package regression;
 
+import boofcv.abst.fiducial.calib.CalibrationPatterns;
 import boofcv.abst.fiducial.calib.ConfigChessboard;
+import boofcv.abst.fiducial.calib.ConfigCircleAsymmetricGrid;
 import boofcv.abst.fiducial.calib.ConfigSquareGrid;
 import boofcv.abst.geo.calibration.DetectorFiducialCalibration;
 import boofcv.alg.geo.calibration.CalibrationObservation;
@@ -28,10 +30,11 @@ public class CalibrationDetectionRegression extends BaseTextFileRegression{
 
 	List<String> chessDirectories = new ArrayList<>();
 	List<String> squareDirectories = new ArrayList<>();
+	List<String> circleAsymDirectories = new ArrayList<>();
 
 	List<DetectorInfo> chessDetectors = new ArrayList<DetectorInfo>();
 	List<DetectorInfo> squareDetectors = new ArrayList<DetectorInfo>();
-
+	List<DetectorInfo> circleAsymDetctors = new ArrayList<DetectorInfo>();
 
 	public CalibrationDetectionRegression() {
 
@@ -47,15 +50,26 @@ public class CalibrationDetectionRegression extends BaseTextFileRegression{
 		squareDirectories.add("data/calib/mono/square_grid/large");
 		squareDirectories.add("data/calib/mono/square_grid/distant");
 
-		addDetector("DetectCalibChess", FactoryFiducialCalibration.chessboard(new ConfigChessboard(7, 5,30)), true);
-		addDetector("DetectCalibSquare", FactoryFiducialCalibration.squareGrid(new ConfigSquareGrid(4, 3,30,30)), false);
+		circleAsymDirectories.add("data/calib/mono/circle_asymmetric/Sony_DSC-HX5V");
+		circleAsymDirectories.add("data/calib/mono/circle_asymmetric/large");
+		circleAsymDirectories.add("data/calib/mono/circle_asymmetric/distant");
+
+		addDetector("DetectCalibChess",
+				FactoryFiducialCalibration.chessboard(new ConfigChessboard(7, 5,30)),
+				CalibrationPatterns.CHESSBOARD);
+		addDetector("DetectCalibSquare",
+				FactoryFiducialCalibration.squareGrid(new ConfigSquareGrid(4, 3,30,30)),
+				CalibrationPatterns.SQUARE_GRID);
+		addDetector("DetectCalibCircleAsymmetric",
+				FactoryFiducialCalibration.circleAsymmGrid(new ConfigCircleAsymmetricGrid(8, 5,1,6)),
+				CalibrationPatterns.CIRCLE_ASYMMETRIC_GRID);
 	}
 
-	public void addDetector( String name , DetectorFiducialCalibration detector , boolean chess ) {
-		if( chess) {
-			chessDetectors.add(new DetectorInfo(name,detector));
-		} else {
-			squareDetectors.add(new DetectorInfo(name,detector));
+	public void addDetector( String name , DetectorFiducialCalibration detector , CalibrationPatterns type) {
+		switch( type ) {
+			case CHESSBOARD:chessDetectors.add(new DetectorInfo(name,detector));break;
+			case SQUARE_GRID:squareDetectors.add(new DetectorInfo(name,detector));break;
+			case CIRCLE_ASYMMETRIC_GRID:circleAsymDetctors.add(new DetectorInfo(name,detector));break;
 		}
 	}
 
@@ -72,6 +86,10 @@ public class CalibrationDetectionRegression extends BaseTextFileRegression{
 
 		for( DetectorInfo d : squareDetectors) {
 			evaluate(d, squareDirectories);
+		}
+
+		for( DetectorInfo d : circleAsymDetctors) {
+			evaluate(d, circleAsymDirectories);
 		}
 
 	}
