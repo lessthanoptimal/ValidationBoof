@@ -2,9 +2,9 @@ package regression;
 
 import boofcv.abst.fiducial.calib.ConfigChessboard;
 import boofcv.abst.fiducial.calib.ConfigSquareGrid;
-import boofcv.abst.geo.calibration.CalibrationDetector;
+import boofcv.abst.geo.calibration.DetectorFiducialCalibration;
 import boofcv.alg.geo.calibration.CalibrationObservation;
-import boofcv.factory.calib.FactoryCalibrationTarget;
+import boofcv.factory.fiducial.FactoryFiducialCalibration;
 import boofcv.io.image.UtilImageIO;
 import boofcv.struct.image.GrayF32;
 import boofcv.struct.image.ImageDataType;
@@ -47,11 +47,11 @@ public class CalibrationDetectionRegression extends BaseTextFileRegression{
 		squareDirectories.add("data/calib/mono/square_grid/large");
 		squareDirectories.add("data/calib/mono/square_grid/distant");
 
-		addDetector("DetectCalibChess", FactoryCalibrationTarget.detectorChessboard(new ConfigChessboard(7, 5,30)), true);
-		addDetector("DetectCalibSquare", FactoryCalibrationTarget.detectorSquareGrid(new ConfigSquareGrid(4, 3,30,30)), false);
+		addDetector("DetectCalibChess", FactoryFiducialCalibration.chessboard(new ConfigChessboard(7, 5,30)), true);
+		addDetector("DetectCalibSquare", FactoryFiducialCalibration.squareGrid(new ConfigSquareGrid(4, 3,30,30)), false);
 	}
 
-	public void addDetector( String name , CalibrationDetector detector , boolean chess ) {
+	public void addDetector( String name , DetectorFiducialCalibration detector , boolean chess ) {
 		if( chess) {
 			chessDetectors.add(new DetectorInfo(name,detector));
 		} else {
@@ -97,7 +97,7 @@ public class CalibrationDetectionRegression extends BaseTextFileRegression{
 		output.close();
 	}
 
-	private void evaluate(CalibrationDetector detector, String detectorName, GrowQueue_F64 allErrors,
+	private void evaluate(DetectorFiducialCalibration detector, String detectorName, GrowQueue_F64 allErrors,
 						  PrintStream output, List<File> files) {
 		for( File f : files ) {
 			if( !f.getName().endsWith("jpg") )
@@ -163,9 +163,9 @@ public class CalibrationDetectionRegression extends BaseTextFileRegression{
 	private class DetectorInfo
 	{
 		String name;
-		CalibrationDetector detector;
+		DetectorFiducialCalibration detector;
 
-		public DetectorInfo(String name, CalibrationDetector detector) {
+		public DetectorInfo(String name, DetectorFiducialCalibration detector) {
 			this.name = name;
 			this.detector = detector;
 		}

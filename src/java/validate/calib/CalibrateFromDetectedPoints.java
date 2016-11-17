@@ -2,12 +2,12 @@ package validate.calib;
 
 import boofcv.abst.fiducial.calib.ConfigChessboard;
 import boofcv.abst.geo.calibration.CalibrateMonoPlanar;
-import boofcv.abst.geo.calibration.CalibrationDetector;
+import boofcv.abst.geo.calibration.DetectorFiducialCalibration;
 import boofcv.abst.geo.calibration.ImageResults;
 import boofcv.alg.geo.calibration.CalibrationObservation;
 import boofcv.alg.geo.calibration.CalibrationPlanarGridZhang99;
 import boofcv.alg.geo.calibration.Zhang99ParamAll;
-import boofcv.factory.calib.FactoryCalibrationTarget;
+import boofcv.factory.fiducial.FactoryFiducialCalibration;
 import boofcv.struct.calib.CameraPinholeRadial;
 import georegression.struct.point.Point2D_F64;
 
@@ -26,7 +26,7 @@ public class CalibrateFromDetectedPoints {
 	PrintStream err = System.err;
 
 	public void processStereo( File stereoDetections , boolean tangential ) throws IOException {
-		CalibrationDetector targetDesc = FactoryCalibrationTarget.detectorChessboard(new ConfigChessboard(7, 5, 30));
+		DetectorFiducialCalibration targetDesc = FactoryFiducialCalibration.chessboard(new ConfigChessboard(7, 5, 30));
 		CalibrationPlanarGridZhang99 zhang99 = new CalibrationPlanarGridZhang99(targetDesc.getLayout(),true,2,tangential);
 
 		List<CalibrationObservation> left = new ArrayList<CalibrationObservation>();
