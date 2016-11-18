@@ -27,19 +27,19 @@ public class GenerateRegressionData {
 		list.add( new ObjectTrackingRegression()); // todo add average FPS
 		list.add( new PointTrackerRegression());
 		list.add( new StereoVisualOdometryRegression());
-//		// TODO compute visual odometry
-//		//      -- Kinect
-//		//      -- Mono-plane
 		list.add( new CalibrationDetectionRegression());
 		list.add( new DenseFlowRegression() );
 		list.add( new DescribeImageDenseRegression());
-//		// TODO Image Segmentation
-//		list.add( new TextThresholdRegression() );
+		list.add( new TextThresholdRegression() );
 		list.add( new FiducialRegression() );
 		list.add( new DetectPolygonRegression() );
 		list.add( new DetectEllipseRegression() );
+		list.add( new VideoStabilizeRegression() );
+//		// TODO Image Segmentation
 		// TODO scene recogition
-		// TODO image stabilization runtime regression
+//		// TODO compute visual odometry
+//		//      -- Kinect
+//		//      -- Mono-plane
 
 		return list;
 	}
