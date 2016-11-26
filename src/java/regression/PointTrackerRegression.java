@@ -62,12 +62,12 @@ public class PointTrackerRegression extends BaseTextFileRegression {
 		List<Info> all = new ArrayList<Info>();
 		Class bandType = ImageDataType.typeToSingleClass(type);
 
-//		all.add( createDefaultKlt(bandType));
-//		all.add( createHarrisNCC(bandType));
-//		all.add( createShiNCC(bandType));
-//		all.add( createFastNCC(bandType));
+		all.add( createDefaultKlt(bandType));
+		all.add( createHarrisNCC(bandType));
+		all.add( createShiNCC(bandType));
+		all.add( createFastNCC(bandType));
 		all.add( createFhBrief(bandType));
-//		all.add( createFhKltSurf(bandType));
+		all.add( createFhKltSurf(bandType));
 
 		for( Info info : all ) {
 			try {

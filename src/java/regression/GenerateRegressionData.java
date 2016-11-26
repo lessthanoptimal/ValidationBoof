@@ -35,12 +35,11 @@ public class GenerateRegressionData {
 		list.add( new DetectPolygonRegression() );
 		list.add( new DetectEllipseRegression() );
 		list.add( new VideoStabilizeRegression() ); // TODO add metric for quality of fit
+		list.add( new ImageClassificationRegression() );
 		// TODO fisheye calibration
 		// TODO Image Segmentation
-		// TODO scene recognition
-		// TODO compute visual odometry
-		//      -- Kinect
-		//      -- Mono-plane
+		// TODO Visual odometry - RGB-D
+		// TODO Visual odometry - Mono-Plane
 
 		return list;
 	}
