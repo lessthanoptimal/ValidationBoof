@@ -1,0 +1,30 @@
+# Data Set = cardboard
+# Match Fraction        = 0.85
+# Match MAX DISTANCE    = 3.0
+# SAMPLES               = 30
+# MAX CENTER DISTANCE   = 5.0
+# Image (expected) (detected) (multiple) (false positives) (false negative) (average error)
+image00000.jpg  20 20  0  0  0  0.2049
+image00001.jpg  20 20  0  0  0  0.2229
+image00002.jpg  20 20  0  0  0  0.2253
+image00003.jpg  20 22  0  2  0  0.1997
+image00004.jpg  20 20  0  0  0  0.2521
+image00005.jpg  20 20  0  0  0  0.2979
+
+# Data Set = outdoors
+# Match Fraction        = 0.85
+# Match MAX DISTANCE    = 3.0
+# SAMPLES               = 30
+# MAX CENTER DISTANCE   = 5.0
+# Image (expected) (detected) (multiple) (false positives) (false negative) (average error)
+image00000.jpg  20 14  0  2  8  0.2938
+image00001.jpg  20 16  0  1  5  0.2510
+image00002.jpg  20 19  0  0  1  0.2378
+image00003.jpg  20 12  0  0  8  0.2299
+image00004.jpg  20  9  0  0 11  0.3026
+image00005.jpg  20 11  0  3 12  0.3412
+image00006.jpg  20 13  0  4 11  0.3128
+image00007.jpg  20  9  0  3 14  0.3630
+image00008.jpg  20 20  0  0  0  0.2826
+image00009.jpg  20 20  0  0  0  0.2634
+

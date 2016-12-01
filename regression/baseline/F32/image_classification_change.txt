@@ -1,0 +1,34 @@
+# Regression tests which outputs image classification results.  A change indicates
+# that the algorithm has changed in some way and should be inspected more closely.
+
+Evaluating ImageClassifierNiNImageNet
+Processing outdoors01.jpg
+   best = birdhouse
+   total scores 1000
+      5.925769805908203  448
+      5.249987602233887  716
+      5.178172588348389  494
+      4.951719760894775  412
+      4.605238437652588  710
+      4.509781360626221  695
+      4.469078540802002  753
+      4.348726272583008  84
+      4.211112976074219  562
+      3.886483669281006  912
+
+
+Evaluating ImageClassifierVggCifar10
+Processing outdoors01.jpg
+   best = cat
+   total scores 10
+      5.123151779174805  3
+      4.850815773010254  4
+      3.024341344833374  6
+      -0.8987381458282471  1
+      -0.9380413293838501  2
+      -1.0193158388137817  5
+      -1.4489704370498657  9
+      -1.8907065391540527  0
+      -3.2389116287231445  8
+      -3.590186357498169  7
+

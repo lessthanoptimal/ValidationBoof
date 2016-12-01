@@ -1,0 +1,87 @@
+# cardboard
+# maxPixelError = 5.0
+
+Summary:
+ correct            :    6 /    6
+ wrong order        : 0
+ wrong ID           : 0
+ duplicates         : 0
+ false positives    : 0
+ false negative     : 0
+Corner errors:
+ precision 50%         : 1.0803062618772896
+ precision 90%         : 2.157203042282472
+ precision 100%        : 4.0090915616898934
+
+---------------------------------------------------
+
+# distance_angle
+# maxPixelError = 5.0
+
+Summary:
+ correct            :   12 /   18
+ wrong order        : 0
+ wrong ID           : 0
+ duplicates         : 0
+ false positives    : 0
+ false negative     : 6
+Corner errors:
+ precision 50%         : 0.264806309628924
+ precision 90%         : 0.5846936846311284
+ precision 100%        : 1.2451619013954447
+
+---------------------------------------------------
+
+# distance_straight
+# maxPixelError = 5.0
+
+Summary:
+ correct            :   14 /   18
+ wrong order        : 0
+ wrong ID           : 0
+ duplicates         : 0
+ false positives    : 0
+ false negative     : 4
+Corner errors:
+ precision 50%         : 0.3168067401983482
+ precision 90%         : 0.6563040939924797
+ precision 100%        : 1.2972404114423812
+
+---------------------------------------------------
+
+# motion_blur
+# maxPixelError = 5.0
+
+Summary:
+ correct            :    8 /   11
+ wrong order        : 0
+ wrong ID           : 0
+ duplicates         : 0
+ false positives    : 0
+ false negative     : 3
+Corner errors:
+ precision 50%         : 0.6272963075429546
+ precision 90%         : 1.235669384973391
+ precision 100%        : 3.1725893769705023
+
+---------------------------------------------------
+
+# rotation
+# maxPixelError = 5.0
+
+Summary:
+ correct            :   11 /   16
+ wrong order        : 0
+ wrong ID           : 0
+ duplicates         : 0
+ false positives    : 0
+ false negative     : 5
+Corner errors:
+ precision 50%         : 0.29688816090087117
+ precision 90%         : 0.6064240716642731
+ precision 100%        : 1.129850823972221
+
+---------------------------------------------------
+
+---------------------------------------------------
+total correct / total expected =   51 /  69

@@ -40,6 +40,7 @@ public class GenerateRegressionData {
 		// TODO Image Segmentation
 		// TODO Visual odometry - RGB-D
 		// TODO Visual odometry - Mono-Plane
+		// TODO template matching regression
 
 		return list;
 	}
@@ -199,7 +200,7 @@ public class GenerateRegressionData {
 		int minute = (int)((elapsedSeconds-days*secondsPerDay-hours*secondsPerHour)/secondsPerMinute);
 		double seconds = elapsedSeconds-days*secondsPerDay-hours*secondsPerHour-minute*secondsPerMinute;
 
-		System.out.printf("Days %d Hours %02d Minutes %02d Seconds %6.2f\n",days,hours,minute,seconds);
+		System.out.printf("%d Days %02d Hours %02d Minutes %6.2f Seconds\n",days,hours,minute,seconds);
 		System.out.println();
 		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 		System.out.println(dateFormat.format(new Date()));
