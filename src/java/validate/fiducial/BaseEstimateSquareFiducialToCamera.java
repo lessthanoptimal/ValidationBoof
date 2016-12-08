@@ -68,6 +68,9 @@ public abstract class BaseEstimateSquareFiducialToCamera<T extends ImageBase> {
 			detector.detect(image);
 //			System.out.println("processing "+path+"  found "+detector.totalFound());
 
+//			if( detector.totalFound() == 0 )
+//				System.out.println("no detections in "+path);
+
 			File f = new File(path);
 			String inputName = f.getName();
 			File outFile = new File(outputDirectory,inputName.substring(0,inputName.length()-3)+"csv");

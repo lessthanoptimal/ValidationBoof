@@ -2,7 +2,7 @@ package validate.tracking;
 
 import boofcv.alg.distort.DistortImageOps;
 import boofcv.alg.distort.PixelTransformHomography_F32;
-import boofcv.alg.interpolate.InterpolateType;
+import boofcv.alg.interpolate.InterpolationType;
 import boofcv.core.image.GeneralizedImageOps;
 import boofcv.core.image.border.BorderType;
 import boofcv.gui.feature.VisualizeFeatures;
@@ -87,7 +87,7 @@ public class VisualDebugHomographyTruth<T extends ImageGray> implements MouseLis
 
 			// render the transformed image
 			DistortImageOps.distortSingle(frame, workImage, new PixelTransformHomography_F32(H),
-					InterpolateType.BILINEAR, BorderType.EXTENDED);
+					InterpolationType.BILINEAR, BorderType.EXTENDED);
 
 			ConvertBufferedImage.convertTo(workImage,out,true);
 

@@ -4,12 +4,12 @@
 # SAMPLES               = 30
 # MAX CENTER DISTANCE   = 5.0
 # Image (expected) (detected) (multiple) (false positives) (false negative) (average error)
-image00000.jpg  20 20  0  0  0  0.2153
-image00001.jpg  20 20  0  0  0  0.2399
-image00002.jpg  20 20  0  0  0  0.2496
-image00003.jpg  20 22  0  2  0  0.1969
-image00004.jpg  20 20  0  0  0  0.2578
-image00005.jpg  20 20  0  0  0  0.3035
+image00000.jpg  20 20  0  0  0  0.1944
+image00001.jpg  20 20  0  0  0  0.2014
+image00002.jpg  20 20  0  0  0  0.2073
+image00003.jpg  20 23  0  3  0  0.1816
+image00004.jpg  20 20  0  0  0  0.2501
+image00005.jpg  20 20  0  0  0  0.2888
 
 # Data Set = outdoors
 # Match Fraction        = 0.85
@@ -17,14 +17,14 @@ image00005.jpg  20 20  0  0  0  0.3035
 # SAMPLES               = 30
 # MAX CENTER DISTANCE   = 5.0
 # Image (expected) (detected) (multiple) (false positives) (false negative) (average error)
-image00000.jpg  20 16  0  1  5  0.2523
-image00001.jpg  20 18  0  1  3  0.2378
-image00002.jpg  20 21  0  1  0  0.1995
-image00003.jpg  20 21  0  1  0  0.2192
-image00004.jpg  20 22  0  3  1  0.3057
-image00005.jpg  20 25  0  5  0  0.1866
-image00006.jpg  20 29  0  9  0  0.1495
-image00007.jpg  20 29  0  9  0  0.1509
-image00008.jpg  20 20  0  0  0  0.2071
-image00009.jpg  20 25  0  5  0  0.2364
+image00000.jpg  20 16  0  1  5  0.2243
+image00001.jpg  20 18  0  1  3  0.2125
+image00002.jpg  20 23  0  3  0  0.2221
+image00003.jpg  20 23  0  3  0  0.1935
+image00004.jpg  20 22  0  3  1  0.2592
+image00005.jpg  20 31  0 11  0  0.1810
+image00006.jpg  20 41  0 21  0  0.1421
+image00007.jpg  20 34  0 14  0  0.1335
+image00008.jpg  20 21  0  1  0  0.2036
+image00009.jpg  20 26  0  6  0  0.2324
 

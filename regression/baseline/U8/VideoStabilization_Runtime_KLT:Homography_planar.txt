@@ -1,3 +1,3 @@
 # Runtime Performance of VideoStabilization_Runtime_KLT:Homography_planar
 # Video Name, total frames, total faults, FPS
-         shake.mjpeg    71    1 46.618516
+         shake.mjpeg    71    1 44.236760

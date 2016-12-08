@@ -1,4 +1,4 @@
-Average FPS 22.268604655966744
+Average FPS 22.319039475128637
 Total Faults = 0
 Fraction with no update 0.0
 Ave per estimate:      distance 0.0194341  rotation 0.000907959

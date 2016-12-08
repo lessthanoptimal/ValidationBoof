@@ -1,8 +1,8 @@
-data/fiducials/circle_asymmetric/standard/cardboard 300 117.279
-data/fiducials/circle_asymmetric/standard/distance_angle 300 104.384
-data/fiducials/circle_asymmetric/standard/distance_straight 300 104.348
-data/fiducials/circle_asymmetric/standard/motion_blur 300 162.866
-data/fiducials/circle_asymmetric/standard/rotation 300  91.102
-data/fiducials/circle_asymmetric/static/angled 300 134.348
-data/fiducials/circle_asymmetric/static/close_far 300  80.364
-data/fiducials/circle_asymmetric/static/close_front 300 118.437
+data/fiducials/circle_asymmetric/standard/cardboard 300 127.173
+data/fiducials/circle_asymmetric/standard/distance_angle 300 100.368
+data/fiducials/circle_asymmetric/standard/distance_straight 300 100.604
+data/fiducials/circle_asymmetric/standard/motion_blur 300 182.039
+data/fiducials/circle_asymmetric/standard/rotation 300  85.886
+data/fiducials/circle_asymmetric/static/angled 300 137.931
+data/fiducials/circle_asymmetric/static/close_far 300  64.267
+data/fiducials/circle_asymmetric/static/close_front 300 115.340
