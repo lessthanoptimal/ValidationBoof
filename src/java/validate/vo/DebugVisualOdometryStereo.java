@@ -6,7 +6,6 @@ import boofcv.abst.feature.tracker.PointTrackerTwoPass;
 import boofcv.abst.sfm.AccessPointTracks3D;
 import boofcv.abst.sfm.d3.StereoVisualOdometry;
 import boofcv.alg.filter.derivative.GImageDerivativeOps;
-import boofcv.alg.geo.PerspectiveOps;
 import boofcv.alg.tracker.klt.PkltConfig;
 import boofcv.factory.feature.disparity.FactoryStereoDisparity;
 import boofcv.factory.feature.tracker.FactoryPointTrackerTwoPass;
@@ -24,8 +23,8 @@ import georegression.struct.point.Point2D_F64;
 import georegression.struct.point.Point3D_F64;
 import georegression.struct.se.Se3_F64;
 import georegression.transform.se.SePointOps_F64;
-import org.ejml.data.DenseMatrix64F;
-import org.ejml.ops.CommonOps;
+import org.ejml.data.DMatrixRMaj;
+import org.ejml.dense.row.CommonOps_DDRM;
 import regression.StereoVisualOdometryRegression;
 
 import java.awt.*;
@@ -39,7 +38,7 @@ import java.util.List;
  * @author Peter Abeles
  */
 // TODO Remove rotational component from translational error vector by applying inverse to total rotation estimate
-public class DebugVisualOdometryStereo<T extends ImageBase>
+public class DebugVisualOdometryStereo<T extends ImageBase<T>>
 		extends EvaluateVisualOdometryStereo<T>
 		implements MouseListener
 {
@@ -89,8 +88,8 @@ public class DebugVisualOdometryStereo<T extends ImageBase>
 			ShowImages.showWindow(imageDisplay,"Input");
 
 		if( viewer != null ) {
-			DenseMatrix64F K = PerspectiveOps.calibrationMatrix(data.getCalibration().left,null);
-			viewer.setK(K);
+//			DMatrixRMaj K = PerspectiveOps.calibrationMatrix(data.getCalibration().left,(DMatrixRMaj)null);
+//			viewer.setFocalLength(K);
 			viewer.setStepSize(data.getCalibration().getBaseline());
 			viewer.setPreferredSize(new Dimension(inputLeft.width, inputLeft.height));
 			viewer.setMaximumSize(viewer.getPreferredSize());
@@ -167,14 +166,14 @@ public class DebugVisualOdometryStereo<T extends ImageBase>
 	}
 
 	private double computeAngularError( Se3_F64 found , Se3_F64 expected ) {
-		DenseMatrix64F A = new DenseMatrix64F(3,3);
+		DMatrixRMaj A = new DMatrixRMaj(3,3);
 
-		CommonOps.multTransA(found.getR(), expected.getR(),A);
+		CommonOps_DDRM.multTransA(found.getR(), expected.getR(),A);
 
 		return rotationMatrixToRadian(A);
 	}
 
-	private double rotationMatrixToRadian(DenseMatrix64F a) {
+	private double rotationMatrixToRadian(DMatrixRMaj a) {
 		double angles[] = ConvertRotation3D_F64.matrixToEuler(a, EulerType.XYZ,null);
 
 		double sum = angles[0]*angles[0] + angles[1]*angles[1] + angles[1]*angles[1];

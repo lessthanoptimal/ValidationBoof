@@ -24,7 +24,7 @@ import bubo.io.serialization.SerializationDefinitionManager;
 import bubo.io.text.ReadCsvObjectSmart;
 import georegression.struct.homography.Homography2D_F64;
 import georegression.struct.point.Point2D_F64;
-import org.ejml.data.DenseMatrix64F;
+import org.ejml.data.DMatrixRMaj;
 import org.ejml.ops.MatrixIO;
 
 import java.io.FileInputStream;
@@ -98,7 +98,7 @@ public class LoadHomographyBenchmarkFiles {
 
 	public static Homography2D_F64 loadHomography( String fileName ) {
 		try {
-			DenseMatrix64F M = MatrixIO.loadCSV(fileName, 3, 3);
+			DMatrixRMaj M = MatrixIO.loadCSV(fileName, 3, 3);
 			Homography2D_F64 H = new Homography2D_F64();
 			H.a11 = M.get(0,0);
 			H.a12 = M.get(0,1);

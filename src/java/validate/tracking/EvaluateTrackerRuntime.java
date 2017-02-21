@@ -16,7 +16,7 @@ import static validate.tracking.BatchEvaluateSummaryAndTime.pathToData;
 /**
  * @author Peter Abeles
  */
-public class EvaluateTrackerRuntime<T extends ImageGray> implements Serializable {
+public class EvaluateTrackerRuntime<T extends ImageGray<T>> implements Serializable {
 
 	public double meanTimeMS;
 	EvaluatedAlgorithm alg;

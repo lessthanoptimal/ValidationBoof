@@ -88,7 +88,7 @@ public class DetectDescribeRegression extends BaseTextFileRegression {
 		}
 	}
 
-	public static <T extends ImageGray>
+	public static <T extends ImageGray<T>>
 	Info surf( boolean stable , boolean color , Class<T> bandType  ) {
 
 		ConfigFastHessian configDetect = new ConfigFastHessian(3, 2, -1,1, 9, 4, 4);
@@ -126,7 +126,7 @@ public class DetectDescribeRegression extends BaseTextFileRegression {
 		return ret;
 	}
 
-	public static <T extends ImageGray>
+	public static <T extends ImageGray<T>>
 	Info briefSoFH( Class<T> bandType  ) {
 
 		ConfigFastHessian configDetect = new ConfigFastHessian(3, 2, -1,1, 9, 4, 4);
@@ -150,7 +150,7 @@ public class DetectDescribeRegression extends BaseTextFileRegression {
 		return ret;
 	}
 
-	public static <T extends ImageGray>
+	public static <T extends ImageGray<T>>
 	Info sift( Class<T> bandType  ) {
 
 		ImageType imageType = ImageType.single(bandType);

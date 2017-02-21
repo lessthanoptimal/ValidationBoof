@@ -35,7 +35,7 @@ public class ObjectTrackingRegression extends BaseTextFileRegression {
 		errorLog.close();
 	}
 
-	public <Input extends ImageBase>
+	public <Input extends ImageBase<Input>>
 	void performMILData( String trackerName , TrackerObjectQuad<Input> tracker , ImageType<Input> imageType ) {
 
 		GenerateDetectionsMilTrackData<Input> generator = new GenerateDetectionsMilTrackData(imageType);
@@ -52,7 +52,7 @@ public class ObjectTrackingRegression extends BaseTextFileRegression {
 		}
 	}
 
-	public <Input extends ImageBase>
+	public <Input extends ImageBase<Input>>
 	void performTLD( String trackerName , TrackerObjectQuad<Input> tracker , ImageType<Input> imageType ) {
 
 		GenerateDetectionsTldData<Input> generator = new GenerateDetectionsTldData(imageType);

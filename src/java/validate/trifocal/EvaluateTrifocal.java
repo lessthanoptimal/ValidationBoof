@@ -3,8 +3,8 @@ package validate.trifocal;
 import boofcv.alg.geo.MultiViewOps;
 import boofcv.struct.geo.AssociatedTriple;
 import boofcv.struct.geo.TrifocalTensor;
-import org.ejml.data.DenseMatrix64F;
-import org.ejml.ops.SpecializedOps;
+import org.ejml.data.DMatrixRMaj;
+import org.ejml.dense.row.SpecializedOps_DDRM;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -45,7 +45,7 @@ public class EvaluateTrifocal {
 		for( int i = 0; i < 3; i++ ) {
 			int row = i*3;
 
-			DenseMatrix64F T = tensor.getT(i);
+			DMatrixRMaj T = tensor.getT(i);
 
 			for( int j = 0; j < 3; j++ ) {
 				T.data[j] = data.get(row)[j];
@@ -64,8 +64,8 @@ public class EvaluateTrifocal {
 
 		double total = 0;
 		for( AssociatedTriple o : obs ) {
-			DenseMatrix64F m = MultiViewOps.constraint(tensor,o.p1,o.p2,o.p3,null);
-			double score = SpecializedOps.elementSumSq(m);
+			DMatrixRMaj m = MultiViewOps.constraint(tensor,o.p1,o.p2,o.p3,null);
+			double score = SpecializedOps_DDRM.elementSumSq(m);
 
 			total += score;
 		}

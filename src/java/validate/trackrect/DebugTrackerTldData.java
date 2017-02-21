@@ -21,7 +21,7 @@ import java.io.File;
 /**
  * @author Peter Abeles
  */
-public class DebugTrackerTldData<T extends ImageBase> {
+public class DebugTrackerTldData<T extends ImageBase<T>> {
 
 	T input;
 

@@ -23,7 +23,7 @@ import java.io.PrintStream;
 */
 public class OutputForKITTI {
 
-	public static <T extends ImageGray>
+	public static <T extends ImageGray<T>>
 	void computeOdometry( SequenceStereoImages data,
 						  StereoVisualOdometry<T> alg ,
 						  Class<T> imageType ,

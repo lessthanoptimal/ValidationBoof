@@ -36,7 +36,7 @@ import boofcv.struct.image.Planar;
  *
  * @author Peter Abeles
  */
-public class DescribeOrientationSurfColor<T extends ImageGray, II extends ImageGray>
+public class DescribeOrientationSurfColor<T extends ImageGray<T>, II extends ImageGray<II>>
 		implements DescribeRegionPoint<Planar<T>,BrightFeature>
 {
 	private OrientationIntegral<II> orientation;

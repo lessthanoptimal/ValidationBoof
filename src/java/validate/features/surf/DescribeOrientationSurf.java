@@ -33,7 +33,7 @@ import boofcv.struct.image.ImageType;
  *
  * @author Peter Abeles
  */
-public class DescribeOrientationSurf<T extends ImageGray, II extends ImageGray>
+public class DescribeOrientationSurf<T extends ImageGray<T>, II extends ImageGray<II>>
 		implements DescribeRegionPoint<T,BrightFeature>
 {
 	private OrientationIntegral<II> orientation;

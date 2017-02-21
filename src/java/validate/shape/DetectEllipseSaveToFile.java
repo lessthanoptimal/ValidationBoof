@@ -24,7 +24,7 @@ import java.io.File;
  *
  * @author Peter Abeles
  */
-public class DetectEllipseSaveToFile<T extends ImageGray> {
+public class DetectEllipseSaveToFile<T extends ImageGray<T>> {
 
 	BinaryEllipseDetector<T> detector;
 	InputToBinary<T> inputToBinary;

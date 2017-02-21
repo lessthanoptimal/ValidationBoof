@@ -26,9 +26,9 @@ import boofcv.factory.feature.associate.FactoryAssociation;
 import boofcv.io.image.UtilImageIO;
 import boofcv.struct.feature.TupleDesc_F64;
 import georegression.geometry.UtilPoint2D_F64;
+import georegression.struct.ConvertFloatType;
 import georegression.struct.homography.Homography2D_F32;
 import georegression.struct.homography.Homography2D_F64;
-import georegression.struct.homography.UtilHomography;
 import georegression.struct.point.Point2D_F32;
 import georegression.transform.homography.HomographyPointOps_F32;
 
@@ -165,7 +165,7 @@ public class BenchmarkFeatureDetectStability {
 		for( int i=1; i < nameBase.size(); i++ ) {
 			String fileName = "H1to"+(i+1)+"p";
 			Homography2D_F64 H64 = LoadHomographyBenchmarkFiles.loadHomography(dataSetDirectory  + fileName);
-			Homography2D_F32 h = UtilHomography.convert(H64, (Homography2D_F32) null);
+			Homography2D_F32 h = ConvertFloatType.convert(H64, null);
 			transforms.add(h);
 		}
 

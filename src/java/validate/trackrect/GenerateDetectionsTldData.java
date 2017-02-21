@@ -18,7 +18,7 @@ import java.io.PrintStream;
 /**
  * @author Peter Abeles
  */
-public class GenerateDetectionsTldData<T extends ImageBase> {
+public class GenerateDetectionsTldData<T extends ImageBase<T>> {
 
 	public static String[]videos = new String[]{"01_david","02_jumping","03_pedestrian1","04_pedestrian2","05_pedestrian3",
 			"06_car","07_motocross","08_volkswagen","09_carchase","10_panda"};
@@ -93,7 +93,7 @@ public class GenerateDetectionsTldData<T extends ImageBase> {
 		out.close();
 	}
 
-	public static <Input extends ImageBase>
+	public static <Input extends ImageBase<Input>>
 	void evaluate( String trackerName ,
 				   TrackerObjectQuad<Input> tracker , ImageType<Input> imageType ) {
 

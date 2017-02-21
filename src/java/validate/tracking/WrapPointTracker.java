@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * @author Peter Abeles
  */
-public class WrapPointTracker<I extends ImageGray>
+public class WrapPointTracker<I extends ImageGray<I>>
 	implements EvaluationTracker<I>
 {
 	PointTracker<I> tracker;

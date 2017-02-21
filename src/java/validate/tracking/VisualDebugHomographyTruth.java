@@ -36,7 +36,7 @@ import static validate.tracking.BatchEvaluateSummaryAndTime.pathToData;
  * @author Peter Abeles
  */
 // TODO compute pixel error weighted by edges
-public class VisualDebugHomographyTruth<T extends ImageGray> implements MouseListener {
+public class VisualDebugHomographyTruth<T extends ImageGray<T>> implements MouseListener {
 
 	T workImage;
 

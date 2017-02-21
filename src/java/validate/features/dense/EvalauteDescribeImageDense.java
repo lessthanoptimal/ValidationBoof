@@ -27,7 +27,7 @@ import java.util.Random;
 /**
  * @author Peter Abeles
  */
-public class EvalauteDescribeImageDense<T extends ImageBase>
+public class EvalauteDescribeImageDense<T extends ImageBase<T>>
 {
 	Random rand = new Random(234);
 

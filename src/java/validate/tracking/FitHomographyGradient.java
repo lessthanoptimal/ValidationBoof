@@ -11,7 +11,7 @@ import org.ddogleg.optimization.functions.FunctionNtoN;
  *
  * @author Peter Abeles
  */
-public class FitHomographyGradient <I extends ImageGray, D extends ImageGray>
+public class FitHomographyGradient <I extends ImageGray<I>, D extends ImageGray<D>>
 		implements FunctionNtoN {
 
 	GImageGray src;

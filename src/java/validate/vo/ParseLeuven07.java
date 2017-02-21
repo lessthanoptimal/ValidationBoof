@@ -3,7 +3,7 @@ package validate.vo;
 import boofcv.io.image.UtilImageIO;
 import georegression.geometry.GeometryMath_F64;
 import georegression.struct.se.Se3_F64;
-import org.ejml.data.DenseMatrix64F;
+import org.ejml.data.DMatrixRMaj;
 
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
@@ -22,8 +22,8 @@ public class ParseLeuven07 {
 	private String homeDirectory;
 
 	// camera calibration information
-	private DenseMatrix64F leftK = new DenseMatrix64F(3,3);
-	private DenseMatrix64F rightK = new DenseMatrix64F(3,3);
+	private DMatrixRMaj leftK = new DMatrixRMaj(3,3);
+	private DMatrixRMaj rightK = new DMatrixRMaj(3,3);
 	private Se3_F64 leftToWorld = new Se3_F64();
 	private Se3_F64 rightToWorld = new Se3_F64();
 
@@ -71,7 +71,7 @@ public class ParseLeuven07 {
 	 * @param K intrinsic camera calibration matrix
 	 * @param motion location of the camera
 	 */
-	private void loadCalibration(String fileName, DenseMatrix64F K, Se3_F64 motion) {
+	private void loadCalibration(String fileName, DMatrixRMaj K, Se3_F64 motion) {
 		try {
 			BufferedReader reader = new BufferedReader(new FileReader(fileName));
 
@@ -91,7 +91,7 @@ public class ParseLeuven07 {
 			reader.readLine(); // empty line
 
 			// rotation matrix
-			DenseMatrix64F R = motion.getR();
+			DMatrixRMaj R = motion.getR();
 			line = readNumbers(reader);
 			R.set(0,0,line[0]); R.set(0,1,line[1]); R.set(0,2,line[2]);
 			line = readNumbers(reader);
@@ -133,7 +133,7 @@ public class ParseLeuven07 {
 		return leftImage;
 	}
 
-	public DenseMatrix64F getLeftK() {
+	public DMatrixRMaj getLeftK() {
 		return leftK;
 	}
 
@@ -141,7 +141,7 @@ public class ParseLeuven07 {
 		return rightImage;
 	}
 
-	public DenseMatrix64F getRightK() {
+	public DMatrixRMaj getRightK() {
 		return rightK;
 	}
 

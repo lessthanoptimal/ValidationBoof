@@ -11,7 +11,7 @@ import java.io.File;
 /**
  * @author Peter Abeles
  */
-public class FactoryBinaryEllipse<T extends ImageGray>
+public class FactoryBinaryEllipse<T extends ImageGray<T>>
 		implements FactoryObject<BinaryEllipseDetector<T>>
 {
 	Class<T> imageType;

@@ -9,6 +9,7 @@ import boofcv.factory.filter.derivative.FactoryDerivative;
 import boofcv.factory.transform.pyramid.FactoryPyramid;
 import boofcv.struct.feature.TupleDesc;
 import boofcv.struct.image.ImageGray;
+import boofcv.struct.image.ImageType;
 import boofcv.struct.pyramid.PyramidDiscrete;
 import georegression.struct.point.Point2D_F64;
 
@@ -21,7 +22,7 @@ import java.util.List;
  * @author Peter Abeles
  */
 public class WrapFusedTracker
-		<I extends ImageGray, D extends ImageGray, TD extends TupleDesc>
+		<I extends ImageGray<I>, D extends ImageGray<D>, TD extends TupleDesc>
 	implements EvaluationTracker<I>
 {
 
@@ -51,7 +52,8 @@ public class WrapFusedTracker
 
 		int pyramidScaling[] = tracker.getTrackerKlt().pyramidScaling;
 
-		pyramid = FactoryPyramid.discreteGaussian(pyramidScaling,-1,2,true,imageType);
+		pyramid = FactoryPyramid.discreteGaussian(pyramidScaling,-1,2,true,
+				ImageType.single(imageType));
 	}
 
 	@Override

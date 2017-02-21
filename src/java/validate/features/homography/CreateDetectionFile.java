@@ -40,7 +40,7 @@ import java.io.PrintStream;
  * @author Peter Abeles
  */
 @SuppressWarnings("unchecked")
-public class CreateDetectionFile<T extends ImageGray> {
+public class CreateDetectionFile<T extends ImageGray<T>> {
 
 	// algorithm that detects the features
 	InterestPointDetector<T> alg;

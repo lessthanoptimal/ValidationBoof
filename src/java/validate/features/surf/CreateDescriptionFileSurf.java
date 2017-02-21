@@ -32,7 +32,7 @@ import java.io.FileNotFoundException;
  * @author Peter Abeles
  */
 public class CreateDescriptionFileSurf {
-	public static <T extends ImageGray>
+	public static <T extends ImageGray<T>>
 	void doStuff( String directory , String imageSuffix , ImageType<T> imageType ) throws FileNotFoundException {
 		DescribeRegionPoint<T,BrightFeature> alg;
 		CreateDescriptionFile<T,BrightFeature> cdf;

@@ -12,7 +12,7 @@ import java.io.*;
 /**
  * @author Peter Abeles
  */
-public class EstimateCircleAsymmetricToCamera<T extends ImageGray> extends BaseEstimateSquareFiducialToCamera<T> {
+public class EstimateCircleAsymmetricToCamera<T extends ImageGray<T>> extends BaseEstimateSquareFiducialToCamera<T> {
 
 	Class<T> imageType;
 

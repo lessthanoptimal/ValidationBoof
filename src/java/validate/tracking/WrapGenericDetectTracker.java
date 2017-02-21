@@ -16,7 +16,7 @@ import java.util.List;
  *
  * @author Peter Abeles
  */
-public class WrapGenericDetectTracker<I extends ImageGray, TD extends TupleDesc>
+public class WrapGenericDetectTracker<I extends ImageGray<I>, TD extends TupleDesc>
 		implements EvaluationTracker<I> {
 
 

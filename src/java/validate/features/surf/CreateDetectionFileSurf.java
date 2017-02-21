@@ -33,7 +33,7 @@ import java.io.FileNotFoundException;
  */
 public class CreateDetectionFileSurf {
 
-	public static <T extends ImageGray>
+	public static <T extends ImageGray<T>>
 	void doStuff( String directory , String suffix , Class<T> imageType ) throws FileNotFoundException {
 		// below are the settings used for detect stability test
 		// graf image 1 with 2000 features

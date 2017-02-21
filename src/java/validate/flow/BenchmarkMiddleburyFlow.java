@@ -17,7 +17,7 @@ import java.util.Arrays;
 /**
  * @author Peter Abeles
  */
-public class BenchmarkMiddleburyFlow<T extends ImageBase> {
+public class BenchmarkMiddleburyFlow<T extends ImageBase<T>> {
 
 	String dataSets[] = new String[]{"Dimetrodon","Grove2","Grove3","Hydrangea","RubberWhale",
 			"Urban2","Urban3","Venus"};

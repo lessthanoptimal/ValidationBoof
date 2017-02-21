@@ -2,7 +2,7 @@ package validate.vo;
 
 import boofcv.io.image.UtilImageIO;
 import georegression.struct.se.Se3_F64;
-import org.ejml.data.DenseMatrix64F;
+import org.ejml.data.DMatrixRMaj;
 
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
@@ -19,8 +19,8 @@ public class ParseKITTI {
 	String directoryImages;
 
 	// camera projection matrices
-	private DenseMatrix64F leftP = new DenseMatrix64F(3,4);
-	private DenseMatrix64F rightP = new DenseMatrix64F(3,4);
+	private DMatrixRMaj leftP = new DMatrixRMaj(3,4);
+	private DMatrixRMaj rightP = new DMatrixRMaj(3,4);
 
 	// left camera pose information
 	private List<Se3_F64> poseLeft = new ArrayList<Se3_F64>();
@@ -117,11 +117,11 @@ public class ParseKITTI {
 		return ret;
 	}
 
-	public DenseMatrix64F getLeftProjection() {
+	public DMatrixRMaj getLeftProjection() {
 		return leftP;
 	}
 
-	public DenseMatrix64F getRightProjection() {
+	public DMatrixRMaj getRightProjection() {
 		return rightP;
 	}
 

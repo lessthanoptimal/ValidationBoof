@@ -19,7 +19,9 @@ import boofcv.struct.calib.StereoParameters;
 import boofcv.struct.image.GrayF32;
 import boofcv.struct.image.ImageGray;
 import georegression.struct.se.Se3_F64;
-import org.ejml.data.DenseMatrix64F;
+import org.ejml.data.DMatrixRMaj;
+import org.ejml.data.FMatrixRMaj;
+import org.ejml.ops.ConvertMatrixData;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -29,7 +31,7 @@ import java.awt.image.BufferedImage;
  * @author Peter Abeles
  */
 @SuppressWarnings("unchecked")
-public class DebugDenseStereoVideo<T extends ImageGray> implements MouseListener {
+public class DebugDenseStereoVideo<T extends ImageGray<T>> implements MouseListener {
 
 	SequenceStereoImages data;
 	StereoDisparity<T,GrayF32> alg;
@@ -116,25 +118,31 @@ public class DebugDenseStereoVideo<T extends ImageGray> implements MouseListener
 		Se3_F64 leftToRight = param.getRightToLeft().invert(null);
 
 		// original camera calibration matrices
-		DenseMatrix64F K1 = PerspectiveOps.calibrationMatrix(param.getLeft(), null);
-		DenseMatrix64F K2 = PerspectiveOps.calibrationMatrix(param.getRight(), null);
+		DMatrixRMaj K1 = PerspectiveOps.calibrationMatrix(param.getLeft(), (DMatrixRMaj)null);
+		DMatrixRMaj K2 = PerspectiveOps.calibrationMatrix(param.getRight(), (DMatrixRMaj)null);
 
 		rectifyAlg.process(K1,new Se3_F64(),K2,leftToRight);
 
 		// rectification matrix for each image
-		DenseMatrix64F rect1 = rectifyAlg.getRect1();
-		DenseMatrix64F rect2 = rectifyAlg.getRect2();
+		DMatrixRMaj rect1 = rectifyAlg.getRect1();
+		DMatrixRMaj rect2 = rectifyAlg.getRect2();
+
+		FMatrixRMaj rect1_F32 = new FMatrixRMaj(rect1.numRows,rect1.numCols);
+		FMatrixRMaj rect2_F32 = new FMatrixRMaj(rect2.numRows,rect2.numCols);
+
+		ConvertMatrixData.convert(rect1,rect1_F32);
+		ConvertMatrixData.convert(rect2,rect2_F32);
 		// New calibration matrix,
-		DenseMatrix64F rectK = rectifyAlg.getCalibrationMatrix();
+		DMatrixRMaj rectK = rectifyAlg.getCalibrationMatrix();
 
 		// Adjust the rectification to make the view area more useful
 		RectifyImageOps.fullViewLeft(param.left, rect1, rect2, rectK);
 
 		// undistorted and rectify images
 		ImageDistort<T,T> imageDistortLeft =
-				RectifyImageOps.rectifyImage(param.getLeft(), rect1, BorderType.ZERO, inputLeft.getImageType());
+				RectifyImageOps.rectifyImage(param.getLeft(), rect1_F32, BorderType.ZERO, inputLeft.getImageType());
 		ImageDistort<T,T> imageDistortRight =
-				RectifyImageOps.rectifyImage(param.getRight(), rect2, BorderType.ZERO, inputRight.getImageType());
+				RectifyImageOps.rectifyImage(param.getRight(), rect2_F32, BorderType.ZERO, inputRight.getImageType());
 
 		GImageMiscOps.fill(rectifiedLeft, 0);
 		GImageMiscOps.fill(rectifiedRight,0);

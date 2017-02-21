@@ -18,7 +18,7 @@ import java.util.List;
 /**
  * @author Peter Abeles
  */
-public class RuntimePerformanceFiducialToCamera< T extends ImageBase> {
+public class RuntimePerformanceFiducialToCamera< T extends ImageBase<T>> {
 
 	PrintStream outputResults = System.out;
 	PrintStream err = System.err;

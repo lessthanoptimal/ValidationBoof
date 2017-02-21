@@ -23,7 +23,7 @@ import java.io.IOException;
  *
  * @author Peter Abeles
  */
-public class EstimateImageFiducialToCamera<T extends ImageGray> extends BaseEstimateSquareFiducialToCamera<T> {
+public class EstimateImageFiducialToCamera<T extends ImageGray<T>> extends BaseEstimateSquareFiducialToCamera<T> {
 
 	FactoryObject<SquareImage_to_FiducialDetector<T>> factory;
 

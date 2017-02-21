@@ -23,7 +23,7 @@ import java.io.File;
  *
  * @author Peter Abeles
  */
-public class DetectPolygonsSaveToFile<T extends ImageGray> {
+public class DetectPolygonsSaveToFile<T extends ImageGray<T>> {
 
 	BinaryPolygonDetector<T> detector;
 	InputToBinary<T> inputToBinary;

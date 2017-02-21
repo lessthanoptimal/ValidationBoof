@@ -37,7 +37,7 @@ import java.util.List;
  *
  * @author Peter Abeles
  */
-public class BenchmarkFeatureDescribeRuntime<T extends ImageGray, D extends TupleDesc> {
+public class BenchmarkFeatureDescribeRuntime<T extends ImageGray<T>, D extends TupleDesc> {
 
 	Class<T> imageType;
 	DescribeRegionPoint<T,D> alg;

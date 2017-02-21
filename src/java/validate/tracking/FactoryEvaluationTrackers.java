@@ -36,7 +36,7 @@ import boofcv.struct.image.ImageGray;
  *
  * @author Peter Abeles
  */
-public class FactoryEvaluationTrackers<T extends ImageGray> {
+public class FactoryEvaluationTrackers<T extends ImageGray<T>> {
 
 	Class<T> imageType;
 

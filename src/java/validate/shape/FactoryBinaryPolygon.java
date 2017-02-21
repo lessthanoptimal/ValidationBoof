@@ -11,7 +11,7 @@ import java.io.File;
 /**
  * @author Peter Abeles
  */
-public class FactoryBinaryPolygon<T extends ImageGray>
+public class FactoryBinaryPolygon<T extends ImageGray<T>>
 		implements FactoryObject<BinaryPolygonDetector<T>>
 {
 	Class<T> imageType;

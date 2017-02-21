@@ -34,7 +34,7 @@ import java.io.IOException;
  *
  * @author Peter Abeles
  */
-public class BenchmarkFeatureDetectRuntime<T extends ImageGray> {
+public class BenchmarkFeatureDetectRuntime<T extends ImageGray<T>> {
 
 	Class<T> imageType;
 	InterestPointDetector<T> alg;

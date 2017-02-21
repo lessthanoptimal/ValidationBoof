@@ -26,7 +26,7 @@ import java.util.List;
  * @author Peter Abeles
  */
 // TODO improve synchronization
-public class DebugTrackerVideo <T extends ImageGray> implements MouseListener, KeyListener {
+public class DebugTrackerVideo <T extends ImageGray<T>> implements MouseListener, KeyListener {
 
 	int KEY_FRAME_PERIOD = 10;
 

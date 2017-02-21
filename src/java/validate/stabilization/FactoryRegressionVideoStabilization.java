@@ -17,7 +17,7 @@ import org.ddogleg.struct.Tuple2;
  * @author Peter Abeles
  */
 public class FactoryRegressionVideoStabilization {
-    public static <T extends ImageBase>
+    public static <T extends ImageBase<T>>
     Tuple2<String,StitchingFromMotion2D<T,?>> createKlt(ImageType<T> imageType )
     {
         // Configure the feature detector

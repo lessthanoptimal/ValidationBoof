@@ -19,7 +19,7 @@ import java.io.*;
 // TODO add support for frames file
 // TODO compute metrics in bulk
 // TODO compute circulant metrics? Need a continuous valued function of distance
-public class GenerateDetectionsMilTrackData<T extends ImageBase> {
+public class GenerateDetectionsMilTrackData<T extends ImageBase<T>> {
 
 	public static String[]videos = new String[]{"cliffbar","coke11","david","dollar","faceocc",
 			"faceocc2","girl","surfer","sylv","tiger1","tiger2","twinings"};

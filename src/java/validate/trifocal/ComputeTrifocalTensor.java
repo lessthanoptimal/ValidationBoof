@@ -6,7 +6,7 @@ import boofcv.struct.geo.AssociatedTriple;
 import boofcv.struct.geo.TrifocalTensor;
 import org.ddogleg.optimization.FactoryOptimization;
 import org.ddogleg.optimization.UnconstrainedLeastSquares;
-import org.ejml.data.DenseMatrix64F;
+import org.ejml.data.DMatrixRMaj;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -57,7 +57,7 @@ public class ComputeTrifocalTensor {
 		out.close();
 	}
 
-	private static void outputMatrix3x3(DenseMatrix64F M, PrintStream out) {
+	private static void outputMatrix3x3(DMatrixRMaj M, PrintStream out) {
 		for( int i = 0; i < 3; i++ )
 			out.printf("%.15f %.15f %.15f\n", M.get(i, 0), M.get(i, 1), M.get(i, 2));
 		out.println();

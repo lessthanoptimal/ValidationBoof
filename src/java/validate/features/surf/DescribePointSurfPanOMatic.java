@@ -26,7 +26,7 @@ import boofcv.struct.feature.BrightFeature;
 import boofcv.struct.image.ImageGray;
 import boofcv.struct.sparse.GradientValue;
 
-public class DescribePointSurfPanOMatic<II extends ImageGray> extends DescribePointSurf<II> {
+public class DescribePointSurfPanOMatic<II extends ImageGray<II>> extends DescribePointSurf<II> {
 
 	double _cmp[][][];
 	int iVecLen = 4;

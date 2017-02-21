@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * @author Peter Abeles
  */
-public class RuntimePerformanceVideoStabilization< T extends ImageBase> {
+public class RuntimePerformanceVideoStabilization< T extends ImageBase<T>> {
 
 	PrintStream outputResults = System.out;
 	PrintStream err = System.err;

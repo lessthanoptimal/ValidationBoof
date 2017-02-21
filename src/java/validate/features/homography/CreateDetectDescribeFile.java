@@ -41,7 +41,7 @@ import java.io.PrintStream;
  * @author Peter Abeles
  */
 @SuppressWarnings("unchecked")
-public class CreateDetectDescribeFile<T extends ImageBase, D extends TupleDesc_F64> {
+public class CreateDetectDescribeFile<T extends ImageBase<T>, D extends TupleDesc_F64> {
 
 	// algorithm that detects the features
 	DetectDescribePoint<T,D> alg;

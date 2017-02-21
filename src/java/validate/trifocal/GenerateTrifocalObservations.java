@@ -7,8 +7,8 @@ import georegression.struct.EulerType;
 import georegression.struct.point.Point3D_F64;
 import georegression.struct.point.Vector3D_F64;
 import georegression.struct.se.Se3_F64;
-import org.ejml.data.DenseMatrix64F;
-import org.ejml.ops.CommonOps;
+import org.ejml.data.DMatrixRMaj;
+import org.ejml.dense.row.CommonOps_DDRM;
 
 import java.io.FileNotFoundException;
 import java.io.PrintStream;
@@ -21,7 +21,7 @@ import java.util.Random;
  */
 public class GenerateTrifocalObservations {
 
-	private static void printCameraMatrix(DenseMatrix64F p1, PrintStream outCamera) {
+	private static void printCameraMatrix(DMatrixRMaj p1, PrintStream outCamera) {
 		for( int i = 0; i < 3; i++ ) {
 			outCamera.printf("%.10f %.10f %.10f %.10f\n", p1.get(i,0), p1.get(i,1), p1.get(i,2), p1.get(i,3));
 		}
@@ -32,7 +32,7 @@ public class GenerateTrifocalObservations {
 		Random rand = new Random(234);
 
 		// camera calibration matrix
-		DenseMatrix64F K = new DenseMatrix64F(3,3,true,60,0.01,320,0,80,250,0,0,1);
+		DMatrixRMaj K = new DMatrixRMaj(3,3,true,60,0.01,320,0,80,250,0,0,1);
 
 		Se3_F64 se2 = new Se3_F64();
 		Se3_F64 se3 = new Se3_F64();
@@ -45,9 +45,9 @@ public class GenerateTrifocalObservations {
 		se3.getT().set(0.6, 0.2, -0.02);
 
 		// While not technically needed, save the camera matrices
-		DenseMatrix64F P1 = PerspectiveOps.createCameraMatrix(CommonOps.identity(3), new Vector3D_F64(), K, null);
-		DenseMatrix64F P2 = PerspectiveOps.createCameraMatrix(se2.R, se2.T, K, null);
-		DenseMatrix64F P3 = PerspectiveOps.createCameraMatrix(se3.R, se3.T, K, null);
+		DMatrixRMaj P1 = PerspectiveOps.createCameraMatrix(CommonOps_DDRM.identity(3), new Vector3D_F64(), K, null);
+		DMatrixRMaj P2 = PerspectiveOps.createCameraMatrix(se2.R, se2.T, K, null);
+		DMatrixRMaj P3 = PerspectiveOps.createCameraMatrix(se3.R, se3.T, K, null);
 
 		PrintStream outCamera = new PrintStream("camera_matrix.txt");
 		outCamera.println("# Trifocal Test: Camera matrices 3x4 in row major order.  Camera 1,2,3");

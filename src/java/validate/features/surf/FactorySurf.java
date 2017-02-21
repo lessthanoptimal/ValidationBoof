@@ -43,7 +43,7 @@ public class FactorySurf {
 	/**
 	 * Java port of Pan-o-Matic's descriptor to make examing its behavior easier.
 	 */
-	public static <T extends ImageGray, II extends ImageGray>
+	public static <T extends ImageGray<T>, II extends ImageGray<II>>
 	DescribeRegionPoint<T,BrightFeature> surfPanOMaticInBoofCV(boolean isOriented, Class<T> imageType) {
 		OrientationIntegral<II> orientation = null;
 
@@ -60,7 +60,7 @@ public class FactorySurf {
 	/**
 	 * Creates a BoofCV SURF descriptor
 	 */
-	public static <T extends ImageBase, II extends ImageGray>
+	public static <T extends ImageBase<T>, II extends ImageGray<II>>
 	DescribeRegionPoint<T,BrightFeature> surf( boolean stable , ImageType<T> imageType )
 	{
 		Class bandType = imageType.getDataType().getDataType();
@@ -87,7 +87,7 @@ public class FactorySurf {
 		}
 	}
 
-	public static <T extends ImageGray>
+	public static <T extends ImageGray<T>>
 	DetectDescribePoint<T,BrightFeature> detectDescribe( boolean stable , boolean color , Class<T> imageType  ) {
 
 		ConfigFastHessian configDetect = new ConfigFastHessian(58,3, -1,1, 9, 4, 4);

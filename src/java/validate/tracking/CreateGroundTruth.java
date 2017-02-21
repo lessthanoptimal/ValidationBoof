@@ -25,12 +25,12 @@ import boofcv.struct.image.GrayF32;
 import boofcv.struct.image.ImageType;
 import georegression.fitting.homography.ModelManagerHomography2D_F64;
 import georegression.struct.homography.Homography2D_F64;
-import georegression.struct.homography.UtilHomography;
+import georegression.struct.homography.UtilHomography_F64;
 import georegression.struct.point.Point2D_F64;
 import org.ddogleg.fitting.modelset.ModelManager;
 import org.ddogleg.fitting.modelset.ModelMatcher;
 import org.ddogleg.fitting.modelset.ransac.Ransac;
-import org.ejml.data.DenseMatrix64F;
+import org.ejml.data.DMatrixRMaj;
 
 import java.awt.image.BufferedImage;
 import java.io.FileNotFoundException;
@@ -92,7 +92,8 @@ public class CreateGroundTruth {
 
 		// create distortion to remove lens distortion
 		// Adjust the distortion so that the undistorted image only shows image pixels
-		Point2Transform2_F32 allInside = LensDistortionOps.transform_F32(AdjustmentType.EXPAND,cameraParam, null,true);
+		Point2Transform2_F32 allInside = LensDistortionOps.
+				transformChangeModel_F32(AdjustmentType.EXPAND,cameraParam, null,true,null);
 		InterpolatePixelS<GrayF32> interp = FactoryInterpolation.bilinearPixelS(GrayF32.class, BorderType.EXTENDED);
 		removeLens = FactoryDistort.distortSB(false,interp, GrayF32.class);
 		removeLens.setModel(new PointToPixelTransform_F32(allInside));
@@ -208,14 +209,14 @@ public class CreateGroundTruth {
 
 		System.out.print(" inliers = "+robustH.getMatchSet().size()+" -- ");
 
-		DenseMatrix64F H_mat = new DenseMatrix64F(3,3);
-		UtilHomography.convert(robustH.getModelParameters(),H_mat);
-		DenseMatrix64F H_refined = new DenseMatrix64F(3,3);
+		DMatrixRMaj H_mat = new DMatrixRMaj(3,3);
+		UtilHomography_F64.convert(robustH.getModelParameters(),H_mat);
+		DMatrixRMaj H_refined = new DMatrixRMaj(3,3);
 
 		if( !refineH.fitModel(robustH.getMatchSet(),H_mat,H_refined) )
 			throw new RuntimeException("Refine Point Failed");
 
-		return UtilHomography.convert(H_refined,(Homography2D_F64)null);
+		return UtilHomography_F64.convert(H_refined,(Homography2D_F64)null);
 	}
 
 	private Homography2D_F64 refineEstimate( GrayF32 dst ,

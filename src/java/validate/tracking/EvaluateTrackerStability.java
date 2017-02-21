@@ -22,7 +22,7 @@ import static validate.tracking.BatchEvaluateSummaryAndTime.pathToData;
 /**
  * @author Peter Abeles
  */
-public class EvaluateTrackerStability<T extends ImageGray> {
+public class EvaluateTrackerStability<T extends ImageGray<T>> {
 
 	// list of tracks that have never gone outside the image's FOV
 	List<Point2D_F64> alwaysInside;

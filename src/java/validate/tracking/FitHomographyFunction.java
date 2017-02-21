@@ -12,7 +12,7 @@ import org.ddogleg.optimization.functions.FunctionNtoS;
  *
  * @author Peter Abeles
  */
-public class FitHomographyFunction<T extends ImageGray> implements FunctionNtoS {
+public class FitHomographyFunction<T extends ImageGray<T>> implements FunctionNtoS {
 
 
 	GImageGray src;

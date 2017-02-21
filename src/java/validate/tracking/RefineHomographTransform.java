@@ -8,6 +8,7 @@ import boofcv.core.image.border.BorderType;
 import boofcv.factory.interpolate.FactoryInterpolation;
 import boofcv.factory.transform.pyramid.FactoryPyramid;
 import boofcv.struct.image.ImageGray;
+import boofcv.struct.image.ImageType;
 import boofcv.struct.pyramid.PyramidDiscrete;
 import georegression.struct.homography.Homography2D_F64;
 import org.ddogleg.optimization.FactoryOptimization;
@@ -20,7 +21,7 @@ import org.ddogleg.optimization.UtilOptimize;
  *
  * @author Peter Abeles
  */
-public class RefineHomographTransform<I extends ImageGray, D extends ImageGray> {
+public class RefineHomographTransform<I extends ImageGray<I>, D extends ImageGray<D>> {
 
 	PyramidDiscrete<I> src;
 	D[] srcDericX;
@@ -41,11 +42,13 @@ public class RefineHomographTransform<I extends ImageGray, D extends ImageGray> 
 		this.derivType = derivType;
 		InterpolatePixelS<I> interp = FactoryInterpolation.bilinearPixelS(imageType,BorderType.EXTENDED);
 
-		function = new FitHomographyFunction<I>(interp);
-		gradient = new FitHomographyGradient<I, D>(interp);
+		function = new FitHomographyFunction<>(interp);
+		gradient = new FitHomographyGradient<>(interp);
 
-		src = FactoryPyramid.discreteGaussian(scales,-1,2,true,imageType);
-		dst = FactoryPyramid.discreteGaussian(scales,-1,2,true,imageType);
+		ImageType<I> type = ImageType.single(imageType);
+
+		src = FactoryPyramid.discreteGaussian(scales,-1,2,true,type);
+		dst = FactoryPyramid.discreteGaussian(scales,-1,2,true,type);
 	}
 
 	public void setSource( I src ) {

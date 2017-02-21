@@ -22,7 +22,7 @@ import java.io.File;
 /**
  * @author Peter Abeles
  */
-public class DebugTldTrackerTldData<T extends ImageGray> implements TldVisualizationPanel.Listener {
+public class DebugTldTrackerTldData<T extends ImageGray<T>> implements TldVisualizationPanel.Listener {
 
 	T input;
 	boolean paused = false;

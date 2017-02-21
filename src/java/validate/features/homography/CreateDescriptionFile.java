@@ -42,7 +42,7 @@ import java.util.List;
  *
  * @author Peter Abeles
  */
-public class CreateDescriptionFile<T extends ImageBase, D extends TupleDesc_F64> {
+public class CreateDescriptionFile<T extends ImageBase<T>, D extends TupleDesc_F64> {
 
 	// algorithm that describes the features
 	protected DescribeRegionPoint<T,D> describe;

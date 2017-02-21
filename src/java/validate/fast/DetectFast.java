@@ -26,7 +26,7 @@ public class DetectFast {
 
 	public static final String FILE_NAME = "boofcv_fast.txt";
 
-	public static <T extends ImageGray> void detect( String outputDirectory , Class<T> imageType ) throws FileNotFoundException {
+	public static <T extends ImageGray<T>> void detect( String outputDirectory , Class<T> imageType ) throws FileNotFoundException {
 		T raw = UtilImageIO.loadImage("data/outdoors_gray.png", imageType);
 
 		FastCornerIntensity<T> alg = FactoryIntensityPointAlg.fast(20,9,imageType);

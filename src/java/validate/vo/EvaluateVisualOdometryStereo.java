@@ -8,7 +8,7 @@ import georegression.geometry.ConvertRotation3D_F64;
 import georegression.metric.UtilAngle;
 import georegression.struct.EulerType;
 import georegression.struct.se.Se3_F64;
-import org.ejml.data.DenseMatrix64F;
+import org.ejml.data.DMatrixRMaj;
 
 import java.io.PrintStream;
 
@@ -17,7 +17,7 @@ import java.io.PrintStream;
  *
  * @author Peter Abeles
  */
-public class EvaluateVisualOdometryStereo<T extends ImageBase> {
+public class EvaluateVisualOdometryStereo<T extends ImageBase<T>> {
 	protected StereoVisualOdometry<T> alg;
 	protected SequenceStereoImages data;
 
@@ -217,7 +217,7 @@ public class EvaluateVisualOdometryStereo<T extends ImageBase> {
 
 	}
 
-	private double rotationMatrixToRadian(DenseMatrix64F a) {
+	private double rotationMatrixToRadian(DMatrixRMaj a) {
 		double angles[] = ConvertRotation3D_F64.matrixToEuler(a,EulerType.XYZ,null);
 
 		double sum = angles[0]*angles[0] + angles[1]*angles[1] + angles[1]*angles[1];

@@ -9,7 +9,7 @@ import boofcv.struct.calib.CameraPinholeRadial;
 import boofcv.struct.image.ImageBase;
 import georegression.struct.point.Vector3D_F64;
 import georegression.struct.se.Se3_F64;
-import org.ejml.data.DenseMatrix64F;
+import org.ejml.data.DMatrixRMaj;
 import validate.DataSetDoesNotExist;
 
 import java.awt.image.BufferedImage;
@@ -25,7 +25,7 @@ import java.util.List;
  *
  * @author Peter Abeles
  */
-public abstract class BaseEstimateSquareFiducialToCamera<T extends ImageBase> {
+public abstract class BaseEstimateSquareFiducialToCamera<T extends ImageBase<T>> {
 
 	File baseDirectory;
 	File outputDirectory = new File(".");
@@ -84,7 +84,7 @@ public abstract class BaseEstimateSquareFiducialToCamera<T extends ImageBase> {
 				detector.getFiducialToCamera(i,fiducialToSensor);
 
 
-				DenseMatrix64F R = fiducialToSensor.getR();
+				DMatrixRMaj R = fiducialToSensor.getR();
 				Vector3D_F64 T = fiducialToSensor.getT();
 
 				// adjust translation for actual fiducial size
