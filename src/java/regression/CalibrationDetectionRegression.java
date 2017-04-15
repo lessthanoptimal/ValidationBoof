@@ -1,9 +1,7 @@
 package regression;
 
 import boofcv.abst.fiducial.calib.CalibrationPatterns;
-import boofcv.abst.fiducial.calib.ConfigChessboard;
-import boofcv.abst.fiducial.calib.ConfigCircleAsymmetricGrid;
-import boofcv.abst.fiducial.calib.ConfigSquareGrid;
+import boofcv.abst.fiducial.calib.ConfigCircleRegularGrid;
 import boofcv.abst.geo.calibration.DetectorFiducialCalibration;
 import boofcv.alg.geo.calibration.CalibrationObservation;
 import boofcv.factory.fiducial.FactoryFiducialCalibration;
@@ -31,10 +29,12 @@ public class CalibrationDetectionRegression extends BaseTextFileRegression{
 	List<String> chessDirectories = new ArrayList<>();
 	List<String> squareDirectories = new ArrayList<>();
 	List<String> circleAsymDirectories = new ArrayList<>();
+	List<String> circleRegirectories = new ArrayList<>();
 
 	List<DetectorInfo> chessDetectors = new ArrayList<DetectorInfo>();
 	List<DetectorInfo> squareDetectors = new ArrayList<DetectorInfo>();
 	List<DetectorInfo> circleAsymDetctors = new ArrayList<DetectorInfo>();
+	List<DetectorInfo> circleRegDetectors = new ArrayList<DetectorInfo>();
 
 	public CalibrationDetectionRegression() {
 
@@ -54,15 +54,23 @@ public class CalibrationDetectionRegression extends BaseTextFileRegression{
 		circleAsymDirectories.add("data/calib/mono/circle_asymmetric/large");
 		circleAsymDirectories.add("data/calib/mono/circle_asymmetric/distant");
 
-		addDetector("DetectCalibChess",
-				FactoryFiducialCalibration.chessboard(new ConfigChessboard(7, 5,30)),
-				CalibrationPatterns.CHESSBOARD);
-		addDetector("DetectCalibSquare",
-				FactoryFiducialCalibration.squareGrid(new ConfigSquareGrid(4, 3,30,30)),
-				CalibrationPatterns.SQUARE_GRID);
-		addDetector("DetectCalibCircleAsymmetric",
-				FactoryFiducialCalibration.circleAsymmGrid(new ConfigCircleAsymmetricGrid(8, 5,1,6)),
-				CalibrationPatterns.CIRCLE_ASYMMETRIC_GRID);
+		circleRegirectories.add("data/calib/mono/circle_regular/distant");
+		circleRegirectories.add("data/calib/mono/circle_regular/large");
+		circleRegirectories.add("data/calib/mono/circle_regular/fisheye");
+
+//		addDetector("DetectCalibChess",
+//				FactoryFiducialCalibration.chessboard(new ConfigChessboard(7, 5,30)),
+//				CalibrationPatterns.CHESSBOARD);
+//		addDetector("DetectCalibSquare",
+//				FactoryFiducialCalibration.squareGrid(new ConfigSquareGrid(4, 3,30,30)),
+//				CalibrationPatterns.SQUARE_GRID);
+//		addDetector("DetectCalibCircleAsymmetric",
+//				FactoryFiducialCalibration.circleAsymmGrid(new ConfigCircleAsymmetricGrid(8, 5,1,6)),
+//				CalibrationPatterns.CIRCLE_ASYMMETRIC_GRID);
+
+		addDetector("DetectCalibCircleRegular",
+				FactoryFiducialCalibration.circleRegularGrid(new ConfigCircleRegularGrid(4, 3,4,6)),
+				CalibrationPatterns.CIRCLE_GRID);
 	}
 
 	public void addDetector( String name , DetectorFiducialCalibration detector , CalibrationPatterns type) {
@@ -70,6 +78,7 @@ public class CalibrationDetectionRegression extends BaseTextFileRegression{
 			case CHESSBOARD:chessDetectors.add(new DetectorInfo(name,detector));break;
 			case SQUARE_GRID:squareDetectors.add(new DetectorInfo(name,detector));break;
 			case CIRCLE_ASYMMETRIC_GRID:circleAsymDetctors.add(new DetectorInfo(name,detector));break;
+			case CIRCLE_GRID:circleRegDetectors.add(new DetectorInfo(name,detector));break;
 		}
 	}
 
@@ -92,31 +101,36 @@ public class CalibrationDetectionRegression extends BaseTextFileRegression{
 			evaluate(d, circleAsymDirectories);
 		}
 
+		for( DetectorInfo d : circleRegDetectors) {
+			evaluate(d, circleRegirectories);
+		}
+
 	}
 
 	private void evaluate( DetectorInfo d , List<String> directories ) throws FileNotFoundException {
 		PrintStream output = new PrintStream(new File(directory,d.name+".txt"));
 		output.println("# (file name) (truth error 50%) (truth error 95%)");
 
-		GrowQueue_F64 allErrors = new GrowQueue_F64();
+		OverallMetrics overallMetrics = new OverallMetrics();
 		for( String dir : directories) {
 			List<File> files = Arrays.asList(new File(dir).listFiles());
 
 			Collections.sort(files);
-			evaluate(d.detector,d.name,allErrors,output, files);
+			evaluate(d.detector,d.name,overallMetrics,output, files);
 		}
 		output.println();
 
-		Arrays.sort(allErrors.data,0,allErrors.size);
-		double error50 = allErrors.data[(int)(allErrors.size*0.5)];
-		double error95 = allErrors.data[(int)(allErrors.size*0.95)];
-		output.println("Summary: 50% = "+error50+"  95% = "+error95);
+		Arrays.sort(overallMetrics.errors.data,0,overallMetrics.errors.size);
+		double error50 = overallMetrics.errors.data[(int)(overallMetrics.errors.size*0.5)];
+		double error95 = overallMetrics.errors.data[(int)(overallMetrics.errors.size*0.95)];
+		double percentSuccess = (overallMetrics.total-overallMetrics.failed)/(double)overallMetrics.total;
+		output.println("Summary: 50% = "+error50+"  95% = "+error95+"   success %"+(100.0*percentSuccess));
 
 		output.close();
 	}
 
-	private void evaluate(DetectorFiducialCalibration detector, String detectorName, GrowQueue_F64 allErrors,
-						  PrintStream output, List<File> files) {
+	private void evaluate(DetectorFiducialCalibration detector, String detectorName,
+						  OverallMetrics metrics, PrintStream output, List<File> files) {
 		for( File f : files ) {
 			if( !f.getName().endsWith("jpg") )
 				continue;
@@ -135,6 +149,8 @@ public class CalibrationDetectionRegression extends BaseTextFileRegression{
 				continue;
 			}
 
+			metrics.total++;
+
 			try {
 				if( detector.process(image) ) {
 					double errors[] = new double[ groundTruth.size() ];
@@ -145,7 +161,7 @@ public class CalibrationDetectionRegression extends BaseTextFileRegression{
 					} else {
 						for (int i = 0; i < found.size(); i++) {
 							errors[i] = distanceFromClosest(found.points.get(i),groundTruth);
-							allErrors.add(errors[i]);
+							metrics.errors.add(errors[i]);
 						}
 
 						Arrays.sort(errors);
@@ -156,10 +172,12 @@ public class CalibrationDetectionRegression extends BaseTextFileRegression{
 						output.println(dataSetName+" "+e50+" "+e95);
 					}
 				} else {
-					output.println(detectorName+" "+dataSetName+" failed");
+					output.println(dataSetName+" failed");
+					metrics.failed++;
 				}
 			} catch( Exception e ) {
 				errorLog.println(detectorName+" "+dataSetName+" detector threw exception. "+e.getMessage());
+				metrics.failed++;
 			}
 		}
 	}
@@ -176,6 +194,12 @@ public class CalibrationDetectionRegression extends BaseTextFileRegression{
 		}
 
 		return best;
+	}
+
+	private class OverallMetrics {
+		GrowQueue_F64 errors = new GrowQueue_F64();
+		int total;
+		int failed;
 	}
 
 	private class DetectorInfo

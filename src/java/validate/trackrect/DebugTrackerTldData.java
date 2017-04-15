@@ -76,8 +76,7 @@ public class DebugTrackerTldData<T extends ImageBase<T>> {
 				g2.drawLine((int)found.d.x,(int)found.d.y,(int)found.a.x,(int)found.a.y);
 			}
 
-			gui.setBufferedImageSafe(image);
-			gui.repaint();
+			gui.setImageRepaint(image);
 
 			imageNum++;
 			if( imageNum % 50 == 0 )

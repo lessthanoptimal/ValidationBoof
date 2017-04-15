@@ -22,20 +22,20 @@ public class GenerateRegressionData {
 	public static List<TextFileRegression> getRegressionsImage() {
 		List<TextFileRegression> list = new ArrayList<TextFileRegression>();
 
-		list.add( new CornerDetectorChangeRegression());
-		list.add( new DetectDescribeRegression());
-		list.add( new ObjectTrackingRegression()); // todo add average FPS
-		list.add( new PointTrackerRegression());
-		list.add( new StereoVisualOdometryRegression());
+//		list.add( new CornerDetectorChangeRegression());
+//		list.add( new DetectDescribeRegression());
+//		list.add( new ObjectTrackingRegression()); // todo add average FPS
+//		list.add( new PointTrackerRegression());
+//		list.add( new StereoVisualOdometryRegression());
 		list.add( new CalibrationDetectionRegression());
-		list.add( new DenseFlowRegression() );
-		list.add( new DescribeImageDenseRegression());
-		list.add( new TextThresholdRegression() );
-		list.add( new FiducialRegression() );
-		list.add( new DetectPolygonRegression() );
-		list.add( new DetectEllipseRegression() );
-		list.add( new VideoStabilizeRegression() ); // TODO add metric for quality of fit
-		list.add( new ImageClassificationRegression() );
+//		list.add( new DenseFlowRegression() );
+//		list.add( new DescribeImageDenseRegression());
+//		list.add( new TextThresholdRegression() );
+//		list.add( new FiducialRegression() );
+//		list.add( new DetectPolygonRegression() );
+//		list.add( new DetectEllipseRegression() );
+//		list.add( new VideoStabilizeRegression() ); // TODO add metric for quality of fit
+//		list.add( new ImageClassificationRegression() );
 		// TODO fisheye calibration
 		// TODO Image Segmentation
 		// TODO Visual odometry - RGB-D

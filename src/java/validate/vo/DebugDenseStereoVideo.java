@@ -87,8 +87,8 @@ public class DebugDenseStereoVideo<T extends ImageGray<T>> implements MouseListe
 		processFrame();
 
 		while( data.next() ) {
-			imageLeft.setBufferedImage(data.getLeft());
-			imageRight.setBufferedImage(data.getRight());
+			imageLeft.setImage(data.getLeft());
+			imageRight.setImage(data.getRight());
 
 			processFrame();
 
@@ -169,8 +169,7 @@ public class DebugDenseStereoVideo<T extends ImageGray<T>> implements MouseListe
 			rectifiedView = new RectifiedPairPanel(true,visualizedRectL,visualizedRectR);
 			ShowImages.showWindow(rectifiedView,"Rectified");
 		} else {
-			disparityView.setBufferedImage(visualized);
-			disparityView.repaint();
+			disparityView.setImageRepaint(visualized);
 			rectifiedView.setImages(visualizedRectL,visualizedRectR);
 			rectifiedView.repaint();
 		}

@@ -1,6 +1,6 @@
 package validate.calib;
 
-import boofcv.abst.fiducial.calib.ConfigCircleAsymmetricGrid;
+import boofcv.abst.fiducial.calib.ConfigCircleRegularGrid;
 import boofcv.abst.geo.calibration.DetectorFiducialCalibration;
 import boofcv.alg.geo.calibration.CalibrationObservation;
 import boofcv.factory.fiducial.FactoryFiducialCalibration;
@@ -29,10 +29,10 @@ public class DetectTargetFeatures {
 		// detects the calibration target points
 		DetectorFiducialCalibration detector = FactoryFiducialCalibration.
 //				chessboard(new ConfigChessboard(5, 7, 30));
-				circleAsymmGrid(new ConfigCircleAsymmetricGrid(8, 5, 1, 6));
+				circleRegularGrid(new ConfigCircleRegularGrid(4, 3, 4, 6));
 
 		// load image list
-		String directory = "data/calib/mono/circle_asymmetric/Sony_DSC-HX5V";
+		String directory = "data/calib/mono/circle_regular/distant";
 		List<String> images = BoofMiscOps.directoryList(directory, "jpg");
 
 		Collections.sort(images);

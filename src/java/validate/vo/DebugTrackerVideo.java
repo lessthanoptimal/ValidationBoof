@@ -103,7 +103,7 @@ public class DebugTrackerVideo <T extends ImageGray<T>> implements MouseListener
 				rgb.createGraphics().drawImage(data.getLeft(), 0, 0, null);
 			}
 
-			imageLeft.setBufferedImage(work);
+			imageLeft.setImage(work);
 
 			processFrame();
 

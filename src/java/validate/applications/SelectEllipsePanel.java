@@ -34,6 +34,8 @@ public class SelectEllipsePanel extends ImageZoomPanel
 
 	double tolerancePixels = 20;
 
+	Color background = new Color(0,0,0,125);
+
 	public SelectEllipsePanel() {
 		panel.addMouseListener(this);
 		panel.addKeyListener(this);
@@ -54,10 +56,13 @@ public class SelectEllipsePanel extends ImageZoomPanel
 
 				renderEllipse(g2, ellipse);
 
-				g2.setColor(Color.PINK);
+
 				float x = (float)(scale*(ellipse.center.x));
 				float y = (float)(scale*((ellipse.center.y - ellipse.a) - 5));
+				g2.setColor(background);
+				g2.fillRect((int)(x-2),(int)(y-12),20,16);
 
+				g2.setColor(Color.PINK);
 				g2.drawString(String.format("%d",i),x,y);
 
 			}

@@ -129,8 +129,7 @@ public class VisualDebugHomographyTruth<T extends ImageGray<T>> implements Mouse
 				}
 			}
 
-			gui.setBufferedImage(out);
-			gui.repaint();
+			gui.setImageRepaint(out);
 
 			BoofMiscOps.pause(50);
 
