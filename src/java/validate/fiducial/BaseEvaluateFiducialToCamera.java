@@ -307,7 +307,8 @@ public abstract class BaseEvaluateFiducialToCamera implements FiducialEvaluateIn
 	public double scoreInOrder( List<Point2D_F64> found , List<Point2D_F64> truth , double errors[] ) {
 		double meanError = 0;
 		if( truth.size() != found.size() ) {
-			System.out.println("Egads.  Incorrect number of fiducials in visible file?");
+			System.out.println("Egads.  Incorrect number of control points in visible file? "
+					+truth.size()+" vs "+found.size());
 		}
 		for (int i = 0; i < found.size(); i++) {
 			Point2D_F64 c = found.get(i);
