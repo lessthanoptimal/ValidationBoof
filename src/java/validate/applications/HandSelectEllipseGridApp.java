@@ -73,7 +73,7 @@ public class HandSelectEllipseGridApp extends HandSelectBase {
 	}
 
 	public static void main(String[] args) {
-		String imagePath = "data/calib/mono/circle_regular/fisheye/image04.jpg";
+		String imagePath = "data/fiducials/circle_regular/static/front_close/frame0100.jpg";
 
 		String outputName = new File(imagePath).getAbsolutePath();
 		outputName = outputName.substring(0,outputName.length()-4)+".txt";

@@ -61,6 +61,9 @@ public class FiducialRegression extends BaseTextFileRegression {
 		process("SquareGrid", new EstimateSquareGridToCamera(imageType), "square_grid");
 
 		process("CircleAsymmetric", new EstimateCircleAsymmetricToCamera(imageType), "circle_asymmetric");
+
+		process("CircleRegular", new EstimateCircleRegularToCamera(imageType), "circle_regular");
+
 	}
 
 	private void process(String name, BaseEstimateSquareFiducialToCamera estimate, String type) throws IOException {
