@@ -36,6 +36,8 @@ public class SuperPixelRegression extends BaseTextFileRegression {
         metrics.err = errorLog;
         metrics.out = out;
 
+        out.println("Super Pixel Regression Metrics\n\n");
+
         process("FH04",FactoryImageSegmentation.fh04(null,imageType),imageType);
         process("MeanShift",FactoryImageSegmentation.meanShift(null,imageType),imageType);
         process("SLIC",FactoryImageSegmentation.slic(new ConfigSlic(200),imageType),imageType);

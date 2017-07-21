@@ -56,15 +56,16 @@ public class ComputeSuperPixelsMetrics<T extends ImageBase<T>> {
             alg.segment(image,segmented);
 
             int regions = alg.getTotalSuperpixels();
-            double stdevGray = computeGrayStdev(image,segmented,regions);
-            double stdevSize = computeRegionSizeStdev(segmented,regions);
+            out.printf("  %20s regions=%4d",names.get(i),regions);
 
-            out.printf("  %20s %4d gray-stdev %6.1f size-stdev %6.2f\n",names.get(i),regions,stdevGray,stdevSize);
-
+            computeColorMetrics(image,segmented,regions);
+            computeShapeMetrics(segmented,regions);
+            out.println();
+            out.flush();
         }
     }
 
-    private double computeGrayStdev(T image, GrayS32 segmented, int regions) {
+    private void computeColorMetrics(T image, GrayS32 segmented, int regions) {
 
         // convert int into a known gray image to make the math easier to compute
         ImageGray gray;
@@ -83,6 +84,7 @@ public class ComputeSuperPixelsMetrics<T extends ImageBase<T>> {
             GConvertImage.convert(gray,grayF32);
         }
 
+        // now compute statistics of each region
         int N = image.width*image.height;
         int count[] = new int[regions];
         float mean[] = new float[regions];
@@ -111,16 +113,34 @@ public class ComputeSuperPixelsMetrics<T extends ImageBase<T>> {
                 stdev[i] = (float)Math.sqrt(stdev[i]/count[i]);
         }
 
+        // standard deviation of the region values
+        float meanAll = 0;
+        for (int i = 0; i < regions; i++) {
+            meanAll += mean[i]*count[i];
+        }
+        meanAll /= N;
+
+        float stdevAll = 0;
+        for (int i = 0; i < regions; i++) {
+            float diff = mean[i]-meanAll;
+            stdevAll += diff*diff*count[i];
+        }
+        // how difference each region's color is. Probably want this to be higher
+        stdevAll = (float)Math.sqrt(stdevAll/N);
+
+        // compute average inner region stdev
         float aveStdev = 0;
 
         for (int i = 0; i < regions; i++) {
             aveStdev += stdev[i];
         }
+        // variance of color within a single region. Probably want this to be lower
         aveStdev /= totalValid;
-        return aveStdev;
+
+        out.printf(" all-stdev=%6.2f ave-stdev=%6.2f",stdevAll,aveStdev);
     }
 
-    private double computeRegionSizeStdev( GrayS32 segmented, int regions) {
+    private void computeShapeMetrics(GrayS32 segmented, int regions) {
         int counts[] = new int[regions];
 
         int N = segmented.width*segmented.height;
@@ -135,6 +155,7 @@ public class ComputeSuperPixelsMetrics<T extends ImageBase<T>> {
             double diff = counts[i]-meanCounts;
             variance += diff*diff;
         }
-        return Math.sqrt(variance/regions);
+        // provides a measure of how uniform the size of each region is
+        out.printf(" size-stdev/mean=%7.4f",Math.sqrt(variance/regions)/meanCounts);
     }
 }
