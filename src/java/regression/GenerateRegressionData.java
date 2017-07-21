@@ -41,8 +41,6 @@ public class GenerateRegressionData {
 		// TODO Visual odometry - RGB-D
 		// TODO Visual odometry - Mono-Plane
 		// TODO template matching regression
-		// TODO image distort regression (MLS)
-		// TODO image classification
 
 		return list;
 	}
@@ -51,6 +49,7 @@ public class GenerateRegressionData {
 		List<TextFileRegression> list = new ArrayList<TextFileRegression>();
 
 		list.add( new CalibrationIntrinsicChangeRegression());
+		list.add( new PointDeformKeyPointsRegression());
 
 		return list;
 	}

@@ -38,15 +38,15 @@ public class SuperPixelRegression extends BaseTextFileRegression {
 
         out.println("Super Pixel Regression Metrics\n\n");
 
-        process("FH04",FactoryImageSegmentation.fh04(null,imageType),imageType);
-        process("MeanShift",FactoryImageSegmentation.meanShift(null,imageType),imageType);
-        process("SLIC",FactoryImageSegmentation.slic(new ConfigSlic(200),imageType),imageType);
-        process("Watershed",FactoryImageSegmentation.watershed(null,imageType),imageType);
+        process("FH04",FactoryImageSegmentation.fh04(null,imageType));
+        process("MeanShift",FactoryImageSegmentation.meanShift(null,imageType));
+        process("SLIC",FactoryImageSegmentation.slic(new ConfigSlic(200),imageType));
+        process("Watershed",FactoryImageSegmentation.watershed(null,imageType));
 
         out.close();
     }
 
-    private void process( String name , ImageSuperpixels alg , ImageType imageType ) {
+    private void process( String name , ImageSuperpixels alg ) {
         System.out.println("processing "+name);
 
         try {
