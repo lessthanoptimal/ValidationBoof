@@ -36,11 +36,13 @@ public class GenerateRegressionData {
 		list.add( new DetectEllipseRegression() );
 		list.add( new VideoStabilizeRegression() ); // TODO add metric for quality of fit
 		list.add( new ImageClassificationRegression() );
+		list.add( new SuperPixelRegression() );
 		// TODO fisheye calibration
-		// TODO Image Segmentation
 		// TODO Visual odometry - RGB-D
 		// TODO Visual odometry - Mono-Plane
 		// TODO template matching regression
+		// TODO image distort regression (MLS)
+		// TODO image classification
 
 		return list;
 	}
