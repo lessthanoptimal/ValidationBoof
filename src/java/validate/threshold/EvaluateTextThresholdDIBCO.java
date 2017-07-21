@@ -34,7 +34,13 @@ public class EvaluateTextThresholdDIBCO {
 		}
 	}
 
-	public EvaluateTextThresholdDIBCO() {
+	public void addAlgorithm( ThresholdText alg , String name ) {
+		algorithms.add( new Alg(alg,name));
+	}
+
+	public void evaluate() {
+		input.clear();
+		truth.clear();
 		// load all the data
 		for (int i = 1; i <= 5 ; i++) {
 			load(String.format("H%02d.bmp",i),String.format("H%02d_truth.bmp",i));
@@ -42,13 +48,7 @@ public class EvaluateTextThresholdDIBCO {
 		for (int i = 1; i <= 5 ; i++) {
 			load(String.format("P%02d.bmp",i),String.format("P%02d_truth.bmp",i));
 		}
-	}
 
-	public void addAlgorithm( ThresholdText alg , String name ) {
-		algorithms.add( new Alg(alg,name));
-	}
-
-	public void evaluate() {
 		GrayU8 found = new GrayU8(1,1);
 		for( Alg alg : algorithms ) {
 
