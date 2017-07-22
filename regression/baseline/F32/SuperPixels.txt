@@ -1,0 +1,15 @@
+Super Pixel Regression Metrics
+
+
+FH04
+   berkeley_horses.jpg regions= 751 all-stdev= 63.30 ave-stdev= 14.21 size-stdev/mean= 1.3670
+      pines_people.jpg regions=2011 all-stdev= 56.01 ave-stdev= 23.25 size-stdev/mean= 1.1532
+MeanShift
+   berkeley_horses.jpg regions= 753 all-stdev= 63.26 ave-stdev= 15.18 size-stdev/mean= 4.5049
+      pines_people.jpg regions=2938 all-stdev= 56.31 ave-stdev= 22.74 size-stdev/mean= 2.0660
+SLIC
+   berkeley_horses.jpg regions= 175 all-stdev= 62.33 ave-stdev= 15.55 size-stdev/mean= 0.4239
+      pines_people.jpg regions= 168 all-stdev= 50.69 ave-stdev= 30.67 size-stdev/mean= 0.4255
+Watershed
+   berkeley_horses.jpg regions=1550 all-stdev= 62.60 ave-stdev= 13.59 size-stdev/mean= 0.4920
+      pines_people.jpg regions=3118 all-stdev= 53.93 ave-stdev= 25.05 size-stdev/mean= 0.4772

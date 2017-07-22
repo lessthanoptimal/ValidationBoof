@@ -1,0 +1,89 @@
+# Data Set = angled
+# maxPixelError = 5.0
+
+Summary:
+ correct            : 100
+ wrong order        : 0
+ wrong ID           : 0
+ duplicates         : 0
+ false positive     : 0
+ false negative     : 0
+Normal Angle (deg):     99
+ errors 50%         : 0.014376130216898615
+ errors 90%         : 0.026212052194716454
+ errors 100%        : 0.059559732330796394
+Location            : 99
+ errors 50%         : 0.00669222485267309
+ errors 90%         : 0.01641172322993002
+ errors 100%        : 0.030855819969345787
+Precision:              4800
+ errors 50%         : 0.05274748949930934
+ errors 90%         : 0.22598903910161686
+ errors 100%        : 0.28241327597027954
+Accuracy:               4800
+ errors 50%         : 1.1862076049374206
+ errors 90%         : 2.2457342859887492
+ errors 100%        : 3.8826182076818436
+
+---------------------------------------------------
+
+# Data Set = front_close
+# maxPixelError = 5.0
+
+Summary:
+ correct            : 100
+ wrong order        : 0
+ wrong ID           : 0
+ duplicates         : 0
+ false positive     : 0
+ false negative     : 0
+Normal Angle (deg):     99
+ errors 50%         : 0.05070024187549283
+ errors 90%         : 0.09223599667396462
+ errors 100%        : 0.13436903083256024
+Location            : 99
+ errors 50%         : 0.004829406052689836
+ errors 90%         : 0.01033661010886933
+ errors 100%        : 0.014332016699927222
+Precision:              4800
+ errors 50%         : 0.01988271454565989
+ errors 90%         : 0.03668584978183161
+ errors 100%        : 0.08259994928643093
+Accuracy:               4800
+ errors 50%         : 0.4894865787632946
+ errors 90%         : 1.1113675395313987
+ errors 100%        : 1.5661592361175039
+
+---------------------------------------------------
+
+# Data Set = front_far
+# maxPixelError = 5.0
+
+Summary:
+ correct            : 100
+ wrong order        : 0
+ wrong ID           : 0
+ duplicates         : 0
+ false positive     : 0
+ false negative     : 0
+Normal Angle (deg):     99
+ errors 50%         : 0.2147025068587018
+ errors 90%         : 0.3958827474805398
+ errors 100%        : 0.613141022512564
+Location            : 99
+ errors 50%         : 0.04185714606846291
+ errors 90%         : 0.10804722892289655
+ errors 100%        : 0.14970995407729729
+Precision:              4800
+ errors 50%         : 0.15286855190941323
+ errors 90%         : 0.22698683147198873
+ errors 100%        : 0.34769642940106277
+Accuracy:               4800
+ errors 50%         : 0.3955729305436303
+ errors 90%         : 0.6474725727530902
+ errors 100%        : 0.8711016720136109
+
+---------------------------------------------------
+
+---------------------------------------------------
+total correct / total expected =  300 / 300

@@ -1,0 +1,7 @@
+data/fiducials/circle_regular/standard/distance_angle 300 100.267
+data/fiducials/circle_regular/standard/distance_straight 300 100.942
+data/fiducials/circle_regular/standard/motion_blur 300 219.619
+data/fiducials/circle_regular/standard/rotation 300  84.722
+data/fiducials/circle_regular/static/angled 300  81.588
+data/fiducials/circle_regular/static/front_close 300 129.926
+data/fiducials/circle_regular/static/front_far 300  99.206

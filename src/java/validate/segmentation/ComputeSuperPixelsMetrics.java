@@ -30,6 +30,11 @@ public class ComputeSuperPixelsMetrics<T extends ImageBase<T>> {
     public ComputeSuperPixelsMetrics(String path , ImageType<T> imageType ) {
 
         File dir = new File(path);
+        File files[] = dir.listFiles();
+        if( files == null ) {
+            err.println("Can't find image files! "+path);
+            return;
+        }
 
         for( File f : dir.listFiles() ) {
             if( !f.isFile()) continue;
