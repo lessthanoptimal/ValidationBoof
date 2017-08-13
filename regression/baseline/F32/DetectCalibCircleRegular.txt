@@ -1,0 +1,20 @@
+# (file name) (truth error 50%) (truth error 95%)
+data/calib/mono/circle_regular/distant/frame01.jpg 0.4343440869929601 0.7163109379079594
+data/calib/mono/circle_regular/distant/frame02.jpg 0.38474411570418865 0.7837870024155177
+data/calib/mono/circle_regular/distant/frame03.jpg 0.4698727641103978 0.8935730764474723
+data/calib/mono/circle_regular/distant/frame04.jpg 0.4344401779178733 0.7471161669191257
+data/calib/mono/circle_regular/distant/frame05.jpg 0.3407351741794475 0.6942841018600983
+data/calib/mono/circle_regular/large/image01.jpg 3.7392119699025965 5.7724522084675645
+data/calib/mono/circle_regular/large/image02.jpg 1.8156181316415585 3.2873966428347194
+data/calib/mono/circle_regular/large/image03.jpg 1.7806633498734432 3.2082501496146154
+data/calib/mono/circle_regular/large/image04.jpg 0.7188408752462574 1.3768859410852219
+data/calib/mono/circle_regular/large/image05.jpg 0.6512272568806265 1.2169636438597222
+data/calib/mono/circle_regular/large/image06.jpg 0.7494344828720835 1.3979826580824428
+data/calib/mono/circle_regular/large/image07.jpg 1.348128989963116 2.359567388770625
+data/calib/mono/circle_regular/fisheye/image00.jpg 0.2768997563648768 0.7717938922172088
+data/calib/mono/circle_regular/fisheye/image01.jpg failed
+data/calib/mono/circle_regular/fisheye/image02.jpg failed
+data/calib/mono/circle_regular/fisheye/image03.jpg failed
+data/calib/mono/circle_regular/fisheye/image04.jpg failed
+
+Summary: 50% = 0.616069927110513  95% = 3.5812351210996676   success %76.47058823529412
