@@ -18,7 +18,7 @@ public class CreateCalibrationFiducialLandmarkFiles {
 //		DetectorFiducialCalibration detector = FactoryFiducialCalibration.chessboard(config);
 //		ConfigSquareGrid config = new ConfigSquareGrid(5,7,1,1);
 //		DetectorFiducialCalibration detector = FactoryFiducialCalibration.squareGrid(config);
-//		ConfigCircleAsymmetricGrid config = new ConfigCircleAsymmetricGrid(8,5,1,6);
+//		ConfigCircleAsymmetricGrid config = new ConfigCircleAsymmetricGrid(8,5,2,6);
 //		DetectorFiducialCalibration detector = FactoryFiducialCalibration.circleAsymmGrid(config);
 		ConfigCircleRegularGrid config = new ConfigCircleRegularGrid(4,3,4,6);
 		DetectorFiducialCalibration detector = FactoryFiducialCalibration.circleRegularGrid(config);

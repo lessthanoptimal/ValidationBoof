@@ -31,7 +31,7 @@ sourceSets {
 dependencies {
     compile files("lib/ProjectBUBO.jar")
 
-    ['boofcv-core','boofcv-swing'].each { String a -> compile group: 'org.boofcv', name: a, version: '0.27-SNAPSHOT' }
+    ['boofcv-core','boofcv-swing'].each { String a -> compile group: 'org.boofcv', name: a, version: '0.27' }
 
     compile group: 'com.google.guava', name: 'guava', version: '17.0'
 

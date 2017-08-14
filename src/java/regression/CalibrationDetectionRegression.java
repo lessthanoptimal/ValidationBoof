@@ -1,7 +1,6 @@
 package regression;
 
-import boofcv.abst.fiducial.calib.CalibrationPatterns;
-import boofcv.abst.fiducial.calib.ConfigCircleRegularGrid;
+import boofcv.abst.fiducial.calib.*;
 import boofcv.abst.geo.calibration.DetectorFiducialCalibration;
 import boofcv.alg.geo.calibration.CalibrationObservation;
 import boofcv.factory.fiducial.FactoryFiducialCalibration;
@@ -58,16 +57,15 @@ public class CalibrationDetectionRegression extends BaseTextFileRegression{
 		circleRegirectories.add("data/calib/mono/circle_regular/large");
 		circleRegirectories.add("data/calib/mono/circle_regular/fisheye");
 
-//		addDetector("DetectCalibChess",
-//				FactoryFiducialCalibration.chessboard(new ConfigChessboard(7, 5,30)),
-//				CalibrationPatterns.CHESSBOARD);
-//		addDetector("DetectCalibSquare",
-//				FactoryFiducialCalibration.squareGrid(new ConfigSquareGrid(4, 3,30,30)),
-//				CalibrationPatterns.SQUARE_GRID);
-//		addDetector("DetectCalibCircleAsymmetric",
-//				FactoryFiducialCalibration.circleAsymmGrid(new ConfigCircleAsymmetricGrid(8, 5,1,6)),
-//				CalibrationPatterns.CIRCLE_ASYMMETRIC_GRID);
-
+		addDetector("DetectCalibChess",
+				FactoryFiducialCalibration.chessboard(new ConfigChessboard(7, 5,30)),
+				CalibrationPatterns.CHESSBOARD);
+		addDetector("DetectCalibSquare",
+				FactoryFiducialCalibration.squareGrid(new ConfigSquareGrid(4, 3,30,30)),
+				CalibrationPatterns.SQUARE_GRID);
+		addDetector("DetectCalibCircleAsymmetric",
+				FactoryFiducialCalibration.circleAsymmGrid(new ConfigCircleAsymmetricGrid(8, 5,2,6)),
+				CalibrationPatterns.CIRCLE_ASYMMETRIC_GRID);
 		addDetector("DetectCalibCircleRegular",
 				FactoryFiducialCalibration.circleRegularGrid(new ConfigCircleRegularGrid(4, 3,4,6)),
 				CalibrationPatterns.CIRCLE_GRID);

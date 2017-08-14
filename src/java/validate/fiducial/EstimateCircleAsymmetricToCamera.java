@@ -46,7 +46,7 @@ public class EstimateCircleAsymmetricToCamera<T extends ImageGray<T>> extends Ba
 			throw new RuntimeException(e);
 		}
 
-		ConfigCircleAsymmetricGrid config = new ConfigCircleAsymmetricGrid(numRows,numCols,diameter/2,centerDistance);
+		ConfigCircleAsymmetricGrid config = new ConfigCircleAsymmetricGrid(numRows,numCols,diameter,centerDistance);
 
 		return FactoryFiducial.calibCircleAsymGrid(config, imageType);
 	}

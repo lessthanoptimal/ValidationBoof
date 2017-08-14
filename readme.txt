@@ -6,6 +6,15 @@ https://sourceforge.net/p/validationboof
 Source Code:
 https://github.com/lessthanoptimal/ValidationBoof
 
+----------------------------------------------
+
+1) Run regression
+2) Copy files from regression/current into regression/baseline
+  cp -r regression/current/* regression/baseline
+3) Make sure all the tests were run by looking at difference of file list
+  diff --brief -r regression/baseline/U8 regression/current/U8
+4)
+
 
 -----------------------------------------------
 
