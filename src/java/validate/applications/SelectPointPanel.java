@@ -27,6 +27,7 @@ public class SelectPointPanel extends ImageZoomPanel
 	Point2D_F64 selected = null;
 
 	public SelectPointPanel() {
+		disableSaveOnClick();
 		panel.addMouseListener(this);
 		panel.addKeyListener(this);
 	}

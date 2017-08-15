@@ -63,7 +63,7 @@ public class HandSelectPointsApp extends HandSelectBase {
 	}
 
 	public static void main(String[] args) {
-		String imagePath = "data/shape/border01/image00000.jpg";
+		String imagePath = "data/fiducials/binary/standard/rotation/image00006.png";
 
 		String outputName = new File(imagePath).getAbsolutePath();
 		outputName = outputName.substring(0,outputName.length()-4)+".txt";
