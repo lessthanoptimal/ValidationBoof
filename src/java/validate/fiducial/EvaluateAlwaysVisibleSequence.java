@@ -1,6 +1,6 @@
 package validate.fiducial;
 
-import boofcv.misc.BoofMiscOps;
+import boofcv.io.UtilIO;
 
 import java.io.File;
 import java.io.PrintStream;
@@ -30,7 +30,7 @@ public class EvaluateAlwaysVisibleSequence implements FiducialEvaluateInterface 
 		FiducialCommon.Library library = FiducialCommon.parseScenario(new File(dataset, "library.txt"));
 		List<String> visible = FiducialCommon.parseVisibleFile(new File(dataset, "visible.txt"));
 
-		List<String> results = BoofMiscOps.directoryList(resultsDirectory.getAbsolutePath(), "csv");
+		List<String> results = UtilIO.directoryList(resultsDirectory.getAbsolutePath(), "csv");
 		Collections.sort(results);
 
 		Map<Long,Tally> map = new HashMap<Long,Tally>();

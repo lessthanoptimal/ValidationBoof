@@ -2,9 +2,9 @@ package validate.fiducial;
 
 import boofcv.abst.fiducial.FiducialDetector;
 import boofcv.alg.distort.radtan.LensDistortionRadialTangential;
+import boofcv.io.UtilIO;
 import boofcv.io.image.ConvertBufferedImage;
 import boofcv.io.image.UtilImageIO;
-import boofcv.misc.BoofMiscOps;
 import boofcv.struct.calib.CameraPinholeRadial;
 import boofcv.struct.image.ImageBase;
 import georegression.struct.point.Vector3D_F64;
@@ -49,9 +49,9 @@ public abstract class BaseEstimateSquareFiducialToCamera<T extends ImageBase<T>>
 		FiducialDetector<T> detector = createDetector(dataSetDir);
 		FiducialCommon.Library library = FiducialCommon.parseScenario(new File(dataSetDir, "library.txt"));
 
-		List<String> files = BoofMiscOps.directoryList(dataSetDir.getAbsolutePath(), "png");
+		List<String> files = UtilIO.directoryList(dataSetDir.getAbsolutePath(), "png");
 		if( files.size() == 0 ) {
-			files = BoofMiscOps.directoryList(dataSetDir.getAbsolutePath(), "jpg");
+			files = UtilIO.directoryList(dataSetDir.getAbsolutePath(), "jpg");
 		}
 		if( files.size() == 0 ) {
 			throw new IllegalArgumentException("No images found.  paths correct?");

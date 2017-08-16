@@ -54,6 +54,6 @@ data/calib/mono/chessboard/border/image00003.jpg 0.1816818048665763 0.3571070400
 data/calib/mono/chessboard/border/image00004.jpg 0.20310286697312563 0.4194119341417846
 data/calib/mono/chessboard/border/image00005.jpg 0.2412787841014225 0.4095624183387316
 data/calib/mono/chessboard/border/image00006.jpg 0.2791097584095307 0.4495289137654936
-DetectCalibChess data/calib/mono/chessboard/border/image00007.jpg failed
+data/calib/mono/chessboard/border/image00007.jpg failed
 
-Summary: 50% = 0.265621034168953  95% = 0.589510643580412
+Summary: 50% = 0.265621034168953  95% = 0.589510643580412   success %98.21428571428571

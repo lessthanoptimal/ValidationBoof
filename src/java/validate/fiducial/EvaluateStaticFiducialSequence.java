@@ -1,6 +1,6 @@
 package validate.fiducial;
 
-import boofcv.misc.BoofMiscOps;
+import boofcv.io.UtilIO;
 import georegression.metric.UtilAngle;
 import georegression.struct.point.Point2D_F64;
 import georegression.struct.point.Vector3D_F64;
@@ -34,7 +34,7 @@ public class EvaluateStaticFiducialSequence extends BaseEvaluateFiducialToCamera
 	{
 		initializeEvaluate(dataSetDir);
 
-		List<String> results = BoofMiscOps.directoryList(resultsDirectory.getAbsolutePath(), "csv");
+		List<String> results = UtilIO.directoryList(resultsDirectory.getAbsolutePath(), "csv");
 		Collections.sort(results);
 
 		outputResults.println("# Data Set = " + dataSetDir.getName());
