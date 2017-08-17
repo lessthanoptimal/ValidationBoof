@@ -1,6 +1,6 @@
 package validate.fiducial;
 
-import boofcv.misc.BoofMiscOps;
+import boofcv.io.UtilIO;
 import georegression.struct.point.Point2D_F64;
 import validate.misc.PointFileCodec;
 
@@ -25,7 +25,7 @@ public class EvaluateFiducialToCamera extends BaseEvaluateFiducialToCamera {
 	public void evaluate( File resultsDirectory , File dataSetDir ) {
 		initializeEvaluate(dataSetDir);
 
-		List<String> results = BoofMiscOps.directoryList(resultsDirectory.getAbsolutePath(),"csv");
+		List<String> results = UtilIO.directoryList(resultsDirectory.getAbsolutePath(),"csv");
 		Collections.sort(results);
 
 		outputResults.println("# "+dataSetDir.getName());

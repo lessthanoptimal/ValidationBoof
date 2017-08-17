@@ -4,9 +4,9 @@ import boofcv.abst.fiducial.calib.ConfigCircleRegularGrid;
 import boofcv.abst.geo.calibration.DetectorFiducialCalibration;
 import boofcv.alg.geo.calibration.CalibrationObservation;
 import boofcv.factory.fiducial.FactoryFiducialCalibration;
+import boofcv.io.UtilIO;
 import boofcv.io.image.ConvertBufferedImage;
 import boofcv.io.image.UtilImageIO;
-import boofcv.misc.BoofMiscOps;
 import boofcv.struct.geo.PointIndex2D_F64;
 import boofcv.struct.image.GrayF32;
 
@@ -33,7 +33,7 @@ public class DetectTargetFeatures {
 
 		// load image list
 		String directory = "data/calib/mono/circle_regular/distant";
-		List<String> images = BoofMiscOps.directoryList(directory, "jpg");
+		List<String> images = UtilIO.directoryList(directory, "jpg");
 
 		Collections.sort(images);
 
