@@ -23,7 +23,6 @@ public class HandSelectQRCodeApp extends HandSelectBase {
 
         File f = selectOutputFile(file);
 
-        System.out.println("Attemping to load: "+f.getName());
         if( f.exists() ) {
             try {
                 gui.markers.addAll(load(f));
@@ -76,6 +75,9 @@ public class HandSelectQRCodeApp extends HandSelectBase {
             out.println("# Hand Labeled QR Code Finder Patterns");
             for (int i = 0; i < gui.markers.size(); i++) {
                 QRCorners c = gui.markers.get(i);
+                if( c.corners.size() != 3*4 ) // skip incomplete qr codes
+                    continue;
+
                 out.println("message = "+c.message);
 
                 for (int j = 0; j < c.corners.size(); j++) {

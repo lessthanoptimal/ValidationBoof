@@ -5,6 +5,8 @@ import boofcv.io.image.UtilImageIO;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.Arrays;
@@ -53,8 +55,24 @@ public abstract class HandSelectBase {
 	public HandSelectBase(){}
 
 	protected void handleFirstImage() {
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		int w = image.getWidth();
+		int h = image.getHeight();
+
+		if( screenSize.width < w+100 || screenSize.height < h ) {
+			gui.setPreferredSize(new Dimension(screenSize.width,screenSize.height));
+		} else {
+			gui.setPreferredSize(new Dimension(w,h));
+		}
+
 		frame = ShowImages.showWindow(gui,getApplicationName());
 		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+		frame.addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowOpened(WindowEvent windowEvent) {
+				adjustImageScale();
+			}
+		});
 	}
 
 	public boolean openImage( File f , boolean next ) {
@@ -93,25 +111,28 @@ public abstract class HandSelectBase {
 		clearPoints();
 		process(f, image);
 
-		// if huge scale image down
-		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		if( firstImage ) {
+			handleFirstImage();
+		} else {
+			adjustImageScale();
+		}
 
-		double scaleX = screenSize.getWidth()/(double)image.getWidth();
-		double scaleY = screenSize.getHeight()/(double)image.getHeight();
+		frame.setTitle(getApplicationName()+" "+f.getName());
+
+		System.out.println("Opening image "+f.getName());
+
+		return true;
+	}
+
+	private void adjustImageScale() {
+		Dimension d = imagePanel.getSize();
+		double scaleX = (d.width-5)/(double)image.getWidth();
+		double scaleY = (d.height-5)/(double)image.getHeight();
 		double scale = Math.min(scaleX,scaleY);
 		if( scale < 1) {
 			infoPanel.setScale(scale);
 			setScale(scale);
 		}
-
-		if( firstImage ) {
-			handleFirstImage();
-		}
-		frame.setTitle(f.getName());
-
-		System.out.println("Opening image "+f.getName());
-
-		return true;
 	}
 
 	public abstract void process(File file, BufferedImage image);
