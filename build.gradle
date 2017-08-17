@@ -28,6 +28,23 @@ sourceSets {
     }
 }
 
+task selectJar(type: Jar) {
+    manifest {
+        attributes 'Implementation-Title': 'Validation Boof',
+                'Implementation-Version': version,
+                'Main-Class': 'validate.applications.HandSelectQRCodeApp'
+    }
+
+    outputs.upToDateWhen { false }
+
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
+
+    doLast {
+        archivePath.renameTo(file('select.jar'))
+    }
+}
+
 dependencies {
     compile files("lib/ProjectBUBO.jar")
 

@@ -268,9 +268,15 @@ public class SelectQrCodeCornerPanel extends ImageZoomPanel
 
 			case KeyEvent.VK_DELETE:
 			case KeyEvent.VK_BACK_SPACE:
-				if( activeQR != null ) {
-					activeQR.corners.remove(selected);
+				synchronized (markers) {
+					if( activeQR != null ) {
+						if( !markers.remove(activeQR)) {
+							throw new RuntimeException("BUG!");
+						}
+						activeQR = null;
+					}
 				}
+
 				selected = null;
 				break;
 

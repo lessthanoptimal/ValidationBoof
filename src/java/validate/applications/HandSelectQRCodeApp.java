@@ -10,10 +10,6 @@ import java.util.List;
 
 import static validate.misc.ParseHelper.skipComments;
 
-// TODO a way to delete one entire qr code and not just a point at a time. Don't delete a point. Just delete the code
-// TODO Select a file using GUI
-// TODO Move to next file using GUI
-// TODO Drag a point to fix it
 public class HandSelectQRCodeApp extends HandSelectBase {
     public HandSelectQRCodeApp( File file ) {
         super(new SelectQrCodeCornerPanel(),file);
