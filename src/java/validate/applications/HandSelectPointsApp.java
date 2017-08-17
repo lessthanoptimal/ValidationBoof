@@ -1,6 +1,5 @@
 package validate.applications;
 
-import boofcv.io.image.UtilImageIO;
 import georegression.struct.point.Point2D_F64;
 import validate.misc.PointFileCodec;
 
@@ -16,33 +15,40 @@ import java.util.List;
 public class HandSelectPointsApp extends HandSelectBase {
 
 
-	SelectPointPanel imagePanel = new SelectPointPanel();
 
-	public HandSelectPointsApp( BufferedImage image , String outputName ) {
-		super(outputName);
+	public HandSelectPointsApp( File file ) {
+		super(new SelectPointPanel(),file);
+	}
 
-		if( new File(outputName).exists() ) {
-			List<List<Point2D_F64>> sets = PointFileCodec.loadSets(outputName);
+	@Override
+	public void process(File file, BufferedImage image) {
+		SelectPointPanel gui = (SelectPointPanel)this.imagePanel;
+
+		File outputFile = selectOutputFile(file);
+
+		if( outputFile.exists() ) {
+			List<List<Point2D_F64>> sets = PointFileCodec.loadSets(outputFile.getPath());
 			if( sets == null ) {
-				imagePanel.addPointSet(PointFileCodec.load(outputName));
+				gui.addPointSet(PointFileCodec.load(outputFile.getPath()));
 			} else {
-				imagePanel.setSets(sets);
+				gui.setSets(sets);
 			}
 		}
-		imagePanel.setBufferedImage(image);
-		initGui(image.getWidth(),image.getHeight(),imagePanel);
+		gui.setBufferedImage(image);
 	}
 
 	@Override
 	public void save() {
-		List<List<Point2D_F64>> points = imagePanel.getSelectedPoints();
+		SelectPointPanel gui = (SelectPointPanel)this.imagePanel;
+		File outputFile = selectOutputFile(inputFile);
+		List<List<Point2D_F64>> points = gui.getSelectedPoints();
 
 		if( points.size() == 1 ) {
-			PointFileCodec.save(outputName, "list of hand selected 2D points", points.get(0));
-			System.out.println("Saved to " + outputName);
+			PointFileCodec.save(outputFile.getPath(), "list of hand selected 2D points", points.get(0));
+			System.out.println("Saved to " + outputFile.getPath());
 		} else if( points.size() > 1 ){
-			PointFileCodec.saveSets(outputName, "list of hand selected 2D points", points);
-			System.out.println("Saved to " + outputName);
+			PointFileCodec.saveSets(outputFile.getPath(), "list of hand selected 2D points", points);
+			System.out.println("Saved to " + outputFile.getPath());
 		}
 	}
 
@@ -53,23 +59,20 @@ public class HandSelectPointsApp extends HandSelectBase {
 
 	@Override
 	public void setScale( double scale ) {
-		imagePanel.setScale(scale);
+		SelectPointPanel gui = (SelectPointPanel)this.imagePanel;
+		gui.setScale(scale);
 	}
 
 	@Override
 	public void clearPoints() {
-		imagePanel.clearPoints();
-		imagePanel.repaint();
+		SelectPointPanel gui = (SelectPointPanel)this.imagePanel;
+		gui.clearPoints();
+		gui.repaint();
 	}
 
 	public static void main(String[] args) {
 		String imagePath = "data/fiducials/binary/standard/rotation/image00006.png";
 
-		String outputName = new File(imagePath).getAbsolutePath();
-		outputName = outputName.substring(0,outputName.length()-4)+".txt";
-
-		BufferedImage image = UtilImageIO.loadImage(imagePath);
-
-		new HandSelectPointsApp(image,outputName);
+		new HandSelectPointsApp(new File(imagePath));
 	}
 }

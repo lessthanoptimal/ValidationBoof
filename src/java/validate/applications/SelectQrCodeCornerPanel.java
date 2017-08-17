@@ -42,6 +42,11 @@ public class SelectQrCodeCornerPanel extends ImageZoomPanel
 		panel.addKeyListener(this);
 	}
 
+	public void reset() {
+		selected = null;
+		markers.clear();
+	}
+
 	@Override
 	protected void paintInPanel(AffineTransform tran,Graphics2D g2 ) {
 

@@ -1,36 +1,47 @@
 package validate.applications;
 
-import boofcv.io.image.UtilImageIO;
 import georegression.struct.point.Point2D_F64;
 
+import javax.swing.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-// TODO a way to delete one entire qr code and not just a point at a time
-//      button ?
-// TODO Instant zoom in keyboard
+import static validate.misc.ParseHelper.skipComments;
+
+// TODO a way to delete one entire qr code and not just a point at a time. Don't delete a point. Just delete the code
 // TODO Select a file using GUI
 // TODO Move to next file using GUI
 // TODO Drag a point to fix it
 public class HandSelectQRCodeApp extends HandSelectBase {
-    SelectQrCodeCornerPanel imagePanel = new SelectQrCodeCornerPanel();
+    public HandSelectQRCodeApp( File file ) {
+        super(new SelectQrCodeCornerPanel(),file);
+    }
 
-    public HandSelectQRCodeApp(BufferedImage image , String outputName ) {
-        super(outputName);
+    @Override
+    public void process(File file, BufferedImage image) {
+        SelectQrCodeCornerPanel gui = (SelectQrCodeCornerPanel)this.imagePanel;
 
-//        if( new File(outputName).exists() ) {
-//            List<List<Point2D_F64>> sets = PointFileCodec.loadSets(outputName);
-//            if( sets == null ) {
-//                imagePanel.addPointSet(PointFileCodec.load(outputName));
-//            } else {
-//                imagePanel.setSets(sets);
-//            }
-//        }
+        gui.reset();
+
+        File f = selectOutputFile(file);
+
+        System.out.println("Attemping to load: "+f.getName());
+        if( f.exists() ) {
+            try {
+                gui.markers.addAll(load(f));
+            } catch( RuntimeException e ) {
+                int dialogResult = JOptionPane.showConfirmDialog (gui, e.getMessage()+"\nDelete?","Delete Corrupted?",JOptionPane.YES_NO_OPTION);
+                if(dialogResult == JOptionPane.YES_OPTION){
+                    if( !f.delete() )
+                        throw new RuntimeException("Failed to delete");
+                }
+            }
+        }
+
         infoPanel.setImageShape(image.getWidth(),image.getHeight());
-        imagePanel.setBufferedImage(image);
-        initGui(image.getWidth(),image.getHeight(),imagePanel);
+        gui.setBufferedImage(image);
     }
 
     @Override
@@ -40,19 +51,98 @@ public class HandSelectQRCodeApp extends HandSelectBase {
 
     @Override
     public void setScale( double scale ) {
-        imagePanel.setScale(scale);
+        SelectQrCodeCornerPanel gui = (SelectQrCodeCornerPanel)this.imagePanel;
+        gui.setScale(scale);
     }
 
     @Override
     public void clearPoints() {
-        imagePanel.clearPoints();
-        imagePanel.repaint();
+        SelectQrCodeCornerPanel gui = (SelectQrCodeCornerPanel)this.imagePanel;
+        gui.clearPoints();
+        gui.repaint();
     }
 
     @Override
     public void save() {
-        System.out.println("I refuse to save your results");
+        SelectQrCodeCornerPanel gui = (SelectQrCodeCornerPanel)this.imagePanel;
 
+        if( gui.markers.isEmpty() ) {
+            System.out.println("Nothing to save");
+            return;
+        }
+
+        File f = selectOutputFile(inputFile);
+        System.out.println("** Saving to "+f.getPath());
+
+        try {
+            PrintStream out = new PrintStream(f);
+
+            out.println("# Hand Labeled QR Code Finder Patterns");
+            for (int i = 0; i < gui.markers.size(); i++) {
+                QRCorners c = gui.markers.get(i);
+                out.println("message = "+c.message);
+
+                for (int j = 0; j < c.corners.size(); j++) {
+                    Point2D_F64 p = c.corners.get(j);
+                    out.printf("%.20f %.20f",p.x,p.y);
+                    if( j != c.corners.size()-1)
+                        out.print(" ");
+                }
+                out.println();
+            }
+            out.close();
+
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private List<QRCorners> load( File file ) {
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(file));
+
+            String line = skipComments(reader);
+
+            List<QRCorners> out = new ArrayList<>();
+            while( line != null ) {
+                QRCorners c = new QRCorners();
+
+                String words[] = line.split(" ");
+                if( words.length < 3 ) {
+                    throw new RuntimeException("expected 3 or more words");
+                }
+                if( !words[0].equals("message") || !words[1].equals("=")) {
+                    throw new RuntimeException("Expected 'message ='");
+                }
+                c.message = words[2];
+
+                line = reader.readLine();
+                if( line == null )
+                    throw new RuntimeException("Premature end of file");
+                words = line.split(" ");
+                if( words.length != (4*3*2)) {
+                    throw new RuntimeException("Unexpected number of words for corners");
+                }
+                for (int i = 0; i < words.length; i += 2 ) {
+                    Point2D_F64 p = new Point2D_F64();
+                    p.x = Double.parseDouble(words[i]);
+                    p.y = Double.parseDouble(words[i+1]);
+                    c.corners.add(p);
+                }
+
+                line = reader.readLine();
+                out.add(c);
+            }
+
+            reader.close();
+
+            return out;
+
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     static class QRCorners
@@ -61,14 +151,8 @@ public class HandSelectQRCodeApp extends HandSelectBase {
         public String message = "UNKNOWN";
     }
 
+
     public static void main(String[] args) {
-        String imagePath = "1487126823099.jpg";
-
-        String outputName = new File(imagePath).getAbsolutePath();
-        outputName = outputName.substring(0,outputName.length()-4)+".txt";
-
-        BufferedImage image = UtilImageIO.loadImage(imagePath);
-
-        new HandSelectQRCodeApp(image,outputName);
+        new HandSelectQRCodeApp(null);
     }
 }

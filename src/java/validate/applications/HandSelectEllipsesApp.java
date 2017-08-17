@@ -1,6 +1,5 @@
 package validate.applications;
 
-import boofcv.io.image.UtilImageIO;
 import validate.misc.EllipseFileCodec;
 
 import java.awt.image.BufferedImage;
@@ -13,22 +12,28 @@ import java.io.File;
  */
 public class HandSelectEllipsesApp extends HandSelectBase {
 
-	SelectEllipsePanel imagePanel = new SelectEllipsePanel();
 
-	public HandSelectEllipsesApp(BufferedImage image , String outputName ) {
-		super(outputName);
+	public HandSelectEllipsesApp( File file ) {
+		super(new SelectEllipsePanel(),file);
+	}
 
-		if( new File(outputName).exists() ) {
-			imagePanel.list.addAll(EllipseFileCodec.load(outputName));
+	@Override
+	public void process(File file, BufferedImage image) {
+		SelectEllipsePanel gui = (SelectEllipsePanel)this.imagePanel;
+
+		File outputFile = selectOutputFile(file);
+		if( outputFile.exists() ) {
+			gui.list.addAll(EllipseFileCodec.load(outputFile.getPath()));
 		}
 
-		imagePanel.setBufferedImage(image);
-		initGui(image.getWidth(),image.getHeight(),imagePanel);
+		gui.setBufferedImage(image);
 	}
 
 	@Override
 	public void save() {
-		EllipseFileCodec.save(outputName," rotated ellipses. x y a b phi",imagePanel.list);
+		SelectEllipsePanel gui = (SelectEllipsePanel)this.imagePanel;
+		File outputFile = selectOutputFile(inputFile);
+		EllipseFileCodec.save(outputFile.getPath()," rotated ellipses. x y a b phi",gui.list);
 	}
 
 	@Override
@@ -38,23 +43,20 @@ public class HandSelectEllipsesApp extends HandSelectBase {
 
 	@Override
 	public void setScale( double scale ) {
-		imagePanel.setScale(scale);
+		SelectEllipsePanel gui = (SelectEllipsePanel)this.imagePanel;
+		gui.setScale(scale);
 	}
 
 	@Override
 	public void clearPoints() {
-		imagePanel.clearPoints();
-		imagePanel.repaint();
+		SelectEllipsePanel gui = (SelectEllipsePanel)this.imagePanel;
+		gui.clearPoints();
+		gui.repaint();
 	}
 
 	public static void main(String[] args) {
-		String imagePath = "data/shape/ellipse/outdoors/image00009.png";
+		String imagePath = "data/fiducials/circle_asymmetric/standard/distance_angle/image00000.jpg";
 
-		String outputName = new File(imagePath).getAbsolutePath();
-		outputName = outputName.substring(0,outputName.length()-4)+".txt";
-
-		BufferedImage image = UtilImageIO.loadImage(imagePath);
-
-		new HandSelectEllipsesApp(image,outputName);
+		new HandSelectEllipsesApp(new File(imagePath));
 	}
 }

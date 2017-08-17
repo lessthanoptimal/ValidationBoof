@@ -2,7 +2,6 @@ package validate.applications;
 
 import boofcv.alg.fiducial.calib.circle.EllipseClustersIntoGrid.Grid;
 import boofcv.alg.fiducial.calib.circle.KeyPointsCircleRegularGrid;
-import boofcv.io.image.UtilImageIO;
 import validate.misc.EllipseFileCodec;
 import validate.misc.PointFileCodec;
 
@@ -19,40 +18,45 @@ public class HandSelectEllipseGridApp extends HandSelectBase {
 	int numRows = 4;
 	int numCols = 3;
 
-	SelectEllipsePanel imagePanel = new SelectEllipsePanel();
 
-	String outputEllipseName;
+	public HandSelectEllipseGridApp( File file ) {
+		super(new SelectEllipsePanel(),file);
+	}
 
-	public HandSelectEllipseGridApp(BufferedImage image , String outputName ) {
-		super(outputName);
+	@Override
+	public void process(File file, BufferedImage image) {
+		SelectEllipsePanel gui = (SelectEllipsePanel)this.imagePanel;
+		File outputFile = selectOutputFile(file);
+		String ellipsePath = outputFile.getPath();
+		ellipsePath = ellipsePath.substring(0,ellipsePath.length()-4)+"_ellipse.txt";
 
-		outputEllipseName = outputName.substring(0,outputName.length()-4)+"_ellipse.txt";
-
-		if( new File(outputEllipseName).exists() ) {
-			imagePanel.list.addAll(EllipseFileCodec.load(outputEllipseName));
+		if( new File(ellipsePath).exists() ) {
+			gui.list.addAll(EllipseFileCodec.load(ellipsePath));
 		}
 
-		imagePanel.setBufferedImage(image);
-		initGui(image.getWidth(),image.getHeight(),imagePanel);
+		gui.setBufferedImage(image);
 	}
 
 	@Override
 	public void save() {
-
+		SelectEllipsePanel gui = (SelectEllipsePanel)this.imagePanel;
 		KeyPointsCircleRegularGrid keyAlg = new KeyPointsCircleRegularGrid();
 
 		Grid g = new Grid();
 		g.rows = numRows;
 		g.columns = numCols;
-		g.ellipses = imagePanel.list;
-
+		g.ellipses = gui.list;
 
 		keyAlg.process(g);
-
 		keyAlg.getKeyPoints();
 
-		EllipseFileCodec.save(outputEllipseName," rotated ellipses. x y a b phi",imagePanel.list);
-		PointFileCodec.save(outputName, " list of hand selected 2D points from ellipse tangents",
+		File outputFile = selectOutputFile(inputFile);
+
+		String ellipsePath = outputFile.getPath();
+		ellipsePath = ellipsePath.substring(0,ellipsePath.length()-4)+"_ellipse.txt";
+
+		EllipseFileCodec.save(ellipsePath," rotated ellipses. x y a b phi",gui.list);
+		PointFileCodec.save(outputFile.getPath(), " list of hand selected 2D points from ellipse tangents",
 				keyAlg.getKeyPoints().toList());
 	}
 
@@ -63,23 +67,20 @@ public class HandSelectEllipseGridApp extends HandSelectBase {
 
 	@Override
 	public void setScale( double scale ) {
-		imagePanel.setScale(scale);
+		SelectEllipsePanel gui = (SelectEllipsePanel)this.imagePanel;
+		gui.setScale(scale);
 	}
 
 	@Override
 	public void clearPoints() {
-		imagePanel.clearPoints();
-		imagePanel.repaint();
+		SelectEllipsePanel gui = (SelectEllipsePanel)this.imagePanel;
+		gui.clearPoints();
+		gui.repaint();
 	}
 
 	public static void main(String[] args) {
-		String imagePath = "data/fiducials/circle_regular/static/front_close/frame0100.jpg";
+		String imagePath = "data/fiducials/circle_asymmetric/standard/distance_angle/image00000.jpg";
 
-		String outputName = new File(imagePath).getAbsolutePath();
-		outputName = outputName.substring(0,outputName.length()-4)+".txt";
-
-		BufferedImage image = UtilImageIO.loadImage(imagePath);
-
-		new HandSelectEllipseGridApp(image,outputName);
+		new HandSelectEllipseGridApp(new File(imagePath));
 	}
 }

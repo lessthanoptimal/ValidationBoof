@@ -25,10 +25,17 @@ public class InfoHandSelectPanel extends JPanel implements ChangeListener, Mouse
 	protected JSpinner zoomSpinner;
 	protected JButton resetZoomButton;
 	protected JButton saveButton;
+	protected JButton nextButton;
+	protected JButton openButton;
+
 	protected JButton clearButton;
 
 	protected JTextArea labelWidth = new JTextArea();
 	protected JTextArea labelHeight = new JTextArea();
+
+	protected JCheckBox cSkipLabeled = new JCheckBox("Skip Labeled");
+
+	boolean skipLabeled = false;
 
 	public InfoHandSelectPanel(HandSelectBase owner) {
 		this.owner = owner;
@@ -46,8 +53,14 @@ public class InfoHandSelectPanel extends JPanel implements ChangeListener, Mouse
 		resetZoomButton.addActionListener(this);
 		saveButton = new JButton("Save");
 		saveButton.addActionListener(this);
+		nextButton = new JButton("Next Image");
+		nextButton.addActionListener(actionEvent -> owner.openNextImage());
+		openButton = new JButton("Open Image");
+		openButton.addActionListener(actionEvent -> owner.openImageDialog());
 		clearButton = new JButton("Clear");
 		clearButton.addActionListener(this);
+		cSkipLabeled.setSelected(skipLabeled);
+		cSkipLabeled.addChangeListener(e->skipLabeled = cSkipLabeled.isSelected());
 
 		labelWidth.setEditable(false);
 		labelWidth.setMaximumSize(new Dimension(250,40));
@@ -63,8 +76,11 @@ public class InfoHandSelectPanel extends JPanel implements ChangeListener, Mouse
 		add( new JLabel("Scale"));
 		add(zoomSpinner);
 		add(Box.createRigidArea(new Dimension(10,50)));
+		add(cSkipLabeled);
 		add(resetZoomButton);
 		add(saveButton);
+		add(openButton);
+		add(nextButton);
 		add(Box.createVerticalGlue());
 		add(clearButton);
 	}
