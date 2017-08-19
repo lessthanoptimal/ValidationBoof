@@ -4,6 +4,7 @@ import javax.swing.*;
 import javax.swing.border.EtchedBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseWheelEvent;
@@ -24,7 +25,17 @@ public class InfoHandSelectPanel extends JPanel implements ChangeListener, Mouse
 	protected JSpinner zoomSpinner;
 	protected JButton resetZoomButton;
 	protected JButton saveButton;
+	protected JButton nextButton;
+	protected JButton openButton;
+
 	protected JButton clearButton;
+
+	protected JTextArea labelWidth = new JTextArea();
+	protected JTextArea labelHeight = new JTextArea();
+
+	protected JCheckBox cSkipLabeled = new JCheckBox("Skip Labeled");
+
+	boolean skipLabeled = false;
 
 	public InfoHandSelectPanel(HandSelectBase owner) {
 		this.owner = owner;
@@ -36,19 +47,49 @@ public class InfoHandSelectPanel extends JPanel implements ChangeListener, Mouse
 		zoomSpinner = new JSpinner(model);
 		zoomSpinner.addChangeListener(this);
 		zoomSpinner.setFocusable(false);
+		zoomSpinner.setMaximumSize(new Dimension(250,80));
 
 		resetZoomButton = new JButton("Home");
 		resetZoomButton.addActionListener(this);
 		saveButton = new JButton("Save");
 		saveButton.addActionListener(this);
+		nextButton = new JButton("Next Image");
+		nextButton.addActionListener(actionEvent -> owner.openNextImage());
+		openButton = new JButton("Open Image");
+		openButton.addActionListener(actionEvent -> owner.openImageDialog());
 		clearButton = new JButton("Clear");
 		clearButton.addActionListener(this);
+		cSkipLabeled.setSelected(skipLabeled);
+		cSkipLabeled.addChangeListener(e->skipLabeled = cSkipLabeled.isSelected());
 
+		labelWidth.setEditable(false);
+		labelWidth.setMaximumSize(new Dimension(250,40));
+		labelHeight.setEditable(false);
+		labelHeight.setMaximumSize(new Dimension(250,40));
+
+		add( new JLabel("Width"));
+		add( labelWidth);
+		add(Box.createRigidArea(new Dimension(10,10)));
+		add( new JLabel("Height"));
+		add( labelHeight);
+		add(Box.createRigidArea(new Dimension(10,10)));
+		add( new JLabel("Scale"));
 		add(zoomSpinner);
+		add(Box.createRigidArea(new Dimension(10,50)));
+		add(cSkipLabeled);
 		add(resetZoomButton);
 		add(saveButton);
+		add(openButton);
+		add(nextButton);
 		add(Box.createVerticalGlue());
 		add(clearButton);
+	}
+
+	public void setImageShape( int width , int height ) {
+		SwingUtilities.invokeLater(()->{
+			labelWidth.setText(""+width);
+			labelHeight.setText(""+height);
+		});
 	}
 
 	@Override
