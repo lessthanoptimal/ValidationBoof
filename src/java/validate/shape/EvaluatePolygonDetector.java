@@ -19,6 +19,11 @@ public class EvaluatePolygonDetector {
 	PrintStream outputResults = System.out;
 	PrintStream err = System.err;
 
+	int summaryTruePositive;
+	int summaryExpected;
+	double summaryError = 0;
+	int summaryCount = 0;
+
 	/**
 	 * Fraction of contour size a corner needs to be within to be considered a match
 	 */
@@ -45,6 +50,10 @@ public class EvaluatePolygonDetector {
 
 		Collections.sort(files);
 
+		summaryTruePositive = 0;
+		summaryExpected = 0;
+		summaryError = 0;
+		summaryCount = 0;
 		for( File f : files ) {
 			if( !(f.getName().endsWith("jpg")||f.getName().endsWith("png")))
 				continue;
@@ -58,6 +67,8 @@ public class EvaluatePolygonDetector {
 			evaluateFile(f.getName(), truth, found);
 		}
 
+		outputResults.printf("Summary: %d / %d   error = %7.3f\n",
+				summaryTruePositive, summaryExpected, summaryError/summaryCount);
 		outputResults.flush();
 	}
 
@@ -124,6 +135,14 @@ public class EvaluatePolygonDetector {
 
 		outputResults.printf("%-15s %2d %2d %2d %2d %2d %2d %7.4f\n", fileName, truth.size(), found.size(),
 				numMultiple, numMissMatched, falsePositives, numFalseNegative, totalError);
+
+		if( totalTruthMatched > 0 ) {
+			this.summaryError += totalError;
+			summaryCount++;
+		}
+
+		summaryTruePositive += found.size()-falsePositives;
+		summaryExpected += truth.size();
 	}
 
 	private static double size( Polygon2D_F64 p ) {
