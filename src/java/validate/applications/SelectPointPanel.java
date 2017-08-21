@@ -10,6 +10,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Ellipse2D;
+import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,10 +22,14 @@ public class SelectPointPanel extends ImageZoomPanel
 	implements MouseListener, KeyListener
 {
 	// list of points selected by the user
-	List<List<Point2D_F64>> pointSets = new ArrayList<List<Point2D_F64>>();
-	List<Point2D_F64> activeSet = new ArrayList<Point2D_F64>();
+	List<List<Point2D_F64>> pointSets = new ArrayList<>();
+	List<Point2D_F64> activeSet = new ArrayList<>();
 
 	Point2D_F64 selected = null;
+
+	Line2D.Double line = new Line2D.Double();
+
+	boolean showLines = true;
 
 	public SelectPointPanel() {
 		disableSaveOnClick();
@@ -35,17 +40,23 @@ public class SelectPointPanel extends ImageZoomPanel
 	@Override
 	protected void paintInPanel(AffineTransform tran,Graphics2D g2 ) {
 
-		g2.setColor(Color.RED);
 		g2.setStroke(new BasicStroke(2));
 		g2.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, RenderingHints.VALUE_STROKE_PURE);
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-
+		g2.setFont(g2.getFont().deriveFont(24f));
 		int r = 6;
 
 		Ellipse2D.Double ellipse = new Ellipse2D.Double();
 		Rectangle2D.Double rect = new Rectangle2D.Double();
 
 		synchronized (pointSets) {
+			if( showLines ) {
+				for (List<Point2D_F64> set : pointSets) {
+					renderLines(g2, set, 0, 0x00FFA0);
+				}
+			}
+
+			g2.setColor(Color.RED);
 			for (List<Point2D_F64> set : pointSets) {
 				for (int i = 0; i < set.size(); i++) {
 					Point2D_F64 p = set.get(i);
@@ -76,6 +87,27 @@ public class SelectPointPanel extends ImageZoomPanel
 			ellipse.setFrame(x-r,y-r,2*r,2*r);
 			g2.draw(ellipse);
 		}
+	}
+
+	private void renderLines( Graphics2D g2 , List<Point2D_F64> corners , int start , int color ) {
+		if( corners.size() <= 1 )
+			return;
+		g2.setColor(new Color(color));
+		int N = corners.size()-start;
+		for (int i = 0,j = N-1; i < N; j=i,i++) {
+			Point2D_F64 a = corners.get(i+start);
+			Point2D_F64 b = corners.get(j+start);
+
+			renderLine(g2,a,b);
+		}
+	}
+
+	private void renderLine( Graphics2D g2 , Point2D_F64 cornerA , Point2D_F64 cornerB ) {
+		double xa = cornerA.x * scale, ya = cornerA.y * scale;
+		double xb = cornerB.x * scale, yb = cornerB.y * scale;
+
+		line.setLine(xa,ya,xb,yb);
+		g2.draw(line);
 	}
 
 	@Override
