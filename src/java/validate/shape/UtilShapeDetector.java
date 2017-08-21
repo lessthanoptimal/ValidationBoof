@@ -2,9 +2,6 @@ package validate.shape;
 
 import boofcv.factory.shape.ConfigEllipseDetector;
 import boofcv.factory.shape.ConfigPolygonDetector;
-import boofcv.factory.shape.ConfigRefinePolygonCornersToImage;
-import boofcv.factory.shape.ConfigRefinePolygonLineToImage;
-import boofcv.struct.Configuration;
 import georegression.struct.point.Point2D_F64;
 import georegression.struct.shapes.Polygon2D_F64;
 import validate.misc.ParseHelper;
@@ -18,7 +15,7 @@ import java.util.List;
  */
 public class UtilShapeDetector {
 
-	public static ConfigPolygonDetector configurePolygon(boolean fitLines , File file ) {
+	public static ConfigPolygonDetector configurePolygon(File file ) {
 
 		int minSides=3,maxSides=6;
 		boolean convex = true;
@@ -54,18 +51,11 @@ public class UtilShapeDetector {
 		}
 
 		ConfigPolygonDetector config = new ConfigPolygonDetector(3,6);
-		Configuration configRefine = null;
-		if( fitLines ) {
-			configRefine = new ConfigRefinePolygonLineToImage();
-		} else {
-			configRefine = new ConfigRefinePolygonCornersToImage();
-		}
 
-		config.refine = configRefine;
-		config.minimumSides = minSides;
-		config.maximumSides = maxSides;
-		config.convex = convex;
-		config.canTouchBorder = border;
+		config.detector.minimumSides = minSides;
+		config.detector.maximumSides = maxSides;
+		config.detector.convex = convex;
+		config.detector.canTouchBorder = border;
 
 		return config;
 	}

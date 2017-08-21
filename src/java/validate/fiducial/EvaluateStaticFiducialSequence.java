@@ -46,7 +46,7 @@ public class EvaluateStaticFiducialSequence extends BaseEvaluateFiducialToCamera
 		// list of all detections for each fiducial.  used to compute precision
 		List<List<Point2D_F64>> allDetections[] = new ArrayList[expected.length];
 		for (int i = 0; i < allDetections.length; i++) {
-			allDetections[i] = new ArrayList<List<Point2D_F64>>();
+			allDetections[i] = new ArrayList<>();
 		}
 
 		// hand selected corners only in the first image
