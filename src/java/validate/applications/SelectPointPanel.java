@@ -147,7 +147,7 @@ public class SelectPointPanel extends ImageZoomPanel
 
 		switch( e.getKeyCode() ) {
 			case KeyEvent.VK_S:
-				activeSet = new ArrayList<Point2D_F64>();
+				activeSet = new ArrayList<>();
 				break;
 
 			case KeyEvent.VK_T:
