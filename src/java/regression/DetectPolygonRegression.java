@@ -1,6 +1,6 @@
 package regression;
 
-import boofcv.alg.shapes.polygon.BinaryPolygonDetector;
+import boofcv.alg.shapes.polygon.DetectPolygonBinaryGrayRefine;
 import boofcv.struct.image.ImageDataType;
 import validate.FactoryObject;
 import validate.shape.DetectPolygonsSaveToFile;
@@ -28,13 +28,11 @@ public class DetectPolygonRegression extends BaseTextFileRegression {
 	public void process(ImageDataType type) throws IOException {
 		final Class imageType = ImageDataType.typeToSingleClass(type);
 
-		process("PolygonLineGlobal", false, new FactoryBinaryPolygon(true,imageType));
-		process("PolygonLineLocal", true, new FactoryBinaryPolygon(true,imageType));
-		process("PolygonCornerGlobal", false, new FactoryBinaryPolygon(false,imageType));
-		process("PolygonCornerLocal", true, new FactoryBinaryPolygon(false,imageType));
+		process("PolygonLineGlobal", false, new FactoryBinaryPolygon(imageType));
+		process("PolygonLineLocal", true, new FactoryBinaryPolygon(imageType));
 	}
 
-	private void process(String name, boolean localBinary , FactoryObject<BinaryPolygonDetector> factory)
+	private void process(String name, boolean localBinary , FactoryObject<DetectPolygonBinaryGrayRefine> factory)
 			throws IOException {
 
 		String outputName = "ShapeDetector_"+name+".txt";
