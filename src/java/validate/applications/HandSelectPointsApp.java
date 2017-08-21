@@ -34,6 +34,7 @@ public class HandSelectPointsApp extends HandSelectBase {
 				gui.setSets(sets);
 			}
 		}
+		infoPanel.setImageShape(image.getWidth(),image.getHeight());
 		gui.setBufferedImage(image);
 	}
 
@@ -71,8 +72,6 @@ public class HandSelectPointsApp extends HandSelectBase {
 	}
 
 	public static void main(String[] args) {
-		String imagePath = "data/fiducials/binary/standard/rotation/image00006.png";
-
-		new HandSelectPointsApp(new File(imagePath));
+		new HandSelectPointsApp(null);
 	}
 }
