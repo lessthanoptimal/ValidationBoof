@@ -61,10 +61,15 @@ public class EvaluatePolygonDetector {
 			String nameResults = UtilShapeDetector.imageToDetectedName(f.getName());
 			String nameTruth = f.getName().substring(0,f.getName().length()-3)+"txt";
 
-			List<Polygon2D_F64> truth = loadTruth(new File(dataDir, nameTruth));
-			List<Polygon2D_F64> found = UtilShapeDetector.loadResults(new File(resultsDir,nameResults));
+			File truthFile = new File(dataDir, nameTruth);
+			if( truthFile.exists() ) {
+				List<Polygon2D_F64> truth = loadTruth(truthFile);
+				List<Polygon2D_F64> found = UtilShapeDetector.loadResults(new File(resultsDir, nameResults));
 
-			evaluateFile(f.getName(), truth, found);
+				evaluateFile(f.getName(), truth, found);
+			} else {
+				outputResults.println("Not truth for "+f.getName());
+			}
 		}
 
 		outputResults.printf("Summary: %d / %d   error = %7.3f\n",
