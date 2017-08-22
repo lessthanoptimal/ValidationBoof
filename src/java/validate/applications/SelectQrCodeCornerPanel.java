@@ -20,6 +20,8 @@ import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.List;
 
+import static validate.applications.HandSelectQRCodeApp.TOTAL_QR_CORNERS;
+
 /**
  * @author Peter Abeles
  */
@@ -194,7 +196,7 @@ public class SelectQrCodeCornerPanel extends ImageZoomPanel
 				}
 				if (!found) {
 					selected = p;
-					if( activeQR == null || activeQR.corners.size() >= 12 ) {
+					if( activeQR == null || activeQR.corners.size() >= TOTAL_QR_CORNERS ) {
 						activeQR = new QRCorners();
 						activeQR.corners.add(p);
 						markers.add(activeQR);
@@ -267,6 +269,16 @@ public class SelectQrCodeCornerPanel extends ImageZoomPanel
 				break;
 
 			case KeyEvent.VK_DELETE:
+				synchronized (markers) {
+					if( selected != null ) {
+						if( !activeQR.corners.remove(selected)) {
+							throw new RuntimeException("BUG!");
+						}
+						selected = null;
+					}
+				}
+				break;
+
 			case KeyEvent.VK_BACK_SPACE:
 				synchronized (markers) {
 					if( activeQR != null ) {

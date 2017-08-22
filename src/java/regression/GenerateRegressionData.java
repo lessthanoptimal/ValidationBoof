@@ -142,12 +142,15 @@ public class GenerateRegressionData {
 				delete(f);
 			} else {
 				if( !f.delete() ) {
-					throw new RuntimeException("Can't delete file "+f);
+					System.err.println("Can't delete file "+f);
+//					throw new RuntimeException("Can't delete file "+f);
 				}
 			}
 		}
-		if( !directory.delete() )
-			throw new RuntimeException("Can't delete directory "+directory);
+		if( !directory.delete() ) {
+			System.err.println("Can't delete file "+directory);
+//			throw new RuntimeException("Can't delete directory "+directory);
+		}
 	}
 
 	public static void main(String[] args) {

@@ -2,17 +2,25 @@ package validate.applications;
 
 import georegression.struct.point.Point2D_F64;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.prefs.Preferences;
 
 import static validate.misc.ParseHelper.skipComments;
 
 public class HandSelectQRCodeApp extends HandSelectBase {
+    public static final int TOTAL_QR_CORNERS = 13;
+
     public HandSelectQRCodeApp( File file ) {
         super(new SelectQrCodeCornerPanel(),file);
+
+        JButton bShowHelp = new JButton("Show Help");
+        bShowHelp.addActionListener(e-> showHelpDialog());
+        infoPanel.add(bShowHelp);
     }
 
     @Override
@@ -37,6 +45,41 @@ public class HandSelectQRCodeApp extends HandSelectBase {
 
         infoPanel.setImageShape(image.getWidth(),image.getHeight());
         gui.setBufferedImage(image);
+    }
+
+    @Override
+    protected void handleFirstImage() {
+        super.handleFirstImage();
+
+        Preferences prefs = Preferences.userRoot().node(getClass().getName());
+        boolean showHelp = prefs.getBoolean("Show_QR_Help",true);
+        if( !showHelp )
+            return;
+
+        showHelpDialog();
+    }
+
+    private void showHelpDialog() {
+        try {
+            InputStream stream = getClass().getResourceAsStream("qrcode_click_order.png");
+            if( stream == null )
+                return;
+            BufferedImage image = ImageIO.read(stream);
+
+            ImageIcon icon = new ImageIcon(image);
+
+            int dialogResult = JOptionPane.showConfirmDialog (gui, "Show this image again?","QR Help",
+                    JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE,icon);
+
+            Preferences prefs = Preferences.userRoot().node(getClass().getName());
+            if(dialogResult == JOptionPane.NO_OPTION){
+                prefs.putBoolean("Show_QR_Help",false);
+            } else {
+                prefs.putBoolean("Show_QR_Help",true);
+            }
+
+        } catch (IOException ignore) {
+        }
     }
 
     @Override
@@ -75,8 +118,10 @@ public class HandSelectQRCodeApp extends HandSelectBase {
             out.println("# Hand Labeled QR Code Finder Patterns");
             for (int i = 0; i < gui.markers.size(); i++) {
                 QRCorners c = gui.markers.get(i);
-                if( c.corners.size() != 3*4 ) // skip incomplete qr codes
+                if( c.corners.size() != TOTAL_QR_CORNERS ) {
+                    System.out.println("Skipping QR with not enough points");
                     continue;
+                }
 
                 out.println("message = "+c.message);
 

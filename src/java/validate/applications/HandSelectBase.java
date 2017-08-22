@@ -55,16 +55,6 @@ public abstract class HandSelectBase {
 	public HandSelectBase(){}
 
 	protected void handleFirstImage() {
-		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-		int w = image.getWidth();
-		int h = image.getHeight();
-
-		if( screenSize.width < w+100 || screenSize.height < h ) {
-			gui.setPreferredSize(new Dimension(screenSize.width,screenSize.height));
-		} else {
-			gui.setPreferredSize(new Dimension(w,h));
-		}
-
 		frame = ShowImages.showWindow(gui,getApplicationName());
 		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		frame.addWindowListener(new WindowAdapter() {
@@ -73,6 +63,23 @@ public abstract class HandSelectBase {
 				adjustImageScale();
 			}
 		});
+
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		Insets inset = Toolkit.getDefaultToolkit().getScreenInsets(frame.getGraphicsConfiguration());
+
+		System.out.println("insert "+inset);
+
+		screenSize.width -= 100;
+		screenSize.height -= inset.bottom;
+
+		int w = image.getWidth();
+		int h = image.getHeight();
+
+		// Make sure it doesn't open an image larger than the monitor
+		w = Math.min(screenSize.width,w);
+		h = Math.min(screenSize.height,h);
+
+		frame.setSize(new Dimension(w,h));
 	}
 
 	public boolean openImage( File f , boolean next ) {
