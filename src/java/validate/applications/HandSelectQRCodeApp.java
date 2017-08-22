@@ -1,5 +1,6 @@
 package validate.applications;
 
+import boofcv.gui.BoofSwingUtil;
 import georegression.struct.point.Point2D_F64;
 
 import javax.imageio.ImageIO;
@@ -20,7 +21,7 @@ public class HandSelectQRCodeApp extends HandSelectBase {
 
         JButton bShowHelp = new JButton("Show Help");
         bShowHelp.addActionListener(e-> showHelpDialog());
-        infoPanel.add(bShowHelp);
+        BoofSwingUtil.invokeNowOrLater(()->{infoPanel.add(bShowHelp);infoPanel.validate();});
     }
 
     @Override
@@ -37,8 +38,9 @@ public class HandSelectQRCodeApp extends HandSelectBase {
             } catch( RuntimeException e ) {
                 int dialogResult = JOptionPane.showConfirmDialog (gui, e.getMessage()+"\nDelete?","Delete Corrupted?",JOptionPane.YES_NO_OPTION);
                 if(dialogResult == JOptionPane.YES_OPTION){
-                    if( !f.delete() )
-                        throw new RuntimeException("Failed to delete");
+                    if( !f.delete() ) {
+                        System.err.println("Failed to delete");
+                    }
                 }
             }
         }
@@ -163,7 +165,7 @@ public class HandSelectQRCodeApp extends HandSelectBase {
                 if( line == null )
                     throw new RuntimeException("Premature end of file");
                 words = line.split(" ");
-                if( words.length != (4*3*2)) {
+                if( words.length != TOTAL_QR_CORNERS*2) {
                     throw new RuntimeException("Unexpected number of words for corners");
                 }
                 for (int i = 0; i < words.length; i += 2 ) {
