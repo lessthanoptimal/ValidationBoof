@@ -1,5 +1,7 @@
 package validate.applications;
 
+import boofcv.gui.BoofSwingUtil;
+
 import javax.swing.*;
 import javax.swing.border.EtchedBorder;
 import javax.swing.event.ChangeEvent;
@@ -27,6 +29,9 @@ public class InfoHandSelectPanel extends JPanel implements ChangeListener, Mouse
 	protected JButton saveButton;
 	protected JButton nextButton;
 	protected JButton openButton;
+	protected JButton reloadButton;
+	protected JTextField fieldPrefix;
+
 
 	protected JButton clearButton;
 
@@ -36,6 +41,7 @@ public class InfoHandSelectPanel extends JPanel implements ChangeListener, Mouse
 	protected JCheckBox cSkipLabeled = new JCheckBox("Skip Labeled");
 
 	boolean skipLabeled = false;
+	String prefix="";
 
 	public InfoHandSelectPanel(HandSelectBase owner) {
 		this.owner = owner;
@@ -54,9 +60,20 @@ public class InfoHandSelectPanel extends JPanel implements ChangeListener, Mouse
 		saveButton = new JButton("Save");
 		saveButton.addActionListener(this);
 		nextButton = new JButton("Next Image");
-		nextButton.addActionListener(actionEvent -> owner.openNextImage());
+		nextButton.addActionListener(actionEvent -> {this.prefix = fieldPrefix.getText();owner.openNextImage();});
 		openButton = new JButton("Open Image");
 		openButton.addActionListener(actionEvent -> owner.openImageDialog());
+		reloadButton = new JButton("Reload");
+		reloadButton.addActionListener(e -> {
+			this.prefix = fieldPrefix.getText();
+			owner.reloadImage();
+		});
+
+
+		fieldPrefix = new JTextField(prefix);
+		fieldPrefix.addActionListener(e-> this.prefix = fieldPrefix.getText());
+		fieldPrefix.setMaximumSize(new Dimension(250,40));
+
 		clearButton = new JButton("Clear");
 		clearButton.addActionListener(this);
 		cSkipLabeled.setSelected(skipLabeled);
@@ -81,12 +98,15 @@ public class InfoHandSelectPanel extends JPanel implements ChangeListener, Mouse
 		add(saveButton);
 		add(openButton);
 		add(nextButton);
+		add(new JLabel("Prefix Labeled"));
+		add(fieldPrefix);
+		add(reloadButton);
 		add(Box.createVerticalGlue());
 		add(clearButton);
 	}
 
 	public void setImageShape( int width , int height ) {
-		SwingUtilities.invokeLater(()->{
+		BoofSwingUtil.invokeNowOrLater(()->{
 			labelWidth.setText(""+width);
 			labelHeight.setText(""+height);
 		});

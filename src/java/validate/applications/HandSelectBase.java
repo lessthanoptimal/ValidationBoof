@@ -1,5 +1,7 @@
 package validate.applications;
 
+import boofcv.gui.BoofSwingUtil;
+import boofcv.gui.image.ImageZoomPanel;
 import boofcv.gui.image.ShowImages;
 import boofcv.io.image.UtilImageIO;
 
@@ -24,7 +26,7 @@ public abstract class HandSelectBase {
 
 	JFrame frame;
 	InfoHandSelectPanel infoPanel = new InfoHandSelectPanel(this);
-	JComponent imagePanel;
+	ImageZoomPanel imagePanel;
 
 	File inputFile;
 
@@ -33,7 +35,10 @@ public abstract class HandSelectBase {
 	java.util.List<File> files;
 	int selectedFile;
 
-	public HandSelectBase( JComponent imagePanel, File openFile ) {
+	// used to detect spamming of reload
+	private volatile boolean openingImage = false;
+
+	public HandSelectBase( ImageZoomPanel imagePanel, File openFile ) {
 		this.imagePanel = imagePanel;
 		gui.setLayout(new BorderLayout());
 		gui.add(imagePanel,BorderLayout.CENTER);
@@ -64,12 +69,12 @@ public abstract class HandSelectBase {
 			}
 		});
 
-		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		Rectangle screenSize = frame.getGraphicsConfiguration().getBounds();
 		Insets inset = Toolkit.getDefaultToolkit().getScreenInsets(frame.getGraphicsConfiguration());
 
 		System.out.println("insert "+inset);
 
-		screenSize.width -= 100;
+		screenSize.width -= 200;
 		screenSize.height -= inset.bottom;
 
 		int w = image.getWidth();
@@ -79,27 +84,37 @@ public abstract class HandSelectBase {
 		w = Math.min(screenSize.width,w);
 		h = Math.min(screenSize.height,h);
 
-		frame.setSize(new Dimension(w,h));
+		double scale = Math.min(w/(double)image.getWidth(),h/(double)image.getHeight());
+		scale = Math.min(1.0,scale);
+		int width = Math.min((int)(image.getWidth()*scale),w);
+		int height = Math.min((int)(image.getHeight()*scale),h);
+
+		imagePanel.setPreferredSize(new Dimension(width,height));
+		frame.pack();
+//		frame.setSize(new Dimension(w,h));
 	}
 
-	public boolean openImage( File f , boolean next ) {
+	public boolean openImage( final File f , boolean next ) {
 
 		if( !f.exists() ) {
 			System.err.println("File does not exist");
 			return false;
 		}
+		openingImage = true;
 
 		if( !next ) {
-			f = f.getAbsoluteFile();
-			if( f.getParentFile() != null ) {
-				File []array = f.getParentFile().listFiles();
-				if( array == null )
+			File ff = f.getAbsoluteFile();
+			if( ff.getParentFile() != null ) {
+				File []array = ff.getParentFile().listFiles();
+				if( array == null ) {
+					openingImage = false;
 					throw new RuntimeException("WTF no files?");
+				}
 				files = Arrays.asList(array);
 				Collections.sort(files);
 
 				for (int i = 0; i < files.size(); i++) {
-					if( files.get(i).getName().equals(f.getName())) {
+					if( files.get(i).getName().equals(ff.getName())) {
 						selectedFile = i;
 						break;
 					}
@@ -108,8 +123,10 @@ public abstract class HandSelectBase {
 		}
 
 		BufferedImage image = UtilImageIO.loadImage(f.getPath());
-		if( image == null )
+		if( image == null ) {
+			openingImage = false;
 			return false;
+		}
 		boolean firstImage = this.image == null;
 
 		this.image = image;
@@ -120,14 +137,16 @@ public abstract class HandSelectBase {
 
 		if( firstImage ) {
 			handleFirstImage();
-		} else {
-			adjustImageScale();
 		}
 
-		frame.setTitle(getApplicationName()+" "+f.getName());
+		BoofSwingUtil.invokeNowOrLater(() -> {
+			adjustImageScale();
+			frame.setTitle(getApplicationName()+" "+f.getName());
+		});
 
 		System.out.println("Opening image "+f.getName());
 
+		openingImage = false;
 		return true;
 	}
 
@@ -165,7 +184,19 @@ public abstract class HandSelectBase {
 			return;
 
 		// save current results
-		save();
+		if( infoPanel.prefix.length() == 0 ) { // Only save automatically if the user is not viewing generated results
+			boolean save = true;
+			if( selectOutputFile(inputFile).exists() ) {
+				save = false;
+//				int dialogResult = JOptionPane.showConfirmDialog(gui, "Output already exists. Save? ",
+//						"Warning",JOptionPane.OK_CANCEL_OPTION);
+//				if(dialogResult == JOptionPane.CANCEL_OPTION){
+//					save = false;
+//				}
+			}
+			if( save )
+				save();
+		}
 
 		// select the next file
 		for (selectedFile += 1; selectedFile < files.size(); selectedFile++) {
@@ -188,12 +219,15 @@ public abstract class HandSelectBase {
 	}
 
 	public File selectOutputFile( File input ) {
-		String path = input.getPath();
+
+		String path = input.getParent();
+		String name = input.getName();
 		//strip the suffic
-		int s = path.lastIndexOf('.');
+		int s = name.lastIndexOf('.');
 		if( s < 0 )
 			return null;
-		return new File(path.substring(0,s)+".txt");
+
+		return new File(path,infoPanel.prefix+name.substring(0,s)+".txt");
 	}
 
 	public abstract String getApplicationName();
@@ -203,6 +237,20 @@ public abstract class HandSelectBase {
 	public abstract void clearPoints();
 
 	public abstract void save();
+
+	public void reloadImage() {
+		if( openingImage ) {
+			System.err.println("Still opening a file");
+			return;
+		}
+		new Thread(){
+			public void run() {
+				openImage(inputFile,true);
+			}
+		}.start();
+	}
+
+//	public abstract void reloadLabeled();
 
 
 }

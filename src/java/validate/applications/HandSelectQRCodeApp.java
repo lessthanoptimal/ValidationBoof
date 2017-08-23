@@ -33,6 +33,7 @@ public class HandSelectQRCodeApp extends HandSelectBase {
         File f = selectOutputFile(file);
 
         if( f.exists() ) {
+            System.out.println("   loading labeled "+f.getName());
             try {
                 gui.markers.addAll(load(f));
             } catch( RuntimeException e ) {
@@ -45,8 +46,11 @@ public class HandSelectQRCodeApp extends HandSelectBase {
             }
         }
 
-        infoPanel.setImageShape(image.getWidth(),image.getHeight());
-        gui.setBufferedImage(image);
+        BoofSwingUtil.invokeNowOrLater(()->{
+            infoPanel.setImageShape(image.getWidth(),image.getHeight());
+            gui.setBufferedImage(image);
+        });
+
     }
 
     @Override
