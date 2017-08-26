@@ -250,21 +250,25 @@ public class SelectQrCodeCornerPanel extends ImageZoomPanel
 
 			case KeyEvent.VK_NUMPAD4:
 			case KeyEvent.VK_KP_LEFT:
+			case KeyEvent.VK_A:
 				p.x -= delta;
 				break;
 
 			case KeyEvent.VK_NUMPAD6:
 			case KeyEvent.VK_KP_RIGHT:
+			case KeyEvent.VK_D:
 				p.x += delta;
 				break;
 
 			case KeyEvent.VK_NUMPAD2:
 			case KeyEvent.VK_KP_DOWN:
+			case KeyEvent.VK_X:
 				p.y += delta;
 				break;
 
 			case KeyEvent.VK_NUMPAD8:
 			case KeyEvent.VK_KP_UP:
+			case KeyEvent.VK_W:
 				p.y -= delta;
 				break;
 
@@ -293,21 +297,25 @@ public class SelectQrCodeCornerPanel extends ImageZoomPanel
 				break;
 
 			case KeyEvent.VK_NUMPAD7:
+			case KeyEvent.VK_Q:
 				p.x -= delta;
 				p.y -= delta;
 				break;
 
 			case KeyEvent.VK_NUMPAD9:
+			case KeyEvent.VK_E:
 				p.x += delta;
 				p.y -= delta;
 				break;
 
 			case KeyEvent.VK_NUMPAD1:
+			case KeyEvent.VK_Z:
 				p.x -= delta;
 				p.y += delta;
 				break;
 
 			case KeyEvent.VK_NUMPAD3:
+			case KeyEvent.VK_C:
 				p.x += delta;
 				p.y += delta;
 				break;
