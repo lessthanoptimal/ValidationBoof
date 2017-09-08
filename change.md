@@ -1,3 +1,8 @@
+Description of changes to benchmarks and justifications for change in performance from previous versions.
+
+## Version 0.28
+
+
 ## Version 0.27
 * Change in RANSAC implementation has caused several results to change.
 ** Affected algorithms: Visual Odometry
