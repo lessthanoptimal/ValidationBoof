@@ -175,6 +175,7 @@ public class GenerateRegressionData {
 		}
 
 		for( ImageDataType dataType : dataTypes ) {
+			System.out.println("\nSTART image "+dataType);
 			clearWorkDirectory();
 			saveMachineInfo();
 			for( TextFileRegression t : imageTests ) {
