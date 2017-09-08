@@ -33,7 +33,7 @@ public class FiducialRegression extends BaseTextFileRegression {
 	public void process(ImageDataType type) throws IOException {
 		final Class imageType = ImageDataType.typeToSingleClass(type);
 
-		final ConfigThreshold robust = ConfigThreshold.local(ThresholdType.LOCAL_SQUARE,20);
+		final ConfigThreshold robust = ConfigThreshold.local(ThresholdType.LOCAL_MEAN,20);
 		final ConfigThreshold fast = ConfigThreshold.fixed(80);
 
 		FactoryObject factory = new FactoryObjectAbstract() {
@@ -60,7 +60,7 @@ public class FiducialRegression extends BaseTextFileRegression {
 
 		process("SquareGrid", new EstimateSquareGridToCamera(imageType), "square_grid");
 
-		process("CircleAsymmetric", new EstimateCircleAsymmetricToCamera(imageType), "circle_asymmetric");
+		process("CircleHexagonal", new EstimateCircleAsymmetricToCamera(imageType), "circle_hexagonal");
 
 		process("CircleRegular", new EstimateCircleRegularToCamera(imageType), "circle_regular");
 

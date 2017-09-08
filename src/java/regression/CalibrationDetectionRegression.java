@@ -63,9 +63,9 @@ public class CalibrationDetectionRegression extends BaseTextFileRegression{
 		addDetector("DetectCalibSquare",
 				FactoryFiducialCalibration.squareGrid(new ConfigSquareGrid(4, 3,30,30)),
 				CalibrationPatterns.SQUARE_GRID);
-		addDetector("DetectCalibCircleAsymmetric",
-				FactoryFiducialCalibration.circleAsymmGrid(new ConfigCircleAsymmetricGrid(8, 5,2,6)),
-				CalibrationPatterns.CIRCLE_ASYMMETRIC_GRID);
+		addDetector("DetectCalibCircleHexagonal",
+				FactoryFiducialCalibration.circleAsymmGrid(new ConfigCircleHexagonalGrid(8, 5,2,6)),
+				CalibrationPatterns.CIRCLE_HEXAGONAL);
 		addDetector("DetectCalibCircleRegular",
 				FactoryFiducialCalibration.circleRegularGrid(new ConfigCircleRegularGrid(4, 3,4,6)),
 				CalibrationPatterns.CIRCLE_GRID);
@@ -75,7 +75,7 @@ public class CalibrationDetectionRegression extends BaseTextFileRegression{
 		switch( type ) {
 			case CHESSBOARD:chessDetectors.add(new DetectorInfo(name,detector));break;
 			case SQUARE_GRID:squareDetectors.add(new DetectorInfo(name,detector));break;
-			case CIRCLE_ASYMMETRIC_GRID:circleAsymDetctors.add(new DetectorInfo(name,detector));break;
+			case CIRCLE_HEXAGONAL:circleAsymDetctors.add(new DetectorInfo(name,detector));break;
 			case CIRCLE_GRID:circleRegDetectors.add(new DetectorInfo(name,detector));break;
 		}
 	}

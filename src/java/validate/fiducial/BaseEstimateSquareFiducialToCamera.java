@@ -68,8 +68,8 @@ public abstract class BaseEstimateSquareFiducialToCamera<T extends ImageBase<T>>
 			detector.detect(image);
 //			System.out.println("processing "+path+"  found "+detector.totalFound());
 
-//			if( detector.totalFound() == 0 )
-//				System.out.println("no detections in "+path);
+			if( detector.totalFound() == 0 )
+				System.out.println("no detections in "+path);
 
 			File f = new File(path);
 			String inputName = f.getName();

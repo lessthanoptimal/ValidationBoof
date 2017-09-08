@@ -1,7 +1,7 @@
 package validate.fiducial;
 
 import boofcv.abst.fiducial.FiducialDetector;
-import boofcv.abst.fiducial.calib.ConfigCircleAsymmetricGrid;
+import boofcv.abst.fiducial.calib.ConfigCircleHexagonalGrid;
 import boofcv.factory.fiducial.FactoryFiducial;
 import boofcv.struct.image.GrayU8;
 import boofcv.struct.image.ImageGray;
@@ -46,7 +46,7 @@ public class EstimateCircleAsymmetricToCamera<T extends ImageGray<T>> extends Ba
 			throw new RuntimeException(e);
 		}
 
-		ConfigCircleAsymmetricGrid config = new ConfigCircleAsymmetricGrid(numRows,numCols,diameter,centerDistance);
+		ConfigCircleHexagonalGrid config = new ConfigCircleHexagonalGrid(numRows,numCols,diameter,centerDistance);
 
 		return FactoryFiducial.calibCircleAsymGrid(config, imageType);
 	}

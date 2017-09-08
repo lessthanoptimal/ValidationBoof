@@ -43,7 +43,7 @@ public class EstimateBinaryFiducialToCamera<T extends ImageBase<T>> extends Base
 			@Override
 			public Object newInstance() {
 				return FactoryFiducial.squareBinary(new ConfigFiducialBinary(1),
-						ConfigThreshold.local(ThresholdType.LOCAL_SQUARE, 15), GrayU8.class);
+						ConfigThreshold.local(ThresholdType.LOCAL_MEAN, 15), GrayU8.class);
 			}
 		};
 

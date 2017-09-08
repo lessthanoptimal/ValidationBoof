@@ -38,7 +38,7 @@ public class DetectEllipseSaveToFile<T extends ImageGray<T>> {
 
 		ConfigThreshold config;
 		if( binaryLocal ) {
-			config = ConfigThreshold.local(ThresholdType.LOCAL_SQUARE,10);
+			config = ConfigThreshold.local(ThresholdType.LOCAL_MEAN,10);
 		} else {
 			config = ConfigThreshold.global(ThresholdType.GLOBAL_OTSU);
 		}
