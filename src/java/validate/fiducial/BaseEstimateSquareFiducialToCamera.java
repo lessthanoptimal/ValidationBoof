@@ -58,8 +58,11 @@ public abstract class BaseEstimateSquareFiducialToCamera<T extends ImageBase<T>>
 		}
 		T image = detector.getInputType().createImage(1,1);
 
-		CameraPinholeRadial intrinsic = FiducialCommon.parseIntrinsic(new File(dataSetDir,"intrinsic.txt"));
-		detector.setLensDistortion(new LensDistortionRadialTangential(intrinsic));
+		File fileIntrinsic = new File(dataSetDir,"intrinsic.txt");
+		if( fileIntrinsic.exists() ) {
+			CameraPinholeRadial intrinsic = FiducialCommon.parseIntrinsic(fileIntrinsic);
+			detector.setLensDistortion(new LensDistortionRadialTangential(intrinsic));
+		}
 		for( String path : files ) {
 			BufferedImage orig = UtilImageIO.loadImage(path);
 			image.reshape(orig.getWidth(),orig.getHeight());
@@ -68,8 +71,8 @@ public abstract class BaseEstimateSquareFiducialToCamera<T extends ImageBase<T>>
 			detector.detect(image);
 //			System.out.println("processing "+path+"  found "+detector.totalFound());
 
-			if( detector.totalFound() == 0 )
-				System.out.println("no detections in "+path);
+//			if( detector.totalFound() == 0 )
+//				System.out.println("no detections in "+path);
 
 			File f = new File(path);
 			String inputName = f.getName();
