@@ -1,0 +1,70 @@
+# distance_angle
+# maxPixelError = 5.0
+
+Summary:
+ correct            :   11 /   11
+ wrong order        : 0
+ wrong ID           : 0
+ duplicates         : 0
+ false positives    : 0
+ false negative     : 0
+Corner errors:
+ precision 50%         : 0.15367345689933257
+ precision 90%         : 0.3118994766160384
+ precision 100%        : 0.7580251448726435
+
+---------------------------------------------------
+
+# distance_straight
+# maxPixelError = 5.0
+
+Summary:
+ correct            :   12 /   12
+ wrong order        : 0
+ wrong ID           : 0
+ duplicates         : 0
+ false positives    : 0
+ false negative     : 0
+Corner errors:
+ precision 50%         : 0.1779536006190416
+ precision 90%         : 0.3370523002927663
+ precision 100%        : 0.4972831868007467
+
+---------------------------------------------------
+
+# motion_blur
+# maxPixelError = 5.0
+
+Summary:
+ correct            :   10 /   13
+ wrong order        : 0
+ wrong ID           : 0
+ duplicates         : 0
+ false positives    : 0
+ false negative     : 3
+Corner errors:
+ precision 50%         : 0.6983899525752768
+ precision 90%         : 1.2580500342801575
+ precision 100%        : 3.1783980927442235
+
+---------------------------------------------------
+
+# rotation
+# maxPixelError = 5.0
+
+Summary:
+ correct            :    4 /    9
+ wrong order        : 0
+ wrong ID           : 0
+ duplicates         : 0
+ false positives    : 0
+ false negative     : 5
+Corner errors:
+ precision 50%         : 0.25216350005074734
+ precision 90%         : 0.40294643719619966
+ precision 100%        : 0.5014783608197995
+
+---------------------------------------------------
+
+---------------------------------------------------
+total correct / total expected =   37 /  45

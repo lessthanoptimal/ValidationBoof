@@ -1,0 +1,34 @@
+# 24x28_hard   sequence with known always visible targets
+total frames 5
+false positives 0
+ fiducial id | visible | multiple 
+00000             1            0
+
+---------------------------------------------------
+
+# 24x28_set0   sequence with known always visible targets
+total frames 59
+false positives 0
+ fiducial id | visible | multiple 
+00000            59            0
+
+---------------------------------------------------
+
+# 5x6_hard   sequence with known always visible targets
+total frames 2
+false positives 0
+ fiducial id | visible | multiple 
+00000             2            0
+
+---------------------------------------------------
+
+# 5x6_set0   sequence with known always visible targets
+total frames 68
+false positives 0
+ fiducial id | visible | multiple 
+00000            68            0
+
+---------------------------------------------------
+
+---------------------------------------------------
+total correct / total expected =  130 / 134

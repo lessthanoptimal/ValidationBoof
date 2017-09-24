@@ -1,8 +1,0 @@
-data/fiducials/circle_asymmetric/standard/cardboard 300 118.906
-data/fiducials/circle_asymmetric/standard/distance_angle 300  98.490
-data/fiducials/circle_asymmetric/standard/distance_straight 300  99.272
-data/fiducials/circle_asymmetric/standard/motion_blur 300 180.941
-data/fiducials/circle_asymmetric/standard/rotation 300  83.333
-data/fiducials/circle_asymmetric/static/angled 300 144.161
-data/fiducials/circle_asymmetric/static/front_close 300 117.188
-data/fiducials/circle_asymmetric/static/front_far 300  67.340
