@@ -52,7 +52,25 @@ public class EvaluateStaticFiducialSequence extends BaseEvaluateFiducialToCamera
 		// hand selected corners only in the first image
 		String nameFirst = new File(results.get(0)).getName();
 		String nameTruth = nameFirst.substring(0,nameFirst.length()-3) + "txt";
-		List<Point2D_F64> truthCorners = PointFileCodec.load(new File(dataSetDir, nameTruth));
+		File fileTruth = new File(dataSetDir, nameTruth);
+		List<Point2D_F64> truthCorners;
+
+		if( fileTruth.exists() ) {
+			// if hand selected truth exists use it
+			truthCorners = PointFileCodec.load(fileTruth);
+		} else {
+			// create it from the first image
+			truthCorners = new ArrayList<>();
+
+			List<FiducialCommon.Detected> detected = parseDetections(new File(results.get(0)));
+			List<FiducialCommon.Landmarks> landmarks = parseLandmarks(new File(dataSetDir, "landmarks.txt"));
+			for( int i = 0; i < detected.size(); i++ ) {
+				FiducialCommon.Detected det = detected.get(i);
+				FiducialCommon.Landmarks landmark = lookupLandmark(landmarks,det.id);
+				List<Point2D_F64> corners = project(adjustCoordinate(det.fiducialToCamera),landmark);
+				truthCorners.addAll(corners);
+			}
+		}
 
 		normalsPrev = new Vector3D_F64[ expected.length ];
 		posePrev = new Se3_F64[ expected.length ];

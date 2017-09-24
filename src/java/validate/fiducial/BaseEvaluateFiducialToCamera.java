@@ -140,7 +140,7 @@ public abstract class BaseEvaluateFiducialToCamera implements FiducialEvaluateIn
 	 */
 	public abstract void evaluate( File resultsDirectory , File dataset );
 
-	private Se3_F64 adjustCoordinate( Se3_F64 foundF2C ) {
+	protected Se3_F64 adjustCoordinate( Se3_F64 foundF2C ) {
 		if( transformToStandard == null ) {
 			return foundF2C;
 		} else {
@@ -226,7 +226,7 @@ public abstract class BaseEvaluateFiducialToCamera implements FiducialEvaluateIn
 		return ret;
 	}
 
-	private static FiducialCommon.Landmarks lookupLandmark( List<FiducialCommon.Landmarks> landmarks, int id ) {
+	protected static FiducialCommon.Landmarks lookupLandmark( List<FiducialCommon.Landmarks> landmarks, int id ) {
 		for( FiducialCommon.Landmarks landmark : landmarks ) {
 			if( landmark.id == id )
 				return landmark;
@@ -235,7 +235,7 @@ public abstract class BaseEvaluateFiducialToCamera implements FiducialEvaluateIn
 		return landmarks.get(0);
 	}
 
-	private List<Point2D_F64> project( Se3_F64 fiducialToCamera , FiducialCommon.Landmarks landmark ) {
+	protected List<Point2D_F64> project( Se3_F64 fiducialToCamera , FiducialCommon.Landmarks landmark ) {
 		List<Point2D_F64> pixels = new ArrayList<Point2D_F64>();
 
 		WorldToCameraToPixel worldToPixel = PerspectiveOps.createWorldToPixel(intrinsic, fiducialToCamera);
