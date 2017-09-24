@@ -14,11 +14,12 @@ public class HandSelectEllipsesApp extends HandSelectBase {
 
 
 	public HandSelectEllipsesApp( File file ) {
-		super(new SelectEllipsePanel(),file);
+		super(new SelectEllipsePanel(false),file);
 	}
 
 	@Override
 	public void process(File file, BufferedImage image) {
+		this.infoPanel.setImageShape(image.getWidth(),image.getHeight());
 		SelectEllipsePanel gui = (SelectEllipsePanel)this.imagePanel;
 
 		File outputFile = selectOutputFile(file);

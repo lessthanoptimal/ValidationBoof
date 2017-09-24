@@ -33,10 +33,15 @@ public class SelectEllipsePanel extends ImageZoomPanel
 	Mode mode = Mode.IDLE;
 
 	double tolerancePixels = 20;
-
 	Color background = new Color(0,0,0,125);
 
-	public SelectEllipsePanel() {
+	// if true the circles are connected an a line will be down to show their relationship
+	boolean connectedCircles;
+
+	Line2D.Double line = new Line2D.Double();
+
+	public SelectEllipsePanel(boolean connectedCircles) {
+		this.connectedCircles = connectedCircles;
 		panel.addMouseListener(this);
 		panel.addKeyListener(this);
 		panel.addMouseMotionListener(this);
@@ -45,17 +50,32 @@ public class SelectEllipsePanel extends ImageZoomPanel
 	@Override
 	protected void paintInPanel(AffineTransform tran,Graphics2D g2 ) {
 
-		g2.setColor(Color.RED);
-		g2.setStroke(new BasicStroke(2));
 		g2.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, RenderingHints.VALUE_STROKE_PURE);
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
 		synchronized (list) {
+			if( connectedCircles ) {
+				g2.setColor(new Color(100, 100, 200));
+				g2.setStroke(new BasicStroke(1));
+				for (int i = 1; i < list.size(); i++) {
+					EllipseRotated_F64 a = list.get(i - 1);
+					EllipseRotated_F64 b = list.get(i);
+
+					line.x1 = (float) (scale * a.center.x);
+					line.y1 = (float) (scale * a.center.y);
+					line.x2 = (float) (scale * b.center.x);
+					line.y2 = (float) (scale * b.center.y);
+
+					g2.draw(line);
+				}
+			}
+
+			g2.setStroke(new BasicStroke(2));
+			g2.setColor(Color.RED);
 			for (int i = 0; i < list.size(); i++) {
 				EllipseRotated_F64 ellipse = list.get(i);
 
 				renderEllipse(g2, ellipse);
-
 
 				float x = (float)(scale*(ellipse.center.x));
 				float y = (float)(scale*((ellipse.center.y - ellipse.a) - 5));
@@ -64,7 +84,6 @@ public class SelectEllipsePanel extends ImageZoomPanel
 
 				g2.setColor(Color.PINK);
 				g2.drawString(String.format("%d",i),x,y);
-
 			}
 		}
 

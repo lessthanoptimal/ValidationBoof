@@ -1,12 +1,13 @@
 package validate.applications;
 
 import boofcv.alg.fiducial.calib.circle.EllipseClustersIntoGrid.Grid;
-import boofcv.alg.fiducial.calib.circle.KeyPointsCircleRegularGrid;
+import boofcv.alg.fiducial.calib.circle.KeyPointsCircleHexagonalGrid;
 import validate.misc.EllipseFileCodec;
 import validate.misc.PointFileCodec;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.util.ArrayList;
 
 /**
  *
@@ -15,16 +16,20 @@ import java.io.File;
  */
 public class HandSelectEllipseGridApp extends HandSelectBase {
 
-	int numRows = 4;
-	int numCols = 3;
+	//		KeyPointsCircleRegularGrid keyAlg = new KeyPointsCircleRegularGrid();
+	KeyPointsCircleHexagonalGrid keyAlg = new KeyPointsCircleHexagonalGrid();
+	int numRows = 5;
+	int numCols = 6;
+	boolean regular = false;
 
 
 	public HandSelectEllipseGridApp( File file ) {
-		super(new SelectEllipsePanel(),file);
+		super(new SelectEllipsePanel(true),file);
 	}
 
 	@Override
 	public void process(File file, BufferedImage image) {
+		this.infoPanel.setImageShape(image.getWidth(),image.getHeight());
 		SelectEllipsePanel gui = (SelectEllipsePanel)this.imagePanel;
 		File outputFile = selectOutputFile(file);
 		String ellipsePath = outputFile.getPath();
@@ -40,12 +45,29 @@ public class HandSelectEllipseGridApp extends HandSelectBase {
 	@Override
 	public void save() {
 		SelectEllipsePanel gui = (SelectEllipsePanel)this.imagePanel;
-		KeyPointsCircleRegularGrid keyAlg = new KeyPointsCircleRegularGrid();
 
 		Grid g = new Grid();
 		g.rows = numRows;
 		g.columns = numCols;
-		g.ellipses = gui.list;
+
+		// for regular grid it can be just set
+		if( regular ) {
+			g.ellipses = gui.list;
+		} else {
+			int index = 0;
+			g.ellipses = new ArrayList<>();
+			for (int row = 0; row < numRows; row++) {
+				for (int col = 0; col < numCols; col++) {
+					if( row%2==0 && col%2==1) {
+						g.ellipses.add(null);
+					} else if( row%2==1 &&col%2 == 0 ) {
+						g.ellipses.add(null);
+					} else {
+						g.ellipses.add( gui.list.get(index++));
+					}
+				}
+			}
+		}
 
 		keyAlg.process(g);
 		keyAlg.getKeyPoints();
@@ -79,8 +101,6 @@ public class HandSelectEllipseGridApp extends HandSelectBase {
 	}
 
 	public static void main(String[] args) {
-		String imagePath = "data/fiducials/circle_asymmetric/standard/distance_angle/image00000.jpg";
-
-		new HandSelectEllipseGridApp(new File(imagePath));
+		new HandSelectEllipseGridApp(null);
 	}
 }

@@ -12,11 +12,11 @@ import java.io.*;
 /**
  * @author Peter Abeles
  */
-public class EstimateCircleAsymmetricToCamera<T extends ImageGray<T>> extends BaseEstimateSquareFiducialToCamera<T> {
+public class EstimateCircleHexagonalToCamera<T extends ImageGray<T>> extends BaseEstimateSquareFiducialToCamera<T> {
 
 	Class<T> imageType;
 
-	public EstimateCircleAsymmetricToCamera(Class<T> imageType) {
+	public EstimateCircleHexagonalToCamera(Class<T> imageType) {
 		this.imageType = imageType;
 	}
 
@@ -48,7 +48,7 @@ public class EstimateCircleAsymmetricToCamera<T extends ImageGray<T>> extends Ba
 
 		ConfigCircleHexagonalGrid config = new ConfigCircleHexagonalGrid(numRows,numCols,diameter,centerDistance);
 
-		return FactoryFiducial.calibCircleAsymGrid(config, imageType);
+		return FactoryFiducial.calibCircleHexagonalGrid(config, imageType);
 	}
 
 
@@ -56,7 +56,7 @@ public class EstimateCircleAsymmetricToCamera<T extends ImageGray<T>> extends Ba
 
 		File outputDirectory = setupOutput();
 
-		EstimateCircleAsymmetricToCamera app = new EstimateCircleAsymmetricToCamera(GrayU8.class);
+		EstimateCircleHexagonalToCamera app = new EstimateCircleHexagonalToCamera(GrayU8.class);
 		app.initialize(new File("data/fiducials/chessboard"));
 		app.setOutputDirectory(outputDirectory);
 

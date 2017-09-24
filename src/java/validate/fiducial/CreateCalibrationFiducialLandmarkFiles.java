@@ -1,6 +1,6 @@
 package validate.fiducial;
 
-import boofcv.abst.fiducial.calib.ConfigCircleRegularGrid;
+import boofcv.abst.fiducial.calib.ConfigCircleHexagonalGrid;
 import boofcv.abst.geo.calibration.DetectorFiducialCalibration;
 import boofcv.factory.fiducial.FactoryFiducialCalibration;
 import georegression.struct.point.Point2D_F64;
@@ -18,10 +18,10 @@ public class CreateCalibrationFiducialLandmarkFiles {
 //		DetectorFiducialCalibration detector = FactoryFiducialCalibration.chessboard(config);
 //		ConfigSquareGrid config = new ConfigSquareGrid(5,7,1,1);
 //		DetectorFiducialCalibration detector = FactoryFiducialCalibration.squareGrid(config);
-//		ConfigCircleAsymmetricGrid config = new ConfigCircleAsymmetricGrid(8,5,2,6);
-//		DetectorFiducialCalibration detector = FactoryFiducialCalibration.circleAsymmGrid(config);
-		ConfigCircleRegularGrid config = new ConfigCircleRegularGrid(4,3,4,6);
-		DetectorFiducialCalibration detector = FactoryFiducialCalibration.circleRegularGrid(config);
+		ConfigCircleHexagonalGrid config = new ConfigCircleHexagonalGrid(5,6,4,5);
+		DetectorFiducialCalibration detector = FactoryFiducialCalibration.circleHexagonalGrid(config);
+//		ConfigCircleRegularGrid config = new ConfigCircleRegularGrid(4,3,4,6);
+//		DetectorFiducialCalibration detector = FactoryFiducialCalibration.circleRegularGrid(config);
 
 		List<Point2D_F64> points = detector.getLayout();
 

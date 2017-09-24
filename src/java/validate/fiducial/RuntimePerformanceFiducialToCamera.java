@@ -35,7 +35,11 @@ public class RuntimePerformanceFiducialToCamera< T extends ImageBase<T>> {
 	public void evaluate( File baseDirectory ) {
 
 		List<File> files = new ArrayList<File>();
-		for( File f : baseDirectory.listFiles() ) {
+		File baseFiles[] = baseDirectory.listFiles();
+		if( baseFiles == null ) {
+			err.println("No files can be found in "+baseDirectory.getPath());
+		}
+		for( File f : baseFiles ) {
 			if( f.isDirectory() && (f.getName().equals("standard") || f.getName().equals("static"))) {
 				files.addAll( Arrays.asList(f.listFiles()));
 			}

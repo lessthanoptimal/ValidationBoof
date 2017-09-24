@@ -13,11 +13,11 @@ import boofcv.io.image.UtilImageIO;
 import boofcv.struct.image.GrayU8;
 import boofcv.struct.image.ImageGray;
 import georegression.struct.shapes.EllipseRotated_F64;
-import org.ddogleg.struct.FastQueue;
 import validate.misc.EllipseFileCodec;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.util.List;
 
 /**
  * Detects polygons inside an image and saves the results to a file
@@ -77,10 +77,10 @@ public class DetectEllipseSaveToFile<T extends ImageGray<T>> {
 		inputToBinary.process(gray, binary);
 		detector.process(gray, binary);
 
-		FastQueue<EllipseRotated_F64> found = detector.getFoundEllipses();
+		List<EllipseRotated_F64> found = detector.getFoundEllipses(null);
 //		System.out.println("Found = "+found.size);
 
-		EllipseFileCodec.save(outputFile.getPath(),"Detected ellipses",found.toList());
+		EllipseFileCodec.save(outputFile.getPath(),"Detected ellipses",found);
 	}
 
 	public static void main(String[] args) {
