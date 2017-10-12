@@ -1,6 +1,7 @@
 package validate.applications;
 
 import boofcv.gui.image.ImageZoomPanel;
+import boofcv.misc.BoofMiscOps;
 import georegression.geometry.UtilEllipse_F64;
 import georegression.metric.Distance2D_F64;
 import georegression.metric.Intersection2D_F64;
@@ -24,7 +25,8 @@ import java.util.List;
 public class SelectEllipsePanel extends ImageZoomPanel
 	implements MouseListener, KeyListener, MouseMotionListener
 {
-	final List<EllipseRotated_F64> list = new ArrayList<EllipseRotated_F64>();
+	final List<EllipseRotated_F64> unselected = new ArrayList<>();
+	final List<EllipseRotated_F64> list = new ArrayList<>();
 
 	EllipseRotated_F64 selected = null;
 	Point2D_F64 seedPoint = new Point2D_F64();
@@ -45,6 +47,13 @@ public class SelectEllipsePanel extends ImageZoomPanel
 		panel.addMouseListener(this);
 		panel.addKeyListener(this);
 		panel.addMouseMotionListener(this);
+	}
+
+	public void addUnselected( List<EllipseRotated_F64> list ) {
+		synchronized (unselected) {
+			unselected.clear();
+			unselected.addAll(list);
+		}
 	}
 
 	@Override
@@ -70,8 +79,11 @@ public class SelectEllipsePanel extends ImageZoomPanel
 				}
 			}
 
+			for (int i = 0; i < unselected.size(); i++) {
+				renderEllipseUnselected(g2, unselected.get(i));
+			}
+
 			g2.setStroke(new BasicStroke(2));
-			g2.setColor(Color.RED);
 			for (int i = 0; i < list.size(); i++) {
 				EllipseRotated_F64 ellipse = list.get(i);
 
@@ -79,14 +91,14 @@ public class SelectEllipsePanel extends ImageZoomPanel
 
 				float x = (float)(scale*(ellipse.center.x));
 				float y = (float)(scale*((ellipse.center.y - ellipse.a) - 5));
+				int width = 12*BoofMiscOps.numDigits(i);
 				g2.setColor(background);
-				g2.fillRect((int)(x-2),(int)(y-12),20,16);
+				g2.fillRect((int)(x-2),(int)(y-12),width,16);
 
 				g2.setColor(Color.PINK);
 				g2.drawString(String.format("%d",i),x,y);
 			}
 		}
-
 	}
 
 	private void renderEllipse(Graphics2D g2, EllipseRotated_F64 ellipse) {
@@ -132,6 +144,24 @@ public class SelectEllipsePanel extends ImageZoomPanel
 		g2.draw(shape);
 	}
 
+	private void renderEllipseUnselected(Graphics2D g2, EllipseRotated_F64 ellipse) {
+		AffineTransform rotate = AffineTransform.getRotateInstance(ellipse.phi);
+		AffineTransform translate = AffineTransform.getTranslateInstance(scale*ellipse.center.x,scale*ellipse.center.y);
+
+		double w = scale*ellipse.a*2;
+		double h = scale*ellipse.b*2;
+
+		Shape shape = rotate.createTransformedShape(new Ellipse2D.Double(-w/2,-h/2,w,h));
+		shape = translate.createTransformedShape(shape);
+
+		g2.setStroke(new BasicStroke(10));
+		g2.setColor(Color.LIGHT_GRAY);
+		g2.draw(shape);
+		g2.setStroke(new BasicStroke(4));
+		g2.setColor(Color.DARK_GRAY);
+		g2.draw(shape);
+	}
+
 	@Override
 	public void mouseClicked(MouseEvent e) {}
 
@@ -148,18 +178,30 @@ public class SelectEllipsePanel extends ImageZoomPanel
 					handled = true;
 				}
 			}
-			if( ! handled ) {
-				selected = findSelected(p);
-				if (selected == null) {
-					mode = Mode.DRAW_CIRCLE;
-					selected = new EllipseRotated_F64(p.x, p.y, 0, 0, 0);
-					seedPoint.set(p);
+			if( !handled ) {
+				selected = findSelected(list,p);
+				if (selected != null && checkEnterAdjustAxis(p)) {
+					handled = true;
+				}
+			}
+
+			if( !handled ) {
+				selected = findSelected(unselected, p);
+				if( selected != null ) {
+					synchronized (unselected) {
+						unselected.remove(selected);
+					}
 					synchronized (list) {
 						list.add(selected);
 					}
-				} else {
-					if (checkEnterAdjustAxis(p)) {
-					}
+				}
+			}
+			if( selected == null) {
+				mode = Mode.DRAW_CIRCLE;
+				selected = new EllipseRotated_F64(p.x, p.y, 0, 0, 0);
+				seedPoint.set(p);
+				synchronized (list) {
+					list.add(selected);
 				}
 			}
 
@@ -168,7 +210,7 @@ public class SelectEllipsePanel extends ImageZoomPanel
 		panel.requestFocus();
 	}
 
-	private EllipseRotated_F64 findSelected( Point2D_F64 p ) {
+	private EllipseRotated_F64 findSelected( final List<EllipseRotated_F64> list, Point2D_F64 p ) {
 		synchronized (list) {
 			EllipseRotated_F64 best = null;
 			double bestD = Double.MAX_VALUE;
@@ -326,6 +368,9 @@ public class SelectEllipsePanel extends ImageZoomPanel
 		synchronized (list) {
 			list.clear();
 			selected = null;
+		}
+		synchronized (unselected) {
+			unselected.clear();
 		}
 	}
 

@@ -27,6 +27,12 @@ public class EstimateCircleHexagonalToCamera<T extends ImageGray<T>> extends Bas
 		if( !descriptionFile.exists() )
 			throw new RuntimeException("Can't find description.txt for square grid");
 
+		ConfigCircleHexagonalGrid config = parseCircleHexagonalConfig(descriptionFile);
+
+		return FactoryFiducial.calibCircleHexagonalGrid(config, imageType);
+	}
+
+	public static ConfigCircleHexagonalGrid parseCircleHexagonalConfig(File descriptionFile) {
 		int numRows,numCols;
 		double diameter,centerDistance;
 		BufferedReader reader = null;
@@ -46,9 +52,7 @@ public class EstimateCircleHexagonalToCamera<T extends ImageGray<T>> extends Bas
 			throw new RuntimeException(e);
 		}
 
-		ConfigCircleHexagonalGrid config = new ConfigCircleHexagonalGrid(numRows,numCols,diameter,centerDistance);
-
-		return FactoryFiducial.calibCircleHexagonalGrid(config, imageType);
+		return new ConfigCircleHexagonalGrid(numRows,numCols,diameter,centerDistance);
 	}
 
 

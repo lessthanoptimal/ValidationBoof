@@ -2,12 +2,20 @@ package validate.applications;
 
 import boofcv.alg.fiducial.calib.circle.EllipseClustersIntoGrid.Grid;
 import boofcv.alg.fiducial.calib.circle.KeyPointsCircleHexagonalGrid;
+import boofcv.alg.filter.binary.ThresholdImageOps;
+import boofcv.alg.shapes.ellipse.BinaryEllipseDetector;
+import boofcv.factory.shape.ConfigEllipseDetector;
+import boofcv.factory.shape.FactoryShapeDetector;
+import boofcv.io.image.ConvertBufferedImage;
+import boofcv.struct.image.GrayU8;
+import georegression.struct.shapes.EllipseRotated_F64;
 import validate.misc.EllipseFileCodec;
 import validate.misc.PointFileCodec;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -18,13 +26,42 @@ public class HandSelectEllipseGridApp extends HandSelectBase {
 
 	//		KeyPointsCircleRegularGrid keyAlg = new KeyPointsCircleRegularGrid();
 	KeyPointsCircleHexagonalGrid keyAlg = new KeyPointsCircleHexagonalGrid();
-	int numRows = 5;
-	int numCols = 6;
+	int numRows = 24;
+	int numCols = 28;
 	boolean regular = false;
 
 
 	public HandSelectEllipseGridApp( File file ) {
 		super(new SelectEllipsePanel(true),file);
+
+		infoPanel.handleSelectShape = new Runnable() {
+			@Override
+			public void run() {
+				if( image == null ) {
+					return;
+				}
+
+				ConfigEllipseDetector config = new ConfigEllipseDetector();
+				config.minimumMinorAxis = 5;
+				BinaryEllipseDetector<GrayU8> detector = FactoryShapeDetector.ellipse(config,GrayU8.class);
+				GrayU8 gray = new GrayU8(image.getWidth(),image.getHeight());
+				GrayU8 binary = gray.createSameShape();
+
+				ConvertBufferedImage.convertFrom(image,gray);
+
+				ThresholdImageOps.localSquare(gray,binary,10,1.0f,true,null,null);
+
+				detector.process(gray,binary);
+
+				List<EllipseRotated_F64> list = new ArrayList<>();
+				detector.getFoundEllipses(list);
+
+
+				System.out.println("Detected total "+list.size());
+				((SelectEllipsePanel)imagePanel).addUnselected(list);
+				imagePanel.repaint();
+			}
+		};
 	}
 
 	@Override

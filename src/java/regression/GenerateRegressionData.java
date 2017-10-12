@@ -4,7 +4,6 @@ import boofcv.struct.image.ImageDataType;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.PrintStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -182,7 +181,7 @@ public class GenerateRegressionData {
 				t.setOutputDirectory(CURRENT_DIRECTORY+"/"+dataType+"/");
 				try {
 					t.process(dataType);
-				} catch (IOException e) {
+				} catch (Exception e) {
 					e.printStackTrace();
 				}
 

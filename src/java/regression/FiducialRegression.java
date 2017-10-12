@@ -60,7 +60,7 @@ public class FiducialRegression extends BaseTextFileRegression {
 
 		process("SquareGrid", new EstimateSquareGridToCamera(imageType), "square_grid");
 
-		process("CircleHexagonal", new EstimateCircleAsymmetricToCamera(imageType), "circle_hexagonal");
+		process("CircleHexagonal", new EstimateCircleHexagonalToCamera(imageType), "circle_hexagonal");
 
 		process("CircleRegular", new EstimateCircleRegularToCamera(imageType), "circle_regular");
 
@@ -156,6 +156,9 @@ public class FiducialRegression extends BaseTextFileRegression {
 		int totalCorrect = 0;
 
 		for( File dataSet : directories) {
+			if( dataSet.isFile() )
+				continue;
+
 			if( workDirectory.exists() ) {
 				ParseHelper.deleteRecursive(workDirectory);
 			}

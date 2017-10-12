@@ -30,6 +30,7 @@ public class InfoHandSelectPanel extends JPanel implements ChangeListener, Mouse
 	protected JButton nextButton;
 	protected JButton openButton;
 	protected JButton reloadButton;
+	protected JButton detectShapes;
 	protected JTextField fieldPrefix;
 
 
@@ -39,6 +40,8 @@ public class InfoHandSelectPanel extends JPanel implements ChangeListener, Mouse
 	protected JTextArea labelHeight = new JTextArea();
 
 	protected JCheckBox cSkipLabeled = new JCheckBox("Skip Labeled");
+
+	Runnable handleSelectShape;
 
 	boolean skipLabeled = false;
 	String prefix="";
@@ -79,6 +82,9 @@ public class InfoHandSelectPanel extends JPanel implements ChangeListener, Mouse
 		cSkipLabeled.setSelected(skipLabeled);
 		cSkipLabeled.addChangeListener(e->skipLabeled = cSkipLabeled.isSelected());
 
+		detectShapes = new JButton("Detect");
+		detectShapes.addActionListener(e->{if(handleSelectShape != null)handleSelectShape.run();});
+
 		labelWidth.setEditable(false);
 		labelWidth.setMaximumSize(new Dimension(250,40));
 		labelHeight.setEditable(false);
@@ -102,10 +108,15 @@ public class InfoHandSelectPanel extends JPanel implements ChangeListener, Mouse
 		add(fieldPrefix);
 		add(reloadButton);
 		add(Box.createVerticalGlue());
+		add(detectShapes);
 		add(clearButton);
 	}
 
-	public void setImageShape( int width , int height ) {
+	public void setHandleSelectShape(Runnable handleSelectShape) {
+		this.handleSelectShape = handleSelectShape;
+	}
+
+	public void setImageShape(int width , int height ) {
 		BoofSwingUtil.invokeNowOrLater(()->{
 			labelWidth.setText(""+width);
 			labelHeight.setText(""+height);

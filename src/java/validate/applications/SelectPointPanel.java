@@ -56,7 +56,6 @@ public class SelectPointPanel extends ImageZoomPanel
 				}
 			}
 
-			g2.setColor(Color.RED);
 			for (List<Point2D_F64> set : pointSets) {
 				for (int i = 0; i < set.size(); i++) {
 					Point2D_F64 p = set.get(i);
@@ -67,10 +66,12 @@ public class SelectPointPanel extends ImageZoomPanel
 					ellipse.setFrame(x - r, y - r, 2 * r, 2 * r);
 					rect.setRect(x - 0.5, y - 0.5, 1, 1);
 
+					g2.setColor(Color.RED);
 					g2.draw(ellipse);
 					g2.draw(rect);
 //			g2.drawOval(x - r, y - r, w,w);
 //			g2.drawRect(x,y,1,1);
+					g2.setColor(Color.MAGENTA);
 					g2.drawString(i + "", (int) x + 2 * r, (int) y);
 				}
 			}
@@ -94,7 +95,14 @@ public class SelectPointPanel extends ImageZoomPanel
 			return;
 		g2.setColor(new Color(color));
 		int N = corners.size()-start;
-		for (int i = 0,j = N-1; i < N; j=i,i++) {
+//		for (int i = 0,j = N-1; i < N; j=i,i++) {
+//			Point2D_F64 a = corners.get(i+start);
+//			Point2D_F64 b = corners.get(j+start);
+//
+//			renderLine(g2,a,b);
+//		}
+		for (int i = 1; i < N; i++) {
+			int j = i - 1;
 			Point2D_F64 a = corners.get(i+start);
 			Point2D_F64 b = corners.get(j+start);
 

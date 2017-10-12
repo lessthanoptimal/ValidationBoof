@@ -28,7 +28,9 @@ file_list = [f for f in listdir(dir_input) if isfile(join(dir_input, f)) and f.l
 file_list.sort()
 
 if not file_list:
+    p.print_help()
     print "Found no images..."
+    exit(1)
 
 for idx,f in enumerate(file_list):
     if idx%10 == 0:
