@@ -39,22 +39,22 @@ public class FiducialRegression extends BaseTextFileRegression {
 		FactoryObject factory = new FactoryObjectAbstract() {
 			@Override public Object newInstance()
 			{return FactoryFiducial.squareBinary(new ConfigFiducialBinary(1), robust, imageType);}};
-		process( "BinaryRobust", new EstimateBinaryFiducialToCamera(factory),"binary");
+		process( "BinaryRobust", new EstimateBinaryFiducialToCamera(factory),"square_border_binary");
 
 		factory = new FactoryObjectAbstract() {
 			@Override public Object newInstance()
 		{return FactoryFiducial.squareBinary(new ConfigFiducialBinary(1), fast, imageType);}};
-		process("BinaryFast", new EstimateBinaryFiducialToCamera(factory), "binary");
+		process("BinaryFast", new EstimateBinaryFiducialToCamera(factory), "square_border_binary");
 
 		factory = new FactoryObjectAbstract() {
 			@Override public Object newInstance()
 		{return FactoryFiducial.squareImage(new ConfigFiducialImage(), robust, imageType);}};
-		process("ImageRobust", new EstimateImageFiducialToCamera(factory), "image");
+		process("ImageRobust", new EstimateImageFiducialToCamera(factory), "square_border_image");
 
 		factory = new FactoryObjectAbstract() {
 			@Override public Object newInstance()
 		{return FactoryFiducial.squareImage(new ConfigFiducialImage(), fast, imageType);}};
-		process("ImageFast", new EstimateImageFiducialToCamera(factory), "image");
+		process("ImageFast", new EstimateImageFiducialToCamera(factory), "square_border_image");
 
 		process("Chessboard", new EstimateChessboardToCamera(imageType), "chessboard");
 
@@ -62,7 +62,7 @@ public class FiducialRegression extends BaseTextFileRegression {
 
 		process("CircleHexagonal", new EstimateCircleHexagonalToCamera(imageType), "circle_hexagonal");
 
-		process("CircleRegular", new EstimateCircleRegularToCamera(imageType), "circle_regular");
+//		process("CircleRegular", new EstimateCircleRegularToCamera(imageType), "circle_regular");
 
 	}
 

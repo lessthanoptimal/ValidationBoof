@@ -1,20 +1,25 @@
 # (file name) (truth error 50%) (truth error 95%)
-data/calib/mono/circle_regular/distant/frame01.jpg 0.4343440869929601 0.7163109379079594
-data/calib/mono/circle_regular/distant/frame02.jpg 0.38474411570418865 0.7837870024155177
-data/calib/mono/circle_regular/distant/frame03.jpg 0.4698727641103978 0.8935730764474723
-data/calib/mono/circle_regular/distant/frame04.jpg 0.4344401779178733 0.7471161669191257
-data/calib/mono/circle_regular/distant/frame05.jpg 0.3407351741794475 0.6942841018600983
-data/calib/mono/circle_regular/large/image01.jpg 3.7392119699025965 5.7724522084675645
-data/calib/mono/circle_regular/large/image02.jpg 1.8156181316415585 3.2873966428347194
-data/calib/mono/circle_regular/large/image03.jpg 1.7806633498734432 3.2082501496146154
-data/calib/mono/circle_regular/large/image04.jpg 0.7188408752462574 1.3768859410852219
-data/calib/mono/circle_regular/large/image05.jpg 0.6512272568806265 1.2169636438597222
-data/calib/mono/circle_regular/large/image06.jpg 0.7494344828720835 1.3979826580824428
-data/calib/mono/circle_regular/large/image07.jpg 1.348128989963116 2.359567388770625
-data/calib/mono/circle_regular/fisheye/image00.jpg 0.2768997563648768 0.7717938922172088
-data/calib/mono/circle_regular/fisheye/image01.jpg failed
-data/calib/mono/circle_regular/fisheye/image02.jpg failed
-data/calib/mono/circle_regular/fisheye/image03.jpg failed
-data/calib/mono/circle_regular/fisheye/image04.jpg failed
+data/calibration_mono/circle_regular/distant/frame01.jpg 0.4009109209368254 0.697913882336743
+data/calibration_mono/circle_regular/distant/frame02.jpg 0.4337774871655336 0.7654839151692124
+data/calibration_mono/circle_regular/distant/frame03.jpg 0.46441597737886414 0.8618822464702803
+data/calibration_mono/circle_regular/distant/frame04.jpg 0.4479722466702446 0.732103242764916
+data/calibration_mono/circle_regular/distant/frame05.jpg 0.32219485959203853 0.6747361044364374
+data/calibration_mono/circle_regular/large/image01.jpg 3.942724054561805 5.920734616546664
+data/calibration_mono/circle_regular/large/image02.jpg 1.8025706088919666 3.349368863514844
+data/calibration_mono/circle_regular/large/image03.jpg 1.7874391697025904 3.339886030832173
+data/calibration_mono/circle_regular/large/image04.jpg 0.6981581975808313 1.3516575891465763
+data/calibration_mono/circle_regular/large/image05.jpg 0.7123761154989391 1.2287312828964836
+data/calibration_mono/circle_regular/large/image06.jpg 0.8025352633514907 1.2772775666331049
+data/calibration_mono/circle_regular/large/image07.jpg 1.2539241608298102 2.632264612927342
+data/calibration_mono/circle_regular/fisheye/image00.jpg 0.2788662882776667 0.7348720544643348
+data/calibration_mono/circle_regular/fisheye/image01.jpg 0.4063247678297137 0.728690669119577
+data/calibration_mono/circle_regular/fisheye/image02.jpg 0.4899361214853224 0.8761445492992316
+data/calibration_mono/circle_regular/fisheye/image03.jpg 0.42902224937826655 0.8143355357365605
+data/calibration_mono/circle_regular/fisheye/image04.jpg 0.41357408711755594 0.8037686714148757
+data/calibration_mono/circle_regular/fisheye/image05.jpg failed
+data/calibration_mono/circle_regular/fisheye/image06.jpg failed
+data/calibration_mono/circle_regular/fisheye/image07.jpg 0.4885233303384459 1.038878975659391
+data/calibration_mono/circle_regular/fisheye/image08.jpg 0.7398684797035682 1.2119090894118607
+data/calibration_mono/circle_regular/fisheye/image09.jpg failed
 
-Summary: 50% = 0.616069927110513  95% = 3.5812351210996676   success %76.47058823529412
+Summary: 50% = 0.5570351926103875  95% = 2.9662793992091485   success %86.36363636363636

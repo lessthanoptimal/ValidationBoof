@@ -1,2 +1,0 @@
-# (type) (left handed) (num columns) (num rows) (square width in mm ) (spacing in mm)
-square true 8 8 0.38888889 0.38888889 

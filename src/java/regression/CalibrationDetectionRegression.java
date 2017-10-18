@@ -39,28 +39,28 @@ public class CalibrationDetectionRegression extends BaseTextFileRegression{
 
 	public CalibrationDetectionRegression() {
 
-		chessDirectories.add("data/calib/stereo/Bumblebee2_Chess");
-		chessDirectories.add("data/calib/mono/chessboard/Sony_DSC-HX5V");
-		chessDirectories.add("data/calib/mono/chessboard/large");
-		chessDirectories.add("data/calib/mono/chessboard/distant");
-		chessDirectories.add("data/calib/mono/chessboard/hard");
-		chessDirectories.add("data/calib/mono/chessboard/border");
-		chessDirectories.add("data/calib/mono/chessboard/fisheye");
+		chessDirectories.add("data/calibration_stereo/Bumblebee2_Chess");
+		chessDirectories.add("data/calibration_mono/chessboard/Sony_DSC-HX5V");
+		chessDirectories.add("data/calibration_mono/chessboard/large");
+		chessDirectories.add("data/calibration_mono/chessboard/distant");
+		chessDirectories.add("data/calibration_mono/chessboard/hard");
+		chessDirectories.add("data/calibration_mono/chessboard/border");
+		chessDirectories.add("data/calibration_mono/chessboard/fisheye");
 
-		squareDirectories.add("data/calib/stereo/Bumblebee2_Square");
-		squareDirectories.add("data/calib/mono/square_grid/Sony_DSC-HX5V");
-		squareDirectories.add("data/calib/mono/square_grid/large");
-		squareDirectories.add("data/calib/mono/square_grid/distant");
-		squareDirectories.add("data/calib/mono/square_grid/fisheye");
+		squareDirectories.add("data/calibration_stereo/Bumblebee2_Square");
+		squareDirectories.add("data/calibration_mono/square_grid/Sony_DSC-HX5V");
+		squareDirectories.add("data/calibration_mono/square_grid/large");
+		squareDirectories.add("data/calibration_mono/square_grid/distant");
+		squareDirectories.add("data/calibration_mono/square_grid/fisheye");
 
-		circleHexDirectories.add("data/calib/mono/circle_hexagonal/calib_5x6");
-		circleHexDirectories.add("data/calib/mono/circle_hexagonal/calib_24x28");
-		circleHexDirectories.add("data/calib/mono/circle_hexagonal/fisheye_5x6");
-		circleHexDirectories.add("data/calib/mono/circle_hexagonal/large_24x28");
+		circleHexDirectories.add("data/calibration_mono/circle_hexagonal/calib_5x6");
+		circleHexDirectories.add("data/calibration_mono/circle_hexagonal/calib_24x28");
+		circleHexDirectories.add("data/calibration_mono/circle_hexagonal/fisheye_5x6");
+		circleHexDirectories.add("data/calibration_mono/circle_hexagonal/large_24x28");
 
-		circleRegirectories.add("data/calib/mono/circle_regular/distant");
-		circleRegirectories.add("data/calib/mono/circle_regular/large");
-		circleRegirectories.add("data/calib/mono/circle_regular/fisheye");
+		circleRegirectories.add("data/calibration_mono/circle_regular/distant");
+		circleRegirectories.add("data/calibration_mono/circle_regular/large");
+		circleRegirectories.add("data/calibration_mono/circle_regular/fisheye");
 
 		addDetector("DetectCalibChess",
 				new CreateChessboard(),

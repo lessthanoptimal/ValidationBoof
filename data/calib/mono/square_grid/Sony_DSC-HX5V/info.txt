@@ -1,2 +1,0 @@
-# (type) (left handed) (num columns) (num rows) (square width in mm ) (spacing in mm)
-square true 4 3 30 30

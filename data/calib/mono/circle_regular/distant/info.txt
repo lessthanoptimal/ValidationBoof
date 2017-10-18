@@ -1,3 +1,0 @@
-# circle grid calibration target
-# rows columns diameter (center distance)
-4 3 4 6
