@@ -34,7 +34,7 @@ public class EvaluateStaticFiducialSequence extends BaseEvaluateFiducialToCamera
 	{
 		initializeEvaluate(dataSetDir);
 
-		List<String> results = UtilIO.directoryList(resultsDirectory.getAbsolutePath(), "csv");
+		List<String> results = UtilIO.listByPrefix(resultsDirectory.getAbsolutePath(), "csv");
 		Collections.sort(results);
 
 		outputResults.println("# Data Set = " + dataSetDir.getName());

@@ -25,7 +25,7 @@ public class EvaluateFiducialToCamera extends BaseEvaluateFiducialToCamera {
 	public void evaluate( File resultsDirectory , File dataSetDir ) {
 		initializeEvaluate(dataSetDir);
 
-		List<String> results = UtilIO.directoryList(resultsDirectory.getAbsolutePath(),"csv");
+		List<String> results = UtilIO.listByPrefix(resultsDirectory.getAbsolutePath(),"csv");
 		Collections.sort(results);
 
 		outputResults.println("# "+dataSetDir.getName());

@@ -49,9 +49,9 @@ public abstract class BaseEstimateSquareFiducialToCamera<T extends ImageBase<T>>
 		FiducialDetector<T> detector = createDetector(dataSetDir);
 		FiducialCommon.Library library = FiducialCommon.parseScenario(new File(dataSetDir, "library.txt"));
 
-		List<String> files = UtilIO.directoryList(dataSetDir.getAbsolutePath(), "png");
+		List<String> files = UtilIO.listByPrefix(dataSetDir.getAbsolutePath(), "png");
 		if( files.size() == 0 ) {
-			files = UtilIO.directoryList(dataSetDir.getAbsolutePath(), "jpg");
+			files = UtilIO.listByPrefix(dataSetDir.getAbsolutePath(), "jpg");
 		}
 		if( files.size() == 0 ) {
 			throw new IllegalArgumentException("No images found.  paths correct?");
