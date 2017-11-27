@@ -62,7 +62,7 @@ public class FiducialRegression extends BaseTextFileRegression {
 
 		process("CircleHexagonal", new EstimateCircleHexagonalToCamera(imageType), "circle_hexagonal");
 
-//		process("CircleRegular", new EstimateCircleRegularToCamera(imageType), "circle_regular");
+		process("CircleRegular", new EstimateCircleRegularToCamera(imageType), "circle_regular");
 
 	}
 
