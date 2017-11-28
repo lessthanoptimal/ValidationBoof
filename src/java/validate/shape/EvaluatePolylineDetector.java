@@ -1,5 +1,7 @@
 package validate.shape;
 
+import georegression.metric.Distance2D_F64;
+import georegression.struct.line.LineSegment2D_F64;
 import georegression.struct.point.Point2D_F64;
 import georegression.struct.point.Point2D_I32;
 import georegression.struct.shapes.Polygon2D_F64;
@@ -27,11 +29,9 @@ public class EvaluatePolylineDetector {
 	public int summaryCount = 0;
 
 	/**
-	 * Fraction of contour size a corner needs to be within to be considered a match
+	 * Distance a corner can be from the shape to be considered a match
 	 */
-	public static final double MATCH_TOLERANCE = 0.1;
-
-	public static final double MATCH_BIAS_PIXELS = 2.0;
+	public static final double MATCH_DISTANCE_PIXELS = 2.0;
 
 	public void setOutputResults(PrintStream outputResults) {
 		this.outputResults = outputResults;
@@ -43,10 +43,9 @@ public class EvaluatePolylineDetector {
 
 	public void evaluate( File dataDir , File resultsDir ) {
 
-
-		outputResults.println("# Match Tolerance in contour fraction = "+MATCH_TOLERANCE);
-		outputResults.println("# Match Tolerance bias pixels         = "+MATCH_BIAS_PIXELS);
-		outputResults.println("# Image (expected) (detected) (multiple) (miss matched) (false positives) (false negative) (average error)");
+		outputResults.println("# Match Tolerance Corner to Polygon   = "+MATCH_DISTANCE_PIXELS);
+		outputResults.println("# Directory (expected) (detected) (multiple) (corner miss matched) (true positives) (false positives) (false negative) (average error)");
+		outputResults.printf("# %-13s %2s %2s %2s %2s %2s %2s %2s %7s\n","Directory","E","D","M","MM","TP","FP","FN","Error");
 
 		List<File> files = Arrays.asList(dataDir.listFiles());
 
@@ -84,23 +83,21 @@ public class EvaluatePolylineDetector {
 		int numMultiple = 0;
 		int numMissMatched = 0;
 		int falsePositives = 0;
-		int numMatched = 0;
 
 		boolean matchedFound[] = new boolean[found.size()];
 
 		double totalError = 0;
-		int totalTruthMatched = 0;
+		int truePositives = 0;
 
 		for( Polygon2D_F64 t : truth ) {
-			double tolerancePixels = size(t)*MATCH_TOLERANCE+MATCH_BIAS_PIXELS;
 
 			List<List<Point2D_I32>> matches = new ArrayList<>();
 
-			int minMatches = t.size()/2 + 1;
+			int minMatches = (int)(t.size()*0.9+0.5);
 			for( int i = 0; i < found.size(); i++ ) {
 				List<Point2D_I32> f = found.get(i);
 
-				if( countMatchedCorners(t,f,tolerancePixels) >= minMatches ) {
+				if( countCornersNearPolygon(t,f,MATCH_DISTANCE_PIXELS) >= minMatches ) {
 					matches.add(f);
 					matchedFound[i] = true;
 				}
@@ -113,7 +110,7 @@ public class EvaluatePolylineDetector {
 					missMatched = false;
 				}
 
-				double error = computeError(t,p,tolerancePixels);
+				double error = computeError(t,p);
 				if( error < bestError ) {
 					bestError = error;
 				}
@@ -124,13 +121,11 @@ public class EvaluatePolylineDetector {
 			}
 			if( matches.size() > 0 ) {
 				totalError += bestError;
-				totalTruthMatched++;
+				truePositives++;
+				if(  missMatched ) {
+					numMissMatched++;
+				}
 			}
-
-			if( matches.size()>0 && missMatched ) {
-				numMissMatched++;
-			}
-
 		}
 
 		for (int i = 0; i < matchedFound.length; i++) {
@@ -139,19 +134,19 @@ public class EvaluatePolylineDetector {
 			}
 		}
 
-		totalError /= totalTruthMatched;
-		int numFalseNegative = truth.size()-totalTruthMatched;
+		totalError /= truePositives;
+		int numFalseNegative = truth.size()-truePositives;
 
-		outputResults.printf("%-15s %2d %2d %2d %2d %2d %2d %7.4f\n", fileName, truth.size(), found.size(),
-				numMultiple, numMissMatched, falsePositives, numFalseNegative, totalError);
+		outputResults.printf("%-15s %2d %2d %2d %2d %2d %2d %2d %7.4f\n", fileName, truth.size(), found.size(),
+				numMultiple, numMissMatched, truePositives, falsePositives, numFalseNegative, totalError);
 
-		if( totalTruthMatched > 0 ) {
+		if( truePositives > 0 ) {
 			this.summaryError += totalError;
 			summaryCount++;
 		}
 
 		summaryFalsePositive += falsePositives;
-		summaryTruePositive += totalTruthMatched;
+		summaryTruePositive += truePositives;
 		summaryExpected += truth.size();
 	}
 
@@ -163,15 +158,19 @@ public class EvaluatePolylineDetector {
 		return total;
 	}
 
-	protected int countMatchedCorners( Polygon2D_F64 a , List<Point2D_I32> b , double tol ) {
+	protected int countCornersNearPolygon(Polygon2D_F64 a , List<Point2D_I32> b , double tol ) {
+
+		LineSegment2D_F64 line = new LineSegment2D_F64();
 
 		int totalMatched=0;
-		for (int i = 0; i < a.size(); i++) {
-			Point2D_F64 pt_a = a.get(i);
-			for (int j = 0; j < b.size(); j++) {
-				Point2D_I32 pt_b = b.get(j);
+		for (int i = 0,j=a.size()-1; i < a.size(); j=i,i++) {
+			line.a = a.get(i);
+			line.b = a.get(j);
 
-				if( pt_a.distance(pt_b.x,pt_b.y) <= tol ) {
+			for (int k = 0; k < b.size(); k++) {
+				Point2D_I32 pt_b = b.get(k);
+
+				if(Distance2D_F64.distance(line,new Point2D_F64(pt_b.x,pt_b.y)) <= tol ) {
 					totalMatched++;
 					break;
 				}
@@ -181,29 +180,29 @@ public class EvaluatePolylineDetector {
 		return totalMatched;
 	}
 
-	protected double computeError( Polygon2D_F64 a , List<Point2D_I32> b , double tol ) {
+	protected double computeError( Polygon2D_F64 a , List<Point2D_I32> b ) {
 
-		int totalMatched=0;
-		double totalError=0;
-		for (int i = 0; i < a.size(); i++) {
-			Point2D_F64 pt_a = a.get(i);
+		double error = 0;
+		LineSegment2D_F64 line = new LineSegment2D_F64();
 
-			double bestError = Double.MAX_VALUE;
-			for (int j = 0; j < b.size(); j++) {
-				Point2D_I32 pt_b = b.get(j);
+		for (int k = 0; k < b.size(); k++) {
+			Point2D_I32 pt_b = b.get(k);
 
-				double error = pt_a.distance(pt_b.x,pt_b.y);
-				if( error < bestError ) {
-					bestError = error;
+			double best = Double.MAX_VALUE;
+			for (int i = 0,j=a.size()-1; i < a.size(); j=i,i++) {
+				line.a = a.get(i);
+				line.b = a.get(j);
+
+				double d = Distance2D_F64.distance(line,new Point2D_F64(pt_b.x,pt_b.y));
+				if( d < best ) {
+					best = d;
 				}
 			}
-			if( bestError <= tol ) {
-				totalError += bestError;
-				totalMatched++;
-			}
+			error += best;
 		}
 
-		return totalError/totalMatched;
+
+		return error/b.size();
 	}
 
 	protected List<Polygon2D_F64> loadTruth( File fileTruth ) {

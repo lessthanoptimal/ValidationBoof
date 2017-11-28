@@ -176,8 +176,6 @@ public class SelectPointPanel extends ImageZoomPanel
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		if( selected == null )
-			return;
 
 //		System.out.println("Key event "+e.getKeyCode()+"  0x"+Integer.toHexString(e.getKeyCode()));
 
@@ -196,52 +194,66 @@ public class SelectPointPanel extends ImageZoomPanel
 
 			case KeyEvent.VK_NUMPAD4:
 			case KeyEvent.VK_KP_LEFT:
-				p.x -= delta;
+				if( p != null )
+					p.x -= delta;
 				break;
 
 			case KeyEvent.VK_NUMPAD6:
 			case KeyEvent.VK_KP_RIGHT:
-				p.x += delta;
+				if( p != null )
+					p.x += delta;
 				break;
 
 			case KeyEvent.VK_NUMPAD2:
 			case KeyEvent.VK_KP_DOWN:
-				p.y += delta;
+				if( p != null )
+					p.y += delta;
 				break;
 
 			case KeyEvent.VK_NUMPAD8:
 			case KeyEvent.VK_KP_UP:
-				p.y -= delta;
+				if( p != null )
+					p.y -= delta;
 				break;
 
 			case KeyEvent.VK_DELETE:
 			case KeyEvent.VK_BACK_SPACE:
-				for( List<Point2D_F64> set : pointSets ) {
-					if( set.remove(selected)) {
-						break;
+				if( selected != null ) {
+					for (List<Point2D_F64> set : pointSets) {
+						if (set.remove(selected)) {
+							break;
+						}
 					}
+					selected = null;
 				}
-				selected = null;
 				break;
 
 			case KeyEvent.VK_NUMPAD7:
-				p.x -= delta;
-				p.y -= delta;
+				if( p != null ) {
+					p.x -= delta;
+					p.y -= delta;
+				}
 				break;
 
 			case KeyEvent.VK_NUMPAD9:
-				p.x += delta;
-				p.y -= delta;
+				if( p != null ) {
+					p.x += delta;
+					p.y -= delta;
+				}
 				break;
 
 			case KeyEvent.VK_NUMPAD1:
-				p.x -= delta;
-				p.y += delta;
+				if( p != null ) {
+					p.x -= delta;
+					p.y += delta;
+				}
 				break;
 
 			case KeyEvent.VK_NUMPAD3:
-				p.x += delta;
-				p.y += delta;
+				if( p != null ) {
+					p.x += delta;
+					p.y += delta;
+				}
 				break;
 		}
 

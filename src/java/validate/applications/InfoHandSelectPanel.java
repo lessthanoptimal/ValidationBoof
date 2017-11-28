@@ -18,7 +18,7 @@ import java.awt.event.MouseWheelListener;
 public class InfoHandSelectPanel extends JPanel implements ChangeListener, MouseWheelListener,
 		ActionListener
 {
-	private static double MAX = 20;
+	private static double MAX = 50;
 	private static double MIN = 0.1;
 	private static double INC = 0.1;
 

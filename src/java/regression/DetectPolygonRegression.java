@@ -46,6 +46,10 @@ public class DetectPolygonRegression extends BaseTextFileRegression {
 		List<File> files = Arrays.asList(baseDataSetDirectory.listFiles());
 		Collections.sort(files);
 
+		int totalTruePositive = 0;
+		int totalExpected = 0;
+		int totalFalsePositive = 0;
+
 		for( File f : files  ) {
 			if( !f.isDirectory() )
 				continue;
@@ -58,7 +62,13 @@ public class DetectPolygonRegression extends BaseTextFileRegression {
 			detection.processDirectory(f, workDirectory);
 			evaluator.evaluate(f, workDirectory);
 			output.println();
+			totalTruePositive += evaluator.summaryTruePositive;
+			totalExpected += evaluator.summaryExpected;
+			totalFalsePositive += evaluator.summaryFalsePositive;
 		}
+
+		output.println();
+		output.println(String.format("Final Summary: TP/(TP+FN) = %d / %d    FP = %d\n",totalTruePositive,totalExpected,totalFalsePositive));
 
 		output.close();
 	}
