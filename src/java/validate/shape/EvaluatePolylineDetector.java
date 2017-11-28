@@ -31,7 +31,7 @@ public class EvaluatePolylineDetector {
 	/**
 	 * Distance a corner can be from the shape to be considered a match
 	 */
-	public static final double MATCH_DISTANCE_PIXELS = 2.0;
+	public static final double MATCH_DISTANCE_PIXELS = 3.0;
 
 	public void setOutputResults(PrintStream outputResults) {
 		this.outputResults = outputResults;
@@ -122,7 +122,7 @@ public class EvaluatePolylineDetector {
 			if( matches.size() > 0 ) {
 				totalError += bestError;
 				truePositives++;
-				if(  missMatched ) {
+				if( missMatched ) {
 					numMissMatched++;
 				}
 			}
@@ -163,37 +163,78 @@ public class EvaluatePolylineDetector {
 		LineSegment2D_F64 line = new LineSegment2D_F64();
 
 		int totalMatched=0;
-		for (int i = 0,j=a.size()-1; i < a.size(); j=i,i++) {
-			line.a = a.get(i);
-			line.b = a.get(j);
-
-			for (int k = 0; k < b.size(); k++) {
-				Point2D_I32 pt_b = b.get(k);
-
-				if(Distance2D_F64.distance(line,new Point2D_F64(pt_b.x,pt_b.y)) <= tol ) {
-					totalMatched++;
-					break;
-				}
-			}
-		}
-
-		return totalMatched;
-	}
-
-	protected double computeError( Polygon2D_F64 a , List<Point2D_I32> b ) {
-
-		double error = 0;
-		LineSegment2D_F64 line = new LineSegment2D_F64();
 
 		for (int k = 0; k < b.size(); k++) {
 			Point2D_I32 pt_b = b.get(k);
 
 			double best = Double.MAX_VALUE;
-			for (int i = 0,j=a.size()-1; i < a.size(); j=i,i++) {
-				line.a = a.get(i);
-				line.b = a.get(j);
+			for (int i = 0; i < a.size()+1; i++) {
+				line.a = a.get(i%a.size());
+				line.b = a.get((i+1)%a.size());
 
-				double d = Distance2D_F64.distance(line,new Point2D_F64(pt_b.x,pt_b.y));
+				double d = Distance2D_F64.distance(line,pt_b.x,pt_b.y);
+				if( d < best ) {
+					best = d;
+				}
+			}
+			if( best <= tol )
+				totalMatched++;
+		}
+
+		return totalMatched;
+	}
+
+	/**
+	 * Compute the error of a and b as a function of the distance of N evenly spaced points on B to the closest
+	 * point on A.
+	 *
+	 * NOTE: It would be better if the reverse was done too and the largest error accepted.
+	 */
+	protected double computeError( Polygon2D_F64 a , List<Point2D_I32> b ) {
+		LineSegment2D_F64 line = new LineSegment2D_F64();
+
+		double cornerLocationsB[] = new double[b.size()+1];
+		double totalLength = 0;
+		for (int i = 0; i < b.size(); i++) {
+			Point2D_I32 b0 = b.get(i%b.size());
+			Point2D_I32 b1 = b.get((i+1)%b.size());
+
+			cornerLocationsB[i] = totalLength;
+			totalLength += b0.distance(b1);
+		}
+		cornerLocationsB[b.size()] = totalLength;
+
+		int numberOfSamples = 100;
+
+		Point2D_F64 pointOnB = new Point2D_F64();
+		double error = 0;
+		int cornerB = 0;
+		for (int k = 0; k < numberOfSamples; k++) {
+			// Find the point on B to match to a point on A
+			double location = totalLength*k/numberOfSamples;
+
+			while (location > cornerLocationsB[cornerB + 1]) {
+				cornerB++;
+			}
+			Point2D_I32 b0 = b.get(cornerB);
+			Point2D_I32 b1 = b.get((cornerB+1)%b.size());
+
+			double locationCornerB = cornerLocationsB[cornerB];
+			double fraction = (location-locationCornerB)/(cornerLocationsB[cornerB+1]-locationCornerB);
+
+			if( fraction < 0 || fraction > 1)
+				throw new RuntimeException("Egads");
+
+			pointOnB.x = (b1.x-b0.x)*fraction + b0.x;
+			pointOnB.y = (b1.y-b0.y)*fraction + b0.y;
+
+			// find the best fit point on A to the point in B
+			double best = Double.MAX_VALUE;
+			for (int i = 0; i < a.size()+1; i++) {
+				line.a = a.get(i%a.size());
+				line.b = a.get((i+1)%a.size());
+
+				double d = Distance2D_F64.distance(line,pointOnB);
 				if( d < best ) {
 					best = d;
 				}
@@ -201,8 +242,7 @@ public class EvaluatePolylineDetector {
 			error += best;
 		}
 
-
-		return error/b.size();
+		return error/numberOfSamples;
 	}
 
 	protected List<Polygon2D_F64> loadTruth( File fileTruth ) {
