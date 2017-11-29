@@ -3,6 +3,7 @@ package validate.shape;
 import boofcv.abst.shapes.polyline.ConfigPolylineSplitMerge;
 import boofcv.factory.shape.ConfigEllipseDetector;
 import boofcv.factory.shape.ConfigPolygonDetector;
+import boofcv.factory.shape.ConfigSplitMergeLineFit;
 import georegression.struct.point.Point2D_F64;
 import georegression.struct.point.Point2D_I32;
 import georegression.struct.shapes.Polygon2D_F64;
@@ -57,6 +58,47 @@ public class UtilShapeDetector {
 		config.maxSides = maxSides;
 		config.convex = convex;
 //		config.loop = loop;
+
+		return config;
+	}
+
+	public static ConfigSplitMergeLineFit configurePolylineSplitMergeOld(File file ) {
+		int minSides=3,maxSides=6;
+		boolean convex = true;
+		boolean loop = true;
+
+		try {
+			BufferedReader reader = new BufferedReader(new FileReader(file));
+
+			String line = ParseHelper.skipComments(reader);
+
+			while( line != null ) {
+
+				String words[] = line.split(" ");
+				if( words.length != 2 )
+					throw new RuntimeException("Unexpected number of words on line");
+
+				if( words[0].equalsIgnoreCase("convex")) {
+					convex = Boolean.parseBoolean(words[1]);
+				} else if( words[0].equalsIgnoreCase("min_sides")) {
+					minSides = Integer.parseInt(words[1]);
+				} else if( words[0].equalsIgnoreCase("max_sides")) {
+					maxSides = Integer.parseInt(words[1]);
+				} else if( words[0].equalsIgnoreCase("loop")) {
+					loop = Boolean.parseBoolean(words[1]);
+				}
+
+				line = reader.readLine();
+			}
+		} catch (FileNotFoundException ignore) {
+			// just go with the defaults
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+
+		ConfigSplitMergeLineFit config = new ConfigSplitMergeLineFit();
+
+		config.loop = loop;
 
 		return config;
 	}

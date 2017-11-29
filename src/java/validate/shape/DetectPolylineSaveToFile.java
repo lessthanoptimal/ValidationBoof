@@ -38,6 +38,9 @@ public class DetectPolylineSaveToFile<T extends ImageGray<T>> {
 	GrayU8 binary = new GrayU8(1,1);
 	GrayS32 labeled = new GrayS32(1,1);
 
+	// average amount of time in milliseconds to process each image in the directory
+	public double averageProcessingTime;
+
 	public DetectPolylineSaveToFile(PointsToPolyline contourToPolyline , boolean binaryLocal, Class<T> imageType ) {
 
 		this.contourToPolyline = contourToPolyline;
@@ -59,6 +62,8 @@ public class DetectPolylineSaveToFile<T extends ImageGray<T>> {
 
 		File files[] = inputDir.listFiles();
 
+		averageProcessingTime = 0;
+		int total = 0;
 		for( File f : files ) {
 			if( !f.isFile() || f.getName().endsWith("txt"))
 				continue;
@@ -70,7 +75,10 @@ public class DetectPolylineSaveToFile<T extends ImageGray<T>> {
 			String name = UtilShapeDetector.imageToDetectedName(f.getName());
 			File outputFile = new File(outputDir,name);
 			process(buffered,outputFile);
+			total++;
 		}
+
+		averageProcessingTime /= total;
 	}
 
 	private void process( BufferedImage buffered , File outputFile ) {
@@ -85,6 +93,7 @@ public class DetectPolylineSaveToFile<T extends ImageGray<T>> {
 
 		List<Contour> contours = BinaryImageOps.convertContours(binaryToContour.getPackedPoints(),binaryToContour.getContours());
 
+		long startNano = System.nanoTime();
 		GrowQueue_I32 vertexes = new GrowQueue_I32();
 		List<List<Point2D_I32>> polylines = new ArrayList<>();
 		for (int i = 0; i < contours.size(); i++) {
@@ -101,8 +110,10 @@ public class DetectPolylineSaveToFile<T extends ImageGray<T>> {
 				}
 			}
 		}
-
+		long stopNano = System.nanoTime();
 		UtilShapeDetector.saveResultsPolyline(polylines,outputFile);
+
+		averageProcessingTime += (stopNano-startNano)/1e6;
 	}
 
 }

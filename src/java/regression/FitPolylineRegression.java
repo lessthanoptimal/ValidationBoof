@@ -6,6 +6,7 @@ import validate.FactoryObject;
 import validate.shape.DetectPolylineSaveToFile;
 import validate.shape.EvaluatePolylineDetector;
 import validate.shape.FactoryPolylineSplitMerge;
+import validate.shape.FactoryPolylineSplitMergeOld;
 
 import java.io.File;
 import java.io.IOException;
@@ -30,12 +31,16 @@ public class FitPolylineRegression extends BaseTextFileRegression {
 
 		process("SplitMerge_Global", false, new FactoryPolylineSplitMerge(),imageType);
 		process("SplitMerge_Local", true, new FactoryPolylineSplitMerge(),imageType);
+		process("SplitMergeOld_Global", false, new FactoryPolylineSplitMergeOld(),imageType);
+		process("SplitMergeOld_Local", true, new FactoryPolylineSplitMergeOld(),imageType);
 	}
 
 	private void process(String name, boolean localBinary , FactoryObject<PointsToPolyline> factory, Class imageType )
 			throws IOException {
 
 		String outputName = "Polyline_"+name+".txt";
+		String outputSpeedName = "PolylineSpeed_"+name+".txt";
+
 
 
 		EvaluatePolylineDetector evaluator = new EvaluatePolylineDetector();
@@ -43,6 +48,8 @@ public class FitPolylineRegression extends BaseTextFileRegression {
 		PrintStream output = new PrintStream(new File(directory,outputName));
 		evaluator.setOutputResults(output);
 
+		PrintStream outputSpeed = new PrintStream(new File(directory,outputSpeedName));
+		outputSpeed.println("# Average processing time of polyline algorithm "+name);
 		List<File> files = Arrays.asList(baseDataSetDirectory.listFiles());
 		Collections.sort(files);
 
@@ -67,12 +74,17 @@ public class FitPolylineRegression extends BaseTextFileRegression {
 			totalTruePositive += evaluator.summaryTruePositive;
 			totalExpected += evaluator.summaryExpected;
 			totalFalsePositive += evaluator.summaryFalsePositive;
+
+			outputSpeed.printf("%20s %9.4f (ms)\n",f.getName(),detection.averageProcessingTime);
 		}
 
 		output.println();
 		output.println(String.format("Final Summary: TP/(TP+FN) = %d / %d    FP = %d\n",totalTruePositive,totalExpected,totalFalsePositive));
 
 		output.close();
+
+		outputSpeed.println();
+		outputSpeed.close();
 	}
 
 	public static void main(String[] args) throws IOException {
