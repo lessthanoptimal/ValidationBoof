@@ -1,5 +1,6 @@
 package validate.shape;
 
+import georegression.geometry.UtilPolygons2D_F64;
 import georegression.metric.Distance2D_F64;
 import georegression.struct.line.LineSegment2D_F64;
 import georegression.struct.point.Point2D_F64;
@@ -191,58 +192,17 @@ public class EvaluatePolylineDetector {
 	 * NOTE: It would be better if the reverse was done too and the largest error accepted.
 	 */
 	protected double computeError( Polygon2D_F64 a , List<Point2D_I32> b ) {
-		LineSegment2D_F64 line = new LineSegment2D_F64();
+		Polygon2D_F64 polyB = new Polygon2D_F64(b.size());
 
-		double cornerLocationsB[] = new double[b.size()+1];
-		double totalLength = 0;
 		for (int i = 0; i < b.size(); i++) {
-			Point2D_I32 b0 = b.get(i%b.size());
-			Point2D_I32 b1 = b.get((i+1)%b.size());
-
-			cornerLocationsB[i] = totalLength;
-			totalLength += b0.distance(b1);
-		}
-		cornerLocationsB[b.size()] = totalLength;
-
-		int numberOfSamples = 100;
-
-		Point2D_F64 pointOnB = new Point2D_F64();
-		double error = 0;
-		int cornerB = 0;
-		for (int k = 0; k < numberOfSamples; k++) {
-			// Find the point on B to match to a point on A
-			double location = totalLength*k/numberOfSamples;
-
-			while (location > cornerLocationsB[cornerB + 1]) {
-				cornerB++;
-			}
-			Point2D_I32 b0 = b.get(cornerB);
-			Point2D_I32 b1 = b.get((cornerB+1)%b.size());
-
-			double locationCornerB = cornerLocationsB[cornerB];
-			double fraction = (location-locationCornerB)/(cornerLocationsB[cornerB+1]-locationCornerB);
-
-			if( fraction < 0 || fraction > 1)
-				throw new RuntimeException("Egads");
-
-			pointOnB.x = (b1.x-b0.x)*fraction + b0.x;
-			pointOnB.y = (b1.y-b0.y)*fraction + b0.y;
-
-			// find the best fit point on A to the point in B
-			double best = Double.MAX_VALUE;
-			for (int i = 0; i < a.size()+1; i++) {
-				line.a = a.get(i%a.size());
-				line.b = a.get((i+1)%a.size());
-
-				double d = Distance2D_F64.distance(line,pointOnB);
-				if( d < best ) {
-					best = d;
-				}
-			}
-			error += best;
+			Point2D_I32 p = b.get(i);
+			polyB.get(i).set(p.x,p.y);
 		}
 
-		return error/numberOfSamples;
+		double error0 = UtilPolygons2D_F64.averageOfClosestPointError(a,polyB,100);
+		double error1 = UtilPolygons2D_F64.averageOfClosestPointError(polyB,a,100);
+
+		return Math.max(error0,error1);
 	}
 
 	protected List<Polygon2D_F64> loadTruth( File fileTruth ) {
