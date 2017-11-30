@@ -1,0 +1,10 @@
+# Average processing time of shape detector algorithm PolygonLineLocal
+            border01   87.8877 (ms)
+            border02   65.4395 (ms)
+             concave    9.2532 (ms)
+    quadrilaterals01   19.7319 (ms)
+               set01  115.4984 (ms)
+               set02    9.5631 (ms)
+               set03   10.3783 (ms)
+               set04    1.0281 (ms)
+

@@ -1,0 +1,10 @@
+# Average processing time of polyline algorithm SplitMergeOld_Local
+            border01  151.8168 (ms)
+            border02   61.3284 (ms)
+             concave   24.7547 (ms)
+    quadrilaterals01   76.8361 (ms)
+               set01  324.2283 (ms)
+               set02   52.5388 (ms)
+               set03   63.3874 (ms)
+               set04    9.2722 (ms)
+
