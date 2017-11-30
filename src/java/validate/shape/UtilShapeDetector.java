@@ -138,10 +138,8 @@ public class UtilShapeDetector {
 			throw new RuntimeException(e);
 		}
 
-		ConfigPolygonDetector config = new ConfigPolygonDetector(3,6);
+		ConfigPolygonDetector config = new ConfigPolygonDetector(minSides,maxSides);
 
-		config.detector.minimumSides = minSides;
-		config.detector.maximumSides = maxSides;
 		config.detector.convex = convex;
 		config.detector.canTouchBorder = border;
 

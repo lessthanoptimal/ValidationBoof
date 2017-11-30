@@ -36,12 +36,15 @@ public class DetectPolygonRegression extends BaseTextFileRegression {
 			throws IOException {
 
 		String outputName = "ShapeDetector_"+name+".txt";
-
+		String outputSpeedName = "ShapeDetectorSpeed_"+name+".txt";
 
 		EvaluatePolygonDetector evaluator = new EvaluatePolygonDetector();
 
 		PrintStream output = new PrintStream(new File(directory,outputName));
 		evaluator.setOutputResults(output);
+
+		PrintStream outputSpeed = new PrintStream(new File(directory,outputSpeedName));
+		outputSpeed.println("# Average processing time of shape detector algorithm "+name);
 
 		List<File> files = Arrays.asList(baseDataSetDirectory.listFiles());
 		Collections.sort(files);
@@ -65,12 +68,16 @@ public class DetectPolygonRegression extends BaseTextFileRegression {
 			totalTruePositive += evaluator.summaryTruePositive;
 			totalExpected += evaluator.summaryExpected;
 			totalFalsePositive += evaluator.summaryFalsePositive;
+
+			outputSpeed.printf("%20s %9.4f (ms)\n",f.getName(),detection.averageProcessingTime);
 		}
 
 		output.println();
 		output.println(String.format("Final Summary: TP/(TP+FN) = %d / %d    FP = %d\n",totalTruePositive,totalExpected,totalFalsePositive));
-
 		output.close();
+
+		outputSpeed.println();
+		outputSpeed.close();
 	}
 
 	public static void main(String[] args) throws IOException {

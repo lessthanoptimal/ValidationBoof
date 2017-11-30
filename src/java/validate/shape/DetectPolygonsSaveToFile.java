@@ -31,6 +31,9 @@ public class DetectPolygonsSaveToFile<T extends ImageGray<T>> {
 	T gray;
 	GrayU8 binary = new GrayU8(1,1);
 
+	// average amount of time in milliseconds to process each image in the directory
+	public double averageProcessingTime;
+
 	public DetectPolygonsSaveToFile( DetectPolygonBinaryGrayRefine<T> detector , boolean binaryLocal) {
 
 		this.detector = detector;
@@ -50,8 +53,10 @@ public class DetectPolygonsSaveToFile<T extends ImageGray<T>> {
 		if( !outputDir.exists() )
 			outputDir.mkdirs();
 
-		File files[] = inputDir.listFiles();
 
+		averageProcessingTime = 0;
+		int total = 0;
+		File files[] = inputDir.listFiles();
 		for( File f : files ) {
 			if( !f.isFile() || f.getName().endsWith("txt"))
 				continue;
@@ -63,7 +68,9 @@ public class DetectPolygonsSaveToFile<T extends ImageGray<T>> {
 			String name = UtilShapeDetector.imageToDetectedName(f.getName());
 			File outputFile = new File(outputDir,name);
 			process(buffered,outputFile);
+			total++;
 		}
+		averageProcessingTime /= total;
 	}
 
 	private void process( BufferedImage buffered , File outputFile ) {
@@ -74,10 +81,14 @@ public class DetectPolygonsSaveToFile<T extends ImageGray<T>> {
 		ConvertBufferedImage.convertFrom(buffered, gray, true);
 
 		inputToBinary.process(gray, binary);
+
+		long startNano = System.nanoTime();
 		detector.process(gray, binary);
 		detector.refineAll();
-
 		List<Polygon2D_F64> found = detector.getPolygons(null);
+		long stopNano = System.nanoTime();
+		averageProcessingTime += (stopNano-startNano)/1e6;
+
 //		System.out.println("Found = "+found.size);
 
 		UtilShapeDetector.saveResults(found,outputFile);

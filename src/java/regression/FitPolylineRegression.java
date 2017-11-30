@@ -41,8 +41,6 @@ public class FitPolylineRegression extends BaseTextFileRegression {
 		String outputName = "Polyline_"+name+".txt";
 		String outputSpeedName = "PolylineSpeed_"+name+".txt";
 
-
-
 		EvaluatePolylineDetector evaluator = new EvaluatePolylineDetector();
 
 		PrintStream output = new PrintStream(new File(directory,outputName));
