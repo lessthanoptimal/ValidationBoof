@@ -3,6 +3,9 @@ Description of changes to benchmarks and justifications for change in performanc
 ## Version 0.28
 
 
+TODO Change threshold for fast in fiducial to OTSU
+
+
 ## Version 0.27
 * Change in RANSAC implementation has caused several results to change.
 ** Affected algorithms: Visual Odometry

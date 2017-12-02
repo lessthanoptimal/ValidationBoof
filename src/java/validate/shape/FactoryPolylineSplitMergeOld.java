@@ -13,16 +13,20 @@ import java.io.File;
 public class FactoryPolylineSplitMergeOld
 		implements FactoryObject<PointsToPolyline>
 {
-	ConfigSplitMergeLineFit config;
+	PolylineSettings settings;
 
 	@Override
 	public void configure(File file) {
-		config = UtilShapeDetector.configurePolylineSplitMergeOld(file);
+		settings = UtilShapeDetector.loadPolylineSettings(file);
 	}
 
 	@Override
 	public PointsToPolyline newInstance() {
-		return FactoryPointsToPolyline.splitMerge(config);
+		PointsToPolyline alg = FactoryPointsToPolyline.splitMerge((ConfigSplitMergeLineFit) null);
+		alg.setMinimumSides(settings.minSides);
+		alg.setMaximumSides(settings.maxSides);
+		alg.setConvex(settings.convex);
+		return alg;
 	}
 
 }

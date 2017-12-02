@@ -85,7 +85,7 @@ public class DetectPolygonsSaveToFile<T extends ImageGray<T>> {
 		long startNano = System.nanoTime();
 		detector.process(gray, binary);
 		detector.refineAll();
-		List<Polygon2D_F64> found = detector.getPolygons(null);
+		List<Polygon2D_F64> found = detector.getPolygons(null,null);
 		long stopNano = System.nanoTime();
 		averageProcessingTime += (stopNano-startNano)/1e6;
 
