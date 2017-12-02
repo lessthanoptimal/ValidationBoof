@@ -7,12 +7,12 @@ false positives 0
 ---------------------------------------------------
 
 # set02   sequence with known always visible targets
-total frames 9
+total frames 16
 false positives 0
  fiducial id | visible | multiple 
-00000             3            0
+00000             4            0
 
 ---------------------------------------------------
 
 ---------------------------------------------------
-total correct / total expected =  144 / 150
+total correct / total expected =  145 / 157

@@ -9,9 +9,9 @@ Summary:
  false positives    : 0
  false negative     : 0
 Corner errors:
- precision 50%         : 0.4023352027893598
- precision 90%         : 0.7432041520722846
- precision 100%        : 1.7357225724408043
+ precision 50%         : 0.4119583065689993
+ precision 90%         : 0.746594347298476
+ precision 100%        : 1.7341336211093334
 
 ---------------------------------------------------
 
@@ -26,9 +26,9 @@ Summary:
  false positives    : 0
  false negative     : 0
 Corner errors:
- precision 50%         : 0.28791053627421276
- precision 90%         : 0.6749576406900999
- precision 100%        : 1.8741547377461774
+ precision 50%         : 0.2862056416807468
+ precision 90%         : 0.6811368323930214
+ precision 100%        : 1.8951924529511595
 
 ---------------------------------------------------
 
@@ -36,16 +36,16 @@ Corner errors:
 # maxPixelError = 5.0
 
 Summary:
- correct            :    8 /   12
+ correct            :   10 /   12
  wrong order        : 0
  wrong ID           : 0
  duplicates         : 0
  false positives    : 0
- false negative     : 4
+ false negative     : 2
 Corner errors:
- precision 50%         : 2.437302531422152
- precision 90%         : 5.422240529675006
- precision 100%        : 9.246087965299578
+ precision 50%         : 2.604530151947379
+ precision 90%         : 6.489194122040767
+ precision 100%        : 10.675063645464478
 
 ---------------------------------------------------
 
@@ -53,18 +53,18 @@ Corner errors:
 # maxPixelError = 5.0
 
 Summary:
- correct            :    6 /    9
+ correct            :    7 /    9
  wrong order        : 0
  wrong ID           : 0
  duplicates         : 0
  false positives    : 0
- false negative     : 3
+ false negative     : 2
 Corner errors:
- precision 50%         : 0.3509141626630951
- precision 90%         : 0.6795474188145956
- precision 100%        : 1.2815843065369947
+ precision 50%         : 0.3756756984065384
+ precision 90%         : 0.8362502798331137
+ precision 100%        : 2.058249802094893
 
 ---------------------------------------------------
 
 ---------------------------------------------------
-total correct / total expected =   40 /  47
+total correct / total expected =   43 /  47

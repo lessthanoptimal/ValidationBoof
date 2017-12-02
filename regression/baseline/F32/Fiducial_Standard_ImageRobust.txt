@@ -9,9 +9,9 @@ Summary:
  false positives    : 0
  false negative     : 3
 Corner errors:
- precision 50%         : 0.31690704037900885
- precision 90%         : 0.5340188430136131
- precision 100%        : 0.7573578054355535
+ precision 50%         : 0.29236471966976174
+ precision 90%         : 0.5189761302613175
+ precision 100%        : 0.7817495789083042
 
 ---------------------------------------------------
 
@@ -26,9 +26,9 @@ Summary:
  false positives    : 0
  false negative     : 0
 Corner errors:
- precision 50%         : 0.30628419903862736
- precision 90%         : 0.5672513145325169
- precision 100%        : 0.9570742403049642
+ precision 50%         : 0.3224710076604513
+ precision 90%         : 0.5428757634440081
+ precision 100%        : 0.9468245141724116
 
 ---------------------------------------------------
 
@@ -36,16 +36,16 @@ Corner errors:
 # maxPixelError = 5.0
 
 Summary:
- correct            :   83 /  132
+ correct            :   84 /  132
  wrong order        : 25
- wrong ID           : 24
+ wrong ID           : 23
  duplicates         : 0
- false positives    : 14
+ false positives    : 35
  false negative     : 0
 Corner errors:
- precision 50%         : 0.3260427026736762
- precision 90%         : 0.5932790691069838
- precision 100%        : 1.1329797185712147
+ precision 50%         : 0.3338426062799316
+ precision 90%         : 0.5843581409512345
+ precision 100%        : 1.1286858653632648
 
 ---------------------------------------------------
 
@@ -53,16 +53,16 @@ Corner errors:
 # maxPixelError = 5.0
 
 Summary:
- correct            :   49 /   96
+ correct            :   52 /   96
  wrong order        : 25
- wrong ID           : 17
+ wrong ID           : 13
  duplicates         : 0
  false positives    : 0
- false negative     : 30
+ false negative     : 31
 Corner errors:
- precision 50%         : 0.9993472413282984
- precision 90%         : 2.1931274171941597
- precision 100%        : 5.349453223757638
+ precision 50%         : 1.0396651682241946
+ precision 90%         : 2.526040707702984
+ precision 100%        : 4.103284985719422
 
 ---------------------------------------------------
 
@@ -77,11 +77,11 @@ Summary:
  false positives    : 0
  false negative     : 8
 Corner errors:
- precision 50%         : 0.4216893918621948
- precision 90%         : 0.850890294329535
- precision 100%        : 1.2830708853502375
+ precision 50%         : 0.4108638142970506
+ precision 90%         : 0.8308374753207629
+ precision 100%        : 1.3269627616342667
 
 ---------------------------------------------------
 
 ---------------------------------------------------
-total correct / total expected =  179 / 290
+total correct / total expected =  183 / 290
