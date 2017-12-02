@@ -21,6 +21,8 @@ import org.ddogleg.struct.GrowQueue_I32;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -60,7 +62,8 @@ public class DetectPolylineSaveToFile<T extends ImageGray<T>> {
 		if( !outputDir.exists() )
 			outputDir.mkdirs();
 
-		File files[] = inputDir.listFiles();
+		List<File> files = Arrays.asList(inputDir.listFiles());
+		Collections.sort(files);
 
 		averageProcessingTime = 0;
 		int total = 0;
