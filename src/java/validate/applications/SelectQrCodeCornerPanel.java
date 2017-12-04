@@ -8,6 +8,7 @@ import georegression.struct.line.LineSegment2D_F64;
 import georegression.struct.point.Point2D_F64;
 import validate.applications.HandSelectQRCodeApp.QRCorners;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -176,7 +177,7 @@ public class SelectQrCodeCornerPanel extends ImageZoomPanel
 	public void mousePressed(MouseEvent e) {
 		Point2D_F64 p = pixelToPoint(e.getX(), e.getY());
 
-		if( e.getButton() == MouseEvent.BUTTON3 ) {
+		if( !(SwingUtilities.isRightMouseButton(e) || e.isControlDown()) ) {
 			centerView(p.x, p.y);
 		} else {
 			synchronized (markers) {
@@ -233,11 +234,11 @@ public class SelectQrCodeCornerPanel extends ImageZoomPanel
 		if( selected == null )
 			return;
 
-//		System.out.println("Key event "+e.getKeyCode()+"  0x"+Integer.toHexString(e.getKeyCode()));
+		System.out.println("Key event "+e.getKeyCode()+"  0x"+Integer.toHexString(e.getKeyCode()));
 
 		Point2D_F64 p = selected;
 
-		double delta = 0.05;
+		double delta = 1.0/scale;
 
 		switch( e.getKeyCode() ) {
 			case KeyEvent.VK_S:
