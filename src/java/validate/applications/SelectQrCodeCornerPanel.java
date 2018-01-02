@@ -241,9 +241,9 @@ public class SelectQrCodeCornerPanel extends ImageZoomPanel
 		double delta = 1.0/scale;
 
 		switch( e.getKeyCode() ) {
-			case KeyEvent.VK_S:
-				activeQR = null;
-				break;
+//			case KeyEvent.VK_S:
+//				activeQR = null;
+//				break;
 
 			case KeyEvent.VK_T:
 //				splitAtSelected();
@@ -264,6 +264,7 @@ public class SelectQrCodeCornerPanel extends ImageZoomPanel
 			case KeyEvent.VK_NUMPAD2:
 			case KeyEvent.VK_KP_DOWN:
 			case KeyEvent.VK_X:
+            case KeyEvent.VK_S:
 				p.y += delta;
 				break;
 
@@ -274,6 +275,7 @@ public class SelectQrCodeCornerPanel extends ImageZoomPanel
 				break;
 
 			case KeyEvent.VK_DELETE:
+            case KeyEvent.VK_R:
 				synchronized (markers) {
 					if( selected != null ) {
 						if( !activeQR.corners.remove(selected)) {

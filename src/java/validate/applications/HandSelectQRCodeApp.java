@@ -1,19 +1,12 @@
 package validate.applications;
 
-import boofcv.abst.filter.binary.InputToBinary;
+import boofcv.abst.fiducial.QrCodeDetector;
 import boofcv.alg.fiducial.qrcode.QrCode;
-import boofcv.alg.fiducial.qrcode.QrCodeDetector;
 import boofcv.factory.fiducial.ConfigQrCode;
 import boofcv.factory.fiducial.FactoryFiducial;
-import boofcv.factory.filter.binary.ConfigThreshold;
-import boofcv.factory.filter.binary.ConfigThresholdLocalOtsu;
-import boofcv.factory.filter.binary.FactoryThresholdBinary;
-import boofcv.factory.filter.binary.ThresholdType;
 import boofcv.gui.BoofSwingUtil;
-import boofcv.io.image.ConvertBufferedImage;
 import boofcv.struct.image.GrayU8;
 import georegression.struct.point.Point2D_F64;
-import org.ddogleg.struct.FastQueue;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -40,32 +33,22 @@ public class HandSelectQRCodeApp extends HandSelectBase {
                 return;
             }
 
-            ConfigThresholdLocalOtsu configThreshold = ConfigThreshold.local(ThresholdType.BLOCK_OTSU,20);
-            configThreshold.scale = 1;
-            configThreshold.tuning = 15;
-
-            InputToBinary<GrayU8> inputToBinary = FactoryThresholdBinary.threshold(configThreshold, GrayU8.class);
-
             ConfigQrCode configQR = new ConfigQrCode();
             configQR.versionMinimum = 2;
             configQR.versionMaximum = 2;
             QrCodeDetector<GrayU8> detector = FactoryFiducial.qrcode(configQR,GrayU8.class);
 
-
             GrayU8 gray = new GrayU8(image.getWidth(),image.getHeight());
-            GrayU8 binary = gray.createSameShape();
 
-            ConvertBufferedImage.convertFrom(image,gray);
-            inputToBinary.process(gray,binary);
-            detector.process(gray,binary);
+            detector.process(gray);
 
-            FastQueue<QrCode> detected = detector.getDetections();
+            List<QrCode> detected = detector.getDetections();
 
             System.out.println("Detected total "+detected.size());
 
             ((SelectQrCodeCornerPanel)imagePanel).markers.clear();
             ((SelectQrCodeCornerPanel)imagePanel).activeQR = null;
-            for (int i = 0; i < detected.size; i++) {
+            for (int i = 0; i < detected.size(); i++) {
                 QrCode qr = detected.get(i);
                 QRCorners corners = new QRCorners();
 
