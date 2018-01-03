@@ -7,6 +7,7 @@ import boofcv.alg.shapes.ellipse.BinaryEllipseDetector;
 import boofcv.factory.shape.ConfigEllipseDetector;
 import boofcv.factory.shape.FactoryShapeDetector;
 import boofcv.io.image.ConvertBufferedImage;
+import boofcv.struct.ConfigLength;
 import boofcv.struct.image.GrayU8;
 import georegression.struct.shapes.EllipseRotated_F64;
 import validate.misc.EllipseFileCodec;
@@ -49,7 +50,7 @@ public class HandSelectEllipseGridApp extends HandSelectBase {
 
 				ConvertBufferedImage.convertFrom(image,gray);
 
-				ThresholdImageOps.localSquare(gray,binary,10,1.0f,true,null,null);
+				ThresholdImageOps.localSquare(gray,binary, ConfigLength.fixed(21),1.0f,true,null,null);
 
 				detector.process(gray,binary);
 

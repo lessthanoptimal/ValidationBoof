@@ -5,7 +5,6 @@ import boofcv.alg.fiducial.qrcode.QrCode;
 import boofcv.factory.fiducial.ConfigQrCode;
 import boofcv.factory.fiducial.FactoryFiducial;
 import boofcv.gui.BoofSwingUtil;
-import boofcv.io.image.ConvertBufferedImage;
 import boofcv.struct.image.GrayU8;
 import georegression.struct.point.Point2D_F64;
 
@@ -39,10 +38,8 @@ public class HandSelectQRCodeApp extends HandSelectBase {
             configQR.versionMaximum = 2;
             QrCodeDetector<GrayU8> detector = FactoryFiducial.qrcode(configQR,GrayU8.class);
 
-
             GrayU8 gray = new GrayU8(image.getWidth(),image.getHeight());
 
-            ConvertBufferedImage.convertFrom(image,gray);
             detector.process(gray);
 
             List<QrCode> detected = detector.getDetections();

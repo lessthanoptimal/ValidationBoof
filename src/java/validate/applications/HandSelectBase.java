@@ -13,7 +13,6 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.prefs.Preferences;
 
 /**
  * Base class for hand selecting image features
@@ -164,17 +163,9 @@ public abstract class HandSelectBase {
 	public abstract void process(File file, BufferedImage image);
 
 	public void openImageDialog() {
-		String LAST_USED_FOLDER = "LAST_USED_FOLDER";
+		File file = BoofSwingUtil.openFileChooser(gui, BoofSwingUtil.FileTypes.IMAGES);
 
-		Preferences prefs = Preferences.userRoot().node(getClass().getName());
-		JFileChooser fc = new JFileChooser(prefs.get(LAST_USED_FOLDER,
-				new File(".").getAbsolutePath()));
-
-		int returnVal = fc.showOpenDialog(gui);
-
-		if (returnVal == JFileChooser.APPROVE_OPTION) {
-			File file = fc.getSelectedFile();
-			prefs.put(LAST_USED_FOLDER, file.getParent());
+		if (file != null) {
 			openImage(file,false);
 		}
 	}
