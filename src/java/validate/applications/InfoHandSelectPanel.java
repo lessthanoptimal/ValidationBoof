@@ -145,8 +145,9 @@ public class InfoHandSelectPanel extends JPanel implements ChangeListener, Mouse
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if( e.getSource() == resetZoomButton ) {
-			zoomSpinner.setValue(1.0);
-			owner.setScale(1.0);
+			double scale = BoofSwingUtil.selectZoomToShowAll(owner.imagePanel,owner.image.getWidth(),owner.image.getHeight());
+			zoomSpinner.setValue(scale*0.99);
+//			owner.setScale(scale);
 		} else if( e.getSource() == saveButton ) {
 			owner.save();
 		} else if( e.getSource() == clearButton ) {
