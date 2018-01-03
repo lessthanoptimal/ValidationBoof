@@ -2,6 +2,17 @@ Description of changes to benchmarks and justifications for change in performanc
 
 ## Version 0.28
 
+- Polyline Algorthm was changed in square based fidudicals
+  * In general this improved speed and reliability
+- Chessboard Calibration
+  * Failing with large images when chessboard goes outside the border due to shapes being very concave
+  * Made threshold local block size larger to compensate
+  * Performance in non-uniform lighting dropped as a result
+- Thresholding for all other calibration targets
+  * Switched to block based techniques for speed
+  * Made threshold block size adaptive based on image size
+  * Large boost to speed and mixed results in other metrics but slightly worse.
+  * Circle Regular's performance plummeted for blurred images
 
 TODO Change threshold for fast in fiducial to OTSU
 

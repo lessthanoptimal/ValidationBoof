@@ -150,14 +150,10 @@ public abstract class HandSelectBase {
 	}
 
 	private void adjustImageScale() {
-		Dimension d = imagePanel.getSize();
-		double scaleX = (d.width-5)/(double)image.getWidth();
-		double scaleY = (d.height-5)/(double)image.getHeight();
-		double scale = Math.min(scaleX,scaleY);
-		if( scale < 1) {
-			infoPanel.setScale(scale);
-			setScale(scale);
-		}
+		double scale = BoofSwingUtil.selectZoomToShowAll(imagePanel,image.getWidth(),image.getHeight());
+		scale = Math.min(1,scale);
+		infoPanel.setScale(scale);
+		setScale(scale);
 	}
 
 	public abstract void process(File file, BufferedImage image);

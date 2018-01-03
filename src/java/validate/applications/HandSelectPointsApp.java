@@ -14,8 +14,6 @@ import java.util.List;
  */
 public class HandSelectPointsApp extends HandSelectBase {
 
-
-
 	public HandSelectPointsApp( File file ) {
 		super(new SelectPointPanel(),file);
 	}
