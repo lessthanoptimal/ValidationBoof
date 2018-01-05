@@ -16,6 +16,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -49,13 +50,7 @@ public abstract class BaseEstimateSquareFiducialToCamera<T extends ImageBase<T>>
 		FiducialDetector<T> detector = createDetector(dataSetDir);
 		FiducialCommon.Library library = FiducialCommon.parseScenario(new File(dataSetDir, "library.txt"));
 
-		List<String> files = UtilIO.listByPrefix(dataSetDir.getAbsolutePath(), "png");
-		if( files.size() == 0 ) {
-			files = UtilIO.listByPrefix(dataSetDir.getAbsolutePath(), "jpg");
-		}
-		if( files.size() == 0 ) {
-			throw new IllegalArgumentException("No images found.  paths correct?");
-		}
+		List<String> files = loadImageFilesByPrefix(dataSetDir);
 		T image = detector.getInputType().createImage(1,1);
 
 		File fileIntrinsic = new File(dataSetDir,"intrinsic.txt");
@@ -102,6 +97,19 @@ public abstract class BaseEstimateSquareFiducialToCamera<T extends ImageBase<T>>
 			}
 			out.close();
 		}
+	}
+
+	public static List<String> loadImageFilesByPrefix(File dataSetDir) {
+		List<String> files = UtilIO.listByPrefix(dataSetDir.getAbsolutePath(), "png");
+		if( files.size() == 0 ) {
+			files = UtilIO.listByPrefix(dataSetDir.getAbsolutePath(), "jpg");
+		}
+		if( files.size() == 0 ) {
+			throw new IllegalArgumentException("No images found.  paths correct?");
+		}
+		Collections.sort(files);
+
+		return files;
 	}
 
 	protected static File setupOutput() {

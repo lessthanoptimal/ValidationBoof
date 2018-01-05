@@ -104,15 +104,16 @@ public class PointFileCodec {
 		try {
 			BufferedReader reader = new BufferedReader(new FileReader(path));
 
+			List<List<Point2D_F64>> sets = new ArrayList<>();
 			String line = skipComments(reader);
 			if( line.compareTo("SETS") == 0 )
 				line = reader.readLine();
 			else {
-				// not a point sets file
-				return null;
+				// not a point sets file, assume everything is one set
+				sets.add( load(path));
+				return sets;
 			}
 
-			List<List<Point2D_F64>> sets = new ArrayList<List<Point2D_F64>>();
 			while( line != null ) {
 				List<Point2D_F64> set = new ArrayList<Point2D_F64>();
 				String words[] = line.split(" ");

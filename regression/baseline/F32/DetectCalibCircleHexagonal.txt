@@ -1,42 +1,42 @@
 # (file name) (truth error 50%) (truth error 95%)
-data/calibration_mono/circle_hexagonal/calib_5x6/image0.jpg 0.24634021152763208 0.48103592812226703
-data/calibration_mono/circle_hexagonal/calib_5x6/image1.jpg 0.19163173779295004 0.4122797754769664
-data/calibration_mono/circle_hexagonal/calib_5x6/image2.jpg 0.25048818414676904 0.45698530900297946
-data/calibration_mono/circle_hexagonal/calib_5x6/image3.jpg 0.1835267545137182 0.5177625797964857
-data/calibration_mono/circle_hexagonal/calib_5x6/image4.jpg 0.2690370582028462 0.5559388197491776
-data/calibration_mono/circle_hexagonal/calib_5x6/image5.jpg 0.3164130150849683 0.47661969609557403
-data/calibration_mono/circle_hexagonal/calib_5x6/image6.jpg 0.20357002544680258 0.4537970877099483
-data/calibration_mono/circle_hexagonal/calib_5x6/image7.jpg 0.25690759400291424 0.3303708286422276
-data/calibration_mono/circle_hexagonal/calib_5x6/image8.jpg 0.2429898296837939 0.39585780933996206
-data/calibration_mono/circle_hexagonal/calib_24x28/image0.jpg 0.03848567426563089 0.09527637088377494
-data/calibration_mono/circle_hexagonal/calib_24x28/image1.jpg 0.03894310958081011 0.09474822611475558
-data/calibration_mono/circle_hexagonal/calib_24x28/image2.jpg 0.03631117708766702 0.11507740483505506
-data/calibration_mono/circle_hexagonal/calib_24x28/image3.jpg 0.03730885367453391 0.09058360100548951
-data/calibration_mono/circle_hexagonal/calib_24x28/image4.jpg 0.0321600248930364 0.09186642854180802
-data/calibration_mono/circle_hexagonal/calib_24x28/image5.jpg 0.037054284203254 0.11519319267573591
-data/calibration_mono/circle_hexagonal/calib_24x28/image6.jpg 0.027876227882842986 0.09183159849451
-data/calibration_mono/circle_hexagonal/fisheye_5x6/image00.jpg 0.1527758649160989 0.2737900874593421
-data/calibration_mono/circle_hexagonal/fisheye_5x6/image01.jpg 0.20315444245050707 0.3129871173569284
-data/calibration_mono/circle_hexagonal/fisheye_5x6/image02.jpg 0.48228261887921287 0.798876972561055
-data/calibration_mono/circle_hexagonal/fisheye_5x6/image03.jpg 0.22681996900790724 0.5955709495428949
-data/calibration_mono/circle_hexagonal/fisheye_5x6/image04.jpg 0.2550407418881515 0.3775101954454315
-data/calibration_mono/circle_hexagonal/fisheye_5x6/image05.jpg 0.1924311980676976 0.3737495636336654
+data/calibration_mono/circle_hexagonal/calib_5x6/image0.jpg 0.2315922396613439 0.47561595504041543
+data/calibration_mono/circle_hexagonal/calib_5x6/image1.jpg 0.2222502399607592 0.4199672445495153
+data/calibration_mono/circle_hexagonal/calib_5x6/image2.jpg 0.24602155105316478 0.4245484805771998
+data/calibration_mono/circle_hexagonal/calib_5x6/image3.jpg 0.1812312351683807 0.45659499440639717
+data/calibration_mono/circle_hexagonal/calib_5x6/image4.jpg 0.3137893392165326 0.49490616485730554
+data/calibration_mono/circle_hexagonal/calib_5x6/image5.jpg 0.292881468081524 0.3969631424835369
+data/calibration_mono/circle_hexagonal/calib_5x6/image6.jpg 0.1897989216380995 0.4565167804650148
+data/calibration_mono/circle_hexagonal/calib_5x6/image7.jpg 0.2328720879208084 0.3453989722675993
+data/calibration_mono/circle_hexagonal/calib_5x6/image8.jpg 0.26777474575039345 0.35916100564992803
+data/calibration_mono/circle_hexagonal/calib_24x28/image0.jpg 0.04215784561746293 0.09761418563788174
+data/calibration_mono/circle_hexagonal/calib_24x28/image1.jpg 0.038655856213920696 0.09807938901534183
+data/calibration_mono/circle_hexagonal/calib_24x28/image2.jpg 0.03565690551605312 0.09572958880130499
+data/calibration_mono/circle_hexagonal/calib_24x28/image3.jpg 0.03883252372487565 0.09615300368324059
+data/calibration_mono/circle_hexagonal/calib_24x28/image4.jpg 0.03234687180781444 0.08894677220823458
+data/calibration_mono/circle_hexagonal/calib_24x28/image5.jpg 0.036228543505247186 0.11033347661616774
+data/calibration_mono/circle_hexagonal/calib_24x28/image6.jpg 0.031039272537378017 0.11651587048977707
+data/calibration_mono/circle_hexagonal/fisheye_5x6/image00.jpg 0.1508903150960601 0.22267931435321517
+data/calibration_mono/circle_hexagonal/fisheye_5x6/image01.jpg 0.20865459482751503 0.2980863600931981
+data/calibration_mono/circle_hexagonal/fisheye_5x6/image02.jpg 0.4564217951283917 0.8115940933792243
+data/calibration_mono/circle_hexagonal/fisheye_5x6/image03.jpg 0.2859662838023243 0.5969292641410127
+data/calibration_mono/circle_hexagonal/fisheye_5x6/image04.jpg 0.27549274575221666 0.3805094257946884
+data/calibration_mono/circle_hexagonal/fisheye_5x6/image05.jpg 0.22137980456155415 0.4038624731617472
 data/calibration_mono/circle_hexagonal/fisheye_5x6/image06.jpg failed
 data/calibration_mono/circle_hexagonal/fisheye_5x6/image07.jpg failed
-data/calibration_mono/circle_hexagonal/fisheye_5x6/image08.jpg 0.20274624704614416 0.26040741617455804
-data/calibration_mono/circle_hexagonal/fisheye_5x6/image09.jpg 0.11842042356282931 0.23684064594172807
-data/calibration_mono/circle_hexagonal/fisheye_5x6/image10.jpg 0.1464939707571505 0.4195076507433049
-data/calibration_mono/circle_hexagonal/fisheye_5x6/image11.jpg 0.22918110979061448 0.3549032506196554
-data/calibration_mono/circle_hexagonal/fisheye_5x6/image12.jpg 0.22821540492497494 0.6295988658814416
-data/calibration_mono/circle_hexagonal/fisheye_5x6/image13.jpg 0.1461131934972453 0.33858108930195424
-data/calibration_mono/circle_hexagonal/fisheye_5x6/image14.jpg 0.20039234325643224 0.34882883167449075
-data/calibration_mono/circle_hexagonal/fisheye_5x6/image15.jpg 0.30304162943860796 0.42020446463435723
+data/calibration_mono/circle_hexagonal/fisheye_5x6/image08.jpg 0.2169765587580485 0.25611244754681806
+data/calibration_mono/circle_hexagonal/fisheye_5x6/image09.jpg 0.1310012873275246 0.24041382679497245
+data/calibration_mono/circle_hexagonal/fisheye_5x6/image10.jpg 0.15360867448834006 0.36432802637261646
+data/calibration_mono/circle_hexagonal/fisheye_5x6/image11.jpg 0.22641202142490044 0.38402796398070616
+data/calibration_mono/circle_hexagonal/fisheye_5x6/image12.jpg 0.23072493543162198 0.6389396962553658
+data/calibration_mono/circle_hexagonal/fisheye_5x6/image13.jpg 0.19096261951394933 0.3404663967389109
+data/calibration_mono/circle_hexagonal/fisheye_5x6/image14.jpg 0.20123379148805667 0.34481294835937115
+data/calibration_mono/circle_hexagonal/fisheye_5x6/image15.jpg 0.2635682398231555 0.4367950453665224
 data/calibration_mono/circle_hexagonal/fisheye_5x6/image16.jpg failed
 data/calibration_mono/circle_hexagonal/fisheye_5x6/image17.jpg failed
-data/calibration_mono/circle_hexagonal/fisheye_5x6/image18.jpg 0.21134746210093813 0.28939983835862026
-data/calibration_mono/circle_hexagonal/large_24x28/image0.jpg failed
-data/calibration_mono/circle_hexagonal/large_24x28/image1.jpg failed
-data/calibration_mono/circle_hexagonal/large_24x28/image2.jpg 0.06981085113234255 0.4038929349872217
-data/calibration_mono/circle_hexagonal/large_24x28/image3.jpg 0.1164561956526198 0.4189570952066177
+data/calibration_mono/circle_hexagonal/fisheye_5x6/image18.jpg 0.216521990016673 0.29371123697495677
+data/calibration_mono/circle_hexagonal/large_24x28/image0.jpg 0.06531646784120386 0.14741766600433945
+data/calibration_mono/circle_hexagonal/large_24x28/image1.jpg 1.0518820774757562 2.3547635902864927
+data/calibration_mono/circle_hexagonal/large_24x28/image2.jpg 0.08134746143622844 0.5412170845440138
+data/calibration_mono/circle_hexagonal/large_24x28/image3.jpg 0.15174194377807787 0.846132002613342
 
-Summary: 50% = 0.046539645163829975  95% = 0.30154805291629994   success %84.61538461538461
+Summary: 50% = 0.05576959888929616  95% = 0.9708320930041402   success %89.74358974358975
