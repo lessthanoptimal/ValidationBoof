@@ -81,6 +81,7 @@ public class EvaluateQrCodeDetections {
             for (int i = 0; i < matchedFound.length; i++) {
                 if( matchedFound[i] == 0 ) {
                     falsePositive++;
+                    System.out.println("false positive "+imageName);
                 }
             }
             totalTruth += truth.size();

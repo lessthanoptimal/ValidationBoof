@@ -1,21 +1,16 @@
 package regression;
 
 import boofcv.abst.fiducial.QrCodeDetector;
+import boofcv.factory.fiducial.ConfigQrCode;
 import boofcv.factory.fiducial.FactoryFiducial;
 import boofcv.struct.image.ImageDataType;
 import org.apache.commons.io.FileUtils;
-import validate.DataSetDoesNotExist;
-import validate.fiducial.*;
 import validate.fiducial.qrcode.DetectQrCodesInImages;
 import validate.fiducial.qrcode.EvaluateQrCodeDetections;
-import validate.misc.ParseHelper;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 
 /**
  * @author Peter Abeles
@@ -31,7 +26,10 @@ public class QrCodeRegression extends BaseTextFileRegression {
 	public void process(ImageDataType type) throws IOException {
 		final Class imageType = ImageDataType.typeToSingleClass(type);
 
-		QrCodeDetector defaultDetector = FactoryFiducial.qrcode(null,imageType);
+		ConfigQrCode config = new ConfigQrCode();
+//		config.polygon.detector.minimumEdgeIntensity = 5;
+//		config.polygon.minimumRefineEdgeIntensity = 10;
+		QrCodeDetector defaultDetector = FactoryFiducial.qrcode(config,imageType);
 
 		process("default",defaultDetector);
 	}
@@ -54,7 +52,7 @@ public class QrCodeRegression extends BaseTextFileRegression {
 		metricsOut.println("# Overlap = average overlap across true positives");
 		metricsOut.println();
 
-		File groundTruthHome = new File(baseFiducial,"standard");
+		File groundTruthHome = new File(baseFiducial,"detection");
 
 		File[] directories = groundTruthHome.listFiles();
 		if( directories == null )
@@ -77,18 +75,16 @@ public class QrCodeRegression extends BaseTextFileRegression {
 			}
 
 			DetectQrCodesInImages evaluateDetect = new DetectQrCodesInImages();
-			evaluateDetect.setOutputDirectory(workDirectory);
+			EvaluateQrCodeDetections evaluateMetrics = new EvaluateQrCodeDetections();
 			try {
+				evaluateDetect.setOutputDirectory(workDirectory);
 				evaluateDetect.process(detector, f);
+				runtimeOut.printf("%20s %8.3f (ms)\n",f.getName(),+evaluateDetect.averageMS);
+				evaluateMetrics.evaluate(workDirectory,f);
 			} catch( RuntimeException e ) {
 				errorLog.println(e.toString());
-				return;
+				continue;
 			}
-
-			runtimeOut.printf("%20s %8.3f (ms)\n",f.getName(),+evaluateDetect.averageMS);
-
-			EvaluateQrCodeDetections evaluateMetrics = new EvaluateQrCodeDetections();
-			evaluateMetrics.evaluate(workDirectory,f);
 
 			foundDataSets = true;
 			metricsOut.printf("%20s N %3d TP %3d FN %3d FP %3d MD %3d Overlap %5.1f%%\n",
@@ -110,119 +106,5 @@ public class QrCodeRegression extends BaseTextFileRegression {
 			throw new IOException("no data set directories found in "+baseFiducial.getPath());
 		}
 
-	}
-
-	private void computeRuntimeMetrics(String type, String outName, BaseEstimateSquareFiducialToCamera factory )
-			throws IOException
-	{
-		PrintStream out = new PrintStream(new File(directory,outName));
-
-
-		RuntimePerformanceFiducialToCamera benchmark =
-				new RuntimePerformanceFiducialToCamera(factory);
-
-		benchmark.setErrorStream(errorLog);
-		benchmark.setOutputResults(out);
-
-		benchmark.evaluate(new File("data/fiducials/",type));
-	}
-
-	private void computeStandardMetrics(String type, String outName,
-										BaseEstimateSquareFiducialToCamera estimate ,
-										double maxPixelError )
-			throws IOException
-	{
-		PrintStream out = new PrintStream(new File(directory,outName));
-
-		EvaluateFiducialToCamera evaluate = new EvaluateFiducialToCamera();
-		evaluate.setJustSummary(true);
-		evaluate.setMaxPixelError(maxPixelError);
-		evaluate.setErrorStream(errorLog);
-		evaluate.setOutputResults(out);
-
-		processDataSets(estimate, new File(new File(baseFiducial,type),"standard"), out, evaluate);
-	}
-
-	private void computeStaticMetrics(String type, String outName,
-										BaseEstimateSquareFiducialToCamera estimate ,
-										double maxPixelError  )
-			throws IOException
-	{
-		PrintStream out = new PrintStream(new File(directory,outName));
-
-		EvaluateStaticFiducialSequence evaluate = new EvaluateStaticFiducialSequence();
-		evaluate.setJustSummary(true);
-		evaluate.setMaxPixelError(maxPixelError);
-		evaluate.setErrorStream(errorLog);
-		evaluate.setOutputResults(out);
-
-		processDataSets(estimate, new File(new File(baseFiducial,type),"static"), out, evaluate);
-	}
-
-	private void computeAlwaysVisibleMetrics(String type, String outName,
-											 BaseEstimateSquareFiducialToCamera estimate)
-			throws IOException
-	{
-		PrintStream out = new PrintStream(new File(directory,outName));
-
-		EvaluateAlwaysVisibleSequence evaluate = new EvaluateAlwaysVisibleSequence();
-		evaluate.setErrorStream(errorLog);
-		evaluate.setOutputResults(out);
-
-		processDataSets(estimate, new File(new File(baseFiducial,type),"always_visible"), out, evaluate);
-	}
-
-	private void processDataSets(BaseEstimateSquareFiducialToCamera estimate, File dataSetsRoot,
-								 PrintStream out,
-								 FiducialEvaluateInterface evaluate)
-			throws IOException
-	{
-		if( !dataSetsRoot.exists() ) {
-			errorLog.println("Can't compute \"always visible\" metrics.  Doesn't exist. "+dataSetsRoot.getPath());
-			return;
-		}
-
-		List<File> directories = Arrays.asList(dataSetsRoot.listFiles());
-		Collections.sort(directories);
-
-		int totalExpected = 0;
-		int totalCorrect = 0;
-
-		for( File dataSet : directories) {
-			if( dataSet.isFile() )
-				continue;
-
-			if( workDirectory.exists() ) {
-				ParseHelper.deleteRecursive(workDirectory);
-			}
-			if( !workDirectory.mkdirs() )
-				throw new RuntimeException("Can't create work directory");
-
-			try {
-				estimate.process(dataSet);
-				evaluate.evaluate(workDirectory, dataSet);
-				totalExpected += evaluate.getTotalExpected();
-				totalCorrect += evaluate.getTotalCorrect();
-			} catch( DataSetDoesNotExist e ) {
-				errorLog.println();
-				errorLog.println(e.getMessage());
-			} catch( RuntimeException e ) {
-				errorLog.println();
-				errorLog.println("ERROR in "+infoString+" processing data set "+dataSet);
-				e.printStackTrace(errorLog);
-			}
-			out.println();
-			out.println("---------------------------------------------------");
-			out.println();
-		}
-
-		out.println("---------------------------------------------------");
-		out.printf("total correct / total expected = %4d /%4d", totalCorrect,totalExpected);
-	}
-
-	public static void main(String[] args) throws IOException {
-		QrCodeRegression app = new QrCodeRegression();
-		app.setOutputDirectory(".");
-		app.process(ImageDataType.F32);
 	}
 }
