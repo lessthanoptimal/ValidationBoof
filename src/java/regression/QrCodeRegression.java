@@ -27,8 +27,9 @@ public class QrCodeRegression extends BaseTextFileRegression {
 		final Class imageType = ImageDataType.typeToSingleClass(type);
 
 		ConfigQrCode config = new ConfigQrCode();
-//		config.polygon.detector.minimumEdgeIntensity = 5;
-//		config.polygon.minimumRefineEdgeIntensity = 10;
+//		config.threshold = ConfigThreshold.local(ThresholdType.LOCAL_MEAN,15);
+//		config.threshold.scale = 0.95;
+
 		QrCodeDetector defaultDetector = FactoryFiducial.qrcode(config,imageType);
 
 		process("default",defaultDetector);
@@ -97,7 +98,7 @@ public class QrCodeRegression extends BaseTextFileRegression {
 			totalFP += evaluateMetrics.falsePositive;
 		}
 
-		metricsOut.printf("\nSumary N %3d TP %3d FP %3d\n", totalN,totalTP,totalFP);
+		metricsOut.printf("\nSummary N %3d TP %3d FP %3d\n", totalN,totalTP,totalFP);
 
 		runtimeOut.close();
 		metricsOut.close();
