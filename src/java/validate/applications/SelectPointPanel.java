@@ -31,6 +31,8 @@ public class SelectPointPanel extends ImageZoomPanel
 
 	boolean showLines = true;
 
+	int renderClosedAt = -1;
+
 	public SelectPointPanel() {
 		disableSaveOnClick();
 		panel.addMouseListener(this);
@@ -108,6 +110,13 @@ public class SelectPointPanel extends ImageZoomPanel
 
 			renderLine(g2,a,b);
 		}
+
+		if( renderClosedAt == N) {
+			Point2D_F64 a = corners.get(0);
+			Point2D_F64 b = corners.get(corners.size()-1);
+
+			renderLine(g2,a,b);
+		}
 	}
 
 	private void renderLine( Graphics2D g2 , Point2D_F64 cornerA , Point2D_F64 cornerB ) {
@@ -181,7 +190,7 @@ public class SelectPointPanel extends ImageZoomPanel
 
 		Point2D_F64 p = selected;
 
-		double delta = 0.05;
+		double delta = 1.0/scale;
 
 		switch( e.getKeyCode() ) {
 			case KeyEvent.VK_S:
