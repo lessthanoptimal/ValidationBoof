@@ -27,6 +27,7 @@ public class ComparePreviousCorner {
 	List<ImageDataType> imageTypes = new ArrayList<ImageDataType>();
 
 	PrintStream out;
+	public PrintStream errorLog=System.err;
 
 	public ComparePreviousCorner( PrintStream out ) {
 
@@ -53,21 +54,30 @@ public class ComparePreviousCorner {
 
 		for (int i = 0; i < detectors.size(); i++) {
 			ImageGray input = UtilImageIO.loadImage(GenerateCornerFeatureFiles.ImagePath, imageType);
-			anyDeriv.setInput(input);
-			ImageGray derivX = anyDeriv.getDerivative(true);
-			ImageGray derivY = anyDeriv.getDerivative(false);
-			ImageGray derivXX = anyDeriv.getDerivative(true, true);
-			ImageGray derivYY = anyDeriv.getDerivative(false, false);
-			ImageGray derivXY = anyDeriv.getDerivative(true, false);
+			if( input == null ) {
+				errorLog.println("Can't load " + GenerateCornerFeatureFiles.ImagePath);
+				continue;
+			}
+			try {
+				anyDeriv.setInput(input);
+				ImageGray derivX = anyDeriv.getDerivative(true);
+				ImageGray derivY = anyDeriv.getDerivative(false);
+				ImageGray derivXX = anyDeriv.getDerivative(true, true);
+				ImageGray derivYY = anyDeriv.getDerivative(false, false);
+				ImageGray derivXY = anyDeriv.getDerivative(true, false);
 
-			AlgInfo info = detectors.get(i);
-			info.detector.process(input, derivX, derivY, derivXX, derivYY, derivXY);
+				AlgInfo info = detectors.get(i);
+				info.detector.process(input, derivX, derivY, derivXX, derivYY, derivXY);
 
-			List<Point2D_F64> found = computeCorners(info);
-			String fileName = info.name+"_"+(ImageDataType.classToType(imageType))+".txt";
-			List<Point2D_F64> expected = PointFileCodec.load(GenerateCornerFeatureFiles.outputDir + "/" + fileName);
+				List<Point2D_F64> found = computeCorners(info);
+				String fileName = info.name + "_" + (ImageDataType.classToType(imageType)) + ".txt";
+				List<Point2D_F64> expected = PointFileCodec.load(GenerateCornerFeatureFiles.outputDir + "/" + fileName);
 
-			compareLists(fileName,found,expected);
+				compareLists(fileName, found, expected);
+			} catch( RuntimeException e ){
+				e.printStackTrace();
+				errorLog.println(e);
+			}
 		}
 	}
 

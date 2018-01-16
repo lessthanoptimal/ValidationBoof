@@ -55,6 +55,8 @@ public class EvalauteDescribeImageDense<T extends ImageBase<T>>
 
 		for (int i = 0; i < images.size(); i++) {
 			T input = UtilImageIO.loadImage(new File(images.get(i)),true,imageType);
+			if( input == null )
+				throw new RuntimeException("Can't open "+images.get(i));
 			workImage.reshape(input.width,input.height);
 
 			alg.process(input);

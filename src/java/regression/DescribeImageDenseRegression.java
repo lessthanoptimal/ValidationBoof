@@ -44,8 +44,8 @@ public class DescribeImageDenseRegression extends BaseTextFileRegression {
 
 		// provide a couple of convenient images.  Results shouldn't vary too much
 		List<String> images = new ArrayList<String>();
-		images.add("data/fiducials/image/standard/distance_angle/image00001.png");
-		images.add("data/calib/mono/chessboard/distant/image00000.jpg");
+		images.add("data/fiducials/square_border_image/standard/distance_angle/image00001.png");
+		images.add("data/calibration_mono/chessboard/distant/image00000.jpg");
 
 		PrintStream out = new PrintStream(new FileOutputStream(new File(directory,"dense_image_descriptors.txt")));
 
@@ -54,9 +54,14 @@ public class DescribeImageDenseRegression extends BaseTextFileRegression {
 			out.println();
 			out.println("Algorithm:  "+info.name);
 			EvalauteDescribeImageDense evaluator = new EvalauteDescribeImageDense(images,info.desc.getImageType());
-			evaluator.setOutputStream(out);
 
-			evaluator.evaluate(info.desc);
+			try {
+				evaluator.setOutputStream(out);
+				evaluator.evaluate(info.desc);
+			} catch( RuntimeException e ) {
+				e.printStackTrace();
+				errorLog.println(e);
+			}
 		}
 		System.out.println("   done");
 

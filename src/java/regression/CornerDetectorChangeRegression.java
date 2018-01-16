@@ -17,7 +17,7 @@ public class CornerDetectorChangeRegression extends BaseTextFileRegression {
 		out.println("# Checks to change in the behavior of corner detectors");
 		out.println("# detector (change in total features) (difference in location)");
 		ComparePreviousCorner compare = new ComparePreviousCorner(out);
-
+		compare.errorLog = errorLog;
 		compare.generateAll(ImageDataType.typeToSingleClass(type));
 	}
 
