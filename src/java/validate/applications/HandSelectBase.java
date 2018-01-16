@@ -46,11 +46,16 @@ public abstract class HandSelectBase {
 		imagePanel.addMouseWheelListener(infoPanel);
 
 		if( openFile == null ) {
-			openImageDialog();
-			if( inputFile == null ) {
-				System.err.println("Can't open file");
-				System.exit(0);
-			}
+			BoofSwingUtil.invokeNowOrLater(new Runnable() {
+				@Override
+				public void run() {
+					openImageDialog();
+					if( inputFile == null ) {
+						System.err.println("Can't open file");
+						System.exit(0);
+					}
+				}
+			});
 		} else if( !openImage(openFile,false) ) {
 			System.err.println("Failed to open file passed into constructor");
 		}
