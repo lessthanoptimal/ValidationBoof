@@ -6,6 +6,7 @@ import boofcv.factory.fiducial.FactoryFiducial;
 import boofcv.struct.image.ImageDataType;
 import org.apache.commons.io.FileUtils;
 import validate.fiducial.qrcode.DetectQrCodesInImages;
+import validate.fiducial.qrcode.EvaluateQrCodeDecoding;
 import validate.fiducial.qrcode.EvaluateQrCodeDetections;
 
 import java.io.File;
@@ -17,6 +18,8 @@ import java.io.PrintStream;
  */
 public class QrCodeRegression extends BaseTextFileRegression {
 
+	EvaluateQrCodeDecoding evaluateMessage = new EvaluateQrCodeDecoding();
+
 	File workDirectory = new File("./tmp");
 	File baseFiducial = new File("data/fiducials/qrcodes");
 
@@ -26,6 +29,10 @@ public class QrCodeRegression extends BaseTextFileRegression {
 	public void process(ImageDataType type) throws IOException {
 		final Class imageType = ImageDataType.typeToSingleClass(type);
 
+
+		evaluateMessage.out = new PrintStream(new File(directory,"QRCodeMessage.txt"));
+		evaluateMessage.err = errorLog;
+
 		ConfigQrCode config = new ConfigQrCode();
 //		config.threshold = ConfigThreshold.local(ThresholdType.LOCAL_MEAN,15);
 //		config.threshold.scale = 0.95;
@@ -33,13 +40,28 @@ public class QrCodeRegression extends BaseTextFileRegression {
 		QrCodeDetector defaultDetector = FactoryFiducial.qrcode(config,imageType);
 
 		process("default",defaultDetector);
+
+		evaluateMessage.out.close();
 	}
 
 	private void process(String name, QrCodeDetector detector) throws IOException {
+		message(name,detector);
+		detection(name,detector);
+	}
+
+	private void message(String name, QrCodeDetector detector ) throws IOException {
+
+		evaluateMessage.out.println("# Evaluating "+name);
+		evaluateMessage.process(detector,new File(baseFiducial,"decoding"));
+		evaluateMessage.out.println();
+	}
+
+	private void detection(String name, QrCodeDetector detector) throws IOException {
 
 		infoString = name;
 
 		PrintStream runtimeOut = new PrintStream(new File(directory,"QRCodeRuntime_"+name+".txt"));
+		runtimeOut.println("# "+name);
 		runtimeOut.println("# Average runtime in milliseconds for each dataset for "+name);
 
 		PrintStream metricsOut = new PrintStream(new File(directory,"QRCodeDetection_"+name+".txt"));
@@ -106,6 +128,5 @@ public class QrCodeRegression extends BaseTextFileRegression {
 		if( !foundDataSets ) {
 			throw new IOException("no data set directories found in "+baseFiducial.getPath());
 		}
-
 	}
 }
