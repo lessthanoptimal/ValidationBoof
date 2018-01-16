@@ -15,7 +15,8 @@ Description of changes to benchmarks and justifications for change in performanc
   * Circle Regular's performance plummeted for blurred images
 - CornerDetectorChangeRegression results have changed because a bug was fixed
   * The passed in corner config class was being modified leading to undefined behavior the next time it was used 
-
+  * This same fix also modified the results for DualPNP Visual Odometry
+  
 TODO Change threshold for fast in fiducial to OTSU
 
 
