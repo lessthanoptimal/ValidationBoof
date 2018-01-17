@@ -1,7 +1,7 @@
 
 Algorithm:  HOG-SB-F32
 ======================================================================
-data/fiducials/image/standard/distance_angle/image00001.png
+data/fiducials/square_border_image/standard/distance_angle/image00001.png
 
 Total Descriptions = 7154
 
@@ -21,7 +21,7 @@ Image Scale
   metric    0.896    0.921    0.947    0.973    1.000    1.028    1.056    1.086    1.116    1.147    1.179    1.212    1.246 
    error  0.75374  0.72272  0.65650  0.49893  0.00000  0.49464  0.63862  0.67948  0.69142  0.71477  0.73508  0.74837  0.75784 
 ======================================================================
-data/calib/mono/chessboard/distant/image00000.jpg
+data/calibration_mono/chessboard/distant/image00000.jpg
 
 Total Descriptions = 7154
 
@@ -43,7 +43,7 @@ Image Scale
 
 Algorithm:  HOG-MS-F32
 ======================================================================
-data/fiducials/image/standard/distance_angle/image00001.png
+data/fiducials/square_border_image/standard/distance_angle/image00001.png
 
 Total Descriptions = 7154
 
@@ -63,7 +63,7 @@ Image Scale
   metric    0.896    0.921    0.947    0.973    1.000    1.028    1.056    1.086    1.116    1.147    1.179    1.212    1.246 
    error  0.74013  0.70819  0.64360  0.48809  0.00000  0.48293  0.62359  0.66338  0.67424  0.69475  0.71322  0.72610  0.73621 
 ======================================================================
-data/calib/mono/chessboard/distant/image00000.jpg
+data/calibration_mono/chessboard/distant/image00000.jpg
 
 Total Descriptions = 7154
 
@@ -85,7 +85,7 @@ Image Scale
 
 Algorithm:  HOG-F-SB-F32
 ======================================================================
-data/fiducials/image/standard/distance_angle/image00001.png
+data/fiducials/square_border_image/standard/distance_angle/image00001.png
 
 Total Descriptions = 7154
 
@@ -105,7 +105,7 @@ Image Scale
   metric    0.896    0.921    0.947    0.973    1.000    1.028    1.056    1.086    1.116    1.147    1.179    1.212    1.246 
    error  0.83188  0.80678  0.74734  0.60044  0.00000  0.61172  0.74302  0.77505  0.78348  0.80674  0.82505  0.83537  0.84588 
 ======================================================================
-data/calib/mono/chessboard/distant/image00000.jpg
+data/calibration_mono/chessboard/distant/image00000.jpg
 
 Total Descriptions = 7154
 
@@ -127,7 +127,7 @@ Image Scale
 
 Algorithm:  HOG-F-MS-F32
 ======================================================================
-data/fiducials/image/standard/distance_angle/image00001.png
+data/fiducials/square_border_image/standard/distance_angle/image00001.png
 
 Total Descriptions = 7154
 
@@ -147,7 +147,7 @@ Image Scale
   metric    0.896    0.921    0.947    0.973    1.000    1.028    1.056    1.086    1.116    1.147    1.179    1.212    1.246 
    error  0.81685  0.78994  0.73225  0.58731  0.00000  0.59837  0.72567  0.75477  0.76334  0.78500  0.80108  0.81081  0.82182 
 ======================================================================
-data/calib/mono/chessboard/distant/image00000.jpg
+data/calibration_mono/chessboard/distant/image00000.jpg
 
 Total Descriptions = 7154
 
@@ -169,7 +169,7 @@ Image Scale
 
 Algorithm:  SURF-F-F32
 ======================================================================
-data/fiducials/image/standard/distance_angle/image00001.png
+data/fiducials/square_border_image/standard/distance_angle/image00001.png
 
 Total Descriptions = 4524
 
@@ -189,7 +189,7 @@ Image Scale
   metric    0.896    0.921    0.947    0.973    1.000    1.028    1.056    1.086    1.116    1.147    1.179    1.212    1.246 
    error  0.93596  0.90893  0.87668  0.79825  0.00000  0.79839  0.87895  0.89735  0.91339  0.92724  0.93157  0.93972  0.95128 
 ======================================================================
-data/calib/mono/chessboard/distant/image00000.jpg
+data/calibration_mono/chessboard/distant/image00000.jpg
 
 Total Descriptions = 4524
 
@@ -211,7 +211,7 @@ Image Scale
 
 Algorithm:  SURF-S-F32
 ======================================================================
-data/fiducials/image/standard/distance_angle/image00001.png
+data/fiducials/square_border_image/standard/distance_angle/image00001.png
 
 Total Descriptions = 4524
 
@@ -231,7 +231,7 @@ Image Scale
   metric    0.896    0.921    0.947    0.973    1.000    1.028    1.056    1.086    1.116    1.147    1.179    1.212    1.246 
    error  0.84449  0.80852  0.76867  0.64348  0.00000  0.65225  0.77018  0.80097  0.81753  0.83249  0.84564  0.85035  0.86771 
 ======================================================================
-data/calib/mono/chessboard/distant/image00000.jpg
+data/calibration_mono/chessboard/distant/image00000.jpg
 
 Total Descriptions = 4524
 
@@ -253,7 +253,7 @@ Image Scale
 
 Algorithm:  SIFT-F32
 ======================================================================
-data/fiducials/image/standard/distance_angle/image00001.png
+data/fiducials/square_border_image/standard/distance_angle/image00001.png
 
 Total Descriptions = 4524
 
@@ -273,7 +273,7 @@ Image Scale
   metric    0.896    0.921    0.947    0.973    1.000    1.028    1.056    1.086    1.116    1.147    1.179    1.212    1.246 
    error  0.97871  0.95136  0.92367  0.82959  0.00000  0.82702  0.90866  0.93463  0.95386  0.96657  0.97647  0.98876  0.99946 
 ======================================================================
-data/calib/mono/chessboard/distant/image00000.jpg
+data/calibration_mono/chessboard/distant/image00000.jpg
 
 Total Descriptions = 4524
 

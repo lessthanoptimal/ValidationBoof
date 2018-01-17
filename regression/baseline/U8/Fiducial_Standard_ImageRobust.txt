@@ -9,9 +9,9 @@ Summary:
  false positives    : 0
  false negative     : 4
 Corner errors:
- precision 50%         : 0.2945435906688214
- precision 90%         : 0.5190047051280059
- precision 100%        : 0.7809557213822105
+ precision 50%         : 0.30701785087959316
+ precision 90%         : 0.4806805266802834
+ precision 100%        : 0.8121200154321913
 
 ---------------------------------------------------
 
@@ -26,9 +26,9 @@ Summary:
  false positives    : 0
  false negative     : 0
 Corner errors:
- precision 50%         : 0.3131089227238765
- precision 90%         : 0.5837832792683234
- precision 100%        : 0.948929910197358
+ precision 50%         : 0.3237534358165023
+ precision 90%         : 0.5437496043203269
+ precision 100%        : 0.9653390335350296
 
 ---------------------------------------------------
 
@@ -36,15 +36,15 @@ Corner errors:
 # maxPixelError = 5.0
 
 Summary:
- correct            :   84 /  132
- wrong order        : 25
+ correct            :   83 /  132
+ wrong order        : 26
  wrong ID           : 23
  duplicates         : 0
- false positives    : 36
+ false positives    : 35
  false negative     : 0
 Corner errors:
- precision 50%         : 0.33501820130726767
- precision 90%         : 0.5870268423371343
+ precision 50%         : 0.3312616795368457
+ precision 90%         : 0.5832352295006862
  precision 100%        : 1.1290394149105611
 
 ---------------------------------------------------
@@ -53,16 +53,16 @@ Corner errors:
 # maxPixelError = 5.0
 
 Summary:
- correct            :   53 /   96
- wrong order        : 25
- wrong ID           : 13
+ correct            :   47 /   96
+ wrong order        : 26
+ wrong ID           : 22
  duplicates         : 0
  false positives    : 0
- false negative     : 30
+ false negative     : 27
 Corner errors:
- precision 50%         : 1.085960473942139
- precision 90%         : 2.5765145833947045
- precision 100%        : 5.6770376802340055
+ precision 50%         : 0.8546796202838456
+ precision 90%         : 1.8479531210782603
+ precision 100%        : 3.405143223115276
 
 ---------------------------------------------------
 
@@ -70,18 +70,18 @@ Corner errors:
 # maxPixelError = 5.0
 
 Summary:
- correct            :   18 /   26
- wrong order        : 25
+ correct            :   19 /   26
+ wrong order        : 26
  wrong ID           : 0
  duplicates         : 0
  false positives    : 0
- false negative     : 8
+ false negative     : 7
 Corner errors:
- precision 50%         : 0.40883965678104617
- precision 90%         : 0.8347590078654767
- precision 100%        : 1.321366340002928
+ precision 50%         : 0.42173037154217063
+ precision 90%         : 0.8830598063572112
+ precision 100%        : 2.2216376513705898
 
 ---------------------------------------------------
 
 ---------------------------------------------------
-total correct / total expected =  184 / 290
+total correct / total expected =  178 / 290

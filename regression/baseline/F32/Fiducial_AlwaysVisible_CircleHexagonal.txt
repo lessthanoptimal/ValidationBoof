@@ -2,7 +2,7 @@
 total frames 14
 false positives 0
  fiducial id | visible | multiple 
-00000             3            0
+00000             2            0
 
 ---------------------------------------------------
 
@@ -18,7 +18,7 @@ false positives 0
 total frames 2
 false positives 0
  fiducial id | visible | multiple 
-00000             2            0
+00000             1            0
 
 ---------------------------------------------------
 
@@ -31,4 +31,4 @@ false positives 0
 ---------------------------------------------------
 
 ---------------------------------------------------
-total correct / total expected =  132 / 143
+total correct / total expected =  130 / 143

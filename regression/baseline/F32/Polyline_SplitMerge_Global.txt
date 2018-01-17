@@ -70,13 +70,13 @@ Summary: TP/E = 36 / 36 error =   0.929 FP = 109
 image00000.jpg  10 11  0  5 10  1  0  0.6554
 image00001.jpg  10 11  0  5 10  1  0  0.6206
 image00002.jpg  10 11  0  2 10  1  0  0.6913
-image00003.jpg  10 23  0  7 10 13  0  0.7697
+image00003.jpg  10 22  0  7 10 12  0  0.7697
 image00004.jpg  10 10  0  4 10  0  0  0.8061
 image00005.jpg  10 12  0  1 10  2  0  0.5552
 image00006.jpg  10 27  0  2 10 17  0  0.7090
 image00007.jpg  10 20  0  5 10 10  0  0.7683
 image00008.jpg  10 20  0  2 10 10  0  0.7852
-Summary: TP/E = 90 / 90 error =   0.707 FP = 55
+Summary: TP/E = 90 / 90 error =   0.707 FP = 54
 
 # Data Set = set03
 # Match Tolerance Corner to Polygon   = 3.0
@@ -89,9 +89,9 @@ image00003.jpg  10 10  0  5  5  5  5  2.4497
 image00004.jpg  10 21  0 10 10 11  0  1.4822
 image00005.jpg  10  9  0  8  8  1  2  2.0399
 image00006.jpg  10 10  0  9  9  1  1  2.4001
-image00007.jpg  10 18  0  8  8 10  2  0.7020
+image00007.jpg  10 17  0  8  8  9  2  0.7020
 image00008.jpg  10 10  0  9  9  1  1  1.5543
-Summary: TP/E = 78 / 90 error =   1.495 FP = 38
+Summary: TP/E = 78 / 90 error =   1.495 FP = 37
 
 # Data Set = set04
 # Match Tolerance Corner to Polygon   = 3.0
@@ -110,5 +110,5 @@ image10.png      6  6  0  2  6  0  0  0.9176
 Summary: TP/E = 54 / 60 error =   0.939 FP = 0
 
 
-Final Summary: TP/(TP+FN) = 770 / 815    FP = 430
+Final Summary: TP/(TP+FN) = 770 / 815    FP = 428
 

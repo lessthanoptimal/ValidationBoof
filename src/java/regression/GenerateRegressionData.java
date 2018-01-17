@@ -80,9 +80,6 @@ public class GenerateRegressionData {
 			if( f.getName().contains(".iml") )
 				continue;
 
-			if( f.getName().equals("readme.txt") )
-				continue;
-
 			if( f.getName().contains(".txt") )
 				if( !f.delete() )
 					throw new RuntimeException("Can't clean work directory: "+f.getName());

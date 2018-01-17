@@ -9,9 +9,9 @@ Summary:
  false positives    : 0
  false negative     : 0
 Corner errors:
- precision 50%         : 0.3427507485911516
- precision 90%         : 0.6729549844877297
- precision 100%        : 1.0113902364636602
+ precision 50%         : 0.34759030913304045
+ precision 90%         : 0.63438026070708
+ precision 100%        : 1.051731538943098
 
 ---------------------------------------------------
 
@@ -26,7 +26,7 @@ Summary:
  false positives    : 0
  false negative     : 0
 Corner errors:
- precision 50%         : 0.2825901386246998
+ precision 50%         : 0.2742106875766014
  precision 90%         : 0.5058456778991721
  precision 100%        : 0.6122332096187616
 
@@ -36,16 +36,16 @@ Corner errors:
 # maxPixelError = 5.0
 
 Summary:
- correct            :   88 /  108
+ correct            :   86 /  108
  wrong order        : 0
  wrong ID           : 1
  duplicates         : 0
  false positives    : 0
- false negative     : 19
+ false negative     : 21
 Corner errors:
- precision 50%         : 0.46459634806523464
- precision 90%         : 0.9665103132063585
- precision 100%        : 2.3740410008063066
+ precision 50%         : 0.46773527240035767
+ precision 90%         : 1.0841251495380444
+ precision 100%        : 2.1918700086302954
 
 ---------------------------------------------------
 
@@ -53,18 +53,18 @@ Corner errors:
 # maxPixelError = 5.0
 
 Summary:
- correct            :   24 /   24
+ correct            :   23 /   24
  wrong order        : 0
  wrong ID           : 0
  duplicates         : 0
  false positives    : 0
- false negative     : 0
+ false negative     : 1
 Corner errors:
- precision 50%         : 0.7263894089764864
- precision 90%         : 1.2410365998535469
- precision 100%        : 2.2671344481218867
+ precision 50%         : 0.7223265667041397
+ precision 90%         : 1.188436094614489
+ precision 100%        : 2.233093723950626
 
 ---------------------------------------------------
 
 ---------------------------------------------------
-total correct / total expected =  152 / 172
+total correct / total expected =  149 / 172
