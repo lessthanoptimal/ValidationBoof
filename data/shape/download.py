@@ -3,7 +3,7 @@
 import urllib
 from subprocess import call
 
-files = ["shape_v1.zip","polygon_v1.zip"]
+files = ["ellipse_v1.zip","polygon_v1.zip"]
 
 for f in files:
     print("retrieving "+f)
