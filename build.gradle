@@ -28,11 +28,11 @@ sourceSets {
     }
 }
 
-task selectJar(type: Jar) {
+task regressionJar(type: Jar) {
     manifest {
         attributes 'Implementation-Title': 'Validation Boof',
                 'Implementation-Version': version,
-                'Main-Class': 'validate.applications.HandSelectQRCodeApp'
+                'Main-Class': 'regression.GenerateRegressionData'
     }
 
     outputs.upToDateWhen { false }
@@ -41,7 +41,7 @@ task selectJar(type: Jar) {
     with jar
 
     doLast {
-        archivePath.renameTo(file('select.jar'))
+        archivePath.renameTo(file('regression.jar'))
     }
 }
 

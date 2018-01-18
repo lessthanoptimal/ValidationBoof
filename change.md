@@ -1,6 +1,7 @@
 Description of changes to benchmarks and justifications for change in performance from previous versions.
 
 ## Version 0.28
+2018/01
 
 - Polyline Algorthm was changed in square based fidudicals
   * In general this improved speed and reliability
