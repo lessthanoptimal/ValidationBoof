@@ -1,6 +1,0 @@
-http://sourceforge.net/projects/validationboof/files/FiducialsEvaluationBoofData_2017Aug16.zip/download
-
-md5sum FiducialsEvaluationBoofData_2017Aug16.zip
-23ec92bef0f42680c46e6af902f18cf0
-
-Just download and unzip
