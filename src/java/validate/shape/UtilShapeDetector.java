@@ -2,10 +2,8 @@ package validate.shape;
 
 import boofcv.factory.shape.ConfigEllipseDetector;
 import boofcv.factory.shape.ConfigPolygonDetector;
-import boofcv.factory.shape.ConfigRefinePolygonCornersToImage;
-import boofcv.factory.shape.ConfigRefinePolygonLineToImage;
-import boofcv.struct.Configuration;
 import georegression.struct.point.Point2D_F64;
+import georegression.struct.point.Point2D_I32;
 import georegression.struct.shapes.Polygon2D_F64;
 import validate.misc.ParseHelper;
 
@@ -18,7 +16,42 @@ import java.util.List;
  */
 public class UtilShapeDetector {
 
-	public static ConfigPolygonDetector configurePolygon(boolean fitLines , File file ) {
+	public static PolylineSettings loadPolylineSettings(File file ) {
+		PolylineSettings settings = new PolylineSettings();
+
+		try {
+			BufferedReader reader = new BufferedReader(new FileReader(file));
+
+			String line = ParseHelper.skipComments(reader);
+
+			while( line != null ) {
+
+				String words[] = line.split(" ");
+				if( words.length != 2 )
+					throw new RuntimeException("Unexpected number of words on line");
+
+				if( words[0].equalsIgnoreCase("convex")) {
+					settings.convex = Boolean.parseBoolean(words[1]);
+				} else if( words[0].equalsIgnoreCase("min_sides")) {
+					settings.minSides = Integer.parseInt(words[1]);
+				} else if( words[0].equalsIgnoreCase("max_sides")) {
+					settings.maxSides = Integer.parseInt(words[1]);
+				} else if( words[0].equalsIgnoreCase("loop")) {
+					settings.looping = Boolean.parseBoolean(words[1]);
+				}
+
+				line = reader.readLine();
+			}
+		} catch (FileNotFoundException ignore) {
+			// just go with the defaults
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+
+		return settings;
+	}
+
+	public static ConfigPolygonDetector configurePolygon(File file ) {
 
 		int minSides=3,maxSides=6;
 		boolean convex = true;
@@ -53,19 +86,10 @@ public class UtilShapeDetector {
 			throw new RuntimeException(e);
 		}
 
-		ConfigPolygonDetector config = new ConfigPolygonDetector(3,6);
-		Configuration configRefine = null;
-		if( fitLines ) {
-			configRefine = new ConfigRefinePolygonLineToImage();
-		} else {
-			configRefine = new ConfigRefinePolygonCornersToImage();
-		}
+		ConfigPolygonDetector config = new ConfigPolygonDetector(minSides,maxSides);
 
-		config.refine = configRefine;
-		config.minimumSides = minSides;
-		config.maximumSides = maxSides;
-		config.convex = convex;
-		config.canTouchBorder = border;
+		config.detector.convex = convex;
+		config.detector.canTouchBorder = border;
 
 		return config;
 	}
@@ -98,6 +122,67 @@ public class UtilShapeDetector {
 
 			out.close();
 		} catch (FileNotFoundException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	public static void saveResultsPolyline(List<List<Point2D_I32>> polygons , File file ) {
+		try {
+			PrintStream out = new PrintStream(file);
+
+			out.println("# Detected polylines in an image");
+			out.println("# (Number of corners) (corner X) (corner Y) ...");
+			for (int i = 0; i < polygons.size(); i++) {
+				List<Point2D_I32> p = polygons.get(i);
+
+				out.print(p.size());
+				for (int j = 0; j < p.size(); j++) {
+					Point2D_I32 c = p.get(j);
+					out.printf(" %d %d", c.x,c.y);
+				}
+				out.println();
+			}
+
+			out.close();
+		} catch (FileNotFoundException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	public static List<List<Point2D_I32>> loadResultsPolyline( File file ) {
+		try {
+			BufferedReader reader = new BufferedReader(new FileReader(file));
+
+			String line = reader.readLine();
+			while( line != null && line.length() >= 1 ) {
+				if( line.charAt(0) != '#')
+					break;
+				line = reader.readLine();
+			}
+
+			List<List<Point2D_I32>> out = new ArrayList<>();
+			while( line != null ) {
+
+				String words[] = line.split(" ");
+				int size = Integer.parseInt(words[0]);
+
+				List<Point2D_I32> poly = new ArrayList<>();
+
+				for (int i = 0; i < size; i++) {
+					Point2D_I32 p = new Point2D_I32();
+					p.x = Integer.parseInt(words[1 + i*2 ]);
+					p.y = Integer.parseInt(words[2 + i*2 ]);
+					poly.add(p);
+				}
+				out.add(poly);
+				line = reader.readLine();
+			}
+
+			return out;
+
+		} catch (FileNotFoundException e) {
+			throw new RuntimeException(e);
+		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
 	}

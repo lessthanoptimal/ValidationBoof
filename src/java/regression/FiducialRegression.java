@@ -33,34 +33,34 @@ public class FiducialRegression extends BaseTextFileRegression {
 	public void process(ImageDataType type) throws IOException {
 		final Class imageType = ImageDataType.typeToSingleClass(type);
 
-		final ConfigThreshold robust = ConfigThreshold.local(ThresholdType.LOCAL_SQUARE,20);
+		final ConfigThreshold robust = ConfigThreshold.local(ThresholdType.LOCAL_MEAN,20);
 		final ConfigThreshold fast = ConfigThreshold.fixed(80);
 
 		FactoryObject factory = new FactoryObjectAbstract() {
 			@Override public Object newInstance()
 			{return FactoryFiducial.squareBinary(new ConfigFiducialBinary(1), robust, imageType);}};
-		process( "BinaryRobust", new EstimateBinaryFiducialToCamera(factory),"binary");
+		process( "BinaryRobust", new EstimateBinaryFiducialToCamera(factory),"square_border_binary");
 
 		factory = new FactoryObjectAbstract() {
 			@Override public Object newInstance()
 		{return FactoryFiducial.squareBinary(new ConfigFiducialBinary(1), fast, imageType);}};
-		process("BinaryFast", new EstimateBinaryFiducialToCamera(factory), "binary");
+		process("BinaryFast", new EstimateBinaryFiducialToCamera(factory), "square_border_binary");
 
 		factory = new FactoryObjectAbstract() {
 			@Override public Object newInstance()
 		{return FactoryFiducial.squareImage(new ConfigFiducialImage(), robust, imageType);}};
-		process("ImageRobust", new EstimateImageFiducialToCamera(factory), "image");
+		process("ImageRobust", new EstimateImageFiducialToCamera(factory), "square_border_image");
 
 		factory = new FactoryObjectAbstract() {
 			@Override public Object newInstance()
 		{return FactoryFiducial.squareImage(new ConfigFiducialImage(), fast, imageType);}};
-		process("ImageFast", new EstimateImageFiducialToCamera(factory), "image");
+		process("ImageFast", new EstimateImageFiducialToCamera(factory), "square_border_image");
 
 		process("Chessboard", new EstimateChessboardToCamera(imageType), "chessboard");
 
 		process("SquareGrid", new EstimateSquareGridToCamera(imageType), "square_grid");
 
-		process("CircleAsymmetric", new EstimateCircleAsymmetricToCamera(imageType), "circle_asymmetric");
+		process("CircleHexagonal", new EstimateCircleHexagonalToCamera(imageType), "circle_hexagonal");
 
 		process("CircleRegular", new EstimateCircleRegularToCamera(imageType), "circle_regular");
 
@@ -156,6 +156,9 @@ public class FiducialRegression extends BaseTextFileRegression {
 		int totalCorrect = 0;
 
 		for( File dataSet : directories) {
+			if( dataSet.isFile() )
+				continue;
+
 			if( workDirectory.exists() ) {
 				ParseHelper.deleteRecursive(workDirectory);
 			}

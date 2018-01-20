@@ -19,4 +19,4 @@ data/calib/mono/circle_asymmetric/distant/image02.jpg 0.5100933132094622 0.79188
 data/calib/mono/circle_asymmetric/distant/image03.jpg 0.24544652724917354 0.4498070427576372
 data/calib/mono/circle_asymmetric/distant/image04.jpg 0.18813417722572334 0.41994153354137437
 
-Summary: 50% = 0.2317305736869244  95% = 10.778231463205083
+Summary: 50% = 0.2317305736869244  95% = 10.778231463205083   success %100.0

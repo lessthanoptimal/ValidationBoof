@@ -1,6 +1,6 @@
 package validate.fiducial;
 
-import boofcv.misc.BoofMiscOps;
+import boofcv.io.UtilIO;
 import georegression.metric.UtilAngle;
 import georegression.struct.point.Point2D_F64;
 import georegression.struct.point.Vector3D_F64;
@@ -34,7 +34,7 @@ public class EvaluateStaticFiducialSequence extends BaseEvaluateFiducialToCamera
 	{
 		initializeEvaluate(dataSetDir);
 
-		List<String> results = BoofMiscOps.directoryList(resultsDirectory.getAbsolutePath(), "csv");
+		List<String> results = UtilIO.listByPrefix(resultsDirectory.getAbsolutePath(), "csv");
 		Collections.sort(results);
 
 		outputResults.println("# Data Set = " + dataSetDir.getName());
@@ -46,13 +46,31 @@ public class EvaluateStaticFiducialSequence extends BaseEvaluateFiducialToCamera
 		// list of all detections for each fiducial.  used to compute precision
 		List<List<Point2D_F64>> allDetections[] = new ArrayList[expected.length];
 		for (int i = 0; i < allDetections.length; i++) {
-			allDetections[i] = new ArrayList<List<Point2D_F64>>();
+			allDetections[i] = new ArrayList<>();
 		}
 
 		// hand selected corners only in the first image
 		String nameFirst = new File(results.get(0)).getName();
 		String nameTruth = nameFirst.substring(0,nameFirst.length()-3) + "txt";
-		List<Point2D_F64> truthCorners = PointFileCodec.load(new File(dataSetDir, nameTruth));
+		File fileTruth = new File(dataSetDir, nameTruth);
+		List<Point2D_F64> truthCorners;
+
+		if( fileTruth.exists() ) {
+			// if hand selected truth exists use it
+			truthCorners = PointFileCodec.load(fileTruth);
+		} else {
+			// create it from the first image
+			truthCorners = new ArrayList<>();
+
+			List<FiducialCommon.Detected> detected = parseDetections(new File(results.get(0)));
+			List<FiducialCommon.Landmarks> landmarks = parseLandmarks(new File(dataSetDir, "landmarks.txt"));
+			for( int i = 0; i < detected.size(); i++ ) {
+				FiducialCommon.Detected det = detected.get(i);
+				FiducialCommon.Landmarks landmark = lookupLandmark(landmarks,det.id);
+				List<Point2D_F64> corners = project(adjustCoordinate(det.fiducialToCamera),landmark);
+				truthCorners.addAll(corners);
+			}
+		}
 
 		normalsPrev = new Vector3D_F64[ expected.length ];
 		posePrev = new Se3_F64[ expected.length ];

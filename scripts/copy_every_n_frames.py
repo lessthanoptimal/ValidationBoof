@@ -7,7 +7,7 @@ from os.path import isfile, join
 from shutil import copyfile
 
 p = optparse.OptionParser()
-p.add_option('--input', '-i', default=".")
+p.add_option('--input', '-i', default="")
 p.add_option('--output', '-o', default="output")
 p.add_option('--skip', '-s', default=10)
 p.add_option('--keepname', '-k', action="store_false")
@@ -18,6 +18,10 @@ options, arguments = p.parse_args()
 dir_input = options.input
 dir_output = options.output
 skip = int(options.skip)
+
+if not dir_input:
+    p.print_help()
+    exit(0)
 
 print "Skip        {}".format(options.skip)
 print "Rename      {}".format(not options.keepname)

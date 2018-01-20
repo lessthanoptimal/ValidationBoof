@@ -49,6 +49,6 @@ public class FactoryRegressionVideoStabilization {
         StitchingFromMotion2D<T,Homography2D_F64>
                 stabilize = FactoryMotion2D.createVideoStitch(0.5, motion, imageType);
 
-        return new Tuple2<>("KLT:Homography",stabilize);
+        return new Tuple2<>("KLT_Homography",stabilize);
     }
 }

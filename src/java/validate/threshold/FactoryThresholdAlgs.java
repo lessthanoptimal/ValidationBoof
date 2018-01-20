@@ -3,6 +3,7 @@ package validate.threshold;
 import boofcv.alg.filter.binary.GThresholdImageOps;
 import boofcv.alg.filter.binary.ThresholdImageOps;
 import boofcv.alg.misc.ImageStatistics;
+import boofcv.struct.ConfigLength;
 import boofcv.struct.image.GrayF32;
 import boofcv.struct.image.GrayU8;
 
@@ -45,7 +46,7 @@ public class FactoryThresholdAlgs {
 		return new ThresholdText() {
 			@Override
 			public void process(GrayF32 input, GrayU8 output) {
-				GThresholdImageOps.localSquare(input, output, 30, 1.0, true, null, null);
+				GThresholdImageOps.localMean(input, output, ConfigLength.fixed(61), 1.0, true, null, null);
 			}
 		};
 	}
@@ -54,7 +55,7 @@ public class FactoryThresholdAlgs {
 		return new ThresholdText() {
 			@Override
 			public void process(GrayF32 input, GrayU8 output) {
-				GThresholdImageOps.localGaussian(input, output, 35, 1.0, true, null, null);
+				GThresholdImageOps.localGaussian(input, output, ConfigLength.fixed(71), 1.0, true, null, null);
 			}
 		};
 	}
@@ -63,7 +64,7 @@ public class FactoryThresholdAlgs {
 		return new ThresholdText() {
 			@Override
 			public void process(GrayF32 input, GrayU8 output) {
-				GThresholdImageOps.localSauvola(input, output, 15, 0.30f, true);//15 0.30 0.8895
+				GThresholdImageOps.localSauvola(input, output, ConfigLength.fixed(31), 0.30f, true);//15 0.30 0.8895
 			}
 		};
 	}
@@ -72,7 +73,7 @@ public class FactoryThresholdAlgs {
 		return new ThresholdText() {
 			@Override
 			public void process(GrayF32 input, GrayU8 output) {
-				GThresholdImageOps.localBlockMinMax(input, output, 15, 1.0, true,15);
+				GThresholdImageOps.localBlockMinMax(input, output, ConfigLength.fixed(31), 1.0, true,15);
 			}
 		};
 	}

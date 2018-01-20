@@ -1,3 +1,0 @@
-# Runtime Performance of VideoStabilization_Runtime_KLT:Homography_gray
-# Video Name, total frames, total faults, FPS
-         shake.mjpeg    71    1 69.950739

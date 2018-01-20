@@ -9,9 +9,9 @@ Summary:
  false positives    : 0
  false negative     : 0
 Corner errors:
- precision 50%         : 0.3624750181988346
- precision 90%         : 0.6209975724031115
- precision 100%        : 0.928371524829634
+ precision 50%         : 0.36257154928082863
+ precision 90%         : 0.6270607056584888
+ precision 100%        : 0.9252178321623225
 
 ---------------------------------------------------
 
@@ -26,9 +26,9 @@ Summary:
  false positives    : 0
  false negative     : 0
 Corner errors:
- precision 50%         : 0.38269903613989936
- precision 90%         : 0.6190896771712621
- precision 100%        : 1.153006194968484
+ precision 50%         : 0.38404931931226344
+ precision 90%         : 0.6154699150049568
+ precision 100%        : 1.1577306271067482
 
 ---------------------------------------------------
 
@@ -43,9 +43,9 @@ Summary:
  false positives    : 0
  false negative     : 0
 Corner errors:
- precision 50%         : 0.3542905435120523
- precision 90%         : 0.5740583472459412
- precision 100%        : 1.146146985382023
+ precision 50%         : 0.35354755056478004
+ precision 90%         : 0.5734966297004513
+ precision 100%        : 1.1422548634478682
 
 ---------------------------------------------------
 
@@ -60,9 +60,9 @@ Summary:
  false positives    : 0
  false negative     : 2
 Corner errors:
- precision 50%         : 3.0570478392260263
- precision 90%         : 5.2259817313008305
- precision 100%        : 9.346102042947887
+ precision 50%         : 3.061424341029051
+ precision 90%         : 5.318874964461586
+ precision 100%        : 9.966549772553288
 
 ---------------------------------------------------
 
@@ -77,9 +77,9 @@ Summary:
  false positives    : 0
  false negative     : 0
 Corner errors:
- precision 50%         : 0.36004394459913425
- precision 90%         : 0.5992428260968022
- precision 100%        : 1.0061337071937346
+ precision 50%         : 0.3561840163266435
+ precision 90%         : 0.6067326972624857
+ precision 100%        : 1.0161534048772252
 
 ---------------------------------------------------
 

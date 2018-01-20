@@ -4,7 +4,6 @@ import boofcv.struct.image.ImageDataType;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.PrintStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -22,22 +21,23 @@ public class GenerateRegressionData {
 	public static List<TextFileRegression> getRegressionsImage() {
 		List<TextFileRegression> list = new ArrayList<TextFileRegression>();
 
+		list.add( new CalibrationDetectionRegression());
 		list.add( new CornerDetectorChangeRegression());
 		list.add( new DetectDescribeRegression());
-		list.add( new ObjectTrackingRegression()); // todo add average FPS
-		list.add( new PointTrackerRegression());
-		list.add( new StereoVisualOdometryRegression());
-		list.add( new CalibrationDetectionRegression());
 		list.add( new DenseFlowRegression() );
 		list.add( new DescribeImageDenseRegression());
-		list.add( new TextThresholdRegression() );
-		list.add( new FiducialRegression() );
 		list.add( new DetectPolygonRegression() );
 		list.add( new DetectEllipseRegression() );
-		list.add( new VideoStabilizeRegression() ); // TODO add metric for quality of fit
+		list.add( new FitPolylineRegression() );
+		list.add( new FiducialRegression() );
+		list.add( new ObjectTrackingRegression()); // todo add average FPS
 		list.add( new ImageClassificationRegression() );
-		// TODO fisheye calibration
-		// TODO Image Segmentation
+		list.add( new PointTrackerRegression());
+		list.add( new StereoVisualOdometryRegression());
+		list.add( new SuperPixelRegression() );
+		list.add( new TextThresholdRegression() );
+		list.add( new VideoStabilizeRegression() ); // TODO add metric for quality of fit
+		list.add( new QrCodeRegression() );
 		// TODO Visual odometry - RGB-D
 		// TODO Visual odometry - Mono-Plane
 		// TODO template matching regression
@@ -49,6 +49,7 @@ public class GenerateRegressionData {
 		List<TextFileRegression> list = new ArrayList<TextFileRegression>();
 
 		list.add( new CalibrationIntrinsicChangeRegression());
+		list.add( new PointDeformKeyPointsRegression());
 
 		return list;
 	}
@@ -77,9 +78,6 @@ public class GenerateRegressionData {
 				continue;
 
 			if( f.getName().contains(".iml") )
-				continue;
-
-			if( f.getName().equals("readme.txt") )
 				continue;
 
 			if( f.getName().contains(".txt") )
@@ -141,12 +139,15 @@ public class GenerateRegressionData {
 				delete(f);
 			} else {
 				if( !f.delete() ) {
-					throw new RuntimeException("Can't delete file "+f);
+					System.err.println("Can't delete file "+f);
+//					throw new RuntimeException("Can't delete file "+f);
 				}
 			}
 		}
-		if( !directory.delete() )
-			throw new RuntimeException("Can't delete directory "+directory);
+		if( !directory.delete() ) {
+			System.err.println("Can't delete file "+directory);
+//			throw new RuntimeException("Can't delete directory "+directory);
+		}
 	}
 
 	public static void main(String[] args) {
@@ -171,13 +172,14 @@ public class GenerateRegressionData {
 		}
 
 		for( ImageDataType dataType : dataTypes ) {
+			System.out.println("\nSTART image "+dataType);
 			clearWorkDirectory();
 			saveMachineInfo();
 			for( TextFileRegression t : imageTests ) {
 				t.setOutputDirectory(CURRENT_DIRECTORY+"/"+dataType+"/");
 				try {
 					t.process(dataType);
-				} catch (IOException e) {
+				} catch (Exception e) {
 					e.printStackTrace();
 				}
 

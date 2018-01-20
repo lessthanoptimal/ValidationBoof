@@ -1,6 +1,6 @@
 package regression;
 
-import boofcv.alg.shapes.polygon.BinaryPolygonDetector;
+import boofcv.alg.shapes.polygon.DetectPolygonBinaryGrayRefine;
 import boofcv.struct.image.ImageDataType;
 import validate.FactoryObject;
 import validate.shape.DetectPolygonsSaveToFile;
@@ -28,25 +28,30 @@ public class DetectPolygonRegression extends BaseTextFileRegression {
 	public void process(ImageDataType type) throws IOException {
 		final Class imageType = ImageDataType.typeToSingleClass(type);
 
-		process("PolygonLineGlobal", false, new FactoryBinaryPolygon(true,imageType));
-		process("PolygonLineLocal", true, new FactoryBinaryPolygon(true,imageType));
-		process("PolygonCornerGlobal", false, new FactoryBinaryPolygon(false,imageType));
-		process("PolygonCornerLocal", true, new FactoryBinaryPolygon(false,imageType));
+		process("PolygonLineGlobal", false, new FactoryBinaryPolygon(imageType));
+		process("PolygonLineLocal", true, new FactoryBinaryPolygon(imageType));
 	}
 
-	private void process(String name, boolean localBinary , FactoryObject<BinaryPolygonDetector> factory)
+	private void process(String name, boolean localBinary , FactoryObject<DetectPolygonBinaryGrayRefine> factory)
 			throws IOException {
 
 		String outputName = "ShapeDetector_"+name+".txt";
-
+		String outputSpeedName = "ShapeDetectorSpeed_"+name+".txt";
 
 		EvaluatePolygonDetector evaluator = new EvaluatePolygonDetector();
 
 		PrintStream output = new PrintStream(new File(directory,outputName));
 		evaluator.setOutputResults(output);
 
+		PrintStream outputSpeed = new PrintStream(new File(directory,outputSpeedName));
+		outputSpeed.println("# Average processing time of shape detector algorithm "+name);
+
 		List<File> files = Arrays.asList(baseDataSetDirectory.listFiles());
 		Collections.sort(files);
+
+		int totalTruePositive = 0;
+		int totalExpected = 0;
+		int totalFalsePositive = 0;
 
 		for( File f : files  ) {
 			if( !f.isDirectory() )
@@ -60,9 +65,19 @@ public class DetectPolygonRegression extends BaseTextFileRegression {
 			detection.processDirectory(f, workDirectory);
 			evaluator.evaluate(f, workDirectory);
 			output.println();
+			totalTruePositive += evaluator.summaryTruePositive;
+			totalExpected += evaluator.summaryExpected;
+			totalFalsePositive += evaluator.summaryFalsePositive;
+
+			outputSpeed.printf("%20s %9.4f (ms)\n",f.getName(),detection.averageProcessingTime);
 		}
 
+		output.println();
+		output.println(String.format("Final Summary: TP/(TP+FN) = %d / %d    FP = %d\n",totalTruePositive,totalExpected,totalFalsePositive));
 		output.close();
+
+		outputSpeed.println();
+		outputSpeed.close();
 	}
 
 	public static void main(String[] args) throws IOException {

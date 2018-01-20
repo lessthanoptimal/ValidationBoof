@@ -1,5 +1,5 @@
 =================================================================
-FILE: data/calib/stereo/points/bumblebee2_chess.txt
+FILE: data/calibration_stereo/points/bumblebee2_chess.txt
 LEFT
 # Intrinsic matrix
 524.621810096439400 526.932986718585000 0.000000000000000 312.594344961581600 247.332760286681580
@@ -88,7 +88,7 @@ Errors
 [009]  mean = 0.079189 max = 0.173441
 [010]  mean = 0.094407 max = 0.186753
 =================================================================
-FILE: data/calib/stereo/points/bumblebee2_chess.txt
+FILE: data/calibration_stereo/points/bumblebee2_chess.txt
 LEFT
 # Intrinsic matrix
 525.527754754072400 527.624925691915500 0.000000000000000 313.491683475972900 245.781896802314320

@@ -3,7 +3,7 @@ apply plugin: 'java'
 apply plugin: 'maven'
 
 group = 'org.boofcv'
-version = '0.27'
+version = '0.28'
 sourceCompatibility = 1.8
 
 repositories {
@@ -28,14 +28,36 @@ sourceSets {
     }
 }
 
+task regressionJar(type: Jar) {
+    manifest {
+        attributes 'Implementation-Title': 'Validation Boof',
+                'Implementation-Version': version,
+                'Main-Class': 'regression.GenerateRegressionData'
+    }
+
+    outputs.upToDateWhen { false }
+
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
+
+    doLast {
+        archivePath.renameTo(file('regression.jar'))
+    }
+}
+
 dependencies {
     compile files("lib/ProjectBUBO.jar")
 
-    ['boofcv-core','boofcv-swing'].each { String a -> compile group: 'org.boofcv', name: a, version: '0.27-SNAPSHOT' }
+    ['boofcv-core','boofcv-swing'].each { String a -> compile group: 'org.boofcv', name: a, version: '0.28' }
 
     compile group: 'com.google.guava', name: 'guava', version: '17.0'
 
-    testCompile group: 'junit', name: 'junit', version: '4.11'
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+    compile group: 'commons-io', name: 'commons-io', version: '2.6'
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '4.3'
 }
 
 idea {

@@ -62,7 +62,7 @@ public class GenerateBenchmarkResults {
 			@Override
 			public Object newInstance() {
 				return FactoryFiducial.squareImage(new ConfigFiducialImage(),
-						ConfigThreshold.local(ThresholdType.LOCAL_SQUARE, 20),
+						ConfigThreshold.local(ThresholdType.LOCAL_MEAN, 20),
 						GrayU8.class);
 			}
 		};

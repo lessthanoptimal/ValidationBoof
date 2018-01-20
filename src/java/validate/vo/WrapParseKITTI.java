@@ -1,6 +1,7 @@
 package validate.vo;
 
 import boofcv.alg.geo.PerspectiveOps;
+import boofcv.struct.calib.CameraPinholeRadial;
 import boofcv.struct.calib.StereoParameters;
 import georegression.geometry.GeometryMath_F64;
 import georegression.struct.se.Se3_F64;
@@ -41,8 +42,8 @@ public class WrapParseKITTI implements SequenceStereoImages {
 		DMatrixRMaj K_inv = new DMatrixRMaj(3,3);
 		CommonOps_DDRM.invert(K,K_inv);
 
-		param.left = PerspectiveOps.matrixToParam(K,leftWidth,leftHeight,null);
-		param.right = PerspectiveOps.matrixToParam(K,rightWidth,rightHeight,null);
+		param.left = PerspectiveOps.matrixToParam(K,leftWidth,leftHeight,new CameraPinholeRadial());
+		param.right = PerspectiveOps.matrixToParam(K,rightWidth,rightHeight,new CameraPinholeRadial());
 		param.left.radial = new double[0];
 		param.right.radial = new double[0];
 

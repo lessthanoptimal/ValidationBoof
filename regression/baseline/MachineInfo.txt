@@ -1,20 +1,18 @@
 Runtime.getRuntime().availableProcessors(): 8
-Runtime.getRuntime().freeMemory(): 210894608
-Runtime.getRuntime().totalMemory(): 320864256
+Runtime.getRuntime().freeMemory(): 335506824
+Runtime.getRuntime().totalMemory(): 1080033280
 =========== java.runtime.name
 Java(TM) SE Runtime Environment
 =========== sun.boot.library.path
-/opt/jdk/jdk1.8.0_101/jre/lib/amd64
+/opt/jdk/jdk1.8.0_121/jre/lib/amd64
 =========== java.vm.version
-25.101-b13
+25.121-b13
 =========== java.vm.vendor
 Oracle Corporation
 =========== java.vendor.url
 http://java.oracle.com/
 =========== path.separator
 :
-=========== idea.launcher.port
-7536
 =========== java.vm.name
 Java HotSpot(TM) 64-Bit Server VM
 =========== file.encoding.pkg
@@ -30,11 +28,11 @@ Java Virtual Machine Specification
 =========== user.dir
 /home/pja/projects/ValidationBoof
 =========== java.runtime.version
-1.8.0_101-b13
+1.8.0_121-b13
 =========== java.awt.graphicsenv
 sun.awt.X11GraphicsEnvironment
 =========== java.endorsed.dirs
-/opt/jdk/jdk1.8.0_101/jre/lib/endorsed
+/opt/jdk/jdk1.8.0_121/jre/lib/endorsed
 =========== os.arch
 amd64
 =========== java.io.tmpdir
@@ -49,7 +47,7 @@ Linux
 =========== sun.jnu.encoding
 UTF-8
 =========== java.library.path
-/opt/idea/latest/bin::/usr/java/packages/lib/amd64:/usr/lib64:/lib64:/lib:/usr/lib
+share/jetbrains-toolbox:share/jetbrains-toolbox/lib:./lib/:./lib/i386-linux-gnu/:./lib/x86_64-linux-gnu/:./lib32/:./lib64/:../lib/:../lib/i386-linux-gnu/:../lib/x86_64-linux-gnu/:../lib32/:../lib64/::/usr/java/packages/lib/amd64:/usr/lib64:/lib64:/lib:/usr/lib
 =========== java.specification.name
 Java Platform API Specification
 =========== java.class.version
@@ -57,7 +55,7 @@ Java Platform API Specification
 =========== sun.management.compiler
 HotSpot 64-Bit Tiered Compilers
 =========== os.version
-4.4.0-51-generic
+4.10.0-42-generic
 =========== user.home
 /home/pja
 =========== user.timezone
@@ -66,20 +64,18 @@ HotSpot 64-Bit Tiered Compilers
 sun.print.PSPrinterJob
 =========== file.encoding
 UTF-8
-=========== idea.launcher.bin.path
-/opt/idea/idea-IU-163.7743.44/bin
 =========== java.specification.version
 1.8
 =========== java.class.path
-/opt/jdk/jdk1.8.0_101/jre/lib/charsets.jar:/opt/jdk/jdk1.8.0_101/jre/lib/deploy.jar:/opt/jdk/jdk1.8.0_101/jre/lib/ext/cldrdata.jar:/opt/jdk/jdk1.8.0_101/jre/lib/ext/dnsns.jar:/opt/jdk/jdk1.8.0_101/jre/lib/ext/jaccess.jar:/opt/jdk/jdk1.8.0_101/jre/lib/ext/jfxrt.jar:/opt/jdk/jdk1.8.0_101/jre/lib/ext/localedata.jar:/opt/jdk/jdk1.8.0_101/jre/lib/ext/nashorn.jar:/opt/jdk/jdk1.8.0_101/jre/lib/ext/sunec.jar:/opt/jdk/jdk1.8.0_101/jre/lib/ext/sunjce_provider.jar:/opt/jdk/jdk1.8.0_101/jre/lib/ext/sunpkcs11.jar:/opt/jdk/jdk1.8.0_101/jre/lib/ext/zipfs.jar:/opt/jdk/jdk1.8.0_101/jre/lib/javaws.jar:/opt/jdk/jdk1.8.0_101/jre/lib/jce.jar:/opt/jdk/jdk1.8.0_101/jre/lib/jfr.jar:/opt/jdk/jdk1.8.0_101/jre/lib/jfxswt.jar:/opt/jdk/jdk1.8.0_101/jre/lib/jsse.jar:/opt/jdk/jdk1.8.0_101/jre/lib/management-agent.jar:/opt/jdk/jdk1.8.0_101/jre/lib/plugin.jar:/opt/jdk/jdk1.8.0_101/jre/lib/resources.jar:/opt/jdk/jdk1.8.0_101/jre/lib/rt.jar:/home/pja/projects/ValidationBoof/build/classes/main:/home/pja/projects/ValidationBoof/lib/ProjectBUBO.jar:/home/pja/.m2/repository/org/boofcv/core/0.26-SNAPSHOT/core-0.26-SNAPSHOT.jar:/home/pja/.gradle/caches/modules-2/files-2.1/com.google.guava/guava/17.0/9c6ef172e8de35fd8d4d8783e4821e57cdef7445/guava-17.0.jar:/home/pja/.gradle/caches/modules-2/files-2.1/org.georegression/georegression/0.12/126bf565834402349316ae743daa4fa34d339755/georegression-0.12.jar:/home/pja/.m2/repository/org/boofcv/calibration/0.26-SNAPSHOT/calibration-0.26-SNAPSHOT.jar:/home/pja/.m2/repository/org/boofcv/feature/0.26-SNAPSHOT/feature-0.26-SNAPSHOT.jar:/home/pja/.m2/repository/org/boofcv/geo/0.26-SNAPSHOT/geo-0.26-SNAPSHOT.jar:/home/pja/.m2/repository/org/boofcv/io/0.26-SNAPSHOT/io-0.26-SNAPSHOT.jar:/home/pja/.m2/repository/org/boofcv/ip/0.26-SNAPSHOT/ip-0.26-SNAPSHOT.jar:/home/pja/.m2/repository/org/boofcv/learning/0.26-SNAPSHOT/learning-0.26-SNAPSHOT.jar:/home/pja/.m2/repository/org/boofcv/recognition/0.26-SNAPSHOT/recognition-0.26-SNAPSHOT.jar:/home/pja/.m2/repository/org/boofcv/sfm/0.26-SNAPSHOT/sfm-0.26-SNAPSHOT.jar:/home/pja/.m2/repository/org/boofcv/visualize/0.26-SNAPSHOT/visualize-0.26-SNAPSHOT.jar:/home/pja/.gradle/caches/modules-2/files-2.1/org.ddogleg/ddogleg/0.10/ee8c6881eba48da70f1264f4de09e6181844f649/ddogleg-0.10.jar:/home/pja/.gradle/caches/modules-2/files-2.1/com.thoughtworks.xstream/xstream/1.4.7/bce3282142b63068260f021fcbe48b72e8d71a1a/xstream-1.4.7.jar:/home/pja/.gradle/caches/modules-2/files-2.1/org.yaml/snakeyaml/1.17/7a27ea250c5130b2922b86dea63cbb1cc10a660c/snakeyaml-1.17.jar:/home/pja/.gradle/caches/modules-2/files-2.1/org.deepboof/main/0.3/f35066913a316938e486062110be298b17eede3d/main-0.3.jar:/home/pja/.gradle/caches/modules-2/files-2.1/org.deepboof/models/0.3/d39566f527ef22d1ed97857a887896e1c28d967f/models-0.3.jar:/home/pja/.gradle/caches/modules-2/files-2.1/org.ejml/core/0.30/79f5269e95262f6b81b84b04b2c355b0704ac9fe/core-0.30.jar:/home/pja/.gradle/caches/modules-2/files-2.1/org.ejml/dense64/0.30/480f1c2838c2998c7e9be4491ef689d590a838b9/dense64-0.30.jar:/home/pja/.gradle/caches/modules-2/files-2.1/org.ejml/simple/0.30/db02b4357af778950d9b0d8652b3bb4af785d999/simple-0.30.jar:/home/pja/.gradle/caches/modules-2/files-2.1/org.ejml/equation/0.30/8b676f156cdcbac572249f303dee710bffa94020/equation-0.30.jar:/home/pja/.gradle/caches/modules-2/files-2.1/xmlpull/xmlpull/1.1.3.1/2b8e230d2ab644e4ecaa94db7cdedbc40c805dfa/xmlpull-1.1.3.1.jar:/home/pja/.gradle/caches/modules-2/files-2.1/xpp3/xpp3_min/1.1.4c/19d4e90b43059058f6e056f794f0ea4030d60b86/xpp3_min-1.1.4c.jar:/home/pja/.gradle/caches/modules-2/files-2.1/org.deepboof/learning/0.3/a742770787b00272664cd052fa1ad17225d6489d/learning-0.3.jar:/home/pja/.gradle/caches/modules-2/files-2.1/org.deepboof/io/0.3/b724ef7e77116afc443a22429baf7cdde8c03f69/io-0.3.jar:/home/pja/.gradle/caches/modules-2/files-2.1/com.google.protobuf/protobuf-java/2.6.1/d9521f2aecb909835746b7a5facf612af5e890e8/protobuf-java-2.6.1.jar:/home/pja/.gradle/caches/modules-2/files-2.1/org.rauschig/jarchivelib/0.5.0/7e7d26b83a2bc3d0ccfb88f1a1cc815766f584e0/jarchivelib-0.5.0.jar:/home/pja/.gradle/caches/modules-2/files-2.1/net.lingala.zip4j/zip4j/1.3.2/4ba84e98ee017b74cb52f45962f929a221f3074c/zip4j-1.3.2.jar:/home/pja/.gradle/caches/modules-2/files-2.1/org.apache.commons/commons-compress/1.7/ab365c96ee9bc88adcc6fa40d185c8e15a31410d/commons-compress-1.7.jar:/home/pja/.gradle/caches/modules-2/files-2.1/org.tukaani/xz/1.4/18a9a2ce6abf32ea1b5fd31dae5210ad93f4e5e3/xz-1.4.jar:/opt/idea/idea-IU-163.7743.44/lib/idea_rt.jar
+/opt/jdk/latest/jre/lib/charsets.jar:/opt/jdk/latest/jre/lib/deploy.jar:/opt/jdk/latest/jre/lib/ext/cldrdata.jar:/opt/jdk/latest/jre/lib/ext/dnsns.jar:/opt/jdk/latest/jre/lib/ext/jaccess.jar:/opt/jdk/latest/jre/lib/ext/jfxrt.jar:/opt/jdk/latest/jre/lib/ext/localedata.jar:/opt/jdk/latest/jre/lib/ext/nashorn.jar:/opt/jdk/latest/jre/lib/ext/sunec.jar:/opt/jdk/latest/jre/lib/ext/sunjce_provider.jar:/opt/jdk/latest/jre/lib/ext/sunpkcs11.jar:/opt/jdk/latest/jre/lib/ext/zipfs.jar:/opt/jdk/latest/jre/lib/javaws.jar:/opt/jdk/latest/jre/lib/jce.jar:/opt/jdk/latest/jre/lib/jfr.jar:/opt/jdk/latest/jre/lib/jfxswt.jar:/opt/jdk/latest/jre/lib/jsse.jar:/opt/jdk/latest/jre/lib/management-agent.jar:/opt/jdk/latest/jre/lib/plugin.jar:/opt/jdk/latest/jre/lib/resources.jar:/opt/jdk/latest/jre/lib/rt.jar:/home/pja/projects/ValidationBoof/out/production/classes:/home/pja/projects/ValidationBoof/out/production/resources:/home/pja/projects/ValidationBoof/lib/ProjectBUBO.jar:/home/pja/.m2/repository/org/boofcv/boofcv-core/0.28-SNAPSHOT/boofcv-core-0.28-SNAPSHOT.jar:/home/pja/.m2/repository/org/boofcv/boofcv-swing/0.28-SNAPSHOT/boofcv-swing-0.28-SNAPSHOT.jar:/home/pja/.gradle/caches/modules-2/files-2.1/com.google.guava/guava/17.0/9c6ef172e8de35fd8d4d8783e4821e57cdef7445/guava-17.0.jar:/home/pja/.gradle/caches/modules-2/files-2.1/commons-io/commons-io/2.6/815893df5f31da2ece4040fe0a12fd44b577afaf/commons-io-2.6.jar:/home/pja/.m2/repository/org/georegression/georegression/0.15-SNAPSHOT/georegression-0.15-SNAPSHOT.jar:/home/pja/.m2/repository/org/boofcv/boofcv-calibration/0.28-SNAPSHOT/boofcv-calibration-0.28-SNAPSHOT.jar:/home/pja/.m2/repository/org/boofcv/boofcv-feature/0.28-SNAPSHOT/boofcv-feature-0.28-SNAPSHOT.jar:/home/pja/.m2/repository/org/boofcv/boofcv-geo/0.28-SNAPSHOT/boofcv-geo-0.28-SNAPSHOT.jar:/home/pja/.m2/repository/org/boofcv/boofcv-io/0.28-SNAPSHOT/boofcv-io-0.28-SNAPSHOT.jar:/home/pja/.m2/repository/org/boofcv/boofcv-ip/0.28-SNAPSHOT/boofcv-ip-0.28-SNAPSHOT.jar:/home/pja/.m2/repository/org/boofcv/boofcv-learning/0.28-SNAPSHOT/boofcv-learning-0.28-SNAPSHOT.jar:/home/pja/.m2/repository/org/boofcv/boofcv-recognition/0.28-SNAPSHOT/boofcv-recognition-0.28-SNAPSHOT.jar:/home/pja/.m2/repository/org/boofcv/boofcv-sfm/0.28-SNAPSHOT/boofcv-sfm-0.28-SNAPSHOT.jar:/home/pja/.m2/repository/org/ddogleg/ddogleg/0.13-SNAPSHOT/ddogleg-0.13-SNAPSHOT.jar:/home/pja/.gradle/caches/modules-2/files-2.1/org.yaml/snakeyaml/1.17/7a27ea250c5130b2922b86dea63cbb1cc10a660c/snakeyaml-1.17.jar:/home/pja/.m2/repository/org/deepboof/main/0.5-SNAPSHOT/main-0.5-SNAPSHOT.jar:/home/pja/.m2/repository/org/deepboof/models/0.5-SNAPSHOT/models-0.5-SNAPSHOT.jar:/home/pja/.m2/repository/org/ejml/ejml-core/0.33-SNAPSHOT/ejml-core-0.33-SNAPSHOT.jar:/home/pja/.m2/repository/org/ejml/ejml-fdense/0.33-SNAPSHOT/ejml-fdense-0.33-SNAPSHOT.jar:/home/pja/.m2/repository/org/ejml/ejml-ddense/0.33-SNAPSHOT/ejml-ddense-0.33-SNAPSHOT.jar:/home/pja/.m2/repository/org/ejml/ejml-simple/0.33-SNAPSHOT/ejml-simple-0.33-SNAPSHOT.jar:/home/pja/.m2/repository/org/ejml/ejml-dsparse/0.33-SNAPSHOT/ejml-dsparse-0.33-SNAPSHOT.jar:/home/pja/.m2/repository/org/deepboof/learning/0.5-SNAPSHOT/learning-0.5-SNAPSHOT.jar:/home/pja/.m2/repository/org/deepboof/io/0.5-SNAPSHOT/io-0.5-SNAPSHOT.jar:/home/pja/.m2/repository/org/ejml/ejml-cdense/0.33-SNAPSHOT/ejml-cdense-0.33-SNAPSHOT.jar:/home/pja/.m2/repository/org/ejml/ejml-zdense/0.33-SNAPSHOT/ejml-zdense-0.33-SNAPSHOT.jar:/home/pja/.gradle/caches/modules-2/files-2.1/com.google.protobuf/protobuf-java/2.6.1/d9521f2aecb909835746b7a5facf612af5e890e8/protobuf-java-2.6.1.jar:/home/pja/.gradle/caches/modules-2/files-2.1/org.rauschig/jarchivelib/0.5.0/7e7d26b83a2bc3d0ccfb88f1a1cc815766f584e0/jarchivelib-0.5.0.jar:/home/pja/.gradle/caches/modules-2/files-2.1/net.lingala.zip4j/zip4j/1.3.2/4ba84e98ee017b74cb52f45962f929a221f3074c/zip4j-1.3.2.jar:/home/pja/.gradle/caches/modules-2/files-2.1/org.apache.commons/commons-compress/1.7/ab365c96ee9bc88adcc6fa40d185c8e15a31410d/commons-compress-1.7.jar:/home/pja/.gradle/caches/modules-2/files-2.1/org.tukaani/xz/1.4/18a9a2ce6abf32ea1b5fd31dae5210ad93f4e5e3/xz-1.4.jar:/home/pja/.local/share/JetBrains/Toolbox/apps/IDEA-U/ch-0/173.4127.27/lib/idea_rt.jar
 =========== user.name
 pja
 =========== java.vm.specification.version
 1.8
 =========== sun.java.command
-com.intellij.rt.execution.application.AppMain regression.GenerateRegressionData
+regression.GenerateRegressionData
 =========== java.home
-/opt/jdk/jdk1.8.0_101/jre
+/opt/jdk/jdk1.8.0_121/jre
 =========== sun.arch.data.model
 64
 =========== user.language
@@ -91,11 +87,11 @@ sun.awt.X11.XToolkit
 =========== java.vm.info
 mixed mode
 =========== java.version
-1.8.0_101
+1.8.0_121
 =========== java.ext.dirs
-/opt/jdk/jdk1.8.0_101/jre/lib/ext:/usr/java/packages/lib/ext
+/opt/jdk/jdk1.8.0_121/jre/lib/ext:/usr/java/packages/lib/ext
 =========== sun.boot.class.path
-/opt/jdk/jdk1.8.0_101/jre/lib/resources.jar:/opt/jdk/jdk1.8.0_101/jre/lib/rt.jar:/opt/jdk/jdk1.8.0_101/jre/lib/sunrsasign.jar:/opt/jdk/jdk1.8.0_101/jre/lib/jsse.jar:/opt/jdk/jdk1.8.0_101/jre/lib/jce.jar:/opt/jdk/jdk1.8.0_101/jre/lib/charsets.jar:/opt/jdk/jdk1.8.0_101/jre/lib/jfr.jar:/opt/jdk/jdk1.8.0_101/jre/classes
+/opt/jdk/jdk1.8.0_121/jre/lib/resources.jar:/opt/jdk/jdk1.8.0_121/jre/lib/rt.jar:/opt/jdk/jdk1.8.0_121/jre/lib/sunrsasign.jar:/opt/jdk/jdk1.8.0_121/jre/lib/jsse.jar:/opt/jdk/jdk1.8.0_121/jre/lib/jce.jar:/opt/jdk/jdk1.8.0_121/jre/lib/charsets.jar:/opt/jdk/jdk1.8.0_121/jre/lib/jfr.jar:/opt/jdk/jdk1.8.0_121/jre/classes
 =========== java.vendor
 Oracle Corporation
 =========== file.separator

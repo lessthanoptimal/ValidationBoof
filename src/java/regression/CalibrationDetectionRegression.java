@@ -1,7 +1,6 @@
 package regression;
 
-import boofcv.abst.fiducial.calib.CalibrationPatterns;
-import boofcv.abst.fiducial.calib.ConfigCircleRegularGrid;
+import boofcv.abst.fiducial.calib.*;
 import boofcv.abst.geo.calibration.DetectorFiducialCalibration;
 import boofcv.alg.geo.calibration.CalibrationObservation;
 import boofcv.factory.fiducial.FactoryFiducialCalibration;
@@ -21,6 +20,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import static validate.fiducial.EstimateCircleHexagonalToCamera.parseCircleHexagonalConfig;
+
 /**
  * @author Peter Abeles
  */
@@ -28,56 +29,59 @@ public class CalibrationDetectionRegression extends BaseTextFileRegression{
 
 	List<String> chessDirectories = new ArrayList<>();
 	List<String> squareDirectories = new ArrayList<>();
-	List<String> circleAsymDirectories = new ArrayList<>();
+	List<String> circleHexDirectories = new ArrayList<>();
 	List<String> circleRegirectories = new ArrayList<>();
 
 	List<DetectorInfo> chessDetectors = new ArrayList<DetectorInfo>();
 	List<DetectorInfo> squareDetectors = new ArrayList<DetectorInfo>();
-	List<DetectorInfo> circleAsymDetctors = new ArrayList<DetectorInfo>();
+	List<DetectorInfo> circleHexDetctors = new ArrayList<DetectorInfo>();
 	List<DetectorInfo> circleRegDetectors = new ArrayList<DetectorInfo>();
 
 	public CalibrationDetectionRegression() {
 
-		chessDirectories.add("data/calib/stereo/Bumblebee2_Chess");
-		chessDirectories.add("data/calib/mono/chessboard/Sony_DSC-HX5V");
-		chessDirectories.add("data/calib/mono/chessboard/large");
-		chessDirectories.add("data/calib/mono/chessboard/distant");
-		chessDirectories.add("data/calib/mono/chessboard/hard");
-		chessDirectories.add("data/calib/mono/chessboard/border");
+		chessDirectories.add("data/calibration_stereo/Bumblebee2_Chess");
+		chessDirectories.add("data/calibration_mono/chessboard/Sony_DSC-HX5V");
+		chessDirectories.add("data/calibration_mono/chessboard/large");
+		chessDirectories.add("data/calibration_mono/chessboard/distant");
+		chessDirectories.add("data/calibration_mono/chessboard/hard");
+		chessDirectories.add("data/calibration_mono/chessboard/border");
+		chessDirectories.add("data/calibration_mono/chessboard/fisheye");
 
-		squareDirectories.add("data/calib/stereo/Bumblebee2_Square");
-		squareDirectories.add("data/calib/mono/square_grid/Sony_DSC-HX5V");
-		squareDirectories.add("data/calib/mono/square_grid/large");
-		squareDirectories.add("data/calib/mono/square_grid/distant");
+		squareDirectories.add("data/calibration_stereo/Bumblebee2_Square");
+		squareDirectories.add("data/calibration_mono/square_grid/Sony_DSC-HX5V");
+		squareDirectories.add("data/calibration_mono/square_grid/large");
+		squareDirectories.add("data/calibration_mono/square_grid/distant");
+		squareDirectories.add("data/calibration_mono/square_grid/fisheye");
 
-		circleAsymDirectories.add("data/calib/mono/circle_asymmetric/Sony_DSC-HX5V");
-		circleAsymDirectories.add("data/calib/mono/circle_asymmetric/large");
-		circleAsymDirectories.add("data/calib/mono/circle_asymmetric/distant");
+		circleHexDirectories.add("data/calibration_mono/circle_hexagonal/calib_5x6");
+		circleHexDirectories.add("data/calibration_mono/circle_hexagonal/calib_24x28");
+		circleHexDirectories.add("data/calibration_mono/circle_hexagonal/fisheye_5x6");
+		circleHexDirectories.add("data/calibration_mono/circle_hexagonal/large_24x28");
 
-		circleRegirectories.add("data/calib/mono/circle_regular/distant");
-		circleRegirectories.add("data/calib/mono/circle_regular/large");
-		circleRegirectories.add("data/calib/mono/circle_regular/fisheye");
+		circleRegirectories.add("data/calibration_mono/circle_regular/distant");
+		circleRegirectories.add("data/calibration_mono/circle_regular/large");
+		circleRegirectories.add("data/calibration_mono/circle_regular/fisheye");
 
-//		addDetector("DetectCalibChess",
-//				FactoryFiducialCalibration.chessboard(new ConfigChessboard(7, 5,30)),
-//				CalibrationPatterns.CHESSBOARD);
-//		addDetector("DetectCalibSquare",
-//				FactoryFiducialCalibration.squareGrid(new ConfigSquareGrid(4, 3,30,30)),
-//				CalibrationPatterns.SQUARE_GRID);
-//		addDetector("DetectCalibCircleAsymmetric",
-//				FactoryFiducialCalibration.circleAsymmGrid(new ConfigCircleAsymmetricGrid(8, 5,1,6)),
-//				CalibrationPatterns.CIRCLE_ASYMMETRIC_GRID);
-
+		addDetector("DetectCalibChess",
+				new CreateChessboard(),
+				CalibrationPatterns.CHESSBOARD);
+		addDetector("DetectCalibSquare",
+				new CreateSquareGrid(),
+				CalibrationPatterns.SQUARE_GRID);
+		addDetector("DetectCalibCircleHexagonal",
+				new CreateCircleHexagonal(),
+				CalibrationPatterns.CIRCLE_HEXAGONAL);
 		addDetector("DetectCalibCircleRegular",
-				FactoryFiducialCalibration.circleRegularGrid(new ConfigCircleRegularGrid(4, 3,4,6)),
+				new CreateCircleRegular(),
 				CalibrationPatterns.CIRCLE_GRID);
 	}
 
-	public void addDetector( String name , DetectorFiducialCalibration detector , CalibrationPatterns type) {
+	public void addDetector( String name , CreateCalibration detector , CalibrationPatterns type) {
 		switch( type ) {
 			case CHESSBOARD:chessDetectors.add(new DetectorInfo(name,detector));break;
 			case SQUARE_GRID:squareDetectors.add(new DetectorInfo(name,detector));break;
-			case CIRCLE_ASYMMETRIC_GRID:circleAsymDetctors.add(new DetectorInfo(name,detector));break;
+			case CIRCLE_HEXAGONAL:
+				circleHexDetctors.add(new DetectorInfo(name,detector));break;
 			case CIRCLE_GRID:circleRegDetectors.add(new DetectorInfo(name,detector));break;
 		}
 	}
@@ -97,8 +101,8 @@ public class CalibrationDetectionRegression extends BaseTextFileRegression{
 			evaluate(d, squareDirectories);
 		}
 
-		for( DetectorInfo d : circleAsymDetctors) {
-			evaluate(d, circleAsymDirectories);
+		for( DetectorInfo d : circleHexDetctors) {
+			evaluate(d, circleHexDirectories);
 		}
 
 		for( DetectorInfo d : circleRegDetectors) {
@@ -113,10 +117,19 @@ public class CalibrationDetectionRegression extends BaseTextFileRegression{
 
 		OverallMetrics overallMetrics = new OverallMetrics();
 		for( String dir : directories) {
-			List<File> files = Arrays.asList(new File(dir).listFiles());
+			File filesArray[] = new File(dir).listFiles();
+			if( filesArray != null ) {
+				File descFile = new File(dir,"description.txt");
+				DetectorFiducialCalibration detector = d.creator.create(descFile);
 
-			Collections.sort(files);
-			evaluate(d.detector,d.name,overallMetrics,output, files);
+				List<File> files = Arrays.asList(filesArray);
+				Collections.sort(files);
+				evaluate(detector,d.name,overallMetrics,output, files);
+			} else {
+				errorLog.println("No files found in "+dir);
+			}
+
+
 		}
 		output.println();
 
@@ -205,11 +218,67 @@ public class CalibrationDetectionRegression extends BaseTextFileRegression{
 	private class DetectorInfo
 	{
 		String name;
-		DetectorFiducialCalibration detector;
+		CreateCalibration creator;
 
-		public DetectorInfo(String name, DetectorFiducialCalibration detector) {
+		public DetectorInfo(String name, CreateCalibration creator) {
 			this.name = name;
-			this.detector = detector;
+			this.creator = creator;
+		}
+	}
+
+	interface CreateCalibration {
+		DetectorFiducialCalibration create( File file );
+	}
+
+	static class CreateChessboard implements CreateCalibration {
+		@Override
+		public DetectorFiducialCalibration create(File file) {
+			ConfigChessboard config;
+			if( !file.exists() )
+				config = new ConfigChessboard(7, 5,30);
+			else {
+				throw new RuntimeException("Implement");
+			}
+			return FactoryFiducialCalibration.chessboard(config);
+		}
+	}
+
+	static class CreateSquareGrid implements CreateCalibration {
+		@Override
+		public DetectorFiducialCalibration create(File file) {
+			ConfigSquareGrid config;
+			if( !file.exists() )
+				config = new ConfigSquareGrid(4, 3,30,30);
+			else {
+				throw new RuntimeException("Implement");
+			}
+			return FactoryFiducialCalibration.squareGrid(config);
+		}
+	}
+
+	static class CreateCircleRegular implements CreateCalibration {
+		@Override
+		public DetectorFiducialCalibration create(File file) {
+			ConfigCircleRegularGrid config;
+			if( !file.exists() )
+				config = new ConfigCircleRegularGrid(4, 3,4,6);
+			else {
+				throw new RuntimeException("Implement");
+			}
+			return FactoryFiducialCalibration.circleRegularGrid(config);
+		}
+	}
+
+	static class CreateCircleHexagonal implements CreateCalibration {
+		@Override
+		public DetectorFiducialCalibration create(File file) {
+			ConfigCircleHexagonalGrid config;
+			if( !file.exists() )
+				config = new ConfigCircleHexagonalGrid(8, 5,2,6);
+			else {
+				config = parseCircleHexagonalConfig(file);
+			}
+			return FactoryFiducialCalibration.circleHexagonalGrid(config);
 		}
 	}
 

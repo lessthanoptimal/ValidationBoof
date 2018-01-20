@@ -1,3 +1,0 @@
-# square asymmetric grid calibration target
-# rows columns diameter (center distance)
-8 5 2 6
