@@ -12,6 +12,9 @@ import validate.fiducial.qrcode.EvaluateQrCodeDetections;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * @author Peter Abeles
@@ -80,6 +83,10 @@ public class QrCodeRegression extends BaseTextFileRegression {
 		File[] directories = groundTruthHome.listFiles();
 		if( directories == null )
 			throw new IOException("no data set directories found in "+groundTruthHome.getPath());
+
+		// sort the directories so that the results are printed out in the same order always
+		List<File> listDirectories = Arrays.asList(directories);
+		Collections.sort(listDirectories);
 
 		int totalTP = 0;
 		int totalN = 0;
