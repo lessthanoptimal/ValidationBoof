@@ -1,6 +1,5 @@
 #!/usr/bin/python
 import os
-import sys
 
 # Run all the training scenarios
 for i in range(0,12):

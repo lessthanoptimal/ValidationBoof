@@ -1,73 +1,74 @@
-apply plugin: 'idea'
-apply plugin: 'java'
-apply plugin: 'maven'
 
 group = 'org.boofcv'
 version = '0.28'
-sourceCompatibility = 1.8
 
-repositories {
-    mavenCentral()
-    mavenLocal()
+allprojects{
+    apply plugin: 'idea'
+    apply plugin: 'java'
+    apply plugin: 'maven'
 
-    maven {
-        url = "https://oss.sonatype.org/content/repositories/snapshots/"
+    repositories {
+        mavenCentral()
+        mavenLocal()
+
+        maven {
+            url = "https://oss.sonatype.org/content/repositories/snapshots/"
+        }
+    }
+
+    dependencies {
+        compile files("$project.rootDir/lib/ProjectBUBO.jar")
+
+        ['boofcv-core','boofcv-swing'].each { String a -> compile group: 'org.boofcv', name: a, version: '0.28' }
+        compile group: 'com.google.guava', name: 'guava', version: '17.0'
+        compile group: 'commons-io', name: 'commons-io', version: '2.6'
+        compile group: 'args4j', name: 'args4j', version: '2.33'
+
+        testCompile group: 'junit', name: 'junit', version: '4.12'
     }
 }
 
-sourceSets {
-    main {
-        java {
-            srcDir 'src/java'
+subprojects {
+    // Create a jar which contains all the applications
+    task moduleJars(type: Jar) {
+        manifest {
+            attributes 'Implementation-Title': 'BoofCV Regression Jar',
+                    'Implementation-Version': '1'
+        }
+
+        outputs.upToDateWhen { false }
+
+        from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+        with jar
+
+        doLast {
+            archivePath.renameTo(file('module_regression.jar'))
         }
     }
-    test {
-        java {
-            srcDir 'test/java'
-        }
+
+    clean.doFirst {
+        delete "module_regression.jar"
     }
 }
 
-task regressionJar(type: Jar) {
-    manifest {
-        attributes 'Implementation-Title': 'Validation Boof',
-                'Implementation-Version': version,
-                'Main-Class': 'regression.GenerateRegressionData'
+[':modules'].each {String a ->
+    project(a) {
+        jar.enabled = false
+        install.enabled = false
+        moduleJars.enabled = false
     }
+}
 
-    outputs.upToDateWhen { false }
-
-    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
-    with jar
-
-    doLast {
-        archivePath.renameTo(file('regression.jar'))
-    }
+clean.doFirst {
+    delete "results"
+    delete "tmp"
 }
 
 dependencies {
-    compile files("lib/ProjectBUBO.jar")
-
-    ['boofcv-core','boofcv-swing'].each { String a -> compile group: 'org.boofcv', name: a, version: '0.28' }
-
-    compile group: 'com.google.guava', name: 'guava', version: '17.0'
-
-    testCompile group: 'junit', name: 'junit', version: '4.12'
-    compile group: 'commons-io', name: 'commons-io', version: '2.6'
+    compile project(':modules:common')
 }
 
 task wrapper(type: Wrapper) {
     gradleVersion = '4.3'
-}
-
-idea {
-    project {
-        jdkName = '1.8 (64bit)'
-        languageLevel = '1.8'
-    }
-
-    module {
-        name = "BoofCV Validation"
-    }
 }
 

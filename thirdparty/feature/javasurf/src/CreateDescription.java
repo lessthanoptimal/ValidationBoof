@@ -2,7 +2,6 @@ import org.mite.jsurf.*;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 

@@ -1,7 +1,16 @@
 Description of changes to benchmarks and justifications for change in performance from previous versions.
 
+## Version 0.29
+2018/01/20
+
+- Broke regression up into different code modules. This was does so that when performing a binary search for a 
+  regression broken code due to a change in API in an unrelated part of the code won't break the whole test
+- 
+  
+
+
 ## Version 0.28
-2018/01
+2018/01/20
 
 - Polyline Algorthm was changed in square based fidudicals
   * In general this improved speed and reliability

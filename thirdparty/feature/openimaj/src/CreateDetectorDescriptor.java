@@ -6,10 +6,6 @@ import org.openimaj.image.feature.local.keypoints.Keypoint;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
 
 /**
  * @author Peter Abeles

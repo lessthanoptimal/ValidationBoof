@@ -1,0 +1,3 @@
+include 'modules:common','modules:calibration','modules:feature','modules:fiducials',
+        'modules:objectracking','modules:segmentation','modules:shape','modules:imageprocessing','modules:geo',
+        'modules:classification'

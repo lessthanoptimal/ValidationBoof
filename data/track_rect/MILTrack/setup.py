@@ -1,6 +1,5 @@
 #!/usr/bin/python
 
-import sys
 import os
 from os import listdir
 from os.path import isfile, join

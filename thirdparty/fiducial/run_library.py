@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 
-import os, sys, subprocess
+import os
+import subprocess
+import sys
 from os.path import isdir, join
 
 if len(sys.argv) < 3:

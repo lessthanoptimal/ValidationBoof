@@ -16,12 +16,11 @@ http://rodrigob.github.io
 
 from __future__ import print_function
 
-import os
 import glob
+import os
+import pylab
 import time
 from optparse import OptionParser
-
-import pylab
 
 from circulant_matrix_tracker import *
 

@@ -1,8 +1,8 @@
-data/fiducials/square_border_image/standard/distance_angle 300 215.672
-data/fiducials/square_border_image/standard/distance_straight 300 264.784
-data/fiducials/square_border_image/standard/hard 300  78.699
-data/fiducials/square_border_image/standard/motion_blur 300 149.328
-data/fiducials/square_border_image/standard/rotation 300 288.739
-data/fiducials/square_border_image/static/static_front_close 300 482.315
-data/fiducials/square_border_image/static/static_front_far 300 376.884
-data/fiducials/square_border_image/static/static_scene 300 134.771
+data/fiducials/square_border_image/standard/distance_angle 300 211.864
+data/fiducials/square_border_image/standard/distance_straight 300 258.398
+data/fiducials/square_border_image/standard/hard 300  81.015
+data/fiducials/square_border_image/standard/motion_blur 300 138.696
+data/fiducials/square_border_image/standard/rotation 300 272.232
+data/fiducials/square_border_image/static/static_front_close 300 459.418
+data/fiducials/square_border_image/static/static_front_far 300 356.295
+data/fiducials/square_border_image/static/static_scene 300 125.156

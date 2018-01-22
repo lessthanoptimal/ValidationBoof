@@ -1,7 +1,7 @@
-data/fiducials/circle_regular/standard/distance_angle 300 132.626
-data/fiducials/circle_regular/standard/distance_straight 300 144.509
-data/fiducials/circle_regular/standard/motion_blur 300 317.125
-data/fiducials/circle_regular/standard/rotation 300 104.858
-data/fiducials/circle_regular/static/angled 300 116.959
-data/fiducials/circle_regular/static/front_close 300 173.511
-data/fiducials/circle_regular/static/front_far 300 138.185
+data/fiducials/circle_regular/standard/distance_angle 300 113.037
+data/fiducials/circle_regular/standard/distance_straight 300 112.066
+data/fiducials/circle_regular/standard/motion_blur 300 259.291
+data/fiducials/circle_regular/standard/rotation 300  92.393
+data/fiducials/circle_regular/static/angled 300 103.484
+data/fiducials/circle_regular/static/front_close 300 152.983
+data/fiducials/circle_regular/static/front_far 300 123.001
