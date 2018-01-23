@@ -4,6 +4,7 @@ import boofcv.abst.fiducial.calib.*;
 import boofcv.abst.geo.calibration.DetectorFiducialCalibration;
 import boofcv.alg.geo.calibration.CalibrationObservation;
 import boofcv.common.BaseImageRegression;
+import boofcv.common.BoofRegressionConstants;
 import boofcv.common.misc.PointFileCodec;
 import boofcv.factory.fiducial.FactoryFiducialCalibration;
 import boofcv.io.image.UtilImageIO;
@@ -39,6 +40,7 @@ public class CalibrationDetectionRegression extends BaseImageRegression {
 	List<DetectorInfo> circleRegDetectors = new ArrayList<DetectorInfo>();
 
 	public CalibrationDetectionRegression() {
+		super(BoofRegressionConstants.TYPE_CALIBRATION);
 
 		chessDirectories.add("data/calibration_stereo/Bumblebee2_Chess");
 		chessDirectories.add("data/calibration_mono/chessboard/Sony_DSC-HX5V");
@@ -113,7 +115,8 @@ public class CalibrationDetectionRegression extends BaseImageRegression {
 	}
 
 	private void evaluate( DetectorInfo d , List<String> directories ) throws FileNotFoundException {
-		PrintStream output = new PrintStream(new File(directory,d.name+".txt"));
+		PrintStream output = new PrintStream(new File(directory,"ACC_"+d.name+".txt"));
+		BoofRegressionConstants.printGenerator(output,getClass());
 		output.println("# (file name) (truth error 50%) (truth error 95%)");
 
 		OverallMetrics overallMetrics = new OverallMetrics();

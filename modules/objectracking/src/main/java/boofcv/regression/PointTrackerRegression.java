@@ -57,6 +57,10 @@ public class PointTrackerRegression extends BaseImageRegression {
 	String variousSets[] = new String[]{"lighting","compressed","urban"};
 	int skips[] = new int[]{1,4,8};
 
+	public PointTrackerRegression() {
+		super(BoofRegressionConstants.TYPE_TRACKING);
+	}
+
 	@Override
 	public void process(ImageDataType type) throws IOException {
 		List<Info> all = new ArrayList<Info>();
@@ -81,7 +85,8 @@ public class PointTrackerRegression extends BaseImageRegression {
 	}
 
 	protected void process( Info info , Class bandType ) throws FileNotFoundException {
-		PrintStream outSummary = new PrintStream(new FileOutputStream(new File(directory,"PointTracker_"+info.name+".txt")));
+		PrintStream outSummary = new PrintStream(new FileOutputStream(new File(directory,"ACC_PointTracker_"+info.name+".txt")));
+		BoofRegressionConstants.printGenerator(outSummary, getClass());
 		outSummary.println("# Inlier Tolerance " + tolerance + "  Algorithm " + info.name);
 		outSummary.println("# (File) (Skip) (F) (F all inside) (Precision) (Recall) (Recall all inside) (Tracks)");
 

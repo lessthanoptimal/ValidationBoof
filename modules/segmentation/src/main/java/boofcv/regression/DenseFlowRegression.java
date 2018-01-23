@@ -20,6 +20,10 @@ public class DenseFlowRegression extends BaseImageRegression {
 
 	public static final String path = "data/denseflow/";
 
+	public DenseFlowRegression() {
+		super(BoofRegressionConstants.TYPE_SEGMENTATION);
+	}
+
 	public void process( ImageDataType type ) {
 
 		List<Info> all = new ArrayList<Info>();
@@ -35,7 +39,8 @@ public class DenseFlowRegression extends BaseImageRegression {
 		for( Info i : all ) {
 			System.out.println("Regression "+i.name);
 			try {
-				PrintStream out = new PrintStream(new File(directory,"DenseFlow"+i.name+".txt"));
+				PrintStream out = new PrintStream(new File(directory,"ACC_DenseFlow"+i.name+".txt"));
+				BoofRegressionConstants.printGenerator(out, getClass());
 				BenchmarkMiddleburyFlow benchmark = new BenchmarkMiddleburyFlow(path,i.detdesc,out);
 				benchmark.evaluate();
 				out.flush();

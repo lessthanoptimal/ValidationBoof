@@ -22,7 +22,9 @@ public class DetectPolygonRegression extends BaseImageRegression {
 	File workDirectory = new File("./tmp");
 	File baseDataSetDirectory = new File("data/shape/polygon");
 
-	String infoString;
+	public DetectPolygonRegression() {
+		super(BoofRegressionConstants.TYPE_SHAPE);
+	}
 
 	@Override
 	public void process(ImageDataType type) throws IOException {
@@ -35,15 +37,17 @@ public class DetectPolygonRegression extends BaseImageRegression {
 	private void process(String name, boolean localBinary , FactoryObject<DetectPolygonBinaryGrayRefine> factory)
 			throws IOException {
 
-		String outputName = "ShapeDetector_"+name+".txt";
-		String outputSpeedName = "ShapeDetectorSpeed_"+name+".txt";
+		String outputName = "ACC_ShapeDetector_"+name+".txt";
+		String outputSpeedName = "RUN_ShapeDetector_"+name+".txt";
 
 		EvaluatePolygonDetector evaluator = new EvaluatePolygonDetector();
 
 		PrintStream output = new PrintStream(new File(directory,outputName));
+		BoofRegressionConstants.printGenerator(output, getClass());
 		evaluator.setOutputResults(output);
 
 		PrintStream outputSpeed = new PrintStream(new File(directory,outputSpeedName));
+		BoofRegressionConstants.printGenerator(outputSpeed, getClass());
 		outputSpeed.println("# Average processing time of shape detector algorithm "+name);
 
 		List<File> files = BoofRegressionConstants.listAndSort(baseDataSetDirectory);

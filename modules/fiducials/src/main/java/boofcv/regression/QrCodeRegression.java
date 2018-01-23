@@ -29,13 +29,18 @@ public class QrCodeRegression extends BaseImageRegression {
 
 	String infoString;
 
+	public QrCodeRegression() {
+		super(BoofRegressionConstants.TYPE_FIDCUIALS);
+	}
+
 	@Override
 	public void process(ImageDataType type) throws IOException {
 		final Class imageType = ImageDataType.typeToSingleClass(type);
 
 
-		evaluateMessage.out = new PrintStream(new File(directory,"QRCodeMessage.txt"));
+		evaluateMessage.out = new PrintStream(new File(directory,"ACC_QRCodeMessage.txt"));
 		evaluateMessage.err = errorLog;
+		BoofRegressionConstants.printGenerator(evaluateMessage.out, getClass());
 
 		ConfigQrCode config = new ConfigQrCode();
 //		config.threshold = ConfigThreshold.local(ThresholdType.LOCAL_MEAN,15);
@@ -64,11 +69,13 @@ public class QrCodeRegression extends BaseImageRegression {
 
 		infoString = name;
 
-		PrintStream runtimeOut = new PrintStream(new File(directory,"QRCodeRuntime_"+name+".txt"));
+		PrintStream runtimeOut = new PrintStream(new File(directory,"RUN_QRCode_"+name+".txt"));
+		BoofRegressionConstants.printGenerator(runtimeOut, getClass());
 		runtimeOut.println("# "+name);
 		runtimeOut.println("# Average runtime in milliseconds for each dataset for "+name);
 
-		PrintStream metricsOut = new PrintStream(new File(directory,"QRCodeDetection_"+name+".txt"));
+		PrintStream metricsOut = new PrintStream(new File(directory,"ACC_QRCodeDetection_"+name+".txt"));
+		BoofRegressionConstants.printGenerator(metricsOut, getClass());
 
 		metricsOut.println("# QR Code Detection Metrics for "+name);
 		metricsOut.println("# N  = total number of qr codes in truth set");

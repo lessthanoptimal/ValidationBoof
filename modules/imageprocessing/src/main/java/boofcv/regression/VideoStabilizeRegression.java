@@ -2,6 +2,7 @@ package boofcv.regression;
 
 import boofcv.alg.sfm.d2.StitchingFromMotion2D;
 import boofcv.common.BaseImageRegression;
+import boofcv.common.BoofRegressionConstants;
 import boofcv.metrics.stabilization.FactoryRegressionVideoStabilization;
 import boofcv.metrics.stabilization.RuntimePerformanceVideoStabilization;
 import boofcv.struct.image.ImageDataType;
@@ -24,6 +25,7 @@ public class VideoStabilizeRegression extends BaseImageRegression {
     List<File> videos = new ArrayList<>();
 
     public VideoStabilizeRegression() {
+        super(BoofRegressionConstants.TYPE_IMAGEPROCESSING);
         videos.add( new File("data/video_stabilize/shake.mjpeg") );
     }
 
@@ -46,7 +48,7 @@ public class VideoStabilizeRegression extends BaseImageRegression {
     private void performRuntime(String name , StitchingFromMotion2D alg , ImageType imageType )
             throws FileNotFoundException
     {
-        name = "VideoStabilization_Runtime_" + name;
+        name = "RUN_VideoStabilization_" + name;
         switch( imageType.getFamily() ) {
             case GRAY:name += "_gray";break;
             case PLANAR:name += "_planar";break;
@@ -57,6 +59,7 @@ public class VideoStabilizeRegression extends BaseImageRegression {
         RuntimePerformanceVideoStabilization benchmark = new RuntimePerformanceVideoStabilization(alg,imageType);
 
         PrintStream out = new PrintStream(new File(directory,name+".txt"));
+        BoofRegressionConstants.printGenerator(out, getClass());
 
         out.println("# Runtime Performance of "+name);
 

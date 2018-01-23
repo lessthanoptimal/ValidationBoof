@@ -42,6 +42,10 @@ import java.util.List;
  */
 public class StereoVisualOdometryRegression extends BaseImageRegression {
 
+	public StereoVisualOdometryRegression() {
+		super(BoofRegressionConstants.TYPE_GEOMETRY);
+	}
+
 	@Override
 	public void process(ImageDataType type) throws IOException {
 		List<Info> all = new ArrayList<Info>();
@@ -70,7 +74,8 @@ public class StereoVisualOdometryRegression extends BaseImageRegression {
 	}
 
 	private void evaluate( Info vo , SequenceStereoImages data , String dataName ) throws FileNotFoundException {
-		PrintStream out = new PrintStream(new File(directory,"StereoVisOdom_"+dataName+"_"+vo.name+".txt"));
+		PrintStream out = new PrintStream(new File(directory,"ACC_StereoVisOdom_"+dataName+"_"+vo.name+".txt"));
+		BoofRegressionConstants.printGenerator(out, getClass());
 		try {
 			EvaluateVisualOdometryStereo evaluator = new EvaluateVisualOdometryStereo(data,vo.vo,vo.imageType);
 

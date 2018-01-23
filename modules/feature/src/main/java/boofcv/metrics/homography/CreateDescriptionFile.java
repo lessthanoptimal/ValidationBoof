@@ -95,12 +95,12 @@ public class CreateDescriptionFile<T extends ImageBase<T>, D extends TupleDesc_F
 			String directoryPath = f.getParent();
 			imageName = imageName.substring(0,imageName.length()-imageSuffix.length());
 
-			File detectionFile = new File(directoryPath+"/DETECTED_"+imageName+"_"+detectionSuffix);
+			File detectionFile = new File(directoryPath,"DETECTED_"+imageName+"_"+detectionSuffix);
 			if( !detectionFile.exists() )
 				throw new RuntimeException("Detection file does not exist: "+detectionFile.getName());
 
 			BufferedImage image = UtilImageIO.loadImage(f.getPath());
-			process(image,detectionFile.getPath(),directoryPath+"/DESCRIBE_"+imageName+"_"+descriptionName+".txt");
+			process(image,detectionFile.getPath(),new File(directoryPath,"DESCRIBE_"+imageName+"_"+descriptionName+".txt").getPath());
 			filesFound++;
 		}
 		System.out.println("Total files processed: "+filesFound);

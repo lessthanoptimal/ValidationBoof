@@ -15,9 +15,14 @@ import java.io.PrintStream;
  */
 public class CornerDetectorChangeRegression extends BaseImageRegression {
 
+	public CornerDetectorChangeRegression() {
+		super(BoofRegressionConstants.TYPE_FEATURE);
+	}
+
 	@Override
 	public void process( ImageDataType type ) throws IOException {
-		PrintStream out = new PrintStream(new File(directory,"detect_corner_change.txt"));
+		PrintStream out = new PrintStream(new File(directory,"ACC_detect_corner_change.txt"));
+		BoofRegressionConstants.printGenerator(out,getClass());
 		out.println("# Checks to change in the behavior of corner detectors");
 		out.println("# detector (change in total features) (difference in location)");
 		ComparePreviousCorner compare = new ComparePreviousCorner(out);

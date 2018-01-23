@@ -1,5 +1,7 @@
 package boofcv.metrics.object;
 
+import boofcv.common.BoofRegressionConstants;
+import boofcv.regression.ObjectTrackingRegression;
 import georegression.struct.shapes.Rectangle2D_F64;
 
 import java.io.*;
@@ -24,8 +26,7 @@ public class EvaluateResultsTldData {
 		try {
 			readerRect = new BufferedReader(new FileReader(inputFile));
 		} catch( IOException e ) {
-			System.err.println("Can't find file. Skipping.  "+inputFile);
-			return;
+			throw new RuntimeException("TLD. Can't find file. Skipping.  "+inputFile);
 		}
 
 		TldResults stats = new TldResults();
@@ -76,7 +77,8 @@ public class EvaluateResultsTldData {
 		EvaluateResultsTldData evaluator = new EvaluateResultsTldData();
 
 		System.out.println("------------ "+library+" ------------------");
-		PrintStream out = new PrintStream(new File(path,"TldData_"+library+".txt"));
+		PrintStream out = new PrintStream(new File(path,"ACC_TldData_"+library+".txt"));
+		BoofRegressionConstants.printGenerator(out,ObjectTrackingRegression.class);
 		if( formatLatex ) {
 			out.println("\\begin{tabular}{|l|c|c|c|c|c|c|}");
 			out.println("\\hline");

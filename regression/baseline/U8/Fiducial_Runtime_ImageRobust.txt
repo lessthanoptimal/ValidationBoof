@@ -1,8 +1,0 @@
-data/fiducials/square_border_image/standard/distance_angle 300  65.474
-data/fiducials/square_border_image/standard/distance_straight 300  76.084
-data/fiducials/square_border_image/standard/hard 300  36.162
-data/fiducials/square_border_image/standard/motion_blur 300  86.780
-data/fiducials/square_border_image/standard/rotation 300  50.968
-data/fiducials/square_border_image/static/static_front_close 300 153.453
-data/fiducials/square_border_image/static/static_front_far 300 142.450
-data/fiducials/square_border_image/static/static_scene 300  81.990

@@ -1,5 +1,7 @@
 package boofcv.metrics.object;
 
+import boofcv.common.BoofRegressionConstants;
+import boofcv.regression.ObjectTrackingRegression;
 import georegression.struct.shapes.Rectangle2D_F64;
 
 import java.io.*;
@@ -24,8 +26,7 @@ public class EvaluateResultsMilTrackData {
 		File resultsFile = new File(inputName);
 
 		if( resultsFile.length() == 0 ) {
-			System.out.println("Empty file, skipping");
-			return;
+			throw new RuntimeException(inputName+" is empty.  Skipping. MIL");
 		}
 
 		BufferedReader readerTruth = new BufferedReader(new FileReader(path + "/" + dataName + "_gt.txt"));
@@ -72,7 +73,8 @@ public class EvaluateResultsMilTrackData {
 		EvaluateResultsMilTrackData evaluator = new EvaluateResultsMilTrackData();
 
 		System.out.println("------------ "+library+" ------------------");
-		PrintStream out = new PrintStream(new File(metricsOutputPath,"MILTrackData_"+library+".txt"));
+		PrintStream out = new PrintStream(new File(metricsOutputPath,"ACC_MILTrackData_"+library+".txt"));
+		BoofRegressionConstants.printGenerator(out,ObjectTrackingRegression.class);
 		if( formatLatex ) {
 			out.println("\\begin{tabular}{|l|c|c|c|c|c|c|}");
 			out.println("\\hline");

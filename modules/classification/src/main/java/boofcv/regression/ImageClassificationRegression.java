@@ -25,6 +25,12 @@ import java.util.List;
  * @author Peter Abeles
  */
 public class ImageClassificationRegression extends BaseImageRegression {
+
+
+	public ImageClassificationRegression() {
+		super(BoofRegressionConstants.TYPE_CLASSIFICATION);
+	}
+
 	@Override
 	public void process(ImageDataType type) throws IOException {
 
@@ -32,7 +38,8 @@ public class ImageClassificationRegression extends BaseImageRegression {
 			throw new RuntimeException("Only F32 images supported.  Skipping");
 		}
 
-		PrintStream out = new PrintStream(new File(directory,"image_classification_change.txt"));
+		PrintStream out = new PrintStream(new File(directory,"ACC_image_classification_change.txt"));
+		BoofRegressionConstants.printGenerator(out,getClass());
 		out.println("# Regression tests which outputs image classification results.  A change indicates");
 		out.println("# that the algorithm has changed in some way and should be inspected more closely.");
 

@@ -22,6 +22,10 @@ public class DetectEllipseRegression extends BaseImageRegression {
 	File workDirectory = new File("./tmp");
 	File baseDataSetDirectory = new File("data/shape/ellipse");
 
+	public DetectEllipseRegression() {
+		super(BoofRegressionConstants.TYPE_SHAPE);
+	}
+
 	@Override
 	public void process(ImageDataType type) throws IOException {
 		final Class imageType = ImageDataType.typeToSingleClass(type);
@@ -34,13 +38,17 @@ public class DetectEllipseRegression extends BaseImageRegression {
 	private void process(String name, boolean localBinary , FactoryObject<BinaryEllipseDetector> factory)
 			throws IOException {
 
-		String outputName = "ShapeDetector_"+name+".txt";
-
+		String outputName = "ACC_ShapeDetector_"+name+".txt";
+		String runtimeName = "RUN_ShapeDetector_"+name+".txt";
 
 		EvaluateEllipseDetector evaluator = new EvaluateEllipseDetector();
 
 		PrintStream output = new PrintStream(new File(directory,outputName));
+		BoofRegressionConstants.printGenerator(output, getClass());
 		evaluator.setOutputResults(output);
+
+		PrintStream outputRuntime = new PrintStream(new File(directory,runtimeName));
+		BoofRegressionConstants.printGenerator(outputRuntime, getClass());
 
 		List<File> files = BoofRegressionConstants.listAndSort(baseDataSetDirectory);
 
@@ -56,9 +64,12 @@ public class DetectEllipseRegression extends BaseImageRegression {
 			detection.processDirectory(f, workDirectory);
 			evaluator.evaluate(f, workDirectory);
 			output.println();
+
+			outputRuntime.printf("%20s %9.4f (ms)\n",f.getName(),detection.averageProcessingTime);
 		}
 
 		output.close();
+		outputRuntime.close();
 	}
 
 	public static void main(String[] args) throws IOException {

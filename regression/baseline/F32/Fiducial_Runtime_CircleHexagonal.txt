@@ -1,8 +1,0 @@
-data/fiducials/circle_hexagonal/standard/distance_angle 300 100.301
-data/fiducials/circle_hexagonal/standard/distance_straight 300 116.550
-data/fiducials/circle_hexagonal/standard/motion_blur 300 262.697
-data/fiducials/circle_hexagonal/standard/rotation 300 121.114
-data/fiducials/circle_hexagonal/static/angled_5x6 300 106.876
-data/fiducials/circle_hexagonal/static/front_close_24x28 300  25.221
-data/fiducials/circle_hexagonal/static/front_close_5x6 300 187.617
-data/fiducials/circle_hexagonal/static/front_far_5x6 300 113.250

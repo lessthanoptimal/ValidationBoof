@@ -19,13 +19,11 @@
 
 package boofcv.metrics.homography;
 
-import boofcv.abst.feature.associate.AssociateDescription;
 import boofcv.abst.feature.associate.ScoreAssociateEuclideanSq_F64;
 import boofcv.abst.feature.associate.ScoreAssociation;
 import boofcv.common.BoofRegressionConstants;
-import boofcv.factory.feature.associate.FactoryAssociation;
 import boofcv.io.image.UtilImageIO;
-import boofcv.struct.feature.TupleDesc_F64;
+import boofcv.regression.DetectDescribeRegression;
 import georegression.geometry.UtilPoint2D_F64;
 import georegression.struct.ConvertFloatType;
 import georegression.struct.homography.Homography2D_F32;
@@ -48,7 +46,6 @@ import java.util.List;
  * @author Peter Abeles
  */
 public class BenchmarkFeatureDetectStability {
-	AssociateDescription<TupleDesc_F64> assoc;
 	List<Homography2D_F32> transforms;
 	double tolerance;
 	double scaleTolerance = 0.25;
@@ -74,12 +71,10 @@ public class BenchmarkFeatureDetectStability {
 	int width;
 	int height;
 
-	public BenchmarkFeatureDetectStability(AssociateDescription<TupleDesc_F64> assoc,
-										   String outputLocation,
+	public BenchmarkFeatureDetectStability(String outputLocation,
 										   String inputLocation,
-										   double tolerance) {
-
-		this.assoc = assoc;
+										   double tolerance)
+	{
 		this.outputLocation = outputLocation;
 		this.inputLocation = inputLocation;
 		this.tolerance = tolerance;
@@ -122,7 +117,8 @@ public class BenchmarkFeatureDetectStability {
 	 */
 	public void evaluate( String algSuffix ) throws FileNotFoundException {
 		System.out.println("\n"+algSuffix);
-		output = new PrintStream(new File(outputLocation,"detect_stability_"+algSuffix+".txt"));
+		output = new PrintStream(new File(outputLocation,"ACC_detect_stability_"+algSuffix+".txt"));
+		BoofRegressionConstants.printGenerator(output, DetectDescribeRegression.class);
 		output.println("tolerance = "+tolerance);
 		output.println("scaleTolerance = "+scaleTolerance);
 		output.println();
@@ -162,19 +158,19 @@ public class BenchmarkFeatureDetectStability {
 		transforms = new ArrayList<Homography2D_F32>();
 		for( int i=1; i < nameBase.size(); i++ ) {
 			String fileName = "H1to"+(i+1)+"p";
-			Homography2D_F64 H64 = LoadHomographyBenchmarkFiles.loadHomography(dataSetDirectory  + fileName);
+			Homography2D_F64 H64 = LoadHomographyBenchmarkFiles.loadHomography(new File(dataSetDirectory , fileName).getPath());
 			Homography2D_F32 h = ConvertFloatType.convert(H64, null);
 			transforms.add(h);
 		}
 
 		List<DetectionInfo> detections[] = new ArrayList[nameBase.size()];
 		for( int i = 0; i < nameBase.size(); i++ ) {
-			String detectName = String.format("%sDETECTED_%s_%s_%s.txt", inputLocation, dataSetName, nameBase.get(i), algSuffix);
+			String detectName = new File(inputLocation,String.format("DETECTED_%s_%s_%s.txt", dataSetName, nameBase.get(i), algSuffix)).getPath();
 			detections[i] = LoadHomographyBenchmarkFiles.loadDetection(detectName);
 		}
 
-		List<Integer> matches = new ArrayList<Integer>();
-		List<Double> fractions = new ArrayList<Double>();
+		List<Integer> matches = new ArrayList<>();
+		List<Double> fractions = new ArrayList<>();
 
 		for( int i = 1; i < nameBase.size(); i++ ) {
 
@@ -290,9 +286,8 @@ public class BenchmarkFeatureDetectStability {
 		double tolerance = 1.5;
 
 		ScoreAssociation score = new ScoreAssociateEuclideanSq_F64();
-		AssociateDescription<TupleDesc_F64> assoc = FactoryAssociation.greedy(score, Double.MAX_VALUE, true);
 
-		BenchmarkFeatureDetectStability app = new BenchmarkFeatureDetectStability(assoc, "","",tolerance);
+		BenchmarkFeatureDetectStability app = new BenchmarkFeatureDetectStability( "","",tolerance);
 
 		app.addDirectory("data/bikes/");
 		app.addDirectory("data/boat/");

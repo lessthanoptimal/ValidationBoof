@@ -1,7 +1,0 @@
-data/fiducials/square_border_binary/standard/distance_angle 300 207.326
-data/fiducials/square_border_binary/standard/distance_straight 300 211.566
-data/fiducials/square_border_binary/standard/motion_blur 300 137.994
-data/fiducials/square_border_binary/standard/rotation 300 269.784
-data/fiducials/square_border_binary/static/static_front_close 300 445.765
-data/fiducials/square_border_binary/static/static_front_far 300 413.793
-data/fiducials/square_border_binary/static/static_scene 300 167.504

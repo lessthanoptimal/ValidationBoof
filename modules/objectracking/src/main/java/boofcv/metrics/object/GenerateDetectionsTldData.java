@@ -1,6 +1,7 @@
 package boofcv.metrics.object;
 
 import boofcv.abst.tracker.TrackerObjectQuad;
+import boofcv.common.BoofRegressionConstants;
 import boofcv.io.image.ConvertBufferedImage;
 import boofcv.io.image.UtilImageIO;
 import boofcv.struct.image.ImageBase;
@@ -25,7 +26,7 @@ public class GenerateDetectionsTldData<T extends ImageBase<T>> {
 
 	T input;
 
-	File outputDirectory = new File("./tmp");
+	File outputDirectory = BoofRegressionConstants.tempDir();
 
 	public GenerateDetectionsTldData(ImageType<T> type) {
 		input = type.createImage(1,1);

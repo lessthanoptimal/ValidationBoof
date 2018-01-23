@@ -14,12 +14,24 @@ public abstract class BaseImageRegression implements ImageRegression {
 
 	protected String directory;
 	protected PrintStream errorLog;
+	// determines the sub-directory that the results will be written to
+	protected String resultsType;
+
+	public BaseImageRegression(String resultsType) {
+		this.resultsType = resultsType;
+	}
 
 	@Override
 	public void setOutputDirectory(String directory) {
-		this.directory = directory;
+		File f = new File(directory,resultsType);
+		if( !f.exists() ) {
+			if( !f.mkdirs() ) {
+				throw new RuntimeException("Can't make output directory "+f.getPath());
+			}
+		}
+		this.directory = f.getPath();
 
-		File tmp = new File("tmp");
+		File tmp = BoofRegressionConstants.tempDir();
 		if( !tmp.exists() ) {
 			if( !tmp.mkdir() )
 				throw new RuntimeException("Can't create tmp directory");

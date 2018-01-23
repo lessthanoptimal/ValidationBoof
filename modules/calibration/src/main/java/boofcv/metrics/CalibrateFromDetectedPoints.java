@@ -49,6 +49,7 @@ public class CalibrateFromDetectedPoints {
 
 	public void setOutputResults(PrintStream outputResults) {
 		this.outputResults = outputResults;
+
 	}
 
 	public void setErrorStream(PrintStream err) {

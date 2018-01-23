@@ -22,7 +22,9 @@ package boofcv.metrics.homography;
 import boofcv.abst.feature.associate.AssociateDescription;
 import boofcv.abst.feature.associate.ScoreAssociateEuclideanSq_F64;
 import boofcv.abst.feature.associate.ScoreAssociation;
+import boofcv.common.BoofRegressionConstants;
 import boofcv.factory.feature.associate.FactoryAssociation;
+import boofcv.regression.DetectDescribeRegression;
 import boofcv.struct.feature.AssociatedIndex;
 import boofcv.struct.feature.TupleDesc_F64;
 import georegression.geometry.UtilPoint2D_F64;
@@ -119,7 +121,8 @@ public class BenchmarkFeatureDescribeStability {
 	 */
 	public void evaluate( String algSuffix ) throws FileNotFoundException {
 		System.out.println("\n"+algSuffix);
-		output = new PrintStream(new File(outputLocation,"describe_stability_"+algSuffix+".txt"));
+		output = new PrintStream(new File(outputLocation,"ACC_describe_stability_"+algSuffix+".txt"));
+		BoofRegressionConstants.printGenerator(output, DetectDescribeRegression.class);
 		output.println("tolerance = "+tolerance);
 		output.println("# rows = Max Matches | Precision | Recall | F-measure");
 		output.println();
@@ -168,7 +171,7 @@ public class BenchmarkFeatureDescribeStability {
 			transforms.add( LoadHomographyBenchmarkFiles.loadHomography(imageDirectory + "/" + fileName));
 		}
 
-		String descriptionName = inputLocation+"DESCRIBE_"+dataSetName+"_"+nameBase.get(0)+"_"+algSuffix;
+		String descriptionName = new File(inputLocation,"DESCRIBE_"+dataSetName+"_"+nameBase.get(0)+"_"+algSuffix).getPath();
 		// load descriptions in the keyframe
 		List<FeatureInfo> keyFrame = LoadHomographyBenchmarkFiles.loadDescription(descriptionName);
 
@@ -180,7 +183,7 @@ public class BenchmarkFeatureDescribeStability {
 		for( int i = 1; i < nameBase.size(); i++ ) {
 //			System.out.print("Examining "+nameBase.get(i));
 
-			descriptionName = inputLocation+"DESCRIBE_"+dataSetName+"_"+nameBase.get(i)+"_"+algSuffix;
+			descriptionName = new File(inputLocation,"DESCRIBE_"+dataSetName+"_"+nameBase.get(i)+"_"+algSuffix).getPath();
 			List<FeatureInfo> targetFrame = LoadHomographyBenchmarkFiles.loadDescription(descriptionName);
 
 			Homography2D_F64 keyToTarget = transforms.get(i-1);

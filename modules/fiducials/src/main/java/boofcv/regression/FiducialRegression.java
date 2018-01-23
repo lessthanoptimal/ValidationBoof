@@ -27,6 +27,10 @@ public class FiducialRegression extends BaseImageRegression {
 
 	String infoString;
 
+	public FiducialRegression() {
+		super(BoofRegressionConstants.TYPE_FIDCUIALS);
+	}
+
 	@Override
 	public void process(ImageDataType type) throws IOException {
 		final Class imageType = ImageDataType.typeToSingleClass(type);
@@ -71,17 +75,17 @@ public class FiducialRegression extends BaseImageRegression {
 		estimate.setOutputDirectory(workDirectory);
 		estimate.initialize(new File(baseFiducial, type));
 
-		computeRuntimeMetrics(type, "Fiducial_Runtime_" + name + ".txt", estimate);
-		computeStandardMetrics(type, "Fiducial_Standard_" + name + ".txt", estimate, 5);
-		computeStaticMetrics(type, "Fiducial_Static_" + name + ".txt", estimate, 5);
-		computeAlwaysVisibleMetrics(type, "Fiducial_AlwaysVisible_" + name + ".txt", estimate);
+		computeRuntimeMetrics(type, "RUN_Fiducial_" + name + ".txt", estimate); // TODO compute while doing the others
+		computeStandardMetrics(type, "ACC_Fiducial_Standard_" + name + ".txt", estimate, 5);
+		computeStaticMetrics(type, "ACC_Fiducial_Static_" + name + ".txt", estimate, 5);
+		computeAlwaysVisibleMetrics(type, "ACC_Fiducial_AlwaysVisible_" + name + ".txt", estimate);
 	}
 
 	private void computeRuntimeMetrics(String type, String outName, BaseEstimateSquareFiducialToCamera factory )
 			throws IOException
 	{
 		PrintStream out = new PrintStream(new File(directory,outName));
-
+		BoofRegressionConstants.printGenerator(out, getClass());
 
 		RuntimePerformanceFiducialToCamera benchmark =
 				new RuntimePerformanceFiducialToCamera(factory);
@@ -98,6 +102,7 @@ public class FiducialRegression extends BaseImageRegression {
 			throws IOException
 	{
 		PrintStream out = new PrintStream(new File(directory,outName));
+		BoofRegressionConstants.printGenerator(out,getClass());
 
 		EvaluateFiducialToCamera evaluate = new EvaluateFiducialToCamera();
 		evaluate.setJustSummary(true);
@@ -114,6 +119,7 @@ public class FiducialRegression extends BaseImageRegression {
 			throws IOException
 	{
 		PrintStream out = new PrintStream(new File(directory,outName));
+		BoofRegressionConstants.printGenerator(out,getClass());
 
 		EvaluateStaticFiducialSequence evaluate = new EvaluateStaticFiducialSequence();
 		evaluate.setJustSummary(true);
@@ -129,6 +135,7 @@ public class FiducialRegression extends BaseImageRegression {
 			throws IOException
 	{
 		PrintStream out = new PrintStream(new File(directory,outName));
+		BoofRegressionConstants.printGenerator(out,getClass());
 
 		EvaluateAlwaysVisibleSequence evaluate = new EvaluateAlwaysVisibleSequence();
 		evaluate.setErrorStream(errorLog);

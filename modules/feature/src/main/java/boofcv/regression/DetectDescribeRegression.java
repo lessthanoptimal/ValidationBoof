@@ -33,7 +33,9 @@ import boofcv.struct.image.ImageDataType;
 import boofcv.struct.image.ImageGray;
 import boofcv.struct.image.ImageType;
 
+import java.io.File;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,6 +50,10 @@ public class DetectDescribeRegression extends BaseImageRegression {
 	double detectTolerance = 1.5;
 	// association tolerance for describe score
 	double describeTolerance = 3;
+
+	public DetectDescribeRegression() {
+		super(BoofRegressionConstants.TYPE_FEATURE);
+	}
 
 	public void process( ImageDataType type ) throws IOException {
 
@@ -70,27 +76,36 @@ public class DetectDescribeRegression extends BaseImageRegression {
 		BenchmarkFeatureDescribeStability describeStability =
 				new BenchmarkFeatureDescribeStability(assoc, directory,tmp,describeTolerance);
 		BenchmarkFeatureDetectStability detectorStability =
-				new BenchmarkFeatureDetectStability(assoc, directory, tmp,detectTolerance);
+				new BenchmarkFeatureDetectStability(directory, tmp,detectTolerance);
 
-		for( String d : LoadHomographyBenchmarkFiles.DATA_SETS ) {
-			detectorStability.addDirectory(path + d);
-			describeStability.addDirectory(path + d);
+		for( String d : LoadHomographyBenchmarkFiles.DATA_SETS )
+		{
+			detectorStability.addDirectory(new File(path,d).getPath());
+			describeStability.addDirectory(new File(path,d).getPath());
 		}
 
+		PrintStream outputRuntime = new PrintStream(new File(directory,"RUN_detect_describe.txt"));
+		BoofRegressionConstants.printGenerator(outputRuntime,getClass());
+		outputRuntime.println("# Runtime for feature detect describe");
+		outputRuntime.println("# <directory> <average time in ms>\n");
 		for( Info i : all ) {
+			outputRuntime.println(i.name);
 			CreateDetectDescribeFile creator = new CreateDetectDescribeFile(i.detdesc,i.imageType,i.name);
 			for( String d : LoadHomographyBenchmarkFiles.DATA_SETS ) {
 				try {
-					creator.directory(path+d,tmp);
+					creator.directory(new File(path,d).getPath(),tmp);
+					outputRuntime.printf(" %10s %.2f\n",d,creator.getAverageProcessingTime() );
 				} catch( RuntimeException e ) {
 					errorLog.println("FAILED "+i.name+" on "+d);
 					errorLog.println(e);
 					e.printStackTrace(errorLog);
 				}
 			}
+			outputRuntime.println();
 			detectorStability.evaluate(i.name);
 			describeStability.evaluate(i.name);
 		}
+		outputRuntime.close();
 	}
 
 	public static <T extends ImageGray<T>>

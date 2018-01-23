@@ -50,6 +50,9 @@ public class CreateDetectDescribeFile<T extends ImageBase<T>, D extends TupleDes
 	// name of the detector
 	String algName;
 
+	int totalImagesProcessed;
+	double totalProcessingTime;
+
 	/**
 	 * Configures detector
 	 *
@@ -76,11 +79,16 @@ public class CreateDetectDescribeFile<T extends ImageBase<T>, D extends TupleDes
 		if( !dir.isDirectory() )
 			throw new IllegalArgumentException("Path does not point to a directory!");
 
+		totalImagesProcessed = 0;
+		totalProcessingTime = 0;
+
 		String dataSetName = dir.getName();
 
 		System.out.println(inputDirectory);
 		int totalProcessed = 0;
 		File[] files = dir.listFiles();
+		if( files == null )
+			throw new RuntimeException("No files in directory "+dir.getName());
 		for( File f : files ) {
 			if( !f.isFile() || (!f.getName().endsWith(".ppm") && !f.getName().endsWith(".pgm"))) {
 				continue;
@@ -92,8 +100,8 @@ public class CreateDetectDescribeFile<T extends ImageBase<T>, D extends TupleDes
 			inputDirectory = f.getParent();
 			imageName = imageName.substring(0,imageName.length()-4);
 
-			String detectName = outputDirectory + "DETECTED_" + dataSetName + "_" + imageName + "_" + algName + ".txt";
-			String describeName = outputDirectory+"DESCRIBE_" + dataSetName + "_" + imageName + "_" + algName + ".txt";
+			String detectName = new File(outputDirectory , "DETECTED_" + dataSetName + "_" + imageName + "_" + algName + ".txt").getPath();
+			String describeName = new File(outputDirectory,"DESCRIBE_" + dataSetName + "_" + imageName + "_" + algName + ".txt").getPath();
 
 			process(image,detectName,describeName);
 			System.out.println("Detected features inside of: " + f.getName() + "  total " + alg.getNumberOfFeatures());
@@ -111,7 +119,12 @@ public class CreateDetectDescribeFile<T extends ImageBase<T>, D extends TupleDes
 		T image = imageType.createImage(input.getWidth(),input.getHeight());
 		ConvertBufferedImage.convertFrom(input, image, true);
 
+		long timeBefore = System.nanoTime();
 		alg.detect(image);
+		long timeAfter = System.nanoTime();
+
+		totalImagesProcessed++;
+		totalProcessingTime += (timeAfter-timeBefore)*1e-6;
 
 		PrintStream outDetect = new PrintStream(new FileOutputStream(detectName));
 		PrintStream outDescribe = new PrintStream(new FileOutputStream(describeName));
@@ -141,5 +154,9 @@ public class CreateDetectDescribeFile<T extends ImageBase<T>, D extends TupleDes
 		}
 		outDetect.close();
 		outDescribe.close();
+	}
+
+	public double getAverageProcessingTime() {
+		return totalProcessingTime/totalImagesProcessed;
 	}
 }

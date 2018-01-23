@@ -2,6 +2,7 @@ package boofcv.regression;
 
 import boofcv.abst.segmentation.ImageSuperpixels;
 import boofcv.common.BaseImageRegression;
+import boofcv.common.BoofRegressionConstants;
 import boofcv.common.ValidationConstants;
 import boofcv.factory.segmentation.ConfigSlic;
 import boofcv.factory.segmentation.FactoryImageSegmentation;
@@ -25,13 +26,18 @@ public class SuperPixelRegression extends BaseImageRegression {
     PrintStream out;
     ComputeSuperPixelsMetrics metrics;
 
+    public SuperPixelRegression() {
+        super(BoofRegressionConstants.TYPE_IMAGEPROCESSING);
+    }
+
     @Override
     public void process(ImageDataType type) throws IOException {
         List<ImageSuperpixels> algs = new ArrayList<>();
 
         ImageType imageType = ImageType.pl(3,type);
 
-        out = new PrintStream(new File(directory,"SuperPixels.txt"));
+        out = new PrintStream(new File(directory,"ACC_SuperPixels.txt"));
+        BoofRegressionConstants.printGenerator(out, getClass());
         metrics = new ComputeSuperPixelsMetrics(pathToData,imageType);
 
         metrics.err = errorLog;

@@ -22,6 +22,12 @@ import java.util.List;
  * @author Peter Abeles
  */
 public class DescribeImageDenseRegression extends BaseImageRegression {
+
+
+	public DescribeImageDenseRegression() {
+		super(BoofRegressionConstants.TYPE_FEATURE);
+	}
+
 	@Override
 	public void process(ImageDataType type) throws IOException {
 
@@ -50,7 +56,8 @@ public class DescribeImageDenseRegression extends BaseImageRegression {
 		images.add("data/fiducials/square_border_image/standard/distance_angle/image00001.png");
 		images.add("data/calibration_mono/chessboard/distant/image00000.jpg");
 
-		PrintStream out = new PrintStream(new FileOutputStream(new File(directory,"dense_image_descriptors.txt")));
+		PrintStream out = new PrintStream(new FileOutputStream(new File(directory,"ACC_dense_image_descriptors.txt")));
+		BoofRegressionConstants.printGenerator(out,getClass());
 
 		for( Info info : algs) {
 			System.out.println("Working on "+info.name);

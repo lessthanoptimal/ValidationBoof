@@ -1,9 +1,0 @@
-# dataset totalValid (error 50%) (error 90%) (error 95%)
-          Dimetrodon 215820    1.38    2.77    2.98
-              Grove2 307200    2.77    3.46    3.84
-              Grove3 307200    3.20    6.53    7.75
-           Hydrangea 211712    3.37    3.79    4.29
-         RubberWhale 222970    0.12    0.82    1.58
-              Urban2 307200    3.22   20.77   21.58
-              Urban3 307200    5.27   13.88   14.86
-               Venus 159600    3.08    5.89    6.32

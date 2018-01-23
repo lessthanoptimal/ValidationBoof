@@ -3,10 +3,11 @@ package boofcv.regression;
 import boofcv.abst.distort.ConfigDeformPointMLS;
 import boofcv.abst.distort.PointDeformKeyPoints;
 import boofcv.alg.distort.mls.TypeDeformMLS;
-import boofcv.common.BaseImageRegression;
+import boofcv.common.BaseFileRegression;
+import boofcv.common.BoofRegressionConstants;
+import boofcv.common.RegressionRunner;
 import boofcv.factory.distort.FactoryDistort;
 import boofcv.metrics.ChangeOutputPointDeformKeyPoints;
-import boofcv.struct.image.ImageDataType;
 
 import java.io.File;
 import java.io.IOException;
@@ -15,15 +16,16 @@ import java.io.PrintStream;
 /**
  * @author Peter Abeles
  */
-public class PointDeformKeyPointsRegression extends BaseImageRegression {
+public class PointDeformKeyPointsFRegression extends BaseFileRegression {
 
     PrintStream out;
     ChangeOutputPointDeformKeyPoints metrics = new ChangeOutputPointDeformKeyPoints();
 
     @Override
-    public void process(ImageDataType type) throws IOException {
+    public void process() throws IOException {
 
-        out = new PrintStream(new File(directory,"PointDeformKeyPointsChange.txt"));
+        out = new PrintStream(new File(directory,"ACC_PointDeformKeyPointsChange.txt"));
+        BoofRegressionConstants.printGenerator(out, getClass());
 
         metrics.err = errorLog;
         metrics.out = out;
@@ -50,11 +52,9 @@ public class PointDeformKeyPointsRegression extends BaseImageRegression {
         }
     }
 
-    public static void main(String[] args) throws IOException {
-        PointDeformKeyPointsRegression regression = new PointDeformKeyPointsRegression();
-
-        regression.setOutputDirectory(".");
-        regression.process(null);
+    public static void main(String[] args) throws IOException, IllegalAccessException, InstantiationException, ClassNotFoundException {
+        BoofRegressionConstants.clearCurrentResults();
+        RegressionRunner.main(new String[]{PointDeformKeyPointsFRegression.class.getName()});
     }
 
 }

@@ -5,8 +5,6 @@ import boofcv.io.image.UtilImageIO;
 import boofcv.struct.image.GrayF32;
 import boofcv.struct.image.GrayU8;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,14 +24,6 @@ public class EvaluateTextThresholdDIBCO {
     double totalTP,totalFP,totalTN,totalFN;
 
     PrintStream out;
-
-    public void setOutputDirectory( String directory ) {
-        try {
-            out = new PrintStream(new File(directory,"text_threshold.txt"));
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-    }
 
     public void addAlgorithm( ThresholdText alg , String name ) {
         algorithms.add( new Alg(alg,name));
@@ -123,6 +113,10 @@ public class EvaluateTextThresholdDIBCO {
         input.add(UtilImageIO.loadImage(directory+fileIn,GrayF32.class));
         GrayF32 img = UtilImageIO.loadImage(directory+fileTruth,GrayF32.class);
         truth.add(ThresholdImageOps.threshold(img, null, 100, true));
+    }
+
+    public void setOutputResults(PrintStream outputStream) {
+        this.out = outputStream;
     }
 
     public static class Alg {

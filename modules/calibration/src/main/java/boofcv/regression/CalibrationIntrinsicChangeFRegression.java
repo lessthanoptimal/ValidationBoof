@@ -1,6 +1,7 @@
 package boofcv.regression;
 
 import boofcv.common.BaseFileRegression;
+import boofcv.common.BoofRegressionConstants;
 import boofcv.common.RegressionRunner;
 import boofcv.metrics.CalibrateFromDetectedPoints;
 
@@ -20,8 +21,11 @@ public class CalibrationIntrinsicChangeFRegression extends BaseFileRegression
 	public void process() throws IOException {
 		CalibrateFromDetectedPoints alg = new CalibrateFromDetectedPoints();
 
+		PrintStream output = new PrintStream(new File(directory, "ACC_estimated_calibration.txt"));
+		BoofRegressionConstants.printGenerator(output,getClass());
+
 		alg.setErrorStream(errorLog);
-		alg.setOutputResults(new PrintStream(new File(directory, "estimated_calibration.txt")));
+		alg.setOutputResults(output);
 
 		alg.processStereo(new File("data/calibration_stereo/points/bumblebee2_chess.txt"), false);
 		alg.processStereo(new File("data/calibration_stereo/points/bumblebee2_chess.txt"), true);

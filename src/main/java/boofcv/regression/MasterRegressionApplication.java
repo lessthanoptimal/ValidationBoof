@@ -41,11 +41,8 @@ public class MasterRegressionApplication {
 		return out;
 	}
 
-	public static boolean runRegression( String name , ImageDataType imageType) {
-		boolean sansImage = name.endsWith("FRegression");
-		if( imageType == null != sansImage)
-			return true;
-
+	public static boolean runRegression( String name , ImageDataType imageType)
+	{
 		File[] dirModules = new File("modules").listFiles();
 		if( dirModules == null )
 			return false;

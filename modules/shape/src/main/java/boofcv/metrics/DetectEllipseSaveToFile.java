@@ -32,6 +32,8 @@ public class DetectEllipseSaveToFile<T extends ImageGray<T>> {
 	T gray;
 	GrayU8 binary = new GrayU8(1,1);
 
+	public double averageProcessingTime;
+
 	public DetectEllipseSaveToFile(BinaryEllipseDetector<T> detector , boolean binaryLocal) {
 
 		this.detector = detector;
@@ -48,8 +50,12 @@ public class DetectEllipseSaveToFile<T extends ImageGray<T>> {
 
 	public void processDirectory( File inputDir , File outputDir ) {
 
+		averageProcessingTime = 0;
+		int totalProcessed = 0;
+
 		if( !outputDir.exists() )
-			outputDir.mkdirs();
+			if( !outputDir.mkdirs() )
+				throw new RuntimeException("Can't make output directory");
 
 		File files[] = inputDir.listFiles();
 
@@ -64,7 +70,9 @@ public class DetectEllipseSaveToFile<T extends ImageGray<T>> {
 			String name = UtilShapeDetector.imageToDetectedName(f.getName());
 			File outputFile = new File(outputDir,name);
 			process(buffered,outputFile);
+			totalProcessed++;
 		}
+		averageProcessingTime /= totalProcessed;
 	}
 
 	private void process( BufferedImage buffered , File outputFile ) {
@@ -75,7 +83,11 @@ public class DetectEllipseSaveToFile<T extends ImageGray<T>> {
 		ConvertBufferedImage.convertFrom(buffered, gray, true);
 
 		inputToBinary.process(gray, binary);
+		long before = System.nanoTime();
 		detector.process(gray, binary);
+		long after = System.nanoTime();
+
+		averageProcessingTime += (after-before)*1e-6;
 
 		List<EllipseRotated_F64> found = detector.getFoundEllipses(null);
 //		System.out.println("Found = "+found.size);

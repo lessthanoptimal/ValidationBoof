@@ -23,7 +23,9 @@ public class FitPolylineRegression extends BaseImageRegression {
 	File workDirectory = new File("./tmp");
 	File baseDataSetDirectory = new File("data/shape/polygon");
 
-	String infoString;
+	public FitPolylineRegression() {
+		super(BoofRegressionConstants.TYPE_SHAPE);
+	}
 
 	@Override
 	public void process(ImageDataType type) throws IOException {
@@ -38,15 +40,17 @@ public class FitPolylineRegression extends BaseImageRegression {
 	private void process(String name, boolean localBinary , FactoryObject<PointsToPolyline> factory, Class imageType )
 			throws IOException {
 
-		String outputName = "Polyline_"+name+".txt";
-		String outputSpeedName = "PolylineSpeed_"+name+".txt";
+		String outputName = "ACC_Polyline_"+name+".txt";
+		String outputSpeedName = "RUN_PolylineSpeed_"+name+".txt";
 
 		EvaluatePolylineDetector evaluator = new EvaluatePolylineDetector();
 
 		PrintStream output = new PrintStream(new File(directory,outputName));
+		BoofRegressionConstants.printGenerator(output, getClass());
 		evaluator.setOutputResults(output);
 
 		PrintStream outputSpeed = new PrintStream(new File(directory,outputSpeedName));
+		BoofRegressionConstants.printGenerator(outputSpeed, getClass());
 		outputSpeed.println("# Average processing time of polyline algorithm "+name);
 		List<File> files = BoofRegressionConstants.listAndSort(baseDataSetDirectory);
 

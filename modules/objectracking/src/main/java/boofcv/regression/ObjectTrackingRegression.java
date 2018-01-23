@@ -20,6 +20,10 @@ public class ObjectTrackingRegression extends BaseImageRegression {
 
 	File trackingOutputDir = BoofRegressionConstants.tempDir();
 
+	public ObjectTrackingRegression() {
+		super(BoofRegressionConstants.TYPE_TRACKING);
+	}
+
 	@Override
 	public void process( ImageDataType type ) throws IOException {
 
