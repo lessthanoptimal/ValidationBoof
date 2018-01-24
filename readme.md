@@ -20,3 +20,13 @@ https://github.com/lessthanoptimal/ValidationBoof
 
 website: http://boofcv.org
 contact: peter.abeles@gmail.com
+
+# E-Mailing of Regression Results
+
+Create a file called "email_login.txt". DO NOT ADD TO GIT.
+* First line is your login.
+* Second line is your password. 
+* Third line is the destination e-mail.
+
+This is configured for gmail only right now. You need to turn on "Allow less secure apps" by going to
+https://myaccount.google.com/security

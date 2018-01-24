@@ -176,5 +176,10 @@ public class MasterRegressionApplication {
 		System.out.println(dateFormat.format(new Date()));
 
 		errorStream.close();
+
+		// Summarize everything
+		ComputeRegressionSummary summary = new ComputeRegressionSummary();
+		summary.generateSummary();
+		summary.emailSummary(new File("email_login.txt"));
 	}
 }
