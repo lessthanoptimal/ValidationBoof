@@ -7,6 +7,8 @@ Description of changes to benchmarks and justifications for change in performanc
   regression broken code due to a change in API in an unrelated part of the code won't break the whole test
 - 
   
+TODO python script that pull latest snapshots, builds/installs, then runs the regression
+TODO Send e-mail if build fails
 
 
 ## Version 0.28
