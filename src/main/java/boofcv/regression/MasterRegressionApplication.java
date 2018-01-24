@@ -114,6 +114,10 @@ public class MasterRegressionApplication {
 
 		BoofRegressionConstants.clearCurrentResults();
 
+		PrintStream errorStream = new PrintStream(
+				new File(BoofRegressionConstants.CURRENT_DIRECTORY,
+						"ERRORLOG_"+MasterRegressionApplication.class.getSimpleName()+".txt"));
+
 		ImageDataType[] dataTypes = new ImageDataType[]{ImageDataType.U8,ImageDataType.F32};
 
 		saveMachineInfo();
@@ -128,6 +132,7 @@ public class MasterRegressionApplication {
 		for( String s : listOfRegressions ) {
 			if( s.endsWith("FRegression")) {
 				if( !runRegression(s,null) ) {
+					errorStream.println("FAILED "+s);
 					System.out.println("FAILED "+s);
 				} else {
 					System.out.println("SUCCESS "+s);
@@ -141,6 +146,7 @@ public class MasterRegressionApplication {
 				if( s.endsWith("FRegression"))
 					continue;
 				if( !runRegression(s,imageType) ) {
+					errorStream.println("FAILED "+imageType+"  "+s);
 					System.out.println(imageType+" FAILED "+s);
 				} else {
 					System.out.println(imageType+" SUCCESS "+s);
@@ -168,5 +174,7 @@ public class MasterRegressionApplication {
 		System.out.println();
 		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 		System.out.println(dateFormat.format(new Date()));
+
+		errorStream.close();
 	}
 }

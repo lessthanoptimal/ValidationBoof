@@ -3,13 +3,24 @@ package boofcv.regression;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.PrintStream;
 import java.util.Date;
 import java.util.List;
 
 /**
+ * Launches a new java process with the specified task. Monitors its progress and kills the process if frozen.
+ * Can specify memory, arguments, and when a process is considered frozen. The user can terminate the process
+ * gracefully by pressing certain keys. By default the standard error and out from the process are redirected
+ * to the master application's std error and std out.
+ *
  * @author Peter Abeles
  */
 public class JavaRuntimeLauncher {
+
+    // Where to send output and error streams from the process
+    PrintStream out = System.out;
+    PrintStream err = System.err;
+
     private String classPath;
     // amount of memory allocated to the JVM
     private long memoryInMB = 200;
@@ -21,6 +32,12 @@ public class JavaRuntimeLauncher {
 
     // save for future debugging
     private String[] jvmArgs;
+
+    // can the user kill the process by pressing Q?
+    boolean userKillWithQ = false;
+
+    // periodically print messages indicating that the process is still alive
+    boolean printAlive = true;
 
     /**
      * Constructor.  Configures which library it is to be launching a class from/related to
@@ -109,7 +126,8 @@ public class JavaRuntimeLauncher {
             throws IOException, InterruptedException {
 
         // flush the input buffer
-        System.in.skip(System.in.available());
+        if( userKillWithQ )
+            System.in.skip(System.in.available());
 
         // If the total amount of time allocated to the slave exceeds the maximum number of trials multiplied
         // by the maximum runtime plus some fudge factor the slave is declared as frozen
@@ -119,7 +137,7 @@ public class JavaRuntimeLauncher {
         long startTime = System.currentTimeMillis();
         long lastAliveMessage = startTime;
         for(;;) {
-            while( System.in.available() > 0 ) {
+            while( userKillWithQ && System.in.available() > 0 ) {
                 if( System.in.read() == 'q' ) {
                     System.out.println("User requested for the application to quit by pressing 'q'");
                     System.exit(0);
@@ -149,9 +167,12 @@ public class JavaRuntimeLauncher {
                 }
 
                 // let everyone know its still alive
-                if( System.currentTimeMillis() - lastAliveMessage > 300000 ) {
+                if( printAlive && System.currentTimeMillis() - lastAliveMessage > 300000 ) {
                     int percent = (int)(100*(ellapsedTime/(double)frozenTime));
-                    System.out.println("\nMaster is still alive: "+new Date()+"  Press 'q' and enter to quit. "+percent+"%");
+                    if( userKillWithQ )
+                        System.out.println("\nMaster is still alive: "+new Date()+"  Press 'q' and enter to quit. "+percent+"%");
+                    else
+                        System.out.println("\nMaster is still alive: "+new Date()+"  "+percent+"%");
                     lastAliveMessage = System.currentTimeMillis();
                 }
             }
@@ -165,7 +186,7 @@ public class JavaRuntimeLauncher {
             int val = error.read();
             if( val < 0 ) break;
 
-            System.out.print(Character.toChars(val));
+            err.print(Character.toChars(val));
         }
     }
 
@@ -175,7 +196,7 @@ public class JavaRuntimeLauncher {
             int val = input.read();
             if( val < 0 ) break;
 
-            System.out.print(Character.toChars(val));
+            out.print(Character.toChars(val));
         }
     }
 
@@ -197,6 +218,22 @@ public class JavaRuntimeLauncher {
         return out;
     }
 
+    public boolean isUserKillWithQ() {
+        return userKillWithQ;
+    }
+
+    public void setUserKillWithQ(boolean userKillWithQ) {
+        this.userKillWithQ = userKillWithQ;
+    }
+
+    public boolean isPrintAlive() {
+        return printAlive;
+    }
+
+    public void setPrintAlive(boolean printAlive) {
+        this.printAlive = printAlive;
+    }
+
     public String getClassPath() {
         return classPath;
     }
@@ -211,6 +248,22 @@ public class JavaRuntimeLauncher {
 
     public String[] getArguments() {
         return jvmArgs;
+    }
+
+    public PrintStream getOut() {
+        return out;
+    }
+
+    public void setOut(PrintStream out) {
+        this.out = out;
+    }
+
+    public PrintStream getErr() {
+        return err;
+    }
+
+    public void setErr(PrintStream err) {
+        this.err = err;
     }
 
     public enum Exit
