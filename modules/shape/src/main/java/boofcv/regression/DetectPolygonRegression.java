@@ -23,6 +23,8 @@ public class DetectPolygonRegression extends BaseRegression implements ImageRegr
 	File workDirectory = new File("./tmp");
 	File baseDataSetDirectory = new File("data/shape/polygon");
 
+	PrintStream outputSpeed;
+
 	public DetectPolygonRegression() {
 		super(BoofRegressionConstants.TYPE_SHAPE);
 	}
@@ -31,24 +33,26 @@ public class DetectPolygonRegression extends BaseRegression implements ImageRegr
 	public void process(ImageDataType type) throws IOException {
 		final Class imageType = ImageDataType.typeToSingleClass(type);
 
-		process("PolygonLineGlobal", false, new FactoryBinaryPolygon(imageType));
-		process("PolygonLineLocal", true, new FactoryBinaryPolygon(imageType));
+		outputSpeed = new PrintStream(new File(directory,"RUN_PolygonDetector.txt"));
+		BoofRegressionConstants.printGenerator(outputSpeed, getClass());
+
+		process("BinaryGlobal", false, new FactoryBinaryPolygon(imageType));
+		process("BinaryLocal", true, new FactoryBinaryPolygon(imageType));
+
+		outputSpeed.close();
 	}
 
 	private void process(String name, boolean localBinary , FactoryObject<DetectPolygonBinaryGrayRefine> factory)
 			throws IOException {
 
-		String outputName = "ACC_ShapeDetector_"+name+".txt";
-		String outputSpeedName = "RUN_ShapeDetector_"+name+".txt";
+		String outputAccuracyName = "ACC_PolygonDetector_"+name+".txt";
 
 		EvaluatePolygonDetector evaluator = new EvaluatePolygonDetector();
 
-		PrintStream output = new PrintStream(new File(directory,outputName));
-		BoofRegressionConstants.printGenerator(output, getClass());
-		evaluator.setOutputResults(output);
+		PrintStream outputAccuracy = new PrintStream(new File(directory,outputAccuracyName));
+		BoofRegressionConstants.printGenerator(outputAccuracy, getClass());
+		evaluator.setOutputResults(outputAccuracy);
 
-		PrintStream outputSpeed = new PrintStream(new File(directory,outputSpeedName));
-		BoofRegressionConstants.printGenerator(outputSpeed, getClass());
 		outputSpeed.println("# Average processing time of shape detector algorithm "+name);
 
 		List<File> files = BoofRegressionConstants.listAndSort(baseDataSetDirectory);
@@ -60,7 +64,7 @@ public class DetectPolygonRegression extends BaseRegression implements ImageRegr
 		for( File f : files  ) {
 			if( !f.isDirectory() )
 				continue;
-			output.println("# Data Set = "+f.getName());
+			outputAccuracy.println("# Data Set = "+f.getName());
 
 			factory.configure(new File(f,"detector.txt"));
 
@@ -68,20 +72,19 @@ public class DetectPolygonRegression extends BaseRegression implements ImageRegr
 
 			detection.processDirectory(f, workDirectory);
 			evaluator.evaluate(f, workDirectory);
-			output.println();
+			outputAccuracy.println();
 			totalTruePositive += evaluator.summaryTruePositive;
 			totalExpected += evaluator.summaryExpected;
 			totalFalsePositive += evaluator.summaryFalsePositive;
 
 			outputSpeed.printf("%20s %9.4f (ms)\n",f.getName(),detection.averageProcessingTime);
 		}
-
-		output.println();
-		output.println(String.format("Final Summary: TP/(TP+FN) = %d / %d    FP = %d\n",totalTruePositive,totalExpected,totalFalsePositive));
-		output.close();
-
 		outputSpeed.println();
-		outputSpeed.close();
+
+		outputAccuracy.println();
+		outputAccuracy.println(String.format("Final Summary: TP/(TP+FN) = %d / %d    FP = %d\n",totalTruePositive,totalExpected,totalFalsePositive));
+		outputAccuracy.close();
+
 	}
 
 	public static void main(String[] args) throws IOException {

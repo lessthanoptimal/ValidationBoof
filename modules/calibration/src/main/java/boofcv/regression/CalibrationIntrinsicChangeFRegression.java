@@ -19,7 +19,7 @@ import java.io.PrintStream;
 public class CalibrationIntrinsicChangeFRegression extends BaseRegression implements FileRegression
 {
 	public CalibrationIntrinsicChangeFRegression() {
-		super("other");
+		super("");
 	}
 
 	@Override

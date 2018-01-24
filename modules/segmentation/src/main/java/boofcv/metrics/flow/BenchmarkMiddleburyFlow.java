@@ -27,20 +27,25 @@ public class BenchmarkMiddleburyFlow<T extends ImageBase<T>> {
 
 	DenseOpticalFlow<T> algorithm;
 
-	PrintStream out;
+	PrintStream outputAccuracy;
+
+	double totalTimeMilli;
+	int totalProcessed;
 
 	public BenchmarkMiddleburyFlow( String dataDirectory ,
 									DenseOpticalFlow<T> algorithm ,
-									PrintStream out ) {
+									PrintStream outputAccuracy) {
 		this.dataDirectory = dataDirectory;
-		this.out = out;
+		this.outputAccuracy = outputAccuracy;
 		this.algorithm = algorithm;
 
 	}
 
 	public void evaluate() throws IOException {
+		totalTimeMilli = 0;
+		totalProcessed = 0;
 
-		out.println("# dataset totalValid (error 50%) (error 90%) (error 95%)");
+		outputAccuracy.println("# dataset totalValid (error 50%) (error 90%) (error 95%)");
 
 		GrowQueue_F64 errors = new GrowQueue_F64();
 
@@ -62,7 +67,11 @@ public class BenchmarkMiddleburyFlow<T extends ImageBase<T>> {
 
 			ImageFlow flowFound = new ImageFlow(flowTruth.width, flowTruth.height);
 
+			long before = System.nanoTime();
 			algorithm.process(input0,input1,flowFound);
+			long after = System.nanoTime();
+			totalTimeMilli += (after-before)*1e-6;
+			totalProcessed++;
 
 			// score the results
 			errors.reset();
@@ -86,11 +95,15 @@ public class BenchmarkMiddleburyFlow<T extends ImageBase<T>> {
 			double error90 = errors.get( (int)(errors.size*0.9) );
 			double error95 = errors.get( (int)(errors.size*0.95) );
 
-			out.printf("%20s %6d %7.2f %7.2f %7.2f\n",which,errors.size,error50,error90,error95);
-			if( out != System.out ) {
+			outputAccuracy.printf("%20s %6d %7.2f %7.2f %7.2f\n",which,errors.size,error50,error90,error95);
+			if( outputAccuracy != System.out ) {
 				System.out.printf("%20s %6d %7.2f %7.2f %7.2f\n",which,errors.size,error50,error90,error95);
 			}
 		}
+	}
+
+	public double getAverageTimeMilli() {
+		return totalTimeMilli/totalProcessed;
 	}
 
 	public static void main(String[] args) throws IOException {

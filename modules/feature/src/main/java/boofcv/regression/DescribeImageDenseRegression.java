@@ -57,23 +57,31 @@ public class DescribeImageDenseRegression extends BaseRegression implements Imag
 		images.add("data/fiducials/square_border_image/standard/distance_angle/image00001.png");
 		images.add("data/calibration_mono/chessboard/distant/image00000.jpg");
 
-		PrintStream out = new PrintStream(new FileOutputStream(new File(directory,"ACC_dense_image_descriptors.txt")));
-		BoofRegressionConstants.printGenerator(out,getClass());
+		PrintStream outputAccuracy = new PrintStream(new FileOutputStream(new File(directory,"ACC_dense_image_descriptors.txt")));
+		BoofRegressionConstants.printGenerator(outputAccuracy,getClass());
+
+		PrintStream outputSpeed = new PrintStream(new FileOutputStream(new File(directory,"RUN_dense_image_descriptors.txt")));
+		BoofRegressionConstants.printGenerator(outputSpeed,getClass());
+		outputSpeed.println("# Average runtime speed in milliseconds for dense image descriptors\n");
 
 		for( Info info : algs) {
 			System.out.println("Working on "+info.name);
-			out.println();
-			out.println("Algorithm:  "+info.name);
+			outputAccuracy.println();
+			outputAccuracy.println("Algorithm:  "+info.name);
 			EvalauteDescribeImageDense evaluator = new EvalauteDescribeImageDense(images,info.desc.getImageType());
 
 			try {
-				evaluator.setOutputStream(out);
+				evaluator.setOutputStream(outputAccuracy);
 				evaluator.evaluate(info.desc);
+				outputSpeed.printf("%20s %6.1f\n",info.name,evaluator.getAverageTimeMilli());
 			} catch( RuntimeException e ) {
 				e.printStackTrace();
 				errorLog.println(e);
 			}
+			outputAccuracy.println();
 		}
+		outputAccuracy.close();
+		outputSpeed.close();
 		System.out.println("   done");
 
 	}

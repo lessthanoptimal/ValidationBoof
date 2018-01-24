@@ -23,7 +23,7 @@ public class PointDeformKeyPointsFRegression extends BaseRegression implements F
     ChangeOutputPointDeformKeyPoints metrics = new ChangeOutputPointDeformKeyPoints();
 
     public PointDeformKeyPointsFRegression() {
-        super("other");
+        super("");
     }
 
     @Override

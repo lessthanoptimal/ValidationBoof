@@ -39,8 +39,6 @@ public class ObjectTrackingRegression extends BaseRegression implements ImageReg
 			performTLD(info.name,info.tracker,info.imageType);
 			EvaluateResultsTldData.process(directory, info.name,trackingOutputDir);
 		}
-
-		errorLog.close();
 	}
 
 	public <Input extends ImageBase<Input>>

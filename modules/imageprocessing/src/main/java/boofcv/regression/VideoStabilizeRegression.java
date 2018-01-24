@@ -35,7 +35,6 @@ public class VideoStabilizeRegression extends BaseRegression implements ImageReg
     public void process(ImageDataType type) throws IOException {
         process(ImageType.pl(3,type));
         process(ImageType.single(type));
-        errorLog.close();
     }
 
     public void process(ImageType imageType) throws IOException {

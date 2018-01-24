@@ -72,6 +72,7 @@ public class RegressionRunner {
             } catch( RuntimeException e ) {
                 e.printStackTrace(regression.getErrorStream());
             }
+            regression.getErrorStream().close();
         } else if( args.length == 1 ) {
             FileRegression regression = (FileRegression)o;
             regression.setOutputDirectory(new File(CURRENT_DIRECTORY,"other").getPath());
@@ -80,6 +81,7 @@ public class RegressionRunner {
             } catch( RuntimeException e ) {
                 e.printStackTrace(regression.getErrorStream());
             }
+            regression.getErrorStream().close();
         } else {
             throw new RuntimeException("Unexpected number of arguments "+args.length);
         }

@@ -82,7 +82,6 @@ public class StereoVisualOdometryRegression extends BaseRegression implements Im
 		}
 
 		outputRuntime.close();
-		errorLog.close();
 	}
 
 	private void evaluate( Info vo , SequenceStereoImages data , String dataName ) throws FileNotFoundException {

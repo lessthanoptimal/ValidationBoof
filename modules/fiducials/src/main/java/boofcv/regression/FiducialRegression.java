@@ -64,8 +64,6 @@ public class FiducialRegression extends BaseRegression implements ImageRegressio
 		process("CircleHexagonal", new EstimateCircleHexagonalToCamera(imageType), "circle_hexagonal");
 
 		process("CircleRegular", new EstimateCircleRegularToCamera(imageType), "circle_regular");
-
-		errorLog.close();
 	}
 
 	private void process(String name, BaseEstimateSquareFiducialToCamera estimate, String type) throws IOException {

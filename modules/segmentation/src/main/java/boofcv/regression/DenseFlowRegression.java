@@ -26,7 +26,7 @@ public class DenseFlowRegression extends BaseRegression implements ImageRegressi
 	}
 
 	@Override
-	public void process( ImageDataType type ) {
+	public void process( ImageDataType type ) throws IOException {
 
 		List<Info> all = new ArrayList<Info>();
 
@@ -38,20 +38,29 @@ public class DenseFlowRegression extends BaseRegression implements ImageRegressi
 		all.add(new Info("HornSchunckPyr",FactoryDenseOpticalFlow.hornSchunckPyramid(null, bandType)));
 		all.add(new Info("Brox",FactoryDenseOpticalFlow.broxWarping(null, bandType)));
 
+		PrintStream outputRuntime = new PrintStream(new File(directory,"RUN_DenseFlow.txt"));
+		BoofRegressionConstants.printGenerator(outputRuntime,getClass());
+		outputRuntime.println("# Runtime dense optical flow");
+		outputRuntime.println("# <algorithm> <average time in ms>\n");
+
 		for( Info i : all ) {
 			System.out.println("Regression "+i.name);
+			PrintStream outputAccurcy = new PrintStream(new File(directory,"ACC_DenseFlow"+i.name+".txt"));;
 			try {
-				PrintStream out = new PrintStream(new File(directory,"ACC_DenseFlow"+i.name+".txt"));
-				BoofRegressionConstants.printGenerator(out, getClass());
-				BenchmarkMiddleburyFlow benchmark = new BenchmarkMiddleburyFlow(path,i.detdesc,out);
+				BoofRegressionConstants.printGenerator(outputAccurcy, getClass());
+				BenchmarkMiddleburyFlow benchmark = new BenchmarkMiddleburyFlow(path,i.detdesc,outputAccurcy);
 				benchmark.evaluate();
-				out.flush();
+				outputAccurcy.flush();
+
+				outputRuntime.printf("%20s %7.1f\n",i.name,benchmark.getAverageTimeMilli());
 			} catch( RuntimeException e ) {
 				errorLog.print(e);
-			} catch (IOException e) {
-				errorLog.print(e);
+			} finally {
+				outputAccurcy.close();
 			}
 		}
+
+		outputRuntime.close();
 	}
 
 	public static class Info {

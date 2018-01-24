@@ -21,8 +21,10 @@ import java.util.List;
  */
 public class FitPolylineRegression extends BaseRegression implements ImageRegression {
 
-	File workDirectory = new File("./tmp");
+	File workDirectory = BoofRegressionConstants.tempDir();
 	File baseDataSetDirectory = new File("data/shape/polygon");
+
+	PrintStream outputSpeed;
 
 	public FitPolylineRegression() {
 		super(BoofRegressionConstants.TYPE_SHAPE);
@@ -32,26 +34,28 @@ public class FitPolylineRegression extends BaseRegression implements ImageRegres
 	public void process(ImageDataType type) throws IOException {
 		final Class imageType = ImageDataType.typeToSingleClass(type);
 
+		outputSpeed = new PrintStream(new File(directory, "RUN_PolylineSpeed.txt"));
+		BoofRegressionConstants.printGenerator(outputSpeed, getClass());
+
 		process("SplitMerge_Global", false, new FactoryPolylineSplitMerge(),imageType);
 		process("SplitMerge_Local", true, new FactoryPolylineSplitMerge(),imageType);
 		process("SplitMergeOld_Global", false, new FactoryPolylineSplitMergeOld(),imageType);
 		process("SplitMergeOld_Local", true, new FactoryPolylineSplitMergeOld(),imageType);
+
+		outputSpeed.close();
 	}
 
 	private void process(String name, boolean localBinary , FactoryObject<PointsToPolyline> factory, Class imageType )
 			throws IOException {
 
-		String outputName = "ACC_Polyline_"+name+".txt";
-		String outputSpeedName = "RUN_PolylineSpeed_"+name+".txt";
+		String outputAccName = "ACC_Polyline_"+name+".txt";
 
 		EvaluatePolylineDetector evaluator = new EvaluatePolylineDetector();
 
-		PrintStream output = new PrintStream(new File(directory,outputName));
-		BoofRegressionConstants.printGenerator(output, getClass());
-		evaluator.setOutputResults(output);
+		PrintStream outputAccuracy = new PrintStream(new File(directory,outputAccName));
+		BoofRegressionConstants.printGenerator(outputAccuracy, getClass());
+		evaluator.setOutputResults(outputAccuracy);
 
-		PrintStream outputSpeed = new PrintStream(new File(directory,outputSpeedName));
-		BoofRegressionConstants.printGenerator(outputSpeed, getClass());
 		outputSpeed.println("# Average processing time of polyline algorithm "+name);
 		List<File> files = BoofRegressionConstants.listAndSort(baseDataSetDirectory);
 
@@ -62,7 +66,7 @@ public class FitPolylineRegression extends BaseRegression implements ImageRegres
 		for( File f : files  ) {
 			if( !f.isDirectory() )
 				continue;
-			output.println("# Data Set = "+f.getName());
+			outputAccuracy.println("# Data Set = "+f.getName());
 
 			factory.configure(new File(f,"detector.txt"));
 
@@ -71,7 +75,7 @@ public class FitPolylineRegression extends BaseRegression implements ImageRegres
 
 			detection.processDirectory(f, workDirectory);
 			evaluator.evaluate(f, workDirectory);
-			output.println();
+			outputAccuracy.println();
 
 			totalTruePositive += evaluator.summaryTruePositive;
 			totalExpected += evaluator.summaryExpected;
@@ -79,14 +83,13 @@ public class FitPolylineRegression extends BaseRegression implements ImageRegres
 
 			outputSpeed.printf("%20s %9.4f (ms)\n",f.getName(),detection.averageProcessingTime);
 		}
-
-		output.println();
-		output.println(String.format("Final Summary: TP/(TP+FN) = %d / %d    FP = %d\n",totalTruePositive,totalExpected,totalFalsePositive));
-
-		output.close();
-
 		outputSpeed.println();
-		outputSpeed.close();
+
+		outputAccuracy.println();
+		outputAccuracy.println(String.format("Final Summary: TP/(TP+FN) = %d / %d    FP = %d\n",totalTruePositive,totalExpected,totalFalsePositive));
+
+		outputAccuracy.close();
+
 	}
 
 	public static void main(String[] args) throws IOException {
