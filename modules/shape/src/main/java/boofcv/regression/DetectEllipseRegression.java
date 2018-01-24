@@ -1,10 +1,7 @@
 package boofcv.regression;
 
 import boofcv.alg.shapes.ellipse.BinaryEllipseDetector;
-import boofcv.common.BaseRegression;
-import boofcv.common.BoofRegressionConstants;
-import boofcv.common.FactoryObject;
-import boofcv.common.ImageRegression;
+import boofcv.common.*;
 import boofcv.metrics.DetectEllipseSaveToFile;
 import boofcv.metrics.EvaluateEllipseDetector;
 import boofcv.metrics.FactoryBinaryEllipse;
@@ -79,9 +76,8 @@ public class DetectEllipseRegression extends BaseRegression implements ImageRegr
 		outputAccuracy.close();
 	}
 
-	public static void main(String[] args) throws IOException {
-		DetectEllipseRegression app = new DetectEllipseRegression();
-		app.setOutputDirectory(".");
-		app.process(ImageDataType.F32);
+	public static void main(String[] args) throws IOException, IllegalAccessException, InstantiationException, ClassNotFoundException {
+		BoofRegressionConstants.clearCurrentResults();
+		RegressionRunner.main(new String[]{DetectEllipseRegression.class.getName(),ImageDataType.F32.toString()});
 	}
 }
