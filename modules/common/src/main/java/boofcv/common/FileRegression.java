@@ -5,8 +5,6 @@ import java.io.IOException;
 /**
  * @author Peter Abeles
  */
-public interface FileRegression {
-    void setOutputDirectory( String directory );
-
+public interface FileRegression extends TestRegression {
     void process() throws IOException;
 }

@@ -1,8 +1,9 @@
 package boofcv.regression;
 
 import boofcv.abst.flow.DenseOpticalFlow;
-import boofcv.common.BaseImageRegression;
+import boofcv.common.BaseRegression;
 import boofcv.common.BoofRegressionConstants;
+import boofcv.common.ImageRegression;
 import boofcv.factory.flow.FactoryDenseOpticalFlow;
 import boofcv.metrics.flow.BenchmarkMiddleburyFlow;
 import boofcv.struct.image.ImageDataType;
@@ -16,7 +17,7 @@ import java.util.List;
 /**
  * @author Peter Abeles
  */
-public class DenseFlowRegression extends BaseImageRegression {
+public class DenseFlowRegression extends BaseRegression implements ImageRegression {
 
 	public static final String path = "data/denseflow/";
 
@@ -24,6 +25,7 @@ public class DenseFlowRegression extends BaseImageRegression {
 		super(BoofRegressionConstants.TYPE_SEGMENTATION);
 	}
 
+	@Override
 	public void process( ImageDataType type ) {
 
 		List<Info> all = new ArrayList<Info>();

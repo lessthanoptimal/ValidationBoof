@@ -1,8 +1,9 @@
 package boofcv.regression;
 
 import boofcv.abst.segmentation.ImageSuperpixels;
-import boofcv.common.BaseImageRegression;
+import boofcv.common.BaseRegression;
 import boofcv.common.BoofRegressionConstants;
+import boofcv.common.ImageRegression;
 import boofcv.common.ValidationConstants;
 import boofcv.factory.segmentation.ConfigSlic;
 import boofcv.factory.segmentation.FactoryImageSegmentation;
@@ -19,7 +20,7 @@ import java.util.List;
 /**
  * @author Peter Abeles
  */
-public class SuperPixelRegression extends BaseImageRegression {
+public class SuperPixelRegression extends BaseRegression implements ImageRegression {
 
     public static String pathToData = ValidationConstants.PATH_DATA+"segmentation/";
 

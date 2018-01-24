@@ -1,8 +1,9 @@
 package boofcv.regression;
 
 import boofcv.abst.scene.ImageClassifier;
-import boofcv.common.BaseImageRegression;
+import boofcv.common.BaseRegression;
 import boofcv.common.BoofRegressionConstants;
+import boofcv.common.ImageRegression;
 import boofcv.common.RegressionRunner;
 import boofcv.factory.scene.ClassifierAndSource;
 import boofcv.factory.scene.FactoryImageClassifier;
@@ -24,8 +25,7 @@ import java.util.List;
  *
  * @author Peter Abeles
  */
-public class ImageClassificationRegression extends BaseImageRegression {
-
+public class ImageClassificationRegression extends BaseRegression implements ImageRegression {
 
 	public ImageClassificationRegression() {
 		super(BoofRegressionConstants.TYPE_CLASSIFICATION);

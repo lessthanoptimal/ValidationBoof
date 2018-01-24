@@ -3,8 +3,9 @@ package boofcv.regression;
 import boofcv.abst.fiducial.calib.*;
 import boofcv.abst.geo.calibration.DetectorFiducialCalibration;
 import boofcv.alg.geo.calibration.CalibrationObservation;
-import boofcv.common.BaseImageRegression;
+import boofcv.common.BaseRegression;
 import boofcv.common.BoofRegressionConstants;
+import boofcv.common.ImageRegression;
 import boofcv.common.misc.PointFileCodec;
 import boofcv.factory.fiducial.FactoryFiducialCalibration;
 import boofcv.io.image.UtilImageIO;
@@ -27,7 +28,7 @@ import static boofcv.parsing.ParseCalibrationConfigFiles.parseCircleHexagonalCon
 /**
  * @author Peter Abeles
  */
-public class CalibrationDetectionRegression extends BaseImageRegression {
+public class CalibrationDetectionRegression extends BaseRegression implements ImageRegression  {
 
 	List<String> chessDirectories = new ArrayList<>();
 	List<String> squareDirectories = new ArrayList<>();
@@ -132,8 +133,6 @@ public class CalibrationDetectionRegression extends BaseImageRegression {
 			} else {
 				errorLog.println("No files found in "+dir);
 			}
-
-
 		}
 		output.println();
 

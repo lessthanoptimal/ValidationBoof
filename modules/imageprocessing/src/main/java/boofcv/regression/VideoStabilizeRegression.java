@@ -1,8 +1,9 @@
 package boofcv.regression;
 
 import boofcv.alg.sfm.d2.StitchingFromMotion2D;
-import boofcv.common.BaseImageRegression;
+import boofcv.common.BaseRegression;
 import boofcv.common.BoofRegressionConstants;
+import boofcv.common.ImageRegression;
 import boofcv.metrics.stabilization.FactoryRegressionVideoStabilization;
 import boofcv.metrics.stabilization.RuntimePerformanceVideoStabilization;
 import boofcv.struct.image.ImageDataType;
@@ -20,7 +21,7 @@ import java.util.List;
  *
  * @author Peter Abeles
  */
-public class VideoStabilizeRegression extends BaseImageRegression {
+public class VideoStabilizeRegression extends BaseRegression implements ImageRegression {
 
     List<File> videos = new ArrayList<>();
 

@@ -1,7 +1,6 @@
 package boofcv.regression;
 
 import boofcv.common.*;
-import boofcv.common.misc.ParseHelper;
 import boofcv.factory.fiducial.ConfigFiducialBinary;
 import boofcv.factory.fiducial.ConfigFiducialImage;
 import boofcv.factory.fiducial.FactoryFiducial;
@@ -20,7 +19,7 @@ import java.util.List;
 /**
  * @author Peter Abeles
  */
-public class FiducialRegression extends BaseImageRegression {
+public class FiducialRegression extends BaseRegression implements ImageRegression {
 
 	File workDirectory = new File("./tmp");
 	File baseFiducial = new File("data/fiducials");
@@ -165,7 +164,7 @@ public class FiducialRegression extends BaseImageRegression {
 				continue;
 
 			if( workDirectory.exists() ) {
-				ParseHelper.deleteRecursive(workDirectory);
+				BoofRegressionConstants.delete(workDirectory,errorLog);
 			}
 			if( !workDirectory.mkdirs() )
 				throw new RuntimeException("Can't create work directory");

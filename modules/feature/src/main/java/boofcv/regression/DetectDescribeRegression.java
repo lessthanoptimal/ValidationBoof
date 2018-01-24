@@ -14,8 +14,9 @@ import boofcv.abst.feature.orientation.OrientationImage;
 import boofcv.abst.feature.orientation.OrientationIntegral;
 import boofcv.abst.feature.orientation.OrientationIntegralToImage;
 import boofcv.alg.transform.ii.GIntegralImageOps;
-import boofcv.common.BaseImageRegression;
+import boofcv.common.BaseRegression;
 import boofcv.common.BoofRegressionConstants;
+import boofcv.common.ImageRegression;
 import boofcv.common.RegressionRunner;
 import boofcv.factory.feature.associate.FactoryAssociation;
 import boofcv.factory.feature.describe.FactoryDescribeRegionPoint;
@@ -42,7 +43,7 @@ import java.util.List;
 /**
  * @author Peter Abeles
  */
-public class DetectDescribeRegression extends BaseImageRegression {
+public class DetectDescribeRegression extends BaseRegression implements ImageRegression {
 
 	public static final String path = "data/affinevgg/";
 
@@ -55,6 +56,7 @@ public class DetectDescribeRegression extends BaseImageRegression {
 		super(BoofRegressionConstants.TYPE_FEATURE);
 	}
 
+	@Override
 	public void process( ImageDataType type ) throws IOException {
 
 		List<Info> all = new ArrayList<Info>();

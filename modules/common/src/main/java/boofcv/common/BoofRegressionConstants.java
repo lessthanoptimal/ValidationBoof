@@ -1,5 +1,6 @@
 package boofcv.common;
 
+import boofcv.misc.BoofMiscOps;
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;
@@ -35,16 +36,44 @@ public class BoofRegressionConstants {
         return new File("tmp");
     }
 
-    public static void clearCurrentResults() throws IOException {
-        FileUtils.deleteDirectory( new File(BoofRegressionConstants.CURRENT_DIRECTORY));
+    public static void clearCurrentResults() {
+        BoofRegressionConstants.delete( new File(BoofRegressionConstants.CURRENT_DIRECTORY),null);
         if( !new File(BoofRegressionConstants.CURRENT_DIRECTORY).mkdir() )
             throw new RuntimeException("Can't create directory");
-        if( !new File(BoofRegressionConstants.CURRENT_DIRECTORY+"other").mkdir() )
+        if( !new File(BoofRegressionConstants.CURRENT_DIRECTORY,"other").mkdir() )
             throw new RuntimeException("Can't create directory");
-        if( !new File(BoofRegressionConstants.CURRENT_DIRECTORY+"U8").mkdir() )
+        if( !new File(BoofRegressionConstants.CURRENT_DIRECTORY,"U8").mkdir() )
             throw new RuntimeException("Can't create directory");
-        if( !new File(BoofRegressionConstants.CURRENT_DIRECTORY+"F32").mkdir() )
+        if( !new File(BoofRegressionConstants.CURRENT_DIRECTORY,"F32").mkdir() )
             throw new RuntimeException("Can't create directory");
+    }
+
+    public static void delete( File f , PrintStream error ) {
+        boolean deleted = false;
+        for (int i = 0; i < 10 && !deleted; i++) {
+            try {
+                if( f.isDirectory() ) {
+                    FileUtils.deleteDirectory(f);
+                    deleted = true;
+                } else if( f.delete() ) {
+                    deleted = true;
+                }
+            } catch( IOException ignore) {
+                System.out.println(ignore.getMessage());
+            }
+
+            if( !deleted ) {
+                // Mother F*****. On windows it will often not delete the file for a long time. Plus Java won't
+                // get rid of the file until the garbage collector is called. This hack allows still to get done
+                System.gc();
+                BoofMiscOps.sleep(250);
+                System.gc();
+            }
+        }
+        if( !deleted && error != null  ) {
+            error.println("Can't delete "+f.getName());
+            throw new RuntimeException("Can't delete "+f.getName());
+        }
     }
 
     public static List<File> listAndSort(File directory ) {

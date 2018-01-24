@@ -1,7 +1,8 @@
 package boofcv.regression;
 
-import boofcv.common.BaseFileRegression;
+import boofcv.common.BaseRegression;
 import boofcv.common.BoofRegressionConstants;
+import boofcv.common.FileRegression;
 import boofcv.common.RegressionRunner;
 import boofcv.metrics.CalibrateFromDetectedPoints;
 
@@ -15,8 +16,12 @@ import java.io.PrintStream;
  *
  * @author Peter Abeles
  */
-public class CalibrationIntrinsicChangeFRegression extends BaseFileRegression
+public class CalibrationIntrinsicChangeFRegression extends BaseRegression implements FileRegression
 {
+	public CalibrationIntrinsicChangeFRegression() {
+		super("other");
+	}
+
 	@Override
 	public void process() throws IOException {
 		CalibrateFromDetectedPoints alg = new CalibrateFromDetectedPoints();

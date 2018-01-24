@@ -1,7 +1,8 @@
 package boofcv.regression;
 
-import boofcv.common.BaseImageRegression;
+import boofcv.common.BaseRegression;
 import boofcv.common.BoofRegressionConstants;
+import boofcv.common.ImageRegression;
 import boofcv.metrics.threshold.EvaluateTextThresholdDIBCO;
 import boofcv.metrics.threshold.FactoryThresholdAlgs;
 import boofcv.struct.image.ImageDataType;
@@ -13,7 +14,7 @@ import java.io.PrintStream;
 /**
  * @author Peter Abeles
  */
-public class TextThresholdRegression extends BaseImageRegression {
+public class TextThresholdRegression extends BaseRegression implements ImageRegression {
 
 	public TextThresholdRegression() {
 		super(BoofRegressionConstants.TYPE_SEGMENTATION);

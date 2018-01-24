@@ -1,8 +1,9 @@
 package boofcv.regression;
 
 import boofcv.abst.fiducial.QrCodeDetector;
-import boofcv.common.BaseImageRegression;
+import boofcv.common.BaseRegression;
 import boofcv.common.BoofRegressionConstants;
+import boofcv.common.ImageRegression;
 import boofcv.common.RegressionRunner;
 import boofcv.factory.fiducial.ConfigQrCode;
 import boofcv.factory.fiducial.FactoryFiducial;
@@ -10,7 +11,6 @@ import boofcv.metrics.qrcode.DetectQrCodesInImages;
 import boofcv.metrics.qrcode.EvaluateQrCodeDecoding;
 import boofcv.metrics.qrcode.EvaluateQrCodeDetections;
 import boofcv.struct.image.ImageDataType;
-import org.apache.commons.io.FileUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -20,7 +20,7 @@ import java.util.List;
 /**
  * @author Peter Abeles
  */
-public class QrCodeRegression extends BaseImageRegression {
+public class QrCodeRegression extends BaseRegression implements ImageRegression {
 
 	EvaluateQrCodeDecoding evaluateMessage = new EvaluateQrCodeDecoding();
 
@@ -100,7 +100,7 @@ public class QrCodeRegression extends BaseImageRegression {
 				return;
 
 			if( workDirectory.exists() ) {
-				FileUtils.deleteDirectory(workDirectory);
+				BoofRegressionConstants.delete(workDirectory,errorLog);
 				if( !workDirectory.mkdirs() ) {
 					throw new IOException("Can't create work directory");
 				}

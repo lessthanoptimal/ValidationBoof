@@ -16,8 +16,9 @@ import boofcv.abst.sfm.d3.StereoVisualOdometry;
 import boofcv.alg.feature.detect.interest.GeneralFeatureDetector;
 import boofcv.alg.filter.derivative.GImageDerivativeOps;
 import boofcv.alg.tracker.klt.PkltConfig;
-import boofcv.common.BaseImageRegression;
+import boofcv.common.BaseRegression;
 import boofcv.common.BoofRegressionConstants;
+import boofcv.common.ImageRegression;
 import boofcv.factory.feature.describe.FactoryDescribeRegionPoint;
 import boofcv.factory.feature.detect.extract.FactoryFeatureExtractor;
 import boofcv.factory.feature.detect.intensity.FactoryIntensityPoint;
@@ -40,7 +41,7 @@ import java.util.List;
 /**
  * @author Peter Abeles
  */
-public class StereoVisualOdometryRegression extends BaseImageRegression {
+public class StereoVisualOdometryRegression extends BaseRegression implements ImageRegression {
 
 	public StereoVisualOdometryRegression() {
 		super(BoofRegressionConstants.TYPE_GEOMETRY);

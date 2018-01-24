@@ -1,7 +1,8 @@
 package boofcv.regression;
 
-import boofcv.common.BaseImageRegression;
+import boofcv.common.BaseRegression;
 import boofcv.common.BoofRegressionConstants;
+import boofcv.common.ImageRegression;
 import boofcv.common.RegressionRunner;
 import boofcv.metrics.corner.ComparePreviousCorner;
 import boofcv.struct.image.ImageDataType;
@@ -13,7 +14,7 @@ import java.io.PrintStream;
 /**
  * @author Peter Abeles
  */
-public class CornerDetectorChangeRegression extends BaseImageRegression {
+public class CornerDetectorChangeRegression extends BaseRegression implements ImageRegression {
 
 	public CornerDetectorChangeRegression() {
 		super(BoofRegressionConstants.TYPE_FEATURE);

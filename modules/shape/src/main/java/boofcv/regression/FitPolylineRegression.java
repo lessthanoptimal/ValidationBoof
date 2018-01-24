@@ -1,9 +1,10 @@
 package boofcv.regression;
 
 import boofcv.abst.shapes.polyline.PointsToPolyline;
-import boofcv.common.BaseImageRegression;
+import boofcv.common.BaseRegression;
 import boofcv.common.BoofRegressionConstants;
 import boofcv.common.FactoryObject;
+import boofcv.common.ImageRegression;
 import boofcv.metrics.DetectPolylineSaveToFile;
 import boofcv.metrics.EvaluatePolylineDetector;
 import boofcv.metrics.FactoryPolylineSplitMerge;
@@ -18,7 +19,7 @@ import java.util.List;
 /**
  * @author Peter Abeles
  */
-public class FitPolylineRegression extends BaseImageRegression {
+public class FitPolylineRegression extends BaseRegression implements ImageRegression {
 
 	File workDirectory = new File("./tmp");
 	File baseDataSetDirectory = new File("data/shape/polygon");

@@ -3,8 +3,9 @@ package boofcv.regression;
 import boofcv.abst.distort.ConfigDeformPointMLS;
 import boofcv.abst.distort.PointDeformKeyPoints;
 import boofcv.alg.distort.mls.TypeDeformMLS;
-import boofcv.common.BaseFileRegression;
+import boofcv.common.BaseRegression;
 import boofcv.common.BoofRegressionConstants;
+import boofcv.common.FileRegression;
 import boofcv.common.RegressionRunner;
 import boofcv.factory.distort.FactoryDistort;
 import boofcv.metrics.ChangeOutputPointDeformKeyPoints;
@@ -16,10 +17,14 @@ import java.io.PrintStream;
 /**
  * @author Peter Abeles
  */
-public class PointDeformKeyPointsFRegression extends BaseFileRegression {
+public class PointDeformKeyPointsFRegression extends BaseRegression implements FileRegression {
 
     PrintStream out;
     ChangeOutputPointDeformKeyPoints metrics = new ChangeOutputPointDeformKeyPoints();
+
+    public PointDeformKeyPointsFRegression() {
+        super("other");
+    }
 
     @Override
     public void process() throws IOException {

@@ -20,10 +20,7 @@ import boofcv.alg.feature.detect.interest.GeneralFeatureDetector;
 import boofcv.alg.filter.derivative.GImageDerivativeOps;
 import boofcv.alg.tracker.klt.PkltConfig;
 import boofcv.alg.transform.ii.GIntegralImageOps;
-import boofcv.common.BaseImageRegression;
-import boofcv.common.BoofRegressionConstants;
-import boofcv.common.RegressionRunner;
-import boofcv.common.ValidationConstants;
+import boofcv.common.*;
 import boofcv.factory.feature.associate.FactoryAssociation;
 import boofcv.factory.feature.describe.FactoryDescribeRegionPoint;
 import boofcv.factory.feature.detect.extract.FactoryFeatureExtractor;
@@ -48,7 +45,7 @@ import java.util.List;
 /**
  * @author Peter Abeles
  */
-public class PointTrackerRegression extends BaseImageRegression {
+public class PointTrackerRegression extends BaseRegression implements ImageRegression {
 
 	public static String pathToData = ValidationConstants.PATH_DATA+"abeles2012/";
 	public static double tolerance = 5;

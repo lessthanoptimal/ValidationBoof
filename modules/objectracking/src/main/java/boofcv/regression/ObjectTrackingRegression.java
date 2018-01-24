@@ -1,8 +1,9 @@
 package boofcv.regression;
 
 import boofcv.abst.tracker.TrackerObjectQuad;
-import boofcv.common.BaseImageRegression;
+import boofcv.common.BaseRegression;
 import boofcv.common.BoofRegressionConstants;
+import boofcv.common.ImageRegression;
 import boofcv.common.RegressionRunner;
 import boofcv.metrics.object.*;
 import boofcv.struct.image.ImageBase;
@@ -16,7 +17,7 @@ import java.util.List;
 /**
  * @author Peter Abeles
  */
-public class ObjectTrackingRegression extends BaseImageRegression {
+public class ObjectTrackingRegression extends BaseRegression implements ImageRegression {
 
 	File trackingOutputDir = BoofRegressionConstants.tempDir();
 

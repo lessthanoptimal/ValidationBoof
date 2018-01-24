@@ -1,8 +1,9 @@
 package boofcv.regression;
 
 import boofcv.abst.feature.dense.DescribeImageDense;
-import boofcv.common.BaseImageRegression;
+import boofcv.common.BaseRegression;
 import boofcv.common.BoofRegressionConstants;
+import boofcv.common.ImageRegression;
 import boofcv.common.RegressionRunner;
 import boofcv.factory.feature.dense.*;
 import boofcv.metrics.dense.EvalauteDescribeImageDense;
@@ -21,7 +22,7 @@ import java.util.List;
  *
  * @author Peter Abeles
  */
-public class DescribeImageDenseRegression extends BaseImageRegression {
+public class DescribeImageDenseRegression extends BaseRegression implements ImageRegression {
 
 
 	public DescribeImageDenseRegression() {

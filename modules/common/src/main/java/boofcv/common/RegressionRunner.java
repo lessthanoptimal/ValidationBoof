@@ -67,11 +67,19 @@ public class RegressionRunner {
 
             ImageRegression regression = (ImageRegression) o;
             regression.setOutputDirectory(new File(CURRENT_DIRECTORY,imageType.toString()).getPath());
-            regression.process(imageType);
+            try {
+                regression.process(imageType);
+            } catch( RuntimeException e ) {
+                e.printStackTrace(regression.getErrorStream());
+            }
         } else if( args.length == 1 ) {
             FileRegression regression = (FileRegression)o;
             regression.setOutputDirectory(new File(CURRENT_DIRECTORY,"other").getPath());
-            regression.process();
+            try {
+                regression.process();
+            } catch( RuntimeException e ) {
+                e.printStackTrace(regression.getErrorStream());
+            }
         } else {
             throw new RuntimeException("Unexpected number of arguments "+args.length);
         }
