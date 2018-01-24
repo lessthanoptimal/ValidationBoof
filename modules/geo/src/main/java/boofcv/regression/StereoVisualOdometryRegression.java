@@ -19,6 +19,7 @@ import boofcv.alg.tracker.klt.PkltConfig;
 import boofcv.common.BaseRegression;
 import boofcv.common.BoofRegressionConstants;
 import boofcv.common.ImageRegression;
+import boofcv.common.RegressionRunner;
 import boofcv.factory.feature.describe.FactoryDescribeRegionPoint;
 import boofcv.factory.feature.detect.extract.FactoryFeatureExtractor;
 import boofcv.factory.feature.detect.intensity.FactoryIntensityPoint;
@@ -43,6 +44,8 @@ import java.util.List;
  */
 public class StereoVisualOdometryRegression extends BaseRegression implements ImageRegression {
 
+	PrintStream outputRuntime;
+
 	public StereoVisualOdometryRegression() {
 		super(BoofRegressionConstants.TYPE_GEOMETRY);
 	}
@@ -57,7 +60,12 @@ public class StereoVisualOdometryRegression extends BaseRegression implements Im
 		all.add( createDualTrackerPnP(bandType));
 		all.add( createQuadPnP(bandType));
 
+		outputRuntime = new PrintStream(new File(directory,"RUN_StereoVisOdom.txt"));
+		BoofRegressionConstants.printGenerator(outputRuntime, getClass());
+		outputRuntime.println("# Runtime speed (average FPS) of stereo vision odometry algorithms");
+
 		for( Info a : all ) {
+			outputRuntime.println(a.name);
 			try {
 				SequenceStereoImages data = new WrapParseLeuven07(new ParseLeuven07("data/leuven07"));
 				evaluate(a,data,"Leuven07");
@@ -72,17 +80,22 @@ public class StereoVisualOdometryRegression extends BaseRegression implements Im
 				errorLog.println("---------------------------------------------------");
 			}
 		}
+
+		outputRuntime.close();
+		errorLog.close();
 	}
 
 	private void evaluate( Info vo , SequenceStereoImages data , String dataName ) throws FileNotFoundException {
+
 		PrintStream out = new PrintStream(new File(directory,"ACC_StereoVisOdom_"+dataName+"_"+vo.name+".txt"));
-		BoofRegressionConstants.printGenerator(out, getClass());
+
 		try {
 			EvaluateVisualOdometryStereo evaluator = new EvaluateVisualOdometryStereo(data,vo.vo,vo.imageType);
 
 			evaluator.setOutputStream(out);
 			evaluator.initialize();
 			while( evaluator.nextFrame() ){}
+			outputRuntime.printf("%20s %5.2f\n",dataName,evaluator.getAverageFPS());
 		} catch( RuntimeException e ) {
 			errorLog.println("FAILED "+vo.name+" on "+dataName);
 			e.printStackTrace(errorLog);
@@ -161,12 +174,9 @@ public class StereoVisualOdometryRegression extends BaseRegression implements Im
 		public StereoVisualOdometry vo;
 	}
 
-	public static void main(String[] args) throws IOException {
-
-		StereoVisualOdometryRegression app = new StereoVisualOdometryRegression();
-
-		app.setOutputDirectory(BoofRegressionConstants.CURRENT_DIRECTORY+"/"+ImageDataType.U8+"/");
-		app.process(ImageDataType.U8);
+	public static void main(String[] args) throws IOException, IllegalAccessException, InstantiationException, ClassNotFoundException {
+		BoofRegressionConstants.clearCurrentResults();
+		RegressionRunner.main(new String[]{StereoVisualOdometryRegression.class.getName(),ImageDataType.F32.toString()});
 	}
 
 }

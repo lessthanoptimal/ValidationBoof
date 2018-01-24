@@ -15,7 +15,8 @@ import java.util.List;
  */
 public class RuntimePerformanceVideoStabilization< T extends ImageBase<T>> {
 
-	PrintStream outputResults = System.out;
+	PrintStream outputRuntime = System.out;
+	PrintStream outputMetrics = System.out;
 	PrintStream err = System.err;
 
 	StitchingFromMotion2D<T,?> stitcher;
@@ -28,7 +29,8 @@ public class RuntimePerformanceVideoStabilization< T extends ImageBase<T>> {
 	}
 
 	public void evaluate( List<File> videos ) {
-		outputResults.println("# Video Name, total frames, total faults, FPS");
+		outputRuntime.println("# Video Name, fps");
+		outputMetrics.println("# Video Name, total frames, total faults");
 
 		for( File f : videos ) {
 			SimpleImageSequence<T> sequence = DefaultMediaManager.INSTANCE.openVideo(f.getPath(),imageType);
@@ -54,7 +56,9 @@ public class RuntimePerformanceVideoStabilization< T extends ImageBase<T>> {
 				double seconds = (System.currentTimeMillis() - timeStart) / 1000.0;
 				double fps = totalFrames / seconds;
 
-				outputResults.printf("%20s  %4d %4d %f\b",f.getName(),totalFrames,totalFaults,fps);
+				outputMetrics.printf("%20s  %4d %4d\n",f.getName(),totalFrames,totalFaults);
+				outputRuntime.printf("%20s  %f\n",f.getName(),fps);
+
 			} catch( RuntimeException e ) {
 				err.println("Caught fault on "+f.getPath());
 				err.println(e);
@@ -64,8 +68,12 @@ public class RuntimePerformanceVideoStabilization< T extends ImageBase<T>> {
 		}
 	}
 
-	public void setOutputResults(PrintStream outputResults) {
-		this.outputResults = outputResults;
+	public void setOutputRuntime(PrintStream outputRuntime) {
+		this.outputRuntime = outputRuntime;
+	}
+
+	public void setOutputMetrics(PrintStream outputMetrics) {
+		this.outputMetrics = outputMetrics;
 	}
 
 	public void setErrorStream(PrintStream err) {

@@ -65,6 +65,7 @@ public class FiducialRegression extends BaseRegression implements ImageRegressio
 
 		process("CircleRegular", new EstimateCircleRegularToCamera(imageType), "circle_regular");
 
+		errorLog.close();
 	}
 
 	private void process(String name, BaseEstimateSquareFiducialToCamera estimate, String type) throws IOException {
@@ -86,13 +87,13 @@ public class FiducialRegression extends BaseRegression implements ImageRegressio
 		PrintStream out = new PrintStream(new File(directory,outName));
 		BoofRegressionConstants.printGenerator(out, getClass());
 
-		RuntimePerformanceFiducialToCamera benchmark =
-				new RuntimePerformanceFiducialToCamera(factory);
+		RuntimePerformanceFiducialToCamera benchmark = new RuntimePerformanceFiducialToCamera(factory);
 
 		benchmark.setErrorStream(errorLog);
 		benchmark.setOutputResults(out);
-
 		benchmark.evaluate(new File("data/fiducials/",type));
+
+		out.close();
 	}
 
 	private void computeStandardMetrics(String type, String outName,
@@ -110,6 +111,8 @@ public class FiducialRegression extends BaseRegression implements ImageRegressio
 		evaluate.setOutputResults(out);
 
 		processDataSets(estimate, new File(new File(baseFiducial,type),"standard"), out, evaluate);
+
+		out.close();
 	}
 
 	private void computeStaticMetrics(String type, String outName,
@@ -127,6 +130,7 @@ public class FiducialRegression extends BaseRegression implements ImageRegressio
 		evaluate.setOutputResults(out);
 
 		processDataSets(estimate, new File(new File(baseFiducial,type),"static"), out, evaluate);
+		out.close();
 	}
 
 	private void computeAlwaysVisibleMetrics(String type, String outName,
@@ -141,6 +145,8 @@ public class FiducialRegression extends BaseRegression implements ImageRegressio
 		evaluate.setOutputResults(out);
 
 		processDataSets(estimate, new File(new File(baseFiducial,type),"always_visible"), out, evaluate);
+
+		out.close();
 	}
 
 	private void processDataSets(BaseEstimateSquareFiducialToCamera estimate, File dataSetsRoot,

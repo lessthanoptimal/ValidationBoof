@@ -54,7 +54,7 @@ public class EvaluateVisualOdometryStereo<T extends ImageBase<T>> {
 
 	PrintStream out;
 
-	long totalTimeNano = 0;
+	double totalTimeMilli = 0;
 
 	public EvaluateVisualOdometryStereo( SequenceStereoImages data,
 										 StereoVisualOdometry<T> alg,
@@ -83,6 +83,8 @@ public class EvaluateVisualOdometryStereo<T extends ImageBase<T>> {
 		integralFoundRotation = 0;
 		integralTrueDistance = 0;
 		integralTrueRotation = 0;
+
+		totalTimeMilli = 0.0;
 
 		numEstimates = 0;
 
@@ -125,8 +127,8 @@ public class EvaluateVisualOdometryStereo<T extends ImageBase<T>> {
 		boolean updated = alg.process(inputLeft,inputRight);
 		long after = System.nanoTime();
 
-		totalTimeNano += after-before;
-		double fps = 1.0/((after-before)*1e-9);
+		totalTimeMilli += (after-before)*1e-6;
+		double fps = (frame+1) / (totalTimeMilli*1e-3);
 
 		if( !updated ) {
 			numSkipUpdate++;
@@ -200,7 +202,6 @@ public class EvaluateVisualOdometryStereo<T extends ImageBase<T>> {
 		double averageSkipRotation = totalErrorRotationSkip/integralTrueDistance;
 
 		if( out != null ) {
-			out.println("Average FPS "+(frame/(1e-9*totalTimeNano)));
 			out.println("Total Faults = "+numFaults);
 			out.println("Fraction with no update "+(numSkipUpdate/(double)frame));
 			out.printf("Ave per estimate:      distance %9.7f  rotation %11.9f\n",
@@ -227,5 +228,9 @@ public class EvaluateVisualOdometryStereo<T extends ImageBase<T>> {
 
 	public void setVerbose(boolean verbose) {
 		this.verbose = verbose;
+	}
+
+	public double getAverageFPS() {
+		return frame/(totalTimeMilli*1e-3);
 	}
 }
