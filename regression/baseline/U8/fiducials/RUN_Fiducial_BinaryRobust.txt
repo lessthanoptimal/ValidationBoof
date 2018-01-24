@@ -1,0 +1,8 @@
+# GENERATOR FiducialRegression
+data/fiducials/square_border_binary/standard/distance_angle 300  83.172
+data/fiducials/square_border_binary/standard/distance_straight 300  91.352
+data/fiducials/square_border_binary/standard/motion_blur 300  71.753
+data/fiducials/square_border_binary/standard/rotation 300  60.618
+data/fiducials/square_border_binary/static/static_front_close 300 172.216
+data/fiducials/square_border_binary/static/static_front_far 300 233.100
+data/fiducials/square_border_binary/static/static_scene 300 129.702

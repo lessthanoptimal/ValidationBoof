@@ -1,0 +1,52 @@
+# GENERATOR DetectDescribeRegression
+# Runtime for feature detect describe
+# <directory> <average time in ms>
+
+BoofSURF-Fast
+     bikes/ 135.54
+      boat/ 128.87
+      graf/ 126.51
+    leuven/ 107.49
+       ubc/ 117.21
+     trees/ 169.71
+      wall/ 158.26
+      bark/ 94.47
+
+BoofSURF-Fast_Color
+     bikes/ 208.52
+      graf/ 244.58
+    leuven/ 191.14
+       ubc/ 222.18
+     trees/ 330.96
+      wall/ 311.50
+      bark/ 177.71
+
+BoofSURF-Stable
+     bikes/ 279.74
+      boat/ 335.96
+      graf/ 350.47
+    leuven/ 267.09
+       ubc/ 321.07
+     trees/ 481.09
+      wall/ 461.87
+      bark/ 262.40
+
+BoofSURF-Stable_Color
+     bikes/ 414.77
+      graf/ 541.60
+    leuven/ 401.91
+       ubc/ 485.66
+     trees/ 738.59
+      wall/ 709.49
+      bark/ 398.77
+
+BoofSIFT
+     bikes/ 715.88
+      boat/ 676.63
+      graf/ 494.75
+    leuven/ 557.42
+       ubc/ 641.29
+     trees/ 833.36
+      wall/ 819.63
+      bark/ 580.93
+

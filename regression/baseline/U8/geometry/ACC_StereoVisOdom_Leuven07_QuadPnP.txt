@@ -1,0 +1,10 @@
+# GENERATOR StereoVisualOdometryRegression
+# Visual Odometry Performance metrics. QuadPnP in Leuven07
+
+Total Faults = 0
+Fraction with no update 0.0034071550255536627
+Ave per estimate:      distance 0.5804756  rotation 0.001545621
+Ave per distance:      distance  11.39909% deg/unit = 1.74e-02
+Ave Skip 20:           distance   7.39079% deg/unit = 5.62e-03
+Absolute:              location 477.77471  rotation  21.09 degrees
+Integral per distance: distance   6.81069% deg/unit = 1.93e-04

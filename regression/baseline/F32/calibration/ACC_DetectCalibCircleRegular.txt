@@ -1,0 +1,26 @@
+# GENERATOR CalibrationDetectionRegression
+# (file name) (truth error 50%) (truth error 95%)
+data/calibration_mono/circle_regular/distant/frame01.jpg 0.41730616316218405 0.730322653680017
+data/calibration_mono/circle_regular/distant/frame02.jpg 0.46326935237075945 0.7432415533195128
+data/calibration_mono/circle_regular/distant/frame03.jpg 0.46433974669507616 0.8564634756916698
+data/calibration_mono/circle_regular/distant/frame04.jpg 0.4431291535301429 0.7684114055668052
+data/calibration_mono/circle_regular/distant/frame05.jpg 0.3095684062594249 0.6435761261794579
+data/calibration_mono/circle_regular/large/image01.jpg 3.6778538883391754 5.694573484670425
+data/calibration_mono/circle_regular/large/image02.jpg 1.8501248446490073 3.2593903678335385
+data/calibration_mono/circle_regular/large/image03.jpg 1.7186907699477278 3.3878565500201328
+data/calibration_mono/circle_regular/large/image04.jpg 0.7165458860644724 1.4826170453877496
+data/calibration_mono/circle_regular/large/image05.jpg 0.6078619102521732 1.158661002310189
+data/calibration_mono/circle_regular/large/image06.jpg 0.7096635061228517 1.4944011366822205
+data/calibration_mono/circle_regular/large/image07.jpg 1.2822015903243398 2.6459055798345044
+data/calibration_mono/circle_regular/fisheye/image00.jpg 0.27197953747805464 0.7390203313485533
+data/calibration_mono/circle_regular/fisheye/image01.jpg 0.40705024039619664 0.684340366466046
+data/calibration_mono/circle_regular/fisheye/image02.jpg 0.49467663983492477 0.878547303709211
+data/calibration_mono/circle_regular/fisheye/image03.jpg 0.39347804076092047 0.7659878569782002
+data/calibration_mono/circle_regular/fisheye/image04.jpg 0.38269006346097717 0.7551223138727025
+data/calibration_mono/circle_regular/fisheye/image05.jpg failed
+data/calibration_mono/circle_regular/fisheye/image06.jpg failed
+data/calibration_mono/circle_regular/fisheye/image07.jpg 0.48861619378388144 1.045226208166663
+data/calibration_mono/circle_regular/fisheye/image08.jpg 0.7237289384036263 1.2703269913320752
+data/calibration_mono/circle_regular/fisheye/image09.jpg failed
+
+Summary: 50% = 0.5478157483795932  95% = 2.996599044678705   success %86.36363636363636

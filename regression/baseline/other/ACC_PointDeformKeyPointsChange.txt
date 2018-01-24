@@ -1,0 +1,7 @@
+# GENERATOR PointDeformKeyPointsFRegression
+PointDeformKeyPoints: Change Regression
+
+
+           MLS-Rigid change-hash=   42.134403228760
+          MLS-Affine change-hash=   46.575584411621
+      MLS-Similarity change-hash=   51.041149139404

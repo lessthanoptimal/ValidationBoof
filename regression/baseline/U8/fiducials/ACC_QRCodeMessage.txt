@@ -1,0 +1,7 @@
+# GENERATOR QrCodeRegression
+# Evaluating default
+# QR Code Decoding results
+Total   26
+Correct 26
+Missed  0
+

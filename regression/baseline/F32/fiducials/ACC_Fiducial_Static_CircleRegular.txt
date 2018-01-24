@@ -1,0 +1,90 @@
+# GENERATOR FiducialRegression
+# Data Set = angled
+# maxPixelError = 5.0
+
+Summary:
+ correct            : 100
+ wrong order        : 0
+ wrong ID           : 0
+ duplicates         : 0
+ false positive     : 0
+ false negative     : 0
+Normal Angle (deg):     99
+ errors 50%         : 0.015566719261821562
+ errors 90%         : 0.030820635516451953
+ errors 100%        : 0.04897033353287943
+Location            : 99
+ errors 50%         : 0.008043000219579233
+ errors 90%         : 0.025244616193825127
+ errors 100%        : 0.03345283201051711
+Precision:              4800
+ errors 50%         : 0.05544459102047618
+ errors 90%         : 0.22469643492983918
+ errors 100%        : 0.27866630175503543
+Accuracy:               4800
+ errors 50%         : 0.4510379457431054
+ errors 90%         : 0.8717717719994659
+ errors 100%        : 1.3919785004046847
+
+---------------------------------------------------
+
+# Data Set = front_close
+# maxPixelError = 5.0
+
+Summary:
+ correct            : 100
+ wrong order        : 0
+ wrong ID           : 0
+ duplicates         : 0
+ false positive     : 0
+ false negative     : 0
+Normal Angle (deg):     99
+ errors 50%         : 0.08515834732489716
+ errors 90%         : 0.19311098501979873
+ errors 100%        : 0.24515210213728247
+Location            : 99
+ errors 50%         : 0.003966867873288168
+ errors 90%         : 0.011409847253560512
+ errors 100%        : 0.016607593108485516
+Precision:              4800
+ errors 50%         : 0.020936670001762598
+ errors 90%         : 0.037699515301576454
+ errors 100%        : 0.10011695194280223
+Accuracy:               4800
+ errors 50%         : 0.4412703000624088
+ errors 90%         : 0.958668337654788
+ errors 100%        : 1.4499362999655747
+
+---------------------------------------------------
+
+# Data Set = front_far
+# maxPixelError = 5.0
+
+Summary:
+ correct            : 100
+ wrong order        : 0
+ wrong ID           : 0
+ duplicates         : 0
+ false positive     : 0
+ false negative     : 0
+Normal Angle (deg):     99
+ errors 50%         : 0.2744045807574032
+ errors 90%         : 0.4573754230590888
+ errors 100%        : 0.7045132955582105
+Location            : 99
+ errors 50%         : 0.05065827372288146
+ errors 90%         : 0.12254266349052163
+ errors 100%        : 0.2024734316542913
+Precision:              4800
+ errors 50%         : 0.14659426687763813
+ errors 90%         : 0.22646726192596733
+ errors 100%        : 0.31206502171219663
+Accuracy:               4800
+ errors 50%         : 0.39334941296512527
+ errors 90%         : 0.6522034121601277
+ errors 100%        : 0.8932934259769971
+
+---------------------------------------------------
+
+---------------------------------------------------
+total correct / total expected =  300 / 300

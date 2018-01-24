@@ -1,0 +1,31 @@
+# GENERATOR DetectEllipseRegression
+# Data Set = cardboard
+# Match Fraction        = 0.85
+# Match MAX DISTANCE    = 3.0
+# SAMPLES               = 30
+# MAX CENTER DISTANCE   = 5.0
+# Image (expected) (detected) (multiple) (false positives) (false negative) (average error)
+image00000.jpg  20 20  0  0  0  0.1981
+image00001.jpg  20 20  0  0  0  0.2051
+image00002.jpg  20 20  0  0  0  0.2045
+image00003.jpg  20 20  0  0  0  0.1819
+image00004.jpg  20 20  0  0  0  0.2566
+image00005.jpg  20 20  0  0  0  0.2902
+
+# Data Set = outdoors
+# Match Fraction        = 0.85
+# Match MAX DISTANCE    = 3.0
+# SAMPLES               = 30
+# MAX CENTER DISTANCE   = 5.0
+# Image (expected) (detected) (multiple) (false positives) (false negative) (average error)
+image00000.jpg  20 13  0  1  8  0.2401
+image00001.jpg  20 15  0  0  5  0.2087
+image00002.jpg  20 19  0  0  1  0.2201
+image00003.jpg  20 12  0  0  8  0.1706
+image00004.jpg  20  9  0  0 11  0.2531
+image00005.jpg  20  9  0  0 11  0.1793
+image00006.jpg  20 10  0  0 10  0.1451
+image00007.jpg  20  7  0  0 13  0.1740
+image00008.jpg  20 20  0  0  0  0.2035
+image00009.jpg  20 20  0  0  0  0.2256
+

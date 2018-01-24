@@ -1,0 +1,53 @@
+# GENERATOR DetectDescribeRegression
+tolerance = 3.0
+# rows = Max Matches | Precision | Recall | F-measure
+
+---------- Directory: data/affinevgg/bikes
+img2 img3 img4 img5 img6 
+3841 3458 2678 2108 1319 
+0.8905 0.8664 0.8117 0.7591 0.5583 
+0.7451 0.7221 0.6374 0.5859 0.5011 
+0.8113 0.7877 0.7141 0.6613 0.5282 
+---------- Directory: data/affinevgg/boat
+---------- Directory: data/affinevgg/graf
+img2 img3 img4 img5 img6 
+2716 2420 1951 1689 1557 
+0.6581 0.3931 0.1820 0.0397 0.0155 
+0.5180 0.2810 0.1215 0.0237 0.0090 
+0.5797 0.3277 0.1457 0.0297 0.0114 
+---------- Directory: data/affinevgg/leuven
+img2 img3 img4 img5 img6 
+3749 3268 2923 2535 2109 
+0.8754 0.8472 0.8404 0.8055 0.7611 
+0.7495 0.7026 0.6610 0.6142 0.5680 
+0.8076 0.7681 0.7399 0.6970 0.6506 
+---------- Directory: data/affinevgg/ubc
+img2 img3 img4 img5 img6 
+4598 4166 3705 2914 2084 
+0.9596 0.9008 0.8229 0.6874 0.5405 
+0.8317 0.7542 0.6510 0.5055 0.4002 
+0.8911 0.8210 0.7269 0.5826 0.4599 
+---------- Directory: data/affinevgg/trees
+img2 img3 img4 img5 img6 
+4859 4316 3557 3517 2481 
+0.6942 0.6010 0.4543 0.4347 0.2992 
+0.5186 0.4632 0.3520 0.2747 0.1858 
+0.5937 0.5232 0.3966 0.3366 0.2292 
+---------- Directory: data/affinevgg/wall
+img2 img3 img4 img5 img6 
+5403 5087 3955 3293 2628 
+0.8614 0.8205 0.6241 0.4618 0.1542 
+0.6545 0.5654 0.4169 0.2733 0.0666 
+0.7438 0.6695 0.4999 0.3434 0.0930 
+---------- Directory: data/affinevgg/bark
+img2 img3 img4 img5 img6 
+1802 1166 1253 1173 1154 
+0.6655 0.4053 0.2933 0.2296 0.0927 
+0.5122 0.3431 0.1971 0.1483 0.0572 
+0.5789 0.3716 0.2358 0.1802 0.0707 
+Summary Score:
+   num features  = 175293
+   max matches   = 101432
+   sumPrecision  = 20.306901492226697
+   sumRecall     = 15.61150130261133
+   sumFMeasure   = 17.607613610301428

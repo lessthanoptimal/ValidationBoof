@@ -1,0 +1,21 @@
+# GENERATOR DetectPolygonRegression
+# Average processing time of shape detector algorithm BinaryGlobal
+            border01   14.0216 (ms)
+            border02    5.6097 (ms)
+             concave    5.6977 (ms)
+    quadrilaterals01   14.1947 (ms)
+               set01    3.8531 (ms)
+               set02    3.4718 (ms)
+               set03    4.0617 (ms)
+               set04    1.0912 (ms)
+
+# Average processing time of shape detector algorithm BinaryLocal
+            border01   25.1201 (ms)
+            border02    9.3574 (ms)
+             concave    7.1433 (ms)
+    quadrilaterals01   17.3921 (ms)
+               set01   14.9075 (ms)
+               set02    5.9245 (ms)
+               set03    5.6115 (ms)
+               set04    1.0682 (ms)
+

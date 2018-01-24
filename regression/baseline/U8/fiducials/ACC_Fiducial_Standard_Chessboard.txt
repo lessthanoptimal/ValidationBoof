@@ -1,0 +1,88 @@
+# GENERATOR FiducialRegression
+# distance_angle
+# maxPixelError = 5.0
+
+Summary:
+ correct            :    5 /    6
+ wrong order        : 0
+ wrong ID           : 0
+ duplicates         : 0
+ false positives    : 0
+ false negative     : 1
+Corner errors:
+ precision 50%         : 0.20560769064579007
+ precision 90%         : 0.38243462635879216
+ precision 100%        : 0.5943688792353555
+
+---------------------------------------------------
+
+# distance_straight
+# maxPixelError = 5.0
+
+Summary:
+ correct            :    8 /    8
+ wrong order        : 0
+ wrong ID           : 0
+ duplicates         : 0
+ false positives    : 0
+ false negative     : 0
+Corner errors:
+ precision 50%         : 0.1997156648669162
+ precision 90%         : 0.37983229786124223
+ precision 100%        : 0.6448247066713347
+
+---------------------------------------------------
+
+# distant
+# maxPixelError = 5.0
+
+Summary:
+ correct            :    7 /    7
+ wrong order        : 0
+ wrong ID           : 0
+ duplicates         : 0
+ false positives    : 0
+ false negative     : 0
+Corner errors:
+ precision 50%         : 0.20735927592936187
+ precision 90%         : 0.36235435932529586
+ precision 100%        : 0.7758069839057186
+
+---------------------------------------------------
+
+# motion_blur
+# maxPixelError = 5.0
+
+Summary:
+ correct            :    9 /   13
+ wrong order        : 0
+ wrong ID           : 0
+ duplicates         : 0
+ false positives    : 0
+ false negative     : 4
+Corner errors:
+ precision 50%         : 1.4557642742450212
+ precision 90%         : 2.8120826948324797
+ precision 100%        : 5.663574721442659
+
+---------------------------------------------------
+
+# rotation
+# maxPixelError = 5.0
+
+Summary:
+ correct            :    7 /    7
+ wrong order        : 0
+ wrong ID           : 0
+ duplicates         : 0
+ false positives    : 0
+ false negative     : 0
+Corner errors:
+ precision 50%         : 0.24625739859357404
+ precision 90%         : 0.46158304761968855
+ precision 100%        : 0.688805291688495
+
+---------------------------------------------------
+
+---------------------------------------------------
+total correct / total expected =   36 /  41

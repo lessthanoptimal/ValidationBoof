@@ -1,0 +1,90 @@
+# GENERATOR FiducialRegression
+# Data Set = static_front_close
+# maxPixelError = 5.0
+
+Summary:
+ correct            : 101
+ wrong order        : 0
+ wrong ID           : 0
+ duplicates         : 0
+ false positive     : 0
+ false negative     : 0
+Normal Angle (deg):     100
+ errors 50%         : 0.012640587257441861
+ errors 90%         : 0.02484068221821965
+ errors 100%        : 0.028376522909003037
+Location            : 100
+ errors 50%         : 5.04175879733509E-4
+ errors 90%         : 8.569247211098179E-4
+ errors 100%        : 0.0016176455568193773
+Precision:              404
+ errors 50%         : 0.023277723171817123
+ errors 90%         : 0.04391756594047787
+ errors 100%        : 0.07580098822835807
+Accuracy:               404
+ errors 50%         : 1.172660938250178
+ errors 90%         : 1.5768776914042497
+ errors 100%        : 1.6163523237096082
+
+---------------------------------------------------
+
+# Data Set = static_front_far
+# maxPixelError = 5.0
+
+Summary:
+ correct            : 100
+ wrong order        : 0
+ wrong ID           : 0
+ duplicates         : 0
+ false positive     : 0
+ false negative     : 0
+Normal Angle (deg):     99
+ errors 50%         : 0.7905608739503615
+ errors 90%         : 9.315630967296254
+ errors 100%        : 13.95764031557087
+Location            : 99
+ errors 50%         : 0.04436173796252666
+ errors 90%         : 0.11239029560673794
+ errors 100%        : 0.26365077810039156
+Precision:              400
+ errors 50%         : 0.029797007346867247
+ errors 90%         : 0.08496295410325365
+ errors 100%        : 0.3427386533915914
+Accuracy:               400
+ errors 50%         : 0.32154431659688193
+ errors 90%         : 0.47829044220307154
+ errors 100%        : 0.5881181365709489
+
+---------------------------------------------------
+
+# Data Set = static_scene
+# maxPixelError = 5.0
+
+Summary:
+ correct            : 1212
+ wrong order        : 0
+ wrong ID           : 0
+ duplicates         : 0
+ false positive     : 0
+ false negative     : 0
+Normal Angle (deg):     1200
+ errors 50%         : 0.021567232833922086
+ errors 90%         : 0.05185604457584584
+ errors 100%        : 0.12922338332645047
+Location            : 1200
+ errors 50%         : 0.007788768022413838
+ errors 90%         : 0.025250805002535577
+ errors 100%        : 0.09451810776639813
+Precision:              4848
+ errors 50%         : 0.021505813008547387
+ errors 90%         : 0.045151444378861774
+ errors 100%        : 0.11270881292062672
+Accuracy:               4848
+ errors 50%         : 0.34090454258536446
+ errors 90%         : 0.6508687857179344
+ errors 100%        : 0.8107750983435988
+
+---------------------------------------------------
+
+---------------------------------------------------
+total correct / total expected = 1413 /1413

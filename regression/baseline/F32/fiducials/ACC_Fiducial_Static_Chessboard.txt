@@ -1,0 +1,61 @@
+# GENERATOR FiducialRegression
+# Data Set = front_close
+# maxPixelError = 5.0
+
+Summary:
+ correct            : 201
+ wrong order        : 0
+ wrong ID           : 0
+ duplicates         : 0
+ false positive     : 0
+ false negative     : 0
+Normal Angle (deg):     200
+ errors 50%         : 0.08640765100719536
+ errors 90%         : 0.19789358251308373
+ errors 100%        : 0.35827786704304254
+Location            : 200
+ errors 50%         : 9.095003785715586E-4
+ errors 90%         : 0.0022671437561409633
+ errors 100%        : 0.006974247266017538
+Precision:              4824
+ errors 50%         : 0.027093832410771186
+ errors 90%         : 0.08039697938012413
+ errors 100%        : 0.563472025809856
+Accuracy:               4824
+ errors 50%         : 0.32709994959908445
+ errors 90%         : 0.60044002614944
+ errors 100%        : 1.1614591404974954
+
+---------------------------------------------------
+
+# Data Set = front_far
+# maxPixelError = 5.0
+
+Summary:
+ correct            : 201
+ wrong order        : 0
+ wrong ID           : 0
+ duplicates         : 0
+ false positive     : 0
+ false negative     : 0
+Normal Angle (deg):     200
+ errors 50%         : 0.3623742509083432
+ errors 90%         : 0.9226750662170007
+ errors 100%        : 15.918408462866786
+Location            : 200
+ errors 50%         : 0.01320423309669035
+ errors 90%         : 0.0353007315436303
+ errors 100%        : 0.07126638664951188
+Precision:              4824
+ errors 50%         : 0.3984232373811716
+ errors 90%         : 0.8106639415553114
+ errors 100%        : 1.9887530699686962
+Accuracy:               4824
+ errors 50%         : 1.8278937779417506
+ errors 90%         : 2.4187290270803135
+ errors 100%        : 2.846274125845607
+
+---------------------------------------------------
+
+---------------------------------------------------
+total correct / total expected =  402 / 402

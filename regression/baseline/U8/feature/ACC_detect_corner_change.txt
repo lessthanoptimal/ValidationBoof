@@ -1,0 +1,13 @@
+# GENERATOR CornerDetectorChangeRegression
+# Checks to change in the behavior of corner detectors
+# detector (change in total features) (difference in location)
+FAST_U8.txt 0 0.0
+ShiTomasi_U8.txt 0 0.0
+ShiTomasiW_U8.txt 0 0.0
+Harris_U8.txt 0 0.0
+HarrisW_U8.txt 0 0.0
+KitRos_U8.txt 0 0.0
+Median_U8.txt 0 0.0
+HessianDet_U8.txt 0 0.0
+HessianTrace_U8.txt 0 0.0
+Laplacian_U8.txt 0 0.0

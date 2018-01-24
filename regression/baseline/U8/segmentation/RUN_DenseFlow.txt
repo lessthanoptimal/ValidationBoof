@@ -1,0 +1,9 @@
+# GENERATOR DenseFlowRegression
+# Runtime dense optical flow
+# <algorithm> <average time in ms>
+
+                 KLT  6312.2
+              Region  6761.1
+         HornSchunck  2633.2
+      HornSchunckPyr  3890.4
+                Brox  6179.0

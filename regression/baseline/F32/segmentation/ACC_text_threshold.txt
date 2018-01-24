@@ -1,0 +1,8 @@
+# GENERATOR TextThresholdRegression
+              global Mean F = 0.567899 P = 0.396862 R = 0.998019
+              global Otsu F = 0.774520 P = 0.655751 R = 0.945827
+           global Entropy F = 0.860363 P = 0.786356 R = 0.949748
+             local Square F = 0.468250 P = 0.306758 R = 0.988803
+           local Gaussian F = 0.457436 P = 0.297910 R = 0.984755
+            local Sauvola F = 0.889507 P = 0.886967 R = 0.892061
+      local Block Min-Max F = 0.706716 P = 0.605441 R = 0.848678

@@ -1,0 +1,12 @@
+# GENERATOR StereoVisualOdometryRegression
+# Runtime speed (average FPS) of stereo vision odometry algorithms
+
+StereoDepth
+            Leuven07 101.96
+             KITTI00 47.85
+DualPnP
+            Leuven07 112.19
+             KITTI00 50.79
+QuadPnP
+            Leuven07 23.45
+             KITTI00 23.19

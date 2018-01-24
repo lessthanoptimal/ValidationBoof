@@ -1,0 +1,41 @@
+# GENERATOR FitPolylineRegression
+# Average processing time of polyline algorithm SplitMerge_Global
+            border01    5.8150 (ms)
+            border02    3.0592 (ms)
+             concave    3.7261 (ms)
+    quadrilaterals01    2.5858 (ms)
+               set01    0.7124 (ms)
+               set02    0.6344 (ms)
+               set03    0.8854 (ms)
+               set04    0.1582 (ms)
+
+# Average processing time of polyline algorithm SplitMerge_Local
+            border01   23.6826 (ms)
+            border02   18.8549 (ms)
+             concave   10.8229 (ms)
+    quadrilaterals01    2.8815 (ms)
+               set01    5.7189 (ms)
+               set02    3.0848 (ms)
+               set03    2.5412 (ms)
+               set04    0.6246 (ms)
+
+# Average processing time of polyline algorithm SplitMergeOld_Global
+            border01   14.6030 (ms)
+            border02    5.4948 (ms)
+             concave   11.3366 (ms)
+    quadrilaterals01    8.5728 (ms)
+               set01   11.6092 (ms)
+               set02    7.2149 (ms)
+               set03    3.8830 (ms)
+               set04    1.2319 (ms)
+
+# Average processing time of polyline algorithm SplitMergeOld_Local
+            border01  117.5620 (ms)
+            border02   74.3100 (ms)
+             concave   29.0620 (ms)
+    quadrilaterals01   58.9603 (ms)
+               set01  299.9183 (ms)
+               set02   43.0211 (ms)
+               set03   47.6767 (ms)
+               set04   14.9877 (ms)
+

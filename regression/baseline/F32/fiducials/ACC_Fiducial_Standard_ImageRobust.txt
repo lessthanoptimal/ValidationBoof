@@ -1,0 +1,88 @@
+# GENERATOR FiducialRegression
+# distance_angle
+# maxPixelError = 5.0
+
+Summary:
+ correct            :   12 /   18
+ wrong order        : 0
+ wrong ID           : 2
+ duplicates         : 0
+ false positives    : 0
+ false negative     : 4
+Corner errors:
+ precision 50%         : 0.3064838674037931
+ precision 90%         : 0.47603319135395944
+ precision 100%        : 0.7311532673372391
+
+---------------------------------------------------
+
+# distance_straight
+# maxPixelError = 5.0
+
+Summary:
+ correct            :   16 /   18
+ wrong order        : 0
+ wrong ID           : 2
+ duplicates         : 0
+ false positives    : 0
+ false negative     : 0
+Corner errors:
+ precision 50%         : 0.3224710076604513
+ precision 90%         : 0.5428757634440081
+ precision 100%        : 0.9508827639251276
+
+---------------------------------------------------
+
+# hard
+# maxPixelError = 5.0
+
+Summary:
+ correct            :   83 /  132
+ wrong order        : 26
+ wrong ID           : 23
+ duplicates         : 0
+ false positives    : 35
+ false negative     : 0
+Corner errors:
+ precision 50%         : 0.3308654239515736
+ precision 90%         : 0.5843581409512345
+ precision 100%        : 1.1286858653632648
+
+---------------------------------------------------
+
+# motion_blur
+# maxPixelError = 5.0
+
+Summary:
+ correct            :   46 /   96
+ wrong order        : 26
+ wrong ID           : 20
+ duplicates         : 0
+ false positives    : 0
+ false negative     : 30
+Corner errors:
+ precision 50%         : 0.8578327719906726
+ precision 90%         : 1.6818969138843396
+ precision 100%        : 3.026912981578442
+
+---------------------------------------------------
+
+# rotation
+# maxPixelError = 5.0
+
+Summary:
+ correct            :   19 /   26
+ wrong order        : 26
+ wrong ID           : 0
+ duplicates         : 0
+ false positives    : 0
+ false negative     : 7
+Corner errors:
+ precision 50%         : 0.40862382947809
+ precision 90%         : 0.8836227058099532
+ precision 100%        : 2.216615337110188
+
+---------------------------------------------------
+
+---------------------------------------------------
+total correct / total expected =  176 / 290

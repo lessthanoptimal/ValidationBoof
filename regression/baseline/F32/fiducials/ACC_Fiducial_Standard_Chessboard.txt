@@ -1,0 +1,88 @@
+# GENERATOR FiducialRegression
+# distance_angle
+# maxPixelError = 5.0
+
+Summary:
+ correct            :    5 /    6
+ wrong order        : 0
+ wrong ID           : 0
+ duplicates         : 0
+ false positives    : 0
+ false negative     : 1
+Corner errors:
+ precision 50%         : 0.20673072016521424
+ precision 90%         : 0.3796820626074877
+ precision 100%        : 0.5973901401800206
+
+---------------------------------------------------
+
+# distance_straight
+# maxPixelError = 5.0
+
+Summary:
+ correct            :    8 /    8
+ wrong order        : 0
+ wrong ID           : 0
+ duplicates         : 0
+ false positives    : 0
+ false negative     : 0
+Corner errors:
+ precision 50%         : 0.19806147672107827
+ precision 90%         : 0.38400039575720546
+ precision 100%        : 0.6591863484451916
+
+---------------------------------------------------
+
+# distant
+# maxPixelError = 5.0
+
+Summary:
+ correct            :    7 /    7
+ wrong order        : 0
+ wrong ID           : 0
+ duplicates         : 0
+ false positives    : 0
+ false negative     : 0
+Corner errors:
+ precision 50%         : 0.20852578999725038
+ precision 90%         : 0.3593591600507362
+ precision 100%        : 0.7669165116321688
+
+---------------------------------------------------
+
+# motion_blur
+# maxPixelError = 5.0
+
+Summary:
+ correct            :    9 /   13
+ wrong order        : 0
+ wrong ID           : 0
+ duplicates         : 0
+ false positives    : 0
+ false negative     : 4
+Corner errors:
+ precision 50%         : 1.453719472654142
+ precision 90%         : 2.81276948866211
+ precision 100%        : 5.665617200840561
+
+---------------------------------------------------
+
+# rotation
+# maxPixelError = 5.0
+
+Summary:
+ correct            :    7 /    7
+ wrong order        : 0
+ wrong ID           : 0
+ duplicates         : 0
+ false positives    : 0
+ false negative     : 0
+Corner errors:
+ precision 50%         : 0.2468340042905517
+ precision 90%         : 0.46542823737782407
+ precision 100%        : 0.6891532433505163
+
+---------------------------------------------------
+
+---------------------------------------------------
+total correct / total expected =   36 /  41

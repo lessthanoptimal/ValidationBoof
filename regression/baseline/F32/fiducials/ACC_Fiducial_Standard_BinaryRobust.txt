@@ -1,0 +1,71 @@
+# GENERATOR FiducialRegression
+# distance_angle
+# maxPixelError = 5.0
+
+Summary:
+ correct            :   20 /   20
+ wrong order        : 0
+ wrong ID           : 0
+ duplicates         : 0
+ false positives    : 0
+ false negative     : 0
+Corner errors:
+ precision 50%         : 0.3451819171336312
+ precision 90%         : 0.6540847515510853
+ precision 100%        : 1.054141208504548
+
+---------------------------------------------------
+
+# distance_straight
+# maxPixelError = 5.0
+
+Summary:
+ correct            :   20 /   20
+ wrong order        : 0
+ wrong ID           : 0
+ duplicates         : 0
+ false positives    : 0
+ false negative     : 0
+Corner errors:
+ precision 50%         : 0.2741281271087167
+ precision 90%         : 0.5024433988225666
+ precision 100%        : 0.6126392979799702
+
+---------------------------------------------------
+
+# motion_blur
+# maxPixelError = 5.0
+
+Summary:
+ correct            :   86 /  108
+ wrong order        : 0
+ wrong ID           : 1
+ duplicates         : 0
+ false positives    : 0
+ false negative     : 21
+Corner errors:
+ precision 50%         : 0.48151132361271315
+ precision 90%         : 1.0642290899845437
+ precision 100%        : 2.1912234273038376
+
+---------------------------------------------------
+
+# rotation
+# maxPixelError = 5.0
+
+Summary:
+ correct            :   23 /   24
+ wrong order        : 0
+ wrong ID           : 0
+ duplicates         : 0
+ false positives    : 0
+ false negative     : 1
+Corner errors:
+ precision 50%         : 0.7171491864702745
+ precision 90%         : 1.1811265240523316
+ precision 100%        : 2.2336235782154854
+
+---------------------------------------------------
+
+---------------------------------------------------
+total correct / total expected =  149 / 172

@@ -1,0 +1,119 @@
+# GENERATOR FiducialRegression
+# Data Set = angled_5x6
+# maxPixelError = 5.0
+
+Summary:
+ correct            : 52
+ wrong order        : 0
+ wrong ID           : 0
+ duplicates         : 0
+ false positive     : 0
+ false negative     : 0
+Normal Angle (deg):     51
+ errors 50%         : 0.026963002778296375
+ errors 90%         : 0.05035472607979475
+ errors 100%        : 0.09067989034871418
+Location            : 51
+ errors 50%         : 0.04344685601260575
+ errors 90%         : 0.08510129595958812
+ errors 100%        : 0.2417356046685079
+Precision:              780
+ errors 50%         : 0.01925740720157845
+ errors 90%         : 0.04628163989955641
+ errors 100%        : 0.17126680877501926
+Accuracy:               780
+ errors 50%         : 0.025581387702187257
+ errors 90%         : 0.059801381467125575
+ errors 100%        : 0.17630313370433226
+
+---------------------------------------------------
+
+# Data Set = front_close_24x28
+# maxPixelError = 5.0
+
+Summary:
+ correct            : 45
+ wrong order        : 0
+ wrong ID           : 0
+ duplicates         : 0
+ false positive     : 0
+ false negative     : 0
+Normal Angle (deg):     44
+ errors 50%         : 0.012038462383859196
+ errors 90%         : 0.01992473003069667
+ errors 100%        : 0.03184533790732427
+Location            : 44
+ errors 50%         : 0.0010394246893252715
+ errors 90%         : 0.0019227072563758403
+ errors 100%        : 0.0027193990531837577
+Precision:              15120
+ errors 50%         : 0.016719623341322435
+ errors 90%         : 0.02827040733746981
+ errors 100%        : 0.046851881923389606
+Accuracy:               15120
+ errors 50%         : 0.03198600063731131
+ errors 90%         : 0.05010044220399108
+ errors 100%        : 0.07834723308840046
+
+---------------------------------------------------
+
+# Data Set = front_close_5x6
+# maxPixelError = 5.0
+
+Summary:
+ correct            : 47
+ wrong order        : 0
+ wrong ID           : 0
+ duplicates         : 0
+ false positive     : 0
+ false negative     : 0
+Normal Angle (deg):     46
+ errors 50%         : 0.10642212967145959
+ errors 90%         : 0.16471434130437146
+ errors 100%        : 0.24175152349678947
+Location            : 46
+ errors 50%         : 0.003974801397659628
+ errors 90%         : 0.008825236414518363
+ errors 100%        : 0.014002505738371442
+Precision:              705
+ errors 50%         : 0.09093439259133389
+ errors 90%         : 0.1895122881718765
+ errors 100%        : 0.2230546770776758
+Accuracy:               705
+ errors 50%         : 0.06583631221862145
+ errors 90%         : 0.2237743280498228
+ errors 100%        : 0.2703598683967816
+
+---------------------------------------------------
+
+# Data Set = front_far_5x6
+# maxPixelError = 5.0
+
+Summary:
+ correct            : 55
+ wrong order        : 0
+ wrong ID           : 0
+ duplicates         : 0
+ false positive     : 0
+ false negative     : 0
+Normal Angle (deg):     54
+ errors 50%         : 0.5316021690024101
+ errors 90%         : 0.8333874761280109
+ errors 100%        : 1.626471813317315
+Location            : 54
+ errors 50%         : 0.06118972522875208
+ errors 90%         : 0.14187193736082568
+ errors 100%        : 0.29439925401305345
+Precision:              825
+ errors 50%         : 0.030426531900890293
+ errors 90%         : 0.10071891271648835
+ errors 100%        : 0.21899454019411826
+Accuracy:               825
+ errors 50%         : 0.08419288250815228
+ errors 90%         : 0.12834817183837127
+ errors 100%        : 0.18898049803318195
+
+---------------------------------------------------
+
+---------------------------------------------------
+total correct / total expected =  199 / 199
