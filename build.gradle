@@ -53,6 +53,24 @@ subprojects {
     }
 }
 
+// Create a jar which contains all the applications
+task regressionJar(type: Jar) {
+    manifest {
+        attributes 'Implementation-Title': 'Regression Jar',
+                'Implementation-Version': version,
+                'Main-Class': 'boofcv.regression.MasterRegressionApplication'
+    }
+
+    outputs.upToDateWhen { false }
+
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
+
+    doLast {
+        archivePath.renameTo(file('regression.jar'))
+    }
+}
+
 [':modules'].each {String a ->
     project(a) {
         jar.enabled = false
