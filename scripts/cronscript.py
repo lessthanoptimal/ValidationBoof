@@ -43,13 +43,14 @@ def check_cd(path):
 # EJML is a special case
 if os.path.isdir(os.path.join(project_home,"..","ejml")):
     check_cd(os.path.join(project_home,"..","ejml"))
+    error_log.write("Building {}\n","ejml")
     run_command("git checkout SNAPSHOT")
     run_command("git pull")
     run_command("git clean -f")
     run_command("./gradlew autogenerate")
     run_command("./gradlew install")
 else:
-    error_log.write("Skipping {} not a directory".format("ejml"))
+    error_log.write("Skipping {} directory does not exist\n".format("ejml"))
 
 # List of projects with standard build
 project_list = ["ddogleg","georegression","boofcv"]
@@ -57,14 +58,18 @@ project_list = ["ddogleg","georegression","boofcv"]
 for p in project_list:
     path_to_p = os.path.join(project_home,"..",p)
     if not os.path.isdir(path_to_p):
-        error_log.write("Skipping {} not a directory".format(p))
+        error_log.write("Skipping {} directory does not exist\n".format(p))
         continue
+    error_log.write("Building {}\n".format(p))
+    error_log.flush()
     check_cd(path_to_p)
     run_command("git checkout SNAPSHOT")
     run_command("git pull")
     run_command("./gradlew install")
 
 # Now it's time to build
+error_log.write("Building regression\n")
+error_log.flush()
 check_cd(project_home)
 run_command("git checkout SNAPSHOT")
 run_command("git pull")
@@ -72,6 +77,8 @@ run_command("git pull")
 run_command("./gradlew clean")
 run_command("./gradlew moduleJars")
 run_command("./gradlew regressionJar")
+error_log.write("Starting regression\n")
+error_log.flush()
 run_command("java -jar regression.jar")
 
 error_log.write("\n\nFinished Script\n\n")
