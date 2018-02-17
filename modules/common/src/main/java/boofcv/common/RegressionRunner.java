@@ -42,7 +42,9 @@ public class RegressionRunner {
                 continue;
 
             if( f.getName().contains(".txt") ) {
-                if( !f.getName().equals("email_login.txt") && !f.delete() )
+                if( !f.getName().equals("email_login.txt") &&
+                        !f.getName().equals("cronlog.txt") &&
+                        !f.delete() )
                     throw new RuntimeException("Can't clean work directory: " + f.getName());
             }
 
