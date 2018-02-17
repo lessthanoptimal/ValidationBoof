@@ -15,12 +15,12 @@ if sys.version_info[0] < 3:
     print("Python 3 is required to run the script and not Python "+str(sys.version_info[0]))
     sys.exit(1)
 
-project_home = os.path.abspath(os.path.join(os.path.dirname(os.path.realpath(__file__),"..")))
+project_home = os.path.abspath(os.path.join(os.path.dirname(os.path.realpath(__file__)),".."))
 
 error_log = open(os.path.join(project_home,log_file_name), 'w')
-error_log.write("# Validation Boof Cron Log")
-error_log.write(datetime.date.today().strftime('# %Y %b %d %H:%M'))
-error_log.write("Project Directory: "+project_home)
+error_log.write("# Validation Boof Cron Log\n")
+error_log.write(datetime.datetime.now().strftime('# %Y %b %d %H:%M\n'))
+error_log.write("Project Directory: "+project_home+"\n")
 error_log.flush()
 
 # Define some commands
@@ -35,12 +35,14 @@ def run_command(command):
         fatal_error("Failed to execute '"+command+"'")
 
 def check_cd(path):
-    if os.chdir(path):
+    try:
+        os.chdir(path)
+    except:
         fatal_error("Failed to cd into '"+path+"'")
 
 # EJML is a special case
-if os.path.join(project_home,"..","ejml"):
-    check_cd(os.path.join(project_home,"ejml"))
+if os.path.isdir(os.path.join(project_home,"..","ejml")):
+    check_cd(os.path.join(project_home,"..","ejml"))
     run_command("git checkout SNAPSHOT")
     run_command("git pull")
     run_command("git clean -f")
@@ -67,9 +69,10 @@ check_cd(project_home)
 run_command("git checkout SNAPSHOT")
 run_command("git pull")
 # run_command("git clean -f") <-- can'tdo this becauze it will zap the email_login.txt file!
+run_command("./gradlew clean")
 run_command("./gradlew moduleJars")
 run_command("./gradlew regressionJar")
-run_command("java -jar regressionJar")
+run_command("java -jar regression.jar")
 
 error_log.write("\n\nFinished Script\n\n")
 error_log.close()
