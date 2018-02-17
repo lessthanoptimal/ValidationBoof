@@ -1,7 +1,7 @@
 ValidationBoof is a set of utilities for validating the correctness of  algorithms in BoofCV.  This validation is often done by comparing the performance of BoofCV against datasets with ground truth and against external libraries.
 
-website: http://boofcv.org
-contact: peter.abeles@gmail.com
+* website: [boofcv.org](http://boofcv.org)
+* contact: peter.abeles@gmail.com
 
 Data Files:
 https://sourceforge.net/p/validationboof
@@ -9,22 +9,25 @@ https://sourceforge.net/p/validationboof
 Source Code:
 https://github.com/lessthanoptimal/ValidationBoof
 
-----------------------------------------------
+# Running Regressions
+
+To run every benchmark do the following. Module jars need to be rebuilt if BoofCV is every changes.
+Look at the command line arguments for regression.jar with the --Help flag to see other options.
 
 1) Set up e-mail file if desired
 2) Create jars for each module
-  ./gradlew moduleJars
+```
+./gradlew moduleJars
+```
 3) Run regression
-  ./gradlew regressionJar
-  java -jar regression.jar
-4) Copy files from regression/current into regression/baseline
-  cp -r regression/current/* regression/baseline
-5) Make sure all the tests were run by looking at difference of file list
-  diff --brief -r regression/baseline/U8 regression/current/U8
+```
+./gradlew regressionJar
+java -jar regression.jar
+```
+4) Check e-mail for summary of changes from baseline
 
------------------------------------------------
 
-# E-Mailing of Regression Results
+# Settings Up Results E-Mailing
 
 Create a file called "email_login.txt". DO NOT ADD TO GIT.
 * First line is your login.
