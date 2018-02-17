@@ -35,6 +35,7 @@ public class ComputeRegressionSummary {
     String emailUsername;
     String emailPassword;
     String emailDestination;
+    private long ellapsedTime;
 
     /**
      * E-mail out a summary of the results
@@ -122,7 +123,13 @@ public class ComputeRegressionSummary {
     }
 
     private String createSummary() {
-        String summary = ""+new Date()+"\n\n";
+        String summary;
+
+        if( ellapsedTime == 0 ) {
+            summary = ""+new Date()+"\n\n";
+        } else {
+            summary = MasterRegressionApplication.printTiming(ellapsedTime)+"\n";
+        }
 
         summary += "Total Matched:         "+totalMatched+"\n\n";
 
@@ -177,9 +184,14 @@ public class ComputeRegressionSummary {
         }
     }
 
+    public void setEllapsedTime(long ellapsedTime) {
+        this.ellapsedTime = ellapsedTime;
+    }
+
     public static void main(String[] args) throws IOException {
         ComputeRegressionSummary summary = new ComputeRegressionSummary();
         summary.generateSummary();
         summary.emailSummary(new File("email_login.txt"));
     }
+
 }

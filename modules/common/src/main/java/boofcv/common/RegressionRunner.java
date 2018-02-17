@@ -41,9 +41,10 @@ public class RegressionRunner {
             if( f.getName().contains(".iml") )
                 continue;
 
-            if( f.getName().contains(".txt") )
-                if( !f.delete() )
-                    throw new RuntimeException("Can't clean work directory: "+f.getName());
+            if( f.getName().contains(".txt") ) {
+                if( !f.getName().equals("email_login.txt") && !f.delete() )
+                    throw new RuntimeException("Can't clean work directory: " + f.getName());
+            }
 
         }
     }

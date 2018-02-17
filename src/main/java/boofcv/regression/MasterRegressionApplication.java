@@ -5,6 +5,9 @@ import boofcv.common.RegressionRunner;
 import boofcv.struct.image.ImageDataType;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
+import org.kohsuke.args4j.CmdLineException;
+import org.kohsuke.args4j.CmdLineParser;
+import org.kohsuke.args4j.Option;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -19,7 +22,16 @@ import java.util.*;
  */
 public class MasterRegressionApplication {
 
-	public static List<String> lookupListOfRegressions() {
+
+	@Option(name="-s",aliases = {"--SummaryOnly"}, usage="If true it will only print out the summary from last time it ran")
+	boolean doSummaryOnly = false;
+
+	@Option(name="-m",aliases = {"--SingleModule"}, usage="If specified then it will only run the specified module")
+	String singleModule = null;
+
+	long elapsedTime;
+
+	public List<String> lookupListOfRegressions() {
 		List<String> out = new ArrayList<>();
 
 		File[] dirModules = new File("modules").listFiles();
@@ -28,6 +40,9 @@ public class MasterRegressionApplication {
 
 		for( File m : dirModules ) {
 			if( m.isDirectory() && new File(m,"module_regression.jar").exists() ) {
+				if( singleModule != null && !m.getName().equals(singleModule))
+					continue;
+
 				Collection<File> found = FileUtils.listFiles(new File(m,"src/main/java/boofcv/regression"),null,false);
 
 				for( File f : found ) {
@@ -109,7 +124,7 @@ public class MasterRegressionApplication {
 		}
 	}
 
-	public static void main(String[] args) throws IOException {
+	private boolean performBenchmark() throws FileNotFoundException {
 		long startTime = System.currentTimeMillis();
 
 		BoofRegressionConstants.clearCurrentResults();
@@ -123,6 +138,11 @@ public class MasterRegressionApplication {
 		saveMachineInfo();
 
 		List<String> listOfRegressions = lookupListOfRegressions();
+
+		if( listOfRegressions.size() == 0 ) {
+			System.err.println("No qualified regressions were found!");
+			return false;
+		}
 
 		for( String s : listOfRegressions ) {
 			System.out.println(s);
@@ -157,8 +177,16 @@ public class MasterRegressionApplication {
 
 		// print how long the test took
 		long stopTime = System.currentTimeMillis();
-		long elapsedTime = stopTime-startTime;
+		elapsedTime = stopTime-startTime;
 
+		System.out.println("\n\n"+printTiming(elapsedTime));
+
+		errorStream.close();
+
+		return true;
+	}
+
+	public static String printTiming(long elapsedTime ){
 		double elapsedSeconds = elapsedTime/1000.0;
 
 		double secondsPerDay = 24*60*60;
@@ -170,16 +198,54 @@ public class MasterRegressionApplication {
 		int minute = (int)((elapsedSeconds-days*secondsPerDay-hours*secondsPerHour)/secondsPerMinute);
 		double seconds = elapsedSeconds-days*secondsPerDay-hours*secondsPerHour-minute*secondsPerMinute;
 
-		System.out.printf("%d Days %02d Hours %02d Minutes %6.2f Seconds\n",days,hours,minute,seconds);
-		System.out.println();
+		String out = "";
+		out += String.format("%d Days %02d Hours %02d Minutes %6.2f Seconds\n",days,hours,minute,seconds);
+		out += "\n";
 		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-		System.out.println(dateFormat.format(new Date()));
+		out += dateFormat.format(new Date())+"\n";
+		return out;
+	}
 
-		errorStream.close();
+	public static void main(String[] args) throws IOException {
 
-		// Summarize everything
-		ComputeRegressionSummary summary = new ComputeRegressionSummary();
-		summary.generateSummary();
-		summary.emailSummary(new File("email_login.txt"));
+		boolean doBenchmark = true;
+		boolean doSummary = true;
+
+		MasterRegressionApplication regression = new MasterRegressionApplication();
+		CmdLineParser parser = new CmdLineParser(regression);
+
+		try {
+			parser.parseArgument(args);
+			if( regression.doSummaryOnly ) {
+				System.out.println("Summary only mode");
+				doBenchmark = false;
+			}
+			if( regression.singleModule != null ) {
+				System.out.println("Will only run modules in "+regression.singleModule);
+			}
+		} catch (CmdLineException e) {
+			parser.getProperties().withUsageWidth(120);
+			parser.printUsage(System.out);
+			return;
+		}
+
+		if( doBenchmark ) {
+			if( !regression.performBenchmark() ) {
+				return;
+			}
+		}
+
+		if( doSummary ) {
+			ComputeRegressionSummary summary = new ComputeRegressionSummary();
+			if( doBenchmark)
+				summary.setEllapsedTime(regression.elapsedTime);
+			summary.generateSummary();
+			try {
+				summary.emailSummary(new File("email_login.txt"));
+			} catch( RuntimeException e ) {
+				System.err.println(e.getMessage());
+				System.err.println("Something wrong with email_login.txt");
+			}
+		}
 	}
 }
