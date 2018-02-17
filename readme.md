@@ -36,3 +36,14 @@ Create a file called "email_login.txt". DO NOT ADD TO GIT.
 
 This is configured for gmail only right now. You need to turn on "Allow less secure apps" by going to
 https://myaccount.google.com/security
+
+# Running Periodically
+
+In Linux, to run the regression test periodically you can use the crontab. Open the crontab with "crontab -e"
+command then end the line at the bottom. It will run the task at noon on Wednesday and Saturday. Output will
+be saved to USER's home directory.
+
+```commandline
+00 12 * * 3,6 export PATH="/opt/jdk/latest/bin:$PATH";/usr/bin/python3 /home/USER/projects/ValidationBoof/scripts/cronscript.py > /home/USER/cron_output.log 2>&\
+1
+```
