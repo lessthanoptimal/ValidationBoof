@@ -1,17 +1,17 @@
 package boofcv.metrics;
 
+import boofcv.abst.filter.binary.BinaryContourFinder;
 import boofcv.abst.filter.binary.InputToBinary;
 import boofcv.abst.shapes.polyline.PointsToPolyline;
 import boofcv.alg.filter.binary.BinaryImageOps;
 import boofcv.alg.filter.binary.Contour;
-import boofcv.alg.filter.binary.LinearContourLabelChang2004;
 import boofcv.core.image.GeneralizedImageOps;
 import boofcv.factory.filter.binary.ConfigThreshold;
+import boofcv.factory.filter.binary.FactoryBinaryContourFinder;
 import boofcv.factory.filter.binary.FactoryThresholdBinary;
 import boofcv.factory.filter.binary.ThresholdType;
 import boofcv.io.image.ConvertBufferedImage;
 import boofcv.io.image.UtilImageIO;
-import boofcv.struct.ConnectRule;
 import boofcv.struct.image.GrayS32;
 import boofcv.struct.image.GrayU8;
 import boofcv.struct.image.ImageGray;
@@ -32,7 +32,7 @@ import java.util.List;
  */
 public class DetectPolylineSaveToFile<T extends ImageGray<T>> {
 
-	LinearContourLabelChang2004 binaryToContour = new LinearContourLabelChang2004(ConnectRule.FOUR);
+	BinaryContourFinder binaryToContour = FactoryBinaryContourFinder.linearChang2004();
 	PointsToPolyline contourToPolyline;
 	InputToBinary<T> inputToBinary;
 
@@ -94,7 +94,7 @@ public class DetectPolylineSaveToFile<T extends ImageGray<T>> {
 		inputToBinary.process(gray, binary);
 		binaryToContour.process(binary,labeled);
 
-		List<Contour> contours = BinaryImageOps.convertContours(binaryToContour.getPackedPoints(),binaryToContour.getContours());
+		List<Contour> contours = BinaryImageOps.convertContours(binaryToContour);
 
 		long startNano = System.nanoTime();
 		GrowQueue_I32 vertexes = new GrowQueue_I32();

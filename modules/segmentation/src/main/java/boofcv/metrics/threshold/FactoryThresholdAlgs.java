@@ -26,8 +26,8 @@ public class FactoryThresholdAlgs {
 		return new ThresholdText() {
 			@Override
 			public void process(GrayF32 input, GrayU8 output) {
-				int threshold = GThresholdImageOps.computeOtsu(input,0,255);
-				ThresholdImageOps.threshold(input,output,threshold,true);
+				double threshold = GThresholdImageOps.computeOtsu(input,0,255);
+				ThresholdImageOps.threshold(input,output,(int)threshold,true);
 			}
 		};
 	}
@@ -36,8 +36,8 @@ public class FactoryThresholdAlgs {
 		return new ThresholdText() {
 			@Override
 			public void process(GrayF32 input, GrayU8 output) {
-				int threshold = GThresholdImageOps.computeEntropy(input, 0, 255);
-				ThresholdImageOps.threshold(input,output,threshold,true);
+				double threshold = GThresholdImageOps.computeEntropy(input, 0, 255);
+				ThresholdImageOps.threshold(input,output,(int)threshold,true);
 			}
 		};
 	}
