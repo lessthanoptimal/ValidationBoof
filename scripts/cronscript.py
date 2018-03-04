@@ -65,6 +65,7 @@ for p in project_list:
     check_cd(path_to_p)
     run_command("git checkout SNAPSHOT")
     run_command("git pull")
+    run_command("./gradlew assemble")
     run_command("./gradlew install")
 
 # Now it's time to build

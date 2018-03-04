@@ -24,7 +24,7 @@ file_list.sort()
 
 if not file_list:
     p.print_help()
-    print "Found no images..."
+    print( "Found no images...")
     exit(1)
 
 digits = int(math.log10(len(file_list)))+1

@@ -63,7 +63,7 @@ public class CalibrateFromDetectedPoints {
 
 		String line;
 		while( (line = reader.readLine()) != null ) {
-			CalibrationObservation target = new CalibrationObservation();
+			CalibrationObservation target = new CalibrationObservation(0,0);
 
 			String s[] = line.split(" ");
 			String fileName = s[0];
