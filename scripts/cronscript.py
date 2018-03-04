@@ -23,8 +23,42 @@ error_log.write(datetime.datetime.now().strftime('# %Y %b %d %H:%M\n'))
 error_log.write("Project Directory: "+project_home+"\n")
 error_log.flush()
 
+file_email = os.path.join(project_home,"email_login.txt")
+
 # Define some commands
+def send_email( message ):
+    try:
+        import smtplib
+
+        if os.path.isfile(file_email):
+            with open(file_email) as f:
+                username = f.readline().rstrip()
+                password = f.readline().rstrip()
+                destination = f.readline().rstrip()
+
+                server = smtplib.SMTP_SSL('smtp.gmail.com', 465)
+                server.login(username+"@gmail.com", password)
+
+                BODY = '\r\n'.join(['To: %s' % destination,
+                                    'From: %s' % (username+"@gmail.com"),
+                                    'Subject: %s' % "Validation Boof Fatal Error",
+                                    '', message])
+
+                server.sendmail(username+"@gmail.com",[destination],BODY)
+                server.quit()
+        else:
+            error_log.write("email_login.txt not found")
+    except Exception as e:
+        error_log.write("Failed to email!\n")
+        error_log.write("  "+str(e)+"\n")
+        error_log.write('  Line {}\n'.format(sys.exc_info()[-1].tb_lineno))
+
+
+
 def fatal_error(message):
+    if len(sys.exc_info()) > 0:
+        error_log.write('  Error below from line {}\n'.format(sys.exc_info()[-1].tb_lineno))
+    send_email(message)
     error_log.write(message+"\n")
     error_log.write("\n\nFATAL ERROR\n\n")
     error_log.close()
