@@ -9,6 +9,7 @@ log_file_name = "cronlog.txt"
 import datetime
 import os
 import sys
+from inspect import getframeinfo, stack
 
 # Check the environment
 if sys.version_info[0] < 3:
@@ -56,8 +57,6 @@ def send_email( message ):
 
 
 def fatal_error(message):
-    if len(sys.exc_info()) > 0:
-        error_log.write('  Error below from line {}\n'.format(sys.exc_info()[-1].tb_lineno))
     send_email(message)
     error_log.write(message+"\n")
     error_log.write("\n\nFATAL ERROR\n\n")
@@ -66,7 +65,9 @@ def fatal_error(message):
 
 def run_command(command):
     if os.system(command):
-        fatal_error("Failed to execute '"+command+"'")
+        caller = getframeinfo(stack()[1][0])
+        caller_info = "File: %s Line: %d" % (caller.filename, caller.lineno)
+        fatal_error("Failed to execute '"+command+"'\n"+caller_info+"\n")
 
 def check_cd(path):
     try:
