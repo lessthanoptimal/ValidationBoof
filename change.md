@@ -5,11 +5,10 @@ Description of changes to benchmarks and justifications for change in performanc
 
 - Broke regression up into different code modules. This was does so that when performing a binary search for a 
   regression broken code due to a change in API in an unrelated part of the code won't break the whole test
-- 
+- Python cronscript which pulls latest code, builds dependencies, builds project and runs project
+  * errors are caught and e-mailed
+  * final report is also e-mailed
   
-TODO python script that pull latest snapshots, builds/installs, then runs the regression
-TODO Send e-mail if build fails
-
 
 ## Version 0.28
 2018/01/20

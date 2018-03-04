@@ -33,6 +33,7 @@ public class RuntimePerformanceFiducialToCamera< T extends ImageBase<T>> {
 	}
 
 	public void evaluate( File baseDirectory ) {
+		outputResults.println("# directory, number of frames, FPS");
 
 		List<File> files = new ArrayList<File>();
 		List<File> baseFiles = BoofRegressionConstants.listAndSort(baseDirectory);

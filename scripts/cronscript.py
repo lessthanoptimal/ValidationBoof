@@ -42,7 +42,7 @@ def send_email( message ):
 
                 BODY = '\r\n'.join(['To: %s' % destination,
                                     'From: %s' % (username+"@gmail.com"),
-                                    'Subject: %s' % "Validation Boof Fatal Error",
+                                    'Subject: %s' % "ValidationBoof Fatal Error",
                                     '', message])
 
                 server.sendmail(username+"@gmail.com",[destination],BODY)
