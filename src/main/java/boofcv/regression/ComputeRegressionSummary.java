@@ -1,5 +1,6 @@
 package boofcv.regression;
 
+import boofcv.GVersion;
 import boofcv.common.BoofRegressionConstants;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.filefilter.FileFilterUtils;
@@ -131,6 +132,10 @@ public class ComputeRegressionSummary {
             summary = MasterRegressionApplication.printTiming(ellapsedTime)+"\n";
         }
 
+        summary += "BoofCV Version:        "+ GVersion.VERSION+"\n";
+        summary += "BoofCV Git SHA:        "+ GVersion.GIT_SHA+"\n";
+        summary += "BoofCV Git Revision:   "+ GVersion.GIT_REVISION+"\n";
+        summary += "\n";
         summary += "Total Matched:         "+totalMatched+"\n\n";
 
         if( missmatched.isEmpty() && baselineUnique.isEmpty() && currentUnique.isEmpty() ) {

@@ -8,7 +8,9 @@ Description of changes to benchmarks and justifications for change in performanc
 - Python cronscript which pulls latest code, builds dependencies, builds project and runs project
   * errors are caught and e-mailed
   * final report is also e-mailed
-  
+- Fidual
+  * Pose estimate changed by a small amount within floating point precision
+  * QuadePoseEstimator no longer converting coordinates from norm->pixel->norm
 
 ## Version 0.28
 2018/01/20
