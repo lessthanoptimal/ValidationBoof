@@ -9,8 +9,8 @@ Description of changes to benchmarks and justifications for change in performanc
   * errors are caught and e-mailed
   * final report is also e-mailed
 - Fidual
-  * Pose estimate changed by a small amount within floating point precision
-  * QuadePoseEstimator no longer converting coordinates from norm->pixel->norm
+  * Pose estimate changed by a small amount. Within floating point precision
+  * QuadePoseEstimator no longer converting coordinates from norm->pixel->norm just norm->pixel
 
 ## Version 0.28
 2018/01/20
@@ -33,7 +33,6 @@ Description of changes to benchmarks and justifications for change in performanc
 - Change in DDogleg's LeastMedianOfSquares
   * It now computes the median by rounding instead of flooring
   * Sparse Flow Object Tracker and TLD object changes had their results changed
-
 
 ## Version 0.27
 * Change in RANSAC implementation has caused several results to change.
