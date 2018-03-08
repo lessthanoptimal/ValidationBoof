@@ -181,7 +181,7 @@ public class ComputeRegressionSummary {
                 byte[] thedigest = md.digest(bytesOfMessage);
 
                 // Should be something like U8/calibration/ACC_Foo.txt
-                File path = new File(f.getParentFile().getParentFile(),f.getParent());
+                File path = new File(f.getParentFile().getParentFile().getName(),f.getParentFile().getName());
                 String key = new File(path,f.getName()).toString();
 
                 output.put(key,thedigest);

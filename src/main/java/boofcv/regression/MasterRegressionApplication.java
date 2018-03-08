@@ -240,11 +240,17 @@ public class MasterRegressionApplication {
 			if( doBenchmark)
 				summary.setEllapsedTime(regression.elapsedTime);
 			summary.generateSummary();
-			try {
-				summary.emailSummary(new File("email_login.txt"));
-			} catch( RuntimeException e ) {
-				System.err.println(e.getMessage());
-				System.err.println("Something wrong with email_login.txt");
+			File f = new File("email_login.txt");
+			if( f.exists() ) {
+				try {
+					summary.emailSummary(f);
+				} catch (RuntimeException e) {
+					System.err.println(e.getMessage());
+					System.err.println("Something wrong with email_login.txt");
+				}
+			} else {
+				System.out.println(summary.summary);
+				System.out.println("\n\n*** email_login.txt doesn't exist ***");
 			}
 		}
 	}
