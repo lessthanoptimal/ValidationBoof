@@ -85,6 +85,11 @@ public class ComputeRegressionSummary {
             }
         }
 
+        // make it easier to read later on
+        Collections.sort(missmatched);
+        Collections.sort(currentUnique);
+        Collections.sort(baselineUnique);
+
         summary = createSummary();
 
         FileUtils.write(new File(BoofRegressionConstants.CURRENT_DIRECTORY,"summary.txt"),summary,"UTF-8");
