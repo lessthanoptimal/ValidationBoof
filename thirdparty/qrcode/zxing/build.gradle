@@ -1,0 +1,44 @@
+
+apply plugin: 'java'
+apply plugin: 'maven'
+
+
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+
+    maven {
+        url = "https://oss.sonatype.org/content/repositories/snapshots/"
+    }
+}
+
+task ZXingQrCodeJar(type: Jar) {
+    manifest {
+        attributes 'Implementation-Title': 'ZXing QR-Code Jar',
+                'Implementation-Version': 1,
+                'Main-Class': 'validation.DetectQrCodeZXingApp'
+    }
+
+    outputs.upToDateWhen { false }
+
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
+
+    doLast {
+        archivePath.renameTo(file('ZXingQrCode.jar'))
+    }
+}
+
+dependencies {
+    ['core','javase'].each { String a ->
+        compile('com.google.zxing:' + a + ":3.3.2")
+    }
+
+    compile group: 'args4j', name: 'args4j', version: '2.33'
+    compile group: 'commons-io', name: 'commons-io', version: '2.6'
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '4.3'
+}
