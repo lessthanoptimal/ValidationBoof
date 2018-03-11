@@ -144,8 +144,11 @@ for target_name in os.listdir(dir_results):
             total_true_positive += metrics['tp']
             total_false_negative += metrics['fn']
 
-    print("Statistics")
+    print();
+    print("=============== {:20s} ================".format(target_name))
+    print("  total input      {}".format(total_true_positive+total_false_negative))
     print("  missile results  {}".format(total_missing))
+    print()
     print("  false positive   {}".format(total_false_positive))
     print("  false negative   {}".format(total_false_negative))
     print("  true positive    {}".format(total_true_positive))

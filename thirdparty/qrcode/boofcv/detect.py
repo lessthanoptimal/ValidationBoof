@@ -15,13 +15,11 @@ if __name__ == '__main__':
     p = optparse.OptionParser()
     p.add_option('--input', '-i', default="",help="Location of directory with input images")
     p.add_option('--output', '-o', default="",help="Location of output directory results are saved to")
-    p.add_option('--suffix', '-s', default="jpg",help="Specifies the type of input image it should search for")
 
     options, arguments = p.parse_args()
 
     dir_input = os.path.abspath(options.input)
     dir_output = os.path.abspath(options.output)
-    img_suffix = options.suffix
 
     if not dir_input:
         p.print_help()
@@ -31,6 +29,6 @@ if __name__ == '__main__':
 
     print("Looking inside of {}".format(dir_input))
 
-    run_command("java -jar ZXingQrCode.jar -i {} -o {} -s {}".format(dir_input,dir_output,img_suffix))
+    run_command("java -jar BoofCVQrCode.jar -i {} -o {}".format(dir_input,dir_output))
 
     print( "\n\nDone!" )

@@ -31,6 +31,6 @@ if __name__ == '__main__':
 
     print("Looking inside of {}".format(dir_input))
 
-    run_command("java -jar ZXingQrCode.jar -i {} -o {} -s {}".format(dir_input,dir_output,img_suffix))
+    run_command("./build/quirc_benchmark -I {} -O {}".format(dir_input,dir_output))
 
     print( "\n\nDone!" )

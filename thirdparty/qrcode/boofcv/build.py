@@ -11,7 +11,7 @@ if __name__ == '__main__':
     check_cd(os.path.abspath(script_directory))
 
     # See if the jar exists. If not build it
-    run_command("./gradlew clean")
-    run_command("./gradlew ZXingQrCodeJar")
+    run_command("../../../gradlew clean")
+    run_command("../../../gradlew BoofCVQrCodeJar")
 
-    print("Done building ZXing")
+    print("Done building BoofCV")

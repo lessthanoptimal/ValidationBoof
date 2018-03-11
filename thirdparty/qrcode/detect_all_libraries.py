@@ -28,14 +28,20 @@ timing = {}
 
 if target is not None:
     if os.path.isdir(join(project_home,target)):
+        output_path = os.path.join("results",target)
+        if os.path.exists(output_path):
+            shutil.rmtree(output_path)
+        os.makedirs(output_path)
         script_path = join(project_home,join(target,"detect.py"))
-        run_command("python3 "+script_path+" -i "+dir_input)
+        run_command("python3 "+script_path+" -i "+dir_input+" -o "+os.path.abspath(output_path))
     else:
         print(target+" is not a directory")
 else:
     # Go through each directory and see if it has a script to
     for d in os.listdir():
         if not os.path.isdir(join(project_home,d)):
+            continue
+        if d is "results":
             continue
 
         script_path = join(project_home,join(d,"detect.py"))

@@ -1,0 +1,21 @@
+
+dependencies {
+    compile project(':modules:common')
+}
+
+task BoofCVQrCodeJar(type: Jar) {
+    manifest {
+        attributes 'Implementation-Title': 'BoofCV QR-Code Jar',
+                'Implementation-Version': 1,
+                'Main-Class': 'validation.DetectQrCodeBoofCVApp'
+    }
+
+    outputs.upToDateWhen { false }
+
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
+
+    doLast {
+        archivePath.renameTo(file('BoofCVQrCode.jar'))
+    }
+}
