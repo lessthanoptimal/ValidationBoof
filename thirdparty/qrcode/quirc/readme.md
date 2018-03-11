@@ -3,7 +3,7 @@
 Install dependencies
 
 ```
-sudo apt-get install libsdl-dev 
+sudo apt-get install libboost-all-dev
 ```
 
 Checkout and build Quirc

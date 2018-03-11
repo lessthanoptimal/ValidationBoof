@@ -1,6 +1,10 @@
 cmake_minimum_required(VERSION 3.2.2)
 project(quirc_benchmark)
 
+
+find_package(Boost REQUIRED COMPONENTS program_options filesystem)
+find_package(OpenCV REQUIRED)
+
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_FLAGS_DEBUG "-g")
 set(CMAKE_CXX_FLAGS_RELEASE "-O3")
@@ -11,9 +15,11 @@ enable_testing()
 
 
 include_directories(${CMAKE_SOURCE_DIR}/quirc/lib/)
+include_directories(${Boost_INCLUDE_DIRS})
+include_directories(${OpenCV_INCLUDE_DIRS})
 
 file(GLOB QUIRC_HDR "quirc/lib/*.h")
 file(GLOB QUIRC_SRC "quirc/lib/*.c")
 
-
 add_executable(quirc_benchmark benchmark.cpp ${QUIRC_HDR} ${QUIRC_SRC})
+target_link_libraries(quirc_benchmark ${Boost_LIBRARIES} ${OpenCV_LIBS})
