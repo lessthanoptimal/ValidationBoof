@@ -7,6 +7,7 @@
 #include <boost/algorithm/string/predicate.hpp>
 #include <opencv2/core/core.hpp>
 #include <opencv2/highgui/highgui.hpp>
+#include <fstream>
 
 using namespace boost::algorithm;
 using namespace std;
@@ -14,18 +15,63 @@ using namespace cv;
 namespace po = boost::program_options;
 namespace bf = boost::filesystem;
 
-void detect_markers( const bf::path& image_path , struct quirc *detector=nullptr ) {
+void run_quirc( const bf::path& image_path , const bf::path& output_path, struct quirc *detector ) {
     Mat image = imread(image_path.c_str(), CV_LOAD_IMAGE_GRAYSCALE);
 
-    cout << "loaded image. w="<<image.rows<<" x "<<image.cols<<" channels "<<image.channels()<<endl;
+//    cout << "output_pat "<<output_path<<endl;
 
-//    byte[] return_buff = new byte[(int) (image.total() *  image.channels())];
-//    result_mat.get(0, 0, return_buff);
+//    cout << "loaded image. w="<<image.rows<<" x "<<image.cols<<" channels "<<image.channels()<<endl;
+
+    if( image.channels() != 1 ) {
+        cout << "Color image???" << endl;
+        exit(1);
+    }
+
+    int width=image.cols,height=image.rows;
+    if( quirc_resize(detector,width,height) == -1 ) {
+        cout << "Failed to resize image for quirc" << endl;
+        exit(1);
+    }
+
+    uint8_t *raw_data = quirc_begin(detector, &width, &height);
+    std::memcpy(raw_data,image.data,width*height*sizeof(uint8_t));
+    quirc_end(detector);
+
+    ofstream file;
+    file.open(output_path.c_str());
+    file << "# Quirc " << quirc_version() << " "<<image_path.filename() << endl;
+
+    int total = quirc_count(detector);
+    int valid = 0;
+
+    for( int i = 0; i < total; i++ ) {
+        struct quirc_code code;
+        struct quirc_data data;
+        quirc_extract(detector, i,&code);
+        if( quirc_decode(&code,&data) == QUIRC_SUCCESS )  {
+            file << "message = " << data.payload << endl;
+            file << code.corners[0].x << " " << code.corners[1].y;
+            for( int j = 1; j < 4; j ++ ) {
+                file << " " << code.corners[j].x << " " << code.corners[j].y;
+            }
+            file << endl;
+            valid++;
+        }
+    }
+
+    file.close();
+
+    cout << valid;
+    cout.flush();
+//    cout << "detected " << total << " valid " << valid << endl;
+
 }
 
 void detect_markers( const string& input_path , const string& output_path , struct quirc *detector=nullptr) {
-    cout << "Input Path:  " << input_path << endl;
-    cout << "Output Path: " << output_path << endl;
+//    cout << "Input Path:  " << input_path << endl;
+//    cout << "Output Path: " << output_path << endl;
+
+    bf::create_directory(bf::path(output_path));
 
     bool first = detector == nullptr;
 
@@ -45,7 +91,11 @@ void detect_markers( const string& input_path , const string& output_path , stru
             if( !(ends_with(current_file, "jpg")|| ends_with(current_file, "png"))) {
                 continue;
             }
-            detect_markers(itr->path(),detector);
+            bf::path output(output_path);
+            output = output / itr->path().filename();
+            output = bf::change_extension(output, "txt");
+
+            run_quirc(itr->path(),output,detector);
 //            cout << current_file << endl;
         } else {
             bf::path output(output_path);
@@ -53,24 +103,12 @@ void detect_markers( const string& input_path , const string& output_path , stru
             detect_markers(itr->path().string(),output.string(),detector);
         }
     }
+    cout << endl;
 
 
     if( first ) {
         quirc_destroy(detector);
     }
-
-    // load image
-
-    // set up quirc
-//    quirc_resize(detector,width,height);
-//    uint8_t *quirc_begin(struct quirc *q, int *w, int *h);
-//    void quirc_end(struct quirc *q);
-
-    // run detector
-
-    // save results
-
-    // clean up
 }
 
 int main( int argc, char *argv[] ) {
