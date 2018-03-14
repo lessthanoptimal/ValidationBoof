@@ -29,6 +29,9 @@ public class MasterRegressionApplication {
 	@Option(name="-m",aliases = {"--SingleModule"}, usage="If specified then it will only run the specified module")
 	String singleModule = null;
 
+	@Option(name="-t",aliases = {"--TestName"}, usage="Run all tests which match this name")
+	String specificTest = null;
+
 	long elapsedTime;
 
 	public List<String> lookupListOfRegressions() {
@@ -46,6 +49,9 @@ public class MasterRegressionApplication {
 				Collection<File> found = FileUtils.listFiles(new File(m,"src/main/java/boofcv/regression"),null,false);
 
 				for( File f : found ) {
+					if( specificTest != null && !f.getName().contains(specificTest))
+						continue;
+
 					if( f.getName().endsWith("Regression.java")) {
 						out.add(FilenameUtils.removeExtension(f.getName()));
 					}
@@ -222,6 +228,9 @@ public class MasterRegressionApplication {
 			}
 			if( regression.singleModule != null ) {
 				System.out.println("Will only run modules in "+regression.singleModule);
+			}
+			if( regression.specificTest != null ) {
+				System.out.println("Will only run tests which match "+regression.specificTest);
 			}
 		} catch (CmdLineException e) {
 			parser.getProperties().withUsageWidth(120);
