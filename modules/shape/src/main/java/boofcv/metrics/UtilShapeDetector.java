@@ -88,7 +88,7 @@ public class UtilShapeDetector {
 
 		ConfigPolygonDetector config = new ConfigPolygonDetector(minSides,maxSides);
 
-		config.detector.convex = convex;
+		config.detector.contourToPoly.convex = convex;
 		config.detector.canTouchBorder = border;
 
 		return config;
