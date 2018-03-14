@@ -11,6 +11,10 @@ Description of changes to benchmarks and justifications for change in performanc
 - Fidual
   * Pose estimate changed by a small amount. Within floating point precision
   * QuadePoseEstimator no longer converting coordinates from norm->pixel->norm just norm->pixel
+- Polygon
+  * Switched code from old algorithm to the new one now that it can handle non-looping contours
+  * Changed some results by an insignificant amount
+  * Minor change in new algorithm's split to fix an edge code probably causes a minor change too
 
 ## Version 0.28
 2018/01/20
