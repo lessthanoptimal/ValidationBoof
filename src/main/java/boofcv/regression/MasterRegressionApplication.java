@@ -32,6 +32,9 @@ public class MasterRegressionApplication {
 	@Option(name="-t",aliases = {"--TestName"}, usage="Run all tests which match this name")
 	String specificTest = null;
 
+	@Option(name="-p",aliases = {"--Preview"}, usage="List tests it would have run")
+	boolean preview = false;
+
 	long elapsedTime;
 
 	public List<String> lookupListOfRegressions() {
@@ -232,13 +235,21 @@ public class MasterRegressionApplication {
 			if( regression.specificTest != null ) {
 				System.out.println("Will only run tests which match "+regression.specificTest);
 			}
+			if( regression.preview ) {
+				doSummary = false;
+			}
 		} catch (CmdLineException e) {
 			parser.getProperties().withUsageWidth(120);
 			parser.printUsage(System.out);
 			return;
 		}
 
-		if( doBenchmark ) {
+		if( regression.preview ) {
+			System.out.println("\n**** Preview Mode ****\n");
+			for( String w : regression.lookupListOfRegressions() ) {
+				System.out.println(w);
+			}
+		} else if( doBenchmark ) {
 			if( !regression.performBenchmark() ) {
 				return;
 			}
