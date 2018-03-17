@@ -56,7 +56,7 @@ public abstract class BaseEstimateSquareFiducialToCamera<T extends ImageBase<T>>
 		File fileIntrinsic = new File(dataSetDir,"intrinsic.txt");
 		if( fileIntrinsic.exists() ) {
 			CameraPinholeRadial intrinsic = FiducialCommon.parseIntrinsic(fileIntrinsic);
-			detector.setLensDistortion(new LensDistortionRadialTangential(intrinsic));
+			detector.setLensDistortion(new LensDistortionRadialTangential(intrinsic),intrinsic.width,intrinsic.height);
 		}
 		for( String path : files ) {
 			BufferedImage orig = UtilImageIO.loadImage(path);

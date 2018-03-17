@@ -59,7 +59,7 @@ public class RuntimePerformanceFiducialToCamera< T extends ImageBase<T>> {
 		CameraPinholeRadial intrinsic = FiducialCommon.parseIntrinsic(new File(inputDirectory,"intrinsic.txt"));
 
 		FiducialDetector<T> detector = factory.createDetector(inputDirectory);
-		detector.setLensDistortion(new LensDistortionRadialTangential(intrinsic));
+		detector.setLensDistortion(new LensDistortionRadialTangential(intrinsic),intrinsic.width,intrinsic.height);
 
 		File[] files = inputDirectory.listFiles();
 		for( File f : files ) {
