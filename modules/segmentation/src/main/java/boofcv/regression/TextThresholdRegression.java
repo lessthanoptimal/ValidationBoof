@@ -35,14 +35,22 @@ public class TextThresholdRegression extends BaseRegression implements ImageRegr
 			app.addAlgorithm(FactoryThresholdAlgs.globalMean(), "global Mean");
 			app.addAlgorithm(FactoryThresholdAlgs.globalOtsu(), "global Otsu");
 			app.addAlgorithm(FactoryThresholdAlgs.globalEntropy(), "global Entropy");
-			app.addAlgorithm(FactoryThresholdAlgs.localSquare(), "local Square");
+			app.addAlgorithm(FactoryThresholdAlgs.localMean(), "local Mean");
 			app.addAlgorithm(FactoryThresholdAlgs.localGaussian(), "local Gaussian");
+			app.addAlgorithm(FactoryThresholdAlgs.localOtsu(), "local Otsu");
 			app.addAlgorithm(FactoryThresholdAlgs.localSauvola(), "local Sauvola");
-			app.addAlgorithm(FactoryThresholdAlgs.localBlockMinMax(), "local Block Min-Max");
+			app.addAlgorithm(FactoryThresholdAlgs.localBlockMinMax(), "block Min-Max");
+			app.addAlgorithm(FactoryThresholdAlgs.localBlockMean(), "block Mean");
+			app.addAlgorithm(FactoryThresholdAlgs.localBlockOtsu(), "block Otsu");
 
 			app.evaluate();
 		} catch( RuntimeException e ) {
 			e.printStackTrace(errorLog);
 		}
+	}
+
+	public static void main(String[] args) throws IOException {
+		TextThresholdRegression regression = new TextThresholdRegression();
+		regression.process(ImageDataType.U8);
 	}
 }

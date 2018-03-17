@@ -13,36 +13,27 @@ import boofcv.struct.image.GrayU8;
 public class FactoryThresholdAlgs {
 
 	public static ThresholdText globalMean() {
-		return new ThresholdText() {
-			@Override
-			public void process(GrayF32 input, GrayU8 output) {
-				float mean = (float)ImageStatistics.mean(input);
-				ThresholdImageOps.threshold(input,output,mean,true);
-			}
-		};
+		return (input, output) -> {
+            float mean = (float)ImageStatistics.mean(input);
+            ThresholdImageOps.threshold(input,output,mean,true);
+        };
 	}
 
 	public static ThresholdText globalOtsu() {
-		return new ThresholdText() {
-			@Override
-			public void process(GrayF32 input, GrayU8 output) {
-				double threshold = GThresholdImageOps.computeOtsu(input,0,255);
-				ThresholdImageOps.threshold(input,output,(int)threshold,true);
-			}
-		};
+		return (input, output) -> {
+            double threshold = GThresholdImageOps.computeOtsu(input,0,255);
+            ThresholdImageOps.threshold(input,output,(int)threshold,true);
+        };
 	}
 
 	public static ThresholdText globalEntropy() {
-		return new ThresholdText() {
-			@Override
-			public void process(GrayF32 input, GrayU8 output) {
-				double threshold = GThresholdImageOps.computeEntropy(input, 0, 255);
-				ThresholdImageOps.threshold(input,output,(int)threshold,true);
-			}
-		};
+		return (input, output) -> {
+            double threshold = GThresholdImageOps.computeEntropy(input, 0, 255);
+            ThresholdImageOps.threshold(input,output,(int)threshold,true);
+        };
 	}
 
-	public static ThresholdText localSquare() {
+	public static ThresholdText localMean() {
 		return new ThresholdText() {
 			@Override
 			public void process(GrayF32 input, GrayU8 output) {
@@ -69,12 +60,25 @@ public class FactoryThresholdAlgs {
 		};
 	}
 
-	public static ThresholdText localBlockMinMax() {
+	public static ThresholdText localOtsu() {
 		return new ThresholdText() {
 			@Override
 			public void process(GrayF32 input, GrayU8 output) {
-				GThresholdImageOps.localBlockMinMax(input, output, ConfigLength.fixed(31), 1.0, true,15);
+				GThresholdImageOps.localOtsu(input, output, true,ConfigLength.fixed(31),15,1.0,true);
 			}
 		};
 	}
+
+	public static ThresholdText localBlockMinMax() {
+		return (input, output) -> GThresholdImageOps.blockMinMax(input, output, ConfigLength.fixed(31), 1.0, true,15);
+	}
+
+	public static ThresholdText localBlockOtsu() {
+		return (input, output) -> GThresholdImageOps.blockOtsu(input, output, true,ConfigLength.fixed(31),15,1.0,true);
+	}
+
+	public static ThresholdText localBlockMean() {
+		return (input, output) -> GThresholdImageOps.blockMean(input, output, ConfigLength.fixed(31), 0.95, true);
+	}
+
 }

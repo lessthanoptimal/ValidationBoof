@@ -123,11 +123,17 @@ for target_name in os.listdir(dir_results):
     total_true_positive = 0
     total_ambiguous = 0
 
+    ds_results = {}
+
     for ds in data_sets:
         path_ds_results = os.path.join(path_to_target,ds)
         path_ds_truth = join(dir_images,ds)
 
         truth_files = [f for f in os.listdir(path_ds_truth) if f.endswith("txt")]
+
+        ds_true_positive = 0
+        ds_false_positive = 0
+        ds_false_negative = 0
 
         for truth_file in truth_files:
             if not os.path.isfile(join(path_ds_results,truth_file)):
@@ -144,6 +150,13 @@ for target_name in os.listdir(dir_results):
             total_true_positive += metrics['tp']
             total_false_negative += metrics['fn']
 
+            ds_false_negative += metrics['fn']
+            ds_true_positive += metrics['tp']
+            ds_false_positive += metrics['fp']
+
+        ds_results[ds] = {"tp":ds_true_positive,"fp":ds_false_positive,"fn":ds_false_negative}
+
+
     print();
     print("=============== {:20s} ================".format(target_name))
     print("  total input      {}".format(total_true_positive+total_false_negative))
@@ -153,3 +166,8 @@ for target_name in os.listdir(dir_results):
     print("  false negative   {}".format(total_false_negative))
     print("  true positive    {}".format(total_true_positive))
     print("  ambiguous        {}".format(total_ambiguous))
+
+    for n in ds_results:
+        r = ds_results[n]
+        F = 2*r['tp']/(2*r['tp'] + r['fp'] + r['fn'])
+        print("{:15s} F={:.2f}".format(n,F))
