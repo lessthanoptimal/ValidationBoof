@@ -64,7 +64,7 @@ public class FactoryThresholdAlgs {
 		return new ThresholdText() {
 			@Override
 			public void process(GrayF32 input, GrayU8 output) {
-				GThresholdImageOps.localOtsu(input, output, true,ConfigLength.fixed(31),15,1.0,true);
+				GThresholdImageOps.localOtsu(input, output, true,ConfigLength.fixed(61),15,1.0,true);
 			}
 		};
 	}
