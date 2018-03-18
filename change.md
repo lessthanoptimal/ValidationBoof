@@ -1,9 +1,10 @@
 Description of changes to benchmarks and justifications for change in performance from previous versions.
 
 ## Version 0.29
-2018/01/20
+2018/
 
-- Add more threshold algorithms
+- Added regression for background models
+- Added more threshold algorithms to text thresholding regression
 - Broke regression up into different code modules. This was does so that when performing a binary search for a 
   regression broken code due to a change in API in an unrelated part of the code won't break the whole test
 - Python cronscript which pulls latest code, builds dependencies, builds project and runs project
