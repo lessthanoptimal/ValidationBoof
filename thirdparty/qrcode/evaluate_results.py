@@ -206,15 +206,18 @@ indexes = np.arange(len(categories))
 fig, ax = plt.subplots()
 
 bar_width = 0.35
-bar_space = 1.5
+bar_space = (len(library_names)+1)*bar_width
 
 for idx,lib_name in enumerate(library_names):
     scores_map = library_scores[lib_name]
     scores_list = [scores_map[x] for x in categories]
-    ax.bar(indexes*bar_space+idx*bar_width,scores_list,bar_width,label=lib_name)
+    locations_x = indexes*bar_space+idx*bar_width
+    ax.bar(locations_x,scores_list,bar_width,label=lib_name)
+    for score_idx,v in enumerate(scores_list):
+        ax.text(locations_x[score_idx]-bar_width*0.4, v + 0.1, "{:.2f}".format(v), color='black', fontsize=7,fontweight='bold', rotation=90)
 
-ax.set_ylim([0.0,1.0])
-ax.set_ylabel("F-Metric")
+ax.set_ylim([0.0,1.15])
+ax.set_ylabel("F-Score")
 ax.set_title('Detection Performance by Categories')
 ax.set_xticks(indexes*bar_space + (bar_width*int(len(library_names)/2)) )
 ax.set_xticklabels(categories, rotation=90)
@@ -228,6 +231,10 @@ plt.close()
 fig, ax = plt.subplots()
 indexes = np.arange(len(categories))
 ax.bar(indexes,count_list)
+max_count = int(np.max(count_list)*1.1)
+for score_idx,v in enumerate(count_list):
+    ax.text(indexes[score_idx]-0.4, v + 1, "{:3d}".format(v), color='black', fontsize=12,fontweight='bold')
+ax.set_ylim([0,max_count])
 ax.set_ylabel("Number of Images")
 ax.set_title('Total Images by Categories')
 ax.set_xticks(indexes)
@@ -241,8 +248,10 @@ fig, ax = plt.subplots()
 indexes = np.arange(len(library_names))
 library_summary = [library_scores[x]['summary'] for x in library_names]
 ax.bar(indexes,library_summary)
-ax.set_ylim([0.0,1.0])
-ax.set_ylabel("F-Metric")
+for score_idx,v in enumerate(library_summary):
+    ax.text(indexes[score_idx]-0.14, v + 0.02, "{:.2f}".format(v), color='black', fontsize=12,fontweight='bold')
+ax.set_ylim([0.0,1.1])
+ax.set_ylabel("F-Score")
 ax.set_title('Overall Detection Performance')
 ax.set_xticks(indexes)
 ax.set_xticklabels(library_names, rotation=90)
