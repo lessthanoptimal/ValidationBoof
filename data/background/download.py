@@ -3,7 +3,7 @@
 import urllib
 from subprocess import call
 
-files = ["background_model_v1.zipp"]
+files = ["background_model_v1.zip"]
 
 for f in files:
     print("retrieving "+f)
