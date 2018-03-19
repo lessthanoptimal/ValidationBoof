@@ -2,8 +2,8 @@
 # Runtime dense optical flow
 # <algorithm> <average time in ms>
 
-                 KLT  6312.2
-              Region  6761.1
-         HornSchunck  2633.2
-      HornSchunckPyr  3890.4
-                Brox  6179.0
+                 KLT  6104.7
+              Region  6513.1
+         HornSchunck  2342.9
+      HornSchunckPyr  3788.3
+                Brox  5953.9

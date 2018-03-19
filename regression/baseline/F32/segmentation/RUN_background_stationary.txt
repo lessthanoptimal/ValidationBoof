@@ -1,0 +1,34 @@
+# GENERATOR BackgroundModelRegression
+# Stationary Background Model Runtime Metrics
+# algorithm, average time (ms)
+
+# basic-gray
+       firerubixcube  0.2442 (ms)
+       yaser_walking  0.1564 (ms)
+      yaser_lighting  0.0317 (ms)
+
+# gaussian-gray
+       firerubixcube  0.4427 (ms)
+       yaser_walking  0.4386 (ms)
+      yaser_lighting  0.0773 (ms)
+
+# gmm-gray
+       firerubixcube  3.4028 (ms)
+       yaser_walking  1.6160 (ms)
+      yaser_lighting  0.3589 (ms)
+
+# basic-rgb
+       firerubixcube  1.3649 (ms)
+       yaser_walking  0.8689 (ms)
+      yaser_lighting  0.1888 (ms)
+
+# gaussian-rgb
+       firerubixcube  2.6586 (ms)
+       yaser_walking  1.9634 (ms)
+      yaser_lighting  0.4494 (ms)
+
+# gmm-rgb
+       firerubixcube  5.7128 (ms)
+       yaser_walking  2.6743 (ms)
+      yaser_lighting  0.5919 (ms)
+

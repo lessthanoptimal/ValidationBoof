@@ -1,8 +1,9 @@
 # GENERATOR FiducialRegression
-data/fiducials/circle_regular/standard/distance_angle 300 138.632
-data/fiducials/circle_regular/standard/distance_straight 300 146.341
-data/fiducials/circle_regular/standard/motion_blur 300 320.513
-data/fiducials/circle_regular/standard/rotation 300 107.953
-data/fiducials/circle_regular/static/angled 300 119.665
-data/fiducials/circle_regular/static/front_close 300 177.620
-data/fiducials/circle_regular/static/front_far 300 139.082
+# directory, number of frames, FPS
+data/fiducials/circle_regular/standard/distance_angle 300 152.439
+data/fiducials/circle_regular/standard/distance_straight 300 161.377
+data/fiducials/circle_regular/standard/motion_blur 300 353.774
+data/fiducials/circle_regular/standard/rotation 300 116.868
+data/fiducials/circle_regular/static/angled 300 131.637
+data/fiducials/circle_regular/static/front_close 300 198.282
+data/fiducials/circle_regular/static/front_far 300 155.925

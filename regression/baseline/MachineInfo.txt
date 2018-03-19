@@ -1,5 +1,5 @@
 Runtime.getRuntime().availableProcessors(): 8
-Runtime.getRuntime().freeMemory(): 494319544
+Runtime.getRuntime().freeMemory(): 499604488
 Runtime.getRuntime().totalMemory(): 504889344
 =========== java.runtime.name
 Java(TM) SE Runtime Environment
@@ -47,7 +47,7 @@ Linux
 =========== sun.jnu.encoding
 UTF-8
 =========== java.library.path
-share/jetbrains-toolbox:share/jetbrains-toolbox/lib:./lib/:./lib/i386-linux-gnu/:./lib/x86_64-linux-gnu/:./lib32/:./lib64/:../lib/:../lib/i386-linux-gnu/:../lib/x86_64-linux-gnu/:../lib32/:../lib64/::/usr/java/packages/lib/amd64:/usr/lib64:/lib64:/lib:/usr/lib
+/usr/java/packages/lib/amd64:/usr/lib64:/lib64:/lib:/usr/lib
 =========== java.specification.name
 Java Platform API Specification
 =========== java.class.version
@@ -55,7 +55,7 @@ Java Platform API Specification
 =========== sun.management.compiler
 HotSpot 64-Bit Tiered Compilers
 =========== os.version
-4.13.0-26-generic
+4.13.0-36-generic
 =========== user.home
 /home/pja
 =========== user.timezone
@@ -67,13 +67,13 @@ UTF-8
 =========== java.specification.version
 1.8
 =========== java.class.path
-/opt/jdk/latest/jre/lib/charsets.jar:/opt/jdk/latest/jre/lib/deploy.jar:/opt/jdk/latest/jre/lib/ext/cldrdata.jar:/opt/jdk/latest/jre/lib/ext/dnsns.jar:/opt/jdk/latest/jre/lib/ext/jaccess.jar:/opt/jdk/latest/jre/lib/ext/jfxrt.jar:/opt/jdk/latest/jre/lib/ext/localedata.jar:/opt/jdk/latest/jre/lib/ext/nashorn.jar:/opt/jdk/latest/jre/lib/ext/sunec.jar:/opt/jdk/latest/jre/lib/ext/sunjce_provider.jar:/opt/jdk/latest/jre/lib/ext/sunpkcs11.jar:/opt/jdk/latest/jre/lib/ext/zipfs.jar:/opt/jdk/latest/jre/lib/javaws.jar:/opt/jdk/latest/jre/lib/jce.jar:/opt/jdk/latest/jre/lib/jfr.jar:/opt/jdk/latest/jre/lib/jfxswt.jar:/opt/jdk/latest/jre/lib/jsse.jar:/opt/jdk/latest/jre/lib/management-agent.jar:/opt/jdk/latest/jre/lib/plugin.jar:/opt/jdk/latest/jre/lib/resources.jar:/opt/jdk/latest/jre/lib/rt.jar:/home/pja/projects/ValidationBoof/out/production/classes:/home/pja/projects/ValidationBoof/out/production/resources:/home/pja/projects/ValidationBoof/lib/ProjectBUBO.jar:/home/pja/.m2/repository/org/boofcv/boofcv-core/0.28/boofcv-core-0.28.jar:/home/pja/.m2/repository/org/boofcv/boofcv-swing/0.28/boofcv-swing-0.28.jar:/home/pja/.gradle/caches/modules-2/files-2.1/com.google.guava/guava/17.0/9c6ef172e8de35fd8d4d8783e4821e57cdef7445/guava-17.0.jar:/home/pja/.gradle/caches/modules-2/files-2.1/commons-io/commons-io/2.6/815893df5f31da2ece4040fe0a12fd44b577afaf/commons-io-2.6.jar:/home/pja/.gradle/caches/modules-2/files-2.1/args4j/args4j/2.33/bd87a75374a6d6523de82fef51fc3cfe9baf9fc9/args4j-2.33.jar:/home/pja/.gradle/caches/modules-2/files-2.1/com.sun.mail/javax.mail/1.6.0/a055c648842c4954c1f7db7254f45d9ad565e278/javax.mail-1.6.0.jar:/home/pja/projects/ValidationBoof/modules/common/out/production/classes:/home/pja/.gradle/caches/modules-2/files-2.1/org.georegression/georegression/0.15/afbc2188da0c924a2224ac6e9147902f838c80c3/georegression-0.15.jar:/home/pja/.m2/repository/org/boofcv/boofcv-calibration/0.28/boofcv-calibration-0.28.jar:/home/pja/.m2/repository/org/boofcv/boofcv-feature/0.28/boofcv-feature-0.28.jar:/home/pja/.m2/repository/org/boofcv/boofcv-geo/0.28/boofcv-geo-0.28.jar:/home/pja/.m2/repository/org/boofcv/boofcv-io/0.28/boofcv-io-0.28.jar:/home/pja/.m2/repository/org/boofcv/boofcv-ip/0.28/boofcv-ip-0.28.jar:/home/pja/.m2/repository/org/boofcv/boofcv-learning/0.28/boofcv-learning-0.28.jar:/home/pja/.m2/repository/org/boofcv/boofcv-recognition/0.28/boofcv-recognition-0.28.jar:/home/pja/.m2/repository/org/boofcv/boofcv-sfm/0.28/boofcv-sfm-0.28.jar:/home/pja/.gradle/caches/modules-2/files-2.1/javax.activation/activation/1.1/e6cb541461c2834bdea3eb920f1884d1eb508b50/activation-1.1.jar:/home/pja/.gradle/caches/modules-2/files-2.1/org.ddogleg/ddogleg/0.13/7bbc770a69852850da999f86a7ba46a9e5c02b7e/ddogleg-0.13.jar:/home/pja/.gradle/caches/modules-2/files-2.1/org.yaml/snakeyaml/1.17/7a27ea250c5130b2922b86dea63cbb1cc10a660c/snakeyaml-1.17.jar:/home/pja/.gradle/caches/modules-2/files-2.1/org.deepboof/main/0.4/8517c2e6d894df618f9f068d8a27ed4cacfca423/main-0.4.jar:/home/pja/.gradle/caches/modules-2/files-2.1/org.deepboof/models/0.4/cef23ff2ff5ac2277c2533774316726ef53664db/models-0.4.jar:/home/pja/.gradle/caches/modules-2/files-2.1/org.ejml/ejml-core/0.33/79f1e14858b9774bb169d4e40b2a07aa6950bb62/ejml-core-0.33.jar:/home/pja/.gradle/caches/modules-2/files-2.1/org.ejml/ejml-fdense/0.33/449de4bf5e4f6fcbc204105db32bc8a56062ad4/ejml-fdense-0.33.jar:/home/pja/.gradle/caches/modules-2/files-2.1/org.ejml/ejml-ddense/0.33/8c578379904d16aefc6eedb278fc771df23aaabb/ejml-ddense-0.33.jar:/home/pja/.gradle/caches/modules-2/files-2.1/org.ejml/ejml-simple/0.33/73e00316092deb19d0fe174c718dcbe4bd75efe8/ejml-simple-0.33.jar:/home/pja/.gradle/caches/modules-2/files-2.1/org.ejml/ejml-dsparse/0.33/720ca88b50cc6aacbf48562ea01a8e8c6d72f9c/ejml-dsparse-0.33.jar:/home/pja/.gradle/caches/modules-2/files-2.1/org.deepboof/learning/0.4/ca9743737e01d193ad1dd52496905609b0246132/learning-0.4.jar:/home/pja/.gradle/caches/modules-2/files-2.1/org.deepboof/io/0.4/79fdaa74f400b96727b8ba8ad32e52366d6c82e/io-0.4.jar:/home/pja/.gradle/caches/modules-2/files-2.1/org.ejml/ejml-cdense/0.33/4a47dd19a4fdb4df5b3d38b34672b0f103b1d64d/ejml-cdense-0.33.jar:/home/pja/.gradle/caches/modules-2/files-2.1/org.ejml/ejml-zdense/0.33/b9392048ff7d52ca090c3efdbc16fa56de737a00/ejml-zdense-0.33.jar:/home/pja/.gradle/caches/modules-2/files-2.1/com.google.protobuf/protobuf-java/2.6.1/d9521f2aecb909835746b7a5facf612af5e890e8/protobuf-java-2.6.1.jar:/home/pja/.gradle/caches/modules-2/files-2.1/org.rauschig/jarchivelib/0.5.0/7e7d26b83a2bc3d0ccfb88f1a1cc815766f584e0/jarchivelib-0.5.0.jar:/home/pja/.gradle/caches/modules-2/files-2.1/net.lingala.zip4j/zip4j/1.3.2/4ba84e98ee017b74cb52f45962f929a221f3074c/zip4j-1.3.2.jar:/home/pja/.gradle/caches/modules-2/files-2.1/org.apache.commons/commons-compress/1.7/ab365c96ee9bc88adcc6fa40d185c8e15a31410d/commons-compress-1.7.jar:/home/pja/.gradle/caches/modules-2/files-2.1/org.tukaani/xz/1.4/18a9a2ce6abf32ea1b5fd31dae5210ad93f4e5e3/xz-1.4.jar:/home/pja/.local/share/JetBrains/Toolbox/apps/IDEA-U/ch-0/173.4301.25/lib/idea_rt.jar
+regression.jar
 =========== user.name
 pja
 =========== java.vm.specification.version
 1.8
 =========== sun.java.command
-boofcv.regression.MasterRegressionApplication
+regression.jar
 =========== java.home
 /opt/jdk/jdk1.8.0_121/jre
 =========== sun.arch.data.model

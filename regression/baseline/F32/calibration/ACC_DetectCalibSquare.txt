@@ -4,8 +4,8 @@ data/calibration_stereo/Bumblebee2_Square/left01.jpg 0.5499776962023383 0.832903
 data/calibration_stereo/Bumblebee2_Square/left02.jpg 0.3955388616853584 0.6423926093117946
 data/calibration_stereo/Bumblebee2_Square/left03.jpg 0.8160381497941531 1.6071029916341404
 data/calibration_stereo/Bumblebee2_Square/left04.jpg 0.37586919830821874 0.7448129675229527
-data/calibration_stereo/Bumblebee2_Square/left05.jpg 0.9092440607126084 1.2206632984177133
-data/calibration_stereo/Bumblebee2_Square/left06.jpg 0.304868834530843 0.7306885248779006
+data/calibration_stereo/Bumblebee2_Square/left05.jpg 0.9025750639182466 1.2206632984177133
+data/calibration_stereo/Bumblebee2_Square/left06.jpg 0.31650966347814935 0.7306885248779006
 data/calibration_stereo/Bumblebee2_Square/left07.jpg 0.42904376438588276 0.8799215493047231
 data/calibration_stereo/Bumblebee2_Square/left08.jpg 0.3881394606397778 0.7422475491317988
 data/calibration_stereo/Bumblebee2_Square/left09.jpg 0.4196708577670367 0.7715731570308948
@@ -70,4 +70,4 @@ data/calibration_mono/square_grid/fisheye/image14.jpg 0.30823832310195304 0.5903
 data/calibration_mono/square_grid/fisheye/image15.jpg 0.5459633914877586 1.3277316523733067
 data/calibration_mono/square_grid/fisheye/image16.jpg 0.6106752444014331 1.5677003168508512
 
-Summary: 50% = 0.4555678113860984  95% = 1.1082202998672916   success %97.10144927536231
+Summary: 50% = 0.45503944359934384  95% = 1.1082202998672916   success %97.10144927536231

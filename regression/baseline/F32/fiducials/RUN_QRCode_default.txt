@@ -1,13 +1,13 @@
 # GENERATOR QrCodeRegression
-# default
-# Average runtime in milliseconds for each dataset for default
-             blurred   33.219 (ms)
-        bright_spots   70.798 (ms)
-          brightness   79.491 (ms)
-               close   67.327 (ms)
-              curved    4.036 (ms)
-           defective    1.245 (ms)
-               focus   85.967 (ms)
-             nominal   21.626 (ms)
-           rotations   26.135 (ms)
-             shadows   25.294 (ms)
+# default detector
+# Data set, average milliseconds
+             blurred   31.249 (ms)
+        bright_spots   66.078 (ms)
+          brightness   74.350 (ms)
+               close   63.108 (ms)
+              curved    3.950 (ms)
+           defective    1.216 (ms)
+               focus   80.877 (ms)
+             nominal   19.979 (ms)
+           rotations   24.452 (ms)
+             shadows   23.910 (ms)
