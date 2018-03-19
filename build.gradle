@@ -1,6 +1,6 @@
 
 group = 'org.boofcv'
-version = '0.29'
+version = '0.30-SNAPSHOT'
 
 allprojects{
     apply plugin: 'idea'
