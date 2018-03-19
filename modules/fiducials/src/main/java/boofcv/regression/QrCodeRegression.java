@@ -71,8 +71,8 @@ public class QrCodeRegression extends BaseRegression implements ImageRegression 
 
 		PrintStream runtimeOut = new PrintStream(new File(directory,"RUN_QRCode_"+name+".txt"));
 		BoofRegressionConstants.printGenerator(runtimeOut, getClass());
-		runtimeOut.println("# "+name);
-		runtimeOut.println("# Average runtime in milliseconds for each dataset for "+name);
+		runtimeOut.println("# "+name+" detector");
+		runtimeOut.println("# Data set, average milliseconds");
 
 		PrintStream metricsOut = new PrintStream(new File(directory,"ACC_QRCodeDetection_"+name+".txt"));
 		BoofRegressionConstants.printGenerator(metricsOut, getClass());

@@ -79,7 +79,8 @@ public class RuntimePerformanceFiducialToCamera< T extends ImageBase<T>> {
 
 		double fps = numFrames/((endTime-startTime)/1000.0);
 
-		outputResults.printf("%s %d %7.3f\n",inputDirectory.getPath(),numFrames,fps);
+		String shortPath = new File(inputDirectory.getParentFile(),inputDirectory.getName()).toString();
+		outputResults.printf("%s %d %7.3f\n",shortPath,numFrames,fps);
 	}
 
 	public void setOutputResults(PrintStream outputResults) {

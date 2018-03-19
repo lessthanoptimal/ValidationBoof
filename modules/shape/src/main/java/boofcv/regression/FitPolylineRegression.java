@@ -56,7 +56,8 @@ public class FitPolylineRegression extends BaseRegression implements ImageRegres
 		BoofRegressionConstants.printGenerator(outputAccuracy, getClass());
 		evaluator.setOutputResults(outputAccuracy);
 
-		outputSpeed.println("# Average processing time of polyline algorithm "+name);
+		outputSpeed.println("# "+name);
+		outputSpeed.println("# data set, average speed (ms)");
 		List<File> files = BoofRegressionConstants.listAndSort(baseDataSetDirectory);
 
 		int totalTruePositive = 0;

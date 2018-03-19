@@ -52,12 +52,15 @@ public class BackgroundModelRegression extends BaseRegression implements ImageRe
             throw new IOException("No datasets exist");
 
         PrintStream out = new PrintStream(new FileOutputStream(new File(directory,"ACC_background_stationary.txt")));
+        BoofRegressionConstants.printGenerator(out, getClass());
         out.println("# Stationary Background Model Detection Metrics");
         out.println("# <data set> <# truth> <mean F> <mean precision> <mean recall>");
         out.println();
 
         PrintStream outputRuntime = new PrintStream(new File(directory,"RUN_background_stationary.txt"));
+        BoofRegressionConstants.printGenerator(outputRuntime, getClass());
         outputRuntime.println("# Stationary Background Model Runtime Metrics");
+        outputRuntime.println("# algorithm, average time (ms)");
         outputRuntime.println();
 
         for( Info info : stationary ) {
