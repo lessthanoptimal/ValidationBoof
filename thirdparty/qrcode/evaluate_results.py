@@ -86,11 +86,14 @@ def compare_results( expected , found ):
         total_matched = 0
         for idx,f in enumerate(found):
             p2=Polygon(reshape_list(f))
-            x = p1.intersection(p2)
-            if x.area/p1.area > 0.1:
-                paired[idx] = True
-                total_matched += 1
-                true_positive += 1
+            try:
+                x = p1.intersection(p2)
+                if x.area/p1.area > 0.1:
+                    paired[idx] = True
+                    total_matched += 1
+                    true_positive += 1
+            except:
+                pass # not sure what to do here
         if total_matched == 0:
             false_negative += 1
         elif total_matched > 1:
