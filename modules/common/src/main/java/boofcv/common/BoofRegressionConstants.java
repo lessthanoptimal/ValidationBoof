@@ -76,9 +76,8 @@ public class BoofRegressionConstants {
         }
     }
 
-    public static List<File> listAndSort(File directory ) {
-
-
+    public static List<File> listAndSort(File directory )
+    {
         File[] files = directory.listFiles();
         if( files == null )
             throw new RuntimeException("Directory has no children! "+directory.getName());

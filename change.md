@@ -1,7 +1,12 @@
 Description of changes to benchmarks and justifications for change in performance from previous versions.
 
-## Version 0.29
+## Version 0.30
 2018/
+
+TODO whitelist file
+
+## Version 0.29
+2018/03/20
 
 - Added regression for background models
 - Added more threshold algorithms to text thresholding regression
