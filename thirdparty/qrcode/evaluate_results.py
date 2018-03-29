@@ -157,8 +157,12 @@ for target_name in os.listdir(dir_results):
                 continue
 
             expected = parse_truth(join(path_ds_truth,truth_file))
-            found = parse_results(join(path_ds_results,truth_file))
-
+            try:
+                found = parse_results(join(path_ds_results,truth_file))
+            except Exception as e:
+                print("Failed parsing {} {}".format(path_ds_results,truth_file))
+                print("error = {}".format(e))
+                raise e
             metrics = compare_results(expected,found)
             total_ambiguous += metrics['ambiguous']
             total_false_positive += metrics['fp']

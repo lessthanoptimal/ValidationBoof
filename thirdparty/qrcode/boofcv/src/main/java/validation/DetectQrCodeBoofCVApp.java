@@ -51,7 +51,7 @@ public class DetectQrCodeBoofCVApp {
         for (int i = 0; i < results.size(); i++) {
             QrCode qr = results.get(i);
 
-            out.println("message = "+qr.message);
+            out.println("message = "+qr.message.replaceAll("\\p{C}", "?"));
 
             for (int j = 0; j < 4; j++) {
                 Point2D_F64 p = qr.bounds.get(j);
