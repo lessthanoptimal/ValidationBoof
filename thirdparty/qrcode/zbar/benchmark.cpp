@@ -20,7 +20,7 @@ namespace bf = boost::filesystem;
 std::string filter_string( const std::string& message ) {
     std::string c = message;
     for( std::string::iterator iter = c.begin() ; iter != c.end() ; ) {
-        if( !std::isalnum(*iter) )
+        if( !std::isprint(*iter) )
             iter = c.erase(iter);
         else
             ++iter ; // not erased, increment iterator
