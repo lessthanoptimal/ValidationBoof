@@ -3,7 +3,7 @@ project(quirc_benchmark)
 
 
 find_package(Boost REQUIRED COMPONENTS program_options filesystem)
-find_package(OpenCV REQUIRED)
+find_package(OpenCV 3.3.1 REQUIRED)
 
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_FLAGS_DEBUG "-g")

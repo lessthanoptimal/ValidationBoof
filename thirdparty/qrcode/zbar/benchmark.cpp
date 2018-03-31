@@ -29,7 +29,7 @@ std::string filter_string( const std::string& message ) {
 }
 
 void run_zbar( const bf::path& image_path , const bf::path& output_path, ImageScanner *scanner ) {
-    Mat image = imread(image_path.c_str(), CV_LOAD_IMAGE_GRAYSCALE);
+    Mat image = imread(image_path.c_str(), CV_LOAD_IMAGE_GRAYSCALE | CV_LOAD_IMAGE_IGNORE_ORIENTATION);
 
 //    cout << "output_pat "<<output_path<<endl;
 

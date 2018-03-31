@@ -3,7 +3,7 @@ project(zbar_benchmark)
 
 
 find_package(Boost REQUIRED COMPONENTS program_options filesystem)
-find_package(OpenCV REQUIRED)
+find_package(OpenCV 3.3.1 REQUIRED)
 
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Threads REQUIRED)
