@@ -4,8 +4,8 @@ import boofcv.common.BoofRegressionConstants;
 import boofcv.common.misc.EllipseFileCodec;
 import georegression.geometry.UtilEllipse_F64;
 import georegression.metric.ClosestPoint2D_F64;
+import georegression.struct.curve.EllipseRotated_F64;
 import georegression.struct.point.Point2D_F64;
-import georegression.struct.shapes.EllipseRotated_F64;
 import georegression.struct.shapes.Polygon2D_F64;
 
 import java.io.File;

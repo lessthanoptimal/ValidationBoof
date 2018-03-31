@@ -6,8 +6,8 @@ import georegression.geometry.UtilEllipse_F64;
 import georegression.metric.Distance2D_F64;
 import georegression.metric.Intersection2D_F64;
 import georegression.metric.UtilAngle;
+import georegression.struct.curve.EllipseRotated_F64;
 import georegression.struct.point.Point2D_F64;
-import georegression.struct.shapes.EllipseRotated_F64;
 
 import java.awt.*;
 import java.awt.event.*;
