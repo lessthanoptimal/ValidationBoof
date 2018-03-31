@@ -88,7 +88,9 @@ void detect_markers( const string& input_path , const string& output_path , Imag
 
     if( first ) {
         scanner = new ImageScanner();
-        scanner->set_config(ZBAR_NONE, ZBAR_CFG_ENABLE, 1);
+        //scanner->set_config(ZBAR_NONE, ZBAR_CFG_ENABLE, 1);
+        scanner->set_config(ZBAR_NONE, ZBAR_CFG_ENABLE, 0);
+        scanner->set_config(ZBAR_QRCODE,ZBAR_CFG_ENABLE,1);
     }
 
     bf::path p(input_path);
