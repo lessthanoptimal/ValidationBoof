@@ -3,6 +3,8 @@ Description of changes to benchmarks and justifications for change in performanc
 ## Version 0.30
 2018/
 
+- Change in calibration results due to change in how they are computed. Within floating point tolerance
+
 TODO whitelist file
 
 ## Version 0.29
