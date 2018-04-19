@@ -1,1 +1,2 @@
+// Disable building the jar which is run as part of the regression
 moduleJars.enabled = false
