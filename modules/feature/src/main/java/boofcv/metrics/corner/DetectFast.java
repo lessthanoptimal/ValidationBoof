@@ -2,7 +2,7 @@ package boofcv.metrics.corner;
 
 import boofcv.abst.feature.detect.extract.ConfigExtract;
 import boofcv.abst.feature.detect.extract.NonMaxSuppression;
-import boofcv.alg.feature.detect.intensity.FastCornerIntensity;
+import boofcv.alg.feature.detect.intensity.FastCornerDetector;
 import boofcv.factory.feature.detect.extract.FactoryFeatureExtractor;
 import boofcv.factory.feature.detect.intensity.FactoryIntensityPointAlg;
 import boofcv.io.image.UtilImageIO;
@@ -29,23 +29,25 @@ public class DetectFast {
 	public static <T extends ImageGray<T>> void detect( String outputDirectory , Class<T> imageType ) throws FileNotFoundException {
 		T raw = UtilImageIO.loadImage("data/outdoors_gray.png", imageType);
 
-		FastCornerIntensity<T> alg = FactoryIntensityPointAlg.fast(20,9,imageType);
+		FastCornerDetector<T> alg = FactoryIntensityPointAlg.fast(20,9,imageType);
 		GrayF32 intensity = new GrayF32(raw.width,raw.height);
 
 		alg.process(raw,intensity);
 
-		QueueCorner found = alg.getCandidates();
+		QueueCorner found = new QueueCorner();
+		found.addAll(alg.getCornersHigh());
+		found.addAll(alg.getCornersLow());
 
 		PrintStream fos = new PrintStream(outputDirectory+FILE_NAME);
 
 		fos.println("# Detected FAST features using BoofCV");
-		fos.println(found.size);
-		for(Point2D_I16 p : found.toList() ) {
+		fos.println(found.size());
+		for(Point2D_I16 p : found.toList()) {
 			fos.println(p.x+" "+p.y);
 		}
 		fos.close();
 
-		System.out.println("Detected " + found.size + " features");
+		System.out.println("Detected " + found.size() + " features");
 
 		NonMaxSuppression nonmax = FactoryFeatureExtractor.nonmax(new ConfigExtract(1,0,3,true, false, true));
 
