@@ -37,9 +37,7 @@ void perform_thresholding( int threshold_value, const bf::path& image_path ,
     cv::Mat enlarged = cv::Mat::zeros(binary.rows+2, binary.cols+2, CV_8UC1);
     int64_t before = duration_cast< milliseconds >(system_clock::now().time_since_epoch()).count();
     binary.copyTo(enlarged.rowRange(1, binary.rows+1).colRange(1, binary.cols+1));
-    // can't get "external" contours since opencv's definition of internal is different.
-    // its' definition is more of "inside of" and not the inside region of a blob
-    cv::findContours(enlarged,contours, hierarchy, RETR_LIST , CHAIN_APPROX_NONE,cv::Point(-1,-1));
+    cv::findContours(enlarged,contours, hierarchy, RETR_CCOMP , CHAIN_APPROX_NONE,cv::Point(-1,-1));
     int64_t after = duration_cast< milliseconds >(system_clock::now().time_since_epoch()).count();
 
     cout << "Image "<<binary.cols<<"x"<<binary.rows<<" Contour " << (after-before) << " (ms)  found=" << contours.size() << endl;
@@ -49,6 +47,9 @@ void perform_thresholding( int threshold_value, const bf::path& image_path ,
     file_contour << "# OpenCV contour "<<contour_path.filename() << endl;
 
     for (size_t cpt = 0; cpt < contours.size(); cpt++) {
+        // this should be external contours only
+        if( hierarchy[cpt][3] != -1 )
+            continue;
         vector<Point> &contour = contours.at(cpt);
         for( size_t i = 0; i < contour.size(); i++ ) {
             Point &p = contour.at(i);
