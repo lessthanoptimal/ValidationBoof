@@ -1,6 +1,7 @@
 
 dependencies {
     compile project(':modules:common')
+    compile project(':')
 }
 
 task BoofCVContourJar(type: Jar) {
