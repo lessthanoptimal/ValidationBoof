@@ -21,9 +21,9 @@ namespace bf = boost::filesystem;
 void perform_thresholding( int threshold_value, const bf::path& image_path ,
                            const bf::path& contour_path, const bf::path& runtime_path )
 {
-    cout << "image_path = " << image_path << endl;
-    cout << "contour_path = " << contour_path << endl;
-    cout << "runtime_path = " << runtime_path << endl;
+//    cout << "image_path = " << image_path << endl;
+//    cout << "contour_path = " << contour_path << endl;
+//    cout << "runtime_path = " << runtime_path << endl;
 
     Mat image = imread(image_path.c_str(), CV_LOAD_IMAGE_GRAYSCALE | CV_LOAD_IMAGE_IGNORE_ORIENTATION);
     Mat binary;
@@ -40,7 +40,7 @@ void perform_thresholding( int threshold_value, const bf::path& image_path ,
     cv::findContours(enlarged,contours, hierarchy, RETR_CCOMP , CHAIN_APPROX_NONE,cv::Point(-1,-1));
     int64_t after = duration_cast< milliseconds >(system_clock::now().time_since_epoch()).count();
 
-    cout << "Image "<<binary.cols<<"x"<<binary.rows<<" Contour " << (after-before) << " (ms)  found=" << contours.size() << endl;
+    cout << "Image "<<binary.cols<<"x"<<binary.rows<<" Contour " << (after-before) << " (ms)  found=" << contours.size() << "  " << image_path << endl;
 
     ofstream file_contour;
     file_contour.open(contour_path.c_str());
