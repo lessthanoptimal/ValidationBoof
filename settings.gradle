@@ -6,5 +6,5 @@ include 'modules:common','modules:calibration','modules:feature','modules:fiduci
 include 'thirdparty:contour:boofcv'
 
 // Shouldn't be included by default but easier to develop with if uncommented
-include 'thirdparty:qrcode:boofcv'
+//include 'thirdparty:qrcode:boofcv'
 //include 'thirdparty:qrcode:zxing'
