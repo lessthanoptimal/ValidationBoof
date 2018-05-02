@@ -212,8 +212,8 @@ count_list = [category_counts[x] for x in categories]
 indexes = np.arange(len(categories))
 fig, ax = plt.subplots()
 
-bar_width = 0.35
-bar_space = (len(library_names)+1)*bar_width
+bar_width = 0.4
+bar_space = (len(library_names)*1.4)*bar_width
 
 for idx,lib_name in enumerate(library_names):
     scores_map = library_scores[lib_name]
@@ -231,6 +231,7 @@ ax.set_xticklabels(categories, rotation=90)
 ax.legend()
 
 plt.gcf().subplots_adjust(bottom=0.25)
+fig.set_size_inches(12, 4)
 plt.savefig("performance_categories.pdf", format='pdf')
 plt.close()
 
