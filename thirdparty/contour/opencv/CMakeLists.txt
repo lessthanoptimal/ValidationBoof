@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 2.8)
 project( FindContours )
 
+set (CMAKE_CXX_STANDARD 11)
+
 find_package(Boost REQUIRED COMPONENTS program_options filesystem)
 find_package(OpenCV 3.3.1 REQUIRED)
 

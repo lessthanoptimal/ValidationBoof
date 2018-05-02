@@ -50,6 +50,7 @@ public class CalibrationDetectionRegression extends BaseRegression implements Im
 		chessDirectories.add("data/calibration_mono/chessboard/hard");
 		chessDirectories.add("data/calibration_mono/chessboard/border");
 		chessDirectories.add("data/calibration_mono/chessboard/fisheye");
+		chessDirectories.add("data/calibration_mono/chessboard/close");
 
 		squareDirectories.add("data/calibration_stereo/Bumblebee2_Square");
 		squareDirectories.add("data/calibration_mono/square_grid/Sony_DSC-HX5V");
