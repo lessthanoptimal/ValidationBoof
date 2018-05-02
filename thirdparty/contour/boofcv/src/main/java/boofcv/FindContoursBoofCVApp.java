@@ -1,13 +1,12 @@
 package boofcv;
 
 import boofcv.abst.filter.binary.BinaryContourFinder;
-import boofcv.abst.filter.binary.BinaryContourFinderChang2004;
 import boofcv.alg.color.ColorRgb;
 import boofcv.alg.filter.binary.ThresholdImageOps;
 import boofcv.applications.CommandLineAppBase;
+import boofcv.factory.filter.binary.FactoryBinaryContourFinder;
 import boofcv.io.image.ConvertBufferedImage;
 import boofcv.struct.ConnectRule;
-import boofcv.struct.image.GrayS32;
 import boofcv.struct.image.GrayU8;
 import boofcv.struct.image.Planar;
 import org.kohsuke.args4j.CmdLineException;
@@ -26,13 +25,11 @@ public class FindContoursBoofCVApp extends CommandLineAppBase {
     @Option(name="-t",aliases = {"--Threshold"}, usage="Binarization threshold.")
     int threshold=0;
 
-    BinaryContourFinder contourFinder = new BinaryContourFinderChang2004();
+    BinaryContourFinder contourFinder = FactoryBinaryContourFinder.linearExternal();
 
     Planar<GrayU8> rgb = new Planar(GrayU8.class,1,1,3);
     GrayU8 gray = new GrayU8(1,1);
     GrayU8 binary = new GrayU8(1,1);
-    GrayS32 labeled = new GrayS32(1,1);
-
 
     public FindContoursBoofCVApp() {
         contourFinder.setConnectRule(ConnectRule.EIGHT);
@@ -49,18 +46,15 @@ public class FindContoursBoofCVApp extends CommandLineAppBase {
         binary.reshape(gray.width, gray.height);
 
         ThresholdImageOps.threshold(gray,binary,threshold,true);
-
-        labeled.reshape(binary.width,binary.height);
-
         long before = System.currentTimeMillis();
-        contourFinder.process(binary,labeled);
+        contourFinder.process(binary);
         long after = System.currentTimeMillis();
 
         int N = contourFinder.getContours().size();
 
         System.out.printf("%4dx%4d time = %4d count %4d file %s\n",binary.width,binary.height,after-before,N,inputFile.getPath());
 
-//            String name = FilenameUtils.removeExtension(f.getName())+".txt";
+//            String name = FilenameUtils.removeExtension(inputFile.getName())+".txt";
 //            save(detector.getDetections(),outputDir,name);
 //            if( ++count%80 == 0 )
 //                System.out.println();
