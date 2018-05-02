@@ -71,11 +71,16 @@ task regressionJar(type: Jar) {
     }
 }
 
-[':modules'].each {String a ->
+def not_modules = new ArrayList();
+not_modules.addAll(subprojects.findAll{x->x.path.startsWith(':thirdparty')})
+not_modules.add(project(':modules'))
+not_modules = not_modules.collect{p->p.path}
+not_modules.each {String a ->
     project(a) {
         jar.enabled = false
         install.enabled = false
         moduleJars.enabled = false
+        regressionJar.enabled = false
     }
 }
 
