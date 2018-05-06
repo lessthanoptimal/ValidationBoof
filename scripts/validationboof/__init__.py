@@ -1,4 +1,5 @@
 import os
+import shutil
 import sys
 
 if sys.version_info[0] < 3:
@@ -17,3 +18,8 @@ def run_command(command):
 def check_cd(path):
     if os.chdir(path):
         fatal_error("Failed to cd into '"+path+"'")
+
+def delete_create(path):
+    if os.path.exists(path):
+        shutil.rmtree(path)
+    os.makedirs(path)
