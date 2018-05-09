@@ -4,7 +4,15 @@ Description of changes to benchmarks and justifications for change in performanc
 2018/
 
 - Change in calibration results due to change in how they are computed. Within floating point tolerance
-
+- Polyline based fiducials
+  * Slight change in performance caused by a fix in the new polyline algorithm
+  * Large improvement in speed caused by new contour algorithm
+- Chessboard
+  * Fixed issue with very close targets
+  * Caused a slight decrease in performance with other targets
+- FAST
+  * Algorithm has been changed to be more faithful
+  
 TODO whitelist file
 
 ## Version 0.29
