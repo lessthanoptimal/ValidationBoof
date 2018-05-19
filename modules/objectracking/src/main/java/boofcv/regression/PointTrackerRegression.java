@@ -172,7 +172,10 @@ public class PointTrackerRegression extends BaseRegression implements ImageRegre
 		Class derivType = GImageDerivativeOps.getDerivativeType(bandType);
 
 		GeneralFeatureIntensity intensity = FactoryIntensityPoint.harris(3, 0.04f, false, derivType);
-		NonMaxSuppression nonmax = FactoryFeatureExtractor.nonmax(new ConfigExtract(10,0.01f));
+		ConfigExtract configExtract = new ConfigExtract(10,0.01f);
+		configExtract.detectMaximums = intensity.localMaximums();
+		configExtract.detectMinimums = intensity.localMinimums();
+		NonMaxSuppression nonmax = FactoryFeatureExtractor.nonmax(configExtract);
 		GeneralFeatureDetector detector = FactoryFeatureExtractor.general(intensity,nonmax,600);
 
 		DescribeRegionPoint describe = FactoryDescribeRegionPoint.pixelNCC(7,7,bandType);
@@ -192,7 +195,10 @@ public class PointTrackerRegression extends BaseRegression implements ImageRegre
 		Class derivType = GImageDerivativeOps.getDerivativeType(bandType);
 
 		GeneralFeatureIntensity intensity = FactoryIntensityPoint.shiTomasi(3, false, derivType);
-		NonMaxSuppression nonmax = FactoryFeatureExtractor.nonmax(new ConfigExtract(10,0.01f));
+		ConfigExtract configExtract = new ConfigExtract(10,0.01f);
+		configExtract.detectMaximums = intensity.localMaximums();
+		configExtract.detectMinimums = intensity.localMinimums();
+		NonMaxSuppression nonmax = FactoryFeatureExtractor.nonmax(configExtract);
 		GeneralFeatureDetector detector = FactoryFeatureExtractor.general(intensity,nonmax,600);
 
 		DescribeRegionPoint describe = FactoryDescribeRegionPoint.pixelNCC(7,7,bandType);
@@ -211,8 +217,11 @@ public class PointTrackerRegression extends BaseRegression implements ImageRegre
 	public Info createFastNCC( Class bandType ) {
 
 		GeneralFeatureIntensity intensity = FactoryIntensityPoint.fast(6, 9, bandType);
-		NonMaxSuppression nonmax = FactoryFeatureExtractor.nonmax(new ConfigExtract(10,6));
-		GeneralFeatureDetector detector = FactoryFeatureExtractor.general(intensity, nonmax, 600);
+		ConfigExtract configExtract = new ConfigExtract(10,6);
+		configExtract.detectMaximums = intensity.localMaximums();
+		configExtract.detectMinimums = intensity.localMinimums();
+		NonMaxSuppression nonmax = FactoryFeatureExtractor.nonmax(configExtract);
+		GeneralFeatureDetector detector = FactoryFeatureExtractor.general(intensity, nonmax, 300);
 
 		DescribeRegionPoint describe = FactoryDescribeRegionPoint.pixelNCC(7,7,bandType);
 		ScoreAssociation score = FactoryAssociation.defaultScore(describe.getDescriptionType());

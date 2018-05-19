@@ -12,8 +12,11 @@ Description of changes to benchmarks and justifications for change in performanc
   * Caused a slight decrease in performance with other targets
 - FAST
   * Algorithm has been changed to be more faithful
+  * Bright and dark features are in two different lists
+- Point Tracker
+  * Can handle multiple sets of tracks
+  * minimums and maximums are handled seperately
   
-TODO whitelist file
 
 ## Version 0.29
 2018/03/20
