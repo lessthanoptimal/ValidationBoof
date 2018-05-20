@@ -3,113 +3,113 @@
 # Match Tolerance Corner to Polygon   = 3.0
 # Directory (expected) (detected) (multiple) (corner miss matched) (true positives) (false positives) (false negative) (average error)
 # Directory      E  D  M MM TP FP FN   Error
-image00000.jpg  12 182  0  6  9 173  3  0.6864
-image00001.jpg  12 56  0  4  6 50  6  8.2699
-image00002.jpg   4 445  0  2  4 441  0  0.6119
-image00003.jpg   3 435  0  1  3 432  0  0.6656
-image00004.jpg   2 472  0  1  1 471  1  0.8261
-image00005.jpg   4 568  0  2  4 564  0  0.5787
-image00006.jpg  12 416  0  7 10 406  2  0.6863
-Summary: TP/E = 37 / 49 error =   1.761 FP = 2537
+image00000.jpg  12 182  0  5  9 173  3  0.7157
+image00001.jpg  12 56  0  4  6 50  6  8.2314
+image00002.jpg   4 446  0  2  4 442  0  0.5964
+image00003.jpg   3 434  0  2  3 431  0  0.6922
+image00004.jpg   2 474  0  0  1 473  1  1.0003
+image00005.jpg   4 569  0  1  4 565  0  0.5506
+image00006.jpg  12 418  0  4 10 408  2  0.6800
+Summary: TP/E = 37 / 49 error =   1.781 FP = 2542
 
 # Data Set = border02
 # Match Tolerance Corner to Polygon   = 3.0
 # Directory (expected) (detected) (multiple) (corner miss matched) (true positives) (false positives) (false negative) (average error)
 # Directory      E  D  M MM TP FP FN   Error
-image00007.jpg   4 108  0  2  2 106  2  0.8765
-image00008.jpg   4 218  0  3  3 215  1  1.0613
-image00009.jpg   3 117  0  2  2 115  1  2.2621
+image00007.jpg   4 108  0  2  2 106  2  0.9415
+image00008.jpg   4 219  0  3  3 216  1  1.0597
+image00009.jpg   3 116  0  2  2 114  1  2.2848
 image00010.jpg   3 163  0  1  1 162  2  0.8481
-Summary: TP/E = 8 / 14 error =   1.262 FP = 598
+Summary: TP/E = 8 / 14 error =   1.284 FP = 598
 
 # Data Set = concave
 # Match Tolerance Corner to Polygon   = 3.0
 # Directory (expected) (detected) (multiple) (corner miss matched) (true positives) (false positives) (false negative) (average error)
 # Directory      E  D  M MM TP FP FN   Error
-image00000.jpg   4 79  0  3  4 75  0  0.6177
-image00001.jpg   4 134  0  3  4 130  0  0.8912
-image00002.jpg   4 84  0  3  4 80  0  0.8466
-image00003.jpg   4 43  0  3  4 39  0  1.0788
-image00004.jpg   4 42  0  1  4 38  0  0.6580
-image00005.jpg   4 103  0  1  4 99  0  0.7527
-image00006.jpg   4 60  0  3  4 56  0  0.6548
-image00007.png  51 51  0 24 50  1  1  0.5822
-Summary: TP/E = 78 / 79 error =   0.760 FP = 518
+image00000.jpg   4 79  0  3  4 75  0  0.6214
+image00001.jpg   4 134  0  3  4 130  0  0.8854
+image00002.jpg   4 84  0  3  4 80  0  0.8816
+image00003.jpg   4 43  0  4  4 39  0  1.0522
+image00004.jpg   4 42  0  2  4 38  0  0.6799
+image00005.jpg   4 104  0  2  4 100  0  0.7551
+image00006.jpg   4 60  0  2  4 56  0  0.6635
+image00007.png  51 51  0 24 49  2  2  0.5686
+Summary: TP/E = 77 / 79 error =   0.763 FP = 520
 
 # Data Set = quadrilaterals01
 # Match Tolerance Corner to Polygon   = 3.0
 # Directory (expected) (detected) (multiple) (corner miss matched) (true positives) (false positives) (false negative) (average error)
 # Directory      E  D  M MM TP FP FN   Error
-image01.jpg     57 68  0  0 57 11  0  0.6822
-image02.jpg     57 72  0  0 57 15  0  0.7293
-image03.jpg     57 63  0  0 57  6  0  0.7176
-image04.jpg     55 84  0  0 55 29  0  0.7457
-image05.jpg     57 73  0  0 57 16  0  0.7074
-original.png    57 57  0  0 57  0  0  0.7549
-shadow01.jpg    57 77  0  0 46 31 11  0.7463
-Summary: TP/E = 386 / 397 error =   0.726 FP = 108
+image01.jpg     57 69  0  0 57 12  0  0.6808
+image02.jpg     57 72  0  0 57 15  0  0.7330
+image03.jpg     57 62  0  0 57  5  0  0.7268
+image04.jpg     55 83  0  0 55 28  0  0.7460
+image05.jpg     57 76  0  0 57 19  0  0.7058
+original.png    57 57  0  0 57  0  0  0.7581
+shadow01.jpg    57 74  0  0 46 28 11  0.7467
+Summary: TP/E = 386 / 397 error =   0.728 FP = 107
 
 # Data Set = set01
 # Match Tolerance Corner to Polygon   = 3.0
 # Directory (expected) (detected) (multiple) (corner miss matched) (true positives) (false positives) (false negative) (average error)
 # Directory      E  D  M MM TP FP FN   Error
-image00000.jpg   4 171  0  0  4 167  0  0.7156
-image00001.jpg   4 189  0  1  4 185  0  0.6875
+image00000.jpg   4 170  0  0  4 166  0  0.7156
+image00001.jpg   4 190  0  1  4 186  0  0.6875
 image00002.jpg   4 183  0  0  4 179  0  0.6558
 image00003.jpg   4 374  0  0  4 370  0  0.6050
 image00004.jpg   4 219  0  3  4 215  0  0.7866
-image00005.jpg   4 297  0  1  4 293  0  0.6504
-image00006.jpg   4 210  0  0  4 206  0  0.4819
-image00007.jpg   4 176  0  2  4 172  0  0.6692
-image00008.jpg   4 193  0  2  4 189  0  0.6569
-Summary: TP/E = 36 / 36 error =   0.657 FP = 1976
+image00005.jpg   4 297  0  0  4 293  0  0.6566
+image00006.jpg   4 209  0  0  4 205  0  0.4819
+image00007.jpg   4 175  0  0  4 171  0  0.6971
+image00008.jpg   4 194  0  1  4 190  0  0.6503
+Summary: TP/E = 36 / 36 error =   0.660 FP = 1975
 
 # Data Set = set02
 # Match Tolerance Corner to Polygon   = 3.0
 # Directory (expected) (detected) (multiple) (corner miss matched) (true positives) (false positives) (false negative) (average error)
 # Directory      E  D  M MM TP FP FN   Error
-image00000.jpg  10 196  0  4 10 186  0  0.6851
-image00001.jpg  10 191  0  1 10 181  0  0.6824
-image00002.jpg  10 174  0  2 10 164  0  0.7059
-image00003.jpg  10 87  0  4 10 77  0  0.7211
-image00004.jpg  10 142  0  4 10 132  0  0.7281
-image00005.jpg  10 133  0  0 10 123  0  0.5707
+image00000.jpg  10 198  0  3 10 188  0  0.6750
+image00001.jpg  10 191  0  0 10 181  0  0.6767
+image00002.jpg  10 174  0  3 10 164  0  0.7175
+image00003.jpg  10 87  0  3 10 77  0  0.6989
+image00004.jpg  10 142  0  2 10 132  0  0.7346
+image00005.jpg  10 133  0  0 10 123  0  0.5359
 image00006.jpg  10 145  0  1 10 135  0  0.6392
-image00007.jpg  10 80  0  3 10 70  0  0.7537
-image00008.jpg  10 69  0  3 10 59  0  0.5351
-Summary: TP/E = 90 / 90 error =   0.669 FP = 1127
+image00007.jpg  10 80  0  3 10 70  0  0.7642
+image00008.jpg  10 69  0  3 10 59  0  0.5773
+Summary: TP/E = 90 / 90 error =   0.669 FP = 1129
 
 # Data Set = set03
 # Match Tolerance Corner to Polygon   = 3.0
 # Directory (expected) (detected) (multiple) (corner miss matched) (true positives) (false positives) (false negative) (average error)
 # Directory      E  D  M MM TP FP FN   Error
-image00000.jpg  10 115  0  9  9 106  1  1.1008
-image00001.jpg  10 115  0  6  9 106  1  0.7662
-image00002.jpg  10 65  0  4  4 61  6  1.7924
-image00003.jpg  10 51  0  2  2 49  8  2.0053
-image00004.jpg  10 67  0  3  3 64  7  2.0655
-image00005.jpg  10 73  0  1  1 72  9  2.0657
-image00006.jpg  10 88  0  1  1 87  9  1.7506
-image00007.jpg  10 60  0  5  5 55  5  2.2883
-image00008.jpg  10 80  0  4  4 76  6  1.3980
-Summary: TP/E = 38 / 90 error =   1.693 FP = 676
+image00000.jpg  10 115  0  7  8 107  2  1.1554
+image00001.jpg  10 116  0  6  9 107  1  0.7737
+image00002.jpg  10 66  0  3  4 62  6  2.0465
+image00003.jpg  10 50  0  2  2 48  8  1.6910
+image00004.jpg  10 68  0  5  5 63  5  2.0264
+image00005.jpg  10 73  0  2  2 71  8  1.8632
+image00006.jpg  10 87  0  1  1 86  9  2.0296
+image00007.jpg  10 61  0  4  4 57  6  2.5264
+image00008.jpg  10 79  0  3  3 76  7  1.1611
+Summary: TP/E = 38 / 90 error =   1.697 FP = 677
 
 # Data Set = set04
 # Match Tolerance Corner to Polygon   = 3.0
 # Directory (expected) (detected) (multiple) (corner miss matched) (true positives) (false positives) (false negative) (average error)
 # Directory      E  D  M MM TP FP FN   Error
-image01.png      6 26  0  5  6 20  0  0.5214
-image02.png      6 30  0  2  6 24  0  0.5178
-image03.png      6 19  0  3  6 13  0  0.6446
-image04.png      6 23  0  4  6 17  0  0.5928
-image05.png      6 21  0  4  6 15  0  0.5279
-image06.png      6 27  0  2  6 21  0  0.5776
-image07.png      6 19  0  4  6 13  0  0.6249
-image08.png      6 22  0  4  6 16  0  0.5412
-image09.png      6 27  0  3  6 21  0  0.5104
-image10.png      6 28  0  3  6 22  0  0.6030
-Summary: TP/E = 60 / 60 error =   0.566 FP = 182
+image01.png      6 26  0  4  6 20  0  0.5245
+image02.png      6 30  0  3  6 24  0  0.4906
+image03.png      6 19  0  2  6 13  0  0.6446
+image04.png      6 24  0  0  6 18  0  0.6245
+image05.png      6 22  0  2  6 16  0  0.5793
+image06.png      6 27  0  2  6 21  0  0.5577
+image07.png      6 20  0  3  6 14  0  0.6100
+image08.png      6 23  0  3  6 17  0  0.5485
+image09.png      6 27  0  2  6 21  0  0.5322
+image10.png      6 28  0  2  6 22  0  0.6137
+Summary: TP/E = 60 / 60 error =   0.573 FP = 186
 
 
-Final Summary: TP/(TP+FN) = 733 / 815    FP = 7722
+Final Summary: TP/(TP+FN) = 732 / 815    FP = 7734
 
