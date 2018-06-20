@@ -12,7 +12,7 @@ import java.io.PrintStream;
 public abstract class BaseRegression implements TestRegression {
 
 	protected String directory;
-	protected PrintStream errorLog;
+	protected PrintStream errorLog = System.err;
 	// determines the sub-directory that the results will be written to
 	protected String resultsType;
 

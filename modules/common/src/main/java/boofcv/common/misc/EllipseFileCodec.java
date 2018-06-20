@@ -1,6 +1,6 @@
 package boofcv.common.misc;
 
-import georegression.struct.shapes.EllipseRotated_F64;
+import georegression.struct.curve.EllipseRotated_F64;
 
 import java.io.*;
 import java.util.ArrayList;

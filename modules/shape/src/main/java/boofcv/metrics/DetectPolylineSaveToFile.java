@@ -1,6 +1,6 @@
 package boofcv.metrics;
 
-import boofcv.abst.filter.binary.BinaryContourFinder;
+import boofcv.abst.filter.binary.BinaryLabelContourFinder;
 import boofcv.abst.filter.binary.InputToBinary;
 import boofcv.abst.shapes.polyline.PointsToPolyline;
 import boofcv.alg.filter.binary.BinaryImageOps;
@@ -32,7 +32,7 @@ import java.util.List;
  */
 public class DetectPolylineSaveToFile<T extends ImageGray<T>> {
 
-	BinaryContourFinder binaryToContour = FactoryBinaryContourFinder.linearChang2004();
+	BinaryLabelContourFinder binaryToContour = FactoryBinaryContourFinder.linearChang2004();
 	PointsToPolyline contourToPolyline;
 	InputToBinary<T> inputToBinary;
 

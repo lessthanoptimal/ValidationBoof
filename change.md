@@ -1,7 +1,25 @@
 Description of changes to benchmarks and justifications for change in performance from previous versions.
 
-## Version 0.29
+## Version 0.30
 2018/
+
+- Change in calibration results due to change in how they are computed. Within floating point tolerance
+- Polyline based fiducials
+  * Slight change in performance caused by a fix in the new polyline algorithm
+  * Large improvement in speed caused by new contour algorithm
+- Chessboard
+  * Fixed issue with very close targets
+  * Caused a slight decrease in performance with other targets
+- FAST
+  * Algorithm has been changed to be more faithful
+  * Bright and dark features are in two different lists
+- Point Tracker
+  * Can handle multiple sets of tracks
+  * minimums and maximums are handled seperately
+  
+
+## Version 0.29
+2018/03/20
 
 - Added regression for background models
 - Added more threshold algorithms to text thresholding regression

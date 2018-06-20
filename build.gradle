@@ -1,8 +1,7 @@
-
-group = 'org.boofcv'
-version = '0.29'
-
 allprojects{
+    group = 'org.boofcv'
+    version = '0.30'
+
     apply plugin: 'idea'
     apply plugin: 'java'
     apply plugin: 'maven'
@@ -19,7 +18,8 @@ allprojects{
     dependencies {
         compile files("$project.rootDir/lib/ProjectBUBO.jar")
 
-        ['boofcv-core','boofcv-swing','boofcv-ffmpeg'].each { String a -> compile group: 'org.boofcv', name: a, version: '0.29' }
+        ['boofcv-core','boofcv-swing','boofcv-ffmpeg','demonstrations'].each
+                { String a -> compile group: 'org.boofcv', name: a, version: version }
         compile group: 'com.google.guava', name: 'guava', version: '17.0'
         compile group: 'commons-io', name: 'commons-io', version: '2.6'
         compile group: 'args4j', name: 'args4j', version: '2.33'
@@ -71,11 +71,16 @@ task regressionJar(type: Jar) {
     }
 }
 
-[':modules'].each {String a ->
+def not_modules = new ArrayList();
+not_modules.addAll(subprojects.findAll{x->x.path.startsWith(':thirdparty')})
+not_modules.add(project(':modules'))
+not_modules = not_modules.collect{p->p.path}
+not_modules.each {String a ->
     project(a) {
         jar.enabled = false
         install.enabled = false
         moduleJars.enabled = false
+        regressionJar.enabled = false
     }
 }
 

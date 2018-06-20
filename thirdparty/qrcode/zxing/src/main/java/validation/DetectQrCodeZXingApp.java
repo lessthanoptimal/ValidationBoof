@@ -51,7 +51,8 @@ public class DetectQrCodeZXingApp {
                 continue;
             ResultPoint[] pts = r.getResultPoints();
 
-            out.println("message = "+r.getText());
+            String message = r.getText().replaceAll("\\p{C}", "?");
+            out.println("message = "+message);
             // ZXing doesn't provide the corners of each position pattern
             // let's provide an approximate bounding box instead
 

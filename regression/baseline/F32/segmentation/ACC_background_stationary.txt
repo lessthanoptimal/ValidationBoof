@@ -4,31 +4,31 @@
 
 # basic-gray
        firerubixcube   12  0.26  0.43  0.45
-       yaser_walking  500  0.26  0.69  0.60
       yaser_lighting    1  0.43  0.28  0.99
+       yaser_walking  500  0.26  0.69  0.60
 
 # gaussian-gray
        firerubixcube   12  0.24  0.33  0.50
-       yaser_walking  500  0.24  0.79  0.50
       yaser_lighting    1  0.32  0.21  0.63
+       yaser_walking  500  0.24  0.79  0.50
 
 # gmm-gray
        firerubixcube   12  0.27  0.38  0.54
-       yaser_walking  500  0.32  0.69  0.84
       yaser_lighting    1  0.17  0.18  0.17
+       yaser_walking  500  0.32  0.69  0.84
 
 # basic-rgb
        firerubixcube   12  0.31  0.55  0.49
-       yaser_walking  500  0.27  0.71  0.60
       yaser_lighting    1  0.43  0.28  0.99
+       yaser_walking  500  0.27  0.71  0.60
 
 # gaussian-rgb
        firerubixcube   12  0.30  0.63  0.39
-       yaser_walking  500  0.13  0.92  0.21
       yaser_lighting    1  0.29  0.30  0.27
+       yaser_walking  500  0.13  0.92  0.21
 
 # gmm-rgb
        firerubixcube   12  0.36  0.58  0.58
-       yaser_walking  500  0.33  0.71  0.84
       yaser_lighting    1  0.19  0.19  0.20
+       yaser_walking  500  0.33  0.71  0.84
 

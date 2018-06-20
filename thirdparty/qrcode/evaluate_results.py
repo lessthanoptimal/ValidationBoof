@@ -86,11 +86,14 @@ def compare_results( expected , found ):
         total_matched = 0
         for idx,f in enumerate(found):
             p2=Polygon(reshape_list(f))
-            x = p1.intersection(p2)
-            if x.area/p1.area > 0.1:
-                paired[idx] = True
-                total_matched += 1
-                true_positive += 1
+            try:
+                x = p1.intersection(p2)
+                if x.area/p1.area > 0.1:
+                    paired[idx] = True
+                    total_matched += 1
+                    true_positive += 1
+            except:
+                pass # not sure what to do here
         if total_matched == 0:
             false_negative += 1
         elif total_matched > 1:
@@ -154,8 +157,12 @@ for target_name in os.listdir(dir_results):
                 continue
 
             expected = parse_truth(join(path_ds_truth,truth_file))
-            found = parse_results(join(path_ds_results,truth_file))
-
+            try:
+                found = parse_results(join(path_ds_results,truth_file))
+            except Exception as e:
+                print("Failed parsing {} {}".format(path_ds_results,truth_file))
+                print("error = {}".format(e))
+                raise e
             metrics = compare_results(expected,found)
             total_ambiguous += metrics['ambiguous']
             total_false_positive += metrics['fp']
@@ -205,8 +212,8 @@ count_list = [category_counts[x] for x in categories]
 indexes = np.arange(len(categories))
 fig, ax = plt.subplots()
 
-bar_width = 0.35
-bar_space = (len(library_names)+1)*bar_width
+bar_width = 0.4
+bar_space = (len(library_names)*1.4)*bar_width
 
 for idx,lib_name in enumerate(library_names):
     scores_map = library_scores[lib_name]
@@ -224,6 +231,7 @@ ax.set_xticklabels(categories, rotation=90)
 ax.legend()
 
 plt.gcf().subplots_adjust(bottom=0.25)
+fig.set_size_inches(12, 4)
 plt.savefig("performance_categories.pdf", format='pdf')
 plt.close()
 

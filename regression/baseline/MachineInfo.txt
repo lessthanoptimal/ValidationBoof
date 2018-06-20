@@ -47,7 +47,7 @@ Linux
 =========== sun.jnu.encoding
 UTF-8
 =========== java.library.path
-/usr/java/packages/lib/amd64:/usr/lib64:/lib64:/lib:/usr/lib
+/home/pja/torch/install/lib::/usr/java/packages/lib/amd64:/usr/lib64:/lib64:/lib:/usr/lib
 =========== java.specification.name
 Java Platform API Specification
 =========== java.class.version
@@ -55,7 +55,7 @@ Java Platform API Specification
 =========== sun.management.compiler
 HotSpot 64-Bit Tiered Compilers
 =========== os.version
-4.13.0-36-generic
+4.13.0-39-generic
 =========== user.home
 /home/pja
 =========== user.timezone
@@ -73,7 +73,7 @@ pja
 =========== java.vm.specification.version
 1.8
 =========== sun.java.command
-regression.jar
+regression.jar -t CornerDetectorChangeRegression
 =========== java.home
 /opt/jdk/jdk1.8.0_121/jre
 =========== sun.arch.data.model

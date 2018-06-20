@@ -47,9 +47,7 @@ public class BackgroundModelRegression extends BaseRegression implements ImageRe
         stationary.add(new Info("gaussian-rgb",FactoryBackgroundModel.stationaryGaussian(configGaussian,colorType)));
         stationary.add(new Info("gmm-rgb",FactoryBackgroundModel.stationaryGmm(null,colorType)));
 
-        File[] files = dataPath.listFiles();
-        if( files == null )
-            throw new IOException("No datasets exist");
+        List<File> files = BoofRegressionConstants.listAndSort(dataPath);
 
         PrintStream out = new PrintStream(new FileOutputStream(new File(directory,"ACC_background_stationary.txt")));
         BoofRegressionConstants.printGenerator(out, getClass());
