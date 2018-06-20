@@ -38,7 +38,7 @@ if target is not None:
         print(target+" is not a directory")
 else:
     # Go through each directory and see if it has a script to
-    for d in sorted(os.listdir()):
+    for d in os.listdir():
         if not os.path.isdir(join(project_home,d)):
             continue
         if d is "results":
@@ -62,7 +62,7 @@ else:
         timing[d] = time1-time0
 
 print("Total Processing Time")
-for s in timing:
+for s in sorted(timing.keys()):
     print("  {} {}".format(s,timing[s]))
 
 print("Finished! Without errors...")

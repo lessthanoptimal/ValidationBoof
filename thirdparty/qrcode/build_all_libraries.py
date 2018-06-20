@@ -34,7 +34,7 @@ for d in os.listdir():
         timing[d] = time1-time0
 
 print("Total Processing Time")
-for s in timing:
+for s in sorted(timing.keys()):
     print("  {} {}".format(s,timing[s]))
 
 print("Finished! Without errors...")
