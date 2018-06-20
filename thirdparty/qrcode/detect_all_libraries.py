@@ -38,7 +38,7 @@ if target is not None:
         print(target+" is not a directory")
 else:
     # Go through each directory and see if it has a script to
-    for d in os.listdir():
+    for d in sorted(os.listdir()):
         if not os.path.isdir(join(project_home,d)):
             continue
         if d is "results":
