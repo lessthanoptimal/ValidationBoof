@@ -7,6 +7,7 @@ import boofcv.io.image.UtilImageIO;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
@@ -25,7 +26,9 @@ public abstract class HandSelectBase {
 
 	JFrame frame;
 	InfoHandSelectPanel infoPanel = new InfoHandSelectPanel(this);
-	ImageZoomPanel imagePanel;
+	VisualizePanel imagePanel;
+
+	VisualizePanel panel;
 
 	File inputFile;
 
@@ -37,7 +40,22 @@ public abstract class HandSelectBase {
 	// used to detect spamming of reload
 	private volatile boolean openingImage = false;
 
-	public HandSelectBase( ImageZoomPanel imagePanel, File openFile ) {
+	protected JMenuBar menuBar;
+	protected JMenu menuFile;
+
+	{
+		try {
+			// In Mac OS X Display the menubar in the correct location
+			System.setProperty("apple.laf.useScreenMenuBar", "true");
+
+			// smoother font
+			System.setProperty("apple.awt.textantialiasing", "true");
+		} catch( Exception ignore ) {
+
+		}
+	}
+
+	public HandSelectBase( VisualizePanel imagePanel, File openFile ) {
 		this.imagePanel = imagePanel;
 		gui.setLayout(new BorderLayout());
 		gui.add(imagePanel,BorderLayout.CENTER);
@@ -46,22 +64,51 @@ public abstract class HandSelectBase {
 		imagePanel.addMouseWheelListener(infoPanel);
 
 		if( openFile == null ) {
-			BoofSwingUtil.invokeNowOrLater(new Runnable() {
-				@Override
-				public void run() {
-					openImageDialog();
-					if( inputFile == null ) {
-						System.err.println("Can't open file");
-						System.exit(0);
-					}
+			BoofSwingUtil.invokeNowOrLater(() -> {
+				openImageDialog();
+				if( inputFile == null ) {
+					System.err.println("Can't open file");
+					System.exit(0);
 				}
 			});
 		} else if( !openImage(openFile,false) ) {
 			System.err.println("Failed to open file passed into constructor");
 		}
+
+		this.imagePanel.setControls(infoPanel);
 	}
 
 	public HandSelectBase(){}
+
+	protected void createMenuBar() {
+		menuBar = new JMenuBar();
+
+		menuFile = new JMenu("File");
+		menuFile.setMnemonic(KeyEvent.VK_F);
+		menuBar.add(menuFile);
+
+		JMenuItem menuItemFile = new JMenuItem("Open Image");
+		BoofSwingUtil.setMenuItemKeys(menuItemFile, KeyEvent.VK_O, KeyEvent.VK_O);
+		menuItemFile.addActionListener(e-> openImageDialog());
+		menuFile.add(menuItemFile);
+
+
+		JMenuItem menuItemNext = new JMenuItem("Next Image");
+		BoofSwingUtil.setMenuItemKeys(menuItemNext, KeyEvent.VK_I, KeyEvent.VK_I);
+		menuItemNext.addActionListener(e->openNextImage());
+		menuFile.add(menuItemNext);
+
+		JMenuItem menuItemClear = new JMenuItem("Clear");
+		menuItemClear.addActionListener(e-> clearPoints());
+		menuFile.add(menuItemClear);
+
+		JMenuItem menuItemSave = new JMenuItem("Save");
+		BoofSwingUtil.setMenuItemKeys(menuItemSave, KeyEvent.VK_S, KeyEvent.VK_S);
+		menuItemClear.addActionListener(e-> save());
+		menuFile.add(menuItemSave);
+
+		frame.setJMenuBar(menuBar);
+	}
 
 	protected void handleFirstImage() {
 		frame = ShowImages.showWindow(gui,getApplicationName());
@@ -72,6 +119,7 @@ public abstract class HandSelectBase {
 				adjustImageScale();
 			}
 		});
+		createMenuBar();
 
 		Rectangle screenSize = frame.getGraphicsConfiguration().getBounds();
 		Insets inset = Toolkit.getDefaultToolkit().getScreenInsets(frame.getGraphicsConfiguration());
@@ -230,6 +278,10 @@ public abstract class HandSelectBase {
 
 	public abstract void save();
 
+	public void repaint() {
+		gui.repaint();
+	}
+
 	public void reloadImage() {
 		if( openingImage ) {
 			System.err.println("Still opening a file");
@@ -240,6 +292,10 @@ public abstract class HandSelectBase {
 				openImage(inputFile,true);
 			}
 		}.start();
+	}
+
+	public static abstract class VisualizePanel extends ImageZoomPanel {
+		public abstract void setControls( InfoHandSelectPanel controls );
 	}
 
 //	public abstract void reloadLabeled();

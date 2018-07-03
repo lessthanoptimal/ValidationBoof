@@ -9,6 +9,7 @@ import boofcv.io.image.ConvertBufferedImage;
 import boofcv.struct.image.GrayU8;
 import georegression.struct.point.Point2D_F64;
 
+import javax.swing.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
@@ -20,8 +21,6 @@ import java.util.List;
  * @author Peter Abeles
  */
 public class HandSelectPointsApp extends HandSelectBase {
-
-
 
 	public HandSelectPointsApp( File file ) {
 		super(new SelectPointPanel(),file);
@@ -106,6 +105,6 @@ public class HandSelectPointsApp extends HandSelectBase {
 	}
 
 	public static void main(String[] args) {
-		new HandSelectPointsApp(null);
+		SwingUtilities.invokeLater(()->new HandSelectPointsApp(null));
 	}
 }
