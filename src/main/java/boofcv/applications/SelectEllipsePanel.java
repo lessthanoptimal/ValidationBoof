@@ -1,6 +1,5 @@
 package boofcv.applications;
 
-import boofcv.gui.image.ImageZoomPanel;
 import boofcv.misc.BoofMiscOps;
 import georegression.geometry.UtilEllipse_F64;
 import georegression.metric.Distance2D_F64;
@@ -22,7 +21,7 @@ import java.util.List;
  */
 // TODO adjust axis
 // TODO rotate
-public class SelectEllipsePanel extends ImageZoomPanel
+public class SelectEllipsePanel extends HandSelectBase.VisualizePanel
 	implements MouseListener, KeyListener, MouseMotionListener
 {
 	final List<EllipseRotated_F64> unselected = new ArrayList<>();
@@ -410,6 +409,11 @@ public class SelectEllipsePanel extends ImageZoomPanel
 
 	@Override
 	public void mouseMoved(MouseEvent e) {
+
+	}
+
+	@Override
+	public void setControls(InfoHandSelectPanel controls) {
 
 	}
 

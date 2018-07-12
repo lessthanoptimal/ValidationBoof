@@ -1,6 +1,5 @@
 package boofcv.applications;
 
-import boofcv.gui.image.ImageZoomPanel;
 import georegression.struct.point.Point2D_F64;
 
 import java.awt.*;
@@ -18,7 +17,7 @@ import java.util.List;
 /**
  * @author Peter Abeles
  */
-public class SelectPointPanel extends ImageZoomPanel
+public class SelectPointPanel extends HandSelectBase.VisualizePanel
 	implements MouseListener, KeyListener
 {
 	// list of points selected by the user
@@ -31,7 +30,7 @@ public class SelectPointPanel extends ImageZoomPanel
 
 	boolean showLines = true;
 
-	int renderClosedAt = -1;
+	InfoHandSelectPanel controls;
 
 	public SelectPointPanel() {
 		disableSaveOnClick();
@@ -111,7 +110,7 @@ public class SelectPointPanel extends ImageZoomPanel
 			renderLine(g2,a,b);
 		}
 
-		if( renderClosedAt == N) {
+		if( controls.fixedCount && corners.size()==controls.shapeCorners) {
 			Point2D_F64 a = corners.get(0);
 			Point2D_F64 b = corners.get(corners.size()-1);
 
@@ -154,6 +153,9 @@ public class SelectPointPanel extends ImageZoomPanel
 				}
 				if (!found) {
 					selected = p;
+					if( controls.fixedCount && activeSet.size() >= controls.shapeCorners ){
+						activeSet = new ArrayList<>();
+					}
 					activeSet.add(p);
 					if (activeSet.size() == 1) {
 						pointSets.add(activeSet);
@@ -316,5 +318,10 @@ public class SelectPointPanel extends ImageZoomPanel
 
 	public void setSets(List<List<Point2D_F64>> sets) {
 		this.pointSets = sets;
+	}
+
+	@Override
+	public void setControls(InfoHandSelectPanel controls) {
+		this.controls = controls;
 	}
 }

@@ -33,6 +33,9 @@ public class InfoHandSelectPanel extends JPanel implements ChangeListener, Mouse
 	protected JButton detectShapes;
 	protected JTextField fieldPrefix;
 
+	protected JCheckBox fixedCheckBox = new JCheckBox("Fixed Set Size");
+	protected JSpinner cornerSpinner;
+
 
 	protected JButton clearButton;
 
@@ -43,6 +46,8 @@ public class InfoHandSelectPanel extends JPanel implements ChangeListener, Mouse
 
 	Runnable handleSelectShape;
 
+	boolean fixedCount = false;
+	int shapeCorners = 4;
 	boolean skipLabeled = false;
 	String prefix="";
 
@@ -52,11 +57,25 @@ public class InfoHandSelectPanel extends JPanel implements ChangeListener, Mouse
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
 
+		fixedCheckBox.setSelected(fixedCount);
+		fixedCheckBox.addChangeListener(e->{
+			fixedCount = fixedCheckBox.isSelected();
+			cornerSpinner.setEnabled(fixedCount);
+			owner.repaint();
+		});
+
 		SpinnerModel model = new SpinnerNumberModel(1.0, MIN,MAX,0.1);
 		zoomSpinner = new JSpinner(model);
 		zoomSpinner.addChangeListener(this);
 		zoomSpinner.setFocusable(false);
 		zoomSpinner.setMaximumSize(new Dimension(250,80));
+
+		model = new SpinnerNumberModel(shapeCorners, 1,1000,1);
+		cornerSpinner = new JSpinner(model);
+		cornerSpinner.addChangeListener(this);
+		cornerSpinner.setFocusable(false);
+		cornerSpinner.setMaximumSize(new Dimension(250,80));
+		cornerSpinner.setEnabled(fixedCount);
 
 		resetZoomButton = new JButton("Home");
 		resetZoomButton.addActionListener(this);
@@ -99,6 +118,8 @@ public class InfoHandSelectPanel extends JPanel implements ChangeListener, Mouse
 		add( new JLabel("Scale"));
 		add(zoomSpinner);
 		add(Box.createRigidArea(new Dimension(10,50)));
+		add(fixedCheckBox);
+		add(cornerSpinner);
 		add(cSkipLabeled);
 		add(resetZoomButton);
 		add(saveButton);
@@ -125,8 +146,13 @@ public class InfoHandSelectPanel extends JPanel implements ChangeListener, Mouse
 
 	@Override
 	public void stateChanged(ChangeEvent e) {
-		double value = ((Number)zoomSpinner.getValue()).doubleValue();
-		owner.setScale(value);
+		if( e.getSource() == zoomSpinner ) {
+			double value = ((Number) zoomSpinner.getValue()).doubleValue();
+			owner.setScale(value);
+		} else if( e.getSource() == cornerSpinner ) {
+			shapeCorners = ((Number) cornerSpinner.getValue()).intValue();
+			owner.repaint();
+		}
 	}
 
 	@Override

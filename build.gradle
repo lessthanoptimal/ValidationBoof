@@ -53,6 +53,29 @@ subprojects {
     }
 }
 
+
+
+task pointLabelJar(type: Jar) {
+    manifest {
+        attributes 'Implementation-Title': 'Point Labeling',
+                'Implementation-Version': version,
+                'Main-Class': 'boofcv.applications.HandSelectPointsApp'
+    }
+
+
+    outputs.upToDateWhen { false }
+
+    from { configurations.compile.findAll{
+        it.name.matches("boofcv-(recognition|feature|geo|sfm|calibration|ip|io|swing).*")||
+    it.name.matches("(common-|georegression|ddogleg|ejml).*")}.collect {
+        it.isDirectory() ? it :  zipTree(it) } }
+    with jar
+
+    doLast {
+        archivePath.renameTo(file('label_points.jar'))
+    }
+}
+
 // Create a jar which contains all the applications
 task regressionJar(type: Jar, dependsOn: ':build' ) {
 
