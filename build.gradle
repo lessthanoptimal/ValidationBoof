@@ -54,7 +54,8 @@ subprojects {
 }
 
 // Create a jar which contains all the applications
-task regressionJar(type: Jar) {
+task regressionJar(type: Jar, dependsOn: ':build' ) {
+
     manifest {
         attributes 'Implementation-Title': 'Regression Jar',
                 'Implementation-Version': version,
@@ -71,6 +72,10 @@ task regressionJar(type: Jar) {
     }
 }
 
+clean.doFirst {
+    delete "regression.jar"
+}
+
 def not_modules = new ArrayList();
 not_modules.addAll(subprojects.findAll{x->x.path.startsWith(':thirdparty')})
 not_modules.add(project(':modules'))
@@ -80,7 +85,6 @@ not_modules.each {String a ->
         jar.enabled = false
         install.enabled = false
         moduleJars.enabled = false
-        regressionJar.enabled = false
     }
 }
 
