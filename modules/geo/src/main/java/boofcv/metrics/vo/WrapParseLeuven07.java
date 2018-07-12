@@ -59,8 +59,8 @@ public class WrapParseLeuven07 implements SequenceStereoImages {
 	@Override
 	public StereoParameters getCalibration()
 	{
-		PerspectiveOps.matrixToParam(data.getLeftK(),360,288,stereoParam.left);
-		PerspectiveOps.matrixToParam(data.getRightK(),360,288,stereoParam.right);
+		PerspectiveOps.matrixToPinhole(data.getLeftK(),360,288,stereoParam.left);
+		PerspectiveOps.matrixToPinhole(data.getRightK(),360,288,stereoParam.right);
 
 		data.getRightToWorld().concat(worldToLeft,stereoParam.rightToLeft);
 

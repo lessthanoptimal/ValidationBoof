@@ -42,8 +42,8 @@ public class WrapParseKITTI implements SequenceStereoImages {
 		DMatrixRMaj K_inv = new DMatrixRMaj(3,3);
 		CommonOps_DDRM.invert(K,K_inv);
 
-		param.left = PerspectiveOps.matrixToParam(K,leftWidth,leftHeight,new CameraPinholeRadial());
-		param.right = PerspectiveOps.matrixToParam(K,rightWidth,rightHeight,new CameraPinholeRadial());
+		param.left = PerspectiveOps.matrixToPinhole(K,leftWidth,leftHeight,new CameraPinholeRadial());
+		param.right = PerspectiveOps.matrixToPinhole(K,rightWidth,rightHeight,new CameraPinholeRadial());
 		param.left.radial = new double[0];
 		param.right.radial = new double[0];
 
