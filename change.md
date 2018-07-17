@@ -1,7 +1,16 @@
 Description of changes to benchmarks and justifications for change in performance from previous versions.
 
-## Version 0.30
+## Version 0.31
 2018/
+
+- Bundle Adjustment Regression
+  * Reduction in residual score 50% and 95%
+- TODO scene reconstruction regression
+- TODO PNP regression
+
+
+## Version 0.30
+2018/05/20
 
 - Change in calibration results due to change in how they are computed. Within floating point tolerance
 - Polyline based fiducials

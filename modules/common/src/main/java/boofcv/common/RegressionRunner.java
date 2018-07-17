@@ -68,7 +68,16 @@ public class RegressionRunner {
         if( args.length == 2 ) {
             ImageDataType imageType = ImageDataType.valueOf(args[1]);
 
-            ImageRegression regression = (ImageRegression) o;
+            ImageRegression regression;
+            try {
+                regression = (ImageRegression) o;
+            } catch( ClassCastException e ) {
+                System.err.println("Can't class regression "+o.getClass().getSimpleName()+" into ImageRegression");
+                System.err.println("Maybe the suffix of the regression is wrong? *Regression for image " +
+                        "and *FRegression for file");
+                System.exit(1);
+                return;
+            }
             regression.setOutputDirectory(new File(CURRENT_DIRECTORY,imageType.toString()).getPath());
             try {
                 regression.process(imageType);
@@ -77,7 +86,16 @@ public class RegressionRunner {
             }
             regression.getErrorStream().close();
         } else if( args.length == 1 ) {
-            FileRegression regression = (FileRegression)o;
+            FileRegression regression;
+            try {
+                regression = (FileRegression) o;
+            } catch( ClassCastException e ) {
+                System.err.println("Can't class regression "+o.getClass().getSimpleName()+" into FileRegression");
+                System.err.println("Maybe the suffix of the regression is wrong? *Regression for image " +
+                        "and *FRegression for file");
+                System.exit(1);
+                return;
+            }
             regression.setOutputDirectory(new File(CURRENT_DIRECTORY,"other").getPath());
             try {
                 regression.process();
