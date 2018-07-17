@@ -1,0 +1,11 @@
+# GENERATOR BundleAdjustmentFRegression
+# Bundle Adjustment Schur_DSCC
+# ftol=1.0E-6  gtol=1.0E-6  max_iterations=50
+dubrovnik/problem-16-22106-pre.txt before p50=4.421792 p95=21.993114
+dubrovnik/problem-16-22106-pre.txt after p50=2.956903 p95=12.770485
+final/problem-93-61203-pre.txt before p50=2.101256 p95=13.198347
+final/problem-93-61203-pre.txt after p50=1.723569 p95=8.750320
+ladybug/problem-49-7776-pre.txt before p50=1.480069 p95=16.655452
+ladybug/problem-49-7776-pre.txt after p50=1.489173 p95=11.714144
+trafalgar/problem-21-11315-pre.txt before p50=2.976838 p95=35.552007
+trafalgar/problem-21-11315-pre.txt after p50=2.775002 p95=16.720696
