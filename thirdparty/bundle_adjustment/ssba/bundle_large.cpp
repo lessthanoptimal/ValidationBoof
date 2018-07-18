@@ -495,6 +495,8 @@ void save_results( const string& path_output,
                    const vector<int>& correspondingView,
                    const vector<int>& correspondingPoint )
 {
+    std::cout << "Warning: Camera model isn't the same as the one in the paper and can't be converted" << endl;
+
     int K = (int)correspondingView.size();
     int N = (int)cams.size();
     int M = (int)Xs.size();
@@ -519,9 +521,15 @@ void save_results( const string& path_output,
         createRodriguesParamFromRotationMatrix(cams[i].getRotation(),rodrigues);
         T = cams[i].getTranslation();
         double f = - cams[i].getFocalLength();
-        double const f2 = f*f;
-        double k1 = distortions[i].k1/f2;
-        double k2 = distortions[i].k2/(f2*f2);
+//        double const f2 = f*f;
+//        double k1 = distortions[i].k1/f2;
+//        double k2 = distortions[i].k2/(f2*f2);
+
+        // Unfortunately these distortion coefficients aren't compatible with the model described
+        // in the paper and can't be converted
+        double k1 = distortions[i].k1;
+        double k2 = distortions[i].k2;
+
 
         myfile << rodrigues[0] << endl << rodrigues[1] << endl << rodrigues[2] << endl;
         myfile << T[0] << endl<< T[1] << endl << T[2] << endl;
@@ -586,6 +594,9 @@ bool process_file( const string& path_input , const string& path_output ) {
       createRotationMatrixRodrigues(om, R);
       cams[i].setRotation(R);
 
+      // NOTE: I think he's trying to get distortion units to be the same as focal length units
+      //       unfortunately this changes the camera model and it can't be converted back.
+      //       The estimate camera focal length isn't used in the distortion model like it should be
       double const f2 = f*f;
       distortions[i].k1 = k1 * f2;
       distortions[i].k2 = k2 * f2 * f2;
