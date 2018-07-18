@@ -521,12 +521,6 @@ void save_results( const string& path_output,
         createRodriguesParamFromRotationMatrix(cams[i].getRotation(),rodrigues);
         T = cams[i].getTranslation();
         double f = - cams[i].getFocalLength();
-//        double const f2 = f*f;
-//        double k1 = distortions[i].k1/f2;
-//        double k2 = distortions[i].k2/(f2*f2);
-
-        // Unfortunately these distortion coefficients aren't compatible with the model described
-        // in the paper and can't be converted
         double k1 = distortions[i].k1;
         double k2 = distortions[i].k2;
 
@@ -593,10 +587,6 @@ bool process_file( const string& path_input , const string& path_output ) {
       Matrix3x3d R;
       createRotationMatrixRodrigues(om, R);
       cams[i].setRotation(R);
-
-      // NOTE: I think he's trying to get distortion units to be the same as focal length units
-      //       unfortunately this changes the camera model and it can't be converted back.
-      //       The estimate camera focal length isn't used in the distortion model like it should be
       double const f2 = f*f;
       distortions[i].k1 = k1 * f2;
       distortions[i].k2 = k2 * f2 * f2;
