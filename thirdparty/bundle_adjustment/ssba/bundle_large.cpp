@@ -487,6 +487,53 @@ namespace
 
 } // end namespace <>
 
+void save_results( const string& path_output,
+                   const vector<Vector3d >& Xs,
+                   const vector<CameraMatrix>& cams,
+                   const vector<SimpleDistortionFunction>& distortions,
+                   const vector<Vector2d>& measurements,
+                   const vector<int>& correspondingView,
+                   const vector<int>& correspondingPoint )
+{
+    int K = (int)correspondingView.size();
+    int N = (int)cams.size();
+    int M = (int)Xs.size();
+
+    ofstream myfile(path_output);
+    myfile.precision(10);
+
+    myfile << N << " " << M << " " << K << endl;
+
+    for (int k = 0; k < K; ++k)
+    {
+        myfile << correspondingView[k] << " ";
+        myfile << correspondingPoint[k] << " ";
+        myfile << measurements[k][0] << " " << measurements[k][1] << endl;
+    }
+
+
+    for (int i = 0; i < N; ++i)
+    {
+        Vector3d rodrigues;
+        Vector3d T;
+        createRodriguesParamFromRotationMatrix(cams[i].getRotation(),rodrigues);
+        T = cams[i].getTranslation();
+        double f = - cams[i].getFocalLength();
+        double const f2 = f*f;
+        double k1 = distortions[i].k1/f2;
+        double k2 = distortions[i].k2/(f2*f2);
+
+        myfile << rodrigues[0] << endl << rodrigues[1] << endl << rodrigues[2] << endl;
+        myfile << T[0] << endl<< T[1] << endl << T[2] << endl;
+        myfile << f << endl << k1 << endl << k2 << endl;
+    }
+
+
+    for (int j = 0; j < M; ++j) {
+        myfile << Xs[j][0] << endl << Xs[j][1] << endl << Xs[j][2] << endl;
+    }
+}
+
 bool process_file( const string& path_input , const string& path_output ) {
 
    ifstream is(path_input);
@@ -590,6 +637,8 @@ bool process_file( const string& path_input , const string& path_output ) {
    //showErrorStatistics(KMat, cams, Xs, measurements, correspondingView, correspondingPoint);
    double const E_final = showObjective(avg_focal_length, inlier_threshold, cams, distortions, Xs, measurements, correspondingView, correspondingPoint);
    cout << "E_init = " << E_init << " E_final = " << E_final << " initial ratio = " << init_ratio << " final ratio = " << final_ratio << endl;
+
+   save_results(path_output,Xs,cams,distortions,measurements,correspondingView, correspondingPoint);
 
    return true;
 }
