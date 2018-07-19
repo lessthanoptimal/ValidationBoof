@@ -6,6 +6,8 @@ import sys
 from os.path import join
 from shapely.geometry import Polygon
 
+# Uses labeled QR Code images to determine each detectors ability to detect QR Codes
+
 # Set up the path and make sure it knows which directory it's in
 project_home = os.path.dirname(os.path.realpath(__file__))
 os.chdir(project_home)
@@ -176,7 +178,7 @@ for target_name in os.listdir(dir_results):
         ds_results[ds] = {"tp":ds_true_positive,"fp":ds_false_positive,"fn":ds_false_negative}
 
 
-    print();
+    print()
     print("=============== {:20s} ================".format(target_name))
     print("  total input      {}".format(total_true_positive+total_false_negative))
     print("  missing results  {}".format(total_missing))
