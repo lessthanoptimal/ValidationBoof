@@ -18,7 +18,6 @@ from validationboof import *
 p = optparse.OptionParser()
 p.add_option('--Results', '-r', default="results",help="Location of root results directory")
 
-
 def parse_results( file_path , unique_set):
     skip = False
     detected = 0
@@ -37,7 +36,6 @@ def parse_results( file_path , unique_set):
 
 options, arguments = p.parse_args()
 
-dir_images = options.Images
 dir_results = options.Results
 
 # Score information for each library is stored here
@@ -47,7 +45,6 @@ library_scores = {}
 category_counts = {}
 
 # List of all the datasets
-data_sets = [d for d in os.listdir(dir_images) if os.path.isdir(join(dir_images,d))]
 
 # name of directories in the root directory is the same as the project which generated them
 for target_name in os.listdir(dir_results):
@@ -59,14 +56,18 @@ for target_name in os.listdir(dir_results):
     total_detections = 0
     unique_set = set()
 
+    data_sets = [d for d in os.listdir(path_to_target) if os.path.isdir(join(path_to_target, d))]
+    file_count = 0
     for ds in data_sets:
         path_ds_results = os.path.join(path_to_target,ds)
         result_files = [f for f in os.listdir(path_ds_results) if f.endswith("txt")]
         for f in result_files:
+            file_count += 1
             total_detections += parse_results(os.path.join(path_ds_results,f),unique_set)
 
     print()
     print("=============== {:20s} ================".format(target_name))
+    print("  data sets         {} {}".format(len(data_sets),file_count))
     print("  total unique      {}".format(len(unique_set)))
     print("  total detected    {}".format(total_detections))
 
