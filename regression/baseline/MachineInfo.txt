@@ -4,9 +4,9 @@ Runtime.getRuntime().totalMemory(): 504889344
 =========== java.runtime.name
 Java(TM) SE Runtime Environment
 =========== sun.boot.library.path
-/opt/jdk/jdk1.8.0_121/jre/lib/amd64
+/opt/jdk/jdk1.8.0_171/jre/lib/amd64
 =========== java.vm.version
-25.121-b13
+25.171-b11
 =========== java.vm.vendor
 Oracle Corporation
 =========== java.vendor.url
@@ -28,11 +28,11 @@ Java Virtual Machine Specification
 =========== user.dir
 /home/pja/projects/ValidationBoof
 =========== java.runtime.version
-1.8.0_121-b13
+1.8.0_171-b11
 =========== java.awt.graphicsenv
 sun.awt.X11GraphicsEnvironment
 =========== java.endorsed.dirs
-/opt/jdk/jdk1.8.0_121/jre/lib/endorsed
+/opt/jdk/jdk1.8.0_171/jre/lib/endorsed
 =========== os.arch
 amd64
 =========== java.io.tmpdir
@@ -47,7 +47,7 @@ Linux
 =========== sun.jnu.encoding
 UTF-8
 =========== java.library.path
-/home/pja/torch/install/lib::/usr/java/packages/lib/amd64:/usr/lib64:/lib64:/lib:/usr/lib
+/usr/java/packages/lib/amd64:/usr/lib64:/lib64:/lib:/usr/lib
 =========== java.specification.name
 Java Platform API Specification
 =========== java.class.version
@@ -55,7 +55,7 @@ Java Platform API Specification
 =========== sun.management.compiler
 HotSpot 64-Bit Tiered Compilers
 =========== os.version
-4.13.0-39-generic
+4.15.0-24-generic
 =========== user.home
 /home/pja
 =========== user.timezone
@@ -73,9 +73,9 @@ pja
 =========== java.vm.specification.version
 1.8
 =========== sun.java.command
-regression.jar -t CornerDetectorChangeRegression
+regression.jar --TestName BundleAdjustment
 =========== java.home
-/opt/jdk/jdk1.8.0_121/jre
+/opt/jdk/jdk1.8.0_171/jre
 =========== sun.arch.data.model
 64
 =========== user.language
@@ -87,11 +87,11 @@ sun.awt.X11.XToolkit
 =========== java.vm.info
 mixed mode
 =========== java.version
-1.8.0_121
+1.8.0_171
 =========== java.ext.dirs
-/opt/jdk/jdk1.8.0_121/jre/lib/ext:/usr/java/packages/lib/ext
+/opt/jdk/jdk1.8.0_171/jre/lib/ext:/usr/java/packages/lib/ext
 =========== sun.boot.class.path
-/opt/jdk/jdk1.8.0_121/jre/lib/resources.jar:/opt/jdk/jdk1.8.0_121/jre/lib/rt.jar:/opt/jdk/jdk1.8.0_121/jre/lib/sunrsasign.jar:/opt/jdk/jdk1.8.0_121/jre/lib/jsse.jar:/opt/jdk/jdk1.8.0_121/jre/lib/jce.jar:/opt/jdk/jdk1.8.0_121/jre/lib/charsets.jar:/opt/jdk/jdk1.8.0_121/jre/lib/jfr.jar:/opt/jdk/jdk1.8.0_121/jre/classes
+/opt/jdk/jdk1.8.0_171/jre/lib/resources.jar:/opt/jdk/jdk1.8.0_171/jre/lib/rt.jar:/opt/jdk/jdk1.8.0_171/jre/lib/sunrsasign.jar:/opt/jdk/jdk1.8.0_171/jre/lib/jsse.jar:/opt/jdk/jdk1.8.0_171/jre/lib/jce.jar:/opt/jdk/jdk1.8.0_171/jre/lib/charsets.jar:/opt/jdk/jdk1.8.0_171/jre/lib/jfr.jar:/opt/jdk/jdk1.8.0_171/jre/classes
 =========== java.vendor
 Oracle Corporation
 =========== file.separator
@@ -102,5 +102,7 @@ http://bugreport.sun.com/bugreport/
 UnicodeLittle
 =========== sun.cpu.endian
 little
+=========== sun.desktop
+gnome
 =========== sun.cpu.isalist
 

@@ -72,7 +72,7 @@ public class CodecBundleAdjustmentInTheLarge {
 
             ConvertRotation3D_F64.rodriguesToMatrix(rod,worldToCameraGL.R);
 
-            BundleInThelargePinhole camera = new BundleInThelargePinhole();
+            SnavelyPinhole camera = new SnavelyPinhole();
 
             camera.f = Double.parseDouble(reader.readLine());
             camera.k1 = Double.parseDouble(reader.readLine());
@@ -124,7 +124,7 @@ public class CodecBundleAdjustmentInTheLarge {
         Rodrigues_F64 axisAngle = new Rodrigues_F64();
         for (int viewIdx = 0; viewIdx < scene.views.length; viewIdx++) {
             BundleAdjustmentSceneStructure.View view = scene.views[viewIdx];
-            BundleInThelargePinhole camera = scene.cameras[view.camera].getModel();
+            SnavelyPinhole camera = scene.cameras[view.camera].getModel();
 
             ConvertRotation3D_F64.matrixToRodrigues(view.worldToView.R,axisAngle);
 
