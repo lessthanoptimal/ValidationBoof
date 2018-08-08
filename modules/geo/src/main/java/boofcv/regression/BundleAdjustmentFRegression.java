@@ -1,12 +1,13 @@
 package boofcv.regression;
 
 import boofcv.abst.geo.bundle.BundleAdjustment;
-import boofcv.abst.geo.bundle.BundleAdjustmentShur_DSCC;
+import boofcv.abst.geo.bundle.BundleAdjustmentSchur_DSCC;
 import boofcv.common.BaseRegression;
 import boofcv.common.BoofRegressionConstants;
 import boofcv.common.FileRegression;
 import boofcv.metrics.sba.CodecBundleAdjustmentInTheLarge;
 import boofcv.misc.BoofMiscOps;
+import org.ddogleg.optimization.lm.ConfigLevenbergMarquardt;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -34,7 +35,7 @@ public class BundleAdjustmentFRegression extends BaseRegression implements FileR
     PrintStream outputQuality;
 
     double ftol=1e-6,gtol=1e-6;
-    int maxIterations = 50;
+    int maxIterations = 100;
 
     CodecBundleAdjustmentInTheLarge parser = new CodecBundleAdjustmentInTheLarge();
 
@@ -44,10 +45,15 @@ public class BundleAdjustmentFRegression extends BaseRegression implements FileR
 
     @Override
     public void process() throws IOException {
-        evaluate(new BundleAdjustmentShur_DSCC(1e-3),"Schur_DSCC");
+        ConfigLevenbergMarquardt config = new ConfigLevenbergMarquardt();
+        config.dampeningInitial = 0.1;
+        config.scalingMinimum = 1e-6;
+        config.scalingMinimum = 1e6;
+        evaluate(new BundleAdjustmentSchur_DSCC(config),"Schur_DSCC");
     }
 
     private void evaluate(BundleAdjustment bundleAdjustment , String algorithm ) throws FileNotFoundException {
+        bundleAdjustment.setVerbose(true);
         System.out.println("BundleAdjustment Evaluating "+algorithm);
         outputQuality = new PrintStream( new File(directory, "ACC_BundleAdjustment_"+algorithm+".txt"));
         BoofRegressionConstants.printGenerator(outputQuality, getClass());

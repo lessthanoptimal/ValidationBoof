@@ -70,7 +70,7 @@ public class ComputeTrifocalTensor {
 
 		saveTrifocal(solution, "boofcv_"+dataName+"_linear7.txt");
 
-		UnconstrainedLeastSquares optimizer = FactoryOptimization.leastSquareLevenberg(1e-3);
+		UnconstrainedLeastSquares optimizer = FactoryOptimization.levenbergMarquardt(null,false);
 		TrifocalAlgebraicPoint7 algebraic7 = new TrifocalAlgebraicPoint7(optimizer,300,1e-20,1e-20);
 		algebraic7.process(obs,solution);
 
