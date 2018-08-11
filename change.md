@@ -24,7 +24,7 @@ Description of changes to benchmarks and justifications for change in performanc
   * Bright and dark features are in two different lists
 - Point Tracker
   * Can handle multiple sets of tracks
-  * minimums and maximums are handled seperately
+  * minimums and maximums are handled separately
   
 
 ## Version 0.29

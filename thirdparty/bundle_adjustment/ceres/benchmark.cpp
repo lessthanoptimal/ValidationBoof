@@ -244,7 +244,7 @@ void process_in_the_large( const string& input_path , const string& output_path 
     Solve(options, &problem, &summary);
     std::cout << summary.FullReport() << "\n";
 
-    // TODO write out to a BAL file
+    bal_problem.WriteToFile(output_path);
 }
 
 int main( int argc, char *argv[] ) {

@@ -37,6 +37,7 @@
 #include <Eigen/Core>
 #include "ceres/rotation.h"
 #include "glog/logging.h"
+#include <iostream>
 
 inline double RandDouble() {
   double r = static_cast<double>(rand());
@@ -252,9 +253,13 @@ void BALProblem::Normalize() {
   // Scale so that the median absolute deviation of the resulting
   // reconstruction is 100.
   const double scale = 100.0 / median_absolute_deviation;
-  VLOG(2) << "median: " << median.transpose();
-  VLOG(2) << "median absolute deviation: " << median_absolute_deviation;
-  VLOG(2) << "scale: " << scale;
+//  VLOG(2) << "median: " << median.transpose();
+//  VLOG(2) << "median absolute deviation: " << median_absolute_deviation;
+//  VLOG(2) << "scale: " << scale;
+    std::cout << "median: " << median.transpose() << std::endl;
+    std::cout << "median absolute deviation: " << median_absolute_deviation << std::endl;
+    std::cout << "scale: " << scale << std::endl;
+
   // X = scale * (X - median)
   for (int i = 0; i < num_points_; ++i) {
     VectorRef point(points + 3 * i, 3);
