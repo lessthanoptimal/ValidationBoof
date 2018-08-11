@@ -4,9 +4,12 @@
 #include <iterator>
 #include <boost/program_options.hpp>
 #include <boost/filesystem.hpp>
+#include <boost/algorithm/string/predicate.hpp>
 
 #include "ceres_bal.hpp"
 #include "ceres/ceres.h"
+#include "gflags/gflags.h"
+#include "snavely_reprojection_error.h"
 
 using namespace boost::algorithm;
 using namespace std;
