@@ -21,7 +21,6 @@ public class EvaluateInTheLargeApp {
 
         double results[] = BundleAdjustmentEvaluationTools.computeReprojectionErrorMetrics(codec.scene,codec.observations);
 
-        System.out.printf("%s 50%%=%-5.1f  95%%=%-5.1f views=%-6d obs=%-7d\n",f.getName(),results[0],results[1],
-                codec.scene.views.length, codec.observations.getObservationCount());
+        System.out.println(f.getName()+" 50% = "+results[0]+" 95% = "+results[1]);
     }
 }
