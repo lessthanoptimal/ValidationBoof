@@ -29,9 +29,13 @@
 // Author: sameeragarwal@google.com (Sameer Agarwal)
 
 #include "ceres_bal.hpp"
+#include <cstdio>
+#include <cstdlib>
 #include <fstream>
+#include <string>
 #include <vector>
 #include <Eigen/Core>
+#include "ceres/rotation.h"
 #include "glog/logging.h"
 
 inline double RandDouble() {
