@@ -47,10 +47,10 @@ public class BundleAdjustmentFRegression extends BaseRegression implements FileR
     @Override
     public void process() throws IOException {
         ConfigLevenbergMarquardt config = new ConfigLevenbergMarquardt();
-        config.mixture = 1.0;
-        config.dampeningInitial = 0.1;
-        config.scalingMinimum = 1e-6;
-        config.scalingMinimum = 1e6;
+        config.mixture = 0.99;
+        config.dampeningInitial = 1e-3;
+        config.scalingMinimum = 1e-8;
+        config.scalingMaximum = 1e8;
         evaluate(new BundleAdjustmentSchur_DSCC(config),"Schur_DSCC");
     }
 
@@ -86,16 +86,20 @@ public class BundleAdjustmentFRegression extends BaseRegression implements FileR
         String path = new File(f.getParentFile().getName(), f.getName()).getPath();
 
         System.out.println(path + " Views=" + parser.scene.views.length + "  Obs=" + parser.observations.getObservationCount());
-        outputQuality.printf("%-45s before p50=%-7.4f p95=%-7.4f views=%-6d obs=%-8d\n", path, errorsBefore[0], errorsBefore[1],
-                parser.scene.views.length,parser.observations.getObservationCount());
-        outputQuality.flush();
 
         long startTime = System.currentTimeMillis();
 
         BundleAdjustmentScaleScene bundleScale = new BundleAdjustmentScaleScene();
         bundleScale.computeScale(parser.scene);
         bundleScale.applyScale(parser.scene, parser.observations);
-        boolean success = bundleAdjustment.optimize(parser.scene, parser.observations);
+        bundleAdjustment.setParameters(parser.scene, parser.observations);
+
+        outputQuality.printf("%-45s before fx=%-5.2e p50=%-7.4f p95=%-7.4f views=%-6d obs=%-8d\n",
+                path, bundleAdjustment.getFitScore(), errorsBefore[0], errorsBefore[1],
+                parser.scene.views.length,parser.observations.getObservationCount());
+        outputQuality.flush();
+
+        boolean success = bundleAdjustment.optimize(parser.scene);
         bundleScale.undoScale(parser.scene, parser.observations);
 
         long stopTime = System.currentTimeMillis();
@@ -111,7 +115,8 @@ public class BundleAdjustmentFRegression extends BaseRegression implements FileR
             outputQuality.printf("%s after FAILED\n", path);
         else {
             double errorsAfter[] = computeReprojectionErrorMetrics(parser.scene, parser.observations);
-            outputQuality.printf("%-45s after  p50=%-7.4f p95=%-7.4f views=%-6d obs=%-8d\n", path, errorsAfter[0], errorsAfter[1],
+            outputQuality.printf("%-45s after  fx=%-5.2e p50=%-7.4f p95=%-7.4f views=%-6d obs=%-8d\n",
+                    path, bundleAdjustment.getFitScore(), errorsAfter[0], errorsAfter[1],
                     parser.scene.views.length,parser.observations.getObservationCount());
         }
         outputQuality.flush();

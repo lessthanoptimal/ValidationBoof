@@ -1,11 +1,11 @@
 # GENERATOR BundleAdjustmentFRegression
 # Bundle Adjustment Schur_DSCC
-# ftol=1.0E-6  gtol=1.0E-6  max_iterations=50
-dubrovnik/problem-16-22106-pre.txt before p50=4.421792 p95=21.993114
-dubrovnik/problem-16-22106-pre.txt after p50=2.956903 p95=12.770485
-final/problem-93-61203-pre.txt before p50=2.101256 p95=13.198347
-final/problem-93-61203-pre.txt after p50=1.723569 p95=8.750320
-ladybug/problem-49-7776-pre.txt before p50=1.480069 p95=16.655452
-ladybug/problem-49-7776-pre.txt after p50=1.489173 p95=11.714144
-trafalgar/problem-21-11315-pre.txt before p50=2.976838 p95=35.552007
-trafalgar/problem-21-11315-pre.txt after p50=2.775002 p95=16.720696
+# ftol=1.0E-6  gtol=1.0E-6  max_iterations=100
+dubrovnik/problem-16-22106-pre.txt            before fx=4.19e+06 p50=4.4218  p95=21.9931 views=16     obs=83718   
+dubrovnik/problem-16-22106-pre.txt            after  fx=2.27e+06 p50=3.2187  p95=12.2344 views=16     obs=83718   
+final/problem-93-61203-pre.txt                before fx=5.65e+06 p50=2.1013  p95=13.1983 views=93     obs=287451  
+final/problem-93-61203-pre.txt                after  fx=3.34e+06 p50=1.7399  p95=8.4909  views=93     obs=287451  
+ladybug/problem-49-7776-pre.txt               before fx=8.51e+05 p50=1.4801  p95=16.6555 views=49     obs=31843   
+ladybug/problem-49-7776-pre.txt               after  fx=4.12e+05 p50=1.4087  p95=11.0786 views=49     obs=31843   
+trafalgar/problem-21-11315-pre.txt            before fx=4.41e+06 p50=2.9768  p95=35.5520 views=21     obs=36455   
+trafalgar/problem-21-11315-pre.txt            after  fx=8.05e+05 p50=2.8158  p95=13.3814 views=21     obs=36455   
