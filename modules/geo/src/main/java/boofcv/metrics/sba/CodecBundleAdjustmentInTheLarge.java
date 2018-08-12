@@ -64,7 +64,8 @@ public class CodecBundleAdjustmentInTheLarge {
             rod.unitAxisRotation.z = Double.parseDouble(reader.readLine());
 
             rod.theta = rod.unitAxisRotation.norm();
-            rod.unitAxisRotation.divide(rod.theta);
+            if( rod.theta != 0 )
+                rod.unitAxisRotation.divide(rod.theta);
 
             worldToCameraGL.T.x = Double.parseDouble(reader.readLine());
             worldToCameraGL.T.y = Double.parseDouble(reader.readLine());
@@ -132,14 +133,14 @@ public class CodecBundleAdjustmentInTheLarge {
             double axisY = axisAngle.unitAxisRotation.y*axisAngle.theta;
             double axisZ = axisAngle.unitAxisRotation.z*axisAngle.theta;
 
-            writer.printf("%.10f %.10f %.10f ",axisX,axisY,axisZ);
-            writer.printf("%.10f %.10f %.10f ",view.worldToView.T.x,view.worldToView.T.y,view.worldToView.T.z);
-            writer.printf("%.10f %.10f %.10f\n",camera.f,camera.k1,camera.k2);
+            writer.printf("%.10f\n%.10f\n%.10f\n",axisX,axisY,axisZ);
+            writer.printf("%.10f\n%.10f\n%.10f\n",view.worldToView.T.x,view.worldToView.T.y,view.worldToView.T.z);
+            writer.printf("%.10f\n%.10f\n%.10f\n",camera.f,camera.k1,camera.k2);
         }
 
         for (int pointId = 0; pointId < scene.points.length; pointId++) {
             BundleAdjustmentSceneStructure.Point p = scene.points[pointId];
-            writer.printf("%.10f %.10f %.10f\n",p.coordinate[0],p.coordinate[1],p.coordinate[2]);
+            writer.printf("%.10f\n%.10f\n%.10f\n",p.coordinate[0],p.coordinate[1],p.coordinate[2]);
         }
         writer.close();
     }
