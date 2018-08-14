@@ -6,7 +6,7 @@ http://ceres-solver.org/nnls_tutorial.html#bundle-adjustment
 
 # Setup
 
-1) Orignal instructions at http://ceres-solver.org/installation.html
+1) Original instructions at http://ceres-solver.org/installation.html
 2) Enter the commands below:
 ```
 sudo apt-get install libgoogle-glog-dev cmake libatlas-base-dev libeigen3-dev libsuitesparse-dev

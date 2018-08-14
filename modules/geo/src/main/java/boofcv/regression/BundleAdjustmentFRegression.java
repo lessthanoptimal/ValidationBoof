@@ -1,7 +1,6 @@
 package boofcv.regression;
 
 import boofcv.abst.geo.bundle.BundleAdjustment;
-import boofcv.abst.geo.bundle.BundleAdjustmentScaleScene;
 import boofcv.abst.geo.bundle.BundleAdjustmentSchur_DSCC;
 import boofcv.common.BaseRegression;
 import boofcv.common.BoofRegressionConstants;
@@ -46,15 +45,21 @@ public class BundleAdjustmentFRegression extends BaseRegression implements FileR
 
     @Override
     public void process() throws IOException {
-        ConfigLevenbergMarquardt config = new ConfigLevenbergMarquardt();
-        config.mixture = 0.99;
-        config.dampeningInitial = 1e-4;
-        config.hessianScaling = true;
-        evaluate(new BundleAdjustmentSchur_DSCC(config),"Schur_DSCC");
+        ConfigLevenbergMarquardt configLM = new ConfigLevenbergMarquardt();
+        configLM.mixture = 0.99;
+        configLM.dampeningInitial = 1e-4;
+        configLM.hessianScaling = true;
+        evaluate(new BundleAdjustmentSchur_DSCC(configLM),"SchurLM_DSCC");
+
+        // matrix is almost never positive definite. very slow convergence. working on this
+//        ConfigTrustRegion configDL = new ConfigTrustRegion();
+//        configDL.regionInitial = 100;
+//        configDL.hessianScaling = true;
+//        evaluate(new BundleAdjustmentSchur_DSCC(configDL),"SchurDogleg_DSCC");
     }
 
     private void evaluate(BundleAdjustment bundleAdjustment , String algorithm ) throws FileNotFoundException {
-        bundleAdjustment.setVerbose(System.out,0);
+        bundleAdjustment.setVerbose(System.out,1);
         System.out.println("BundleAdjustment Evaluating "+algorithm);
         outputQuality = new PrintStream( new File(directory, "ACC_BundleAdjustment_"+algorithm+".txt"));
         BoofRegressionConstants.printGenerator(outputQuality, getClass());
@@ -88,9 +93,9 @@ public class BundleAdjustmentFRegression extends BaseRegression implements FileR
 
         long startTime = System.currentTimeMillis();
 
-        BundleAdjustmentScaleScene bundleScale = new BundleAdjustmentScaleScene();
-        bundleScale.computeScale(parser.scene);
-        bundleScale.applyScale(parser.scene, parser.observations);
+//        BundleAdjustmentScaleScene bundleScale = new BundleAdjustmentScaleScene();
+//        bundleScale.computeScale(parser.scene);
+//        bundleScale.applyScale(parser.scene, parser.observations);
         bundleAdjustment.setParameters(parser.scene, parser.observations);
 
         outputQuality.printf("%-45s before fx=%-5.2e p50=%-7.4f p95=%-7.4f views=%-6d obs=%-8d\n",
@@ -99,7 +104,7 @@ public class BundleAdjustmentFRegression extends BaseRegression implements FileR
         outputQuality.flush();
 
         boolean success = bundleAdjustment.optimize(parser.scene);
-        bundleScale.undoScale(parser.scene, parser.observations);
+//        bundleScale.undoScale(parser.scene, parser.observations);
 
         long stopTime = System.currentTimeMillis();
 
