@@ -48,14 +48,13 @@ public class BundleAdjustmentFRegression extends BaseRegression implements FileR
     public void process() throws IOException {
         ConfigLevenbergMarquardt config = new ConfigLevenbergMarquardt();
         config.mixture = 0.99;
-        config.dampeningInitial = 1e-3;
-        config.scalingMinimum = 1e-8;
-        config.scalingMaximum = 1e8;
+        config.dampeningInitial = 1e-4;
+        config.hessianScaling = true;
         evaluate(new BundleAdjustmentSchur_DSCC(config),"Schur_DSCC");
     }
 
     private void evaluate(BundleAdjustment bundleAdjustment , String algorithm ) throws FileNotFoundException {
-        bundleAdjustment.setVerbose(true);
+        bundleAdjustment.setVerbose(System.out,0);
         System.out.println("BundleAdjustment Evaluating "+algorithm);
         outputQuality = new PrintStream( new File(directory, "ACC_BundleAdjustment_"+algorithm+".txt"));
         BoofRegressionConstants.printGenerator(outputQuality, getClass());
@@ -120,5 +119,10 @@ public class BundleAdjustmentFRegression extends BaseRegression implements FileR
                     parser.scene.views.length,parser.observations.getObservationCount());
         }
         outputQuality.flush();
+    }
+
+    public static void main(String[] args) throws IOException {
+        BundleAdjustmentFRegression regression = new BundleAdjustmentFRegression();
+        regression.process();
     }
 }
