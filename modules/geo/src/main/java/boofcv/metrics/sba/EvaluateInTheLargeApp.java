@@ -1,6 +1,7 @@
 package boofcv.metrics.sba;
 
 import boofcv.gui.BoofSwingUtil;
+import boofcv.io.geo.CodecBundleAdjustmentInTheLarge;
 
 import java.io.File;
 import java.io.IOException;

@@ -2,6 +2,8 @@ package boofcv.metrics.sba;
 
 import boofcv.abst.geo.bundle.BundleAdjustmentObservations;
 import boofcv.abst.geo.bundle.BundleAdjustmentSceneStructure;
+import boofcv.alg.geo.bundle.cameras.BundlePinholeSnavely;
+import boofcv.io.geo.CodecBundleAdjustmentInTheLarge;
 import georegression.geometry.ConvertRotation3D_F64;
 import georegression.struct.point.Point2D_F64;
 import georegression.struct.point.Point3D_F64;
@@ -32,7 +34,7 @@ public class CreateSyntheticBAL {
         observations = new BundleAdjustmentObservations(scene.views.length);
 
         double radius = 300;
-        SnavelyPinhole camera = new SnavelyPinhole();
+        BundlePinholeSnavely camera = new BundlePinholeSnavely();
         camera.f = 500;
         camera.k1 = 0.01;
         camera.k2 = 0.001;
