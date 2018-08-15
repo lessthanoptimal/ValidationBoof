@@ -1,11 +1,12 @@
 package boofcv.regression;
 
 import boofcv.abst.geo.bundle.BundleAdjustment;
+import boofcv.abst.geo.bundle.BundleAdjustmentScaleScene;
 import boofcv.abst.geo.bundle.BundleAdjustmentSchur_DSCC;
 import boofcv.common.BaseRegression;
 import boofcv.common.BoofRegressionConstants;
 import boofcv.common.FileRegression;
-import boofcv.metrics.sba.CodecBundleAdjustmentInTheLarge;
+import boofcv.io.geo.CodecBundleAdjustmentInTheLarge;
 import boofcv.misc.BoofMiscOps;
 import org.ddogleg.optimization.lm.ConfigLevenbergMarquardt;
 
@@ -93,9 +94,9 @@ public class BundleAdjustmentFRegression extends BaseRegression implements FileR
 
         long startTime = System.currentTimeMillis();
 
-//        BundleAdjustmentScaleScene bundleScale = new BundleAdjustmentScaleScene();
-//        bundleScale.computeScale(parser.scene);
-//        bundleScale.applyScale(parser.scene, parser.observations);
+        BundleAdjustmentScaleScene bundleScale = new BundleAdjustmentScaleScene();
+        bundleScale.computeScale(parser.scene);
+        bundleScale.applyScale(parser.scene, parser.observations);
         bundleAdjustment.setParameters(parser.scene, parser.observations);
 
         outputQuality.printf("%-45s before fx=%-5.2e p50=%-7.4f p95=%-7.4f views=%-6d obs=%-8d\n",
@@ -104,7 +105,7 @@ public class BundleAdjustmentFRegression extends BaseRegression implements FileR
         outputQuality.flush();
 
         boolean success = bundleAdjustment.optimize(parser.scene);
-//        bundleScale.undoScale(parser.scene, parser.observations);
+        bundleScale.undoScale(parser.scene, parser.observations);
 
         long stopTime = System.currentTimeMillis();
 
