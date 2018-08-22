@@ -5,8 +5,8 @@ Description of changes to benchmarks and justifications for change in performanc
 
 - Bundle Adjustment Regression
   * Reduction in residual score 50% and 95%
-- TODO scene reconstruction regression
-- TODO PNP regression
+- PNP Regression
+  * Planar P4P
 
 
 ## Version 0.30

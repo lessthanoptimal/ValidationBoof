@@ -67,6 +67,11 @@ public class GeneratePnPObservation {
     public void initialize( double stdevPixel, String path ) {
         this.stdevPixel = stdevPixel;
         directory = new File(path);
+
+        if( !directory.exists() ) {
+            if( !directory.mkdirs())
+                throw new RuntimeException("Can't create directories. "+directory.getPath());
+        }
     }
 
     /**
@@ -132,12 +137,11 @@ public class GeneratePnPObservation {
         Se3_F64 BodyToUp = new Se3_F64();
         Se3_F64 UpToTilt = new Se3_F64();
         Se3_F64 TiltToZ = new Se3_F64();
-        Se3_F64 ZToPose = new Se3_F64();
-        Se3_F64 PoseToCamera = new Se3_F64();
+        Se3_F64 ZToCamera = new Se3_F64();
         Se3_F64 BodyToCamera = new Se3_F64();
 
         // transform to make the marker facing the camera
-        ConvertRotation3D_F64.eulerToMatrix(EulerType.XYZ, Math.PI / 2.0, 0, 0, BodyToUp.R);
+        ConvertRotation3D_F64.eulerToMatrix(EulerType.XYZ, 0, 0, 0, BodyToUp.R);
 
         // Moves the marker to the specified distance from the camera's origin
         TiltToZ.T.set(0, 0, distance);
@@ -147,8 +151,7 @@ public class GeneratePnPObservation {
         sequence.addTransform(true, BodyToUp);
         sequence.addTransform(true, UpToTilt);
         sequence.addTransform(true, TiltToZ);
-        sequence.addTransform(true, ZToPose);
-        sequence.addTransform(true, PoseToCamera);
+        sequence.addTransform(true, ZToCamera);
 
         Point2D_F64 centerPixel = new Point2D_F64();
         for (int trial = 0; trial < numTrials; trial++) {
@@ -166,7 +169,7 @@ public class GeneratePnPObservation {
                 centerPixel.x = random.nextDouble() * (imageWidth - 1);
                 centerPixel.y = random.nextDouble() * (imageHeight - 1);
 
-                rotateToPixel(centerPixel, ZToPose);
+                rotateToPixel(centerPixel, ZToCamera);
 
                 sequence.computeTransform(BodyToCamera);
 
@@ -308,10 +311,10 @@ public class GeneratePnPObservation {
     }
 
     public static void main(String[] args) {
-        GeneratePnPObservation generator = new GeneratePnPObservation(60,640,480);
+        GeneratePnPObservation generator = new GeneratePnPObservation(60,1024,768);
 
-        generator.initialize(0.01,".");
-        generator.targetSquare(0.3);
-        generator.generateUniformImageDiscreteDistances(new DiscreteRange(1,10,20),10,1000);
+        generator.initialize(0.5,"pnp");
+        generator.targetSquare(0.2);
+        generator.generateUniformImageDiscreteDistances(new DiscreteRange(1,6,20),30,2000);
     }
 }

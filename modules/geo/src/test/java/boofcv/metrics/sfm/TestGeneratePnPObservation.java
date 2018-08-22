@@ -76,7 +76,7 @@ public class TestGeneratePnPObservation {
         generator.stdevPixel = 0;
 
         List<Point3D_F64> marker = new ArrayList<>();
-        Se3_F64 BodyToCamera = SpecialEuclideanOps_F64.setEulerXYZ(Math.PI/2.0,0,0,0,0,5,null);
+        Se3_F64 BodyToCamera = SpecialEuclideanOps_F64.setEulerXYZ(0,0,0,0,0,5,null);
 
 
         marker.add( new Point3D_F64(0,1,0));
@@ -100,5 +100,33 @@ public class TestGeneratePnPObservation {
         assertFalse(generator.renderMarker(marker,BodyToCamera,pixels));
         SpecialEuclideanOps_F64.setEulerXYZ(Math.PI/2.0,0,0,0,1000,0.1,BodyToCamera);
         assertFalse(generator.renderMarker(marker,BodyToCamera,pixels));
+    }
+
+    /**
+     * If the marker is square and in the center of the image make sure the rendered marker is square too
+     */
+    @Test
+    public void renderMarker_square() {
+        GeneratePnPObservation generator = new GeneratePnPObservation(60,640,480);
+        generator.random = new Random(1234);
+        generator.stdevPixel = 0;
+        generator.targetSquare(1);
+
+        Se3_F64 BodyToCamera = SpecialEuclideanOps_F64.setEulerXYZ(0,0,0,0,0,4,null);
+
+        List<Point2D_F64> pixels = new ArrayList<>();
+        for (int i = 0; i < generator.marker.size(); i++) {
+            pixels.add( new Point2D_F64() );
+        }
+
+        assertTrue(generator.renderMarker(generator.marker,BodyToCamera,pixels));
+
+        double length0 = pixels.get(0).distance(pixels.get(1));
+        for (int i = 1; i < 4; i++) {
+            int j = (i+1)%4;
+            double lengthi = pixels.get(i).distance(pixels.get(j));
+
+            assertEquals(length0,lengthi, UtilEjml.TEST_F64);
+        }
     }
 }
