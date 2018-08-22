@@ -118,7 +118,15 @@ public class GeneratePnPObservation {
         }
     }
 
-    private void simulateRange(double distance, double maxTilt, int numTrials,
+    /**
+     * Generates simulated data where every point is the specified distance from the camera
+     * @param distance distance marker is from camera's origin
+     * @param maxTilt Maximum allowed tilt of marker relative to camera axis
+     * @param numTrials Number of MC trials
+     * @param BodyToCameras (Output)
+     * @param observations (Output)
+     */
+    void simulateRange(double distance, double maxTilt, int numTrials,
                                List<Se3_F64> BodyToCameras, List<List<Point2D_F64>> observations) {
         // Coordinate frame transform. body is the marker's body frame
         Se3_F64 BodyToUp = new Se3_F64();
@@ -191,10 +199,21 @@ public class GeneratePnPObservation {
         }
     }
 
-    private boolean renderMarker(List<Point3D_F64> marker, Se3_F64 BodyToCamera, List<Point2D_F64> pixels) {
+    /**
+     * Render marker in image
+     *
+     * @param marker points in marker reference frame
+     * @param BodyToCamera Transform from marker body to camera
+     * @param pixels (Output) location of marker in image
+     * @return true if marker is in view and was rendered
+     */
+     boolean renderMarker(List<Point3D_F64> marker, Se3_F64 BodyToCamera, List<Point2D_F64> pixels) {
         Point3D_F64 p3 = new Point3D_F64();
         for (int indexCorner = 0; indexCorner < marker.size(); indexCorner++) {
             BodyToCamera.transform(marker.get(indexCorner), p3);
+
+            if( p3.z <= 0 )
+                return false;
 
             Point2D_F64 pixel = pixels.get(indexCorner);
             normToPixel.compute(p3.x / p3.z, p3.y / p3.z, pixel);
