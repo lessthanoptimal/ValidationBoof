@@ -10,7 +10,6 @@ import boofcv.metrics.sfm.EvaluatePnPObservations;
 import boofcv.metrics.sfm.GeneratePnPObservation;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintStream;
 
@@ -29,21 +28,23 @@ public class PoseNPointFRegression extends BaseRegression implements FileRegress
 
     @Override
     public void process() throws IOException {
-        evaluatePlanerP4P("ACC_Planar_P4P.txt",45);
-        evaluatePlanerP4P("ACC_Planar_P4P_N.txt",1);
+        evaluatePlanerP4P("ACC_Planar_P4P.txt");
 
     }
 
-    private void evaluatePlanerP4P( String name , double maxTilt ) throws FileNotFoundException {
+    private void evaluatePlanerP4P( String name ) throws IOException {
         // Generate simulated test data
         GeneratePnPObservation generator = new GeneratePnPObservation(60,1024,768);
         generator.initialize(1.0,SIMULATED_PATH);
         generator.targetSquare(0.2);
-        generator.generateUniformImageDiscreteDistances(new DiscreteRange(1,10,20),maxTilt,4000);
+        generator.generateUniformImageDiscreteDistances(new DiscreteRange(1,10,20),45,4000);
+        generator.generateUniformImageDiscreteAngles(new DiscreteRange(0,45,10),1.5,4000);
 
         PrintStream out = new PrintStream( new File(directory, name) );
 
-        out.println("Planar square target. Pixel Stdev = "+generator.getStdevPixel()+" max tilt = "+maxTilt+" degrees");
+        out.println("Planar square target. Pixel Stdev = "+generator.getStdevPixel());
+        out.println("    range tests: distance = 1 to 10  max_tilt = 45 degrees");
+        out.println("    angle tests: distance = 1.5      angle    = 0 to 45 degrees");
         out.println();
         EvaluatePnPObservations evalutor = new EvaluatePnPObservations();
         evalutor.setErr(errorLog);

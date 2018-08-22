@@ -12,9 +12,11 @@ import georegression.struct.point.Point3D_F64;
 import georegression.struct.se.Se3_F64;
 import georegression.struct.so.Rodrigues_F64;
 import georegression.transform.InvertibleTransformSequence;
+import org.apache.commons.io.FileUtils;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -68,10 +70,15 @@ public class GeneratePnPObservation {
         this.stdevPixel = stdevPixel;
         directory = new File(path);
 
-        if( !directory.exists() ) {
-            if( !directory.mkdirs())
-                throw new RuntimeException("Can't create directories. "+directory.getPath());
+        if( directory.exists() ) {
+            try {
+                FileUtils.deleteDirectory(directory);
+            } catch( IOException e ) {
+                throw new RuntimeException(e);
+            }
         }
+        if( !directory.mkdirs())
+            throw new RuntimeException("Can't create directories. "+directory.getPath());
     }
 
     /**
@@ -109,7 +116,7 @@ public class GeneratePnPObservation {
             List<Se3_F64> BodyToCameras = new ArrayList<>();
             List<List<Point2D_F64>> observations = new ArrayList<>();
 
-            simulateRange(distance, maxTilt, trialsPerSet, BodyToCameras, observations);
+            simulate(distance, maxTilt, trialsPerSet, BodyToCameras, observations,true,false);
 
             File file = new File(directory, String.format("range_%02d.txt", i));
 
@@ -124,15 +131,50 @@ public class GeneratePnPObservation {
     }
 
     /**
+     * Target is dead center in the image and the target's orientation is adjusted by fixed angle amounts
+     * @param angles
+     * @param distance
+     * @param trialsPerSet
+     */
+    public void generateUniformImageDiscreteAngles(DiscreteRange angles, double distance, int trialsPerSet) {
+        Random seedGenerator = new Random(0xDEADBEEF);
+
+        for (int i = 0; i < angles.count; i++) {
+            long seed = seedGenerator.nextLong();
+            random = new Random(seed);
+
+            double angle = angles.min + i * (angles.max - angles.min) / (angles.count - 1);
+            angle = UtilAngle.radian(angle);
+
+            List<Se3_F64> BodyToCameras = new ArrayList<>();
+            List<List<Point2D_F64>> observations = new ArrayList<>();
+
+            simulate(distance, angle, trialsPerSet, BodyToCameras, observations,false,true);
+
+            File file = new File(directory, String.format("center_angle_%02d.txt", i));
+
+            System.out.println("Creating "+file.getPath());
+            try {
+                PrintStream output = new PrintStream(file);
+                saveSimulation(marker, BodyToCameras, observations, seed, output);
+            } catch (FileNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
+
+    /**
      * Generates simulated data where every point is the specified distance from the camera
      * @param distance distance marker is from camera's origin
-     * @param maxTilt Maximum allowed tilt of marker relative to camera axis
+     * @param angle Maximum allowed tilt of marker relative to camera axis
      * @param numTrials Number of MC trials
      * @param BodyToCameras (Output)
      * @param observations (Output)
      */
-    void simulateRange(double distance, double maxTilt, int numTrials,
-                               List<Se3_F64> BodyToCameras, List<List<Point2D_F64>> observations) {
+    void simulate(double distance, double angle, int numTrials,
+                       List<Se3_F64> BodyToCameras, List<List<Point2D_F64>> observations,
+                       boolean randomTilt , boolean centerImage ) {
         // Coordinate frame transform. body is the marker's body frame
         Se3_F64 BodyToUp = new Se3_F64();
         Se3_F64 UpToTilt = new Se3_F64();
@@ -159,17 +201,20 @@ public class GeneratePnPObservation {
             for (int i = 0; i < marker.size(); i++) {
                 pixels.add(new Point2D_F64());
             }
+
             // Each attempt's goal is to randomly select a trial which is visible inside the camera
             boolean success = false;
             for (int attempt = 0; attempt < 10000; attempt++) {
                 // Make it so that the marker doesn't perfectly look at the camera
-                randomTilt(maxTilt, UpToTilt);
+                double tiltAngle = randomTilt ? 2.0 * (random.nextDouble() - 0.5) * angle : angle;
+                randomTilt(tiltAngle, UpToTilt);
 
-                // randomly select a pixel to be target's center
-                centerPixel.x = random.nextDouble() * (imageWidth - 1);
-                centerPixel.y = random.nextDouble() * (imageHeight - 1);
-
-                rotateToPixel(centerPixel, ZToCamera);
+                if( !centerImage ) {
+                    // randomly select a pixel to be target's center
+                    centerPixel.x = random.nextDouble() * (imageWidth - 1);
+                    centerPixel.y = random.nextDouble() * (imageHeight - 1);
+                    rotateToPixel(centerPixel, ZToCamera);
+                }
 
                 sequence.computeTransform(BodyToCamera);
 

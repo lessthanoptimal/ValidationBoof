@@ -38,7 +38,7 @@ public class TestGeneratePnPObservation {
     }
 
     @Test
-    public void simulateRange() {
+    public void simulate() {
         int width = 640;
         int height = 480;
         GeneratePnPObservation generator = new GeneratePnPObservation(60,width,height);
@@ -51,7 +51,7 @@ public class TestGeneratePnPObservation {
 
         double distance = 2;
         int N = 150;
-        generator.simulateRange(distance,0.01,N,BodyToCameras,observations);
+        generator.simulate(distance,0.01,N,BodyToCameras,observations,true,false);
 
         assertEquals(N,BodyToCameras.size());
         assertEquals(N,observations.size());
