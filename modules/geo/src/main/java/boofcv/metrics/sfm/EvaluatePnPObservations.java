@@ -42,7 +42,7 @@ public class EvaluatePnPObservations {
     GrowQueue_F64 errorAngle = new GrowQueue_F64();
     GrowQueue_F64 errorTranslation = new GrowQueue_F64();
     int totalFailures,totalEstimated;
-
+    DMatrixRMaj R = new DMatrixRMaj(3,3);
 
     public void printHeader() {
         out.println("        file                N   tran50  tran95  ang50   ang95");
@@ -127,7 +127,6 @@ public class EvaluatePnPObservations {
     }
 
     private double computeAngleError() {
-        DMatrixRMaj R = new DMatrixRMaj(3,3);
         CommonOps_DDRM.multTransA(found.R,expected.R,R);
         ConvertRotation3D_F64.matrixToRodrigues(R,rod);
         return rod.theta;

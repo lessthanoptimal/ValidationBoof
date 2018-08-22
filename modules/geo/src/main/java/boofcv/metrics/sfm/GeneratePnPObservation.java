@@ -310,11 +310,27 @@ public class GeneratePnPObservation {
         out.close();
     }
 
+    public double getHfov() {
+        return hfov;
+    }
+
+    public int getImageWidth() {
+        return imageWidth;
+    }
+
+    public int getImageHeight() {
+        return imageHeight;
+    }
+
+    public double getStdevPixel() {
+        return stdevPixel;
+    }
+
     public static void main(String[] args) {
         GeneratePnPObservation generator = new GeneratePnPObservation(60,1024,768);
 
         generator.initialize(0.5,"pnp");
         generator.targetSquare(0.2);
-        generator.generateUniformImageDiscreteDistances(new DiscreteRange(1,6,20),30,2000);
+        generator.generateUniformImageDiscreteDistances(new DiscreteRange(1,6,20),1,2000);
     }
 }

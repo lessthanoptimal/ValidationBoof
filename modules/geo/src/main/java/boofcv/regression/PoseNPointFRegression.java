@@ -29,19 +29,22 @@ public class PoseNPointFRegression extends BaseRegression implements FileRegress
 
     @Override
     public void process() throws IOException {
-        evaluatePlanerP4P();
+        evaluatePlanerP4P("ACC_Planar_P4P.txt",45);
+        evaluatePlanerP4P("ACC_Planar_P4P_N.txt",1);
 
     }
 
-    private void evaluatePlanerP4P() throws FileNotFoundException {
+    private void evaluatePlanerP4P( String name , double maxTilt ) throws FileNotFoundException {
         // Generate simulated test data
         GeneratePnPObservation generator = new GeneratePnPObservation(60,1024,768);
         generator.initialize(1.0,SIMULATED_PATH);
         generator.targetSquare(0.2);
-        generator.generateUniformImageDiscreteDistances(new DiscreteRange(1,10,20),45,4000);
+        generator.generateUniformImageDiscreteDistances(new DiscreteRange(1,10,20),maxTilt,4000);
 
-        PrintStream out = new PrintStream( new File(directory, "ACC_Planar_P4P.txt") );
+        PrintStream out = new PrintStream( new File(directory, name) );
 
+        out.println("Planar square target. Pixel Stdev = "+generator.getStdevPixel()+" max tilt = "+maxTilt+" degrees");
+        out.println();
         EvaluatePnPObservations evalutor = new EvaluatePnPObservations();
         evalutor.setErr(errorLog);
         evalutor.setOut(out);
