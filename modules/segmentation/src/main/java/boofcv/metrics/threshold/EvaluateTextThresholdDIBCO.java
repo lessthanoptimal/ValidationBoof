@@ -138,7 +138,10 @@ public class EvaluateTextThresholdDIBCO {
         app.addAlgorithm(FactoryThresholdAlgs.localMean(),"local mean");
         app.addAlgorithm(FactoryThresholdAlgs.localGaussian(),"local gaussian");
         app.addAlgorithm(FactoryThresholdAlgs.localSauvola(),"Sauvola");
+        app.addAlgorithm(FactoryThresholdAlgs.localNick(),"NICK");
         app.addAlgorithm(FactoryThresholdAlgs.localBlockMinMax(),"Block Min-Max");
+        app.addAlgorithm(FactoryThresholdAlgs.localBlockMean(), "block Mean");
+        app.addAlgorithm(FactoryThresholdAlgs.localBlockOtsu(), "block Otsu");
 
         app.evaluate();
     }

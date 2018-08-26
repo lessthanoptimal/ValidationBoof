@@ -55,7 +55,16 @@ public class FactoryThresholdAlgs {
 		return new ThresholdText() {
 			@Override
 			public void process(GrayF32 input, GrayU8 output) {
-				GThresholdImageOps.localSauvola(input, output, ConfigLength.fixed(31), 0.30f, true);//15 0.30 0.8895
+				GThresholdImageOps.localSauvola(input, output, ConfigLength.fixed(37), 0.30f, true);//15 0.30 0.8895
+			}
+		};
+	}
+
+	public static ThresholdText localNick() {
+		return new ThresholdText() {
+			@Override
+			public void process(GrayF32 input, GrayU8 output) {
+				GThresholdImageOps.localNick(input, output, ConfigLength.fixed(61), -0.18f, true);
 			}
 		};
 	}

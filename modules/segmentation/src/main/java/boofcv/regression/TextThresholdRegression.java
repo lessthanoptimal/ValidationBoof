@@ -39,6 +39,7 @@ public class TextThresholdRegression extends BaseRegression implements ImageRegr
 			app.addAlgorithm(FactoryThresholdAlgs.localGaussian(), "local Gaussian");
 			app.addAlgorithm(FactoryThresholdAlgs.localOtsu(), "local Otsu");
 			app.addAlgorithm(FactoryThresholdAlgs.localSauvola(), "local Sauvola");
+			app.addAlgorithm(FactoryThresholdAlgs.localNick(), "local NICK");
 			app.addAlgorithm(FactoryThresholdAlgs.localBlockMinMax(), "block Min-Max");
 			app.addAlgorithm(FactoryThresholdAlgs.localBlockMean(), "block Mean");
 			app.addAlgorithm(FactoryThresholdAlgs.localBlockOtsu(), "block Otsu");
