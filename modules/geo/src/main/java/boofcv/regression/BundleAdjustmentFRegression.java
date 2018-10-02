@@ -1,11 +1,13 @@
 package boofcv.regression;
 
 import boofcv.abst.geo.bundle.BundleAdjustment;
-import boofcv.abst.geo.bundle.BundleAdjustmentScaleScene;
-import boofcv.abst.geo.bundle.BundleAdjustmentSchur_DSCC;
+import boofcv.abst.geo.bundle.ScaleSceneStructure;
+import boofcv.abst.geo.bundle.SceneStructureMetric;
 import boofcv.common.BaseRegression;
 import boofcv.common.BoofRegressionConstants;
 import boofcv.common.FileRegression;
+import boofcv.factory.geo.ConfigBundleAdjustment;
+import boofcv.factory.geo.FactoryMultiView;
 import boofcv.io.geo.CodecBundleAdjustmentInTheLarge;
 import boofcv.misc.BoofMiscOps;
 import org.ddogleg.optimization.lm.ConfigLevenbergMarquardt;
@@ -50,7 +52,10 @@ public class BundleAdjustmentFRegression extends BaseRegression implements FileR
         configLM.mixture = 0.99;
         configLM.dampeningInitial = 1e-4;
         configLM.hessianScaling = true;
-        evaluate(new BundleAdjustmentSchur_DSCC(configLM),"SchurLM_DSCC");
+        ConfigBundleAdjustment configBA = new ConfigBundleAdjustment();
+        configBA.configOptimizer = configLM;
+        BundleAdjustment<SceneStructureMetric> sba = FactoryMultiView.bundleAdjustmentMetric(configBA);
+        evaluate(sba,"SchurLM_DSCC");
 
         // matrix is almost never positive definite. very slow convergence. working on this
 //        ConfigTrustRegion configDL = new ConfigTrustRegion();
@@ -59,7 +64,7 @@ public class BundleAdjustmentFRegression extends BaseRegression implements FileR
 //        evaluate(new BundleAdjustmentSchur_DSCC(configDL),"SchurDogleg_DSCC");
     }
 
-    private void evaluate(BundleAdjustment bundleAdjustment , String algorithm ) throws FileNotFoundException {
+    private void evaluate(BundleAdjustment<SceneStructureMetric> bundleAdjustment , String algorithm ) throws FileNotFoundException {
         bundleAdjustment.setVerbose(System.out,1);
         System.out.println("BundleAdjustment Evaluating "+algorithm);
         outputQuality = new PrintStream( new File(directory, "ACC_BundleAdjustment_"+algorithm+".txt"));
@@ -81,7 +86,7 @@ public class BundleAdjustmentFRegression extends BaseRegression implements FileR
         }
     }
 
-    protected void evauluate( BundleAdjustment bundleAdjustment , File f ) throws IOException {
+    protected void evauluate( BundleAdjustment<SceneStructureMetric> bundleAdjustment , File f ) throws IOException {
         parser.parse(f);
 
         bundleAdjustment.configure(ftol, gtol, maxIterations);
@@ -94,8 +99,7 @@ public class BundleAdjustmentFRegression extends BaseRegression implements FileR
 
         long startTime = System.currentTimeMillis();
 
-        BundleAdjustmentScaleScene bundleScale = new BundleAdjustmentScaleScene();
-        bundleScale.computeScale(parser.scene);
+        ScaleSceneStructure bundleScale = new ScaleSceneStructure();
         bundleScale.applyScale(parser.scene, parser.observations);
         bundleAdjustment.setParameters(parser.scene, parser.observations);
 

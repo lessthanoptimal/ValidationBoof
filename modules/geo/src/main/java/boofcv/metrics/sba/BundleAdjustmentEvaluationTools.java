@@ -2,7 +2,7 @@ package boofcv.metrics.sba;
 
 import boofcv.abst.geo.bundle.BundleAdjustmentCamera;
 import boofcv.abst.geo.bundle.BundleAdjustmentObservations;
-import boofcv.abst.geo.bundle.BundleAdjustmentSceneStructure;
+import boofcv.abst.geo.bundle.SceneStructureMetric;
 import georegression.struct.point.Point2D_F64;
 import georegression.struct.point.Point3D_F64;
 import org.ddogleg.struct.GrowQueue_F64;
@@ -13,8 +13,8 @@ import org.ddogleg.struct.GrowQueue_F64;
  * @author Peter Abeles
  */
 public class BundleAdjustmentEvaluationTools {
-    public static double[] computeReprojectionErrorMetrics(BundleAdjustmentSceneStructure structure ,
-                                                       BundleAdjustmentObservations observations)
+    public static double[] computeReprojectionErrorMetrics(SceneStructureMetric structure ,
+                                                           BundleAdjustmentObservations observations)
     {
 
         Point2D_F64 observed = new Point2D_F64();
@@ -27,7 +27,7 @@ public class BundleAdjustmentEvaluationTools {
 
         for (int viewIdx = 0; viewIdx < observations.views.length; viewIdx++) {
             BundleAdjustmentObservations.View obsView = observations.views[viewIdx];
-            BundleAdjustmentSceneStructure.View view = structure.views[viewIdx];
+            SceneStructureMetric.View view = structure.views[viewIdx];
             BundleAdjustmentCamera camera = structure.cameras[view.camera].model;
 
             for (int pointIdx = 0; pointIdx < obsView.size() ; pointIdx++) {

@@ -204,7 +204,7 @@ public class EvaluatePnPObservations {
     public static void main(String[] args) {
         EvaluatePnPObservations evaluator = new EvaluatePnPObservations();
 
-        Estimate1ofPnP alg = FactoryMultiView.computePnP_1(EnumPNP.IPPE,-1,0);
+        Estimate1ofPnP alg = FactoryMultiView.pnp_1(EnumPNP.IPPE,-1,0);
 //        Estimate1ofPnP alg = FactoryMultiView.computePnP_1(EnumPNP.P3P_FINSTERWALDER,-1,1);
 
         evaluator.printHeader();

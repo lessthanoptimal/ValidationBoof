@@ -34,7 +34,7 @@ public class RefineHomographTransform<I extends ImageGray<I>, D extends ImageGra
 	FitHomographyFunction<I> function;
 	FitHomographyGradient<I,D> gradient;
 
-	UnconstrainedMinimization minimizer = FactoryOptimization.unconstrained();
+	UnconstrainedMinimization minimizer = FactoryOptimization.quasiNewtonBfgs(null);
 
 	Homography2D_F64 result = new Homography2D_F64();
 

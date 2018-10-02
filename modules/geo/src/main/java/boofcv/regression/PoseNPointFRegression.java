@@ -52,12 +52,12 @@ public class PoseNPointFRegression extends BaseRegression implements FileRegress
 
         out.println("GRUNERT");
         evalutor.printHeader();
-        evalutor.evaluate(new File(SIMULATED_PATH), FactoryMultiView.computePnP_1(EnumPNP.P3P_GRUNERT,-1,1));
+        evalutor.evaluate(new File(SIMULATED_PATH), FactoryMultiView.pnp_1(EnumPNP.P3P_GRUNERT,-1,1));
         out.println();
 
         out.println("FINSTERWALDER");
         evalutor.printHeader();
-        evalutor.evaluate(new File(SIMULATED_PATH), FactoryMultiView.computePnP_1(EnumPNP.P3P_FINSTERWALDER,-1,1));
+        evalutor.evaluate(new File(SIMULATED_PATH), FactoryMultiView.pnp_1(EnumPNP.P3P_FINSTERWALDER,-1,1));
         out.println();
 
         out.println("EPNP");
@@ -67,7 +67,7 @@ public class PoseNPointFRegression extends BaseRegression implements FileRegress
 
         out.println("IPPE");
         evalutor.printHeader();
-        evalutor.evaluate(new File(SIMULATED_PATH), FactoryMultiView.computePnP_1(EnumPNP.IPPE,-1,0));
+        evalutor.evaluate(new File(SIMULATED_PATH), FactoryMultiView.pnp_1(EnumPNP.IPPE,-1,0));
         out.println();
     }
 

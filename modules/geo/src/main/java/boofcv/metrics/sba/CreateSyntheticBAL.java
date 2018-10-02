@@ -1,7 +1,7 @@
 package boofcv.metrics.sba;
 
 import boofcv.abst.geo.bundle.BundleAdjustmentObservations;
-import boofcv.abst.geo.bundle.BundleAdjustmentSceneStructure;
+import boofcv.abst.geo.bundle.SceneStructureMetric;
 import boofcv.alg.geo.bundle.cameras.BundlePinholeSnavely;
 import boofcv.io.geo.CodecBundleAdjustmentInTheLarge;
 import georegression.geometry.ConvertRotation3D_F64;
@@ -25,11 +25,11 @@ public class CreateSyntheticBAL {
 
     double pixelNoise = 0.2;
 
-    public BundleAdjustmentSceneStructure scene;
+    public SceneStructureMetric scene;
     public BundleAdjustmentObservations observations;
 
     public void smallWorld() {
-        scene = new BundleAdjustmentSceneStructure(false);
+        scene = new SceneStructureMetric(false);
         scene.initialize(1,3,10);
         observations = new BundleAdjustmentObservations(scene.views.length);
 

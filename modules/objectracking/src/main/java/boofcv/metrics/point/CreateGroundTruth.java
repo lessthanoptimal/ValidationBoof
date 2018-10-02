@@ -74,7 +74,7 @@ public class CreateGroundTruth {
 	ModelMatcher<Homography2D_F64,AssociatedPair> robustH =
 			new Ransac<Homography2D_F64, AssociatedPair>(123123,mm,generatorH,distance,7500,1);
 
-	RefineEpipolar refineH = FactoryMultiView.refineHomography(1e-8, 1000, EpipolarError.SAMPSON);
+	RefineEpipolar refineH = FactoryMultiView.homographyRefine(1e-8, 1000, EpipolarError.SAMPSON);
 
 	// Refines the initial estimate of the Homography matrix
 	RefineHomographTransform<GrayF32,GrayF32> refinePyramidH =
