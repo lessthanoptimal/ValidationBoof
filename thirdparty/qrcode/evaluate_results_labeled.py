@@ -131,7 +131,7 @@ category_counts = {}
 data_sets = [d for d in os.listdir(dir_images) if os.path.isdir(join(dir_images,d))]
 
 # name of directories in the root directory is the same as the project which generated them
-for target_name in os.listdir(dir_results):
+for target_name in sorted(os.listdir(dir_results)):
     if not os.path.isdir(join(dir_results,target_name)):
         continue
 
@@ -209,7 +209,7 @@ for target_name in os.listdir(dir_results):
 
     scoresF["summary"] = compute_f(total_true_positive,total_false_positive,0,total_false_negative)
     scoresRun["summary"] = sum( [ds_results[n]["ms50"] for n in ds_results]) / len(ds_results)
-    for n in ds_results:
+    for n in sorted(list(ds_results.keys())):
         r = ds_results[n]
         F = compute_f(r['tp'],r['fp'],0,r['fn'])
         scoresF[n] = F
