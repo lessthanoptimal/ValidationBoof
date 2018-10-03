@@ -222,7 +222,7 @@ for target_name in sorted(os.listdir(dir_results)):
 print()
 
 print("Summary Runtime")
-for n in library_run_scores:
+for n in sorted(list(library_run_scores.keys())):
     print("{:10s} {:7.3f} (ms)".format(n,library_run_scores[n]["summary"]))
 print()
 
