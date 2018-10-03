@@ -41,10 +41,12 @@ public class DetectQrCodeZXingApp {
         System.exit(1);
     }
 
-    public static void save(Result[] results , File outputDir , String outputName ) throws FileNotFoundException {
+    public static void save(Result[] results , double milliseconds , File outputDir , String outputName ) throws FileNotFoundException {
         PrintStream out = new PrintStream(new File(outputDir,outputName));
 
         out.println("# ZXing QR-Code Detections "+outputName);
+        out.printf("milliseconds = %.4f\n",milliseconds);
+
         for (int i = 0; results != null && i < results.length; i++) {
             Result r = results[i];
             if( r.getBarcodeFormat() != BarcodeFormat.QR_CODE )
@@ -137,20 +139,26 @@ public class DetectQrCodeZXingApp {
             BufferedImage image = ImageIO.read(f);
             if( image == null ) {
                 failExit("Can't load image "+f.getName());
+                continue;
             }
 
             LuminanceSource source = new BufferedImageLuminanceSource(image);
-            BinaryBitmap bitmap = new BinaryBitmap(new HybridBinarizer(source));
 
+            // Don't include converting to gray scale because opencv code does that
+            // when loading and can't be separated
+            long time0 = System.nanoTime();
+            BinaryBitmap bitmap = new BinaryBitmap(new HybridBinarizer(source));
             Result[] results = null;
             try {
                 results = reader.decodeMultiple(bitmap,hints);
             } catch (NotFoundException e) {
                 // fall thru, it means there is no QR code in image
             }
+            long time1 = System.nanoTime();
+            double milliseconds = (time1-time0)*1e-6;
 
             String name = FilenameUtils.removeExtension(f.getName())+".txt";
-            save(results,outputDir,name);
+            save(results,milliseconds,outputDir,name);
             if( ++count%80 == 0 )
                 System.out.println();
         }

@@ -9,6 +9,8 @@
 #include <opencv2/core/core.hpp>
 #include <opencv2/highgui/highgui.hpp>
 #include <fstream>
+#include <chrono>
+#include <iomanip>
 
 using namespace boost::algorithm;
 using namespace std;
@@ -40,15 +42,16 @@ void run_zbar( const bf::path& image_path , const bf::path& output_path, ImageSc
         exit(1);
     }
 
-    ofstream file;
-    file.open(output_path.c_str());
-    file << "# ZBar "<<image_path.filename() << endl;
+
+    auto time0 = chrono::steady_clock::now();
 
     int width=image.cols,height=image.rows;
     Image zimage(width, height, "Y800", image.data, width * height);
     int n = scanner->scan(zimage);
     int valid = 0;
 
+    // output to a stream instead of the file initially just incase it does processing at this stage
+    std::ostringstream streamMem;
     // extract results
     for(Image::SymbolIterator symbol = zimage.symbol_begin();
         symbol != zimage.symbol_end();
@@ -58,14 +61,24 @@ void run_zbar( const bf::path& image_path , const bf::path& output_path, ImageSc
         if( !boost::algorithm::ends_with(symbol->get_type_name(), "QR-Code"))
             continue;
 
-        file << "message = " << filter_string(symbol->get_data()) << endl;
-        file << symbol->get_location_x(0) << " " << symbol->get_location_y(0);
+        streamMem << "message = " << filter_string(symbol->get_data()) << endl;
+        streamMem << symbol->get_location_x(0) << " " << symbol->get_location_y(0);
         for( int j = 1; j < symbol->get_location_size(); j ++ ) {
-            file << " " << symbol->get_location_x(j) << " " << symbol->get_location_y(j);
+            streamMem << " " << symbol->get_location_x(j) << " " << symbol->get_location_y(j);
         }
-        file << endl;
+        streamMem << endl;
         valid++;
     }
+
+    auto time1 = chrono::steady_clock::now();
+
+    double milliseconds = 1e-6*chrono::duration_cast<chrono::nanoseconds>(time1-time0).count();
+
+    ofstream file;
+    file.open(output_path.c_str());
+    file << "# ZBar "<<image_path.filename() << endl;
+    file << "milliseconds = " << std::setprecision( 4 ) << milliseconds << endl;
+    file << streamMem.str();
 
     zimage.set_data(NULL, 0);
     file.close();

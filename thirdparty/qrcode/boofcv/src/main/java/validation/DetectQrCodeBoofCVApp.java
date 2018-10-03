@@ -44,13 +44,14 @@ public class DetectQrCodeBoofCVApp {
         System.exit(1);
     }
 
-    public static void save(List<QrCode> results , File outputDir , String outputName ) throws FileNotFoundException {
+    public static void save(List<QrCode> results , double milliseconds, File outputDir , String outputName ) throws FileNotFoundException {
         PrintStream out = new PrintStream(new File(outputDir,outputName));
 
         out.println("# BoofCV "+ BoofVersion.VERSION+" QR-Code Detections "+outputName);
+        out.printf("milliseconds = %.4f\n",milliseconds);
+
         for (int i = 0; i < results.size(); i++) {
             QrCode qr = results.get(i);
-
             out.println("message = "+qr.message.replaceAll("\\p{C}", "?"));
 
             for (int j = 0; j < 4; j++) {
@@ -130,13 +131,20 @@ public class DetectQrCodeBoofCVApp {
             BufferedImage image = ImageIO.read(f);
             if( image == null ) {
                 failExit("Can't load image "+f.getName());
+                continue;
             }
+
+            // Don't include converting to gray scale because opencv code does that
+            // when loading and can't be separated
             ConvertBufferedImage.convertFrom(image,gray);
 
+            long time0 = System.nanoTime();
             detector.process(gray);
+            long time1 = System.nanoTime();
+            double milliseconds = (time1-time0)*1e-6;
 
             String name = FilenameUtils.removeExtension(f.getName())+".txt";
-            save(detector.getDetections(),outputDir,name);
+            save(detector.getDetections(),milliseconds,outputDir,name);
             if( ++count%80 == 0 )
                 System.out.println();
         }

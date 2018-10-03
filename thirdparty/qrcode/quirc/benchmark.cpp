@@ -8,6 +8,8 @@
 #include <opencv2/core/core.hpp>
 #include <opencv2/highgui/highgui.hpp>
 #include <fstream>
+#include <chrono>
+#include <iomanip>
 
 using namespace boost::algorithm;
 using namespace std;
@@ -27,6 +29,7 @@ void run_quirc( const bf::path& image_path , const bf::path& output_path, struct
         exit(1);
     }
 
+    auto time0 = chrono::steady_clock::now();
     int width=image.cols,height=image.rows;
     if( quirc_resize(detector,width,height) == -1 ) {
         cout << "Failed to resize image for quirc" << endl;
@@ -37,10 +40,8 @@ void run_quirc( const bf::path& image_path , const bf::path& output_path, struct
     std::memcpy(raw_data,image.data,width*height*sizeof(uint8_t));
     quirc_end(detector);
 
-    ofstream file;
-    file.open(output_path.c_str());
-    file << "# Quirc " << quirc_version() << " "<<image_path.filename() << endl;
-
+    // output to a stream instead of the file initially just incase it does processing at this stage
+    std::ostringstream streamMem;
     int total = quirc_count(detector);
     int valid = 0;
 
@@ -49,15 +50,26 @@ void run_quirc( const bf::path& image_path , const bf::path& output_path, struct
         struct quirc_data data;
         quirc_extract(detector, i,&code);
         if( quirc_decode(&code,&data) == QUIRC_SUCCESS )  {
-            file << "message = " << data.payload << endl;
-            file << code.corners[0].x << " " << code.corners[1].y;
+            streamMem << "message = " << data.payload << endl;
+            streamMem << code.corners[0].x << " " << code.corners[1].y;
             for( int j = 1; j < 4; j ++ ) {
-                file << " " << code.corners[j].x << " " << code.corners[j].y;
+                streamMem << " " << code.corners[j].x << " " << code.corners[j].y;
             }
-            file << endl;
+            streamMem << endl;
             valid++;
         }
     }
+
+    auto time1 = chrono::steady_clock::now();
+
+    double milliseconds = 1e-6*chrono::duration_cast<chrono::nanoseconds>(time1-time0).count();
+
+    ofstream file;
+    file.open(output_path.c_str());
+    file << "# Quirc " << quirc_version() << " "<<image_path.filename() << endl;
+    file << "milliseconds = " << std::setprecision( 4 ) << milliseconds << endl;
+    file << streamMem.str();
+
 
     file.close();
 
