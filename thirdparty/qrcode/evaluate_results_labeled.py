@@ -221,6 +221,10 @@ for target_name in sorted(os.listdir(dir_results)):
 
 print()
 
+print("Summary Runtime")
+for n in library_run_scores:
+    print("{:10s} {:7.3f} (ms)".format(n,library_run_scores[n]["summary"]))
+print()
 
 # Create the plot showing a summary by category
 import matplotlib.pyplot as plt
