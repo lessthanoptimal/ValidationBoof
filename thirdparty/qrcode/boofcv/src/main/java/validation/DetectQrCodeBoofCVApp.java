@@ -50,6 +50,8 @@ public class DetectQrCodeBoofCVApp {
         out.println("# BoofCV "+ BoofVersion.VERSION+" QR-Code Detections "+outputName);
         out.printf("milliseconds = %.4f\n",milliseconds);
 
+        // BoofCV fully computes everything inside of process. It has a very very very slight advantage by not
+        // counting the print below like the C libraries do
         for (int i = 0; i < results.size(); i++) {
             QrCode qr = results.get(i);
             out.println("message = "+qr.message.replaceAll("\\p{C}", "?"));
