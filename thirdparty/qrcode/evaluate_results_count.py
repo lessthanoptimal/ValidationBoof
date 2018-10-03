@@ -2,9 +2,9 @@
 
 import argparse
 import os
+import re
 import sys
 from os.path import join
-import re
 
 # Given unlabeled data, count how many QR codes each library detects and how many unique QR Codes they detect
 
@@ -27,6 +27,8 @@ def parse_results( file_path , unique_set , filter):
         for line in f:
             # Skip comments and messages
             if line[0] is '#':
+                continue
+            if line.startswith("milliseconds"):
                 continue
             if not skip:
                 if not line.startswith("message = "):
