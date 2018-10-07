@@ -25,7 +25,7 @@ import java.util.List;
 public class QrCodeBenchmarkViewerApp extends JPanel{
     ImageZoomPanel imagePanel = new ImageZoomPanel();
 
-    File resultsDirectory = new File("/home/pja/projects/ValidationBoof/thirdparty/qrcode/results/zbar");
+    File resultsDirectory = new File("/home/pja/projects/ValidationBoof/thirdparty/qrcode/results/zxing");
 
     JFrame window;
 
@@ -37,11 +37,12 @@ public class QrCodeBenchmarkViewerApp extends JPanel{
         openFile(file);
 
         add(BorderLayout.CENTER,imagePanel);
+        imagePanel.getImagePanel().setPreferredSize(new Dimension(800,800));
 
         window = ShowImages.showWindow(this,"QR Code Benchmark");
+        window.setPreferredSize(new Dimension(800,800));
         window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         createMenuBar();
-        window.pack();
         window.setVisible(true);
     }
 
@@ -120,19 +121,30 @@ public class QrCodeBenchmarkViewerApp extends JPanel{
             if( f.exists() ) {
                 List<Polygon2D_F64> locations = detections(f);
 
+                System.out.println("Detected QR: "+locations.size());
                 Graphics2D g2 = buffered.createGraphics();
                 g2.setColor(Color.RED);
                 g2.setStroke(new BasicStroke(10));
                 for (Polygon2D_F64 p : locations) {
                     VisualizeShapes.drawPolygon(p, true, g2, true);
                 }
+            } else {
+                System.out.println("Does not exist: "+f.getPath());
             }
-        } catch( IOException ignore ){}
+        } catch( IOException e ){
+            System.err.println(e.getMessage());
+        }
 
-        imagePanel.setBufferedImage(buffered);
+        imagePanel.setBufferedImageNoChange(buffered);
+        if( imagePanel.getImagePanel().getPreferredSize().width < 100 ) {
+            System.out.println("setting preferred size");
+            imagePanel.setPreferredSize(new Dimension(800,800));
+        }
 
         double scale = BoofSwingUtil.selectZoomToShowAll(imagePanel,buffered.getWidth(),buffered.getHeight());
         imagePanel.setScale(scale);
+        imagePanel.repaint();
+
     }
 
     private static List<Polygon2D_F64> detections(File file ) throws IOException {
@@ -150,6 +162,8 @@ public class QrCodeBenchmarkViewerApp extends JPanel{
             if( line.charAt(0) == '#')
                 continue;
             if( line.startsWith("message"))
+                continue;
+            if( line.startsWith("milliseconds"))
                 continue;
 
             String words[] = line.split(" ");
@@ -170,6 +184,6 @@ public class QrCodeBenchmarkViewerApp extends JPanel{
         if( f == null )
             return;
 
-        QrCodeBenchmarkViewerApp app = new QrCodeBenchmarkViewerApp(f);
+        SwingUtilities.invokeLater(()->new QrCodeBenchmarkViewerApp(f));
     }
 }
