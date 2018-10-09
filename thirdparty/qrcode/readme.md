@@ -33,7 +33,8 @@ If you want to rebuild everything later on you can simply run the ./build_all_li
 
 # Running the Benchmark
 
-./build_all_libraries.py
-./detect_all_libraries.py
-./evaluate_results.py
-
+- pip install shapely
+- ./build_all_libraries.py
+- ./detect_all_libraries.py
+- ./evaluate_results_count.py
+- ./evaluate_results_labeled.py
