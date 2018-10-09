@@ -76,8 +76,7 @@ public class TestGeneratePnPObservation {
         generator.stdevPixel = 0;
 
         List<Point3D_F64> marker = new ArrayList<>();
-        Se3_F64 BodyToCamera = SpecialEuclideanOps_F64.eulerXYZ(0,0,0,0,0,5,null);
-
+        Se3_F64 BodyToCamera = SpecialEuclideanOps_F64.eulerXyz(0,0,5,0,0,0,null);
 
         marker.add( new Point3D_F64(0,1,0));
         marker.add( new Point3D_F64(1,1,0));
@@ -92,13 +91,13 @@ public class TestGeneratePnPObservation {
         assertTrue(generator.renderMarker(marker,BodyToCamera,pixels));
 
         // marker is behind
-        SpecialEuclideanOps_F64.eulerXYZ(Math.PI/2.0,0,0,0,0,-5,BodyToCamera);
+        SpecialEuclideanOps_F64.eulerXyz(0,0,-5,Math.PI/2.0,0,0,BodyToCamera);
         assertFalse(generator.renderMarker(marker,BodyToCamera,pixels));
 
         // outside the image
-        SpecialEuclideanOps_F64.eulerXYZ(Math.PI/2.0,0,0,1000,0,0.1,BodyToCamera);
+        SpecialEuclideanOps_F64.eulerXyz(0,1000,0,0.1,Math.PI/2.0,0,BodyToCamera);
         assertFalse(generator.renderMarker(marker,BodyToCamera,pixels));
-        SpecialEuclideanOps_F64.eulerXYZ(Math.PI/2.0,0,0,0,1000,0.1,BodyToCamera);
+        SpecialEuclideanOps_F64.eulerXyz(0,0,1000,0.1,Math.PI/2.0,0,BodyToCamera);
         assertFalse(generator.renderMarker(marker,BodyToCamera,pixels));
     }
 
@@ -112,7 +111,7 @@ public class TestGeneratePnPObservation {
         generator.stdevPixel = 0;
         generator.targetSquare(1);
 
-        Se3_F64 BodyToCamera = SpecialEuclideanOps_F64.eulerXYZ(0,0,0,0,0,4,null);
+        Se3_F64 BodyToCamera = SpecialEuclideanOps_F64.eulerXyz(0,0,4,0,0,0,null);
 
         List<Point2D_F64> pixels = new ArrayList<>();
         for (int i = 0; i < generator.marker.size(); i++) {

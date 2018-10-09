@@ -1,6 +1,6 @@
 package boofcv.metrics.sba;
 
-import boofcv.abst.geo.bundle.BundleAdjustmentObservations;
+import boofcv.abst.geo.bundle.SceneObservations;
 import boofcv.abst.geo.bundle.SceneStructureMetric;
 import boofcv.alg.geo.bundle.cameras.BundlePinholeSnavely;
 import boofcv.io.geo.CodecBundleAdjustmentInTheLarge;
@@ -26,12 +26,12 @@ public class CreateSyntheticBAL {
     double pixelNoise = 0.2;
 
     public SceneStructureMetric scene;
-    public BundleAdjustmentObservations observations;
+    public SceneObservations observations;
 
     public void smallWorld() {
         scene = new SceneStructureMetric(false);
         scene.initialize(1,3,10);
-        observations = new BundleAdjustmentObservations(scene.views.length);
+        observations = new SceneObservations(scene.views.length);
 
         double radius = 300;
         BundlePinholeSnavely camera = new BundlePinholeSnavely();
