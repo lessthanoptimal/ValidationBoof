@@ -1,16 +1,16 @@
 package boofcv.metrics.sfm;
 
 import boofcv.alg.geo.MultiViewOps;
+import boofcv.io.UtilIO;
 import boofcv.struct.geo.AssociatedTriple;
 import boofcv.struct.geo.TrifocalTensor;
+import georegression.struct.point.Point3D_F64;
+import org.apache.commons.io.FilenameUtils;
 import org.ejml.data.DMatrixRMaj;
-import org.ejml.dense.row.SpecializedOps_DDRM;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -20,10 +20,16 @@ import java.util.List;
  */
 public class EvaluateTrifocal {
 
+	public File directoryObservations = new File(".");
+	public File directoryResults = new File(".");
+
+	public PrintStream out = System.out;
+	public PrintStream err = System.err;
+
 	public static TrifocalTensor readTensor( File file ) throws IOException {
 		BufferedReader reader = new BufferedReader(new FileReader(file));
 
-		List<double[]> data = new ArrayList<double[]>();
+		List<double[]> data = new ArrayList<>();
 
 		String line;
 		while( (line = reader.readLine()) != null ) {
@@ -57,6 +63,8 @@ public class EvaluateTrifocal {
 		return tensor;
 	}
 
+
+
 	public static double score( TrifocalTensor tensor , List<AssociatedTriple> obs )
 	{
 		// adjust the scale so that there is no advantage there
@@ -64,36 +72,49 @@ public class EvaluateTrifocal {
 
 		double total = 0;
 		for( AssociatedTriple o : obs ) {
-			DMatrixRMaj m = MultiViewOps.constraint(tensor,o.p1,o.p2,o.p3,null);
-			double score = SpecializedOps_DDRM.elementSumSq(m);
-
-			total += score;
+			Point3D_F64 predicted = new Point3D_F64();
+			MultiViewOps.transfer12(tensor,o.p1,o.p3,predicted);
+			total += o.p2.distance(predicted.x/predicted.z,predicted.y/predicted.z);
+			MultiViewOps.transfer13(tensor,o.p1,o.p2,predicted);
+			total += o.p3.distance(predicted.x/predicted.z,predicted.y/predicted.z);
 		}
 
-		total /= obs.size();
+		total /= 2*obs.size();
 
 		return total;
 	}
 
-	public static void main( String args[] ) throws IOException {
-		String path = "../trifocal";
+	public void evaluate( String library ) throws IOException {
 
-		List<AssociatedTriple> noiseObs = ComputeTrifocalTensor.readObservations(path+"/tensor_pixel_noise.txt");
-		List<AssociatedTriple> perfectObs = ComputeTrifocalTensor.readObservations(path+"/tensor_pixel_perfect.txt");
+		List<String> files = UtilIO.listAll(directoryObservations.getPath());
+		Collections.sort(files);
 
-		File files[] = new File(path+"/results").listFiles();
+		out.println(library);
+		out.println();
 
-		for( File f : files ) {
-			if( !f.isFile() || !f.getName().endsWith(".txt"))
+		for( String s : files ) {
+			File f = new File(s);
+			String name = f.getName();
+			if (!f.isFile() || !name.startsWith("tensor_pixel") || !name.endsWith(".txt"))
 				continue;
 
-			TrifocalTensor tensor = readTensor(f);
+			List<AssociatedTriple> observations = ComputeTrifocalTensor.readObservations(f);
 
-			if( f.getName().contains("noise") ) {
-				System.out.printf("%40s score = %15.4f\n", f.getName(), score(tensor, noiseObs));
-			} else {
-				System.out.printf("%40s score = %15.4f\n",f.getName(),score(tensor,perfectObs));
-			}
+			TrifocalTensor tensor = readTensor(new File(directoryResults,library+"_"+name));
+			double score = score(tensor,observations);
+
+			out.printf("%30s score %f\n", FilenameUtils.removeExtension(f.getName()),score);
 		}
+		out.println();
+	}
+
+	public static void main( String args[] ) throws IOException {
+		EvaluateTrifocal app = new EvaluateTrifocal();
+		app.directoryObservations = new File("trifocal");
+		app.directoryResults = new File("trifocal/results");
+
+		app.evaluate("algebraic7");
+		app.evaluate("linear7");
+
 	}
 }

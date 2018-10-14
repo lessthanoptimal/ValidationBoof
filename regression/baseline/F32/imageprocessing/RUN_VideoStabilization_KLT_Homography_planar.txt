@@ -1,4 +1,4 @@
 # GENERATOR VideoStabilizeRegression
 # Runtime Performance of KLT_Homography_planar
 # Video Name, fps
-         shake.mjpeg  45.806452
+         shake.mjpeg  45.865633

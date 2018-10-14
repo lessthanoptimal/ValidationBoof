@@ -1,11 +1,10 @@
 package boofcv.metrics.sfm;
 
-import boofcv.alg.geo.trifocal.TrifocalAlgebraicPoint7;
-import boofcv.alg.geo.trifocal.TrifocalLinearPoint7;
+import boofcv.abst.geo.Estimate1ofTrifocalTensor;
+import boofcv.factory.geo.EnumTrifocal;
+import boofcv.factory.geo.FactoryMultiView;
 import boofcv.struct.geo.AssociatedTriple;
 import boofcv.struct.geo.TrifocalTensor;
-import org.ddogleg.optimization.FactoryOptimization;
-import org.ddogleg.optimization.UnconstrainedLeastSquares;
 import org.ejml.data.DMatrixRMaj;
 
 import java.io.*;
@@ -19,7 +18,8 @@ import java.util.List;
  */
 public class ComputeTrifocalTensor {
 
-	public static List<AssociatedTriple> readObservations( String file ) throws IOException {
+
+	public static List<AssociatedTriple> readObservations( File file ) throws IOException {
 		BufferedReader reader = new BufferedReader(new FileReader(file));
 
 		List<AssociatedTriple> ret = new ArrayList<AssociatedTriple>();
@@ -45,8 +45,8 @@ public class ComputeTrifocalTensor {
 		return ret;
 	}
 
-	public static void saveTrifocal( TrifocalTensor tensor , String fileName ) throws FileNotFoundException {
-		PrintStream out = new PrintStream(fileName);
+	public static void saveTrifocal( TrifocalTensor tensor , File outputPath ) throws FileNotFoundException {
+		PrintStream out = new PrintStream(outputPath);
 
 		out.println("# BoofCV results file for trifocal tensor estimate. Row-major 3x3 matrices.  T1,T2,T3");
 
@@ -63,25 +63,34 @@ public class ComputeTrifocalTensor {
 		out.println();
 	}
 
-	public static void evaluate( List<AssociatedTriple> obs , String dataName ) throws FileNotFoundException {
-		TrifocalLinearPoint7 linear7 = new TrifocalLinearPoint7();
-		TrifocalTensor solution = new TrifocalTensor();
-		linear7.process(obs,solution);
+	public static void compute(File inputDirectory , Estimate1ofTrifocalTensor alg , String algName ,
+							   File outputDirectory ) throws IOException
+	{
+		if( !outputDirectory.exists() )
+			if( !outputDirectory.mkdirs() )
+				throw new RuntimeException("Can't create output directory");
 
-		saveTrifocal(solution, "boofcv_"+dataName+"_linear7.txt");
+		for( File f : inputDirectory.listFiles() ) {
+			if( !f.isFile() || !f.getName().startsWith("tensor_pixel")) {
+				continue;
+			}
+			List<AssociatedTriple> obs = readObservations(f);
+			TrifocalTensor solution = new TrifocalTensor();
+			alg.process(obs,solution);
 
-		UnconstrainedLeastSquares optimizer = FactoryOptimization.levenbergMarquardt(null,false);
-		TrifocalAlgebraicPoint7 algebraic7 = new TrifocalAlgebraicPoint7(optimizer,300,1e-20,1e-20);
-		algebraic7.process(obs,solution);
-
-		saveTrifocal(solution, "boofcv_"+dataName+"_algebraic7.txt");
+			String outputName = algName+"_"+f.getName();
+			saveTrifocal(solution, new File(outputDirectory,outputName));
+		}
 	}
 
 	public static void main( String args[] ) throws IOException {
-		List<AssociatedTriple> perfectObs = readObservations("../trifocal/tensor_pixel_perfect.txt");
-		List<AssociatedTriple> noisyObs = readObservations("../trifocal/tensor_pixel_noise.txt");
+		File inputDirectory = new File("trifocal");
+		File outputDirectory = new File("trifocal/results");
 
-		evaluate(perfectObs,"perfect");
-		evaluate(noisyObs,"noise");
+		Estimate1ofTrifocalTensor alg = FactoryMultiView.trifocal_1(EnumTrifocal.ALGEBRAIC_7,300);
+		compute(inputDirectory,alg,"algebraic7",outputDirectory);
+
+		alg = FactoryMultiView.trifocal_1(EnumTrifocal.LINEAR_7,300);
+		compute(inputDirectory,alg,"linear7",outputDirectory);
 	}
 }

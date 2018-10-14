@@ -55,7 +55,7 @@ Java Platform API Specification
 =========== sun.management.compiler
 HotSpot 64-Bit Tiered Compilers
 =========== os.version
-4.15.0-24-generic
+4.15.0-34-generic
 =========== user.home
 /home/pja
 =========== user.timezone
@@ -73,7 +73,7 @@ pja
 =========== java.vm.specification.version
 1.8
 =========== sun.java.command
-regression.jar --TestName BundleAdjustment
+regression.jar
 =========== java.home
 /opt/jdk/jdk1.8.0_171/jre
 =========== sun.arch.data.model

@@ -5,7 +5,8 @@
                local Mean F = 0.468250 P = 0.306758 R = 0.988803
            local Gaussian F = 0.457436 P = 0.297910 R = 0.984755
                local Otsu F = 0.872756 P = 0.930905 R = 0.821445
-            local Sauvola F = 0.889507 P = 0.886967 R = 0.892061
+            local Sauvola F = 0.892239 P = 0.867919 R = 0.917961
+               local NICK F = 0.891157 P = 0.885251 R = 0.897143
             block Min-Max F = 0.706716 P = 0.605441 R = 0.848678
                block Mean F = 0.740959 P = 0.593602 R = 0.985636
                block Otsu F = 0.848028 P = 0.790474 R = 0.914622

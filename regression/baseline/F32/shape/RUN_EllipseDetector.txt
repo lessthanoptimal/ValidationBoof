@@ -1,14 +1,14 @@
 # GENERATOR DetectEllipseRegression
 # Runtime for black ellipse detectors
 Detector Global
-           cardboard   15.8977 (ms)
-            outdoors    4.5493 (ms)
+           cardboard   17.4751 (ms)
+            outdoors    5.7456 (ms)
 
 Detector Local
-           cardboard    7.7345 (ms)
-            outdoors   24.3702 (ms)
+           cardboard    8.1002 (ms)
+            outdoors   24.8153 (ms)
 
 Detector LocalPixel
-           cardboard    4.6251 (ms)
-            outdoors   19.6837 (ms)
+           cardboard    4.7141 (ms)
+            outdoors   19.9679 (ms)
 

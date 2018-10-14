@@ -7,7 +7,7 @@ Description of changes to benchmarks and justifications for change in performanc
   * Reduction in residual score 50% and 95%
 - PNP Regression
   * Planar P4P
-
+- Trifocal Tensor Regression
 
 ## Version 0.30
 2018/05/20
