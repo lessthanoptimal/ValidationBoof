@@ -63,24 +63,31 @@ public class ComputeTrifocalTensor {
 		out.println();
 	}
 
-	public static void compute(File inputDirectory , Estimate1ofTrifocalTensor alg , String algName ,
+	public static long compute(File inputDirectory , Estimate1ofTrifocalTensor alg , String algName ,
 							   File outputDirectory ) throws IOException
 	{
 		if( !outputDirectory.exists() )
 			if( !outputDirectory.mkdirs() )
 				throw new RuntimeException("Can't create output directory");
 
+		long totalTime = 0;
+		TrifocalTensor solution = new TrifocalTensor();
 		for( File f : inputDirectory.listFiles() ) {
 			if( !f.isFile() || !f.getName().startsWith("tensor_pixel")) {
 				continue;
 			}
 			List<AssociatedTriple> obs = readObservations(f);
-			TrifocalTensor solution = new TrifocalTensor();
+
+			long before = System.currentTimeMillis();
 			alg.process(obs,solution);
+			long after = System.currentTimeMillis();
+			totalTime += after-before;
 
 			String outputName = algName+"_"+f.getName();
 			saveTrifocal(solution, new File(outputDirectory,outputName));
 		}
+
+		return totalTime;
 	}
 
 	public static void main( String args[] ) throws IOException {

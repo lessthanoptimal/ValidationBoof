@@ -22,39 +22,56 @@ public class TrifocalTensorFRegression extends BaseRegression implements FileReg
 
     public static final String SIMULATED_PATH = "tmp/trifocal";
 
+    EvaluateTrifocal evaulator = new EvaluateTrifocal();
+    File inputDirectory;
+    File outputDirectory;
+    PrintStream outputRuntime;
+
     public TrifocalTensorFRegression() {
         super(BoofRegressionConstants.TYPE_GEOMETRY);
     }
 
     @Override
     public void process() throws IOException {
-        File inputDirectory = new File(SIMULATED_PATH);
+        // initialize directories
+        inputDirectory = new File(SIMULATED_PATH);
         FileUtils.deleteDirectory(inputDirectory);
+        outputDirectory = new File(SIMULATED_PATH+"/estimated");
 
-        System.out.println("Generating trifocal data");
-        new GenerateTrifocalObservations().initialize(SIMULATED_PATH).generate();
 
-        File outputDirectory = new File(SIMULATED_PATH+"/estimated");
-
-        System.out.println("Estimating trifocal");
-        Estimate1ofTrifocalTensor alg = FactoryMultiView.trifocal_1(EnumTrifocal.ALGEBRAIC_7,300);
-        ComputeTrifocalTensor.compute(inputDirectory, alg, "algebraic7", outputDirectory);
-
-        alg = FactoryMultiView.trifocal_1(EnumTrifocal.LINEAR_7,300);
-        ComputeTrifocalTensor.compute(inputDirectory,alg,"linear7",outputDirectory);
-
-        EvaluateTrifocal evaulator = new EvaluateTrifocal();
+        // performance output
         evaulator.out = new PrintStream( new File(directory, "TrifocalTensor.txt") );
         BoofRegressionConstants.printGenerator(evaulator.out, getClass());
         evaulator.directoryObservations = new File(SIMULATED_PATH);
         evaulator.directoryResults = new File(SIMULATED_PATH+"/estimated");
 
-        evaulator.evaluate("algebraic7");
-        evaulator.evaluate("linear7");
+        // set up runtime results file
+        outputRuntime = new PrintStream(new File(directory, "RUN_TrifocalTensor.txt"));
+        BoofRegressionConstants.printGenerator(outputRuntime, getClass());
+        outputRuntime.println();
+
+        System.out.println("Generating trifocal data");
+        new GenerateTrifocalObservations().initialize(SIMULATED_PATH).generate();
+
+        System.out.println("Estimating trifocal");
+        Estimate1ofTrifocalTensor alg = FactoryMultiView.trifocal_1(EnumTrifocal.ALGEBRAIC_7,300);
+        process(alg,"algebraic7");
+        alg = FactoryMultiView.trifocal_1(EnumTrifocal.LINEAR_7,300);
+        process(alg,"linear7");
+
 
         evaulator.out.close();
+        outputRuntime.close();
 
         System.out.println("Done trifocal");
+    }
+
+    private void process( Estimate1ofTrifocalTensor alg , String name ) throws IOException {
+        inputDirectory = new File(SIMULATED_PATH);
+        long time = ComputeTrifocalTensor.compute(inputDirectory, alg, name, outputDirectory);
+        evaulator.evaluate(name);
+
+        outputRuntime.printf("%30s %s\n",name, time);
     }
 
     public static void main(String[] args) throws IOException {

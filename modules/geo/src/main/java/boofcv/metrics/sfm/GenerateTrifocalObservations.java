@@ -69,7 +69,7 @@ public class GenerateTrifocalObservations {
 
 		outWorld.println("# Trifocal Test: Location of world points");
 
-		List<Point3D_F64> world = UtilPoint3D_F64.random(new Point3D_F64(0,0,2),-1,1,1000,rand);
+		List<Point3D_F64> world = UtilPoint3D_F64.random(new Point3D_F64(0,0,2),-1,1,2000,rand);
 		for( int i = 0; i < world.size(); i++ ) {
 			Point3D_F64 p = world.get(i);
 
