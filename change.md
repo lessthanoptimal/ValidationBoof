@@ -8,6 +8,8 @@ Description of changes to benchmarks and justifications for change in performanc
 - PNP Regression
   * Planar P4P
 - Trifocal Tensor Regression
+_ Visual Odometry
+  * QuadPnP has gotten slower. Not sure why. Regression was fixed earlier dealing with score.
 
 ## Version 0.30
 2018/05/20

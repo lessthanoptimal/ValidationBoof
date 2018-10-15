@@ -1,5 +1,5 @@
 # GENERATOR BundleAdjustmentFRegression
-dubrovnik/problem-16-22106-pre.txt            000:00:05:53 (days:hrs:min:sec)
-final/problem-93-61203-pre.txt                000:00:30:51 (days:hrs:min:sec)
-ladybug/problem-49-7776-pre.txt               000:00:00:36 (days:hrs:min:sec)
+dubrovnik/problem-16-22106-pre.txt            000:00:06:12 (days:hrs:min:sec)
+final/problem-93-61203-pre.txt                000:00:32:09 (days:hrs:min:sec)
+ladybug/problem-49-7776-pre.txt               000:00:00:37 (days:hrs:min:sec)
 trafalgar/problem-21-11315-pre.txt            000:00:00:26 (days:hrs:min:sec)

@@ -2,9 +2,9 @@
 # Visual Odometry Performance metrics. QuadPnP in Leuven07
 
 Total Faults = 0
-Fraction with no update 0.0017035775127768314
-Ave per estimate:      distance 3.1966613  rotation 0.016895021
-Ave per distance:      distance  62.88177% deg/unit = 1.90e-01
-Ave Skip 20:           distance  36.99096% deg/unit = 9.95e-02
-Absolute:              location 3951.14872  rotation  71.88 degrees
-Integral per distance: distance  30.15930% deg/unit = 9.87e-02
+Fraction with no update 0.0034071550255536627
+Ave per estimate:      distance 0.5804756  rotation 0.001545621
+Ave per distance:      distance  11.39909% deg/unit = 1.74e-02
+Ave Skip 20:           distance   7.39079% deg/unit = 5.62e-03
+Absolute:              location 477.77471  rotation  21.09 degrees
+Integral per distance: distance   6.81069% deg/unit = 1.93e-04

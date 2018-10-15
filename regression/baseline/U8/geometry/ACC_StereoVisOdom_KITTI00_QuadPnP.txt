@@ -2,9 +2,9 @@
 # Visual Odometry Performance metrics. QuadPnP in KITTI00
 
 Total Faults = 0
-Fraction with no update 0.0013215859030837004
-Ave per estimate:      distance 0.5572591  rotation 0.028744227
-Ave per distance:      distance  67.84339% deg/unit = 2.01e+00
-Ave Skip 20:           distance  38.16881% deg/unit = 1.03e+00
-Absolute:              location 859.34759  rotation  63.57 degrees
-Integral per distance: distance  43.83070% deg/unit = 6.31e-01
+Fraction with no update 0.0
+Ave per estimate:      distance 0.0192967  rotation 0.000906795
+Ave per distance:      distance   2.35238% deg/unit = 6.33e-02
+Ave Skip 20:           distance   1.56368% deg/unit = 2.37e-02
+Absolute:              location  52.65973  rotation  29.16 degrees
+Integral per distance: distance   0.31112% deg/unit = 1.37e-03

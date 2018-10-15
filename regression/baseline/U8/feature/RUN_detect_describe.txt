@@ -3,50 +3,50 @@
 # <directory> <average time in ms>
 
 BoofSURF-Fast
-     bikes/ 137.74
-      boat/ 133.16
-      graf/ 130.33
-    leuven/ 110.48
-       ubc/ 121.36
-     trees/ 171.55
-      wall/ 159.37
-      bark/ 96.01
+     bikes/ 135.58
+      boat/ 128.38
+      graf/ 125.62
+    leuven/ 107.12
+       ubc/ 117.39
+     trees/ 169.67
+      wall/ 158.04
+      bark/ 94.86
 
 BoofSURF-Fast_Color
-     bikes/ 214.69
-      graf/ 250.84
-    leuven/ 196.94
-       ubc/ 227.40
-     trees/ 337.67
-      wall/ 318.12
-      bark/ 181.76
+     bikes/ 210.36
+      graf/ 245.98
+    leuven/ 193.16
+       ubc/ 221.50
+     trees/ 333.07
+      wall/ 314.26
+      bark/ 179.99
 
 BoofSURF-Stable
-     bikes/ 274.21
-      boat/ 324.35
-      graf/ 338.14
-    leuven/ 258.12
-       ubc/ 310.61
-     trees/ 464.99
-      wall/ 444.98
-      bark/ 253.80
+     bikes/ 270.18
+      boat/ 324.39
+      graf/ 337.04
+    leuven/ 256.35
+       ubc/ 309.22
+     trees/ 465.36
+      wall/ 441.85
+      bark/ 253.35
 
 BoofSURF-Stable_Color
-     bikes/ 398.99
-      graf/ 511.61
-    leuven/ 383.16
-       ubc/ 462.41
-     trees/ 702.69
-      wall/ 674.33
-      bark/ 378.96
+     bikes/ 391.70
+      graf/ 507.41
+    leuven/ 383.79
+       ubc/ 460.87
+     trees/ 701.18
+      wall/ 672.89
+      bark/ 375.21
 
 BoofSIFT
-     bikes/ 705.82
-      boat/ 668.79
-      graf/ 488.67
-    leuven/ 554.02
-       ubc/ 635.56
-     trees/ 825.40
-      wall/ 822.44
-      bark/ 571.26
+     bikes/ 699.93
+      boat/ 671.27
+      graf/ 494.98
+    leuven/ 556.27
+       ubc/ 638.71
+     trees/ 833.94
+      wall/ 815.75
+      bark/ 576.29
 
