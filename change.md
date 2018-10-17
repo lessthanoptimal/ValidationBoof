@@ -1,7 +1,7 @@
 Description of changes to benchmarks and justifications for change in performance from previous versions.
 
 ## Version 0.31
-2018/
+2018/10/16
 
 - Bundle Adjustment Regression
   * Reduction in residual score 50% and 95%

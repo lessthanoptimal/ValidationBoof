@@ -1,6 +1,6 @@
 allprojects{
     group = 'org.boofcv'
-    version = '0.31-SNAPSHOT'
+    version = '0.31'
 
     apply plugin: 'idea'
     apply plugin: 'java'
