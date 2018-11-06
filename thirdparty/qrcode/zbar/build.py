@@ -13,7 +13,7 @@ check_cd(os.path.abspath(script_directory))
 check_cd("zbar-0.10")
 run_command("find ./zbar -type f -iname '*.[ch]' -print0 | xargs -0 sed -i.bu 's/dprintf/zbarprintf/g'")
 run_command("find ./zbar -name '*.bu' -type f -delete")
-run_command("./configure --disable-video --without-gtk --without-qt --without-python --without-imagemagick")
+run_command("./configure 'CXXFLAGS=-O3' --disable-video --without-gtk --without-qt --without-python --without-imagemagick")
 run_command("make -j8")
 
 # Build the application
