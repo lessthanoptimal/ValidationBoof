@@ -134,7 +134,7 @@ public class BackgroundModelMetrics<T extends ImageBase<T>> {
         Map<Integer,String> output = new HashMap<>();
 
         String prefix = "motion";
-        List<String> files = UtilIO.listByPrefix(directory.getPath(),prefix);
+        List<String> files = UtilIO.listByPrefix(directory.getPath(),prefix,null);
 
         for( String path : files ) {
             File f = new File(path);
