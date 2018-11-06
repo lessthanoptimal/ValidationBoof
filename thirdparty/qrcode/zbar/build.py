@@ -20,7 +20,7 @@ run_command("make -j8")
 check_cd(os.path.abspath(script_directory))
 delete_create("build")
 check_cd("build")
-run_command("cmake ..")
+run_command("cmake -DCMAKE_BUILD_TYPE=Release ..")
 run_command("make -j8")
 
 print("Done building ZBar")
