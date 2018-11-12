@@ -33,7 +33,7 @@ public class DetectTargetFeatures {
 
 		// load image list
 		String directory = "data/calib/mono/circle_regular/distant";
-		List<String> images = UtilIO.listByPrefix(directory, "jpg");
+		List<String> images = UtilIO.listByPrefix(directory, null,"jpg");
 
 		Collections.sort(images);
 

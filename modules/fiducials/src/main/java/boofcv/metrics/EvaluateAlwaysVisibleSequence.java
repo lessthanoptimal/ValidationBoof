@@ -30,7 +30,7 @@ public class EvaluateAlwaysVisibleSequence implements FiducialEvaluateInterface 
 		FiducialCommon.Library library = FiducialCommon.parseScenario(new File(dataset, "library.txt"));
 		List<String> visible = FiducialCommon.parseVisibleFile(new File(dataset, "visible.txt"));
 
-		List<String> results = UtilIO.listByPrefix(resultsDirectory.getAbsolutePath(), "csv");
+		List<String> results = UtilIO.listByPrefix(resultsDirectory.getAbsolutePath(),null, "csv");
 		Collections.sort(results);
 
 		Map<Long,Tally> map = new HashMap<Long,Tally>();

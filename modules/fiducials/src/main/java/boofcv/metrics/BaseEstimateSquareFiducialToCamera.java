@@ -100,9 +100,9 @@ public abstract class BaseEstimateSquareFiducialToCamera<T extends ImageBase<T>>
 	}
 
 	public static List<String> loadImageFilesByPrefix(File dataSetDir) {
-		List<String> files = UtilIO.listByPrefix(dataSetDir.getAbsolutePath(), "png");
+		List<String> files = UtilIO.listByPrefix(dataSetDir.getAbsolutePath(),null, "png");
 		if( files.size() == 0 ) {
-			files = UtilIO.listByPrefix(dataSetDir.getAbsolutePath(), "jpg");
+			files = UtilIO.listByPrefix(dataSetDir.getAbsolutePath(),null, "jpg");
 		}
 		if( files.size() == 0 ) {
 			throw new IllegalArgumentException("No images found.  paths correct?");
