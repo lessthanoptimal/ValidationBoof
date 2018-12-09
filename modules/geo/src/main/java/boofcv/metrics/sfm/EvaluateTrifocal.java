@@ -73,9 +73,9 @@ public class EvaluateTrifocal {
 		double total = 0;
 		for( AssociatedTriple o : obs ) {
 			Point3D_F64 predicted = new Point3D_F64();
-			MultiViewOps.transfer12(tensor,o.p1,o.p3,predicted);
+			MultiViewOps.transfer_1_to_3(tensor,o.p1,o.p3,predicted);
 			total += o.p2.distance(predicted.x/predicted.z,predicted.y/predicted.z);
-			MultiViewOps.transfer13(tensor,o.p1,o.p2,predicted);
+			MultiViewOps.transfer_1_to_3(tensor,o.p1,o.p2,predicted);
 			total += o.p3.distance(predicted.x/predicted.z,predicted.y/predicted.z);
 		}
 

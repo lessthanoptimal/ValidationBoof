@@ -3,7 +3,7 @@ package boofcv.metrics.point;
 import boofcv.abst.geo.RefineEpipolar;
 import boofcv.alg.distort.AdjustmentType;
 import boofcv.alg.distort.ImageDistort;
-import boofcv.alg.distort.LensDistortionOps;
+import boofcv.alg.distort.LensDistortionOps_F32;
 import boofcv.alg.distort.PointToPixelTransform_F32;
 import boofcv.alg.geo.robust.DistanceHomographySq;
 import boofcv.alg.geo.robust.GenerateHomographyLinear;
@@ -92,8 +92,8 @@ public class CreateGroundTruth {
 
 		// create distortion to remove lens distortion
 		// Adjust the distortion so that the undistorted image only shows image pixels
-		Point2Transform2_F32 allInside = LensDistortionOps.
-				transformChangeModel_F32(AdjustmentType.EXPAND,cameraParam, null,true,null);
+		Point2Transform2_F32 allInside = LensDistortionOps_F32.
+				transformChangeModel(AdjustmentType.EXPAND,cameraParam, null,true,null);
 		InterpolatePixelS<GrayF32> interp = FactoryInterpolation.bilinearPixelS(GrayF32.class, BorderType.EXTENDED);
 		removeLens = FactoryDistort.distortSB(false,interp, GrayF32.class);
 		removeLens.setModel(new PointToPixelTransform_F32(allInside));

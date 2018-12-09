@@ -53,7 +53,7 @@ public class OutputForKITTI {
 				for( int row = 0; row < 3; row++ ) {
 					for( int i = 0; i < 3; i++ )
 						output.printf("%15e ", found.getR().get(row, i));
-					output.printf("%15e", found.getT().getIndex(row));
+					output.printf("%15e", found.getT().getIdx(row));
 					if( row != 2 )
 						output.print(" ");
 				}

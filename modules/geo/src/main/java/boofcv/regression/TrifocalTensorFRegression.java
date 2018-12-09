@@ -4,6 +4,7 @@ import boofcv.abst.geo.Estimate1ofTrifocalTensor;
 import boofcv.common.BaseRegression;
 import boofcv.common.BoofRegressionConstants;
 import boofcv.common.FileRegression;
+import boofcv.factory.geo.ConfigTrifocal;
 import boofcv.factory.geo.EnumTrifocal;
 import boofcv.factory.geo.FactoryMultiView;
 import boofcv.metrics.sfm.ComputeTrifocalTensor;
@@ -54,9 +55,14 @@ public class TrifocalTensorFRegression extends BaseRegression implements FileReg
         new GenerateTrifocalObservations().initialize(SIMULATED_PATH).generate();
 
         System.out.println("Estimating trifocal");
-        Estimate1ofTrifocalTensor alg = FactoryMultiView.trifocal_1(EnumTrifocal.ALGEBRAIC_7,300);
+        ConfigTrifocal configAlg7 = new ConfigTrifocal();
+        configAlg7.which = EnumTrifocal.ALGEBRAIC_7;
+        configAlg7.converge.maxIterations = 300;
+        Estimate1ofTrifocalTensor alg = FactoryMultiView.trifocal_1(configAlg7);
         process(alg,"algebraic7");
-        alg = FactoryMultiView.trifocal_1(EnumTrifocal.LINEAR_7,300);
+        ConfigTrifocal configLinear7 = new ConfigTrifocal();
+        configLinear7.which = EnumTrifocal.LINEAR_7;
+        alg = FactoryMultiView.trifocal_1(configLinear7);
         process(alg,"linear7");
 
 
