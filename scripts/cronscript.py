@@ -63,7 +63,7 @@ def fatal_error(message):
 
     # Read in the log file and send it
     with open(os.path.join(project_home,log_file_name), 'r') as f:
-        email_txt=f.read().replace('\n', '')
+        email_txt=f.read()
 
     send_email(email_txt)
     sys.exit(1)
