@@ -57,10 +57,15 @@ def send_email( message ):
 
 
 def fatal_error(message):
-    send_email(message)
     error_log.write(message+"\n")
     error_log.write("\n\nFATAL ERROR\n\n")
     error_log.close()
+
+    # Read in the log file and send it
+    with open(os.path.join(project_home,log_file_name), 'r') as f:
+        email_txt=f.read().replace('\n', '')
+
+    send_email(email_txt)
     sys.exit(1)
 
 def run_command(command):
@@ -75,31 +80,27 @@ def check_cd(path):
     except:
         fatal_error("Failed to cd into '"+path+"'")
 
-# EJML is a special case
-if os.path.isdir(os.path.join(project_home,"..","ejml")):
-    check_cd(os.path.join(project_home,"..","ejml"))
-    error_log.write("Building {}\n","ejml")
-    run_command("git checkout SNAPSHOT")
-    run_command("git pull")
-    run_command("git clean -f")
-    run_command("./gradlew autogenerate")
-    run_command("./gradlew install")
-else:
-    error_log.write("Skipping {} directory does not exist\n".format("ejml"))
 
-# List of projects with standard build
-project_list = ["ddogleg","georegression","boofcv"]
+# List of dependencies to build
+project_list = [{"name":"ejml","autogen":True},
+                {"name":"ddogleg","autogen":False},
+                {"name":"georegression","autogen":True},
+                {"name":"boofcv","autogen":False}]
 
-for p in project_list:
+for lib in project_list:
+    p = lib["name"]
     path_to_p = os.path.join(project_home,"..",p)
     if not os.path.isdir(path_to_p):
         error_log.write("Skipping {} directory does not exist\n".format(p))
+        error_log.flush()
         continue
     error_log.write("Building {}\n".format(p))
     error_log.flush()
     check_cd(path_to_p)
     run_command("git checkout SNAPSHOT")
     run_command("git pull")
+    if lib["autogen"]:
+        run_command("./gradlew autogenerate")
     run_command("./gradlew assemble")
     run_command("./gradlew install")
 
@@ -109,7 +110,7 @@ error_log.flush()
 check_cd(project_home)
 run_command("git checkout SNAPSHOT")
 run_command("git pull")
-# run_command("git clean -f") <-- can'tdo this becauze it will zap the email_login.txt file!
+# run_command("git clean -f") <-- can'tdo this because it will zap the email_login.txt file!
 run_command("./gradlew clean")
 run_command("./gradlew moduleJars")
 run_command("./gradlew regressionJar")
