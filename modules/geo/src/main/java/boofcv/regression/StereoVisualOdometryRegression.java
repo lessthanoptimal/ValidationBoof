@@ -52,7 +52,7 @@ public class StereoVisualOdometryRegression extends BaseRegression implements Im
 
 	@Override
 	public void process(ImageDataType type) throws IOException {
-		List<Info> all = new ArrayList<Info>();
+		List<Info> all = new ArrayList<>();
 
 		Class bandType = ImageDataType.typeToSingleClass(type);
 
