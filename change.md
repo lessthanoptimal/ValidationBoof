@@ -1,5 +1,11 @@
 Description of changes to benchmarks and justifications for change in performance from previous versions.
 
+## Version 0.32
+
+- Added three view reconstruction performance metrics
+  * TODO compute maximum fraction possible?
+  * TODO rotate images 90 degrees and see if score is stable
+
 ## Version 0.31
 2018/10/16
 

@@ -48,13 +48,19 @@ public class ThreeViewReconstructionRegression extends BaseRegression implements
             return;
         }
 
+        double averageScore = 0;
+        double averageRuntime = 0;
+        int totalFailed = 0;
         for( String image : images ) {
             System.out.println("Evaluating "+image);
             try {
                 if (evaluator.process(new File(inputDir, image).getPath(), "jpg")) {
+                    averageScore += evaluator.getScore();
+                    averageRuntime += evaluator.getElapsedTime();
                     out.printf("%30s %6.2f\n", image, evaluator.getScore() * 100);
                     outputRuntime.printf("%30s %d\n", image, evaluator.getElapsedTime());
                 } else {
+                    totalFailed++;
                     out.printf("%30s failed!\n", image);
                     outputRuntime.printf("%30s failed!\n", image);
                 }
@@ -63,6 +69,16 @@ public class ThreeViewReconstructionRegression extends BaseRegression implements
             }
         }
 
+        averageScore /= (images.size()-totalFailed);
+        averageRuntime /= (images.size()-totalFailed);
+        out.println();
+        out.println("Summary:");
+        out.printf("  average = %6.2f\n",averageScore*100);
+        out.println("  failed  = "+totalFailed);
+
+        outputRuntime.println();
+        outputRuntime.println("Summary:");
+        outputRuntime.printf("  average = %.1f (ms)\n",averageRuntime);
         outputRuntime.close();
     }
 
