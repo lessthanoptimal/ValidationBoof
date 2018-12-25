@@ -14,6 +14,7 @@ import boofcv.alg.geo.PerspectiveOps;
 import boofcv.alg.geo.RectifyImageOps;
 import boofcv.alg.geo.bundle.cameras.BundlePinholeSimplified;
 import boofcv.alg.geo.rectify.RectifyCalibrated;
+import boofcv.alg.misc.ImageStatistics;
 import boofcv.alg.sfm.structure.ThreeViewEstimateMetricScene;
 import boofcv.core.image.ConvertImage;
 import boofcv.core.image.border.BorderType;
@@ -53,6 +54,7 @@ public class ThreeViewStereoPerformance {
     FastQueue<AssociatedTriple> associated = new FastQueue<>(AssociatedTriple.class,true);
 
     double score;
+    double areaFraction;
     // process time after loading the images and just after finishing
     long time0,time1;
 
@@ -90,7 +92,8 @@ public class ThreeViewStereoPerformance {
 
         int max = 200;
 
-        GrayF32 disparity = computeStereoDisparity(image01,image02,intrinsic01,intrinsic02,leftToRight,0,max);
+        GrayU8 rectMask = new GrayU8(image01.width, image01.height);
+        GrayF32 disparity = computeStereoDisparity(image01,image02,intrinsic01,intrinsic02,rectMask,leftToRight,0,max);
 
         time1 = System.currentTimeMillis();
 
@@ -106,7 +109,11 @@ public class ThreeViewStereoPerformance {
             }
         }
 
-        score = total/(double)(disparity.width*disparity.height);
+        // pixels are marked in 1 if the source image was reachable
+        int area = ImageStatistics.sum(rectMask)+1; // +1 is to avoid divide by zero
+
+        score = total/(double)area;
+        areaFraction = area / (double)(disparity.width*disparity.height);
     }
 
     private void findTripplets( String path , String suffix ) {
@@ -183,6 +190,7 @@ public class ThreeViewStereoPerformance {
     public GrayF32 computeStereoDisparity( GrayU8 distortedLeft, GrayU8 distortedRight ,
                                            CameraPinholeRadial intrinsicLeft ,
                                            CameraPinholeRadial intrinsicRight ,
+                                           GrayU8 rectMask,
                                            Se3_F64 leftToRight ,
                                            int minDisparity , int maxDisparity) {
 
@@ -198,7 +206,7 @@ public class ThreeViewStereoPerformance {
         GrayU8 rectifiedLeft = distortedLeft.createSameShape();
         GrayU8 rectifiedRight = distortedRight.createSameShape();
         rectifyImages(distortedLeft, distortedRight, leftToRight, intrinsicLeft, intrinsicRight,
-                rectifiedLeft, rectifiedRight, rectifiedK, rectifiedR);
+                rectifiedLeft, rectifiedRight,rectMask, rectifiedK, rectifiedR);
 
         // compute disparity
         StereoDisparity<GrayS16, GrayF32> disparityAlg =
@@ -224,6 +232,7 @@ public class ThreeViewStereoPerformance {
                        CameraPinholeRadial intrinsicRight,
                        T rectifiedLeft,
                        T rectifiedRight,
+                       GrayU8 rectMask,
                        DMatrixRMaj rectifiedK,
                        DMatrixRMaj rectifiedR) {
         RectifyCalibrated rectifyAlg = RectifyImageOps.createCalibrated();
@@ -256,12 +265,16 @@ public class ThreeViewStereoPerformance {
         ImageDistort<T,T> distortRight =
                 RectifyImageOps.rectifyImage(intrinsicRight, rect2_F32, BorderType.SKIP, distortedRight.getImageType());
 
-        distortLeft.apply(distortedLeft, rectifiedLeft);
+        distortLeft.apply(distortedLeft, rectifiedLeft,rectMask);
         distortRight.apply(distortedRight, rectifiedRight);
     }
 
     public double getScore() {
         return score;
+    }
+
+    public double getAreaFraction() {
+        return areaFraction;
     }
 
     public long getElapsedTime() {
