@@ -3,8 +3,9 @@ Description of changes to benchmarks and justifications for change in performanc
 ## Version 0.32
 
 - Added three view reconstruction performance metrics
-  * TODO compute maximum fraction possible?
-  * TODO rotate images 90 degrees and see if score is stable
+- Several fiducial algorithms were not properly undistorting the image
+  when a lens distortion model was provided. This has been fixed.
+  As a result some of the runtime tests have slowed down a little bit.
 
 ## Version 0.31
 2018/10/16
