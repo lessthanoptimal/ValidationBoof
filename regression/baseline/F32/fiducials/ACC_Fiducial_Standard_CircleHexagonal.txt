@@ -10,9 +10,9 @@ Summary:
  false positives    : 0
  false negative     : 1
 Corner errors:
- precision 50%         : 0.15451265920121204
- precision 90%         : 0.31887089246318884
- precision 100%        : 0.7466388764580786
+ precision 50%         : 0.15483157955907306
+ precision 90%         : 0.3246063921398966
+ precision 100%        : 0.7511919041545674
 
 ---------------------------------------------------
 
@@ -27,9 +27,9 @@ Summary:
  false positives    : 0
  false negative     : 0
 Corner errors:
- precision 50%         : 0.1709288111006789
- precision 90%         : 0.34124990405199457
- precision 100%        : 0.5001566238262651
+ precision 50%         : 0.17608960881112853
+ precision 90%         : 0.3427409412994663
+ precision 100%        : 0.4915166775240312
 
 ---------------------------------------------------
 
@@ -44,9 +44,9 @@ Summary:
  false positives    : 0
  false negative     : 4
 Corner errors:
- precision 50%         : 0.6757234960566605
- precision 90%         : 1.156841004707379
- precision 100%        : 1.7156043118104574
+ precision 50%         : 0.6810437139924673
+ precision 90%         : 1.1617282122964745
+ precision 100%        : 1.751974447415328
 
 ---------------------------------------------------
 
@@ -61,9 +61,9 @@ Summary:
  false positives    : 0
  false negative     : 5
 Corner errors:
- precision 50%         : 0.2523692182654269
- precision 90%         : 0.41188863973795153
- precision 100%        : 0.5051341980948141
+ precision 50%         : 0.2578226694613289
+ precision 90%         : 0.4257428910351897
+ precision 100%        : 0.5083956191656084
 
 ---------------------------------------------------
 

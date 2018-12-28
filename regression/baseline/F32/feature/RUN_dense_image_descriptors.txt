@@ -1,10 +1,10 @@
 # GENERATOR DescribeImageDenseRegression
 # Average runtime speed in milliseconds for dense image descriptors
 
-          HOG-SB-F32  129.6
-          HOG-MS-F32  137.1
-        HOG-F-SB-F32   33.6
-        HOG-F-MS-F32   41.3
+          HOG-SB-F32  134.0
+          HOG-MS-F32  141.1
+        HOG-F-SB-F32   33.3
+        HOG-F-MS-F32   41.0
           SURF-F-F32   42.3
-          SURF-S-F32   67.9
-            SIFT-F32  244.6
+          SURF-S-F32   67.3
+            SIFT-F32  242.1

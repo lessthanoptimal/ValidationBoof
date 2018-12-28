@@ -1,27 +1,27 @@
 # GENERATOR TrifocalTensorFRegression
 algebraic7
 
-          tensor_pixel_noise 0 score 0.000000
-          tensor_pixel_noise 1 score 1.208034
-          tensor_pixel_noise 2 score 2.350032
-          tensor_pixel_noise 3 score 3.636367
-          tensor_pixel_noise 4 score 4.659642
-          tensor_pixel_noise 5 score 28.960901
-          tensor_pixel_noise 6 score 6.961466
-          tensor_pixel_noise 7 score 15.130221
-          tensor_pixel_noise 8 score 9.553009
-          tensor_pixel_noise 9 score 32.587481
+          tensor_pixel_noise 0 score 13.832181
+          tensor_pixel_noise 1 score 14.270269
+          tensor_pixel_noise 2 score 14.688451
+          tensor_pixel_noise 3 score 15.073974
+          tensor_pixel_noise 4 score 15.449808
+          tensor_pixel_noise 5 score 16.143082
+          tensor_pixel_noise 6 score 16.346023
+          tensor_pixel_noise 7 score 31.090429
+          tensor_pixel_noise 8 score 17.834288
+          tensor_pixel_noise 9 score 42.050713
 
 linear7
 
-          tensor_pixel_noise 0 score 0.000000
-          tensor_pixel_noise 1 score 1.207894
-          tensor_pixel_noise 2 score 2.350727
-          tensor_pixel_noise 3 score 3.637626
-          tensor_pixel_noise 4 score 4.655643
-          tensor_pixel_noise 5 score 5.684450
-          tensor_pixel_noise 6 score 6.970908
-          tensor_pixel_noise 7 score 8.425000
-          tensor_pixel_noise 8 score 9.154482
-          tensor_pixel_noise 9 score 10.686283
+          tensor_pixel_noise 0 score 13.832181
+          tensor_pixel_noise 1 score 14.273194
+          tensor_pixel_noise 2 score 14.687576
+          tensor_pixel_noise 3 score 15.053843
+          tensor_pixel_noise 4 score 15.429565
+          tensor_pixel_noise 5 score 16.123961
+          tensor_pixel_noise 6 score 16.328325
+          tensor_pixel_noise 7 score 16.771811
+          tensor_pixel_noise 8 score 17.844282
+          tensor_pixel_noise 9 score 17.196088
 

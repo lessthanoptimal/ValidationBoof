@@ -55,7 +55,7 @@ Java Platform API Specification
 =========== sun.management.compiler
 HotSpot 64-Bit Tiered Compilers
 =========== os.version
-4.15.0-34-generic
+4.15.0-43-generic
 =========== user.home
 /home/pja
 =========== user.timezone

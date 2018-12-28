@@ -3,8 +3,8 @@
 
 Total Faults = 0
 Fraction with no update 8.517887563884157E-4
-Ave per estimate:      distance 0.4179602  rotation 0.001006004
-Ave per distance:      distance   8.22874% deg/unit = 1.13e-02
-Ave Skip 20:           distance   1.60112% deg/unit = 1.90e-03
-Absolute:              location  41.93978  rotation   2.75 degrees
-Integral per distance: distance   0.45104% deg/unit = 1.05e-03
+Ave per estimate:      distance 0.8941326  rotation 0.001840359
+Ave per distance:      distance  17.60355% deg/unit = 2.08e-02
+Ave Skip 20:           distance   1.49292% deg/unit = 2.02e-03
+Absolute:              location  74.14538  rotation   1.34 degrees
+Integral per distance: distance   8.84745% deg/unit = 1.07e-02

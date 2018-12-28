@@ -1,0 +1,67 @@
+# GENERATOR ThreeViewReconstructionRegression
+# Uncalibrated Three View Reconstruction Performance. Stereo association percentage
+# (name) (score: higher better) (rectified area: higher better)
+
+               apartment_bush_  25.86  84.47
+             apartment_road_a_  16.83  98.38
+                       barrel_  58.64  63.80
+                      bobcats_  54.22  73.01
+                        books_  83.63  86.43
+                         bowl_  58.85  90.90
+                   building_a_  23.54  75.85
+                      chicken_  45.44  83.09
+         christmass_display_a_  27.95  70.60
+                         deer_  42.42  95.70
+                       dinner_  46.92  78.76
+                 dinner_table_  28.11  86.73
+                         eggs_  52.67  44.30
+                fence_grass_a_  21.37  95.06
+                fence_grass_b_  17.80  73.00
+                   fig_leaves_  39.69  79.37
+                     figuresA_  33.63  90.71
+                      house_a_  32.63  69.85
+                      house_b_  23.46  73.36
+                     kitchenA_  53.62  52.75
+                     kitchenB_  30.02  93.03
+                      library_  51.97  45.05
+              minecraft_cave1_  38.27  99.15
+              minecraft_cave2_  28.09  98.54
+            minecraft_distant_  31.36  88.35
+               minecraft_high_  38.22  98.26
+                    mono_wall_  64.45  81.95
+              parking_meter_a_  26.39  72.33
+                      pebbles_  69.46  79.13
+                      pelican_  63.75  68.14
+                     people_a_  24.49  66.95
+                     people_b_   4.65  73.12
+                     person_a_  27.62  47.50
+                        power_  18.34  74.34
+                       puddle_  47.97  83.49
+                   pumpkintop_  58.91  76.34
+                       road_a_  19.51  77.97
+                         rock_   2.77  14.07
+                  rock_leaves_  63.11  94.73
+                     rockview_  46.76  86.45
+                      safeway_  19.27  82.50
+                      santa_a_  33.37  47.36
+                         seal_  44.16  83.99
+                sf_building_a_  18.56  75.25
+                sf_building_b_  32.38  45.54
+                sf_building_c_  38.00  74.36
+                sf_building_d_  17.39  93.38
+                  sf_bus_stop_  16.83  86.81
+                   sf_grass_a_  39.85  42.76
+            sf_intersection_a_  24.89  83.07
+                     sf_thing_  40.09  40.95
+               shuffleboard_a_  33.59  81.59
+               shuffleboard_b_  28.62  49.64
+                        skull_  26.14  54.36
+                   succulents_  21.53  80.94
+                   triflowers_  23.16  77.65
+                       turkey_  46.38  92.46
+                  uni_pacific_   4.35  23.86
+                    waterdrip_  51.61  96.16
+
+Summary:
+  average =  35.65
+  failed  = 0

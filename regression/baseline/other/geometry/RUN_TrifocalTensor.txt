@@ -1,4 +1,4 @@
 # GENERATOR TrifocalTensorFRegression
 
-                    algebraic7 7505
-                       linear7 191
+                    algebraic7 4551
+                       linear7 184

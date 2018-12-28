@@ -1,0 +1,65 @@
+# GENERATOR ThreeViewReconstructionRegression
+# Runtime for each triplet of images in milliseconds
+
+               apartment_bush_ 3291
+             apartment_road_a_ 3582
+                       barrel_ 4427
+                      bobcats_ 5745
+                        books_ 7919
+                         bowl_ 3895
+                   building_a_ 3135
+                      chicken_ 4977
+         christmass_display_a_ 3111
+                         deer_ 3256
+                       dinner_ 6374
+                 dinner_table_ 4953
+                         eggs_ 4088
+                fence_grass_a_ 4946
+                fence_grass_b_ 5219
+                   fig_leaves_ 3688
+                     figuresA_ 2884
+                      house_a_ 5246
+                      house_b_ 3087
+                     kitchenA_ 5066
+                     kitchenB_ 5075
+                      library_ 7032
+              minecraft_cave1_ 3124
+              minecraft_cave2_ 3721
+            minecraft_distant_ 5123
+               minecraft_high_ 5181
+                    mono_wall_ 4249
+              parking_meter_a_ 5010
+                      pebbles_ 7685
+                      pelican_ 8724
+                     people_a_ 3727
+                     people_b_ 2856
+                     person_a_ 3325
+                        power_ 4053
+                       puddle_ 6870
+                   pumpkintop_ 7364
+                       road_a_ 6082
+                         rock_ 4304
+                  rock_leaves_ 7472
+                     rockview_ 8280
+                      safeway_ 3993
+                      santa_a_ 4191
+                         seal_ 7408
+                sf_building_a_ 4763
+                sf_building_b_ 4212
+                sf_building_c_ 4802
+                sf_building_d_ 4996
+                  sf_bus_stop_ 2828
+                   sf_grass_a_ 4069
+            sf_intersection_a_ 3671
+                     sf_thing_ 5863
+               shuffleboard_a_ 5403
+               shuffleboard_b_ 4622
+                        skull_ 4418
+                   succulents_ 2143
+                   triflowers_ 3855
+                       turkey_ 6139
+                  uni_pacific_ 5604
+                    waterdrip_ 7676
+
+Summary:
+  average = 4894.9 (ms)
