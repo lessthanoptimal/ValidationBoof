@@ -17,10 +17,10 @@ Summary: TP/E = 44 / 49 error =   1.078 FP = 175
 # Directory (expected) (detected) (multiple) (corner miss matched) (true positives) (false positives) (false negative) (average error)
 # Directory      E  D  M MM TP FP FN   Error
 image00007.jpg   4  8  0  3  4  4  0  0.9529
-image00008.jpg   4 13  0  3  4  9  0  1.2790
+image00008.jpg   4 13  0  3  4  9  0  1.2712
 image00009.jpg   3  4  0  3  3  1  0  1.2580
 image00010.jpg   3  6  0  3  3  3  0  1.6198
-Summary: TP/E = 14 / 14 error =   1.277 FP = 17
+Summary: TP/E = 14 / 14 error =   1.275 FP = 17
 
 # Data Set = concave
 # Match Tolerance Corner to Polygon   = 3.0

@@ -17,7 +17,7 @@ Summary: TP/E = 45 / 49 error =   0.538 FP = 25
 # Directory (expected) (detected) (multiple) (miss matched) (true positives) (false positives) (false negative) (average error)
 # Directory      E  D  M MM TP FP FN   Error
 image00007.jpg   4  3  0  2  3  0  1  0.4730
-image00008.jpg   4  3  0  2  3  0  1  0.8298
+image00008.jpg   4  3  0  2  3  0  1  0.8279
 image00009.jpg   3  3  0  2  2  1  1  0.3225
 image00010.jpg   3  5  0  3  3  2  0  1.3162
 Summary: TP/E = 11 / 14 error =   0.735 FP = 3

@@ -16,11 +16,11 @@ Summary: TP/E = 37 / 49 error =   1.781 FP = 2542
 # Match Tolerance Corner to Polygon   = 3.0
 # Directory (expected) (detected) (multiple) (corner miss matched) (true positives) (false positives) (false negative) (average error)
 # Directory      E  D  M MM TP FP FN   Error
-image00007.jpg   4 108  0  2  2 106  2  0.9415
+image00007.jpg   4 108  0  2  2 106  2  0.8447
 image00008.jpg   4 219  0  3  3 216  1  1.0597
 image00009.jpg   3 116  0  2  2 114  1  2.2848
 image00010.jpg   3 163  0  1  1 162  2  0.8481
-Summary: TP/E = 8 / 14 error =   1.284 FP = 598
+Summary: TP/E = 8 / 14 error =   1.259 FP = 598
 
 # Data Set = concave
 # Match Tolerance Corner to Polygon   = 3.0
@@ -44,10 +44,10 @@ image01.jpg     57 69  0  0 57 12  0  0.6808
 image02.jpg     57 72  0  0 57 15  0  0.7330
 image03.jpg     57 62  0  0 57  5  0  0.7268
 image04.jpg     55 83  0  0 55 28  0  0.7460
-image05.jpg     57 76  0  0 57 19  0  0.7058
+image05.jpg     57 75  0  0 57 18  0  0.7058
 original.png    57 57  0  0 57  0  0  0.7581
 shadow01.jpg    57 74  0  0 46 28 11  0.7467
-Summary: TP/E = 386 / 397 error =   0.728 FP = 107
+Summary: TP/E = 386 / 397 error =   0.728 FP = 106
 
 # Data Set = set01
 # Match Tolerance Corner to Polygon   = 3.0
@@ -57,12 +57,12 @@ image00000.jpg   4 170  0  0  4 166  0  0.7156
 image00001.jpg   4 190  0  1  4 186  0  0.6875
 image00002.jpg   4 183  0  0  4 179  0  0.6558
 image00003.jpg   4 374  0  0  4 370  0  0.6050
-image00004.jpg   4 219  0  3  4 215  0  0.7866
+image00004.jpg   4 219  0  3  4 215  0  0.7960
 image00005.jpg   4 297  0  0  4 293  0  0.6566
 image00006.jpg   4 209  0  0  4 205  0  0.4819
 image00007.jpg   4 175  0  0  4 171  0  0.6971
 image00008.jpg   4 194  0  1  4 190  0  0.6503
-Summary: TP/E = 36 / 36 error =   0.660 FP = 1975
+Summary: TP/E = 36 / 36 error =   0.661 FP = 1975
 
 # Data Set = set02
 # Match Tolerance Corner to Polygon   = 3.0
@@ -83,7 +83,7 @@ Summary: TP/E = 90 / 90 error =   0.669 FP = 1129
 # Match Tolerance Corner to Polygon   = 3.0
 # Directory (expected) (detected) (multiple) (corner miss matched) (true positives) (false positives) (false negative) (average error)
 # Directory      E  D  M MM TP FP FN   Error
-image00000.jpg  10 115  0  7  8 107  2  1.1554
+image00000.jpg  10 114  0  7  8 106  2  1.1554
 image00001.jpg  10 116  0  6  9 107  1  0.7737
 image00002.jpg  10 66  0  3  4 62  6  2.0465
 image00003.jpg  10 50  0  2  2 48  8  1.6910
@@ -92,7 +92,7 @@ image00005.jpg  10 73  0  2  2 71  8  1.8632
 image00006.jpg  10 87  0  1  1 86  9  2.0296
 image00007.jpg  10 61  0  4  4 57  6  2.5264
 image00008.jpg  10 79  0  3  3 76  7  1.1611
-Summary: TP/E = 38 / 90 error =   1.697 FP = 677
+Summary: TP/E = 38 / 90 error =   1.697 FP = 676
 
 # Data Set = set04
 # Match Tolerance Corner to Polygon   = 3.0
@@ -111,5 +111,5 @@ image10.png      6 28  0  2  6 22  0  0.6137
 Summary: TP/E = 60 / 60 error =   0.573 FP = 186
 
 
-Final Summary: TP/(TP+FN) = 732 / 815    FP = 7734
+Final Summary: TP/(TP+FN) = 732 / 815    FP = 7732
 
