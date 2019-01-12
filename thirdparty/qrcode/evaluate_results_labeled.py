@@ -137,6 +137,8 @@ for target_name in sorted(os.listdir(dir_results)):
 
     path_to_target = os.path.join(dir_results,target_name)
 
+    # weighted statistical sum. Each category has a weight of 1 independent
+    # of the number of QR Codes and images
     total_missing = 0
     total_false_positive = 0
     total_false_negative = 0
@@ -153,6 +155,7 @@ for target_name in sorted(os.listdir(dir_results)):
 
         category_counts[ds] = len(truth_files)
 
+        # DS = dataset
         ds_true_positive = 0
         ds_false_positive = 0
         ds_false_negative = 0
@@ -177,13 +180,15 @@ for target_name in sorted(os.listdir(dir_results)):
             milliseconds.append(found['ms'])
 
             total_ambiguous += metrics_loc['ambiguous']
-            total_false_positive += metrics_loc['fp']
-            total_true_positive += metrics_loc['tp']
-            total_false_negative += metrics_loc['fn']
 
             ds_false_negative += metrics_loc['fn']
             ds_true_positive += metrics_loc['tp']
             ds_false_positive += metrics_loc['fp']
+
+        ds_total_qr = ds_true_positive + ds_false_negative
+        total_false_positive += ds_false_negative/ds_total_qr
+        total_true_positive  += ds_true_positive/ds_total_qr
+        total_false_negative += ds_false_positive/ds_total_qr
 
         milliseconds.sort()
         ms50 = milliseconds[int(len(milliseconds)/2)]
@@ -375,7 +380,7 @@ for score_idx,v in enumerate(library_summary):
     ax.text(indexes[score_idx]-0.14, v, "{:.2f}".format(v), color='black', fontsize=12,fontweight='bold')
 ax.set_ylim([0.0,1.1])
 ax.set_ylabel("F-Score (1=best)")
-ax.set_title('Overall Detection Performance')
+ax.set_title('Overall Detection Performance\nAverage by Category')
 ax.set_xticks(indexes)
 ax.set_xticklabels(library_names, rotation=90)
 plt.gcf().subplots_adjust(bottom=0.15)
