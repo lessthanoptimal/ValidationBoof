@@ -143,6 +143,9 @@ for target_name in sorted(os.listdir(dir_results)):
     total_false_positive = 0
     total_false_negative = 0
     total_true_positive = 0
+    weighted_false_positive = 0
+    weighted_false_negative = 0
+    weighted_true_positive = 0
     total_ambiguous = 0
 
     ds_results = {}
@@ -186,9 +189,12 @@ for target_name in sorted(os.listdir(dir_results)):
             ds_false_positive += metrics_loc['fp']
 
         ds_total_qr = ds_true_positive + ds_false_negative
-        total_false_positive += ds_false_negative/ds_total_qr
-        total_true_positive  += ds_true_positive/ds_total_qr
-        total_false_negative += ds_false_positive/ds_total_qr
+        total_false_negative += ds_false_negative
+        total_true_positive  += ds_true_positive
+        total_false_positive += ds_false_positive
+        weighted_false_positive += ds_false_positive/ds_total_qr
+        weighted_false_negative += ds_false_negative/ds_total_qr
+        weighted_true_positive  += ds_true_positive/ds_total_qr
 
         milliseconds.sort()
         ms50 = milliseconds[int(len(milliseconds)/2)]
@@ -212,7 +218,7 @@ for target_name in sorted(os.listdir(dir_results)):
     scoresF = {}
     scoresRun = {}
 
-    scoresF["summary"] = compute_f(total_true_positive,total_false_positive,0,total_false_negative)
+    scoresF["summary"] = compute_f(weighted_true_positive, weighted_false_positive,0, weighted_false_negative)
     scoresRun["summary"] = sum( [ds_results[n]["ms50"] for n in ds_results]) / len(ds_results)
     for n in sorted(list(ds_results.keys())):
         r = ds_results[n]

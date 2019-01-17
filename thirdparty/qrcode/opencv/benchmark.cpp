@@ -1,24 +1,38 @@
-#include <quirc.h>
+#include <cstddef>
 #include <string>
 #include <iostream>
 #include <iterator>
 #include <boost/program_options.hpp>
 #include <boost/filesystem.hpp>
 #include <boost/algorithm/string/predicate.hpp>
-#include <opencv2/core/core.hpp>
-#include <opencv2/highgui/highgui.hpp>
 #include <fstream>
 #include <chrono>
 #include <iomanip>
+#include <opencv2/objdetect.hpp>
+#include <opencv2/imgcodecs.hpp>
+#include <opencv2/highgui/highgui.hpp>
+#include <opencv2/imgproc/imgproc.hpp>
 
 using namespace boost::algorithm;
 using namespace std;
 using namespace cv;
+
 namespace po = boost::program_options;
 namespace bf = boost::filesystem;
 
-void run_quirc( const bf::path& image_path , const bf::path& output_path, struct quirc *detector ) {
-    Mat image = imread(image_path.c_str(), CV_LOAD_IMAGE_GRAYSCALE | CV_LOAD_IMAGE_IGNORE_ORIENTATION);
+std::string filter_string( const std::string& message ) {
+    std::string c = message;
+    for( std::string::iterator iter = c.begin() ; iter != c.end() ; ) {
+        if( !std::isprint(*iter) )
+            iter = c.erase(iter);
+        else
+            ++iter ; // not erased, increment iterator
+    }
+    return c;
+}
+
+void run_opencv( const bf::path& image_path , const bf::path& output_path, cv::QRCodeDetector *scanner ) {
+    Mat image = imread(image_path.c_str(), IMREAD_GRAYSCALE | IMREAD_IGNORE_ORIENTATION);
 
 //    cout << "output_pat "<<output_path<<endl;
 
@@ -29,66 +43,54 @@ void run_quirc( const bf::path& image_path , const bf::path& output_path, struct
         exit(1);
     }
 
-    auto time0 = chrono::steady_clock::now();
-    int width=image.cols,height=image.rows;
-    if( quirc_resize(detector,width,height) == -1 ) {
-        cout << "Failed to resize image for quirc" << endl;
-        exit(1);
-    }
-
-    uint8_t *raw_data = quirc_begin(detector, &width, &height);
-    std::memcpy(raw_data,image.data,width*height*sizeof(uint8_t));
-    quirc_end(detector);
+    Mat bbox;
 
     // output to a stream instead of the file initially just in case it does processing at this stage
     std::ostringstream streamMem;
-    int total = quirc_count(detector);
-    int valid = 0;
 
-    for( int i = 0; i < total; i++ ) {
-        struct quirc_code code;
-        struct quirc_data data;
-        quirc_extract(detector, i,&code);
-        if( quirc_decode(&code,&data) == QUIRC_SUCCESS )  {
-            streamMem << "message = " << data.payload << endl;
-            streamMem << code.corners[0].x << " " << code.corners[1].y;
-            for( int j = 1; j < 4; j ++ ) {
-                streamMem << " " << code.corners[j].x << " " << code.corners[j].y;
-            }
-            streamMem << endl;
-            valid++;
-        }
-    }
-
+    auto time0 = chrono::steady_clock::now();
+    // Looks like OpenCV can only decode a single QR code in an image
+    std::string message = scanner->detectAndDecode(image,bbox);
     auto time1 = chrono::steady_clock::now();
+
+    int valid = 0;
+    if(message.length()>0) {
+        valid++;
+        streamMem << "message = " << message << endl;
+        streamMem << bbox.at<float>(0,0) << " " << bbox.at<float>(0,1);
+        for( int j = 1; j < bbox.rows; j ++ ) {
+            streamMem << " " << bbox.at<float>(j,0) << " " << bbox.at<float>(j,1);
+        }
+        streamMem << endl;
+    }
 
     double milliseconds = 1e-6*chrono::duration_cast<chrono::nanoseconds>(time1-time0).count();
 
     ofstream file;
     file.open(output_path.c_str());
-    file << "# Quirc " << quirc_version() << " "<<image_path.filename() << endl;
+    file << "# OpenCV "<<image_path.filename() << endl;
     file << "milliseconds = " << std::setprecision( 4 ) << milliseconds << endl;
     file << streamMem.str();
 
-
-    file.close();
-
-    cout << valid;
+    if( valid < 10)
+        cout << valid;
+    else
+        cout << "*";
     cout.flush();
 //    cout << "detected " << total << " valid " << valid << endl;
-
 }
 
-void detect_markers( const string& input_path , const string& output_path , struct quirc *detector=nullptr) {
+void detect_markers( const string& input_path , const string& output_path , cv::QRCodeDetector *scanner=nullptr) {
 //    cout << "Input Path:  " << input_path << endl;
 //    cout << "Output Path: " << output_path << endl;
 
     bf::create_directory(bf::path(output_path));
 
-    bool first = detector == nullptr;
+    bool first = scanner == nullptr;
 
-    if( first )
-        detector = quirc_new();
+    if( first ) {
+        scanner = new cv::QRCodeDetector();
+    }
 
     bf::path p(input_path);
 
@@ -107,19 +109,19 @@ void detect_markers( const string& input_path , const string& output_path , stru
             output = output / itr->path().filename();
             output = bf::change_extension(output, "txt");
 
-            run_quirc(itr->path(),output,detector);
+            run_opencv(itr->path(),output,scanner);
 //            cout << current_file << endl;
         } else {
             bf::path output(output_path);
             output = output / itr->path().filename();
-            detect_markers(itr->path().string(),output.string(),detector);
+            detect_markers(itr->path().string(),output.string(),scanner);
         }
     }
     cout << endl;
 
 
     if( first ) {
-        quirc_destroy(detector);
+        delete scanner;
     }
 }
 
