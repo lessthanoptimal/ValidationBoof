@@ -1,12 +1,12 @@
 package boofcv.metrics;
 
 import boofcv.abst.fiducial.FiducialDetector;
-import boofcv.alg.distort.radtan.LensDistortionRadialTangential;
+import boofcv.alg.distort.brown.LensDistortionBrown;
 import boofcv.common.DataSetDoesNotExist;
 import boofcv.io.UtilIO;
 import boofcv.io.image.ConvertBufferedImage;
 import boofcv.io.image.UtilImageIO;
-import boofcv.struct.calib.CameraPinholeRadial;
+import boofcv.struct.calib.CameraPinholeBrown;
 import boofcv.struct.image.ImageBase;
 import georegression.struct.point.Vector3D_F64;
 import georegression.struct.se.Se3_F64;
@@ -55,8 +55,8 @@ public abstract class BaseEstimateSquareFiducialToCamera<T extends ImageBase<T>>
 
 		File fileIntrinsic = new File(dataSetDir,"intrinsic.txt");
 		if( fileIntrinsic.exists() ) {
-			CameraPinholeRadial intrinsic = FiducialCommon.parseIntrinsic(fileIntrinsic);
-			detector.setLensDistortion(new LensDistortionRadialTangential(intrinsic),intrinsic.width,intrinsic.height);
+			CameraPinholeBrown intrinsic = FiducialCommon.parseIntrinsic(fileIntrinsic);
+			detector.setLensDistortion(new LensDistortionBrown(intrinsic),intrinsic.width,intrinsic.height);
 		}
 		for( String path : files ) {
 			BufferedImage orig = UtilImageIO.loadImage(path);

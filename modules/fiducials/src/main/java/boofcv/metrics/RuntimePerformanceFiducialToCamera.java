@@ -1,11 +1,11 @@
 package boofcv.metrics;
 
 import boofcv.abst.fiducial.FiducialDetector;
-import boofcv.alg.distort.radtan.LensDistortionRadialTangential;
+import boofcv.alg.distort.brown.LensDistortionBrown;
 import boofcv.common.BoofRegressionConstants;
 import boofcv.io.image.ConvertBufferedImage;
 import boofcv.io.image.UtilImageIO;
-import boofcv.struct.calib.CameraPinholeRadial;
+import boofcv.struct.calib.CameraPinholeBrown;
 import boofcv.struct.image.ImageBase;
 
 import java.awt.image.BufferedImage;
@@ -56,10 +56,10 @@ public class RuntimePerformanceFiducialToCamera< T extends ImageBase<T>> {
 
 		List<T> frames = new ArrayList<T>();
 
-		CameraPinholeRadial intrinsic = FiducialCommon.parseIntrinsic(new File(inputDirectory,"intrinsic.txt"));
+		CameraPinholeBrown intrinsic = FiducialCommon.parseIntrinsic(new File(inputDirectory,"intrinsic.txt"));
 
 		FiducialDetector<T> detector = factory.createDetector(inputDirectory);
-		detector.setLensDistortion(new LensDistortionRadialTangential(intrinsic),intrinsic.width,intrinsic.height);
+		detector.setLensDistortion(new LensDistortionBrown(intrinsic),intrinsic.width,intrinsic.height);
 
 		File[] files = inputDirectory.listFiles();
 		for( File f : files ) {

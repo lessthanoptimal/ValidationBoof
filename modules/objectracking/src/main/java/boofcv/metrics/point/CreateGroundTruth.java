@@ -18,7 +18,7 @@ import boofcv.io.image.ConvertBufferedImage;
 import boofcv.io.image.SimpleImageSequence;
 import boofcv.io.image.UtilImageIO;
 import boofcv.io.wrapper.DefaultMediaManager;
-import boofcv.struct.calib.CameraPinholeRadial;
+import boofcv.struct.calib.CameraPinholeBrown;
 import boofcv.struct.distort.Point2Transform2_F32;
 import boofcv.struct.geo.AssociatedPair;
 import boofcv.struct.image.GrayF32;
@@ -86,7 +86,7 @@ public class CreateGroundTruth {
 	// features in the key frame
 	GrayF32 keyFrame;
 
-	public CreateGroundTruth( CameraPinholeRadial cameraParam , String outputDirectory ) {
+	public CreateGroundTruth( CameraPinholeBrown cameraParam , String outputDirectory ) {
 
 		this.outputDirectory = outputDirectory;
 
@@ -241,7 +241,7 @@ public class CreateGroundTruth {
 		SimpleImageSequence sequence =
 				DefaultMediaManager.INSTANCE.openVideo(pathToData+whichData+".mjpeg", ImageType.single(GrayF32.class));
 
-		CameraPinholeRadial cameraParam = CalibrationIO.load("data/intrinsic.yaml");
+		CameraPinholeBrown cameraParam = CalibrationIO.load("data/intrinsic.yaml");
 
 		String outputDir = "data/temp";
 
