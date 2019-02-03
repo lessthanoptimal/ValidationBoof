@@ -4,11 +4,11 @@ import boofcv.abst.fiducial.calib.ConfigChessboard;
 import boofcv.abst.geo.bundle.SceneStructureMetric;
 import boofcv.abst.geo.calibration.DetectorFiducialCalibration;
 import boofcv.abst.geo.calibration.ImageResults;
+import boofcv.alg.geo.bundle.cameras.BundlePinholeBrown;
 import boofcv.alg.geo.calibration.CalibrationObservation;
 import boofcv.alg.geo.calibration.CalibrationPlanarGridZhang99;
 import boofcv.alg.geo.calibration.cameras.Zhang99CameraBrown;
 import boofcv.factory.fiducial.FactoryFiducialCalibration;
-import boofcv.struct.calib.CameraPinholeBrown;
 import georegression.geometry.ConvertRotation3D_F64;
 import georegression.struct.point.Point2D_F64;
 import georegression.struct.point.Vector3D_F64;
@@ -41,14 +41,19 @@ public class CalibrateFromDetectedPoints {
 
 		outputResults.println("=================================================================");
 		outputResults.println("FILE: " + stereoDetections);
-		outputResults.println("LEFT");
-		SceneStructureMetric params = calibrate(zhang99, left);
-		printErrors(zhang99.computeErrors());
-		outputResults.println();
-		outputResults.println("RIGHT");
-		params = calibrate(zhang99, right);
-		zhang99.computeErrors();
-		printErrors(zhang99.computeErrors());
+		try {
+			outputResults.println("LEFT");
+			calibrate(zhang99, left);
+			printErrors(zhang99.computeErrors());
+			outputResults.println();
+			outputResults.println("RIGHT");
+			calibrate(zhang99, right);
+			zhang99.computeErrors();
+			printErrors(zhang99.computeErrors());
+		} catch( RuntimeException e ) {
+			e.printStackTrace();
+			err.println(e);
+		}
 	}
 
 	public void setOutputResults(PrintStream outputResults) {
@@ -89,7 +94,6 @@ public class CalibrateFromDetectedPoints {
 	}
 
 	private SceneStructureMetric calibrate(CalibrationPlanarGridZhang99 zhang99, List<CalibrationObservation> observations )
-			throws FileNotFoundException
 	{
 		if( !zhang99.process(observations) )
 			throw new RuntimeException("Calibration failed!");
@@ -98,7 +102,7 @@ public class CalibrateFromDetectedPoints {
 		SceneStructureMetric found = zhang99.getStructure();
 
 		// Convenient function for converting from specialized Zhang99 format to generalized
-		CameraPinholeBrown param = found.getCameras()[0].getModel();
+		BundlePinholeBrown param = found.getCameras()[0].getModel();
 
 		// print the results to standard out
 //		param.print();
