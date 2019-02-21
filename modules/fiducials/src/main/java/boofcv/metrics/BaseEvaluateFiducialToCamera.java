@@ -2,7 +2,7 @@ package boofcv.metrics;
 
 import boofcv.alg.geo.PerspectiveOps;
 import boofcv.alg.geo.WorldToCameraToPixel;
-import boofcv.struct.calib.CameraPinholeRadial;
+import boofcv.struct.calib.CameraPinholeBrown;
 import georegression.struct.point.Point2D_F64;
 import georegression.struct.point.Point3D_F64;
 import georegression.struct.point.Vector3D_F64;
@@ -33,7 +33,7 @@ public abstract class BaseEvaluateFiducialToCamera implements FiducialEvaluateIn
 	PrintStream outputResults = System.out;
 	PrintStream err = System.err;
 
-	CameraPinholeRadial intrinsic;
+	CameraPinholeBrown intrinsic;
 	// ID's of the detected fiducials
 	long expected[];
 	// The number of times a fiducial was detected.  This will include wrong ID's and orientations

@@ -50,7 +50,7 @@ public class HandSelectEllipseGridApp extends HandSelectBase {
 
 				ConvertBufferedImage.convertFrom(image,gray);
 
-				ThresholdImageOps.localMean(gray,binary, ConfigLength.fixed(21),1.0f,true,null,null);
+				ThresholdImageOps.localMean(gray,binary, ConfigLength.fixed(21),1.0f,true,null,null,null);
 
 				detector.process(gray,binary);
 

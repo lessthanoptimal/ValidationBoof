@@ -19,11 +19,11 @@
 
 package boofcv.metrics.surf;
 
+import boofcv.BoofDefaults;
 import boofcv.abst.feature.describe.DescribeRegionPoint;
 import boofcv.abst.feature.orientation.OrientationIntegral;
 import boofcv.alg.feature.describe.DescribePointSurf;
 import boofcv.alg.transform.ii.GIntegralImageOps;
-import boofcv.struct.BoofDefaults;
 import boofcv.struct.feature.BrightFeature;
 import boofcv.struct.image.ImageGray;
 import boofcv.struct.image.ImageType;

@@ -1,7 +1,7 @@
 package boofcv.metrics.vo;
 
 import boofcv.alg.geo.PerspectiveOps;
-import boofcv.struct.calib.CameraPinholeRadial;
+import boofcv.struct.calib.CameraPinholeBrown;
 import boofcv.struct.calib.StereoParameters;
 import georegression.struct.se.Se3_F64;
 
@@ -23,8 +23,8 @@ public class WrapParseLeuven07 implements SequenceStereoImages {
 		this.data = data;
 
 		stereoParam = new StereoParameters();
-		stereoParam.left = new CameraPinholeRadial();
-		stereoParam.right = new CameraPinholeRadial();
+		stereoParam.left = new CameraPinholeBrown();
+		stereoParam.right = new CameraPinholeBrown();
 		stereoParam.rightToLeft = new Se3_F64();
 
 		stereoParam.left.radial = new double[2];

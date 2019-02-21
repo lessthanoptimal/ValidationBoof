@@ -54,7 +54,7 @@ public class BundleAdjustmentFRegression extends BaseRegression implements FileR
         configLM.hessianScaling = true;
         ConfigBundleAdjustment configBA = new ConfigBundleAdjustment();
         configBA.configOptimizer = configLM;
-        BundleAdjustment<SceneStructureMetric> sba = FactoryMultiView.bundleAdjustmentMetric(configBA);
+        BundleAdjustment<SceneStructureMetric> sba = FactoryMultiView.bundleSparseMetric(configBA);
         evaluate(sba,"SchurLM_DSCC");
 
         // matrix is almost never positive definite. very slow convergence. working on this

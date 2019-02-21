@@ -9,7 +9,7 @@ import boofcv.abst.geo.bundle.SceneStructureMetric;
 import boofcv.alg.descriptor.UtilFeature;
 import boofcv.alg.distort.ImageDistort;
 import boofcv.alg.feature.associate.AssociateThreeByPairs;
-import boofcv.alg.filter.derivative.LaplacianEdge;
+import boofcv.alg.filter.derivative.DerivativeLaplacian;
 import boofcv.alg.geo.PerspectiveOps;
 import boofcv.alg.geo.RectifyImageOps;
 import boofcv.alg.geo.bundle.cameras.BundlePinholeSimplified;
@@ -17,14 +17,14 @@ import boofcv.alg.geo.rectify.RectifyCalibrated;
 import boofcv.alg.misc.ImageStatistics;
 import boofcv.alg.sfm.structure.ThreeViewEstimateMetricScene;
 import boofcv.core.image.ConvertImage;
-import boofcv.core.image.border.BorderType;
 import boofcv.factory.feature.associate.FactoryAssociation;
 import boofcv.factory.feature.detdesc.FactoryDetectDescribe;
 import boofcv.factory.feature.disparity.DisparityAlgorithms;
 import boofcv.factory.feature.disparity.FactoryStereoDisparity;
 import boofcv.io.image.ConvertBufferedImage;
 import boofcv.io.image.UtilImageIO;
-import boofcv.struct.calib.CameraPinholeRadial;
+import boofcv.struct.border.BorderType;
+import boofcv.struct.calib.CameraPinholeBrown;
 import boofcv.struct.feature.AssociatedTripleIndex;
 import boofcv.struct.feature.BrightFeature;
 import boofcv.struct.geo.AssociatedTriple;
@@ -79,12 +79,12 @@ public class ThreeViewStereoPerformance {
 
     private void computeDisparityScore(int width, int height, SceneStructureMetric structure) {
         BundlePinholeSimplified cp = structure.getCameras()[0].getModel();
-        CameraPinholeRadial intrinsic01 = new CameraPinholeRadial();
+        CameraPinholeBrown intrinsic01 = new CameraPinholeBrown();
         intrinsic01.fsetK(cp.f,cp.f,0,cx,cy,width,height);
         intrinsic01.fsetRadial(cp.k1,cp.k2);
 
         cp = structure.getCameras()[1].getModel();
-        CameraPinholeRadial intrinsic02 = new CameraPinholeRadial();
+        CameraPinholeBrown intrinsic02 = new CameraPinholeBrown();
         intrinsic02.fsetK(cp.f,cp.f,0,cx,cy,width,height);
         intrinsic02.fsetRadial(cp.k1,cp.k2);
 
@@ -188,8 +188,8 @@ public class ThreeViewStereoPerformance {
     }
 
     public GrayF32 computeStereoDisparity( GrayU8 distortedLeft, GrayU8 distortedRight ,
-                                           CameraPinholeRadial intrinsicLeft ,
-                                           CameraPinholeRadial intrinsicRight ,
+                                           CameraPinholeBrown intrinsicLeft ,
+                                           CameraPinholeBrown intrinsicRight ,
                                            GrayU8 rectMask,
                                            Se3_F64 leftToRight ,
                                            int minDisparity , int maxDisparity) {
@@ -216,8 +216,8 @@ public class ThreeViewStereoPerformance {
         // Apply the Laplacian across the image to add extra resistance to changes in lighting or camera gain
         GrayS16 derivLeft = new GrayS16(width, height);
         GrayS16 derivRight = new GrayS16(width, height);
-        LaplacianEdge.process(rectifiedLeft, derivLeft);
-        LaplacianEdge.process(rectifiedRight, derivRight);
+        DerivativeLaplacian.process(rectifiedLeft, derivLeft,null);
+        DerivativeLaplacian.process(rectifiedRight, derivRight, null);
 
         // process and return the results
         disparityAlg.process(derivLeft, derivRight);
@@ -228,8 +228,8 @@ public class ThreeViewStereoPerformance {
     void rectifyImages(T distortedLeft,
                        T distortedRight,
                        Se3_F64 leftToRight,
-                       CameraPinholeRadial intrinsicLeft,
-                       CameraPinholeRadial intrinsicRight,
+                       CameraPinholeBrown intrinsicLeft,
+                       CameraPinholeBrown intrinsicRight,
                        T rectifiedLeft,
                        T rectifiedRight,
                        GrayU8 rectMask,

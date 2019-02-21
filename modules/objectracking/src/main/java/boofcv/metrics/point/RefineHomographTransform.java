@@ -4,9 +4,9 @@ import boofcv.alg.filter.derivative.DerivativeType;
 import boofcv.alg.filter.derivative.GImageDerivativeOps;
 import boofcv.alg.interpolate.InterpolatePixelS;
 import boofcv.alg.transform.pyramid.PyramidOps;
-import boofcv.core.image.border.BorderType;
 import boofcv.factory.interpolate.FactoryInterpolation;
 import boofcv.factory.transform.pyramid.FactoryPyramid;
+import boofcv.struct.border.BorderType;
 import boofcv.struct.image.ImageGray;
 import boofcv.struct.image.ImageType;
 import boofcv.struct.pyramid.PyramidDiscrete;
@@ -40,7 +40,7 @@ public class RefineHomographTransform<I extends ImageGray<I>, D extends ImageGra
 
 	public RefineHomographTransform( int scales[], Class<I> imageType , Class<D> derivType ) {
 		this.derivType = derivType;
-		InterpolatePixelS<I> interp = FactoryInterpolation.bilinearPixelS(imageType,BorderType.EXTENDED);
+		InterpolatePixelS<I> interp = FactoryInterpolation.bilinearPixelS(imageType, BorderType.EXTENDED);
 
 		function = new FitHomographyFunction<>(interp);
 		gradient = new FitHomographyGradient<>(interp);

@@ -1,16 +1,18 @@
 package boofcv.metrics;
 
 import boofcv.abst.fiducial.calib.ConfigChessboard;
-import boofcv.abst.geo.calibration.CalibrateMonoPlanar;
+import boofcv.abst.geo.bundle.SceneStructureMetric;
 import boofcv.abst.geo.calibration.DetectorFiducialCalibration;
 import boofcv.abst.geo.calibration.ImageResults;
 import boofcv.alg.geo.calibration.CalibrationObservation;
 import boofcv.alg.geo.calibration.CalibrationPlanarGridZhang99;
-import boofcv.alg.geo.calibration.Zhang99AllParam;
-import boofcv.alg.geo.calibration.pinhole.CalibParamPinholeRadial;
+import boofcv.alg.geo.calibration.cameras.Zhang99CameraBrown;
 import boofcv.factory.fiducial.FactoryFiducialCalibration;
-import boofcv.struct.calib.CameraPinholeRadial;
+import boofcv.struct.calib.CameraPinholeBrown;
+import georegression.geometry.ConvertRotation3D_F64;
 import georegression.struct.point.Point2D_F64;
+import georegression.struct.point.Vector3D_F64;
+import georegression.struct.so.Rodrigues_F64;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -29,7 +31,7 @@ public class CalibrateFromDetectedPoints {
 	public void processStereo( File stereoDetections , boolean tangential ) throws IOException {
 		DetectorFiducialCalibration targetDesc = FactoryFiducialCalibration.chessboard(new ConfigChessboard(7, 5, 30));
 		CalibrationPlanarGridZhang99 zhang99 = new CalibrationPlanarGridZhang99(targetDesc.getLayout(),
-				new CalibParamPinholeRadial(true,2,tangential));
+				new Zhang99CameraBrown(true,tangential,2));
 
 		List<CalibrationObservation> left = new ArrayList<CalibrationObservation>();
 		List<CalibrationObservation> right = new ArrayList<CalibrationObservation>();
@@ -39,12 +41,12 @@ public class CalibrateFromDetectedPoints {
 		outputResults.println("=================================================================");
 		outputResults.println("FILE: " + stereoDetections);
 		outputResults.println("LEFT");
-		Zhang99AllParam params = calibrate(zhang99, left);
-		printErrors(params,left,targetDesc.getLayout());
+		List<ImageResults> errors = calibrate(zhang99, left);
+		printErrors(errors);
 		outputResults.println();
 		outputResults.println("RIGHT");
-		params = calibrate(zhang99, right);
-		printErrors(params, right, targetDesc.getLayout());
+		errors = calibrate(zhang99, right);
+		printErrors(errors);
 	}
 
 	public void setOutputResults(PrintStream outputResults) {
@@ -56,7 +58,9 @@ public class CalibrateFromDetectedPoints {
 		this.err = err;
 	}
 
-	public static void loadObservations( File file , List<CalibrationObservation> left , List<CalibrationObservation> right )
+	public static void loadObservations( File file ,
+										 List<CalibrationObservation> left ,
+										 List<CalibrationObservation> right )
 			throws IOException
 	{
 		BufferedReader reader = new BufferedReader(new FileReader(file));
@@ -84,17 +88,16 @@ public class CalibrateFromDetectedPoints {
 		}
 	}
 
-	private Zhang99AllParam calibrate(CalibrationPlanarGridZhang99 zhang99, List<CalibrationObservation> observations )
-			throws FileNotFoundException
+	private List<ImageResults> calibrate(CalibrationPlanarGridZhang99 zhang99, List<CalibrationObservation> observations )
 	{
 		if( !zhang99.process(observations) )
 			throw new RuntimeException("Calibration failed!");
 
 		// Get camera parameters and extrinsic target location in each image
-		Zhang99AllParam found = zhang99.getOptimized();
+		SceneStructureMetric structure = zhang99.structure;
 
 		// Convenient function for converting from specialized Zhang99 format to generalized
-		CameraPinholeRadial param = found.getIntrinsic().getCameraModel();
+		CameraPinholeBrown param = (CameraPinholeBrown)zhang99.getCameraModel();
 
 		// print the results to standard out
 //		param.print();
@@ -108,23 +111,24 @@ public class CalibrateFromDetectedPoints {
 		outputResults.println();
 		outputResults.println("# Tangential Distortion");
 		outputResults.printf("%1.15f %1.15f\n",param.t1,param.t2);
-		outputResults.println(found.views.length);
-		for( Zhang99AllParam.View v : found.views ) {
-			double rx = v.rotation.unitAxisRotation.x * v.rotation.theta;
-			double ry = v.rotation.unitAxisRotation.y * v.rotation.theta;
-			double rz = v.rotation.unitAxisRotation.z * v.rotation.theta;
+		outputResults.println(structure.views.length);
+		Rodrigues_F64 rod = new Rodrigues_F64();
+		for( SceneStructureMetric.View v : structure.views ) {
+			ConvertRotation3D_F64.matrixToRodrigues(v.worldToView.R,rod);
+			double rx = rod.unitAxisRotation.x * rod.theta;
+			double ry = rod.unitAxisRotation.y * rod.theta;
+			double rz = rod.unitAxisRotation.z * rod.theta;
+
+			Vector3D_F64 T = v.worldToView.T;
 
 			outputResults.println("# Extrinsic");
-			outputResults.printf("%1.15f %1.15f %1.15f %1.15f %1.15f %1.15f\n",rx,ry,rz,v.T.x,v.T.y,v.T.z);
+			outputResults.printf("%1.15f %1.15f %1.15f %1.15f %1.15f %1.15f\n",rx,ry,rz,T.x,T.y,T.z);
 		}
-		return found;
+		return zhang99.computeErrors();
 	}
 
-	private void printErrors( Zhang99AllParam param ,
-							  List<CalibrationObservation> observations, List<Point2D_F64> grid )
+	private void printErrors( List<ImageResults> results )
 	{
-		List<ImageResults> results = CalibrateMonoPlanar.computeErrors(observations, param, grid);
-
 		outputResults.println();
 		outputResults.println("Errors");
 		for (int i = 0; i < results.size(); i++) {
