@@ -15,6 +15,7 @@ import boofcv.abst.feature.detect.interest.InterestPointDetector;
 import boofcv.abst.feature.orientation.OrientationImage;
 import boofcv.abst.feature.orientation.OrientationIntegral;
 import boofcv.abst.feature.orientation.OrientationIntegralToImage;
+import boofcv.abst.feature.tracker.ConfigTrackerDda;
 import boofcv.abst.feature.tracker.PointTracker;
 import boofcv.alg.feature.detect.interest.GeneralFeatureDetector;
 import boofcv.alg.filter.derivative.GImageDerivativeOps;
@@ -163,7 +164,7 @@ public class PointTrackerRegression extends BaseRegression implements ImageRegre
 		Info info = new Info();
 		info.name = "FhBrief";
 		info.imageType = ImageType.single(bandType);
-		info.tracker = FactoryPointTracker.dda(detector,orientation, describe , associate2D, false);
+		info.tracker = FactoryPointTracker.dda(detector,orientation, describe , associate2D, new ConfigTrackerDda());
 
 		return info;
 	}
