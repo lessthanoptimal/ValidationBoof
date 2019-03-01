@@ -3,6 +3,7 @@ package validation;
 import boofcv.BoofVersion;
 import boofcv.abst.fiducial.QrCodeDetector;
 import boofcv.alg.fiducial.qrcode.QrCode;
+import boofcv.concurrency.BoofConcurrency;
 import boofcv.factory.fiducial.FactoryFiducial;
 import boofcv.io.image.ConvertBufferedImage;
 import boofcv.struct.image.GrayU8;
@@ -70,6 +71,8 @@ public class DetectQrCodeBoofCVApp {
     }
 
     public static void main(String[] args) {
+        // turn on multi-threading
+        BoofConcurrency.USE_CONCURRENT = true;
 
         QrCodeDetector<GrayU8> detector = FactoryFiducial.qrcode(null,GrayU8.class);
 
