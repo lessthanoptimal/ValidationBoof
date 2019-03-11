@@ -7,6 +7,7 @@ Description of changes to benchmarks and justifications for change in performanc
 - QR Code threshold was tuned some more improving overall performance. Slight performance drop in rare edge cases.
 - QR Code more images added to regression
 - Calibration optimization method was changed. Results of for practical purposes identical
+- Turned off concurrency by default for all regression tests to ensure results are deterministic
 
 ## Version 0.32
 

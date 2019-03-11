@@ -1,5 +1,6 @@
 package boofcv.common;
 
+import boofcv.concurrency.BoofConcurrency;
 import boofcv.struct.image.ImageDataType;
 import org.apache.commons.io.FileUtils;
 
@@ -60,6 +61,9 @@ public class RegressionRunner {
     }
 
     public static void main(String[] args) throws ClassNotFoundException, IllegalAccessException, InstantiationException, IOException {
+
+        // Turn off threading since it can cause non-deterministic results
+        BoofConcurrency.USE_CONCURRENT = false;
 
         clearWorkDirectory();
 
