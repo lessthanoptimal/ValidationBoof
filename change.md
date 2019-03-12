@@ -1,5 +1,14 @@
 Description of changes to benchmarks and justifications for change in performance from previous versions.
 
+## Version 0.33
+2019/
+
+- DDA Point Tracker was improved. Now prunes tracks if there are too many. On average accuracy improved by a good bit.
+- QR Code threshold was tuned some more improving overall performance. Slight performance drop in rare edge cases.
+- QR Code more images added to regression
+- Calibration optimization method was changed. Results of for practical purposes identical
+- Turned off concurrency by default for all regression tests to ensure results are deterministic
+
 ## Version 0.32
 
 - Added three view reconstruction performance metrics
