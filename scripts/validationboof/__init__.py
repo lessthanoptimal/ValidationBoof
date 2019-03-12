@@ -8,7 +8,7 @@ if sys.version_info[0] < 3:
 
 def fatal_error(message):
     sys.stderr.write(message+"\n")
-    sys.stderr.write("\n\nBUILD FAILED!!! LOOK AT MESSAGES ABOVE\n\n")
+    sys.stderr.write("\n\nFAILED!!! LOOK AT MESSAGES ABOVE\n\n")
     sys.exit(1)
 
 def run_command(command):

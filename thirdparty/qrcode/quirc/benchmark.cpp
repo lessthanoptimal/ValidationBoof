@@ -10,6 +10,7 @@
 #include <fstream>
 #include <chrono>
 #include <iomanip>
+#include <algorithm>
 
 using namespace boost::algorithm;
 using namespace std;
@@ -50,7 +51,9 @@ void run_quirc( const bf::path& image_path , const bf::path& output_path, struct
         struct quirc_data data;
         quirc_extract(detector, i,&code);
         if( quirc_decode(&code,&data) == QUIRC_SUCCESS )  {
-            streamMem << "message = " << data.payload << endl;
+            std::string message = std::string((const char*)data.payload);
+            message.erase(std::remove(message.begin(), message.end(), '\n'), message.end());
+            streamMem << "message = " << message << endl;
             streamMem << code.corners[0].x << " " << code.corners[1].y;
             for( int j = 1; j < 4; j ++ ) {
                 streamMem << " " << code.corners[j].x << " " << code.corners[j].y;

@@ -29,6 +29,8 @@ if __name__ == '__main__':
 
     print("Looking inside of {}".format(dir_input))
 
-    run_command("./build/opencv_benchmark -I {} -O {}".format(dir_input,dir_output))
+    command = "./build/opencv_benchmark -I {} -O {}".format(dir_input,dir_output)
+    if os.system(command):
+        print("WARNING: Failed to execute '"+command+"'")
 
-    print( "\n\nDone!" )
+    print("\n\nDone!")

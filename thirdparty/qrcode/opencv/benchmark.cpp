@@ -31,7 +31,7 @@ std::string filter_string( const std::string& message ) {
     return c;
 }
 
-void run_opencv( const bf::path& image_path , const bf::path& output_path, cv::QRCodeDetector *scanner ) {
+void run_opencv( const bf::path& image_path , const bf::path& output_path, cv::QRCodeDetector *&scanner ) {
     Mat image = imread(image_path.c_str(), IMREAD_GRAYSCALE | IMREAD_IGNORE_ORIENTATION);
 
 //    cout << "output_pat "<<output_path<<endl;
@@ -48,14 +48,23 @@ void run_opencv( const bf::path& image_path , const bf::path& output_path, cv::Q
     // output to a stream instead of the file initially just in case it does processing at this stage
     std::ostringstream streamMem;
 
+    std::string message = "";
     auto time0 = chrono::steady_clock::now();
-    // Looks like OpenCV can only decode a single QR code in an image
-    std::string message = scanner->detectAndDecode(image,bbox);
+    try {
+        // Looks like OpenCV can only decode a single QR code in an image
+        message = scanner->detectAndDecode(image,bbox);
+    } catch( ... ){
+        cout << "Exception!!!" << endl;
+        // attempt to recover by deleting the old scanner
+        delete scanner;
+        scanner = new cv::QRCodeDetector();
+    }
     auto time1 = chrono::steady_clock::now();
 
     int valid = 0;
     if(message.length()>0) {
         valid++;
+        message.erase(std::remove(message.begin(), message.end(), '\n'), message.end());
         streamMem << "message = " << message << endl;
         streamMem << bbox.at<float>(0,0) << " " << bbox.at<float>(0,1);
         for( int j = 1; j < bbox.rows; j ++ ) {

@@ -61,7 +61,9 @@ void run_zbar( const bf::path& image_path , const bf::path& output_path, ImageSc
         if( !boost::algorithm::ends_with(symbol->get_type_name(), "QR-Code"))
             continue;
 
-        streamMem << "message = " << filter_string(symbol->get_data()) << endl;
+        std::string message = filter_string(symbol->get_data());
+        message.erase(std::remove(message.begin(), message.end(), '\n'), message.end());
+        streamMem << "message = " << message << endl;
         streamMem << symbol->get_location_x(0) << " " << symbol->get_location_y(0);
         for( int j = 1; j < symbol->get_location_size(); j ++ ) {
             streamMem << " " << symbol->get_location_x(j) << " " << symbol->get_location_y(j);
