@@ -1,7 +1,7 @@
 Description of changes to benchmarks and justifications for change in performance from previous versions.
 
 ## Version 0.33
-2019/
+2019/03/19
 
 - DDA Point Tracker was improved. Now prunes tracks if there are too many. On average accuracy improved by a good bit.
 - QR Code threshold was tuned some more improving overall performance. Slight performance drop in rare edge cases.
