@@ -38,3 +38,13 @@ If you want to rebuild everything later on you can simply run the ./build_all_li
 - ./detect_all_libraries.py
 - ./evaluate_results_count.py
 - ./evaluate_results_labeled.py
+
+# Convert output for web
+
+```
+convert -density 150 -shave 120x0 detection_categories.pdf  detection_categories.png
+convert -density 150 detection_summary.pdf detection_summary.png
+convert -density 150 runtime_summary.pdf runtime_summary.png
+convert -density 150 -shave 120x0 runtime_categories_relative_mean.pdf runtime_categories_relative_mean.png
+convert -density 150 category_counts.pdf category_counts.png
+```

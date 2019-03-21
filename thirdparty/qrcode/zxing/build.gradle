@@ -32,7 +32,7 @@ task ZXingQrCodeJar(type: Jar) {
 
 dependencies {
     ['core','javase'].each { String a ->
-        compile('com.google.zxing:' + a + ":3.3.2")
+        compile('com.google.zxing:' + a + ":3.3.3")
     }
 
     compile group: 'args4j', name: 'args4j', version: '2.33'
