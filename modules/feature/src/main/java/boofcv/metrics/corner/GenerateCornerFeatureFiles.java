@@ -2,6 +2,8 @@ package boofcv.metrics.corner;
 
 import boofcv.abst.feature.detect.intensity.GeneralFeatureIntensity;
 import boofcv.abst.feature.detect.interest.ConfigGeneralDetector;
+import boofcv.abst.feature.detect.interest.ConfigHarrisCorner;
+import boofcv.abst.feature.detect.interest.ConfigShiTomasi;
 import boofcv.abst.filter.derivative.AnyImageDerivative;
 import boofcv.alg.feature.detect.intensity.HessianBlobIntensity;
 import boofcv.alg.feature.detect.interest.GeneralFeatureDetector;
@@ -92,12 +94,18 @@ public class GenerateCornerFeatureFiles {
 
 		List<AlgInfo> out = new ArrayList<AlgInfo>();
 
-		ConfigGeneralDetector confDector = new ConfigGeneralDetector(200,2,0.1f);
+		int radius = 2;
+		ConfigGeneralDetector confDector = new ConfigGeneralDetector(200,radius+1,0.1f);
+
 		out.add( new AlgInfo("FAST",FactoryDetectPoint.createFast(null,confDector,inputType)) );
-		out.add( new AlgInfo("ShiTomasi",FactoryDetectPoint.createShiTomasi(confDector,false,derivType)) );
-		out.add( new AlgInfo("ShiTomasiW",FactoryDetectPoint.createShiTomasi(confDector, true, derivType)) );
-		out.add( new AlgInfo("Harris",FactoryDetectPoint.createHarris(confDector, false, derivType)) );
-		out.add( new AlgInfo("HarrisW",FactoryDetectPoint.createHarris(confDector,true,derivType)) );
+		out.add( new AlgInfo("ShiTomasi",FactoryDetectPoint.createShiTomasi(confDector,
+				new ConfigShiTomasi(false,radius),derivType)) );
+		out.add( new AlgInfo("ShiTomasiW",FactoryDetectPoint.createShiTomasi(confDector,
+				new ConfigShiTomasi(true,radius), derivType)) );
+		out.add( new AlgInfo("Harris",FactoryDetectPoint.createHarris(confDector,
+				new ConfigHarrisCorner(false,radius), derivType)) );
+		out.add( new AlgInfo("HarrisW",FactoryDetectPoint.createHarris(confDector,
+				new ConfigHarrisCorner(true,radius),derivType)) );
 		out.add( new AlgInfo("KitRos",FactoryDetectPoint.createKitRos(confDector, derivType)) );
 		out.add( new AlgInfo("Median",FactoryDetectPoint.createMedian(confDector,inputType)) );
 
