@@ -1,9 +1,6 @@
 package boofcv.regression;
 
 import boofcv.common.*;
-import boofcv.factory.fiducial.ConfigFiducialBinary;
-import boofcv.factory.fiducial.ConfigFiducialImage;
-import boofcv.factory.fiducial.FactoryFiducial;
 import boofcv.factory.filter.binary.ConfigThreshold;
 import boofcv.factory.filter.binary.ThresholdType;
 import boofcv.metrics.*;
@@ -37,33 +34,35 @@ public class FiducialRegression extends BaseRegression implements ImageRegressio
 		final ConfigThreshold robust = ConfigThreshold.local(ThresholdType.LOCAL_MEAN,20);
 		final ConfigThreshold fast = ConfigThreshold.fixed(80);
 
-		FactoryObject factory = new FactoryObjectAbstract() {
-			@Override public Object newInstance()
-			{return FactoryFiducial.squareBinary(new ConfigFiducialBinary(1), robust, imageType);}};
-		process( "BinaryRobust", new EstimateBinaryFiducialToCamera(factory),"square_border_binary");
-
-		factory = new FactoryObjectAbstract() {
-			@Override public Object newInstance()
-		{return FactoryFiducial.squareBinary(new ConfigFiducialBinary(1), fast, imageType);}};
-		process("BinaryFast", new EstimateBinaryFiducialToCamera(factory), "square_border_binary");
-
-		factory = new FactoryObjectAbstract() {
-			@Override public Object newInstance()
-		{return FactoryFiducial.squareImage(new ConfigFiducialImage(), robust, imageType);}};
-		process("ImageRobust", new EstimateImageFiducialToCamera(factory), "square_border_image");
-
-		factory = new FactoryObjectAbstract() {
-			@Override public Object newInstance()
-		{return FactoryFiducial.squareImage(new ConfigFiducialImage(), fast, imageType);}};
-		process("ImageFast", new EstimateImageFiducialToCamera(factory), "square_border_image");
+//		FactoryObject factory = new FactoryObjectAbstract() {
+//			@Override public Object newInstance()
+//			{return FactoryFiducial.squareBinary(new ConfigFiducialBinary(1), robust, imageType);}};
+//		process( "BinaryRobust", new EstimateBinaryFiducialToCamera(factory),"square_border_binary");
+//
+//		factory = new FactoryObjectAbstract() {
+//			@Override public Object newInstance()
+//		{return FactoryFiducial.squareBinary(new ConfigFiducialBinary(1), fast, imageType);}};
+//		process("BinaryFast", new EstimateBinaryFiducialToCamera(factory), "square_border_binary");
+//
+//		factory = new FactoryObjectAbstract() {
+//			@Override public Object newInstance()
+//		{return FactoryFiducial.squareImage(new ConfigFiducialImage(), robust, imageType);}};
+//		process("ImageRobust", new EstimateImageFiducialToCamera(factory), "square_border_image");
+//
+//		factory = new FactoryObjectAbstract() {
+//			@Override public Object newInstance()
+//		{return FactoryFiducial.squareImage(new ConfigFiducialImage(), fast, imageType);}};
+//		process("ImageFast", new EstimateImageFiducialToCamera(factory), "square_border_image");
 
 		process("Chessboard", new EstimateChessboardToCamera(imageType), "chessboard");
 
-		process("SquareGrid", new EstimateSquareGridToCamera(imageType), "square_grid");
+		process("Chessboard2", new EstimateChessboardToCamera2(imageType), "chessboard2");
 
-		process("CircleHexagonal", new EstimateCircleHexagonalToCamera(imageType), "circle_hexagonal");
-
-		process("CircleRegular", new EstimateCircleRegularToCamera(imageType), "circle_regular");
+//		process("SquareGrid", new EstimateSquareGridToCamera(imageType), "square_grid");
+//
+//		process("CircleHexagonal", new EstimateCircleHexagonalToCamera(imageType), "circle_hexagonal");
+//
+//		process("CircleRegular", new EstimateCircleRegularToCamera(imageType), "circle_regular");
 	}
 
 	private void process(String name, BaseEstimateSquareFiducialToCamera estimate, String type) throws IOException {

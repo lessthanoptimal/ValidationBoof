@@ -1,7 +1,7 @@
 package boofcv.metrics;
 
 import boofcv.abst.fiducial.FiducialDetector;
-import boofcv.abst.fiducial.calib.ConfigCircleHexagonalGrid;
+import boofcv.abst.fiducial.calib.ConfigGridDimen;
 import boofcv.factory.fiducial.FactoryFiducial;
 import boofcv.struct.image.GrayU8;
 import boofcv.struct.image.ImageGray;
@@ -9,7 +9,7 @@ import boofcv.struct.image.ImageGray;
 import java.io.File;
 import java.io.IOException;
 
-import static boofcv.parsing.ParseCalibrationConfigFiles.parseCircleHexagonalConfig;
+import static boofcv.parsing.ParseCalibrationConfigFiles.parseGridDimen4;
 
 /**
  * @author Peter Abeles
@@ -29,9 +29,9 @@ public class EstimateCircleHexagonalToCamera<T extends ImageGray<T>> extends Bas
 		if( !descriptionFile.exists() )
 			throw new RuntimeException("Can't find description.txt for square grid");
 
-		ConfigCircleHexagonalGrid config = parseCircleHexagonalConfig(descriptionFile);
+		ConfigGridDimen config = parseGridDimen4(descriptionFile);
 
-		return FactoryFiducial.calibCircleHexagonalGrid(config, imageType);
+		return FactoryFiducial.calibCircleHexagonalGrid(null,config, imageType);
 	}
 
 	public static void main(String[] args) throws IOException {
@@ -44,6 +44,4 @@ public class EstimateCircleHexagonalToCamera<T extends ImageGray<T>> extends Bas
 
 //		app.process("distance_straight");
 	}
-
-
 }

@@ -1,6 +1,6 @@
 package boofcv.metrics;
 
-import boofcv.abst.fiducial.calib.ConfigCircleRegularGrid;
+import boofcv.abst.fiducial.calib.ConfigGridDimen;
 import boofcv.abst.geo.calibration.DetectorFiducialCalibration;
 import boofcv.alg.geo.calibration.CalibrationObservation;
 import boofcv.factory.fiducial.FactoryFiducialCalibration;
@@ -28,8 +28,8 @@ public class DetectTargetFeatures {
 	public static void main( String args[] ) throws FileNotFoundException {
 		// detects the calibration target points
 		DetectorFiducialCalibration detector = FactoryFiducialCalibration.
-//				chessboard(new ConfigChessboard(5, 7, 30));
-				circleRegularGrid(new ConfigCircleRegularGrid(4, 3, 4, 6));
+//				chessboard(null, new ConfigGridDimen(5, 7, 30));
+				circleRegularGrid(null,new ConfigGridDimen(4, 3, 4, 6));
 
 		// load image list
 		String directory = "data/calib/mono/circle_regular/distant";

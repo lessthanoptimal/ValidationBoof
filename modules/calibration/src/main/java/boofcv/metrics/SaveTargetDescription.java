@@ -1,6 +1,6 @@
 package boofcv.metrics;
 
-import boofcv.abst.fiducial.calib.ConfigChessboard;
+import boofcv.abst.fiducial.calib.ConfigGridDimen;
 import boofcv.abst.geo.calibration.DetectorFiducialCalibration;
 import boofcv.factory.fiducial.FactoryFiducialCalibration;
 import georegression.struct.point.Point2D_F64;
@@ -17,7 +17,8 @@ import java.io.PrintStream;
 public class SaveTargetDescription {
 
 	public static void main( String args[] ) throws FileNotFoundException {
-		DetectorFiducialCalibration target = FactoryFiducialCalibration.chessboard(new ConfigChessboard(5, 7, 30));
+		DetectorFiducialCalibration target = FactoryFiducialCalibration.chessboard(
+				null,new ConfigGridDimen(5, 7, 30));
 
 		PrintStream out = new PrintStream(new FileOutputStream("target.txt"));
 		out.println(target.getLayout().size());

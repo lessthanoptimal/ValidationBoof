@@ -1,6 +1,6 @@
 package boofcv.parsing;
 
-import boofcv.abst.fiducial.calib.ConfigCircleHexagonalGrid;
+import boofcv.abst.fiducial.calib.ConfigGridDimen;
 import boofcv.common.misc.ParseHelper;
 
 import java.io.*;
@@ -9,9 +9,9 @@ import java.io.*;
  * @author Peter Abeles
  */
 public class ParseCalibrationConfigFiles {
-    public static ConfigCircleHexagonalGrid parseCircleHexagonalConfig(File descriptionFile) {
+    public static ConfigGridDimen parseGridDimen3(File descriptionFile) {
         int numRows,numCols;
-        double diameter,centerDistance;
+        double shapeSize,centerDistance;
         BufferedReader reader = null;
         try {
             reader = new BufferedReader(new FileReader(descriptionFile));
@@ -19,8 +19,7 @@ public class ParseCalibrationConfigFiles {
             String words[] = line.split(" ");
             numRows = Integer.parseInt(words[0]);
             numCols = Integer.parseInt(words[1]);
-            diameter = Double.parseDouble(words[2]);
-            centerDistance = Double.parseDouble(words[3]);
+            shapeSize = Double.parseDouble(words[2]);
             reader.close();
 
         } catch (FileNotFoundException e) {
@@ -29,7 +28,30 @@ public class ParseCalibrationConfigFiles {
             throw new RuntimeException(e);
         }
 
-        return new ConfigCircleHexagonalGrid(numRows,numCols,diameter,centerDistance);
+        return new ConfigGridDimen(numRows,numCols,shapeSize);
+    }
+
+    public static ConfigGridDimen parseGridDimen4(File descriptionFile) {
+        int numRows,numCols;
+        double shapeSize,shapeDistance;
+        BufferedReader reader = null;
+        try {
+            reader = new BufferedReader(new FileReader(descriptionFile));
+            String line = ParseHelper.skipComments(reader);
+            String words[] = line.split(" ");
+            numRows = Integer.parseInt(words[0]);
+            numCols = Integer.parseInt(words[1]);
+            shapeSize = Double.parseDouble(words[2]);
+            shapeDistance = Double.parseDouble(words[3]);
+            reader.close();
+
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        return new ConfigGridDimen(numRows,numCols,shapeSize,shapeDistance);
     }
 
 }

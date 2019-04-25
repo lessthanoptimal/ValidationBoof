@@ -1,6 +1,7 @@
 package boofcv.regression;
 
-import boofcv.abst.fiducial.calib.*;
+import boofcv.abst.fiducial.calib.CalibrationPatterns;
+import boofcv.abst.fiducial.calib.ConfigGridDimen;
 import boofcv.abst.geo.calibration.DetectorFiducialCalibration;
 import boofcv.alg.geo.calibration.CalibrationObservation;
 import boofcv.common.BaseRegression;
@@ -23,7 +24,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import static boofcv.parsing.ParseCalibrationConfigFiles.parseCircleHexagonalConfig;
+import static boofcv.parsing.ParseCalibrationConfigFiles.parseGridDimen3;
+import static boofcv.parsing.ParseCalibrationConfigFiles.parseGridDimen4;
 
 /**
  * @author Peter Abeles
@@ -49,8 +51,12 @@ public class CalibrationDetectionRegression extends BaseRegression implements Im
 		chessDirectories.add("data/calibration_mono/chessboard/distant");
 		chessDirectories.add("data/calibration_mono/chessboard/hard");
 		chessDirectories.add("data/calibration_mono/chessboard/border");
-		chessDirectories.add("data/calibration_mono/chessboard/fisheye");
+		chessDirectories.add("data/calibration_mono/chessboard/fisheye1");
+		chessDirectories.add("data/calibration_mono/chessboard/fisheye2");
 		chessDirectories.add("data/calibration_mono/chessboard/close");
+		chessDirectories.add("data/calibration_mono/chessboard/sloppy13x10");
+		chessDirectories.add("data/calibration_mono/chessboard/focus");
+		chessDirectories.add("data/calibration_mono/chessboard/rotation_vertical");
 
 		squareDirectories.add("data/calibration_stereo/Bumblebee2_Square");
 		squareDirectories.add("data/calibration_mono/square_grid/Sony_DSC-HX5V");
@@ -69,6 +75,9 @@ public class CalibrationDetectionRegression extends BaseRegression implements Im
 
 		addDetector("DetectCalibChess",
 				new CreateChessboard(),
+				CalibrationPatterns.CHESSBOARD);
+		addDetector("DetectCalibChess2",
+				new CreateChessboard2(),
 				CalibrationPatterns.CHESSBOARD);
 		addDetector("DetectCalibSquare",
 				new CreateSquareGrid(),
@@ -237,52 +246,65 @@ public class CalibrationDetectionRegression extends BaseRegression implements Im
 	static class CreateChessboard implements CreateCalibration {
 		@Override
 		public DetectorFiducialCalibration create(File file) {
-			ConfigChessboard config;
+			ConfigGridDimen config;
 			if( !file.exists() )
-				config = new ConfigChessboard(7, 5,30);
+				config = new ConfigGridDimen(7, 5,30);
 			else {
-				throw new RuntimeException("Implement");
+				config = parseGridDimen3(file);
 			}
-			return FactoryFiducialCalibration.chessboard(config);
+			return FactoryFiducialCalibration.chessboard(null,config);
+		}
+	}
+
+	static class CreateChessboard2 implements CreateCalibration {
+		@Override
+		public DetectorFiducialCalibration create(File file) {
+			ConfigGridDimen config;
+			if( !file.exists() )
+				config = new ConfigGridDimen(7,5,30);
+			else {
+				config = parseGridDimen3(file);
+			}
+			return FactoryFiducialCalibration.chessboard2(null,config);
 		}
 	}
 
 	static class CreateSquareGrid implements CreateCalibration {
 		@Override
 		public DetectorFiducialCalibration create(File file) {
-			ConfigSquareGrid config;
+			ConfigGridDimen config;
 			if( !file.exists() )
-				config = new ConfigSquareGrid(4, 3,30,30);
+				config = new ConfigGridDimen(4, 3,30,30);
 			else {
-				throw new RuntimeException("Implement");
+				config = parseGridDimen4(file);
 			}
-			return FactoryFiducialCalibration.squareGrid(config);
+			return FactoryFiducialCalibration.squareGrid(null,config);
 		}
 	}
 
 	static class CreateCircleRegular implements CreateCalibration {
 		@Override
 		public DetectorFiducialCalibration create(File file) {
-			ConfigCircleRegularGrid config;
+			ConfigGridDimen config;
 			if( !file.exists() )
-				config = new ConfigCircleRegularGrid(4, 3,4,6);
+				config = new ConfigGridDimen(4, 3,4,6);
 			else {
-				throw new RuntimeException("Implement");
+				config = parseGridDimen4(file);
 			}
-			return FactoryFiducialCalibration.circleRegularGrid(config);
+			return FactoryFiducialCalibration.circleRegularGrid(null,config);
 		}
 	}
 
 	static class CreateCircleHexagonal implements CreateCalibration {
 		@Override
 		public DetectorFiducialCalibration create(File file) {
-			ConfigCircleHexagonalGrid config;
+			ConfigGridDimen config;
 			if( !file.exists() )
-				config = new ConfigCircleHexagonalGrid(8, 5,2,6);
+				config = new ConfigGridDimen(8, 5,2,6);
 			else {
-				config = parseCircleHexagonalConfig(file);
+				config = parseGridDimen4(file);
 			}
-			return FactoryFiducialCalibration.circleHexagonalGrid(config);
+			return FactoryFiducialCalibration.circleHexagonalGrid(null,config);
 		}
 	}
 

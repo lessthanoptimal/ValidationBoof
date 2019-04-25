@@ -1,7 +1,7 @@
 package boofcv.metrics;
 
 import boofcv.abst.fiducial.FiducialDetector;
-import boofcv.abst.fiducial.calib.ConfigSquareGrid;
+import boofcv.abst.fiducial.calib.ConfigGridDimen;
 import boofcv.common.misc.ParseHelper;
 import boofcv.factory.fiducial.FactoryFiducial;
 import boofcv.struct.image.GrayU8;
@@ -46,9 +46,9 @@ public class EstimateSquareGridToCamera<T extends ImageGray<T>> extends BaseEsti
 			throw new RuntimeException(e);
 		}
 
-		ConfigSquareGrid config = new ConfigSquareGrid(numRows,numCols,square,space);
+		ConfigGridDimen config = new ConfigGridDimen(numRows,numCols,square,space);
 
-		return FactoryFiducial.calibSquareGrid(config, imageType);
+		return FactoryFiducial.calibSquareGrid(null,config, imageType);
 	}
 
 

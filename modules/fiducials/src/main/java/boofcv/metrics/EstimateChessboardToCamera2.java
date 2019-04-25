@@ -7,48 +7,50 @@ import boofcv.factory.fiducial.FactoryFiducial;
 import boofcv.struct.image.GrayU8;
 import boofcv.struct.image.ImageGray;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 
 /**
  * @author Peter Abeles
  */
-public class EstimateCircleRegularToCamera<T extends ImageGray<T>> extends BaseEstimateSquareFiducialToCamera<T> {
+public class EstimateChessboardToCamera2<T extends ImageGray<T>> extends BaseEstimateSquareFiducialToCamera<T> {
 
 	Class<T> imageType;
 
-	public EstimateCircleRegularToCamera(Class<T> imageType) {
+	public EstimateChessboardToCamera2(Class<T> imageType) {
 		this.imageType = imageType;
 	}
 
 	@Override
 	public FiducialDetector<T> createDetector(File datasetDir) {
 
+		ConfigGridDimen config = loadDimension(datasetDir);
+
+		return FactoryFiducial.calibChessboard2(null,config, imageType);
+	}
+
+	public static ConfigGridDimen loadDimension(File datasetDir) {
 		File descriptionFile = new File(datasetDir,"description.txt");
 		if( !descriptionFile.exists() )
-			throw new RuntimeException("Can't find description.txt for square grid");
+			throw new RuntimeException("Can't find description.txt for chessboard");
 
 		int numRows,numCols;
-		double diameter,centerDistance;
-		BufferedReader reader = null;
+		BufferedReader reader;
 		try {
 			reader = new BufferedReader(new FileReader(descriptionFile));
 			String line = ParseHelper.skipComments(reader);
 			String words[] = line.split(" ");
 			numRows = Integer.parseInt(words[0]);
 			numCols = Integer.parseInt(words[1]);
-			diameter = Double.parseDouble(words[2]);
-			centerDistance = Double.parseDouble(words[3]);
 			reader.close();
 
-		} catch (FileNotFoundException e) {
-			throw new RuntimeException(e);
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
 
-		ConfigGridDimen config = new ConfigGridDimen(numRows,numCols,diameter,centerDistance);
-
-		return FactoryFiducial.calibCircleRegularGrid(null,config, imageType);
+		return new ConfigGridDimen(numRows,numCols,1);
 	}
 
 
@@ -56,7 +58,7 @@ public class EstimateCircleRegularToCamera<T extends ImageGray<T>> extends BaseE
 
 		File outputDirectory = setupOutput();
 
-		EstimateCircleRegularToCamera app = new EstimateCircleRegularToCamera(GrayU8.class);
+		EstimateChessboardToCamera2 app = new EstimateChessboardToCamera2(GrayU8.class);
 		app.initialize(new File("data/fiducials/chessboard"));
 		app.setOutputDirectory(outputDirectory);
 
