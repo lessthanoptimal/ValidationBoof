@@ -95,7 +95,7 @@ public class GenerateCornerFeatureFiles {
 		List<AlgInfo> out = new ArrayList<AlgInfo>();
 
 		int radius = 2;
-		ConfigGeneralDetector confDector = new ConfigGeneralDetector(200,radius+1,0.1f);
+		ConfigGeneralDetector confDector = new ConfigGeneralDetector(200,radius,0.1f);
 
 		out.add( new AlgInfo("FAST",FactoryDetectPoint.createFast(null,confDector,inputType)) );
 		out.add( new AlgInfo("ShiTomasi",FactoryDetectPoint.createShiTomasi(confDector,

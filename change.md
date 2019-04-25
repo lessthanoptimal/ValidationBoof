@@ -3,7 +3,7 @@ Description of changes to benchmarks and justifications for change in performanc
 ## Version 0.34
 2019/
 
-
+- Default SIFT scale-space changed. No longer doubled.
 
 ## Version 0.33
 2019/03/19
