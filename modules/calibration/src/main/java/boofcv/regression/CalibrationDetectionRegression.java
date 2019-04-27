@@ -37,10 +37,10 @@ public class CalibrationDetectionRegression extends BaseRegression implements Im
 	List<String> circleHexDirectories = new ArrayList<>();
 	List<String> circleRegirectories = new ArrayList<>();
 
-	List<DetectorInfo> chessDetectors = new ArrayList<DetectorInfo>();
-	List<DetectorInfo> squareDetectors = new ArrayList<DetectorInfo>();
-	List<DetectorInfo> circleHexDetctors = new ArrayList<DetectorInfo>();
-	List<DetectorInfo> circleRegDetectors = new ArrayList<DetectorInfo>();
+	List<DetectorInfo> chessDetectors = new ArrayList<>();
+	List<DetectorInfo> squareDetectors = new ArrayList<>();
+	List<DetectorInfo> circleHexDetctors = new ArrayList<>();
+	List<DetectorInfo> circleRegDetectors = new ArrayList<>();
 
 	public CalibrationDetectionRegression() {
 		super(BoofRegressionConstants.TYPE_CALIBRATION);

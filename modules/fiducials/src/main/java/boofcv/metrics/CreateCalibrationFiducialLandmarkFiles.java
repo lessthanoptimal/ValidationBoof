@@ -14,12 +14,12 @@ import java.util.List;
  */
 public class CreateCalibrationFiducialLandmarkFiles {
 	public static void main(String[] args) throws FileNotFoundException {
-//		ConfigChessboard config = new ConfigChessboard(5,7,1);
-//		DetectorFiducialCalibration detector = FactoryFiducialCalibration.chessboard(config);
-//		ConfigSquareGrid config = new ConfigSquareGrid(5,7,1,1);
+		ConfigGridDimen config = new ConfigGridDimen(5,7,1);
+		DetectorFiducialCalibration detector = FactoryFiducialCalibration.chessboard(null,config);
+//		ConfigGridDimen config = new ConfigGridDimen(5,7,1,1);
 //		DetectorFiducialCalibration detector = FactoryFiducialCalibration.squareGrid(config);
-		ConfigGridDimen config = new ConfigGridDimen(5,6,4,5);
-		DetectorFiducialCalibration detector = FactoryFiducialCalibration.circleHexagonalGrid(null,config);
+//		ConfigGridDimen config = new ConfigGridDimen(5,6,4,5);
+//		DetectorFiducialCalibration detector = FactoryFiducialCalibration.circleHexagonalGrid(null,config);
 //		ConfigCircleRegularGrid config = new ConfigCircleRegularGrid(4,3,4,6);
 //		DetectorFiducialCalibration detector = FactoryFiducialCalibration.circleRegularGrid(config);
 

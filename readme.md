@@ -15,15 +15,16 @@ To run every benchmark do the following. Module jars need to be rebuilt if BoofC
 Look at the command line arguments for regression.jar with the --Help flag to see other options.
 
 1) Set up e-mail file if desired
-2) Create jars for each module and build the regression application
+2) To replicate the exact output use JRE 11.0.1+13-LTS
+3) Create jars for each module and build the regression application
 ```
 ./gradlew moduleJars;./gradlew regressionJar
 ```
-3) Run regression
+4) Run regression
 ```
 java -jar regression.jar
 ```
-4) Check e-mail for summary of changes from baseline
+5) Check e-mail for summary of changes from baseline
 
 
 # Settings Up Results E-Mailing

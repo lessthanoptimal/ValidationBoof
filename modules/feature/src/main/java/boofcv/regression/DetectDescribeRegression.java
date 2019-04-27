@@ -178,7 +178,6 @@ public class DetectDescribeRegression extends BaseRegression implements ImageReg
 		ImageType imageType = ImageType.single(bandType);
 
 		ConfigCompleteSift config = new ConfigCompleteSift();
-//		ConfigSiftScaleSpace configSS = config.scaleSpace;
 		ConfigSiftDetector configDet = config.detector;
 		configDet.extract.radius = 3;
 		configDet.extract.threshold = 0f;
