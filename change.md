@@ -4,6 +4,9 @@ Description of changes to benchmarks and justifications for change in performanc
 2019/
 
 - Default SIFT scale-space changed. No longer doubled.
+- Fiducials
+  * Fixed bug in regression where total wrong order was not being reset
+  * Turned off wrong order check for chessboard
 
 ## Version 0.33
 2019/03/19

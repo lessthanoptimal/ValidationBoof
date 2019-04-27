@@ -40,35 +40,37 @@ public class FiducialRegression extends BaseRegression implements ImageRegressio
 		FactoryObject factory = new FactoryObjectAbstract() {
 			@Override public Object newInstance()
 			{return FactoryFiducial.squareBinary(new ConfigFiducialBinary(1), robust, imageType);}};
-		process( "BinaryRobust", new EstimateBinaryFiducialToCamera(factory),"square_border_binary");
+		process( "BinaryRobust", new EstimateBinaryFiducialToCamera(factory),"square_border_binary",false);
 
 		factory = new FactoryObjectAbstract() {
 			@Override public Object newInstance()
 		{return FactoryFiducial.squareBinary(new ConfigFiducialBinary(1), fast, imageType);}};
-		process("BinaryFast", new EstimateBinaryFiducialToCamera(factory), "square_border_binary");
+		process("BinaryFast", new EstimateBinaryFiducialToCamera(factory), "square_border_binary",false);
 
 		factory = new FactoryObjectAbstract() {
 			@Override public Object newInstance()
 		{return FactoryFiducial.squareImage(new ConfigFiducialImage(), robust, imageType);}};
-		process("ImageRobust", new EstimateImageFiducialToCamera(factory), "square_border_image");
+		process("ImageRobust", new EstimateImageFiducialToCamera(factory), "square_border_image",false);
 
 		factory = new FactoryObjectAbstract() {
 			@Override public Object newInstance()
 		{return FactoryFiducial.squareImage(new ConfigFiducialImage(), fast, imageType);}};
-		process("ImageFast", new EstimateImageFiducialToCamera(factory), "square_border_image");
+		process("ImageFast", new EstimateImageFiducialToCamera(factory), "square_border_image",false);
 
-		process("Chessboard", new EstimateChessboardToCamera(imageType), "chessboard");
+		process("Chessboard", new EstimateChessboardToCamera(imageType), "chessboard", true);
 
-		process("Chessboard2", new EstimateChessboardToCamera2(imageType), "chessboard");
+		process("Chessboard2", new EstimateChessboardToCamera2(imageType), "chessboard", true);
 
-		process("SquareGrid", new EstimateSquareGridToCamera(imageType), "square_grid");
+		process("SquareGrid", new EstimateSquareGridToCamera(imageType), "square_grid",false);
 
-		process("CircleHexagonal", new EstimateCircleHexagonalToCamera(imageType), "circle_hexagonal");
+		process("CircleHexagonal", new EstimateCircleHexagonalToCamera(imageType), "circle_hexagonal",false);
 
-		process("CircleRegular", new EstimateCircleRegularToCamera(imageType), "circle_regular");
+		process("CircleRegular", new EstimateCircleRegularToCamera(imageType), "circle_regular",false);
 	}
 
-	private void process(String name, BaseEstimateSquareFiducialToCamera estimate, String type) throws IOException {
+	private void process(String name, BaseEstimateSquareFiducialToCamera estimate, String type, boolean ignoreOrder )
+			throws IOException
+	{
 
 		infoString = name;
 
@@ -77,7 +79,7 @@ public class FiducialRegression extends BaseRegression implements ImageRegressio
 
 		try {
 			computeRuntimeMetrics(type, "RUN_Fiducial_" + name + ".txt", estimate); // TODO compute while doing the others
-			computeStandardMetrics(type, "ACC_Fiducial_Standard_" + name + ".txt", estimate, 5);
+			computeStandardMetrics(type, "ACC_Fiducial_Standard_" + name + ".txt", estimate,ignoreOrder, 5);
 			computeStaticMetrics(type, "ACC_Fiducial_Static_" + name + ".txt", estimate, 5);
 			computeAlwaysVisibleMetrics(type, "ACC_Fiducial_AlwaysVisible_" + name + ".txt", estimate);
 		} catch( RuntimeException e ) {
@@ -103,6 +105,7 @@ public class FiducialRegression extends BaseRegression implements ImageRegressio
 
 	private void computeStandardMetrics(String type, String outName,
 										BaseEstimateSquareFiducialToCamera estimate ,
+										boolean ignoreOrder ,
 										double maxPixelError )
 			throws IOException
 	{
@@ -111,6 +114,7 @@ public class FiducialRegression extends BaseRegression implements ImageRegressio
 
 		EvaluateFiducialToCamera evaluate = new EvaluateFiducialToCamera();
 		evaluate.setJustSummary(true);
+		evaluate.setIgnoreWrongOrder(ignoreOrder);
 		evaluate.setMaxPixelError(maxPixelError);
 		evaluate.setErrorStream(errorLog);
 		evaluate.setOutputResults(out);

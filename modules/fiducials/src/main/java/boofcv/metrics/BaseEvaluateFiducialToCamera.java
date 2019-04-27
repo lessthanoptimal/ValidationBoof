@@ -61,11 +61,12 @@ public abstract class BaseEvaluateFiducialToCamera implements FiducialEvaluateIn
 	GrowQueue_F64 errors = new GrowQueue_F64();
 
 	FiducialCommon.Library library;
-	List<String> visible;
-
 
 	// Fiducial IDs that were assigned to false positive
 	GrowQueue_I32 falsePositiveIDs = new GrowQueue_I32();
+
+	// Should it consider "wrong order" as correct? This should be true if there's rotational ambiguity
+	boolean ignoreWrongOrder = false;
 
 	// Only print the summary results
 	boolean justSummary = false;
@@ -128,6 +129,7 @@ public abstract class BaseEvaluateFiducialToCamera implements FiducialEvaluateIn
 		totalExpected = 0;
 		totalCorrect = 0;
 		totalWrongID = 0;
+		totalWrongOrder = 0;
 		totalFalsePositive = 0;
 		totalFalseNegative = 0;
 		totalDuplicates = 0;
@@ -178,7 +180,7 @@ public abstract class BaseEvaluateFiducialToCamera implements FiducialEvaluateIn
 				fiducialPose[match.index].set(det.fiducialToCamera);
 
 				if( match.id == det.id ) {
-					if( match.outOfOrder )
+					if( !ignoreWrongOrder && match.outOfOrder )
 						totalWrongOrder++;
 					else
 						totalCorrect++;
@@ -350,6 +352,10 @@ public abstract class BaseEvaluateFiducialToCamera implements FiducialEvaluateIn
 
 	public void setJustSummary(boolean justSummary) {
 		this.justSummary = justSummary;
+	}
+
+	public void setIgnoreWrongOrder(boolean ignoreWrongOrder) {
+		this.ignoreWrongOrder = ignoreWrongOrder;
 	}
 
 	public static class Assignment
