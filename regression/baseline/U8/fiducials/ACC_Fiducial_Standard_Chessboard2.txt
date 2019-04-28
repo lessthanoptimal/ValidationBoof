@@ -1,0 +1,122 @@
+# GENERATOR FiducialRegression
+# distance_angle
+# maxPixelError = 5.0
+
+Summary:
+ correct            :    5 /    6
+ wrong order        : 0
+ wrong ID           : 0
+ duplicates         : 0
+ false positives    : 0
+ false negative     : 1
+Corner errors:
+ precision 50%         : 0.2038651814020613
+ precision 90%         : 0.3832842498587704
+ precision 100%        : 0.6073110894092927
+
+---------------------------------------------------
+
+# distance_straight
+# maxPixelError = 5.0
+
+Summary:
+ correct            :    7 /    8
+ wrong order        : 0
+ wrong ID           : 0
+ duplicates         : 0
+ false positives    : 0
+ false negative     : 1
+Corner errors:
+ precision 50%         : 0.20550167299031694
+ precision 90%         : 0.3747742347031424
+ precision 100%        : 0.7005291380231234
+
+---------------------------------------------------
+
+# distant
+# maxPixelError = 5.0
+
+Summary:
+ correct            :    7 /    7
+ wrong order        : 0
+ wrong ID           : 0
+ duplicates         : 0
+ false positives    : 0
+ false negative     : 0
+Corner errors:
+ precision 50%         : 0.18739353861842065
+ precision 90%         : 0.3266117740967985
+ precision 100%        : 0.7259556568065388
+
+---------------------------------------------------
+
+# motion_blur
+# maxPixelError = 5.0
+
+Summary:
+ correct            :    8 /   13
+ wrong order        : 0
+ wrong ID           : 0
+ duplicates         : 0
+ false positives    : 0
+ false negative     : 5
+Corner errors:
+ precision 50%         : 1.5262126062358015
+ precision 90%         : 2.8145318993002926
+ precision 100%        : 5.663237616103956
+
+---------------------------------------------------
+
+# rotation_flat
+# maxPixelError = 5.0
+
+Summary:
+ correct            :   12 /   12
+ wrong order        : 0
+ wrong ID           : 0
+ duplicates         : 0
+ false positives    : 0
+ false negative     : 0
+Corner errors:
+ precision 50%         : 0.34993395273316463
+ precision 90%         : 0.6552124616631758
+ precision 100%        : 0.9979772170776856
+
+---------------------------------------------------
+
+# rotation_vertical
+# maxPixelError = 5.0
+
+Summary:
+ correct            :    7 /    7
+ wrong order        : 0
+ wrong ID           : 0
+ duplicates         : 0
+ false positives    : 0
+ false negative     : 0
+Corner errors:
+ precision 50%         : 0.24131386566309143
+ precision 90%         : 0.45628731447311793
+ precision 100%        : 0.6573411231771981
+
+---------------------------------------------------
+
+# shadow
+# maxPixelError = 5.0
+
+Summary:
+ correct            :   15 /   15
+ wrong order        : 0
+ wrong ID           : 0
+ duplicates         : 0
+ false positives    : 0
+ false negative     : 0
+Corner errors:
+ precision 50%         : 0.5307510047524961
+ precision 90%         : 0.9847730555620199
+ precision 100%        : 1.6655486331170963
+
+---------------------------------------------------
+
+---------------------------------------------------
+total correct / total expected =   61 /  68
