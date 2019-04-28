@@ -5,7 +5,7 @@
                apartment_bush_  25.86  84.47
              apartment_road_a_  16.83  98.38
                        barrel_  58.64  63.80
-                      bobcats_  54.22  73.01
+                      bobcats_  54.23  73.01
                         books_  83.63  86.43
                          bowl_  58.85  90.90
                    building_a_  23.54  75.85
@@ -20,7 +20,7 @@
                    fig_leaves_  39.69  79.37
                      figuresA_  33.63  90.71
                       house_a_  32.63  69.85
-                      house_b_  23.46  73.36
+                      house_b_  23.54  73.36
                      kitchenA_  53.62  52.75
                      kitchenB_  30.02  93.03
                       library_  51.97  45.05
@@ -38,7 +38,7 @@
                         power_  18.34  74.34
                        puddle_  47.97  83.49
                    pumpkintop_  58.91  76.34
-                       road_a_  19.51  77.97
+                       road_a_  19.50  77.97
                          rock_   2.77  14.07
                   rock_leaves_  63.11  94.73
                      rockview_  46.76  86.45
@@ -51,7 +51,7 @@
                 sf_building_d_  17.39  93.38
                   sf_bus_stop_  16.83  86.81
                    sf_grass_a_  39.85  42.76
-            sf_intersection_a_  24.89  83.07
+            sf_intersection_a_  24.86  83.07
                      sf_thing_  40.09  40.95
                shuffleboard_a_  33.59  81.59
                shuffleboard_b_  28.62  49.64

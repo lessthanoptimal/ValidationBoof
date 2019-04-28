@@ -4,8 +4,8 @@ data/calibration_stereo/Bumblebee2_Chess/left01.jpg 0.2834623508220676 0.4401757
 data/calibration_stereo/Bumblebee2_Chess/left02.jpg 0.32900690358109974 0.5065298311675046
 data/calibration_stereo/Bumblebee2_Chess/left03.jpg 0.21303291785077955 0.37963342339379474
 data/calibration_stereo/Bumblebee2_Chess/left04.jpg 0.2174465016470857 0.5462738741651219
-data/calibration_stereo/Bumblebee2_Chess/left05.jpg 0.21173792116080406 0.34514257141049054
-data/calibration_stereo/Bumblebee2_Chess/left06.jpg 0.25662055975319653 0.44780359818239984
+data/calibration_stereo/Bumblebee2_Chess/left05.jpg 0.21173792116080406 0.34514257141037685
+data/calibration_stereo/Bumblebee2_Chess/left06.jpg 0.25662055975327663 0.44780359818239984
 data/calibration_stereo/Bumblebee2_Chess/left07.jpg 0.29612928683762235 0.4757263841212765
 data/calibration_stereo/Bumblebee2_Chess/left08.jpg 0.24245805856178415 0.4336334048540649
 data/calibration_stereo/Bumblebee2_Chess/left09.jpg 0.25525614236170413 0.534166750093285
@@ -16,7 +16,7 @@ data/calibration_stereo/Bumblebee2_Chess/right02.jpg 0.2763517875002667 0.553230
 data/calibration_stereo/Bumblebee2_Chess/right03.jpg 0.40106544384058673 0.653552255932011
 data/calibration_stereo/Bumblebee2_Chess/right04.jpg 0.31452760882494646 0.5172700086552502
 data/calibration_stereo/Bumblebee2_Chess/right05.jpg 0.3023406820558375 0.5064136874409754
-data/calibration_stereo/Bumblebee2_Chess/right06.jpg 0.3391596205795635 0.4121560768939622
+data/calibration_stereo/Bumblebee2_Chess/right06.jpg 0.3391596205795635 0.412156076893934
 data/calibration_stereo/Bumblebee2_Chess/right07.jpg 0.34532844649666283 0.6200984126003198
 data/calibration_stereo/Bumblebee2_Chess/right08.jpg 0.26940853745718163 0.3654950109483569
 data/calibration_stereo/Bumblebee2_Chess/right09.jpg 0.33747034973971723 0.43187081038599745
@@ -36,7 +36,7 @@ data/calibration_mono/chessboard/Sony_DSC-HX5V/frame11.jpg 0.40128501313439097 0
 data/calibration_mono/chessboard/Sony_DSC-HX5V/frame12.jpg 0.3232385397126808 0.5840559179504421
 data/calibration_mono/chessboard/Sony_DSC-HX5V/frame13.jpg 0.30003941180371807 0.5377485111710663
 data/calibration_mono/chessboard/large/large00.jpg 0.2810073099724107 0.7537706616499349
-data/calibration_mono/chessboard/large/large01.jpg 0.2682272812486872 0.531155098030427
+data/calibration_mono/chessboard/large/large01.jpg 0.2682272812486872 0.5311550980304666
 data/calibration_mono/chessboard/large/large02.jpg 0.43825275598521163 0.7209198417779412
 data/calibration_mono/chessboard/large/large03.jpg 0.2821478506507275 0.45707511666833556
 data/calibration_mono/chessboard/large/large04.jpg 0.34153476628355134 0.5161456015581797
@@ -46,7 +46,7 @@ data/calibration_mono/chessboard/distant/image00001.jpg 0.2183676847603041 0.263
 data/calibration_mono/chessboard/distant/image00002.jpg 0.20525174962011736 0.288702184553556
 data/calibration_mono/chessboard/distant/image00003.jpg 0.20026772180283214 0.3097001278293041
 data/calibration_mono/chessboard/distant/image00004.jpg 0.19444331527654238 0.3483191048524997
-data/calibration_mono/chessboard/distant/image00005.jpg 0.24497699004897835 0.6643243171057231
+data/calibration_mono/chessboard/distant/image00005.jpg 0.24497699004899415 0.6643243171057231
 data/calibration_mono/chessboard/distant/image00006.jpg 0.1852208235030566 0.3585054988749337
 data/calibration_mono/chessboard/hard/image01.jpg 0.20747411582720113 0.40209773312164854
 data/calibration_mono/chessboard/border/image00000.jpg 0.2348445636924257 0.35406199918239406
@@ -65,17 +65,63 @@ data/calibration_mono/chessboard/border/image00012.jpg 0.41202717290818697 1.081
 data/calibration_mono/chessboard/border/image00013.jpg failed
 data/calibration_mono/chessboard/border/image00014.jpg 0.4301504048018693 0.6527042861511295
 data/calibration_mono/chessboard/border/image00015.jpg 0.5415441398534542 0.7631589613077375
-data/calibration_mono/chessboard/fisheye/image00.jpg 0.3784634588239426 0.5923369584318944
-data/calibration_mono/chessboard/fisheye/image01.jpg 0.7160370141962386 1.0928621855353522
-data/calibration_mono/chessboard/fisheye/image02.jpg 1.0370250605522657 1.3165170538384876
-data/calibration_mono/chessboard/fisheye/image03.jpg 0.6283549633701033 0.9624140871624288
-data/calibration_mono/chessboard/fisheye/image04.jpg 0.42321874607447524 0.6467246711172564
-data/calibration_mono/chessboard/fisheye/image05.jpg 0.27134438966441143 0.5768547419912043
-data/calibration_mono/chessboard/fisheye/image06.jpg 0.5307404644203919 0.9368423354072715
-data/calibration_mono/chessboard/fisheye/image07.jpg 0.5650490199706675 1.063594512223891
-data/calibration_mono/chessboard/fisheye/image08.jpg 0.35870348518085515 0.5728536447831577
-data/calibration_mono/chessboard/fisheye/image09.jpg 0.278190595247752 0.49168893116015056
-data/calibration_mono/chessboard/fisheye/image10.jpg failed
+data/calibration_mono/chessboard/fisheye1/image00.jpg 0.378463458823853 0.5923369584318433
+data/calibration_mono/chessboard/fisheye1/image01.jpg 0.7160370141962386 1.0928621855353522
+data/calibration_mono/chessboard/fisheye1/image02.jpg 1.0370250605522657 1.3165170538384876
+data/calibration_mono/chessboard/fisheye1/image03.jpg 0.6283549633701033 0.9624140871624288
+data/calibration_mono/chessboard/fisheye1/image04.jpg 0.42321874607447524 0.6467246711172564
+data/calibration_mono/chessboard/fisheye1/image05.jpg 0.27134438966441143 0.5768547419912043
+data/calibration_mono/chessboard/fisheye1/image06.jpg 0.5307404644203919 0.9368423354072715
+data/calibration_mono/chessboard/fisheye1/image07.jpg 0.5650490199706256 1.063594512223921
+data/calibration_mono/chessboard/fisheye1/image08.jpg 0.35870348518085515 0.5728536447831577
+data/calibration_mono/chessboard/fisheye1/image09.jpg 0.278190595247752 0.49168893116015056
+data/calibration_mono/chessboard/fisheye1/image10.jpg failed
+data/calibration_mono/chessboard/fisheye2/image00.jpg 0.30763307150595226 0.6135917909049219
+data/calibration_mono/chessboard/fisheye2/image01.jpg 0.5779634029182602 0.8370006874912139
+data/calibration_mono/chessboard/fisheye2/image02.jpg 0.4117246608769283 0.6686702040070783
+data/calibration_mono/chessboard/fisheye2/image03.jpg 1.2323515848234936 1.575893135509464
+data/calibration_mono/chessboard/fisheye2/image04.jpg 0.4108029763173373 0.7436922225462623
+data/calibration_mono/chessboard/fisheye2/image05.jpg 0.3520025446813639 0.5187433402849019
+data/calibration_mono/chessboard/fisheye2/image06.jpg 1.3370641787523585 1.8452070535455791
+data/calibration_mono/chessboard/fisheye2/image07.jpg 1.142618086224617 1.4565658902329224
+data/calibration_mono/chessboard/fisheye2/image08.jpg 0.9047876397254899 1.5640940156106578
+data/calibration_mono/chessboard/fisheye2/image09.jpg 0.6865902682619643 1.085671177442472
+data/calibration_mono/chessboard/fisheye2/image10.jpg 0.7252373710156853 1.3310918224579336
+data/calibration_mono/chessboard/fisheye2/image11.jpg 1.1410706549857197 1.5656762152321793
+data/calibration_mono/chessboard/fisheye2/image12.jpg 0.6320646840838303 0.8333605331895558
+data/calibration_mono/chessboard/fisheye2/image13.jpg failed
+data/calibration_mono/chessboard/fisheye2/image14.jpg 1.194148986389284 2.5269386300739134
+data/calibration_mono/chessboard/fisheye2/image15.jpg failed
+data/calibration_mono/chessboard/fisheye2/image16.jpg 0.9249548092766343 1.4097513162524011
+data/calibration_mono/chessboard/fisheye2/image17.jpg 0.9560616107296004 1.612297822208896
+data/calibration_mono/chessboard/fisheye2/image18.jpg 1.868700216728555 2.281879764043072
+data/calibration_mono/chessboard/fisheye2/image19.jpg 1.856962983430734 3.0821044603105205
+data/calibration_mono/chessboard/fisheye2/image20.jpg 1.8712275768763693 2.611566628985652
+data/calibration_mono/chessboard/fisheye2/image21.jpg 1.351749504470691 2.868746208938465
+data/calibration_mono/chessboard/fisheye2/image22.jpg 0.40288080036800494 0.7790386537331672
+data/calibration_mono/chessboard/fisheye2/image23.jpg 1.2865249520937263 1.8131720717743725
+data/calibration_mono/chessboard/fisheye2/image24.jpg failed
+data/calibration_mono/chessboard/fisheye2/image25.jpg failed
+data/calibration_mono/chessboard/fisheye2/image26.jpg 1.6676892292281493 2.632922700156221
+data/calibration_mono/chessboard/fisheye2/image27.jpg 1.9177991069545586 2.840716884365253
+data/calibration_mono/chessboard/fisheye2/image28.jpg 1.3295390054377394 4.358739825531751
+data/calibration_mono/chessboard/fisheye2/image29.jpg failed
+data/calibration_mono/chessboard/fisheye2/image30.jpg failed
+data/calibration_mono/chessboard/fisheye2/image31.jpg 1.3949784478162706 2.202500449613629
+data/calibration_mono/chessboard/fisheye2/image32.jpg 0.3596202223521685 1.952594369976678
+data/calibration_mono/chessboard/fisheye2/image33.jpg 0.9965499452317074 1.3728595671964439
+data/calibration_mono/chessboard/fisheye2/image34.jpg 1.2091379216012696 1.6913370658112126
+data/calibration_mono/chessboard/fisheye2/image35.jpg 1.7334220490705083 2.1985773105303763
+data/calibration_mono/chessboard/fisheye2/image36.jpg failed
+data/calibration_mono/chessboard/fisheye2/image37.jpg failed
+data/calibration_mono/chessboard/fisheye2/image38.jpg 2.1403797047962887 3.2125153345927018
+data/calibration_mono/chessboard/fisheye2/image39.jpg 0.566910643456265 0.8660568164886081
+data/calibration_mono/chessboard/fisheye2/image40.jpg failed
+data/calibration_mono/chessboard/fisheye2/image41.jpg 1.0652948714738355 1.9888977562446977
+data/calibration_mono/chessboard/fisheye2/image42.jpg 1.7560957133200032 2.45406464586348
+data/calibration_mono/chessboard/fisheye2/image43.jpg failed
+data/calibration_mono/chessboard/fisheye2/image44.jpg failed
+data/calibration_mono/chessboard/fisheye2/image45.jpg failed
 data/calibration_mono/chessboard/close/image00.jpg 0.41886348676001756 0.8062598536745832
 data/calibration_mono/chessboard/close/image01.jpg 0.4355732066190214 0.6838887489480443
 data/calibration_mono/chessboard/close/image02.jpg 0.47978734388286903 0.8527930931742256
@@ -88,5 +134,40 @@ data/calibration_mono/chessboard/close/image08.jpg 0.41821257980852544 0.7761997
 data/calibration_mono/chessboard/close/image09.jpg 0.4928459670359104 0.9547604013470136
 data/calibration_mono/chessboard/close/image10.jpg 0.43247581756998094 0.761841526989087
 data/calibration_mono/chessboard/close/image11.jpg 0.5364813127233864 0.8359692977546879
+data/calibration_mono/chessboard/sloppy13x10/image00.jpg 0.3418446334250698 0.681681068855355
+data/calibration_mono/chessboard/sloppy13x10/image01.jpg 0.3879975835319518 0.7522722019636496
+data/calibration_mono/chessboard/sloppy13x10/image02.jpg 0.3523664052816342 0.7743659896592555
+data/calibration_mono/chessboard/sloppy13x10/image03.jpg 0.5394273158433329 1.1006644359457085
+data/calibration_mono/chessboard/sloppy13x10/image04.jpg 0.852508760706846 1.728224198997214
+data/calibration_mono/chessboard/sloppy13x10/image05.jpg 0.8716754714633245 1.7256082395665797
+data/calibration_mono/chessboard/sloppy13x10/image06.jpg 0.749431687376473 1.513670843283916
+data/calibration_mono/chessboard/sloppy13x10/image07.jpg 0.2922961871118026 0.6425578475254126
+data/calibration_mono/chessboard/sloppy13x10/image08.jpg 0.36364286054296835 0.6937334422111608
+data/calibration_mono/chessboard/sloppy13x10/image09.jpg 0.29314682083182186 0.6120951882765558
+data/calibration_mono/chessboard/sloppy13x10/image10.jpg 0.3547656907727131 0.7630912267500694
+data/calibration_mono/chessboard/sloppy13x10/image11.jpg 0.3723523019440086 0.9075156461116901
+data/calibration_mono/chessboard/sloppy13x10/image12.jpg 0.49367050356350967 1.0126114078036461
+data/calibration_mono/chessboard/focus/image01.jpg failed
+data/calibration_mono/chessboard/focus/image02.jpg failed
+data/calibration_mono/chessboard/focus/image03.jpg failed
+data/calibration_mono/chessboard/focus/image04.jpg failed
+data/calibration_mono/chessboard/focus/image05.jpg 0.6492537544721327 1.2043562403698316
+data/calibration_mono/chessboard/focus/image06.jpg 0.7460959318883313 1.4950912898068385
+data/calibration_mono/chessboard/focus/image07.jpg 0.6025160507633838 1.001426664644629
+data/calibration_mono/chessboard/focus/image08.jpg 0.37894910474438837 0.8382033641309238
+data/calibration_mono/chessboard/focus/image09.jpg 0.3683222214374777 0.8627289739021337
+data/calibration_mono/chessboard/focus/image10.jpg 0.31591437115946575 0.5053718523670649
+data/calibration_mono/chessboard/focus/image11.jpg 0.19939265727346564 0.4164427787451741
+data/calibration_mono/chessboard/focus/image12.jpg 0.2625104395686455 0.37824182658666333
+data/calibration_mono/chessboard/focus/image13.jpg 0.2377453298793011 0.4069572596531444
+data/calibration_mono/chessboard/focus/image14.jpg 0.18281333341581 0.380640466297695
+data/calibration_mono/chessboard/focus/image15.jpg 0.18147706879511763 0.28888402577625977
+data/calibration_mono/chessboard/rotation_vertical/image01.jpg 0.28638346266501724 0.5268356888151018
+data/calibration_mono/chessboard/rotation_vertical/image02.jpg 0.25812735111898955 0.40085285857684033
+data/calibration_mono/chessboard/rotation_vertical/image03.jpg 0.30007063054758576 0.5262283422748367
+data/calibration_mono/chessboard/rotation_vertical/image04.jpg 0.25359577127118343 0.4777705827161519
+data/calibration_mono/chessboard/rotation_vertical/image05.jpg 0.29238894139592114 0.45113128818923415
+data/calibration_mono/chessboard/rotation_vertical/image06.jpg 0.1844586834780791 0.2884491809917579
+data/calibration_mono/chessboard/rotation_vertical/image07.jpg 0.25090214857472704 0.44890803604885043
 
-Summary: 50% = 0.3043295840834234  95% = 0.8090004644598476   success %95.45454545454545
+Summary: 50% = 0.3815946909175798  95% = 1.575893135509464   success %88.16568047337277

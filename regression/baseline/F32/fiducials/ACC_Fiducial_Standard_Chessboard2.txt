@@ -10,9 +10,9 @@ Summary:
  false positives    : 0
  false negative     : 1
 Corner errors:
- precision 50%         : 0.20691088115042855
- precision 90%         : 0.3827268549947593
- precision 100%        : 0.5943309185645387
+ precision 50%         : 0.20446979797228135
+ precision 90%         : 0.3834205300077561
+ precision 100%        : 0.6071232003065488
 
 ---------------------------------------------------
 
@@ -20,16 +20,16 @@ Corner errors:
 # maxPixelError = 5.0
 
 Summary:
- correct            :    8 /    8
+ correct            :    7 /    8
  wrong order        : 0
  wrong ID           : 0
  duplicates         : 0
  false positives    : 0
- false negative     : 0
+ false negative     : 1
 Corner errors:
- precision 50%         : 0.19757426565183006
- precision 90%         : 0.3824703125517009
- precision 100%        : 0.6441449129269902
+ precision 50%         : 0.2071135231905834
+ precision 90%         : 0.37876281449795085
+ precision 100%        : 0.7001311389601584
 
 ---------------------------------------------------
 
@@ -44,9 +44,9 @@ Summary:
  false positives    : 0
  false negative     : 0
 Corner errors:
- precision 50%         : 0.20599179937747228
- precision 90%         : 0.34537768106020983
- precision 100%        : 0.7049774306250872
+ precision 50%         : 0.18823187047685958
+ precision 90%         : 0.32722953714462644
+ precision 100%        : 0.7274987996439076
 
 ---------------------------------------------------
 
@@ -54,16 +54,16 @@ Corner errors:
 # maxPixelError = 5.0
 
 Summary:
- correct            :    9 /   13
+ correct            :    8 /   13
  wrong order        : 0
  wrong ID           : 0
  duplicates         : 0
  false positives    : 0
- false negative     : 4
+ false negative     : 5
 Corner errors:
- precision 50%         : 1.4557808626712712
- precision 90%         : 2.812083000465145
- precision 100%        : 5.663582035034032
+ precision 50%         : 1.5243395804020647
+ precision 90%         : 2.8156205837389714
+ precision 100%        : 5.66590758650925
 
 ---------------------------------------------------
 
@@ -78,9 +78,9 @@ Summary:
  false positives    : 0
  false negative     : 0
 Corner errors:
- precision 50%         : 0.35760058859325666
- precision 90%         : 0.6615943096226361
- precision 100%        : 0.9561406280557149
+ precision 50%         : 0.34962594987708284
+ precision 90%         : 0.6707942202782944
+ precision 100%        : 1.0012640719502177
 
 ---------------------------------------------------
 
@@ -95,9 +95,9 @@ Summary:
  false positives    : 0
  false negative     : 0
 Corner errors:
- precision 50%         : 0.24503278369237627
- precision 90%         : 0.4631028221588075
- precision 100%        : 0.6886659467888467
+ precision 50%         : 0.24168890958436606
+ precision 90%         : 0.45657522797276306
+ precision 100%        : 0.6576223451213613
 
 ---------------------------------------------------
 
@@ -105,18 +105,18 @@ Corner errors:
 # maxPixelError = 5.0
 
 Summary:
- correct            :   14 /   15
+ correct            :   15 /   15
  wrong order        : 0
  wrong ID           : 0
  duplicates         : 0
  false positives    : 0
- false negative     : 1
+ false negative     : 0
 Corner errors:
- precision 50%         : 0.5164831551035027
- precision 90%         : 0.9536202169001318
- precision 100%        : 1.4986217360509204
+ precision 50%         : 0.5305001863067157
+ precision 90%         : 0.9841540441874407
+ precision 100%        : 1.661769805557354
 
 ---------------------------------------------------
 
 ---------------------------------------------------
-total correct / total expected =   62 /  68
+total correct / total expected =   61 /  68

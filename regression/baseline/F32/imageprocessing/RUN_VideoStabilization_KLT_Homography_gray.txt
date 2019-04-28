@@ -1,4 +1,4 @@
 # GENERATOR VideoStabilizeRegression
 # Runtime Performance of KLT_Homography_gray
 # Video Name, fps
-         shake.mjpeg  92.327698
+         shake.mjpeg  91.849935

@@ -1,108 +1,108 @@
 Runtime.getRuntime().availableProcessors(): 8
-Runtime.getRuntime().freeMemory(): 499604488
-Runtime.getRuntime().totalMemory(): 504889344
-=========== java.runtime.name
-Java(TM) SE Runtime Environment
-=========== sun.boot.library.path
-/opt/jdk/jdk1.8.0_171/jre/lib/amd64
-=========== java.vm.version
-25.171-b11
-=========== java.vm.vendor
-Oracle Corporation
-=========== java.vendor.url
-http://java.oracle.com/
-=========== path.separator
-:
-=========== java.vm.name
-Java HotSpot(TM) 64-Bit Server VM
-=========== file.encoding.pkg
-sun.io
-=========== user.country
-US
-=========== sun.java.launcher
-SUN_STANDARD
-=========== sun.os.patch.level
-unknown
-=========== java.vm.specification.name
-Java Virtual Machine Specification
-=========== user.dir
-/home/pja/projects/ValidationBoof
-=========== java.runtime.version
-1.8.0_171-b11
-=========== java.awt.graphicsenv
-sun.awt.X11GraphicsEnvironment
-=========== java.endorsed.dirs
-/opt/jdk/jdk1.8.0_171/jre/lib/endorsed
-=========== os.arch
-amd64
-=========== java.io.tmpdir
-/tmp
-=========== line.separator
+Runtime.getRuntime().freeMemory(): 520662920
+Runtime.getRuntime().totalMemory(): 526385152
+=========== sun.desktop
+gnome
+=========== awt.toolkit
+sun.awt.X11.XToolkit
+=========== java.specification.version
+11
+=========== sun.cpu.isalist
 
-
-=========== java.vm.specification.vendor
-Oracle Corporation
-=========== os.name
-Linux
 =========== sun.jnu.encoding
 UTF-8
-=========== java.library.path
-/usr/java/packages/lib/amd64:/usr/lib64:/lib64:/lib:/usr/lib
-=========== java.specification.name
-Java Platform API Specification
-=========== java.class.version
-52.0
-=========== sun.management.compiler
-HotSpot 64-Bit Tiered Compilers
-=========== os.version
-4.15.0-46-generic
-=========== user.home
-/home/pja
-=========== user.timezone
-
-=========== java.awt.printerjob
-sun.print.PSPrinterJob
-=========== file.encoding
-UTF-8
-=========== java.specification.version
-1.8
 =========== java.class.path
 regression.jar
-=========== user.name
-pja
-=========== java.vm.specification.version
-1.8
-=========== sun.java.command
-regression.jar
-=========== java.home
-/opt/jdk/jdk1.8.0_171/jre
+=========== java.vm.vendor
+Azul Systems, Inc.
 =========== sun.arch.data.model
 64
+=========== java.vendor.url
+http://www.azulsystems.com/
+=========== user.timezone
+
+=========== os.name
+Linux
+=========== java.vm.specification.version
+11
+=========== sun.java.launcher
+SUN_STANDARD
+=========== user.country
+US
+=========== sun.boot.library.path
+/opt/jdk/jdk-11.0.1/lib
+=========== sun.java.command
+regression.jar -m fiducials
+=========== jdk.debug
+release
+=========== sun.cpu.endian
+little
+=========== user.home
+/home/pja
 =========== user.language
 en
 =========== java.specification.vendor
 Oracle Corporation
-=========== awt.toolkit
-sun.awt.X11.XToolkit
-=========== java.vm.info
-mixed mode
-=========== java.version
-1.8.0_171
-=========== java.ext.dirs
-/opt/jdk/jdk1.8.0_171/jre/lib/ext:/usr/java/packages/lib/ext
-=========== sun.boot.class.path
-/opt/jdk/jdk1.8.0_171/jre/lib/resources.jar:/opt/jdk/jdk1.8.0_171/jre/lib/rt.jar:/opt/jdk/jdk1.8.0_171/jre/lib/sunrsasign.jar:/opt/jdk/jdk1.8.0_171/jre/lib/jsse.jar:/opt/jdk/jdk1.8.0_171/jre/lib/jce.jar:/opt/jdk/jdk1.8.0_171/jre/lib/charsets.jar:/opt/jdk/jdk1.8.0_171/jre/lib/jfr.jar:/opt/jdk/jdk1.8.0_171/jre/classes
-=========== java.vendor
-Oracle Corporation
+=========== java.version.date
+2018-10-16
+=========== java.home
+/opt/jdk/jdk-11.0.1
 =========== file.separator
 /
+=========== java.vm.compressedOopsMode
+Zero based
+=========== line.separator
+
+
+=========== java.specification.name
+Java Platform API Specification
+=========== java.vm.specification.vendor
+Oracle Corporation
+=========== java.awt.graphicsenv
+sun.awt.X11GraphicsEnvironment
+=========== sun.management.compiler
+HotSpot 64-Bit Tiered Compilers
+=========== java.runtime.version
+11.0.1+13-LTS
+=========== user.name
+pja
+=========== path.separator
+:
+=========== os.version
+4.15.0-47-generic
+=========== java.runtime.name
+OpenJDK Runtime Environment
+=========== file.encoding
+UTF-8
+=========== java.vm.name
+OpenJDK 64-Bit Server VM
+=========== java.vendor.version
+Zulu11.2+3
 =========== java.vendor.url.bug
-http://bugreport.sun.com/bugreport/
+http://www.azulsystems.com/support/
+=========== java.io.tmpdir
+/tmp
+=========== java.version
+11.0.1
+=========== user.dir
+/home/pja/projects/ValidationBoof
+=========== os.arch
+amd64
+=========== java.vm.specification.name
+Java Virtual Machine Specification
+=========== java.awt.printerjob
+sun.print.PSPrinterJob
+=========== sun.os.patch.level
+unknown
+=========== java.library.path
+/usr/java/packages/lib:/usr/lib64:/lib64:/lib:/usr/lib
+=========== java.vendor
+Azul Systems, Inc.
+=========== java.vm.info
+mixed mode
+=========== java.vm.version
+11.0.1+13-LTS
 =========== sun.io.unicode.encoding
 UnicodeLittle
-=========== sun.cpu.endian
-little
-=========== sun.desktop
-gnome
-=========== sun.cpu.isalist
-
+=========== java.class.version
+55.0

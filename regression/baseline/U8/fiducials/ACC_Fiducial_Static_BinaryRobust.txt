@@ -68,7 +68,7 @@ Summary:
  false positive     : 0
  false negative     : 0
 Normal Angle (deg):     1200
- errors 50%         : 0.020215457914617825
+ errors 50%         : 0.020215457896588813
  errors 90%         : 0.05181372198216645
  errors 100%        : 0.12568260545985252
 Location            : 1200

@@ -2,11 +2,11 @@
 # Runtime speed (average FPS) of stereo vision odometry algorithms
 
 StereoDepth
-            Leuven07 89.69
-             KITTI00 38.11
+            Leuven07 92.44
+             KITTI00 38.17
 DualPnP
-            Leuven07 86.25
-             KITTI00 33.25
+            Leuven07 83.58
+             KITTI00 32.59
 QuadPnP
-            Leuven07 22.34
-             KITTI00 19.38
+            Leuven07 24.12
+             KITTI00 19.61
