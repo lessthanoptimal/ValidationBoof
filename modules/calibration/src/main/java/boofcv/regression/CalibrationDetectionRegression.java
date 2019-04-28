@@ -130,29 +130,35 @@ public class CalibrationDetectionRegression extends BaseRegression implements Im
 		BoofRegressionConstants.printGenerator(output,getClass());
 		output.println("# (file name) (truth error 50%) (truth error 95%)");
 
-		OverallMetrics overallMetrics = new OverallMetrics();
-		for( String dir : directories) {
-			File filesArray[] = new File(dir).listFiles();
-			if( filesArray != null ) {
-				File descFile = new File(dir,"description.txt");
-				DetectorFiducialCalibration detector = d.creator.create(descFile);
+		try {
+			OverallMetrics overallMetrics = new OverallMetrics();
+			for (String dir : directories) {
+				File filesArray[] = new File(dir).listFiles();
+				if (filesArray != null) {
+					File descFile = new File(dir, "description.txt");
+					DetectorFiducialCalibration detector = d.creator.create(descFile);
 
-				List<File> files = Arrays.asList(filesArray);
-				Collections.sort(files);
-				evaluate(detector,d.name,overallMetrics,output, files);
-			} else {
-				errorLog.println("No files found in "+dir);
+					List<File> files = Arrays.asList(filesArray);
+					Collections.sort(files);
+					evaluate(detector, d.name, overallMetrics, output, files);
+				} else {
+					errorLog.println("No files found in " + dir);
+				}
 			}
+			output.println();
+
+			Arrays.sort(overallMetrics.errors.data, 0, overallMetrics.errors.size);
+			double error50 = overallMetrics.errors.data[(int) (overallMetrics.errors.size * 0.5)];
+			double error95 = overallMetrics.errors.data[(int) (overallMetrics.errors.size * 0.95)];
+			double percentSuccess = (overallMetrics.total - overallMetrics.failed) / (double) overallMetrics.total;
+			output.println("Summary: 50% = " + error50 + "  95% = " + error95 + "   success %" + (100.0 * percentSuccess));
+		} catch ( Exception e ) {
+			e.printStackTrace();
+			e.printStackTrace(errorLog);
+		} finally {
+			output.close();
 		}
-		output.println();
 
-		Arrays.sort(overallMetrics.errors.data,0,overallMetrics.errors.size);
-		double error50 = overallMetrics.errors.data[(int)(overallMetrics.errors.size*0.5)];
-		double error95 = overallMetrics.errors.data[(int)(overallMetrics.errors.size*0.95)];
-		double percentSuccess = (overallMetrics.total-overallMetrics.failed)/(double)overallMetrics.total;
-		output.println("Summary: 50% = "+error50+"  95% = "+error95+"   success %"+(100.0*percentSuccess));
-
-		output.close();
 	}
 
 	private void evaluate(DetectorFiducialCalibration detector, String detectorName,
