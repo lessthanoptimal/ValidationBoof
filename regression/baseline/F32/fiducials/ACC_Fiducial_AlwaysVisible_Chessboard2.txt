@@ -3,9 +3,9 @@
 total frames 959
 false positives 0
  fiducial id | visible | multiple 
-00000           957            0
+00000           958            0
 
 ---------------------------------------------------
 
 ---------------------------------------------------
-total correct / total expected =  957 / 959
+total correct / total expected =  958 / 959

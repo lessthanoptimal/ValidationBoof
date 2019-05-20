@@ -11,7 +11,7 @@ Summary:
  false negative     : 1
 Corner errors:
  precision 50%         : 0.20446979797228135
- precision 90%         : 0.3834205300077561
+ precision 90%         : 0.37578800626876246
  precision 100%        : 0.6071232003065488
 
 ---------------------------------------------------
@@ -27,9 +27,9 @@ Summary:
  false positives    : 0
  false negative     : 1
 Corner errors:
- precision 50%         : 0.2071135231905834
- precision 90%         : 0.37876281449795085
- precision 100%        : 0.7001311389601584
+ precision 50%         : 0.20890496424395794
+ precision 90%         : 0.3939987140866647
+ precision 100%        : 0.6915255856235443
 
 ---------------------------------------------------
 
@@ -62,7 +62,7 @@ Summary:
  false negative     : 5
 Corner errors:
  precision 50%         : 1.5243395804020647
- precision 90%         : 2.8156205837389714
+ precision 90%         : 2.809925606945653
  precision 100%        : 5.66590758650925
 
 ---------------------------------------------------
@@ -78,9 +78,9 @@ Summary:
  false positives    : 0
  false negative     : 0
 Corner errors:
- precision 50%         : 0.34962594987708284
- precision 90%         : 0.6707942202782944
- precision 100%        : 1.0012640719502177
+ precision 50%         : 0.3462185407771552
+ precision 90%         : 0.6619254156525723
+ precision 100%        : 1.0316155860295673
 
 ---------------------------------------------------
 
@@ -95,9 +95,9 @@ Summary:
  false positives    : 0
  false negative     : 0
 Corner errors:
- precision 50%         : 0.24168890958436606
- precision 90%         : 0.45657522797276306
- precision 100%        : 0.6576223451213613
+ precision 50%         : 0.2484052595859279
+ precision 90%         : 0.46407579033841984
+ precision 100%        : 0.657392485528391
 
 ---------------------------------------------------
 
@@ -112,9 +112,9 @@ Summary:
  false positives    : 0
  false negative     : 0
 Corner errors:
- precision 50%         : 0.5305001863067157
- precision 90%         : 0.9841540441874407
- precision 100%        : 1.661769805557354
+ precision 50%         : 0.5305814894999001
+ precision 90%         : 0.9986025722903554
+ precision 100%        : 1.6725902720538444
 
 ---------------------------------------------------
 
