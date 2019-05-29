@@ -1,5 +1,5 @@
 Runtime.getRuntime().availableProcessors(): 8
-Runtime.getRuntime().freeMemory(): 520662920
+Runtime.getRuntime().freeMemory(): 520662840
 Runtime.getRuntime().totalMemory(): 526385152
 =========== sun.desktop
 gnome
@@ -32,7 +32,7 @@ US
 =========== sun.boot.library.path
 /opt/jdk/jdk-11.0.1/lib
 =========== sun.java.command
-regression.jar -m fiducials
+regression.jar -t Fiducial
 =========== jdk.debug
 release
 =========== sun.cpu.endian
@@ -69,7 +69,7 @@ pja
 =========== path.separator
 :
 =========== os.version
-4.15.0-47-generic
+4.15.0-50-generic
 =========== java.runtime.name
 OpenJDK Runtime Environment
 =========== file.encoding

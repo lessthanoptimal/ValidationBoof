@@ -74,10 +74,10 @@ public class CalibrationDetectionRegression extends BaseRegression implements Im
 		circleRegirectories.add("data/calibration_mono/circle_regular/fisheye");
 
 		addDetector("DetectCalibChess",
-				new CreateChessboard(),
+				new CreateChessboardOld(),
 				CalibrationPatterns.CHESSBOARD);
 		addDetector("DetectCalibChess2",
-				new CreateChessboard2(),
+				new CreateChessboardNew(),
 				CalibrationPatterns.CHESSBOARD);
 		addDetector("DetectCalibSquare",
 				new CreateSquareGrid(),
@@ -249,7 +249,7 @@ public class CalibrationDetectionRegression extends BaseRegression implements Im
 		DetectorFiducialCalibration create( File file );
 	}
 
-	static class CreateChessboard implements CreateCalibration {
+	static class CreateChessboardOld implements CreateCalibration {
 		@Override
 		public DetectorFiducialCalibration create(File file) {
 			ConfigGridDimen config;
@@ -258,11 +258,11 @@ public class CalibrationDetectionRegression extends BaseRegression implements Im
 			else {
 				config = parseGridDimen3(file);
 			}
-			return FactoryFiducialCalibration.chessboard(null,config);
+			return FactoryFiducialCalibration.chessboardOld(null,config);
 		}
 	}
 
-	static class CreateChessboard2 implements CreateCalibration {
+	static class CreateChessboardNew implements CreateCalibration {
 		@Override
 		public DetectorFiducialCalibration create(File file) {
 			ConfigGridDimen config;
@@ -271,7 +271,7 @@ public class CalibrationDetectionRegression extends BaseRegression implements Im
 			else {
 				config = parseGridDimen3(file);
 			}
-			return FactoryFiducialCalibration.chessboard2(null,config);
+			return FactoryFiducialCalibration.chessboard(null,config);
 		}
 	}
 
