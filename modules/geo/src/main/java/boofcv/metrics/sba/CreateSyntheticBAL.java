@@ -60,9 +60,9 @@ public class CreateSyntheticBAL {
 
         Point2D_F64 pixel = new Point2D_F64();
         Point3D_F64 viewPt = new Point3D_F64();
-        for (int pixelIdx = 0; pixelIdx < scene.points.length; pixelIdx++) {
+        for (int pixelIdx = 0; pixelIdx < scene.points.size; pixelIdx++) {
             Point3D_F64 p = new Point3D_F64();
-            p.x = -1 + 2.0*pixelIdx/(scene.points.length-1);
+            p.x = -1 + 2.0*pixelIdx/(scene.points.size-1);
             p.y = rand.nextGaussian();
             p.z = -3 + rand.nextGaussian()*0.1;
 

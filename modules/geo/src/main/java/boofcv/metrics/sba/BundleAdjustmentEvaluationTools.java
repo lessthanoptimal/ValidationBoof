@@ -33,7 +33,7 @@ public class BundleAdjustmentEvaluationTools {
             for (int pointIdx = 0; pointIdx < obsView.size() ; pointIdx++) {
                 obsView.get(pointIdx,observed);
                 int pointId = obsView.point.get(pointIdx);
-                structure.points[pointId].get(worldPt);
+                structure.points.data[pointId].get(worldPt);
 
                 view.worldToView.transform(worldPt,cameraPt);
 
