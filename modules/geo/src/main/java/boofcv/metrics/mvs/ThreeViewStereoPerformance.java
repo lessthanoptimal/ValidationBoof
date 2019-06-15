@@ -78,17 +78,17 @@ public class ThreeViewStereoPerformance {
     }
 
     private void computeDisparityScore(int width, int height, SceneStructureMetric structure) {
-        BundlePinholeSimplified cp = structure.getCameras()[0].getModel();
+        BundlePinholeSimplified cp = structure.getCameras().data[0].getModel();
         CameraPinholeBrown intrinsic01 = new CameraPinholeBrown();
         intrinsic01.fsetK(cp.f,cp.f,0,cx,cy,width,height);
         intrinsic01.fsetRadial(cp.k1,cp.k2);
 
-        cp = structure.getCameras()[1].getModel();
+        cp = structure.getCameras().data[1].getModel();
         CameraPinholeBrown intrinsic02 = new CameraPinholeBrown();
         intrinsic02.fsetK(cp.f,cp.f,0,cx,cy,width,height);
         intrinsic02.fsetRadial(cp.k1,cp.k2);
 
-        Se3_F64 leftToRight = structure.views[1].worldToView;
+        Se3_F64 leftToRight = structure.views.data[1].worldToView;
 
         int max = 200;
 

@@ -31,7 +31,7 @@ public class CreateSyntheticBAL {
     public void smallWorld() {
         scene = new SceneStructureMetric(false);
         scene.initialize(1,3,10);
-        observations = new SceneObservations(scene.views.length);
+        observations = new SceneObservations(scene.views.size);
 
         double radius = 300;
         BundlePinholeSnavely camera = new BundlePinholeSnavely();
@@ -41,7 +41,7 @@ public class CreateSyntheticBAL {
         scene.setCamera(0,false,camera);
 
         Rodrigues_F64 rod = new Rodrigues_F64();
-        for (int i = 0; i < scene.views.length; i++) {
+        for (int i = 0; i < scene.views.size; i++) {
             Se3_F64 worldToView = new Se3_F64();
             worldToView.T.x = -0.5 + i;
 
@@ -68,8 +68,8 @@ public class CreateSyntheticBAL {
 
             scene.setPoint(pixelIdx,p.x,p.y,p.z);
 
-            for (int viewIdx = 0; viewIdx < scene.views.length; viewIdx++) {
-                Se3_F64 worldToView = scene.views[viewIdx].worldToView;
+            for (int viewIdx = 0; viewIdx < scene.views.size; viewIdx++) {
+                Se3_F64 worldToView = scene.views.data[viewIdx].worldToView;
                 worldToView.transform(p,viewPt);
 
                 if( viewPt.z >= 0 ) {

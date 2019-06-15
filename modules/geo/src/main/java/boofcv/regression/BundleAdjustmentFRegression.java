@@ -27,20 +27,20 @@ import static boofcv.metrics.sba.BundleAdjustmentEvaluationTools.computeReprojec
 public class BundleAdjustmentFRegression extends BaseRegression implements FileRegression {
 
     // A smaller subset of the datasets is used here to ensure the regression can run quickly.
-    String[] datasets = new String[] {
+    private String[] datasets = new String[] {
             "data/bundle_adjustment/dubrovnik/problem-16-22106-pre.txt",
             "data/bundle_adjustment/final/problem-93-61203-pre.txt",
             "data/bundle_adjustment/ladybug/problem-49-7776-pre.txt",
             "data/bundle_adjustment/trafalgar/problem-21-11315-pre.txt"
     };
 
-    PrintStream outputRuntime;
-    PrintStream outputQuality;
+    private PrintStream outputRuntime;
+    private PrintStream outputQuality;
 
-    double ftol=1e-6,gtol=1e-6;
-    int maxIterations = 100;
+    private double ftol=1e-6,gtol=1e-6;
+    private int maxIterations = 100;
 
-    CodecBundleAdjustmentInTheLarge parser = new CodecBundleAdjustmentInTheLarge();
+    private CodecBundleAdjustmentInTheLarge parser = new CodecBundleAdjustmentInTheLarge();
 
     public BundleAdjustmentFRegression() {
         super(BoofRegressionConstants.TYPE_GEOMETRY);
@@ -91,11 +91,11 @@ public class BundleAdjustmentFRegression extends BaseRegression implements FileR
 
         bundleAdjustment.configure(ftol, gtol, maxIterations);
 
-        double errorsBefore[] = computeReprojectionErrorMetrics(parser.scene, parser.observations);
+        double[] errorsBefore = computeReprojectionErrorMetrics(parser.scene, parser.observations);
 
         String path = new File(f.getParentFile().getName(), f.getName()).getPath();
 
-        System.out.println(path + " Views=" + parser.scene.views.length + "  Obs=" + parser.observations.getObservationCount());
+        System.out.println(path + " Views=" + parser.scene.views.size + "  Obs=" + parser.observations.getObservationCount());
 
         long startTime = System.currentTimeMillis();
 
@@ -105,7 +105,7 @@ public class BundleAdjustmentFRegression extends BaseRegression implements FileR
 
         outputQuality.printf("%-45s before fx=%-5.2e p50=%-7.4f p95=%-7.4f views=%-6d obs=%-8d\n",
                 path, bundleAdjustment.getFitScore(), errorsBefore[0], errorsBefore[1],
-                parser.scene.views.length,parser.observations.getObservationCount());
+                parser.scene.views.size,parser.observations.getObservationCount());
         outputQuality.flush();
 
         boolean success = bundleAdjustment.optimize(parser.scene);
@@ -123,10 +123,10 @@ public class BundleAdjustmentFRegression extends BaseRegression implements FileR
         if (!success)
             outputQuality.printf("%s after FAILED\n", path);
         else {
-            double errorsAfter[] = computeReprojectionErrorMetrics(parser.scene, parser.observations);
+            double[] errorsAfter = computeReprojectionErrorMetrics(parser.scene, parser.observations);
             outputQuality.printf("%-45s after  fx=%-5.2e p50=%-7.4f p95=%-7.4f views=%-6d obs=%-8d\n",
                     path, bundleAdjustment.getFitScore(), errorsAfter[0], errorsAfter[1],
-                    parser.scene.views.length,parser.observations.getObservationCount());
+                    parser.scene.views.size,parser.observations.getObservationCount());
         }
         outputQuality.flush();
     }

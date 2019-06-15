@@ -112,9 +112,9 @@ public class CalibrateFromDetectedPoints {
 		outputResults.println();
 		outputResults.println("# Tangential Distortion");
 		outputResults.printf("%1.15f %1.15f\n",param.t1,param.t2);
-		outputResults.println(structure.views.length);
+		outputResults.println(structure.views.size);
 		Rodrigues_F64 rod = new Rodrigues_F64();
-		for( SceneStructureMetric.View v : structure.views ) {
+		for( SceneStructureMetric.View v : structure.views.toList() ) {
 			ConvertRotation3D_F64.matrixToRodrigues(v.worldToView.R,rod);
 			double rx = rod.unitAxisRotation.x * rod.theta;
 			double ry = rod.unitAxisRotation.y * rod.theta;

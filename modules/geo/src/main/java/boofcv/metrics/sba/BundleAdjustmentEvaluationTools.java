@@ -25,10 +25,10 @@ public class BundleAdjustmentEvaluationTools {
 
         GrowQueue_F64 errors = new GrowQueue_F64(observations.getObservationCount());
 
-        for (int viewIdx = 0; viewIdx < observations.views.length; viewIdx++) {
-            SceneObservations.View obsView = observations.views[viewIdx];
-            SceneStructureMetric.View view = structure.views[viewIdx];
-            BundleAdjustmentCamera camera = structure.cameras[view.camera].model;
+        for (int viewIdx = 0; viewIdx < observations.views.size; viewIdx++) {
+            SceneObservations.View obsView = observations.views.data[viewIdx];
+            SceneStructureMetric.View view = structure.views.data[viewIdx];
+            BundleAdjustmentCamera camera = structure.cameras.data[view.camera].model;
 
             for (int pointIdx = 0; pointIdx < obsView.size() ; pointIdx++) {
                 obsView.get(pointIdx,observed);
