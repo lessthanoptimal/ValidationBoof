@@ -1,7 +1,7 @@
 Description of changes to benchmarks and justifications for change in performance from previous versions.
 
 ## Version 0.34
-2019/
+2019/07/07
 
 - Default SIFT scale-space changed. No longer doubled.
 - Fiducials
