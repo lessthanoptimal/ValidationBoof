@@ -1,9 +1,9 @@
 # GENERATOR FiducialRegression
 # directory, number of frames, FPS
-data/fiducials/square_border_binary/standard/distance_angle 300  98.264
-data/fiducials/square_border_binary/standard/distance_straight 300 112.360
-data/fiducials/square_border_binary/standard/motion_blur 300  82.169
-data/fiducials/square_border_binary/standard/rotation 300  73.728
-data/fiducials/square_border_binary/static/static_front_close 300 232.558
-data/fiducials/square_border_binary/static/static_front_far 300 312.175
-data/fiducials/square_border_binary/static/static_scene 300 163.666
+data/fiducials/square_border_binary/standard/distance_angle 300 101.971
+data/fiducials/square_border_binary/standard/distance_straight 300 116.414
+data/fiducials/square_border_binary/standard/motion_blur 300  84.674
+data/fiducials/square_border_binary/standard/rotation 300  76.104
+data/fiducials/square_border_binary/static/static_front_close 300 239.617
+data/fiducials/square_border_binary/static/static_front_far 300 321.199
+data/fiducials/square_border_binary/static/static_scene 300 169.396
