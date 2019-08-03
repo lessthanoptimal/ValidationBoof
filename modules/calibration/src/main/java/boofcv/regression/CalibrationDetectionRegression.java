@@ -12,17 +12,16 @@ import boofcv.factory.fiducial.FactoryFiducialCalibration;
 import boofcv.io.image.UtilImageIO;
 import boofcv.struct.image.GrayF32;
 import boofcv.struct.image.ImageDataType;
+import com.google.common.base.Strings;
 import georegression.struct.point.Point2D_F64;
+import org.apache.commons.io.FilenameUtils;
 import org.ddogleg.struct.GrowQueue_F64;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintStream;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 import static boofcv.parsing.ParseCalibrationConfigFiles.parseGridDimen3;
 import static boofcv.parsing.ParseCalibrationConfigFiles.parseGridDimen4;
@@ -49,6 +48,8 @@ public class CalibrationDetectionRegression extends BaseRegression implements Im
 		chessDirectories.add("data/calibration_mono/chessboard/Sony_DSC-HX5V");
 		chessDirectories.add("data/calibration_mono/chessboard/large");
 		chessDirectories.add("data/calibration_mono/chessboard/distant");
+		chessDirectories.add("data/calibration_mono/chessboard/distance_angle");
+		chessDirectories.add("data/calibration_mono/chessboard/distance_straight");
 		chessDirectories.add("data/calibration_mono/chessboard/hard");
 		chessDirectories.add("data/calibration_mono/chessboard/border");
 		chessDirectories.add("data/calibration_mono/chessboard/fisheye1");
@@ -57,6 +58,14 @@ public class CalibrationDetectionRegression extends BaseRegression implements Im
 		chessDirectories.add("data/calibration_mono/chessboard/sloppy13x10");
 		chessDirectories.add("data/calibration_mono/chessboard/focus");
 		chessDirectories.add("data/calibration_mono/chessboard/rotation_vertical");
+		chessDirectories.add("data/calibration_mono/chessboard/rotation_flat");
+		chessDirectories.add("data/calibration_mono/chessboard/motion_blur");
+		chessDirectories.add("data/calibration_mono/chessboard/shadow");
+		chessDirectories.add("data/calibration_mono/chessboard/large_shadow");
+		chessDirectories.add("data/calibration_mono/chessboard/ocam_kaidan_omni");
+		chessDirectories.add("data/calibration_mono/chessboard/ocam_ladybug");
+		chessDirectories.add("data/calibration_mono/chessboard/ocam_mini_omni");
+		chessDirectories.add("data/calibration_mono/chessboard/ocam_omni");
 
 		squareDirectories.add("data/calibration_stereo/Bumblebee2_Square");
 		squareDirectories.add("data/calibration_mono/square_grid/Sony_DSC-HX5V");
@@ -130,8 +139,10 @@ public class CalibrationDetectionRegression extends BaseRegression implements Im
 		BoofRegressionConstants.printGenerator(output,getClass());
 		output.println("# (file name) (truth error 50%) (truth error 95%)");
 
+		Map<String,OverallMetrics> dirMetrics = new HashMap<>();
 		try {
 			OverallMetrics overallMetrics = new OverallMetrics();
+
 			for (String dir : directories) {
 				File filesArray[] = new File(dir).listFiles();
 				if (filesArray != null) {
@@ -140,18 +151,33 @@ public class CalibrationDetectionRegression extends BaseRegression implements Im
 
 					List<File> files = Arrays.asList(filesArray);
 					Collections.sort(files);
-					evaluate(detector, d.name, overallMetrics, output, files);
+
+					OverallMetrics directoryMetrics = new OverallMetrics();
+					evaluate(detector, d.name, directoryMetrics, output, files);
+					overallMetrics.add(directoryMetrics);
+					dirMetrics.put(dir,directoryMetrics);
+					if( directoryMetrics.total == 0 ) {
+						errorLog.println("Failed to find images in dir");
+					}
 				} else {
 					errorLog.println("No files found in " + dir);
 				}
 			}
-			output.println();
 
-			Arrays.sort(overallMetrics.errors.data, 0, overallMetrics.errors.size);
-			double error50 = overallMetrics.errors.data[(int) (overallMetrics.errors.size * 0.5)];
-			double error95 = overallMetrics.errors.data[(int) (overallMetrics.errors.size * 0.95)];
-			double percentSuccess = (overallMetrics.total - overallMetrics.failed) / (double) overallMetrics.total;
-			output.println("Summary: 50% = " + error50 + "  95% = " + error95 + "   success %" + (100.0 * percentSuccess));
+			output.println("\n"+ Strings.repeat("-",80)+"\n");
+
+			// Print out summary results for individual directories
+			for( String dir : directories ) {
+				OverallMetrics m = dirMetrics.get(dir);
+				String name = new File(dir).getName();
+
+				printSummary(output, m, name);
+			}
+
+			// Summarize Everything all together
+			output.println("\n"+ Strings.repeat("-",80)+"\n");
+			printSummary(output, overallMetrics, "Summary");
+
 		} catch ( Exception e ) {
 			e.printStackTrace();
 			e.printStackTrace(errorLog);
@@ -161,17 +187,41 @@ public class CalibrationDetectionRegression extends BaseRegression implements Im
 
 	}
 
+	private void printSummary(PrintStream output, OverallMetrics m, String name) {
+		m.errors.sort();
+		double error50,error95,percentSuccess;
+		if( m.errors.size > 0 ) {
+			error50 = m.errors.getFraction(0.5);
+			error95 = m.errors.getFraction(0.95);
+			percentSuccess = 100*(m.total - m.failed) / (double) m.total;
+		} else {
+			error50 = Double.NaN;
+			error95 = Double.NaN;
+			percentSuccess = 0.0;
+		}
+
+		output.printf("%-35s Errors{ 50%% : %7.4f , 95%% : %7.4f }, Detection : %%%6.2f , Images : %d\n",
+				name,error50,error95,percentSuccess,m.total);
+	}
+
 	private void evaluate(DetectorFiducialCalibration detector, String detectorName,
 						  OverallMetrics metrics, PrintStream output, List<File> files) {
 		for( File f : files ) {
-			if( !f.getName().endsWith("jpg") )
+			String extension = FilenameUtils.getExtension(f.getName()).toLowerCase();
+			if( !(extension.equals("jpg") || extension.equals("png")) )
 				continue;
 
-			String dataSetName = f.getPath();
+			String dataSetName = new File(f.getParentFile().getName(),f.getName()).getPath();
 			String path = f.getAbsolutePath();
 			String pathTruth = path.substring(0,path.length()-3) + "txt";
 
 			GrayF32 image = UtilImageIO.loadImage(f.getAbsolutePath(), GrayF32.class);
+			if( image == null ) {
+				errorLog.println(detectorName+" failed to load image "+dataSetName);
+				output.printf("%-35s  image_error\n",dataSetName);
+				metrics.failed++; // mark as a failure so that it will raise a red flag when inspecting metrics
+				continue;
+			}
 
 			List<Point2D_F64> groundTruth;
 			try {
@@ -180,12 +230,18 @@ public class CalibrationDetectionRegression extends BaseRegression implements Im
 				errorLog.println(detectorName+" "+dataSetName+" no ground truth. "+e.getMessage());
 				continue;
 			}
+			if( groundTruth == null ) {
+				errorLog.println(detectorName + " failed to load point file " + pathTruth);
+				output.printf("%-35s  point_file_error\n", dataSetName);
+				metrics.failed++; // mark as a failure so that it will raise a red flag when inspecting metrics
+				continue;
+			}
 
 			metrics.total++;
 
 			try {
 				if( detector.process(image) ) {
-					double errors[] = new double[ groundTruth.size() ];
+					double[] errors = new double[ groundTruth.size() ];
 
 					CalibrationObservation found = detector.getDetectedPoints();
 					if( found.size() != groundTruth.size() ) {
@@ -201,14 +257,14 @@ public class CalibrationDetectionRegression extends BaseRegression implements Im
 						double e50 = errors[errors.length/2];
 						double e95 = errors[(int)((errors.length-1)*0.95)];
 
-						output.println(dataSetName+" "+e50+" "+e95);
+						output.printf("%-35s %7.4f %7.4f\n",dataSetName,e50,e95);
 					}
 				} else {
-					output.println(dataSetName+" failed");
+					output.printf("%-35s  detection_failed\n",dataSetName);
 					metrics.failed++;
 				}
 			} catch( Exception e ) {
-				errorLog.println(detectorName+" "+dataSetName+" detector threw exception. "+e.getMessage());
+				errorLog.println(detectorName+" "+dataSetName+" detector threw "+e.getClass().getSimpleName()+" message="+e.getMessage());
 				metrics.failed++;
 			}
 		}
@@ -232,6 +288,12 @@ public class CalibrationDetectionRegression extends BaseRegression implements Im
 		GrowQueue_F64 errors = new GrowQueue_F64();
 		int total;
 		int failed;
+
+		public void add( OverallMetrics src ) {
+			errors.addAll(src.errors);
+			this.total += src.total;
+			this.failed += src.failed;
+		}
 	}
 
 	private class DetectorInfo
