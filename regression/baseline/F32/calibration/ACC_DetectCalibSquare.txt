@@ -1,73 +1,83 @@
 # GENERATOR CalibrationDetectionRegression
 # (file name) (truth error 50%) (truth error 95%)
-data/calibration_stereo/Bumblebee2_Square/left01.jpg 0.5384070032646961 0.832903093987096
-data/calibration_stereo/Bumblebee2_Square/left02.jpg 0.3955388616853584 0.6423926093117946
-data/calibration_stereo/Bumblebee2_Square/left03.jpg 0.8160381497941531 1.6071029916341404
-data/calibration_stereo/Bumblebee2_Square/left04.jpg 0.37586919830821874 0.7491799173601494
-data/calibration_stereo/Bumblebee2_Square/left05.jpg 0.9025750639182466 1.2206632984177133
-data/calibration_stereo/Bumblebee2_Square/left06.jpg 0.31650966347814935 0.7306885248779006
-data/calibration_stereo/Bumblebee2_Square/left07.jpg 0.42904376438588276 0.8799215493047463
-data/calibration_stereo/Bumblebee2_Square/left08.jpg 0.3881394606397778 0.7422475491317988
-data/calibration_stereo/Bumblebee2_Square/left09.jpg 0.4196708577670367 0.7715731570308948
-data/calibration_stereo/Bumblebee2_Square/left10.jpg 0.48763210158445963 1.1243770997554792
-data/calibration_stereo/Bumblebee2_Square/left11.jpg 0.8502233973348203 1.2520551755134592
-data/calibration_stereo/Bumblebee2_Square/left12.jpg 0.4528130114551907 0.889325403931326
-data/calibration_stereo/Bumblebee2_Square/left13.jpg 0.5435289753906006 0.8358570468693828
-data/calibration_stereo/Bumblebee2_Square/right01.jpg 0.33501567972127344 0.7144415780150285
-data/calibration_stereo/Bumblebee2_Square/right02.jpg 0.4002280437835064 0.8388219716508221
-data/calibration_stereo/Bumblebee2_Square/right03.jpg 0.3705949056911 0.8930003964959853
-data/calibration_stereo/Bumblebee2_Square/right04.jpg 0.5732418808067408 1.2399513626753096
-data/calibration_stereo/Bumblebee2_Square/right05.jpg 0.625119397523708 1.1056052413826734
-data/calibration_stereo/Bumblebee2_Square/right06.jpg 0.6449051045288677 1.0257950781327394
-data/calibration_stereo/Bumblebee2_Square/right07.jpg 0.619052814775329 1.0304743567471981
-data/calibration_stereo/Bumblebee2_Square/right08.jpg 0.40162668342136865 0.808974011165298
-data/calibration_stereo/Bumblebee2_Square/right09.jpg 0.5303628977910284 0.8460243387711405
-data/calibration_stereo/Bumblebee2_Square/right10.jpg 0.5001697515195634 0.8584192347333746
-data/calibration_stereo/Bumblebee2_Square/right11.jpg 0.3988366430154859 0.7660503035503613
-data/calibration_stereo/Bumblebee2_Square/right12.jpg 0.4264810985935511 0.9176950725169578
-data/calibration_stereo/Bumblebee2_Square/right13.jpg 0.4859371316595295 0.9133636899762899
-data/calibration_mono/square_grid/Sony_DSC-HX5V/frame01.jpg 0.7846799324873719 1.1822335492505105
-data/calibration_mono/square_grid/Sony_DSC-HX5V/frame02.jpg 0.4425362370492233 0.8640388158427402
-data/calibration_mono/square_grid/Sony_DSC-HX5V/frame03.jpg 0.7045704733185845 1.1976072864069176
-data/calibration_mono/square_grid/Sony_DSC-HX5V/frame04.jpg 0.5985969478859106 1.0648130439223042
-data/calibration_mono/square_grid/Sony_DSC-HX5V/frame05.jpg 0.703016809917144 1.1011827815091213
-data/calibration_mono/square_grid/Sony_DSC-HX5V/frame06.jpg 0.6110367143175519 0.9796260707923555
-data/calibration_mono/square_grid/Sony_DSC-HX5V/frame07.jpg 0.6196178864948092 1.093584273375802
-data/calibration_mono/square_grid/Sony_DSC-HX5V/frame08.jpg 0.4901374671573377 1.0138154464574496
-data/calibration_mono/square_grid/Sony_DSC-HX5V/frame09.jpg 0.37963192324003364 0.7294437868333846
-data/calibration_mono/square_grid/Sony_DSC-HX5V/frame10.jpg 0.5557724121179564 0.872488666720044
-data/calibration_mono/square_grid/Sony_DSC-HX5V/frame11.jpg 0.39680952140520465 0.9645009466362013
-data/calibration_mono/square_grid/Sony_DSC-HX5V/frame12.jpg 0.5530299852775873 0.9357728504745046
-data/calibration_mono/square_grid/Sony_DSC-HX5V/frame13.jpg 0.3861371317522345 0.8458050633590984
-data/calibration_mono/square_grid/Sony_DSC-HX5V/frame14.jpg 0.4558986103747864 0.8026360100868793
-data/calibration_mono/square_grid/large/large00.jpg 0.667472465180161 1.3545433726546838
-data/calibration_mono/square_grid/large/large01.jpg 0.47724392097327606 0.828423891506606
-data/calibration_mono/square_grid/large/large02.jpg 0.3691300986607771 0.7101795000250831
-data/calibration_mono/square_grid/large/large03.jpg 0.4114260710839694 0.7385349841313485
-data/calibration_mono/square_grid/large/large04.jpg 0.42344905626899615 0.6746097210922748
-data/calibration_mono/square_grid/distant/image00000.jpg 0.2077921050975698 0.384552740520162
-data/calibration_mono/square_grid/distant/image00001.jpg 0.3328549473305561 0.5718548805145856
-data/calibration_mono/square_grid/distant/image00002.jpg 0.26212068491557167 0.5857963894076457
-data/calibration_mono/square_grid/distant/image00003.jpg 0.21355661191387224 0.4523072522059629
-data/calibration_mono/square_grid/distant/image00004.jpg 0.26315075179305086 0.5461350034774938
-data/calibration_mono/square_grid/distant/image00005.jpg 0.2867520436350894 0.5969671600642167
-data/calibration_mono/square_grid/distant/image00006.jpg 0.24170530263494738 0.4587326017068199
-data/calibration_mono/square_grid/fisheye/image00.jpg 0.6856460400753699 1.8146355479671141
-data/calibration_mono/square_grid/fisheye/image01.jpg failed
-data/calibration_mono/square_grid/fisheye/image02.jpg failed
-data/calibration_mono/square_grid/fisheye/image03.jpg 0.38755615820291467 0.7302033526738102
-data/calibration_mono/square_grid/fisheye/image04.jpg 0.5707531901544384 0.9775866117858311
-data/calibration_mono/square_grid/fisheye/image05.jpg 0.8805330061303154 2.2222156826784354
-data/calibration_mono/square_grid/fisheye/image06.jpg 0.3976231055869889 0.814333070486483
-data/calibration_mono/square_grid/fisheye/image07.jpg failed
-data/calibration_mono/square_grid/fisheye/image08.jpg 0.32644811417817327 0.6578329897324761
-data/calibration_mono/square_grid/fisheye/image09.jpg 0.3678024251263665 0.7512428675102828
-data/calibration_mono/square_grid/fisheye/image10.jpg 0.7554411634852307 1.3541810374096355
-data/calibration_mono/square_grid/fisheye/image11.jpg 0.5734662610671829 1.199977746246225
-data/calibration_mono/square_grid/fisheye/image12.jpg 0.583294641800601 1.1283182777183314
-data/calibration_mono/square_grid/fisheye/image13.jpg 0.354273010088916 0.7929731683480128
-data/calibration_mono/square_grid/fisheye/image14.jpg 0.30823832310195304 0.590397972585702
-data/calibration_mono/square_grid/fisheye/image15.jpg 0.5459633914877586 1.3277316523733067
-data/calibration_mono/square_grid/fisheye/image16.jpg 0.6106752444014331 1.5677003168508512
+Bumblebee2_Square/left01.jpg         0.5384  0.8329
+Bumblebee2_Square/left02.jpg         0.3955  0.6424
+Bumblebee2_Square/left03.jpg         0.8160  1.6071
+Bumblebee2_Square/left04.jpg         0.3759  0.7492
+Bumblebee2_Square/left05.jpg         0.9026  1.2207
+Bumblebee2_Square/left06.jpg         0.3165  0.7307
+Bumblebee2_Square/left07.jpg         0.4290  0.8799
+Bumblebee2_Square/left08.jpg         0.3881  0.7422
+Bumblebee2_Square/left09.jpg         0.4197  0.7716
+Bumblebee2_Square/left10.jpg         0.4876  1.1244
+Bumblebee2_Square/left11.jpg         0.8502  1.2521
+Bumblebee2_Square/left12.jpg         0.4528  0.8893
+Bumblebee2_Square/left13.jpg         0.5435  0.8359
+Bumblebee2_Square/right01.jpg        0.3350  0.7144
+Bumblebee2_Square/right02.jpg        0.4002  0.8388
+Bumblebee2_Square/right03.jpg        0.3706  0.8930
+Bumblebee2_Square/right04.jpg        0.5732  1.2400
+Bumblebee2_Square/right05.jpg        0.6251  1.1056
+Bumblebee2_Square/right06.jpg        0.6449  1.0258
+Bumblebee2_Square/right07.jpg        0.6191  1.0305
+Bumblebee2_Square/right08.jpg        0.4016  0.8090
+Bumblebee2_Square/right09.jpg        0.5304  0.8460
+Bumblebee2_Square/right10.jpg        0.5002  0.8584
+Bumblebee2_Square/right11.jpg        0.3988  0.7661
+Bumblebee2_Square/right12.jpg        0.4265  0.9177
+Bumblebee2_Square/right13.jpg        0.4859  0.9134
+Sony_DSC-HX5V/frame01.jpg            0.7847  1.1822
+Sony_DSC-HX5V/frame02.jpg            0.4425  0.8640
+Sony_DSC-HX5V/frame03.jpg            0.7046  1.1976
+Sony_DSC-HX5V/frame04.jpg            0.5986  1.0648
+Sony_DSC-HX5V/frame05.jpg            0.7030  1.1012
+Sony_DSC-HX5V/frame06.jpg            0.6110  0.9796
+Sony_DSC-HX5V/frame07.jpg            0.6196  1.0936
+Sony_DSC-HX5V/frame08.jpg            0.4901  1.0138
+Sony_DSC-HX5V/frame09.jpg            0.3796  0.7294
+Sony_DSC-HX5V/frame10.jpg            0.5558  0.8725
+Sony_DSC-HX5V/frame11.jpg            0.3968  0.9645
+Sony_DSC-HX5V/frame12.jpg            0.5530  0.9358
+Sony_DSC-HX5V/frame13.jpg            0.3861  0.8458
+Sony_DSC-HX5V/frame14.jpg            0.4559  0.8026
+large/large00.jpg                    0.6675  1.3545
+large/large01.jpg                    0.4772  0.8284
+large/large02.jpg                    0.3691  0.7102
+large/large03.jpg                    0.4114  0.7385
+large/large04.jpg                    0.4234  0.6746
+distant/image00000.jpg               0.2078  0.3846
+distant/image00001.jpg               0.3329  0.5719
+distant/image00002.jpg               0.2621  0.5858
+distant/image00003.jpg               0.2136  0.4523
+distant/image00004.jpg               0.2632  0.5461
+distant/image00005.jpg               0.2868  0.5970
+distant/image00006.jpg               0.2417  0.4587
+fisheye/image00.jpg                  0.6856  1.8146
+fisheye/image01.jpg                  detection_failed
+fisheye/image02.jpg                  detection_failed
+fisheye/image03.jpg                  0.3876  0.7302
+fisheye/image04.jpg                  0.5708  0.9776
+fisheye/image05.jpg                  0.8805  2.2222
+fisheye/image06.jpg                  0.3976  0.8143
+fisheye/image07.jpg                  detection_failed
+fisheye/image08.jpg                  0.3264  0.6578
+fisheye/image09.jpg                  0.3678  0.7512
+fisheye/image10.jpg                  0.7554  1.3542
+fisheye/image11.jpg                  0.5735  1.2000
+fisheye/image12.jpg                  0.5833  1.1283
+fisheye/image13.jpg                  0.3543  0.7930
+fisheye/image14.jpg                  0.3082  0.5904
+fisheye/image15.jpg                  0.5460  1.3277
+fisheye/image16.jpg                  0.6107  1.5677
 
-Summary: 50% = 0.4558986103747864  95% = 1.1165426942817906   success %95.65217391304348
+--------------------------------------------------------------------------------
+
+Bumblebee2_Square                   Errors{ 50% :  0.4791 , 95% :  1.0950 }, Detection : %100.00 , Images : 26
+Sony_DSC-HX5V                       Errors{ 50% :  0.5402 , 95% :  1.0694 }, Detection : %100.00 , Images : 14
+large                               Errors{ 50% :  0.4442 , 95% :  1.0009 }, Detection : %100.00 , Images : 5
+distant                             Errors{ 50% :  0.2480 , 95% :  0.5638 }, Detection : %100.00 , Images : 7
+fisheye                             Errors{ 50% :  0.4726 , 95% :  1.3277 }, Detection : % 82.35 , Images : 17
+
+--------------------------------------------------------------------------------
+
+Summary                             Errors{ 50% :  0.4559 , 95% :  1.1147 }, Detection : % 95.65 , Images : 69
