@@ -197,6 +197,22 @@ focus/image33.jpg                    0.4235  0.5591
 focus/image34.jpg                    0.2428  0.7004
 focus/image35.jpg                    0.2497  0.4366
 focus/image36.jpg                    0.1905  0.3816
+focus_large/image00.jpg              detection_failed
+focus_large/image01.jpg              detection_failed
+focus_large/image02.jpg              detection_failed
+focus_large/image03.jpg              detection_failed
+focus_large/image04.jpg              detection_failed
+focus_large/image05.jpg              detection_failed
+focus_large/image06.jpg              detection_failed
+focus_large/image07.jpg              detection_failed
+focus_large/image08.jpg              detection_failed
+focus_large/image09.jpg              detection_failed
+focus_large/image10.jpg              detection_failed
+focus_large/image11.jpg              detection_failed
+focus_large/image12.jpg              1.6804  3.8190
+focus_large/image13.jpg              0.8795  1.8072
+focus_large/image14.jpg              0.3465  0.6737
+focus_large/image15.jpg              0.2023  0.4465
 rotation_vertical/image01.jpg        0.3073  0.4865
 rotation_vertical/image02.jpg        0.2445  0.4672
 rotation_vertical/image03.jpg        0.3026  0.5307
@@ -229,6 +245,31 @@ motion_blur/image00009.jpg           detection_failed
 motion_blur/image00010.jpg           detection_failed
 motion_blur/image00011.jpg           0.3861  0.6066
 motion_blur/image00012.jpg           0.4307  0.8859
+motion_blur/image00013.jpg           detection_failed
+motion_blur/image00014.jpg           detection_failed
+motion_blur/image00015.jpg           detection_failed
+motion_blur/image00016.jpg           detection_failed
+motion_blur/image00017.jpg           detection_failed
+motion_blur/image00018.jpg           detection_failed
+motion_blur/image00019.jpg           detection_failed
+motion_blur/image00020.jpg           detection_failed
+motion_blur/image00021.jpg           detection_failed
+motion_blur/image00022.jpg           detection_failed
+motion_blur/image00023.jpg           detection_failed
+motion_blur/image00024.jpg           detection_failed
+motion_blur/image00025.jpg           detection_failed
+motion_blur/image00026.jpg           detection_failed
+motion_blur/image00027.jpg           detection_failed
+motion_blur/image00028.jpg           detection_failed
+motion_blur/image00029.jpg           detection_failed
+motion_blur/image00030.jpg           detection_failed
+motion_blur/image00031.jpg           detection_failed
+motion_blur/image00032.jpg           detection_failed
+motion_blur/image00033.jpg           detection_failed
+motion_blur/image00034.jpg           detection_failed
+motion_blur/image00035.jpg           detection_failed
+motion_blur/image00036.jpg           detection_failed
+motion_blur/image00037.jpg           detection_failed
 shadow/image01.png                   0.2085  0.3425
 shadow/image02.png                   0.2106  0.4279
 shadow/image03.png                   0.1960  0.3405
@@ -415,9 +456,10 @@ fisheye2                            Errors{ 50% :  0.9100 , 95% :  2.4302 }, Det
 close                               Errors{ 50% :  0.4427 , 95% :  0.9018 }, Detection : %100.00 , Images : 12
 sloppy13x10                         Errors{ 50% :  0.4171 , 95% :  1.2507 }, Detection : %100.00 , Images : 13
 focus                               Errors{ 50% :  0.3739 , 95% :  1.4867 }, Detection : % 80.56 , Images : 36
+focus_large                         Errors{ 50% :  0.4798 , 95% :  2.9529 }, Detection : % 25.00 , Images : 16
 rotation_vertical                   Errors{ 50% :  0.2481 , 95% :  0.5307 }, Detection : %100.00 , Images : 7
 rotation_flat                       Errors{ 50% :  0.2819 , 95% :  0.5870 }, Detection : %100.00 , Images : 12
-motion_blur                         Errors{ 50% :  0.4227 , 95% :  1.0722 }, Detection : % 61.54 , Images : 13
+motion_blur                         Errors{ 50% :  0.4227 , 95% :  1.0722 }, Detection : % 21.05 , Images : 38
 shadow                              Errors{ 50% :  0.2089 , 95% :  0.4437 }, Detection : % 80.00 , Images : 15
 large_shadow                        Errors{ 50% :     NaN , 95% :     NaN }, Detection : %  0.00 , Images : 10
 caltech_edges                       Errors{ 50% :     NaN , 95% :     NaN }, Detection : %  0.00 , Images : 20
@@ -430,4 +472,4 @@ ocam_omni                           Errors{ 50% :  0.6806 , 95% :  1.9089 }, Det
 
 --------------------------------------------------------------------------------
 
-Summary                             Errors{ 50% :  0.3647 , 95% :  1.4919 }, Detection : % 66.17 , Images : 399
+Summary                             Errors{ 50% :  0.3660 , 95% :  1.5186 }, Detection : % 60.91 , Images : 440

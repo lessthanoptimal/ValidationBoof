@@ -179,9 +179,9 @@ focus/image15.jpg                    0.1804  0.2651
 focus/image16.jpg                    0.5463  1.1401
 focus/image17.jpg                    0.7763  1.2934
 focus/image18.jpg                    0.6381  1.1820
-focus/image19.jpg                    0.6205  1.2728
-focus/image20.jpg                    0.6683  1.0434
-focus/image21.jpg                    0.5224  0.8449
+focus/image19.jpg                    0.5772  1.2594
+focus/image20.jpg                    0.5963  1.0347
+focus/image21.jpg                    0.5527  0.8309
 focus/image22.jpg                    0.4006  0.5554
 focus/image23.jpg                    0.2382  0.4321
 focus/image24.jpg                    0.3026  0.4971
@@ -197,6 +197,22 @@ focus/image33.jpg                    0.2986  0.5443
 focus/image34.jpg                    0.2706  0.5279
 focus/image35.jpg                    0.2280  0.4327
 focus/image36.jpg                    0.1860  0.3243
+focus_large/image00.jpg              6.6893 12.6772
+focus_large/image01.jpg              6.7344 13.9346
+focus_large/image02.jpg              5.6170 11.1232
+focus_large/image03.jpg              4.2615  7.7127
+focus_large/image04.jpg              4.2842  9.2127
+focus_large/image05.jpg              4.4800  8.5263
+focus_large/image06.jpg              4.0657  6.8466
+focus_large/image07.jpg              3.2974  6.4318
+focus_large/image08.jpg              2.5722  5.4562
+focus_large/image09.jpg              3.0787  5.9620
+focus_large/image10.jpg              2.4078  5.4648
+focus_large/image11.jpg              1.7719  3.8777
+focus_large/image12.jpg              2.0257  3.6644
+focus_large/image13.jpg              0.6780  1.5919
+focus_large/image14.jpg              0.2456  0.4496
+focus_large/image15.jpg              0.2134  0.3967
 rotation_vertical/image01.jpg        0.2450  0.4523
 rotation_vertical/image02.jpg        0.2595  0.3681
 rotation_vertical/image03.jpg        0.2578  0.5350
@@ -224,11 +240,36 @@ motion_blur/image00004.jpg           0.4737  0.8257
 motion_blur/image00005.jpg           0.9220  1.9218
 motion_blur/image00006.jpg           0.4547  1.1270
 motion_blur/image00007.jpg           0.4243  0.6003
-motion_blur/image00008.jpg           detection_failed
+motion_blur/image00008.jpg           1.3291  3.5764
 motion_blur/image00009.jpg           1.0598  2.1505
 motion_blur/image00010.jpg           0.5832  1.2562
 motion_blur/image00011.jpg           0.3714  0.6375
 motion_blur/image00012.jpg           0.4767  1.0276
+motion_blur/image00013.jpg           0.6227  5.0287
+motion_blur/image00014.jpg           0.7902  1.3192
+motion_blur/image00015.jpg           0.6631  1.3481
+motion_blur/image00016.jpg           0.5254  1.2576
+motion_blur/image00017.jpg           0.5924  3.7347
+motion_blur/image00018.jpg           1.2297  2.3630
+motion_blur/image00019.jpg           0.5093  1.4547
+motion_blur/image00020.jpg           0.7303  2.1312
+motion_blur/image00021.jpg           2.3738  4.0409
+motion_blur/image00022.jpg           detection_failed
+motion_blur/image00023.jpg           0.8083  1.9071
+motion_blur/image00024.jpg           0.8915  2.6806
+motion_blur/image00025.jpg           0.4088  0.6669
+motion_blur/image00026.jpg           detection_failed
+motion_blur/image00027.jpg           1.6695  3.1649
+motion_blur/image00028.jpg           1.5272  3.2237
+motion_blur/image00029.jpg           0.9900  1.8129
+motion_blur/image00030.jpg           1.0350  1.7850
+motion_blur/image00031.jpg           detection_failed
+motion_blur/image00032.jpg           1.0940  1.7360
+motion_blur/image00033.jpg           0.7616  1.8699
+motion_blur/image00034.jpg           0.6234  1.4302
+motion_blur/image00035.jpg           0.9265  2.6463
+motion_blur/image00036.jpg           0.7093  1.4029
+motion_blur/image00037.jpg           0.7572  1.7084
 shadow/image01.png                   0.2146  0.3378
 shadow/image02.png                   0.2248  0.3619
 shadow/image03.png                   0.1932  0.3375
@@ -244,10 +285,10 @@ shadow/image12.png                   0.1560  0.3067
 shadow/image13.png                   0.2165  0.3607
 shadow/image14.png                   0.1477  0.3185
 shadow/image15.png                   0.1841  0.5199
-large_shadow/image01.jpg             0.7578  1.3917
+large_shadow/image01.jpg             0.7578  1.3427
 large_shadow/image02.jpg             detection_failed
 large_shadow/image03.jpg             0.4726  1.0099
-large_shadow/image04.jpg             1.3743  2.2465
+large_shadow/image04.jpg             1.4088  2.2465
 large_shadow/image05.jpg             0.5313  1.0277
 large_shadow/image06.jpg             0.4323  1.1806
 large_shadow/image07.jpg             0.7046  1.5238
@@ -339,7 +380,7 @@ ocam_fisheye190/Fisheye190deg4.jpg   0.1892  0.3475
 ocam_fisheye190/Fisheye190deg5.jpg   detection_failed
 ocam_fisheye190/Fisheye190deg6.jpg   0.2989  0.5331
 ocam_fisheye190/Fisheye190deg7.jpg   0.2130  0.4173
-ocam_fisheye190/Fisheye190deg8.jpg   0.2266  0.4795
+ocam_fisheye190/Fisheye190deg8.jpg   0.2272  0.4795
 ocam_kaidan_omni/KaidanOmni01.jpg    0.2397  0.5222
 ocam_kaidan_omni/KaidanOmni02.jpg    0.2796  0.5031
 ocam_kaidan_omni/KaidanOmni03.jpg    0.2401  0.5075
@@ -356,7 +397,7 @@ ocam_kaidan_omni/KaidanOmni13.jpg    0.2491  0.5316
 ocam_kaidan_omni/KaidanOmni14.jpg    0.2842  0.4930
 ocam_kaidan_omni/KaidanOmni15.jpg    0.2312  0.5622
 ocam_kaidan_omni/KaidanOmni16.jpg    0.2640  0.4853
-ocam_kaidan_omni/KaidanOmni17.jpg    0.2649  0.6405
+ocam_kaidan_omni/KaidanOmni17.jpg    detection_failed
 ocam_ladybug/Ladybug1.jpg            0.2448  0.4564
 ocam_ladybug/Ladybug10.jpg           0.3569  0.6698
 ocam_ladybug/Ladybug11.jpg           0.2745  0.5779
@@ -393,7 +434,7 @@ ocam_omni/omni05.jpg                 0.3182  0.5374
 ocam_omni/omni06.jpg                 0.3325  0.6280
 ocam_omni/omni07.jpg                 0.3350  0.7415
 ocam_omni/omni08.jpg                 0.2337  0.4893
-ocam_omni/omni09.jpg                 0.3298  0.5129
+ocam_omni/omni09.jpg                 0.3287  0.5129
 ocam_omni/omni10.jpg                 0.2876  0.5860
 ocam_omni/omni11.jpg                 0.2778  0.4856
 ocam_omni/omni12.jpg                 0.2962  0.5058
@@ -414,20 +455,21 @@ fisheye1                            Errors{ 50% :  0.2420 , 95% :  0.5022 }, Det
 fisheye2                            Errors{ 50% :  0.3212 , 95% :  0.7933 }, Detection : %100.00 , Images : 46
 close                               Errors{ 50% :  0.4242 , 95% :  0.9147 }, Detection : %100.00 , Images : 12
 sloppy13x10                         Errors{ 50% :  0.4245 , 95% :  1.2734 }, Detection : %100.00 , Images : 13
-focus                               Errors{ 50% :  0.3997 , 95% :  1.6439 }, Detection : %100.00 , Images : 36
+focus                               Errors{ 50% :  0.3986 , 95% :  1.6439 }, Detection : %100.00 , Images : 36
+focus_large                         Errors{ 50% :  2.7412 , 95% :  9.2127 }, Detection : %100.00 , Images : 16
 rotation_vertical                   Errors{ 50% :  0.2409 , 95% :  0.4750 }, Detection : %100.00 , Images : 7
 rotation_flat                       Errors{ 50% :  0.2752 , 95% :  0.5827 }, Detection : %100.00 , Images : 12
-motion_blur                         Errors{ 50% :  0.4887 , 95% :  1.5691 }, Detection : % 92.31 , Images : 13
+motion_blur                         Errors{ 50% :  0.6442 , 95% :  2.7555 }, Detection : % 92.11 , Images : 38
 shadow                              Errors{ 50% :  0.2138 , 95% :  0.4477 }, Detection : %100.00 , Images : 15
-large_shadow                        Errors{ 50% :  0.5404 , 95% :  1.9165 }, Detection : % 90.00 , Images : 10
+large_shadow                        Errors{ 50% :  0.5462 , 95% :  1.8898 }, Detection : % 90.00 , Images : 10
 caltech_edges                       Errors{ 50% :  0.2613 , 95% :  0.5623 }, Detection : % 75.00 , Images : 20
 deltille_fisheye                    Errors{ 50% :  0.2093 , 95% :  0.4576 }, Detection : % 94.83 , Images : 58
 ocam_fisheye190                     Errors{ 50% :  0.2164 , 95% :  0.5012 }, Detection : % 75.00 , Images : 8
-ocam_kaidan_omni                    Errors{ 50% :  0.2552 , 95% :  0.5384 }, Detection : % 94.12 , Images : 17
+ocam_kaidan_omni                    Errors{ 50% :  0.2543 , 95% :  0.5294 }, Detection : % 88.24 , Images : 17
 ocam_ladybug                        Errors{ 50% :  0.2539 , 95% :  0.5644 }, Detection : %100.00 , Images : 13
 ocam_mini_omni                      Errors{ 50% :  0.2200 , 95% :  0.5161 }, Detection : % 86.67 , Images : 15
-ocam_omni                           Errors{ 50% :  0.2857 , 95% :  0.5975 }, Detection : %100.00 , Images : 14
+ocam_omni                           Errors{ 50% :  0.2850 , 95% :  0.5975 }, Detection : %100.00 , Images : 14
 
 --------------------------------------------------------------------------------
 
-Summary                             Errors{ 50% :  0.2599 , 95% :  0.7443 }, Detection : % 96.24 , Images : 399
+Summary                             Errors{ 50% :  0.2737 , 95% :  1.3481 }, Detection : % 95.91 , Images : 440
