@@ -256,18 +256,18 @@ motion_blur/image00020.jpg           0.7303  2.1312
 motion_blur/image00021.jpg           2.3738  4.0409
 motion_blur/image00022.jpg           detection_failed
 motion_blur/image00023.jpg           0.8083  1.9071
-motion_blur/image00024.jpg           0.8915  2.6806
+motion_blur/image00024.jpg           0.9165  2.6806
 motion_blur/image00025.jpg           0.4088  0.6669
 motion_blur/image00026.jpg           detection_failed
 motion_blur/image00027.jpg           1.6695  3.1649
-motion_blur/image00028.jpg           1.5272  3.2237
-motion_blur/image00029.jpg           0.9900  1.8129
-motion_blur/image00030.jpg           1.0350  1.7850
+motion_blur/image00028.jpg           1.5665  3.2237
+motion_blur/image00029.jpg           0.9900  1.7305
+motion_blur/image00030.jpg           1.0754  2.0589
 motion_blur/image00031.jpg           detection_failed
 motion_blur/image00032.jpg           1.0940  1.7360
 motion_blur/image00033.jpg           0.7616  1.8699
 motion_blur/image00034.jpg           0.6234  1.4302
-motion_blur/image00035.jpg           0.9265  2.6463
+motion_blur/image00035.jpg           0.9953  5.2131
 motion_blur/image00036.jpg           0.7093  1.4029
 motion_blur/image00037.jpg           0.7572  1.7084
 shadow/image01.png                   0.2146  0.3378
@@ -286,15 +286,28 @@ shadow/image13.png                   0.2165  0.3607
 shadow/image14.png                   0.1477  0.3185
 shadow/image15.png                   0.1841  0.5199
 large_shadow/image01.jpg             0.7578  1.3427
-large_shadow/image02.jpg             detection_failed
-large_shadow/image03.jpg             0.4726  1.0099
-large_shadow/image04.jpg             1.4088  2.2465
+large_shadow/image02.jpg             0.6035  1.5117
+large_shadow/image03.jpg             0.5074  1.0313
+large_shadow/image04.jpg             1.4088  1.9720
 large_shadow/image05.jpg             0.5313  1.0277
 large_shadow/image06.jpg             0.4323  1.1806
 large_shadow/image07.jpg             0.7046  1.5238
 large_shadow/image08.jpg             0.5616  1.0526
 large_shadow/image09.jpg             0.4456  0.8228
 large_shadow/image10.jpg             0.7138  1.4690
+large_shadow/image11.jpg             0.4793  1.0470
+large_shadow/image12.jpg             1.1536  2.1703
+large_shadow/image13.jpg             0.3384  0.9611
+large_shadow/image14.jpg             0.4377  1.0972
+large_shadow/image15.jpg             0.6505  0.8600
+large_shadow/image16.jpg             0.3798  0.5766
+large_shadow/image17.jpg             detection_failed
+large_shadow/image18.jpg             0.2640  0.4156
+large_shadow/image19.jpg             0.3563  0.5440
+large_shadow/image20.jpg             0.2713  0.4590
+large_shadow/image21.jpg             0.2962  0.5205
+large_shadow/image22.jpg             0.4535  0.6781
+large_shadow/image23.jpg             0.2749  0.4805
 caltech_edges/Image01.jpg            0.2668  0.5008
 caltech_edges/Image02.jpg            0.2465  0.4643
 caltech_edges/Image03.jpg            0.2193  0.4639
@@ -304,14 +317,14 @@ caltech_edges/Image06.jpg            0.2051  0.4575
 caltech_edges/Image07.jpg            0.2695  0.5817
 caltech_edges/Image08.jpg            0.3055  0.5469
 caltech_edges/Image09.jpg            0.3345  0.6728
-caltech_edges/Image10.jpg            0.3058  0.5668
+caltech_edges/Image10.jpg            detection_failed
 caltech_edges/Image11.jpg            0.2141  0.4545
-caltech_edges/Image12.jpg            detection_failed
+caltech_edges/Image12.jpg            0.2201  0.5087
 caltech_edges/Image13.jpg            0.2308  0.5130
-caltech_edges/Image14.jpg            detection_failed
-caltech_edges/Image15.jpg            detection_failed
-caltech_edges/Image16.jpg            detection_failed
-caltech_edges/Image17.jpg            detection_failed
+caltech_edges/Image14.jpg            0.2537  0.5099
+caltech_edges/Image15.jpg            0.2280  0.4932
+caltech_edges/Image16.jpg            0.2410  0.5247
+caltech_edges/Image17.jpg            0.2927  0.5966
 caltech_edges/Image18.jpg            0.3360  0.6292
 caltech_edges/Image19.jpg            0.3143  0.7606
 caltech_edges/Image20.jpg            0.2953  0.5777
@@ -459,10 +472,10 @@ focus                               Errors{ 50% :  0.3986 , 95% :  1.6439 }, Det
 focus_large                         Errors{ 50% :  2.7412 , 95% :  9.2127 }, Detection : %100.00 , Images : 16
 rotation_vertical                   Errors{ 50% :  0.2409 , 95% :  0.4750 }, Detection : %100.00 , Images : 7
 rotation_flat                       Errors{ 50% :  0.2752 , 95% :  0.5827 }, Detection : %100.00 , Images : 12
-motion_blur                         Errors{ 50% :  0.6442 , 95% :  2.7555 }, Detection : % 92.11 , Images : 38
+motion_blur                         Errors{ 50% :  0.6442 , 95% :  2.8054 }, Detection : % 92.11 , Images : 38
 shadow                              Errors{ 50% :  0.2138 , 95% :  0.4477 }, Detection : %100.00 , Images : 15
-large_shadow                        Errors{ 50% :  0.5462 , 95% :  1.8898 }, Detection : % 90.00 , Images : 10
-caltech_edges                       Errors{ 50% :  0.2613 , 95% :  0.5623 }, Detection : % 75.00 , Images : 20
+large_shadow                        Errors{ 50% :  0.4381 , 95% :  1.6039 }, Detection : % 95.65 , Images : 23
+caltech_edges                       Errors{ 50% :  0.2547 , 95% :  0.5513 }, Detection : % 95.00 , Images : 20
 deltille_fisheye                    Errors{ 50% :  0.2093 , 95% :  0.4576 }, Detection : % 94.83 , Images : 58
 ocam_fisheye190                     Errors{ 50% :  0.2164 , 95% :  0.5012 }, Detection : % 75.00 , Images : 8
 ocam_kaidan_omni                    Errors{ 50% :  0.2543 , 95% :  0.5294 }, Detection : % 88.24 , Images : 17
@@ -472,4 +485,4 @@ ocam_omni                           Errors{ 50% :  0.2850 , 95% :  0.5975 }, Det
 
 --------------------------------------------------------------------------------
 
-Summary                             Errors{ 50% :  0.2737 , 95% :  1.3481 }, Detection : % 95.91 , Images : 440
+Summary                             Errors{ 50% :  0.2728 , 95% :  1.3209 }, Detection : % 96.91 , Images : 453

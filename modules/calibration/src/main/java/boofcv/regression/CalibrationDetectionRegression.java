@@ -57,11 +57,15 @@ public class CalibrationDetectionRegression extends BaseRegression implements Im
 		chessDirectories.add("data/calibration_mono/chessboard/close");
 		chessDirectories.add("data/calibration_mono/chessboard/sloppy13x10");
 		chessDirectories.add("data/calibration_mono/chessboard/focus");
+		chessDirectories.add("data/calibration_mono/chessboard/focus_large");
 		chessDirectories.add("data/calibration_mono/chessboard/rotation_vertical");
 		chessDirectories.add("data/calibration_mono/chessboard/rotation_flat");
 		chessDirectories.add("data/calibration_mono/chessboard/motion_blur");
 		chessDirectories.add("data/calibration_mono/chessboard/shadow");
 		chessDirectories.add("data/calibration_mono/chessboard/large_shadow");
+		chessDirectories.add("data/calibration_mono/chessboard/caltech_edges");
+		chessDirectories.add("data/calibration_mono/chessboard/deltille_fisheye");
+		chessDirectories.add("data/calibration_mono/chessboard/ocam_fisheye190");
 		chessDirectories.add("data/calibration_mono/chessboard/ocam_kaidan_omni");
 		chessDirectories.add("data/calibration_mono/chessboard/ocam_ladybug");
 		chessDirectories.add("data/calibration_mono/chessboard/ocam_mini_omni");
@@ -135,6 +139,11 @@ public class CalibrationDetectionRegression extends BaseRegression implements Im
 	}
 
 	private void evaluate( DetectorInfo d , List<String> directories ) throws FileNotFoundException {
+		PrintStream runtimeOut = new PrintStream(new File(directory,"RUN_"+d.name+".txt"));
+		BoofRegressionConstants.printGenerator(runtimeOut, getClass());
+		runtimeOut.println("# "+d.name);
+		runtimeOut.println("# Data set, average milliseconds");
+
 		PrintStream output = new PrintStream(new File(directory,"ACC_"+d.name+".txt"));
 		BoofRegressionConstants.printGenerator(output,getClass());
 		output.println("# (file name) (truth error 50%) (truth error 95%)");
@@ -158,6 +167,9 @@ public class CalibrationDetectionRegression extends BaseRegression implements Im
 					dirMetrics.put(dir,directoryMetrics);
 					if( directoryMetrics.total == 0 ) {
 						errorLog.println("Failed to find images in dir");
+						runtimeOut.printf("%30s NaN\n",new File(dir).getName());
+					} else {
+						runtimeOut.printf("%30s %8.2f\n",new File(dir).getName(),directoryMetrics.averageSpeedMS);
 					}
 				} else {
 					errorLog.println("No files found in " + dir);
@@ -183,6 +195,7 @@ public class CalibrationDetectionRegression extends BaseRegression implements Im
 			e.printStackTrace(errorLog);
 		} finally {
 			output.close();
+			runtimeOut.close();
 		}
 
 	}
@@ -240,7 +253,11 @@ public class CalibrationDetectionRegression extends BaseRegression implements Im
 			metrics.total++;
 
 			try {
-				if( detector.process(image) ) {
+				long time0 = System.nanoTime();
+				boolean success = detector.process(image);
+				long time1 = System.nanoTime();
+				metrics.averageSpeedMS += (time1-time0)*1e-6;
+				if( success ) {
 					double[] errors = new double[ groundTruth.size() ];
 
 					CalibrationObservation found = detector.getDetectedPoints();
@@ -268,6 +285,8 @@ public class CalibrationDetectionRegression extends BaseRegression implements Im
 				metrics.failed++;
 			}
 		}
+
+		metrics.averageSpeedMS /= metrics.total;
 	}
 
 	private double distanceFromClosest( Point2D_F64 target , List<Point2D_F64> points ) {
@@ -288,6 +307,7 @@ public class CalibrationDetectionRegression extends BaseRegression implements Im
 		GrowQueue_F64 errors = new GrowQueue_F64();
 		int total;
 		int failed;
+		double averageSpeedMS;
 
 		public void add( OverallMetrics src ) {
 			errors.addAll(src.errors);

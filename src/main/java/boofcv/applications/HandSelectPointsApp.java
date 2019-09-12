@@ -1,11 +1,16 @@
 package boofcv.applications;
 
 import boofcv.abst.fiducial.QrCodeDetector;
+import boofcv.abst.fiducial.calib.CalibrationDetectorChessboard;
+import boofcv.abst.fiducial.calib.ConfigGridDimen;
 import boofcv.alg.fiducial.qrcode.QrCode;
+import boofcv.alg.geo.calibration.CalibrationObservation;
 import boofcv.common.misc.PointFileCodec;
 import boofcv.factory.fiducial.FactoryFiducial;
+import boofcv.factory.fiducial.FactoryFiducialCalibration;
 import boofcv.gui.BoofSwingUtil;
 import boofcv.io.image.ConvertBufferedImage;
+import boofcv.struct.image.GrayF32;
 import boofcv.struct.image.GrayU8;
 import georegression.struct.point.Point2D_F64;
 
@@ -25,7 +30,8 @@ public class HandSelectPointsApp extends HandSelectBase {
 	public HandSelectPointsApp( File file ) {
 		super(new SelectPointPanel(),file);
 
-		addDetectQrCodes();
+//		addDetectQrCodes();
+		addDetectChessboard();
 	}
 
 	@Override
@@ -68,6 +74,33 @@ public class HandSelectPointsApp extends HandSelectBase {
 				gui.repaint();
 				System.out.println("detected "+detector.getDetections().size());
 			});
+		};
+	}
+
+	private void addDetectChessboard() {
+		infoPanel.handleSelectShape = ()->{
+			ConfigGridDimen configGrid = new ConfigGridDimen(10,7,1);
+
+			CalibrationDetectorChessboard detector = FactoryFiducialCalibration.chessboard(null,configGrid);
+
+			GrayF32 gray = new GrayF32(1,1);
+			ConvertBufferedImage.convertFrom(image,gray);
+			if( detector.process(gray) ) {
+				SelectPointPanel gui = (SelectPointPanel)this.imagePanel;
+
+				BoofSwingUtil.invokeNowOrLater(()->{
+					gui.clearPoints();
+
+					CalibrationObservation found = detector.getDetectedPoints();
+					List<Point2D_F64> list = new ArrayList<>();
+					for (int i = 0; i < found.size(); i++) {
+						list.add(found.get(i));
+					}
+					gui.addPointSet(list);
+					gui.repaint();
+				});
+			}
+
 		};
 	}
 

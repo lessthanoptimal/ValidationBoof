@@ -295,6 +295,19 @@ large_shadow/image07.jpg             detection_failed
 large_shadow/image08.jpg             detection_failed
 large_shadow/image09.jpg             detection_failed
 large_shadow/image10.jpg             detection_failed
+large_shadow/image11.jpg             detection_failed
+large_shadow/image12.jpg             detection_failed
+large_shadow/image13.jpg             detection_failed
+large_shadow/image14.jpg             detection_failed
+large_shadow/image15.jpg             detection_failed
+large_shadow/image16.jpg             detection_failed
+large_shadow/image17.jpg             detection_failed
+large_shadow/image18.jpg             detection_failed
+large_shadow/image19.jpg             detection_failed
+large_shadow/image20.jpg             detection_failed
+large_shadow/image21.jpg             detection_failed
+large_shadow/image22.jpg             detection_failed
+large_shadow/image23.jpg             detection_failed
 caltech_edges/Image01.jpg            detection_failed
 caltech_edges/Image02.jpg            detection_failed
 caltech_edges/Image03.jpg            detection_failed
@@ -461,7 +474,7 @@ rotation_vertical                   Errors{ 50% :  0.2481 , 95% :  0.5307 }, Det
 rotation_flat                       Errors{ 50% :  0.2819 , 95% :  0.5870 }, Detection : %100.00 , Images : 12
 motion_blur                         Errors{ 50% :  0.4227 , 95% :  1.0722 }, Detection : % 21.05 , Images : 38
 shadow                              Errors{ 50% :  0.2089 , 95% :  0.4437 }, Detection : % 80.00 , Images : 15
-large_shadow                        Errors{ 50% :     NaN , 95% :     NaN }, Detection : %  0.00 , Images : 10
+large_shadow                        Errors{ 50% :     NaN , 95% :     NaN }, Detection : %  0.00 , Images : 23
 caltech_edges                       Errors{ 50% :     NaN , 95% :     NaN }, Detection : %  0.00 , Images : 20
 deltille_fisheye                    Errors{ 50% :  0.4212 , 95% :  1.8302 }, Detection : % 34.48 , Images : 58
 ocam_fisheye190                     Errors{ 50% :  0.3093 , 95% :  0.6583 }, Detection : % 25.00 , Images : 8
@@ -472,4 +485,4 @@ ocam_omni                           Errors{ 50% :  0.6806 , 95% :  1.9089 }, Det
 
 --------------------------------------------------------------------------------
 
-Summary                             Errors{ 50% :  0.3660 , 95% :  1.5186 }, Detection : % 60.91 , Images : 440
+Summary                             Errors{ 50% :  0.3660 , 95% :  1.5186 }, Detection : % 59.16 , Images : 453
