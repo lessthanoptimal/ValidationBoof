@@ -146,7 +146,7 @@ public class CalibrationDetectionRegression extends BaseRegression implements Im
 
 		PrintStream output = new PrintStream(new File(directory,"ACC_"+d.name+".txt"));
 		BoofRegressionConstants.printGenerator(output,getClass());
-		output.println("# (file name) (truth error 50%) (truth error 95%)");
+		output.println("# (file name) (truth error 50%) (truth error 95%) (truth error 100%)");
 
 		Map<String,OverallMetrics> dirMetrics = new HashMap<>();
 		try {
@@ -273,8 +273,9 @@ public class CalibrationDetectionRegression extends BaseRegression implements Im
 
 						double e50 = errors[errors.length/2];
 						double e95 = errors[(int)((errors.length-1)*0.95)];
+						double e100 = errors[errors.length-1];
 
-						output.printf("%-35s %7.4f %7.4f\n",dataSetName,e50,e95);
+						output.printf("%-35s %7.4f %7.4f %7.4f\n",dataSetName,e50,e95,e100);
 					}
 				} else {
 					output.printf("%-35s  detection_failed\n",dataSetName);

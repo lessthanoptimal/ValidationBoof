@@ -1,44 +1,44 @@
 # GENERATOR CalibrationDetectionRegression
-# (file name) (truth error 50%) (truth error 95%)
-calib_5x6/image0.jpg                 0.2316  0.4756
-calib_5x6/image1.jpg                 0.2223  0.4200
-calib_5x6/image2.jpg                 0.2460  0.4245
-calib_5x6/image3.jpg                 0.1812  0.4566
-calib_5x6/image4.jpg                 0.3138  0.4949
-calib_5x6/image5.jpg                 0.2929  0.3970
-calib_5x6/image6.jpg                 0.1898  0.4565
-calib_5x6/image7.jpg                 0.2329  0.3454
-calib_5x6/image8.jpg                 0.2678  0.3592
-calib_24x28/image0.jpg               0.0422  0.0976
-calib_24x28/image1.jpg               0.0387  0.0981
-calib_24x28/image2.jpg               0.0357  0.0957
-calib_24x28/image3.jpg               0.0388  0.0962
-calib_24x28/image4.jpg               0.0323  0.0889
-calib_24x28/image5.jpg               0.0362  0.1103
-calib_24x28/image6.jpg               0.0310  0.1165
-fisheye_5x6/image00.jpg              0.1509  0.2227
-fisheye_5x6/image01.jpg              0.2087  0.2981
-fisheye_5x6/image02.jpg              0.4564  0.8116
-fisheye_5x6/image03.jpg              0.2860  0.5969
-fisheye_5x6/image04.jpg              0.2755  0.3805
-fisheye_5x6/image05.jpg              0.2214  0.4039
+# (file name) (truth error 50%) (truth error 95%) (truth error 100%)
+calib_5x6/image0.jpg                 0.2316  0.4756  0.4887
+calib_5x6/image1.jpg                 0.2223  0.4200  0.4948
+calib_5x6/image2.jpg                 0.2460  0.4245  0.4725
+calib_5x6/image3.jpg                 0.1812  0.4566  0.5429
+calib_5x6/image4.jpg                 0.3138  0.4949  0.5611
+calib_5x6/image5.jpg                 0.2929  0.3970  0.4601
+calib_5x6/image6.jpg                 0.1898  0.4565  0.5356
+calib_5x6/image7.jpg                 0.2329  0.3454  0.3733
+calib_5x6/image8.jpg                 0.2678  0.3592  0.5406
+calib_24x28/image0.jpg               0.0422  0.0976  0.1805
+calib_24x28/image1.jpg               0.0387  0.0981  0.1774
+calib_24x28/image2.jpg               0.0357  0.0957  0.4765
+calib_24x28/image3.jpg               0.0388  0.0962  0.1532
+calib_24x28/image4.jpg               0.0323  0.0889  0.1440
+calib_24x28/image5.jpg               0.0362  0.1103  0.2441
+calib_24x28/image6.jpg               0.0310  0.1165  0.4535
+fisheye_5x6/image00.jpg              0.1509  0.2227  0.2551
+fisheye_5x6/image01.jpg              0.2087  0.2981  0.3184
+fisheye_5x6/image02.jpg              0.4564  0.8116  0.8523
+fisheye_5x6/image03.jpg              0.2860  0.5969  0.6692
+fisheye_5x6/image04.jpg              0.2755  0.3805  1.3142
+fisheye_5x6/image05.jpg              0.2214  0.4039  0.4301
 fisheye_5x6/image06.jpg              detection_failed
 fisheye_5x6/image07.jpg              detection_failed
-fisheye_5x6/image08.jpg              0.2170  0.2561
-fisheye_5x6/image09.jpg              0.1310  0.2404
-fisheye_5x6/image10.jpg              0.1536  0.3643
-fisheye_5x6/image11.jpg              0.2264  0.3840
-fisheye_5x6/image12.jpg              0.2307  0.6389
-fisheye_5x6/image13.jpg              0.1910  0.3405
-fisheye_5x6/image14.jpg              0.2012  0.3448
-fisheye_5x6/image15.jpg              0.2636  0.4368
+fisheye_5x6/image08.jpg              0.2170  0.2561  0.2563
+fisheye_5x6/image09.jpg              0.1310  0.2404  0.2995
+fisheye_5x6/image10.jpg              0.1536  0.3643  0.4879
+fisheye_5x6/image11.jpg              0.2264  0.3840  0.4405
+fisheye_5x6/image12.jpg              0.2307  0.6389  0.9711
+fisheye_5x6/image13.jpg              0.1910  0.3405  0.3633
+fisheye_5x6/image14.jpg              0.2012  0.3448  0.3882
+fisheye_5x6/image15.jpg              0.2636  0.4368  0.5421
 fisheye_5x6/image16.jpg              detection_failed
 fisheye_5x6/image17.jpg              detection_failed
-fisheye_5x6/image18.jpg              0.2165  0.2937
-large_24x28/image0.jpg               0.0653  0.1474
-large_24x28/image1.jpg               1.0519  2.3548
-large_24x28/image2.jpg               0.0813  0.5412
-large_24x28/image3.jpg               0.1517  0.8461
+fisheye_5x6/image18.jpg              0.2165  0.2937  0.3241
+large_24x28/image0.jpg               0.0653  0.1474  0.2712
+large_24x28/image1.jpg               1.0519  2.3548  3.7469
+large_24x28/image2.jpg               0.0813  0.5412  0.9846
+large_24x28/image3.jpg               0.1517  0.8461  1.7072
 
 --------------------------------------------------------------------------------
 

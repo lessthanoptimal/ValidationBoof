@@ -1,458 +1,458 @@
 # GENERATOR CalibrationDetectionRegression
-# (file name) (truth error 50%) (truth error 95%)
-Bumblebee2_Chess/left01.jpg          0.2606  0.4331
-Bumblebee2_Chess/left02.jpg          0.2911  0.4516
-Bumblebee2_Chess/left03.jpg          0.1841  0.3268
-Bumblebee2_Chess/left04.jpg          0.2330  0.4883
-Bumblebee2_Chess/left05.jpg          0.1933  0.3048
-Bumblebee2_Chess/left06.jpg          0.2795  0.3862
-Bumblebee2_Chess/left07.jpg          0.2571  0.4281
-Bumblebee2_Chess/left08.jpg          0.2113  0.3831
-Bumblebee2_Chess/left09.jpg          0.2828  0.6210
-Bumblebee2_Chess/left10.jpg          0.2809  0.4253
-Bumblebee2_Chess/left11.jpg          0.2818  0.4345
-Bumblebee2_Chess/right01.jpg         0.3155  0.4700
-Bumblebee2_Chess/right02.jpg         0.2968  0.4817
-Bumblebee2_Chess/right03.jpg         0.3623  0.6604
-Bumblebee2_Chess/right04.jpg         0.3424  0.4870
-Bumblebee2_Chess/right05.jpg         0.3236  0.4867
-Bumblebee2_Chess/right06.jpg         0.3041  0.4016
-Bumblebee2_Chess/right07.jpg         0.3453  0.5115
-Bumblebee2_Chess/right08.jpg         0.2511  0.3685
-Bumblebee2_Chess/right09.jpg         0.2605  0.4152
-Bumblebee2_Chess/right10.jpg         0.2712  0.4757
-Bumblebee2_Chess/right11.jpg         0.3205  0.5180
-Sony_DSC-HX5V/frame01.jpg            0.2411  0.5095
-Sony_DSC-HX5V/frame02.jpg            0.2749  0.5572
-Sony_DSC-HX5V/frame03.jpg            0.3682  0.6054
-Sony_DSC-HX5V/frame04.jpg            0.3282  0.5789
-Sony_DSC-HX5V/frame05.jpg            0.2949  0.5115
-Sony_DSC-HX5V/frame06.jpg            0.3660  0.5939
-Sony_DSC-HX5V/frame07.jpg            0.3103  0.4226
-Sony_DSC-HX5V/frame08.jpg            0.2939  0.5725
-Sony_DSC-HX5V/frame09.jpg            0.2799  0.5937
-Sony_DSC-HX5V/frame10.jpg            0.2712  0.4299
-Sony_DSC-HX5V/frame11.jpg            0.3932  0.6690
-Sony_DSC-HX5V/frame12.jpg            0.3091  0.4608
-Sony_DSC-HX5V/frame13.jpg            0.3373  0.5328
-large/large00.jpg                    0.3041  0.6992
-large/large01.jpg                    0.2671  0.5130
-large/large02.jpg                    0.3847  0.7888
-large/large03.jpg                    0.2553  0.3752
-large/large04.jpg                    0.3507  0.5421
-large/large05.jpg                    0.3924  0.6674
-distant/image00000.jpg               0.2269  0.4392
-distant/image00001.jpg               0.2062  0.2954
-distant/image00002.jpg               0.2122  0.3113
-distant/image00003.jpg               0.1935  0.3012
-distant/image00004.jpg               0.1949  0.3351
-distant/image00005.jpg               0.2582  0.4921
-distant/image00006.jpg               0.1992  0.3128
-distance_angle/image01.jpg           0.1447  0.3547
-distance_angle/image02.jpg           0.2147  0.3254
-distance_angle/image03.jpg           0.2254  0.3957
-distance_angle/image04.jpg           0.2222  0.3211
-distance_angle/image05.jpg           0.1974  0.3416
-distance_angle/image06.jpg           0.2436  0.3255
-distance_straight/image00.jpg        0.2437  0.3878
-distance_straight/image01.jpg        0.1729  0.4223
-distance_straight/image02.jpg        0.1540  0.2477
-distance_straight/image03.jpg        0.2481  0.4031
-distance_straight/image04.jpg        0.1934  0.3624
-distance_straight/image05.jpg        0.2550  0.3547
-distance_straight/image06.jpg        0.1678  0.2951
-distance_straight/image07.jpg        0.1129  0.2546
-hard/image01.jpg                     0.2263  0.3575
-border/image00000.jpg                0.2157  0.3686
-border/image00001.jpg                0.1972  0.3477
-border/image00002.jpg                0.2273  0.4661
-border/image00003.jpg                0.1854  0.4238
-border/image00004.jpg                0.2177  0.4572
-border/image00005.jpg                0.2146  0.4083
-border/image00006.jpg                0.2557  0.4914
-border/image00007.jpg                0.2589  0.4245
-border/image00008.jpg                0.4977  1.1655
-border/image00009.jpg                0.4224  1.0060
-border/image00010.jpg                0.2953  0.7312
-border/image00011.jpg                0.4106  0.7655
-border/image00012.jpg                0.3734  1.0704
-border/image00013.jpg                0.3999  0.9052
-border/image00014.jpg                0.3606  0.5862
-border/image00015.jpg                0.4390  0.7316
-fisheye1/image00.jpg                 0.2337  0.3827
-fisheye1/image01.jpg                 0.2116  0.2964
-fisheye1/image02.jpg                 0.2797  0.4902
-fisheye1/image03.jpg                 0.2814  0.4209
-fisheye1/image04.jpg                 0.2366  0.3506
-fisheye1/image05.jpg                 0.2604  0.4639
-fisheye1/image06.jpg                 0.2661  0.4212
-fisheye1/image07.jpg                 0.2652  0.4641
-fisheye1/image08.jpg                 0.2685  0.5411
-fisheye1/image09.jpg                 0.2916  0.5075
-fisheye1/image10.jpg                 0.2115  0.4502
-fisheye2/image00.jpg                 0.3021  0.4866
-fisheye2/image01.jpg                 0.2781  0.4799
-fisheye2/image02.jpg                 0.2774  0.3814
-fisheye2/image03.jpg                 0.3090  0.5804
-fisheye2/image04.jpg                 0.2871  0.5449
-fisheye2/image05.jpg                 0.2869  0.5278
-fisheye2/image06.jpg                 0.3620  0.7306
-fisheye2/image07.jpg                 0.3254  0.5376
-fisheye2/image08.jpg                 0.2910  0.4591
-fisheye2/image09.jpg                 0.2462  0.4471
-fisheye2/image10.jpg                 0.3474  0.5603
-fisheye2/image11.jpg                 0.4963  0.6433
-fisheye2/image12.jpg                 0.3049  0.5096
-fisheye2/image13.jpg                 0.3918  0.6619
-fisheye2/image14.jpg                 0.3042  0.6721
-fisheye2/image15.jpg                 0.7813  2.2004
-fisheye2/image16.jpg                 0.3342  0.7754
-fisheye2/image17.jpg                 0.3408  0.6008
-fisheye2/image18.jpg                 0.5129  1.2342
-fisheye2/image19.jpg                 0.4123  0.8191
-fisheye2/image20.jpg                 0.4636  0.7789
-fisheye2/image21.jpg                 0.2507  0.4475
-fisheye2/image22.jpg                 0.2600  0.3991
-fisheye2/image23.jpg                 0.2759  0.4777
-fisheye2/image24.jpg                 0.3923  0.7860
-fisheye2/image25.jpg                 0.3878  0.5972
-fisheye2/image26.jpg                 0.4530  0.6967
-fisheye2/image27.jpg                 0.3975  0.7829
-fisheye2/image28.jpg                 0.2396  0.6148
-fisheye2/image29.jpg                 0.3012  0.4553
-fisheye2/image30.jpg                 0.4349  0.9885
-fisheye2/image31.jpg                 0.2864  0.5126
-fisheye2/image32.jpg                 0.2458  0.4160
-fisheye2/image33.jpg                 0.2484  0.3724
-fisheye2/image34.jpg                 0.2921  0.4760
-fisheye2/image35.jpg                 0.3244  0.5764
-fisheye2/image36.jpg                 0.5344  1.0837
-fisheye2/image37.jpg                 0.3349  0.5021
-fisheye2/image38.jpg                 0.4097  0.7339
-fisheye2/image39.jpg                 0.2598  0.4810
-fisheye2/image40.jpg                 0.2708  0.4958
-fisheye2/image41.jpg                 0.4284  0.6883
-fisheye2/image42.jpg                 0.5489  0.9888
-fisheye2/image43.jpg                 0.4693  0.8568
-fisheye2/image44.jpg                 0.3241  0.5559
-fisheye2/image45.jpg                 0.2481  0.5063
-close/image00.jpg                    0.3723  0.6922
-close/image01.jpg                    0.4824  0.7585
-close/image02.jpg                    0.5033  0.7600
-close/image03.jpg                    0.5527  0.9190
-close/image04.jpg                    0.3855  0.8963
-close/image05.jpg                    0.4189  0.7814
-close/image06.jpg                    0.4388  0.6716
-close/image07.jpg                    0.4281  0.8698
-close/image08.jpg                    0.3222  0.7784
-close/image09.jpg                    0.5615  0.9573
-close/image10.jpg                    0.4241  0.7191
-close/image11.jpg                    0.3793  0.7210
-sloppy13x10/image00.jpg              0.3227  0.6602
-sloppy13x10/image01.jpg              0.4320  0.8230
-sloppy13x10/image02.jpg              0.3804  0.8251
-sloppy13x10/image03.jpg              0.5226  1.0769
-sloppy13x10/image04.jpg              0.9629  1.8190
-sloppy13x10/image05.jpg              0.9096  1.7368
-sloppy13x10/image06.jpg              0.7792  1.6243
-sloppy13x10/image07.jpg              0.3111  0.6763
-sloppy13x10/image08.jpg              0.3608  0.6715
-sloppy13x10/image09.jpg              0.3155  0.6350
-sloppy13x10/image10.jpg              0.3209  0.7404
-sloppy13x10/image11.jpg              0.3716  0.8657
-sloppy13x10/image12.jpg              0.4313  0.9450
-focus/image01.jpg                    1.2553  2.3756
-focus/image02.jpg                    1.4293  2.4042
-focus/image03.jpg                    1.3386  2.5864
-focus/image04.jpg                    1.0989  2.0381
-focus/image05.jpg                    0.7965  1.4532
-focus/image06.jpg                    0.8355  1.6632
-focus/image07.jpg                    0.6363  1.0865
-focus/image08.jpg                    0.4013  0.9958
-focus/image09.jpg                    0.3303  0.8868
-focus/image10.jpg                    0.3112  0.4844
-focus/image11.jpg                    0.2148  0.4257
-focus/image12.jpg                    0.2690  0.3901
-focus/image13.jpg                    0.2410  0.3775
-focus/image14.jpg                    0.2003  0.3128
-focus/image15.jpg                    0.1804  0.2651
-focus/image16.jpg                    0.5463  1.1401
-focus/image17.jpg                    0.7763  1.2934
-focus/image18.jpg                    0.6381  1.1820
-focus/image19.jpg                    0.5772  1.2594
-focus/image20.jpg                    0.5963  1.0347
-focus/image21.jpg                    0.5527  0.8309
-focus/image22.jpg                    0.4006  0.5554
-focus/image23.jpg                    0.2382  0.4321
-focus/image24.jpg                    0.3026  0.4971
-focus/image25.jpg                    1.1227  1.8234
-focus/image26.jpg                    0.9085  1.4223
-focus/image27.jpg                    0.7526  1.4260
-focus/image28.jpg                    0.7372  1.2370
-focus/image29.jpg                    0.4229  0.7138
-focus/image30.jpg                    0.4104  0.6727
-focus/image31.jpg                    0.2413  0.4836
-focus/image32.jpg                    0.3517  0.4381
-focus/image33.jpg                    0.2986  0.5443
-focus/image34.jpg                    0.2706  0.5279
-focus/image35.jpg                    0.2280  0.4327
-focus/image36.jpg                    0.1860  0.3243
-focus_large/image00.jpg              6.6893 12.6772
-focus_large/image01.jpg              6.7344 13.9346
-focus_large/image02.jpg              5.6170 11.1232
-focus_large/image03.jpg              4.2615  7.7127
-focus_large/image04.jpg              4.2842  9.2127
-focus_large/image05.jpg              4.4800  8.5263
-focus_large/image06.jpg              4.0657  6.8466
-focus_large/image07.jpg              3.2974  6.4318
-focus_large/image08.jpg              2.5722  5.4562
-focus_large/image09.jpg              3.0787  5.9620
-focus_large/image10.jpg              2.4078  5.4648
-focus_large/image11.jpg              1.7719  3.8777
-focus_large/image12.jpg              2.0257  3.6644
-focus_large/image13.jpg              0.6780  1.5919
-focus_large/image14.jpg              0.2456  0.4496
-focus_large/image15.jpg              0.2134  0.3967
-rotation_vertical/image01.jpg        0.2450  0.4523
-rotation_vertical/image02.jpg        0.2595  0.3681
-rotation_vertical/image03.jpg        0.2578  0.5350
-rotation_vertical/image04.jpg        0.2582  0.4052
-rotation_vertical/image05.jpg        0.2859  0.4467
-rotation_vertical/image06.jpg        0.1880  0.2811
-rotation_vertical/image07.jpg        0.2595  0.4394
-rotation_flat/image01.jpg            0.2001  0.4047
-rotation_flat/image02.jpg            0.2439  0.3904
-rotation_flat/image03.jpg            0.2648  0.4490
-rotation_flat/image04.jpg            0.2684  0.4754
-rotation_flat/image05.jpg            0.3688  0.5877
-rotation_flat/image06.jpg            0.3320  0.6447
-rotation_flat/image07.jpg            0.2558  0.4141
-rotation_flat/image08.jpg            0.3225  0.4854
-rotation_flat/image09.jpg            0.3502  0.5915
-rotation_flat/image10.jpg            0.3543  0.5698
-rotation_flat/image11.jpg            0.2743  0.4775
-rotation_flat/image12.jpg            0.2830  0.4412
-motion_blur/image00000.jpg           0.3464  0.6546
-motion_blur/image00001.jpg           0.4210  0.6315
-motion_blur/image00002.jpg           0.5875  1.1938
-motion_blur/image00003.jpg           0.7004  1.0863
-motion_blur/image00004.jpg           0.4737  0.8257
-motion_blur/image00005.jpg           0.9220  1.9218
-motion_blur/image00006.jpg           0.4547  1.1270
-motion_blur/image00007.jpg           0.4243  0.6003
-motion_blur/image00008.jpg           1.3291  3.5764
-motion_blur/image00009.jpg           1.0598  2.1505
-motion_blur/image00010.jpg           0.5832  1.2562
-motion_blur/image00011.jpg           0.3714  0.6375
-motion_blur/image00012.jpg           0.4767  1.0276
-motion_blur/image00013.jpg           0.6227  5.0287
-motion_blur/image00014.jpg           0.7902  1.3192
-motion_blur/image00015.jpg           0.6631  1.3481
-motion_blur/image00016.jpg           0.5254  1.2576
-motion_blur/image00017.jpg           0.5924  3.7347
-motion_blur/image00018.jpg           1.2297  2.3630
-motion_blur/image00019.jpg           0.5093  1.4547
-motion_blur/image00020.jpg           0.7303  2.1312
-motion_blur/image00021.jpg           2.3738  4.0409
+# (file name) (truth error 50%) (truth error 95%) (truth error 100%)
+Bumblebee2_Chess/left01.jpg          0.2606  0.4331  0.5003
+Bumblebee2_Chess/left02.jpg          0.2911  0.4516  0.4748
+Bumblebee2_Chess/left03.jpg          0.1841  0.3268  0.4457
+Bumblebee2_Chess/left04.jpg          0.2330  0.4883  0.6245
+Bumblebee2_Chess/left05.jpg          0.1933  0.3048  0.4509
+Bumblebee2_Chess/left06.jpg          0.2795  0.3862  0.5288
+Bumblebee2_Chess/left07.jpg          0.2571  0.4281  0.4745
+Bumblebee2_Chess/left08.jpg          0.2113  0.3831  0.5365
+Bumblebee2_Chess/left09.jpg          0.2828  0.6210  0.6310
+Bumblebee2_Chess/left10.jpg          0.2809  0.4253  0.5100
+Bumblebee2_Chess/left11.jpg          0.2818  0.4345  0.6147
+Bumblebee2_Chess/right01.jpg         0.3155  0.4700  0.6715
+Bumblebee2_Chess/right02.jpg         0.2968  0.4817  0.5824
+Bumblebee2_Chess/right03.jpg         0.3623  0.6604  0.6962
+Bumblebee2_Chess/right04.jpg         0.3424  0.4870  0.7053
+Bumblebee2_Chess/right05.jpg         0.3236  0.4867  0.6722
+Bumblebee2_Chess/right06.jpg         0.3041  0.4016  0.4759
+Bumblebee2_Chess/right07.jpg         0.3453  0.5115  0.6728
+Bumblebee2_Chess/right08.jpg         0.2511  0.3685  0.6068
+Bumblebee2_Chess/right09.jpg         0.2605  0.4152  0.5082
+Bumblebee2_Chess/right10.jpg         0.2712  0.4757  0.5983
+Bumblebee2_Chess/right11.jpg         0.3205  0.5180  0.6159
+Sony_DSC-HX5V/frame01.jpg            0.2411  0.5095  0.6137
+Sony_DSC-HX5V/frame02.jpg            0.2749  0.5572  0.7400
+Sony_DSC-HX5V/frame03.jpg            0.3682  0.6054  0.6769
+Sony_DSC-HX5V/frame04.jpg            0.3282  0.5789  0.6101
+Sony_DSC-HX5V/frame05.jpg            0.2949  0.5115  0.6850
+Sony_DSC-HX5V/frame06.jpg            0.3660  0.5939  0.6245
+Sony_DSC-HX5V/frame07.jpg            0.3103  0.4226  0.6986
+Sony_DSC-HX5V/frame08.jpg            0.2939  0.5725  0.6646
+Sony_DSC-HX5V/frame09.jpg            0.2799  0.5937  0.6385
+Sony_DSC-HX5V/frame10.jpg            0.2712  0.4299  0.4707
+Sony_DSC-HX5V/frame11.jpg            0.3932  0.6690  0.8019
+Sony_DSC-HX5V/frame12.jpg            0.3091  0.4608  0.7367
+Sony_DSC-HX5V/frame13.jpg            0.3373  0.5328  0.8528
+large/large00.jpg                    0.3041  0.6992  1.1033
+large/large01.jpg                    0.2671  0.5130  0.5458
+large/large02.jpg                    0.3847  0.7888  0.9139
+large/large03.jpg                    0.2553  0.3752  0.4843
+large/large04.jpg                    0.3507  0.5421  0.6547
+large/large05.jpg                    0.3924  0.6674  1.3533
+distant/image00000.jpg               0.2269  0.4392  0.5144
+distant/image00001.jpg               0.2062  0.2954  0.3541
+distant/image00002.jpg               0.2122  0.3113  0.3637
+distant/image00003.jpg               0.1935  0.3012  0.4912
+distant/image00004.jpg               0.1949  0.3351  0.3583
+distant/image00005.jpg               0.2582  0.4921  0.6145
+distant/image00006.jpg               0.1992  0.3128  0.5414
+distance_angle/image01.jpg           0.1447  0.3547  0.4814
+distance_angle/image02.jpg           0.2147  0.3254  0.4400
+distance_angle/image03.jpg           0.2254  0.3957  0.5873
+distance_angle/image04.jpg           0.2222  0.3211  0.4923
+distance_angle/image05.jpg           0.1974  0.3416  0.3960
+distance_angle/image06.jpg           0.2436  0.3255  0.4789
+distance_straight/image00.jpg        0.2437  0.3878  0.4657
+distance_straight/image01.jpg        0.1729  0.4223  0.4871
+distance_straight/image02.jpg        0.1540  0.2477  0.2705
+distance_straight/image03.jpg        0.2481  0.4031  0.5076
+distance_straight/image04.jpg        0.1934  0.3624  0.4477
+distance_straight/image05.jpg        0.2550  0.3547  0.4017
+distance_straight/image06.jpg        0.1678  0.2951  0.6640
+distance_straight/image07.jpg        0.1129  0.2546  0.3284
+hard/image01.jpg                     0.2263  0.3575  0.3882
+border/image00000.jpg                0.2157  0.3686  0.5032
+border/image00001.jpg                0.1972  0.3477  0.5865
+border/image00002.jpg                0.2273  0.4661  0.6277
+border/image00003.jpg                0.1854  0.4238  0.5380
+border/image00004.jpg                0.2177  0.4572  0.4790
+border/image00005.jpg                0.2146  0.4083  0.6073
+border/image00006.jpg                0.2557  0.4914  0.5473
+border/image00007.jpg                0.2589  0.4245  0.4641
+border/image00008.jpg                0.4977  1.1655  2.3370
+border/image00009.jpg                0.4224  1.0060  1.1314
+border/image00010.jpg                0.2953  0.7312  0.8886
+border/image00011.jpg                0.4106  0.7655  0.9182
+border/image00012.jpg                0.3734  1.0704  1.6619
+border/image00013.jpg                0.3999  0.9052  0.9918
+border/image00014.jpg                0.3606  0.5862  0.7764
+border/image00015.jpg                0.4390  0.7316  1.1711
+fisheye1/image00.jpg                 0.2337  0.3827  0.6472
+fisheye1/image01.jpg                 0.2116  0.2964  0.3823
+fisheye1/image02.jpg                 0.2797  0.4902  0.6851
+fisheye1/image03.jpg                 0.2814  0.4209  0.5702
+fisheye1/image04.jpg                 0.2366  0.3506  0.3840
+fisheye1/image05.jpg                 0.2604  0.4639  0.6489
+fisheye1/image06.jpg                 0.2661  0.4212  0.4970
+fisheye1/image07.jpg                 0.2652  0.4641  0.6267
+fisheye1/image08.jpg                 0.2685  0.5411  0.8895
+fisheye1/image09.jpg                 0.2916  0.5075  0.6153
+fisheye1/image10.jpg                 0.2115  0.4502  0.4875
+fisheye2/image00.jpg                 0.3021  0.4866  0.6579
+fisheye2/image01.jpg                 0.2781  0.4799  0.5369
+fisheye2/image02.jpg                 0.2774  0.3814  0.6805
+fisheye2/image03.jpg                 0.3090  0.5804  0.6708
+fisheye2/image04.jpg                 0.2871  0.5449  0.6594
+fisheye2/image05.jpg                 0.2869  0.5278  0.7933
+fisheye2/image06.jpg                 0.3620  0.7306  0.8949
+fisheye2/image07.jpg                 0.3254  0.5376  0.6435
+fisheye2/image08.jpg                 0.2910  0.4591  0.5547
+fisheye2/image09.jpg                 0.2462  0.4471  0.7339
+fisheye2/image10.jpg                 0.3474  0.5603  0.7630
+fisheye2/image11.jpg                 0.4963  0.6433  0.6822
+fisheye2/image12.jpg                 0.3049  0.5096  0.7031
+fisheye2/image13.jpg                 0.3918  0.6619  0.7371
+fisheye2/image14.jpg                 0.3042  0.6721  0.7272
+fisheye2/image15.jpg                 0.7813  2.2004  3.1273
+fisheye2/image16.jpg                 0.3342  0.7754  1.2609
+fisheye2/image17.jpg                 0.3408  0.6008  0.7297
+fisheye2/image18.jpg                 0.5129  1.2342  1.4289
+fisheye2/image19.jpg                 0.4123  0.8191  0.9284
+fisheye2/image20.jpg                 0.4636  0.7789  0.9334
+fisheye2/image21.jpg                 0.2507  0.4475  0.5538
+fisheye2/image22.jpg                 0.2600  0.3991  0.5439
+fisheye2/image23.jpg                 0.2759  0.4777  0.5339
+fisheye2/image24.jpg                 0.3923  0.7860  0.8986
+fisheye2/image25.jpg                 0.3878  0.5972  0.6718
+fisheye2/image26.jpg                 0.4530  0.6967  1.0968
+fisheye2/image27.jpg                 0.3975  0.7829  0.8851
+fisheye2/image28.jpg                 0.2396  0.6148  0.7762
+fisheye2/image29.jpg                 0.3012  0.4553  0.9082
+fisheye2/image30.jpg                 0.4349  0.9885  1.9268
+fisheye2/image31.jpg                 0.2864  0.5126  0.6156
+fisheye2/image32.jpg                 0.2458  0.4160  0.6240
+fisheye2/image33.jpg                 0.2484  0.3724  0.4453
+fisheye2/image34.jpg                 0.2921  0.4760  0.5723
+fisheye2/image35.jpg                 0.3244  0.5764  0.7885
+fisheye2/image36.jpg                 0.5344  1.0837  1.7584
+fisheye2/image37.jpg                 0.3349  0.5021  0.6351
+fisheye2/image38.jpg                 0.4097  0.7339  1.7604
+fisheye2/image39.jpg                 0.2598  0.4810  0.6719
+fisheye2/image40.jpg                 0.2708  0.4958  0.8276
+fisheye2/image41.jpg                 0.4284  0.6883  1.1623
+fisheye2/image42.jpg                 0.5489  0.9888  1.4524
+fisheye2/image43.jpg                 0.4693  0.8568  1.2720
+fisheye2/image44.jpg                 0.3241  0.5559  0.6705
+fisheye2/image45.jpg                 0.2481  0.5063  0.5715
+close/image00.jpg                    0.3723  0.6922  0.9789
+close/image01.jpg                    0.4824  0.7585  0.9314
+close/image02.jpg                    0.5033  0.7600  1.3978
+close/image03.jpg                    0.5527  0.9190  1.1871
+close/image04.jpg                    0.3855  0.8963  1.0488
+close/image05.jpg                    0.4189  0.7814  0.8080
+close/image06.jpg                    0.4388  0.6716  0.7452
+close/image07.jpg                    0.4281  0.8698  0.9043
+close/image08.jpg                    0.3222  0.7784  0.9539
+close/image09.jpg                    0.5615  0.9573  1.3382
+close/image10.jpg                    0.4241  0.7191  0.9147
+close/image11.jpg                    0.3793  0.7210  1.0562
+sloppy13x10/image00.jpg              0.3227  0.6602  0.9023
+sloppy13x10/image01.jpg              0.4320  0.8230  1.0905
+sloppy13x10/image02.jpg              0.3804  0.8251  1.1382
+sloppy13x10/image03.jpg              0.5226  1.0769  1.8173
+sloppy13x10/image04.jpg              0.9629  1.8190  2.0838
+sloppy13x10/image05.jpg              0.9096  1.7368  2.5383
+sloppy13x10/image06.jpg              0.7792  1.6243  2.6171
+sloppy13x10/image07.jpg              0.3111  0.6763  0.8262
+sloppy13x10/image08.jpg              0.3608  0.6715  1.0169
+sloppy13x10/image09.jpg              0.3155  0.6350  0.7737
+sloppy13x10/image10.jpg              0.3209  0.7404  1.0984
+sloppy13x10/image11.jpg              0.3716  0.8657  1.4307
+sloppy13x10/image12.jpg              0.4313  0.9450  2.0699
+focus/image01.jpg                    1.2553  2.3756  3.5396
+focus/image02.jpg                    1.4293  2.4042  3.3408
+focus/image03.jpg                    1.3386  2.5864  3.2487
+focus/image04.jpg                    1.0989  2.0381  3.2699
+focus/image05.jpg                    0.7965  1.4532  1.9925
+focus/image06.jpg                    0.8355  1.6632  1.9404
+focus/image07.jpg                    0.6363  1.0865  1.4753
+focus/image08.jpg                    0.4013  0.9958  1.1708
+focus/image09.jpg                    0.3303  0.8868  1.1352
+focus/image10.jpg                    0.3112  0.4844  0.5064
+focus/image11.jpg                    0.2148  0.4257  0.5976
+focus/image12.jpg                    0.2690  0.3901  0.4148
+focus/image13.jpg                    0.2410  0.3775  0.5938
+focus/image14.jpg                    0.2003  0.3128  0.4383
+focus/image15.jpg                    0.1804  0.2651  0.4962
+focus/image16.jpg                    0.5463  1.1401  1.4638
+focus/image17.jpg                    0.7763  1.2934  1.7145
+focus/image18.jpg                    0.6381  1.1820  2.2084
+focus/image19.jpg                    0.5772  1.2594  1.5196
+focus/image20.jpg                    0.5963  1.0347  1.3302
+focus/image21.jpg                    0.5527  0.8309  1.2211
+focus/image22.jpg                    0.4006  0.5554  0.9680
+focus/image23.jpg                    0.2382  0.4321  0.6012
+focus/image24.jpg                    0.3026  0.4971  0.6387
+focus/image25.jpg                    1.1227  1.8234  2.0946
+focus/image26.jpg                    0.9085  1.4223  1.4792
+focus/image27.jpg                    0.7526  1.4260  1.7331
+focus/image28.jpg                    0.7372  1.2370  1.5854
+focus/image29.jpg                    0.4229  0.7138  0.8834
+focus/image30.jpg                    0.4104  0.6727  0.7005
+focus/image31.jpg                    0.2413  0.4836  0.6099
+focus/image32.jpg                    0.3517  0.4381  0.4648
+focus/image33.jpg                    0.2986  0.5443  0.6859
+focus/image34.jpg                    0.2706  0.5279  0.7217
+focus/image35.jpg                    0.2280  0.4327  0.5431
+focus/image36.jpg                    0.1860  0.3243  0.3577
+focus_large/image00.jpg              6.6893 12.6772 16.5637
+focus_large/image01.jpg              6.7344 13.9346 16.4088
+focus_large/image02.jpg              5.6170 11.1232 15.6911
+focus_large/image03.jpg              4.2615  7.7127  8.4420
+focus_large/image04.jpg              4.2842  9.2127 13.3467
+focus_large/image05.jpg              4.4800  8.5263 13.5044
+focus_large/image06.jpg              4.0657  6.8466  7.2440
+focus_large/image07.jpg              3.2974  6.4318  7.9494
+focus_large/image08.jpg              2.5722  5.4562  8.5197
+focus_large/image09.jpg              3.0787  5.9620  7.8325
+focus_large/image10.jpg              2.4078  5.4648  6.8474
+focus_large/image11.jpg              1.7719  3.8777  4.5815
+focus_large/image12.jpg              2.0257  3.6644  4.2100
+focus_large/image13.jpg              0.6780  1.5919  1.9785
+focus_large/image14.jpg              0.2456  0.4496  0.6045
+focus_large/image15.jpg              0.2134  0.3967  0.5696
+rotation_vertical/image01.jpg        0.2450  0.4523  0.4849
+rotation_vertical/image02.jpg        0.2595  0.3681  0.4228
+rotation_vertical/image03.jpg        0.2578  0.5350  0.6432
+rotation_vertical/image04.jpg        0.2582  0.4052  0.5180
+rotation_vertical/image05.jpg        0.2859  0.4467  0.5303
+rotation_vertical/image06.jpg        0.1880  0.2811  0.3345
+rotation_vertical/image07.jpg        0.2595  0.4394  0.6677
+rotation_flat/image01.jpg            0.2001  0.4047  0.5721
+rotation_flat/image02.jpg            0.2439  0.3904  0.5508
+rotation_flat/image03.jpg            0.2648  0.4490  0.6959
+rotation_flat/image04.jpg            0.2684  0.4754  0.5723
+rotation_flat/image05.jpg            0.3688  0.5877  0.6272
+rotation_flat/image06.jpg            0.3320  0.6447  0.7014
+rotation_flat/image07.jpg            0.2558  0.4141  0.4504
+rotation_flat/image08.jpg            0.3225  0.4854  0.8987
+rotation_flat/image09.jpg            0.3502  0.5915  0.7456
+rotation_flat/image10.jpg            0.3543  0.5698  0.9710
+rotation_flat/image11.jpg            0.2743  0.4775  0.5892
+rotation_flat/image12.jpg            0.2830  0.4412  0.6203
+motion_blur/image00000.jpg           0.3464  0.6546  1.2318
+motion_blur/image00001.jpg           0.4210  0.6315  0.8969
+motion_blur/image00002.jpg           0.5875  1.1938  1.9359
+motion_blur/image00003.jpg           0.7004  1.0863  2.1372
+motion_blur/image00004.jpg           0.4737  0.8257  0.9349
+motion_blur/image00005.jpg           0.9220  1.9218  3.1337
+motion_blur/image00006.jpg           0.4547  1.1270  1.4525
+motion_blur/image00007.jpg           0.4243  0.6003  0.7904
+motion_blur/image00008.jpg           1.3291  3.5764  4.3731
+motion_blur/image00009.jpg           1.0598  2.1505  3.9755
+motion_blur/image00010.jpg           0.5832  1.2562  4.5578
+motion_blur/image00011.jpg           0.3714  0.6375  0.6733
+motion_blur/image00012.jpg           0.4767  1.0276  1.1605
+motion_blur/image00013.jpg           0.6227  5.0287  5.1794
+motion_blur/image00014.jpg           0.7902  1.3192  1.7507
+motion_blur/image00015.jpg           0.6631  1.3481  4.3825
+motion_blur/image00016.jpg           0.5254  1.2576  1.4358
+motion_blur/image00017.jpg           0.5924  3.7347  4.8796
+motion_blur/image00018.jpg           1.2297  2.3630  4.1517
+motion_blur/image00019.jpg           0.5093  1.4547  2.6068
+motion_blur/image00020.jpg           0.7303  2.1312  3.4223
+motion_blur/image00021.jpg           2.3738  4.0409  4.5469
 motion_blur/image00022.jpg           detection_failed
-motion_blur/image00023.jpg           0.8083  1.9071
-motion_blur/image00024.jpg           0.9165  2.6806
-motion_blur/image00025.jpg           0.4088  0.6669
+motion_blur/image00023.jpg           0.8083  1.9071  3.8382
+motion_blur/image00024.jpg           0.9165  2.6806  3.9656
+motion_blur/image00025.jpg           0.4088  0.6669  0.8964
 motion_blur/image00026.jpg           detection_failed
-motion_blur/image00027.jpg           1.6695  3.1649
-motion_blur/image00028.jpg           1.5665  3.2237
-motion_blur/image00029.jpg           0.9900  1.7305
-motion_blur/image00030.jpg           1.0754  2.0589
+motion_blur/image00027.jpg           1.6695  3.1649  3.9142
+motion_blur/image00028.jpg           1.5665  3.2237  4.2561
+motion_blur/image00029.jpg           0.9900  1.7305  3.6258
+motion_blur/image00030.jpg           1.0754  2.0589  9.5501
 motion_blur/image00031.jpg           detection_failed
-motion_blur/image00032.jpg           1.0940  1.7360
-motion_blur/image00033.jpg           0.7616  1.8699
-motion_blur/image00034.jpg           0.6234  1.4302
-motion_blur/image00035.jpg           0.9953  5.2131
-motion_blur/image00036.jpg           0.7093  1.4029
-motion_blur/image00037.jpg           0.7572  1.7084
-shadow/image01.png                   0.2146  0.3378
-shadow/image02.png                   0.2248  0.3619
-shadow/image03.png                   0.1932  0.3375
-shadow/image04.png                   0.2084  0.3739
-shadow/image05.png                   0.2374  0.4298
-shadow/image06.png                   0.2445  0.4240
-shadow/image07.png                   0.2109  0.3180
-shadow/image08.png                   0.2584  0.3325
-shadow/image09.png                   0.2669  0.5673
-shadow/image10.png                   0.2075  0.3470
-shadow/image11.png                   0.2247  0.3667
-shadow/image12.png                   0.1560  0.3067
-shadow/image13.png                   0.2165  0.3607
-shadow/image14.png                   0.1477  0.3185
-shadow/image15.png                   0.1841  0.5199
-large_shadow/image01.jpg             0.7578  1.3427
-large_shadow/image02.jpg             0.6035  1.5117
-large_shadow/image03.jpg             0.5074  1.0313
-large_shadow/image04.jpg             1.4088  1.9720
-large_shadow/image05.jpg             0.5313  1.0277
-large_shadow/image06.jpg             0.4323  1.1806
-large_shadow/image07.jpg             0.7046  1.5238
-large_shadow/image08.jpg             0.5616  1.0526
-large_shadow/image09.jpg             0.4456  0.8228
-large_shadow/image10.jpg             0.7138  1.4690
-large_shadow/image11.jpg             0.4793  1.0470
-large_shadow/image12.jpg             1.1536  2.1703
-large_shadow/image13.jpg             0.3384  0.9611
-large_shadow/image14.jpg             0.4377  1.0972
-large_shadow/image15.jpg             0.6505  0.8600
-large_shadow/image16.jpg             0.3798  0.5766
+motion_blur/image00032.jpg           1.0940  1.7360  2.0074
+motion_blur/image00033.jpg           0.7616  1.8699  2.8054
+motion_blur/image00034.jpg           0.6234  1.4302  2.5564
+motion_blur/image00035.jpg           0.9953  5.2131  6.3324
+motion_blur/image00036.jpg           0.7093  1.4029  1.7524
+motion_blur/image00037.jpg           0.7572  1.7084  2.4814
+shadow/image01.png                   0.2146  0.3378  0.4200
+shadow/image02.png                   0.2248  0.3619  0.4501
+shadow/image03.png                   0.1932  0.3375  0.3853
+shadow/image04.png                   0.2084  0.3739  0.3853
+shadow/image05.png                   0.2374  0.4298  0.5326
+shadow/image06.png                   0.2445  0.4240  0.4674
+shadow/image07.png                   0.2109  0.3180  0.3748
+shadow/image08.png                   0.2584  0.3325  0.4632
+shadow/image09.png                   0.2669  0.5673  0.6091
+shadow/image10.png                   0.2075  0.3470  0.4178
+shadow/image11.png                   0.2247  0.3667  0.4997
+shadow/image12.png                   0.1560  0.3067  0.4216
+shadow/image13.png                   0.2165  0.3607  0.4419
+shadow/image14.png                   0.1477  0.3185  0.8173
+shadow/image15.png                   0.1841  0.5199  0.6268
+large_shadow/image01.jpg             0.7578  1.3427  3.7392
+large_shadow/image02.jpg             0.6035  1.5117 26.7973
+large_shadow/image03.jpg             0.5074  1.0313 39.0923
+large_shadow/image04.jpg             1.4088  1.9720  3.5569
+large_shadow/image05.jpg             0.5313  1.0277  1.8666
+large_shadow/image06.jpg             0.4323  1.1806  2.2636
+large_shadow/image07.jpg             0.7046  1.5238  2.1786
+large_shadow/image08.jpg             0.5616  1.0526  1.3216
+large_shadow/image09.jpg             0.4456  0.8228  2.4272
+large_shadow/image10.jpg             0.7138  1.4690  1.8476
+large_shadow/image11.jpg             0.4793  1.0470  1.4959
+large_shadow/image12.jpg             1.1536  2.1703  8.8911
+large_shadow/image13.jpg             0.3384  0.9611  1.1913
+large_shadow/image14.jpg             0.4377  1.0972  3.1141
+large_shadow/image15.jpg             0.6505  0.8600  0.9768
+large_shadow/image16.jpg             0.3798  0.5766 31.1807
 large_shadow/image17.jpg             detection_failed
-large_shadow/image18.jpg             0.2640  0.4156
-large_shadow/image19.jpg             0.3563  0.5440
-large_shadow/image20.jpg             0.2713  0.4590
-large_shadow/image21.jpg             0.2962  0.5205
-large_shadow/image22.jpg             0.4535  0.6781
-large_shadow/image23.jpg             0.2749  0.4805
-caltech_edges/Image01.jpg            0.2668  0.5008
-caltech_edges/Image02.jpg            0.2465  0.4643
-caltech_edges/Image03.jpg            0.2193  0.4639
-caltech_edges/Image04.jpg            0.2254  0.4514
-caltech_edges/Image05.jpg            0.2536  0.4774
-caltech_edges/Image06.jpg            0.2051  0.4575
-caltech_edges/Image07.jpg            0.2695  0.5817
-caltech_edges/Image08.jpg            0.3055  0.5469
-caltech_edges/Image09.jpg            0.3345  0.6728
+large_shadow/image18.jpg             0.2640  0.4156  0.4802
+large_shadow/image19.jpg             0.3563  0.5440  0.9297
+large_shadow/image20.jpg             0.2713  0.4590  0.6528
+large_shadow/image21.jpg             0.2962  0.5205  1.0324
+large_shadow/image22.jpg             0.4535  0.6781  1.0976
+large_shadow/image23.jpg             0.2749  0.4805  0.5745
+caltech_edges/Image01.jpg            0.2668  0.5008  0.6551
+caltech_edges/Image02.jpg            0.2465  0.4643  0.7123
+caltech_edges/Image03.jpg            0.2193  0.4639  0.6972
+caltech_edges/Image04.jpg            0.2254  0.4514  0.7718
+caltech_edges/Image05.jpg            0.2536  0.4774  0.6693
+caltech_edges/Image06.jpg            0.2051  0.4575  0.8724
+caltech_edges/Image07.jpg            0.2695  0.5817  0.8299
+caltech_edges/Image08.jpg            0.3055  0.5469  0.7116
+caltech_edges/Image09.jpg            0.3345  0.6728  0.9239
 caltech_edges/Image10.jpg            detection_failed
-caltech_edges/Image11.jpg            0.2141  0.4545
-caltech_edges/Image12.jpg            0.2201  0.5087
-caltech_edges/Image13.jpg            0.2308  0.5130
-caltech_edges/Image14.jpg            0.2537  0.5099
-caltech_edges/Image15.jpg            0.2280  0.4932
-caltech_edges/Image16.jpg            0.2410  0.5247
-caltech_edges/Image17.jpg            0.2927  0.5966
-caltech_edges/Image18.jpg            0.3360  0.6292
-caltech_edges/Image19.jpg            0.3143  0.7606
-caltech_edges/Image20.jpg            0.2953  0.5777
-deltille_fisheye/0000.png            0.2518  0.4880
-deltille_fisheye/0001.png            0.2230  0.4516
-deltille_fisheye/0002.png            0.2131  0.4057
-deltille_fisheye/0003.png            0.2637  0.4700
-deltille_fisheye/0004.png            0.2243  0.4192
-deltille_fisheye/0005.png            0.1826  0.3880
-deltille_fisheye/0006.png            0.1673  0.3307
-deltille_fisheye/0007.png            0.1869  0.3840
-deltille_fisheye/0008.png            0.1858  0.4373
-deltille_fisheye/0009.png            0.2005  0.4576
-deltille_fisheye/0010.png            0.1984  0.3274
-deltille_fisheye/0011.png            0.2008  0.3270
-deltille_fisheye/0012.png            0.1599  0.3592
-deltille_fisheye/0013.png            0.1759  0.4408
-deltille_fisheye/0014.png            0.2190  0.4857
-deltille_fisheye/0015.png            0.2467  0.5277
-deltille_fisheye/0016.png            0.2356  0.5843
-deltille_fisheye/0017.png            0.1906  0.3757
-deltille_fisheye/0018.png            0.2109  0.4499
-deltille_fisheye/0019.png            0.2098  0.4262
-deltille_fisheye/0020.png            0.2076  0.3740
-deltille_fisheye/0021.png            0.1986  0.4737
-deltille_fisheye/0022.png            0.2042  0.4384
-deltille_fisheye/0035.png            0.1963  0.4055
-deltille_fisheye/0036.png            0.2325  0.4266
-deltille_fisheye/0037.png            0.1994  0.3785
-deltille_fisheye/0038.png            0.2379  0.4077
-deltille_fisheye/0039.png            0.1891  0.3493
-deltille_fisheye/0040.png            0.1760  0.3918
-deltille_fisheye/0085.png            0.1941  0.4101
-deltille_fisheye/0102.png            0.2185  0.4671
-deltille_fisheye/0107.png            0.1945  0.4422
-deltille_fisheye/0113.png            0.2305  0.5101
-deltille_fisheye/0139.png            0.2208  0.4752
-deltille_fisheye/0140.png            0.1997  0.3627
-deltille_fisheye/0158.png            0.2254  0.4567
-deltille_fisheye/0159.png            0.2563  0.5199
-deltille_fisheye/0160.png            0.2289  0.5011
-deltille_fisheye/0184.png            0.1959  0.4232
-deltille_fisheye/0185.png            0.2190  0.4084
-deltille_fisheye/0187.png            0.1828  0.3798
-deltille_fisheye/0188.png            0.2531  0.4438
-deltille_fisheye/0189.png            0.2344  0.5112
-deltille_fisheye/0190.png            0.2800  0.4754
-deltille_fisheye/0217.png            0.2161  0.3729
-deltille_fisheye/0219.png            0.1824  0.3455
-deltille_fisheye/0220.png            0.2315  0.4756
-deltille_fisheye/0222.png            0.2193  0.4369
-deltille_fisheye/0223.png            0.2291  0.4805
-deltille_fisheye/0224.png            0.2142  0.4796
-deltille_fisheye/0228.png            0.2268  0.4025
+caltech_edges/Image11.jpg            0.2141  0.4545  0.5821
+caltech_edges/Image12.jpg            0.2201  0.5087  0.7008
+caltech_edges/Image13.jpg            0.2308  0.5130  0.7497
+caltech_edges/Image14.jpg            0.2537  0.5099  0.8919
+caltech_edges/Image15.jpg            0.2280  0.4932  0.7341
+caltech_edges/Image16.jpg            0.2410  0.5247  0.6753
+caltech_edges/Image17.jpg            0.2927  0.5966  0.8123
+caltech_edges/Image18.jpg            0.3360  0.6292  0.8457
+caltech_edges/Image19.jpg            0.3143  0.7606  0.9440
+caltech_edges/Image20.jpg            0.2953  0.5777  0.7939
+deltille_fisheye/0000.png            0.2518  0.4880  0.7982
+deltille_fisheye/0001.png            0.2230  0.4516  0.6050
+deltille_fisheye/0002.png            0.2131  0.4057  0.7284
+deltille_fisheye/0003.png            0.2637  0.4700  0.6756
+deltille_fisheye/0004.png            0.2243  0.4192  0.5430
+deltille_fisheye/0005.png            0.1826  0.3880  0.9818
+deltille_fisheye/0006.png            0.1673  0.3307  0.4447
+deltille_fisheye/0007.png            0.1869  0.3840  0.4894
+deltille_fisheye/0008.png            0.1858  0.4373  0.7072
+deltille_fisheye/0009.png            0.2005  0.4576  0.6084
+deltille_fisheye/0010.png            0.1984  0.3274  0.3919
+deltille_fisheye/0011.png            0.2008  0.3270  0.5443
+deltille_fisheye/0012.png            0.1599  0.3592  0.4756
+deltille_fisheye/0013.png            0.1759  0.4408  0.6135
+deltille_fisheye/0014.png            0.2190  0.4857  0.6678
+deltille_fisheye/0015.png            0.2467  0.5277  0.6194
+deltille_fisheye/0016.png            0.2356  0.5843  0.8951
+deltille_fisheye/0017.png            0.1906  0.3757  0.7195
+deltille_fisheye/0018.png            0.2109  0.4499  0.8454
+deltille_fisheye/0019.png            0.2098  0.4262  0.7279
+deltille_fisheye/0020.png            0.2076  0.3740  0.5486
+deltille_fisheye/0021.png            0.1986  0.4737  0.8382
+deltille_fisheye/0022.png            0.2042  0.4384  0.7850
+deltille_fisheye/0035.png            0.1963  0.4055  0.4824
+deltille_fisheye/0036.png            0.2325  0.4266  0.5475
+deltille_fisheye/0037.png            0.1994  0.3785  0.5286
+deltille_fisheye/0038.png            0.2379  0.4077  0.4736
+deltille_fisheye/0039.png            0.1891  0.3493  0.5377
+deltille_fisheye/0040.png            0.1760  0.3918  0.6596
+deltille_fisheye/0085.png            0.1941  0.4101  0.6732
+deltille_fisheye/0102.png            0.2185  0.4671  0.6945
+deltille_fisheye/0107.png            0.1945  0.4422  0.8372
+deltille_fisheye/0113.png            0.2305  0.5101  0.9866
+deltille_fisheye/0139.png            0.2208  0.4752  0.9819
+deltille_fisheye/0140.png            0.1997  0.3627  0.5318
+deltille_fisheye/0158.png            0.2254  0.4567  0.7838
+deltille_fisheye/0159.png            0.2563  0.5199  0.6710
+deltille_fisheye/0160.png            0.2289  0.5011  0.5821
+deltille_fisheye/0184.png            0.1959  0.4232  0.6582
+deltille_fisheye/0185.png            0.2190  0.4084  0.6285
+deltille_fisheye/0187.png            0.1828  0.3798  0.6178
+deltille_fisheye/0188.png            0.2531  0.4438  0.5545
+deltille_fisheye/0189.png            0.2344  0.5112  0.6705
+deltille_fisheye/0190.png            0.2800  0.4754  0.6428
+deltille_fisheye/0217.png            0.2161  0.3729  0.4620
+deltille_fisheye/0219.png            0.1824  0.3455  0.5610
+deltille_fisheye/0220.png            0.2315  0.4756  0.7164
+deltille_fisheye/0222.png            0.2193  0.4369  0.6921
+deltille_fisheye/0223.png            0.2291  0.4805  0.7633
+deltille_fisheye/0224.png            0.2142  0.4796  0.6061
+deltille_fisheye/0228.png            0.2268  0.4025  0.5831
 deltille_fisheye/0229.png            detection_failed
 deltille_fisheye/0230.png            detection_failed
 deltille_fisheye/0231.png            detection_failed
-deltille_fisheye/0234.png            0.2443  0.4594
-deltille_fisheye/0236.png            0.2306  0.4330
-deltille_fisheye/0253.png            0.1840  0.3891
-deltille_fisheye/0254.png            0.2568  0.4410
-ocam_fisheye190/Fisheye190deg1.jpg   0.2204  0.4136
-ocam_fisheye190/Fisheye190deg2.jpg   0.2049  0.3857
+deltille_fisheye/0234.png            0.2443  0.4594  0.6814
+deltille_fisheye/0236.png            0.2306  0.4330  0.7669
+deltille_fisheye/0253.png            0.1840  0.3891  0.4907
+deltille_fisheye/0254.png            0.2568  0.4410  0.5674
+ocam_fisheye190/Fisheye190deg1.jpg   0.2204  0.4136  0.6236
+ocam_fisheye190/Fisheye190deg2.jpg   0.2049  0.3857  0.6085
 ocam_fisheye190/Fisheye190deg3.jpg   detection_failed
-ocam_fisheye190/Fisheye190deg4.jpg   0.1892  0.3475
+ocam_fisheye190/Fisheye190deg4.jpg   0.1892  0.3475  0.6982
 ocam_fisheye190/Fisheye190deg5.jpg   detection_failed
-ocam_fisheye190/Fisheye190deg6.jpg   0.2989  0.5331
-ocam_fisheye190/Fisheye190deg7.jpg   0.2130  0.4173
-ocam_fisheye190/Fisheye190deg8.jpg   0.2272  0.4795
-ocam_kaidan_omni/KaidanOmni01.jpg    0.2397  0.5222
-ocam_kaidan_omni/KaidanOmni02.jpg    0.2796  0.5031
-ocam_kaidan_omni/KaidanOmni03.jpg    0.2401  0.5075
-ocam_kaidan_omni/KaidanOmni04.jpg    0.2402  0.5315
-ocam_kaidan_omni/KaidanOmni05.jpg    0.2763  0.5454
-ocam_kaidan_omni/KaidanOmni06.jpg    0.2551  0.4739
-ocam_kaidan_omni/KaidanOmni07.jpg    0.2575  0.5169
+ocam_fisheye190/Fisheye190deg6.jpg   0.2989  0.5331  0.7279
+ocam_fisheye190/Fisheye190deg7.jpg   0.2130  0.4173  0.6222
+ocam_fisheye190/Fisheye190deg8.jpg   0.2272  0.4795  0.6262
+ocam_kaidan_omni/KaidanOmni01.jpg    0.2397  0.5222  0.6802
+ocam_kaidan_omni/KaidanOmni02.jpg    0.2796  0.5031  0.6433
+ocam_kaidan_omni/KaidanOmni03.jpg    0.2401  0.5075  0.6677
+ocam_kaidan_omni/KaidanOmni04.jpg    0.2402  0.5315  0.6060
+ocam_kaidan_omni/KaidanOmni05.jpg    0.2763  0.5454  1.0391
+ocam_kaidan_omni/KaidanOmni06.jpg    0.2551  0.4739  0.6969
+ocam_kaidan_omni/KaidanOmni07.jpg    0.2575  0.5169  0.8362
 ocam_kaidan_omni/KaidanOmni08.jpg    detection_failed
-ocam_kaidan_omni/KaidanOmni09.jpg    0.2486  0.4867
-ocam_kaidan_omni/KaidanOmni10.jpg    0.2256  0.4517
-ocam_kaidan_omni/KaidanOmni11.jpg    0.2515  0.5301
-ocam_kaidan_omni/KaidanOmni12.jpg    0.2922  0.5326
-ocam_kaidan_omni/KaidanOmni13.jpg    0.2491  0.5316
-ocam_kaidan_omni/KaidanOmni14.jpg    0.2842  0.4930
-ocam_kaidan_omni/KaidanOmni15.jpg    0.2312  0.5622
-ocam_kaidan_omni/KaidanOmni16.jpg    0.2640  0.4853
+ocam_kaidan_omni/KaidanOmni09.jpg    0.2486  0.4867  0.6485
+ocam_kaidan_omni/KaidanOmni10.jpg    0.2256  0.4517  0.5384
+ocam_kaidan_omni/KaidanOmni11.jpg    0.2515  0.5301  0.7110
+ocam_kaidan_omni/KaidanOmni12.jpg    0.2922  0.5326  1.0269
+ocam_kaidan_omni/KaidanOmni13.jpg    0.2491  0.5316  0.6035
+ocam_kaidan_omni/KaidanOmni14.jpg    0.2842  0.4930  0.5808
+ocam_kaidan_omni/KaidanOmni15.jpg    0.2312  0.5622  0.6787
+ocam_kaidan_omni/KaidanOmni16.jpg    0.2640  0.4853  0.7776
 ocam_kaidan_omni/KaidanOmni17.jpg    detection_failed
-ocam_ladybug/Ladybug1.jpg            0.2448  0.4564
-ocam_ladybug/Ladybug10.jpg           0.3569  0.6698
-ocam_ladybug/Ladybug11.jpg           0.2745  0.5779
-ocam_ladybug/Ladybug12.jpg           0.2530  0.5061
-ocam_ladybug/Ladybug13.jpg           0.2829  0.5122
-ocam_ladybug/Ladybug2.jpg            0.1880  0.6351
-ocam_ladybug/Ladybug3.jpg            0.2013  0.4449
-ocam_ladybug/Ladybug4.jpg            0.2839  0.4172
-ocam_ladybug/Ladybug5.jpg            0.2539  0.4543
-ocam_ladybug/Ladybug6.jpg            0.2215  0.5075
-ocam_ladybug/Ladybug7.jpg            0.2791  0.5487
-ocam_ladybug/Ladybug8.jpg            0.3070  0.6026
-ocam_ladybug/Ladybug9.jpg            0.3021  0.5306
-ocam_mini_omni/MiniOmni01.jpg        0.2473  0.5378
-ocam_mini_omni/MiniOmni02.jpg        0.2501  0.5411
-ocam_mini_omni/MiniOmni03.jpg        0.1863  0.3769
-ocam_mini_omni/MiniOmni04.jpg        0.2038  0.4061
-ocam_mini_omni/MiniOmni05.jpg        0.2253  0.5142
-ocam_mini_omni/MiniOmni06.jpg        0.1991  0.4558
-ocam_mini_omni/MiniOmni07.jpg        0.2117  0.4857
-ocam_mini_omni/MiniOmni08.jpg        0.2478  0.6094
-ocam_mini_omni/MiniOmni09.jpg        0.2238  0.4962
-ocam_mini_omni/MiniOmni10.jpg        0.2252  0.5612
-ocam_mini_omni/MiniOmni11.jpg        0.2064  0.4458
-ocam_mini_omni/MiniOmni12.jpg        0.2085  0.4970
+ocam_ladybug/Ladybug1.jpg            0.2448  0.4564  0.5264
+ocam_ladybug/Ladybug10.jpg           0.3569  0.6698  0.7665
+ocam_ladybug/Ladybug11.jpg           0.2745  0.5779  0.8401
+ocam_ladybug/Ladybug12.jpg           0.2530  0.5061  0.6036
+ocam_ladybug/Ladybug13.jpg           0.2829  0.5122  0.7853
+ocam_ladybug/Ladybug2.jpg            0.1880  0.6351  0.7783
+ocam_ladybug/Ladybug3.jpg            0.2013  0.4449  0.6223
+ocam_ladybug/Ladybug4.jpg            0.2839  0.4172  0.9869
+ocam_ladybug/Ladybug5.jpg            0.2539  0.4543  0.5644
+ocam_ladybug/Ladybug6.jpg            0.2215  0.5075  0.5260
+ocam_ladybug/Ladybug7.jpg            0.2791  0.5487  0.5831
+ocam_ladybug/Ladybug8.jpg            0.3070  0.6026  0.6757
+ocam_ladybug/Ladybug9.jpg            0.3021  0.5306  0.7092
+ocam_mini_omni/MiniOmni01.jpg        0.2473  0.5378  0.6019
+ocam_mini_omni/MiniOmni02.jpg        0.2501  0.5411  1.0167
+ocam_mini_omni/MiniOmni03.jpg        0.1863  0.3769  0.6209
+ocam_mini_omni/MiniOmni04.jpg        0.2038  0.4061  0.5563
+ocam_mini_omni/MiniOmni05.jpg        0.2253  0.5142  1.2475
+ocam_mini_omni/MiniOmni06.jpg        0.1991  0.4558  0.5118
+ocam_mini_omni/MiniOmni07.jpg        0.2117  0.4857  0.5982
+ocam_mini_omni/MiniOmni08.jpg        0.2478  0.6094  0.9048
+ocam_mini_omni/MiniOmni09.jpg        0.2238  0.4962  0.6926
+ocam_mini_omni/MiniOmni10.jpg        0.2252  0.5612  0.7511
+ocam_mini_omni/MiniOmni11.jpg        0.2064  0.4458  0.5899
+ocam_mini_omni/MiniOmni12.jpg        0.2085  0.4970  0.8774
 ocam_mini_omni/MiniOmni13.jpg        detection_failed
-ocam_mini_omni/MiniOmni14.jpg        0.2403  0.5365
+ocam_mini_omni/MiniOmni14.jpg        0.2403  0.5365  0.8563
 ocam_mini_omni/MiniOmni15.jpg        detection_failed
-ocam_omni/omni01.jpg                 0.3504  0.9538
-ocam_omni/omni02.jpg                 0.3285  0.5295
-ocam_omni/omni03.jpg                 0.2893  0.5838
-ocam_omni/omni04.jpg                 0.2780  0.4705
-ocam_omni/omni05.jpg                 0.3182  0.5374
-ocam_omni/omni06.jpg                 0.3325  0.6280
-ocam_omni/omni07.jpg                 0.3350  0.7415
-ocam_omni/omni08.jpg                 0.2337  0.4893
-ocam_omni/omni09.jpg                 0.3287  0.5129
-ocam_omni/omni10.jpg                 0.2876  0.5860
-ocam_omni/omni11.jpg                 0.2778  0.4856
-ocam_omni/omni12.jpg                 0.2962  0.5058
-ocam_omni/omni13.jpg                 0.2392  0.4758
-ocam_omni/omni14.jpg                 0.2390  0.5311
+ocam_omni/omni01.jpg                 0.3504  0.9538  1.2928
+ocam_omni/omni02.jpg                 0.3285  0.5295  0.7070
+ocam_omni/omni03.jpg                 0.2893  0.5838  0.7255
+ocam_omni/omni04.jpg                 0.2780  0.4705  0.6601
+ocam_omni/omni05.jpg                 0.3182  0.5374  0.7331
+ocam_omni/omni06.jpg                 0.3325  0.6280  0.7529
+ocam_omni/omni07.jpg                 0.3350  0.7415  0.9945
+ocam_omni/omni08.jpg                 0.2337  0.4893  0.7209
+ocam_omni/omni09.jpg                 0.3287  0.5129  0.8429
+ocam_omni/omni10.jpg                 0.2876  0.5860  0.7481
+ocam_omni/omni11.jpg                 0.2778  0.4856  0.7702
+ocam_omni/omni12.jpg                 0.2962  0.5058  0.6624
+ocam_omni/omni13.jpg                 0.2392  0.4758  0.5975
+ocam_omni/omni14.jpg                 0.2390  0.5311  0.6148
 
 --------------------------------------------------------------------------------
 

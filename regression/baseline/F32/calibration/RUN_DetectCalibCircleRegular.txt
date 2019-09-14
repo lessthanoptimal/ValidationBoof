@@ -1,0 +1,6 @@
+# GENERATOR CalibrationDetectionRegression
+# DetectCalibCircleRegular
+# Data set, average milliseconds
+                       distant     9.73
+                         large   299.94
+                       fisheye     7.62

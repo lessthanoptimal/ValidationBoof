@@ -1,74 +1,74 @@
 # GENERATOR CalibrationDetectionRegression
-# (file name) (truth error 50%) (truth error 95%)
-Bumblebee2_Square/left01.jpg         0.5384  0.8329
-Bumblebee2_Square/left02.jpg         0.3955  0.6424
-Bumblebee2_Square/left03.jpg         0.8160  1.6071
-Bumblebee2_Square/left04.jpg         0.3759  0.7492
-Bumblebee2_Square/left05.jpg         0.9026  1.2207
-Bumblebee2_Square/left06.jpg         0.3165  0.7307
-Bumblebee2_Square/left07.jpg         0.4290  0.8799
-Bumblebee2_Square/left08.jpg         0.3881  0.7422
-Bumblebee2_Square/left09.jpg         0.4197  0.7716
-Bumblebee2_Square/left10.jpg         0.4876  1.1244
-Bumblebee2_Square/left11.jpg         0.8502  1.2521
-Bumblebee2_Square/left12.jpg         0.4528  0.8893
-Bumblebee2_Square/left13.jpg         0.5435  0.8359
-Bumblebee2_Square/right01.jpg        0.3350  0.7144
-Bumblebee2_Square/right02.jpg        0.4002  0.8388
-Bumblebee2_Square/right03.jpg        0.3706  0.8930
-Bumblebee2_Square/right04.jpg        0.5732  1.2400
-Bumblebee2_Square/right05.jpg        0.6251  1.1056
-Bumblebee2_Square/right06.jpg        0.6449  1.0258
-Bumblebee2_Square/right07.jpg        0.6191  1.0305
-Bumblebee2_Square/right08.jpg        0.4016  0.8090
-Bumblebee2_Square/right09.jpg        0.5304  0.8460
-Bumblebee2_Square/right10.jpg        0.5002  0.8584
-Bumblebee2_Square/right11.jpg        0.3988  0.7661
-Bumblebee2_Square/right12.jpg        0.4265  0.9177
-Bumblebee2_Square/right13.jpg        0.4859  0.9134
-Sony_DSC-HX5V/frame01.jpg            0.7847  1.1822
-Sony_DSC-HX5V/frame02.jpg            0.4425  0.8640
-Sony_DSC-HX5V/frame03.jpg            0.7046  1.1976
-Sony_DSC-HX5V/frame04.jpg            0.5986  1.0648
-Sony_DSC-HX5V/frame05.jpg            0.7030  1.1012
-Sony_DSC-HX5V/frame06.jpg            0.6110  0.9796
-Sony_DSC-HX5V/frame07.jpg            0.6196  1.0936
-Sony_DSC-HX5V/frame08.jpg            0.4901  1.0138
-Sony_DSC-HX5V/frame09.jpg            0.3796  0.7294
-Sony_DSC-HX5V/frame10.jpg            0.5558  0.8725
-Sony_DSC-HX5V/frame11.jpg            0.3968  0.9645
-Sony_DSC-HX5V/frame12.jpg            0.5530  0.9358
-Sony_DSC-HX5V/frame13.jpg            0.3861  0.8458
-Sony_DSC-HX5V/frame14.jpg            0.4559  0.8026
-large/large00.jpg                    0.6675  1.3545
-large/large01.jpg                    0.4772  0.8284
-large/large02.jpg                    0.3691  0.7102
-large/large03.jpg                    0.4114  0.7385
-large/large04.jpg                    0.4234  0.6746
-distant/image00000.jpg               0.2078  0.3846
-distant/image00001.jpg               0.3329  0.5719
-distant/image00002.jpg               0.2621  0.5858
-distant/image00003.jpg               0.2136  0.4523
-distant/image00004.jpg               0.2632  0.5461
-distant/image00005.jpg               0.2868  0.5970
-distant/image00006.jpg               0.2417  0.4587
-fisheye/image00.jpg                  0.6856  1.8146
+# (file name) (truth error 50%) (truth error 95%) (truth error 100%)
+Bumblebee2_Square/left01.jpg         0.5384  0.8329  1.1876
+Bumblebee2_Square/left02.jpg         0.3955  0.6424  0.7208
+Bumblebee2_Square/left03.jpg         0.8160  1.6071  1.8273
+Bumblebee2_Square/left04.jpg         0.3759  0.7492  0.9996
+Bumblebee2_Square/left05.jpg         0.9026  1.2207  1.8289
+Bumblebee2_Square/left06.jpg         0.3165  0.7307  1.1291
+Bumblebee2_Square/left07.jpg         0.4290  0.8799  1.2339
+Bumblebee2_Square/left08.jpg         0.3881  0.7422  0.9284
+Bumblebee2_Square/left09.jpg         0.4197  0.7716  0.8825
+Bumblebee2_Square/left10.jpg         0.4876  1.1244  1.2451
+Bumblebee2_Square/left11.jpg         0.8502  1.2521  1.6327
+Bumblebee2_Square/left12.jpg         0.4528  0.8893  1.2982
+Bumblebee2_Square/left13.jpg         0.5435  0.8359  1.0437
+Bumblebee2_Square/right01.jpg        0.3350  0.7144  0.7958
+Bumblebee2_Square/right02.jpg        0.4002  0.8388  1.0730
+Bumblebee2_Square/right03.jpg        0.3706  0.8930  1.2941
+Bumblebee2_Square/right04.jpg        0.5732  1.2400  1.5863
+Bumblebee2_Square/right05.jpg        0.6251  1.1056  1.3773
+Bumblebee2_Square/right06.jpg        0.6449  1.0258  1.2515
+Bumblebee2_Square/right07.jpg        0.6191  1.0305  1.4520
+Bumblebee2_Square/right08.jpg        0.4016  0.8090  1.4205
+Bumblebee2_Square/right09.jpg        0.5304  0.8460  1.0025
+Bumblebee2_Square/right10.jpg        0.5002  0.8584  1.2329
+Bumblebee2_Square/right11.jpg        0.3988  0.7661  0.8858
+Bumblebee2_Square/right12.jpg        0.4265  0.9177  1.2463
+Bumblebee2_Square/right13.jpg        0.4859  0.9134  1.1165
+Sony_DSC-HX5V/frame01.jpg            0.7847  1.1822  1.4474
+Sony_DSC-HX5V/frame02.jpg            0.4425  0.8640  1.0659
+Sony_DSC-HX5V/frame03.jpg            0.7046  1.1976  1.9535
+Sony_DSC-HX5V/frame04.jpg            0.5986  1.0648  1.1578
+Sony_DSC-HX5V/frame05.jpg            0.7030  1.1012  1.5546
+Sony_DSC-HX5V/frame06.jpg            0.6110  0.9796  1.1766
+Sony_DSC-HX5V/frame07.jpg            0.6196  1.0936  1.2043
+Sony_DSC-HX5V/frame08.jpg            0.4901  1.0138  1.2463
+Sony_DSC-HX5V/frame09.jpg            0.3796  0.7294  1.0049
+Sony_DSC-HX5V/frame10.jpg            0.5558  0.8725  0.9843
+Sony_DSC-HX5V/frame11.jpg            0.3968  0.9645  1.0875
+Sony_DSC-HX5V/frame12.jpg            0.5530  0.9358  1.0277
+Sony_DSC-HX5V/frame13.jpg            0.3861  0.8458  1.0787
+Sony_DSC-HX5V/frame14.jpg            0.4559  0.8026  0.9664
+large/large00.jpg                    0.6675  1.3545  2.2211
+large/large01.jpg                    0.4772  0.8284  1.2904
+large/large02.jpg                    0.3691  0.7102  0.9775
+large/large03.jpg                    0.4114  0.7385  0.9793
+large/large04.jpg                    0.4234  0.6746  0.8833
+distant/image00000.jpg               0.2078  0.3846  0.5356
+distant/image00001.jpg               0.3329  0.5719  0.7477
+distant/image00002.jpg               0.2621  0.5858  0.7415
+distant/image00003.jpg               0.2136  0.4523  0.6439
+distant/image00004.jpg               0.2632  0.5461  0.8954
+distant/image00005.jpg               0.2868  0.5970  0.7131
+distant/image00006.jpg               0.2417  0.4587  0.4778
+fisheye/image00.jpg                  0.6856  1.8146  2.7059
 fisheye/image01.jpg                  detection_failed
 fisheye/image02.jpg                  detection_failed
-fisheye/image03.jpg                  0.3876  0.7302
-fisheye/image04.jpg                  0.5708  0.9776
-fisheye/image05.jpg                  0.8805  2.2222
-fisheye/image06.jpg                  0.3976  0.8143
+fisheye/image03.jpg                  0.3876  0.7302  0.8545
+fisheye/image04.jpg                  0.5708  0.9776  1.5328
+fisheye/image05.jpg                  0.8805  2.2222  2.6209
+fisheye/image06.jpg                  0.3976  0.8143  1.1747
 fisheye/image07.jpg                  detection_failed
-fisheye/image08.jpg                  0.3264  0.6578
-fisheye/image09.jpg                  0.3678  0.7512
-fisheye/image10.jpg                  0.7554  1.3542
-fisheye/image11.jpg                  0.5735  1.2000
-fisheye/image12.jpg                  0.5833  1.1283
-fisheye/image13.jpg                  0.3543  0.7930
-fisheye/image14.jpg                  0.3082  0.5904
-fisheye/image15.jpg                  0.5460  1.3277
-fisheye/image16.jpg                  0.6107  1.5677
+fisheye/image08.jpg                  0.3264  0.6578  0.7760
+fisheye/image09.jpg                  0.3678  0.7512  1.1478
+fisheye/image10.jpg                  0.7554  1.3542  1.4230
+fisheye/image11.jpg                  0.5735  1.2000  1.3997
+fisheye/image12.jpg                  0.5833  1.1283  1.1674
+fisheye/image13.jpg                  0.3543  0.7930  0.9970
+fisheye/image14.jpg                  0.3082  0.5904  1.0255
+fisheye/image15.jpg                  0.5460  1.3277  1.7661
+fisheye/image16.jpg                  0.6107  1.5677  2.4762
 
 --------------------------------------------------------------------------------
 
