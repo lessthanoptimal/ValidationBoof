@@ -1,7 +1,7 @@
 # GENERATOR CalibrationDetectionRegression
 # DetectCalibCircleHexagonal
 # Data set, average milliseconds
-                     calib_5x6    11.69
-                   calib_24x28    52.18
-                   fisheye_5x6    19.71
-                   large_24x28   116.30
+                     calib_5x6    12.53
+                   calib_24x28    51.46
+                   fisheye_5x6    19.20
+                   large_24x28   116.42

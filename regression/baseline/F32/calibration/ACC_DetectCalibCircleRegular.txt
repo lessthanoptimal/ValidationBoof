@@ -25,10 +25,10 @@ fisheye/image09.jpg                  detection_failed
 
 --------------------------------------------------------------------------------
 
-distant                             Errors{ 50% :  0.4125 , 95% :  0.8116 }, Detection : %100.00 , Images : 5
-large                               Errors{ 50% :  1.0822 , 95% :  4.3358 }, Detection : %100.00 , Images : 7
-fisheye                             Errors{ 50% :  0.4345 , 95% :  1.0212 }, Detection : % 70.00 , Images : 10
+distant                             Errors{ 50%  0.412 , 95%  0.812 , MAX  1.086 }, Success :  5 /  5
+large                               Errors{ 50%  1.082 , 95%  4.336 , MAX  7.723 }, Success :  7 /  7
+fisheye                             Errors{ 50%  0.434 , 95%  1.021 , MAX  1.563 }, Success :  7 / 10
 
 --------------------------------------------------------------------------------
 
-Summary                             Errors{ 50% :  0.5471 , 95% :  2.9932 }, Detection : % 86.36 , Images : 22
+Summary                             Errors{ 50%  0.547 , 95%  2.993 , MAX  7.723 }, Success : 19 / 22

@@ -72,12 +72,12 @@ fisheye/image16.jpg                  0.6107  1.5677  2.4762
 
 --------------------------------------------------------------------------------
 
-Bumblebee2_Square                   Errors{ 50% :  0.4791 , 95% :  1.0950 }, Detection : %100.00 , Images : 26
-Sony_DSC-HX5V                       Errors{ 50% :  0.5402 , 95% :  1.0694 }, Detection : %100.00 , Images : 14
-large                               Errors{ 50% :  0.4442 , 95% :  1.0009 }, Detection : %100.00 , Images : 5
-distant                             Errors{ 50% :  0.2480 , 95% :  0.5638 }, Detection : %100.00 , Images : 7
-fisheye                             Errors{ 50% :  0.4726 , 95% :  1.3277 }, Detection : % 82.35 , Images : 17
+Bumblebee2_Square                   Errors{ 50%  0.479 , 95%  1.095 , MAX  1.829 }, Success : 26 / 26
+Sony_DSC-HX5V                       Errors{ 50%  0.540 , 95%  1.069 , MAX  1.953 }, Success : 14 / 14
+large                               Errors{ 50%  0.444 , 95%  1.001 , MAX  2.221 }, Success :  5 /  5
+distant                             Errors{ 50%  0.248 , 95%  0.564 , MAX  0.895 }, Success :  7 /  7
+fisheye                             Errors{ 50%  0.473 , 95%  1.328 , MAX  2.706 }, Success : 14 / 17
 
 --------------------------------------------------------------------------------
 
-Summary                             Errors{ 50% :  0.4559 , 95% :  1.1147 }, Detection : % 95.65 , Images : 69
+Summary                             Errors{ 50%  0.456 , 95%  1.115 , MAX  2.706 }, Success : 66 / 69

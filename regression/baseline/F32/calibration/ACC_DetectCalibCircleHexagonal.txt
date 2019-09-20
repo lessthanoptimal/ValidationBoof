@@ -42,11 +42,11 @@ large_24x28/image3.jpg               0.1517  0.8461  1.7072
 
 --------------------------------------------------------------------------------
 
-calib_5x6                           Errors{ 50% :  0.2391 , 95% :  0.4880 }, Detection : %100.00 , Images : 9
-calib_24x28                         Errors{ 50% :  0.0360 , 95% :  0.1001 }, Detection : %100.00 , Images : 7
-fisheye_5x6                         Errors{ 50% :  0.2162 , 95% :  0.5544 }, Detection : % 78.95 , Images : 19
-large_24x28                         Errors{ 50% :  0.1238 , 95% :  1.7072 }, Detection : %100.00 , Images : 4
+calib_5x6                           Errors{ 50%  0.239 , 95%  0.488 , MAX  0.561 }, Success :  9 /  9
+calib_24x28                         Errors{ 50%  0.036 , 95%  0.100 , MAX  0.476 }, Success :  7 /  7
+fisheye_5x6                         Errors{ 50%  0.216 , 95%  0.554 , MAX  1.314 }, Success : 15 / 19
+large_24x28                         Errors{ 50%  0.124 , 95%  1.707 , MAX  3.747 }, Success :  4 /  4
 
 --------------------------------------------------------------------------------
 
-Summary                             Errors{ 50% :  0.0558 , 95% :  0.9694 }, Detection : % 89.74 , Images : 39
+Summary                             Errors{ 50%  0.056 , 95%  0.969 , MAX  3.747 }, Success : 35 / 39

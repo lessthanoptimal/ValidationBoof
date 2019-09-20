@@ -456,33 +456,33 @@ ocam_omni/omni14.jpg                 0.8197  1.8668  2.3508
 
 --------------------------------------------------------------------------------
 
-Bumblebee2_Chess                    Errors{ 50% :  0.2733 , 95% :  0.5464 }, Detection : %100.00 , Images : 22
-Sony_DSC-HX5V                       Errors{ 50% :  0.3142 , 95% :  0.6367 }, Detection : %100.00 , Images : 13
-large                               Errors{ 50% :  0.2822 , 95% :  0.7105 }, Detection : %100.00 , Images : 6
-distant                             Errors{ 50% :  0.2016 , 95% :  0.4469 }, Detection : %100.00 , Images : 7
-distance_angle                      Errors{ 50% :  0.2082 , 95% :  0.4721 }, Detection : % 83.33 , Images : 6
-distance_straight                   Errors{ 50% :  0.1946 , 95% :  0.4319 }, Detection : %100.00 , Images : 8
-hard                                Errors{ 50% :  0.1883 , 95% :  0.4022 }, Detection : %100.00 , Images : 1
-border                              Errors{ 50% :  0.2544 , 95% :  0.7677 }, Detection : % 75.00 , Images : 16
-fisheye1                            Errors{ 50% :  0.4951 , 95% :  1.1445 }, Detection : %100.00 , Images : 11
-fisheye2                            Errors{ 50% :  0.9100 , 95% :  2.4302 }, Detection : % 65.22 , Images : 46
-close                               Errors{ 50% :  0.4427 , 95% :  0.9018 }, Detection : %100.00 , Images : 12
-sloppy13x10                         Errors{ 50% :  0.4171 , 95% :  1.2507 }, Detection : %100.00 , Images : 13
-focus                               Errors{ 50% :  0.3739 , 95% :  1.4867 }, Detection : % 80.56 , Images : 36
-focus_large                         Errors{ 50% :  0.4798 , 95% :  2.9529 }, Detection : % 25.00 , Images : 16
-rotation_vertical                   Errors{ 50% :  0.2481 , 95% :  0.5307 }, Detection : %100.00 , Images : 7
-rotation_flat                       Errors{ 50% :  0.2819 , 95% :  0.5870 }, Detection : %100.00 , Images : 12
-motion_blur                         Errors{ 50% :  0.4227 , 95% :  1.0722 }, Detection : % 21.05 , Images : 38
-shadow                              Errors{ 50% :  0.2089 , 95% :  0.4437 }, Detection : % 80.00 , Images : 15
-large_shadow                        Errors{ 50% :     NaN , 95% :     NaN }, Detection : %  0.00 , Images : 23
-caltech_edges                       Errors{ 50% :     NaN , 95% :     NaN }, Detection : %  0.00 , Images : 20
-deltille_fisheye                    Errors{ 50% :  0.4212 , 95% :  1.8302 }, Detection : % 34.48 , Images : 58
-ocam_fisheye190                     Errors{ 50% :  0.3093 , 95% :  0.6583 }, Detection : % 25.00 , Images : 8
-ocam_kaidan_omni                    Errors{ 50% :  0.4067 , 95% :  0.7825 }, Detection : % 35.29 , Images : 17
-ocam_ladybug                        Errors{ 50% :  0.4076 , 95% :  0.8649 }, Detection : %100.00 , Images : 13
-ocam_mini_omni                      Errors{ 50% :  0.3160 , 95% :  0.6806 }, Detection : % 66.67 , Images : 15
-ocam_omni                           Errors{ 50% :  0.6806 , 95% :  1.9089 }, Detection : % 35.71 , Images : 14
+Bumblebee2_Chess                    Errors{ 50%  0.273 , 95%  0.546 , MAX  0.880 }, Success : 22 / 22
+Sony_DSC-HX5V                       Errors{ 50%  0.314 , 95%  0.637 , MAX  0.853 }, Success : 13 / 13
+large                               Errors{ 50%  0.282 , 95%  0.710 , MAX  1.271 }, Success :  6 /  6
+distant                             Errors{ 50%  0.202 , 95%  0.447 , MAX  1.034 }, Success :  7 /  7
+distance_angle                      Errors{ 50%  0.208 , 95%  0.472 , MAX  0.577 }, Success :  5 /  6
+distance_straight                   Errors{ 50%  0.195 , 95%  0.432 , MAX  0.803 }, Success :  8 /  8
+hard                                Errors{ 50%  0.188 , 95%  0.402 , MAX  0.496 }, Success :  1 /  1
+border                              Errors{ 50%  0.254 , 95%  0.768 , MAX  2.163 }, Success : 12 / 16
+fisheye1                            Errors{ 50%  0.495 , 95%  1.144 , MAX  1.765 }, Success : 11 / 11
+fisheye2                            Errors{ 50%  0.910 , 95%  2.430 , MAX  3.961 }, Success : 30 / 46
+close                               Errors{ 50%  0.443 , 95%  0.902 , MAX  1.362 }, Success : 12 / 12
+sloppy13x10                         Errors{ 50%  0.417 , 95%  1.251 , MAX  2.044 }, Success : 13 / 13
+focus                               Errors{ 50%  0.374 , 95%  1.487 , MAX  4.037 }, Success : 29 / 36
+focus_large                         Errors{ 50%  0.480 , 95%  2.953 , MAX  4.696 }, Success :  4 / 16
+rotation_vertical                   Errors{ 50%  0.248 , 95%  0.531 , MAX  0.725 }, Success :  7 /  7
+rotation_flat                       Errors{ 50%  0.282 , 95%  0.587 , MAX  0.914 }, Success : 12 / 12
+motion_blur                         Errors{ 50%  0.423 , 95%  1.072 , MAX  1.918 }, Success :  8 / 38
+shadow                              Errors{ 50%  0.209 , 95%  0.444 , MAX  0.626 }, Success : 12 / 15
+large_shadow                        Errors{ 50%    NaN , 95%    NaN , MAX    NaN }, Success :  0 / 23
+caltech_edges                       Errors{ 50%    NaN , 95%    NaN , MAX    NaN }, Success :  0 / 20
+deltille_fisheye                    Errors{ 50%  0.421 , 95%  1.830 , MAX  4.618 }, Success : 20 / 58
+ocam_fisheye190                     Errors{ 50%  0.309 , 95%  0.658 , MAX  0.888 }, Success :  2 /  8
+ocam_kaidan_omni                    Errors{ 50%  0.407 , 95%  0.782 , MAX  1.362 }, Success :  6 / 17
+ocam_ladybug                        Errors{ 50%  0.408 , 95%  0.865 , MAX  1.199 }, Success : 13 / 13
+ocam_mini_omni                      Errors{ 50%  0.316 , 95%  0.681 , MAX  3.155 }, Success : 10 / 15
+ocam_omni                           Errors{ 50%  0.681 , 95%  1.909 , MAX  2.862 }, Success :  5 / 14
 
 --------------------------------------------------------------------------------
 
-Summary                             Errors{ 50% :  0.3660 , 95% :  1.5186 }, Detection : % 59.16 , Images : 453
+Summary                             Errors{ 50%  0.366 , 95%  1.519 , MAX  4.696 }, Success : 268 / 453

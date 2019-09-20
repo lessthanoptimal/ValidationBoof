@@ -202,19 +202,21 @@ public class CalibrationDetectionRegression extends BaseRegression implements Im
 
 	private void printSummary(PrintStream output, OverallMetrics m, String name) {
 		m.errors.sort();
-		double error50,error95,percentSuccess;
+		double error50,error95,error100;
+		int success = 0;
 		if( m.errors.size > 0 ) {
 			error50 = m.errors.getFraction(0.5);
 			error95 = m.errors.getFraction(0.95);
-			percentSuccess = 100*(m.total - m.failed) / (double) m.total;
+			error100 = m.errors.getFraction(1.00);
+			success = m.total - m.failed;
 		} else {
 			error50 = Double.NaN;
 			error95 = Double.NaN;
-			percentSuccess = 0.0;
+			error100 = Double.NaN;
 		}
 
-		output.printf("%-35s Errors{ 50%% : %7.4f , 95%% : %7.4f }, Detection : %%%6.2f , Images : %d\n",
-				name,error50,error95,percentSuccess,m.total);
+		output.printf("%-35s Errors{ 50%% %6.3f , 95%% %6.3f , MAX %6.3f }, Success : %2d / %2d\n",
+				name,error50,error95,error100,success,m.total);
 	}
 
 	private void evaluate(DetectorFiducialCalibration detector, String detectorName,
