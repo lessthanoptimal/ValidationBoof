@@ -83,7 +83,7 @@ public class EvalauteDescribeImageDense<T extends ImageBase<T>>
             out.println("======================================================================");
             out.println(images.get(i));
             out.println();
-            out.println("Total Descriptions = "+original.size());
+            out.println("Total Descriptions = "+original.size()+", zeros (bad) = "+countZeros());
             out.println();
             printMetric(invarianceLightScaling(input),"Light Scaling");
             out.println();
@@ -295,6 +295,18 @@ public class EvalauteDescribeImageDense<T extends ImageBase<T>>
         return totalError;
     }
 
+    private int countZeros() {
+        int count = 0;
+        for (int j = 0; j < magnitude.size(); j++) {
+            double m = magnitude.get(j);
+            if( m == 0 ) {
+                count++;
+            }
+        }
+
+        return count;
+    }
+
     private List<TupleDesc_F64> copy( List<TupleDesc_F64> input ) {
         List<TupleDesc_F64> output = new ArrayList<TupleDesc_F64>();
 
@@ -312,6 +324,8 @@ public class EvalauteDescribeImageDense<T extends ImageBase<T>>
     private static class Metric {
         GrowQueue_F64 parameter = new GrowQueue_F64();
         GrowQueue_F64 error = new GrowQueue_F64();
+        // number of times the descriptor
+        int zeros;
     }
 
     public static void main(String[] args) {

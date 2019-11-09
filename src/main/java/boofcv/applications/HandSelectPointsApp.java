@@ -49,7 +49,7 @@ public class HandSelectPointsApp extends HandSelectBase {
 			}
 		}
 		infoPanel.setImageShape(image.getWidth(),image.getHeight());
-		gui.setBufferedImage(image);
+		gui.setImage(image);
 	}
 
 	private void addDetectQrCodes() {

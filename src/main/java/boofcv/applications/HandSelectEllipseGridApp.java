@@ -77,7 +77,7 @@ public class HandSelectEllipseGridApp extends HandSelectBase {
 			gui.list.addAll(EllipseFileCodec.load(ellipsePath));
 		}
 
-		gui.setBufferedImage(image);
+		gui.setImage(image);
 	}
 
 	@Override

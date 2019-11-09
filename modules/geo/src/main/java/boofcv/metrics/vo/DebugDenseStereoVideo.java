@@ -7,7 +7,7 @@ import boofcv.alg.geo.RectifyImageOps;
 import boofcv.alg.geo.rectify.RectifyCalibrated;
 import boofcv.alg.misc.GImageMiscOps;
 import boofcv.core.image.GeneralizedImageOps;
-import boofcv.factory.feature.disparity.DisparityAlgorithms;
+import boofcv.factory.feature.disparity.ConfigureDisparityBMBest5;
 import boofcv.factory.feature.disparity.FactoryStereoDisparity;
 import boofcv.gui.image.ImagePanel;
 import boofcv.gui.image.ShowImages;
@@ -56,7 +56,7 @@ public class DebugDenseStereoVideo<T extends ImageGray<T>> implements MouseListe
 								 SequenceStereoImages data) {
 		this.alg = alg;
 		this.data = data;
-		imageType = alg.getInputType();
+		imageType = alg.getInputType().getImageClass();
 
 		inputLeft = GeneralizedImageOps.createSingleBand(imageType, 1, 1);
 		inputRight = GeneralizedImageOps.createSingleBand(imageType,1,1);
@@ -197,10 +197,16 @@ public class DebugDenseStereoVideo<T extends ImageGray<T>> implements MouseListe
 //		SequenceStereoImages data = new WrapParseLeuven07(new ParseLeuven07("data/leuven07"));
 		SequenceStereoImages data = new WrapParseKITTI("data/KITTI","00");
 
-		Class imageType = GrayF32.class;
-
-		StereoDisparity alg = FactoryStereoDisparity.regionSubpixelWta(DisparityAlgorithms.RECT,
-				10, 120, 2, 2, 30, 0, 0.1, imageType);
+		ConfigureDisparityBMBest5 config5 = new ConfigureDisparityBMBest5();
+		config5.regionRadiusX = config5.regionRadiusY = 2;
+		config5.maxPerPixelError = 30;
+		config5.validateRtoL = 0;
+		config5.texture = 0.1;
+		config5.subpixel = true;
+		config5.minDisparity = 10;
+		config5.maxDisparity = 120;
+		StereoDisparity<GrayF32, GrayF32> alg =
+				FactoryStereoDisparity.blockMatchBest5(config5,GrayF32.class,GrayF32.class);
 
 		DebugDenseStereoVideo app = new DebugDenseStereoVideo(alg,data);
 		app.processSequence();
