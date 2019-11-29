@@ -1,5 +1,11 @@
 Description of changes to benchmarks and justifications for change in performance from previous versions.
 
+## Version 0.35
+2019
+
+- Revamp Chessboard detector
+- Added DetectLineRegression
+
 ## Version 0.34
 2019/07/07
 

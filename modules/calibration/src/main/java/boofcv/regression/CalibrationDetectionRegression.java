@@ -86,21 +86,21 @@ public class CalibrationDetectionRegression extends BaseRegression implements Im
 		circleRegirectories.add("data/calibration_mono/circle_regular/large");
 		circleRegirectories.add("data/calibration_mono/circle_regular/fisheye");
 
-		addDetector("DetectCalibChess",
-				new CreateChessboardOld(),
-				CalibrationPatterns.CHESSBOARD);
+//		addDetector("DetectCalibChess",
+//				new CreateChessboardOld(),
+//				CalibrationPatterns.CHESSBOARD);
 		addDetector("DetectCalibChess2",
 				new CreateChessboardNew(),
 				CalibrationPatterns.CHESSBOARD);
-		addDetector("DetectCalibSquare",
-				new CreateSquareGrid(),
-				CalibrationPatterns.SQUARE_GRID);
-		addDetector("DetectCalibCircleHexagonal",
-				new CreateCircleHexagonal(),
-				CalibrationPatterns.CIRCLE_HEXAGONAL);
-		addDetector("DetectCalibCircleRegular",
-				new CreateCircleRegular(),
-				CalibrationPatterns.CIRCLE_GRID);
+//		addDetector("DetectCalibSquare",
+//				new CreateSquareGrid(),
+//				CalibrationPatterns.SQUARE_GRID);
+//		addDetector("DetectCalibCircleHexagonal",
+//				new CreateCircleHexagonal(),
+//				CalibrationPatterns.CIRCLE_HEXAGONAL);
+//		addDetector("DetectCalibCircleRegular",
+//				new CreateCircleRegular(),
+//				CalibrationPatterns.CIRCLE_GRID);
 	}
 
 	public void addDetector( String name , CreateCalibration detector , CalibrationPatterns type) {

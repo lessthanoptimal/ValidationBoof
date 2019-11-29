@@ -1,8 +1,13 @@
 package boofcv.metrics;
 
 import boofcv.common.misc.ParseHelper;
+import boofcv.common.misc.PointFileCodec;
 import boofcv.factory.shape.ConfigEllipseDetector;
 import boofcv.factory.shape.ConfigPolygonDetector;
+import georegression.struct.ConvertFloatType;
+import georegression.struct.line.LineParametric2D_F32;
+import georegression.struct.line.LineSegment2D_F32;
+import georegression.struct.line.LineSegment2D_F64;
 import georegression.struct.point.Point2D_F64;
 import georegression.struct.point.Point2D_I32;
 import georegression.struct.shapes.Polygon2D_F64;
@@ -224,6 +229,82 @@ public class UtilShapeDetector {
 		}
 	}
 
+	public static List<LineSegment2D_F32> loadTruthLineSegments(File fileTruth ) {
+		List<List<Point2D_F64>> sets = PointFileCodec.loadSets(fileTruth.getPath());
+
+		List<LineSegment2D_F32> lines = new ArrayList<>();
+
+		LineSegment2D_F64 line64 = new LineSegment2D_F64();
+
+		for (int i = 0; i < sets.size(); i++) {
+			List<Point2D_F64> set = sets.get(i);
+
+			if( set.size() == 2 ) {
+				line64.set(set.get(0),set.get(1));
+
+				lines.add( ConvertFloatType.convert(line64,null));
+			} else {
+				for (int j = 0,k=sets.size()-1; j < sets.size(); j++) {
+					line64.set(set.get(j),set.get(k));
+					lines.add(ConvertFloatType.convert(line64,null));
+				}
+			}
+		}
+
+		return lines;
+	}
+
+	public static void saveResultsLines(List<LineParametric2D_F32> lines , File file ) {
+		try {
+			PrintStream out = new PrintStream(file);
+
+			out.println("# Detected lines in an image. Parametric equation");
+			out.println("# x0 y0 slopeX slopeY");
+			for (int i = 0; i < lines.size(); i++) {
+				LineParametric2D_F32 p = lines.get(i);
+				out.printf("%f %f %f %f\n",p.p.x,p.p.y,p.slope.x,p.slope.y);
+			}
+
+			out.close();
+		} catch (FileNotFoundException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	public static List<LineParametric2D_F32> loadResultsLines( File file ) {
+		try {
+			BufferedReader reader = new BufferedReader(new FileReader(file));
+
+			String line = reader.readLine();
+			while( line != null && line.length() >= 1 ) {
+				if( line.charAt(0) != '#')
+					break;
+				line = reader.readLine();
+			}
+
+			List<LineParametric2D_F32> out = new ArrayList<>();
+			while( line != null ) {
+				LineParametric2D_F32 l = new LineParametric2D_F32();
+
+				String words[] = line.split(" ");
+				if( words.length != 4 )
+					throw new RuntimeException("Unexpected number of works. "+words.length);
+
+				l.p.x = Float.parseFloat(words[0]);
+				l.p.y = Float.parseFloat(words[1]);
+				l.slope.x = Float.parseFloat(words[2]);
+				l.slope.y = Float.parseFloat(words[3]);
+
+				out.add(l);
+				line = reader.readLine();
+			}
+
+			return out;
+
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+	}
 
 	public static List<Polygon2D_F64> loadResults( File file ) {
 		try {
@@ -255,8 +336,6 @@ public class UtilShapeDetector {
 
 			return out;
 
-		} catch (FileNotFoundException e) {
-			throw new RuntimeException(e);
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
