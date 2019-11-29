@@ -1,0 +1,10 @@
+# GENERATOR DetectLineRegression
+# Match Tolerance Closest Point = 6.0
+# Match Tolerance Fraction Match = 0.75
+# Directory (expected) (detected) (true positives) (false positives) (average error)
+# Directory           E  D TP FP   Error
+chessboard           14 14 13  1  0.4795
+simple_objects        9  8  6  2  0.8253
+
+Summary: matched = 19 / 23 error =   0.652 FP = 3
+

@@ -1,0 +1,11 @@
+# GENERATOR DetectLineRegression
+# Match Tolerance Closest Point = 6.0
+# Match Tolerance Fraction Match = 0.75
+# Directory (expected) (detected) (true positives) (false positives) (average error)
+# Directory           E  D TP FP   Error
+black_lines_01        5  5  5  0  1.4556
+spiral                6  6  6  0  2.1080
+vertical_lines       11 11  9  2  2.6337
+
+Summary: matched = 20 / 22 error =   2.066 FP = 2
+
