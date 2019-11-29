@@ -244,7 +244,7 @@ public class UtilShapeDetector {
 
 				lines.add( ConvertFloatType.convert(line64,null));
 			} else {
-				for (int j = 0,k=sets.size()-1; j < sets.size(); j++) {
+				for (int j = 0,k=set.size()-1; j < set.size(); j++) {
 					line64.set(set.get(j),set.get(k));
 					lines.add(ConvertFloatType.convert(line64,null));
 				}
