@@ -5,6 +5,7 @@ Description of changes to benchmarks and justifications for change in performanc
 
 - Revamp Chessboard detector
 - Added DetectLineRegression
+- Added DisparityRegression
 
 ## Version 0.34
 2019/07/07

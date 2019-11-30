@@ -19,7 +19,7 @@ import boofcv.alg.sfm.structure.ThreeViewEstimateMetricScene;
 import boofcv.core.image.ConvertImage;
 import boofcv.factory.feature.associate.FactoryAssociation;
 import boofcv.factory.feature.detdesc.FactoryDetectDescribe;
-import boofcv.factory.feature.disparity.ConfigureDisparityBMBest5;
+import boofcv.factory.feature.disparity.ConfigDisparityBMBest5;
 import boofcv.factory.feature.disparity.FactoryStereoDisparity;
 import boofcv.io.image.ConvertBufferedImage;
 import boofcv.io.image.UtilImageIO;
@@ -209,14 +209,14 @@ public class ThreeViewStereoPerformance {
                 rectifiedLeft, rectifiedRight,rectMask, rectifiedK, rectifiedR);
 
         // compute disparity
-        ConfigureDisparityBMBest5 config5 = new ConfigureDisparityBMBest5();
+        ConfigDisparityBMBest5 config5 = new ConfigDisparityBMBest5();
         config5.regionRadiusX = config5.regionRadiusY = 6;
         config5.maxPerPixelError = 30;
         config5.validateRtoL = 3;
         config5.texture = 0.05;
         config5.subpixel = true;
         config5.minDisparity = minDisparity;
-        config5.maxDisparity = maxDisparity;
+        config5.rangeDisparity = maxDisparity-minDisparity;
         StereoDisparity<GrayS16, GrayF32> disparityAlg =
                 FactoryStereoDisparity.blockMatchBest5(config5,GrayS16.class,GrayF32.class);
 
