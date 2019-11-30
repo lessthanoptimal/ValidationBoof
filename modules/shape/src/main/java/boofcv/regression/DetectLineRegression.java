@@ -3,6 +3,7 @@ package boofcv.regression;
 import boofcv.common.BaseRegression;
 import boofcv.common.BoofRegressionConstants;
 import boofcv.common.ImageRegression;
+import boofcv.common.RegressionRunner;
 import boofcv.metrics.DetectLinesSaveToFile;
 import boofcv.metrics.EvaluateHoughLineDetector;
 import boofcv.metrics.FactoryLineDetector;
@@ -69,9 +70,11 @@ public class DetectLineRegression extends BaseRegression implements ImageRegress
 
 	}
 
-	public static void main(String[] args) throws IOException {
-		DetectLineRegression app = new DetectLineRegression();
-		app.setOutputDirectory(".");
-		app.process(ImageDataType.F32);
+	public static void main(String[] args) throws IOException, IllegalAccessException, InstantiationException, ClassNotFoundException {
+//		DetectLineRegression app = new DetectLineRegression();
+//		app.setOutputDirectory(".");
+//		app.process(ImageDataType.F32);
+		BoofRegressionConstants.clearCurrentResults();
+		RegressionRunner.main(new String[]{DetectLineRegression.class.getName(),ImageDataType.F32.toString()});
 	}
 }

@@ -5,7 +5,6 @@ import boofcv.factory.feature.disparity.*;
 import boofcv.metrics.disparity.MiddleburyStereoEvaluation.Score;
 import boofcv.struct.image.GrayF32;
 import boofcv.struct.image.GrayU8;
-import org.ddogleg.stats.UtilStatisticsQueue;
 import org.ddogleg.struct.GrowQueue_F64;
 
 import java.io.PrintStream;
@@ -27,7 +26,7 @@ public class EvaluateDisparity {
 	public PrintStream outRun = System.out;
 
 	public void process() {
-		List<TestSubject> subjects = createAlgorithms(200);
+		List<TestSubject> subjects = createAlgorithms(120);
 
 		out.println("# Middlebury Results for BAD_THRESH "+BAD_THRESH);
 		out.println("# err = average, bp = bad percent, ip = invalid percent, tbp = total bad percent");
@@ -109,6 +108,7 @@ public class EvaluateDisparity {
 
 	private TestSubject create_SGM( int range , DisparitySgmError error ) {
 		ConfigDisparitySGM config = new ConfigDisparitySGM();
+		config.paths = ConfigDisparitySGM.Paths.P16;
 		config.errorType = error;
 		config.rangeDisparity = range;
 

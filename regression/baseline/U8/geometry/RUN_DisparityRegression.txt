@@ -1,0 +1,10 @@
+# GENERATOR DisparityRegression
+BM5_SAD                        337.21 (ms)
+BM5_CENSUS                     421.92 (ms)
+BM5_NCC                        559.25 (ms)
+BM_SAD                         159.97 (ms)
+BM_CENSUS                      208.57 (ms)
+BM_NCC                         290.65 (ms)
+SGM_ABSOLUTE_DIFFERENCE        2655.94 (ms)
+SGM_CENSUS                     3603.00 (ms)
+SGM_MUTUAL_INFORMATION         3361.82 (ms)
