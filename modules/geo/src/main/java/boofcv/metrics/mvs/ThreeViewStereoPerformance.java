@@ -9,7 +9,6 @@ import boofcv.abst.geo.bundle.SceneStructureMetric;
 import boofcv.alg.descriptor.UtilFeature;
 import boofcv.alg.distort.ImageDistort;
 import boofcv.alg.feature.associate.AssociateThreeByPairs;
-import boofcv.alg.filter.derivative.DerivativeLaplacian;
 import boofcv.alg.geo.PerspectiveOps;
 import boofcv.alg.geo.RectifyImageOps;
 import boofcv.alg.geo.bundle.cameras.BundlePinholeSimplified;
@@ -20,6 +19,7 @@ import boofcv.core.image.ConvertImage;
 import boofcv.factory.feature.associate.FactoryAssociation;
 import boofcv.factory.feature.detdesc.FactoryDetectDescribe;
 import boofcv.factory.feature.disparity.ConfigDisparityBMBest5;
+import boofcv.factory.feature.disparity.DisparityError;
 import boofcv.factory.feature.disparity.FactoryStereoDisparity;
 import boofcv.io.image.ConvertBufferedImage;
 import boofcv.io.image.UtilImageIO;
@@ -67,6 +67,8 @@ public class ThreeViewStereoPerformance {
 
         // Run the reconstruction algorithm. This is the heart of what we are testing
         ThreeViewEstimateMetricScene alg = new ThreeViewEstimateMetricScene();
+
+        alg.configRansac.maxIterations = 2000;
 
         if( !alg.process(associated.toList(),width,height) )
             return false;
@@ -195,9 +197,6 @@ public class ThreeViewStereoPerformance {
                                            int minDisparity , int maxDisparity) {
 
 //		drawInliers(origLeft, origRight, intrinsic, inliers);
-        int width = distortedLeft.width;
-        int height = distortedRight.height;
-
         // Rectify and remove lens distortion for stereo processing
         DMatrixRMaj rectifiedK = new DMatrixRMaj(3, 3);
         DMatrixRMaj rectifiedR = new DMatrixRMaj(3, 3);
@@ -210,24 +209,19 @@ public class ThreeViewStereoPerformance {
 
         // compute disparity
         ConfigDisparityBMBest5 config5 = new ConfigDisparityBMBest5();
+        config5.errorType = DisparityError.CENSUS;
         config5.regionRadiusX = config5.regionRadiusY = 6;
         config5.maxPerPixelError = 30;
         config5.validateRtoL = 3;
         config5.texture = 0.05;
         config5.subpixel = true;
-        config5.minDisparity = minDisparity;
-        config5.rangeDisparity = maxDisparity-minDisparity;
-        StereoDisparity<GrayS16, GrayF32> disparityAlg =
-                FactoryStereoDisparity.blockMatchBest5(config5,GrayS16.class,GrayF32.class);
-
-        // Apply the Laplacian across the image to add extra resistance to changes in lighting or camera gain
-        GrayS16 derivLeft = new GrayS16(width, height);
-        GrayS16 derivRight = new GrayS16(width, height);
-        DerivativeLaplacian.process(rectifiedLeft, derivLeft,null);
-        DerivativeLaplacian.process(rectifiedRight, derivRight, null);
+        config5.disparityMin = minDisparity;
+        config5.disparityRange = maxDisparity-minDisparity+1;
+        StereoDisparity<GrayU8, GrayF32> disparityAlg =
+                FactoryStereoDisparity.blockMatchBest5(config5,GrayU8.class,GrayF32.class);
 
         // process and return the results
-        disparityAlg.process(derivLeft, derivRight);
+        disparityAlg.process(rectifiedLeft, rectifiedRight);
         return disparityAlg.getDisparity();
     }
 
@@ -259,7 +253,8 @@ public class ThreeViewStereoPerformance {
         rectifiedK.set(rectifyAlg.getCalibrationMatrix());
 
         // Adjust the rectification to make the view area more useful
-        RectifyImageOps.fullViewLeft(intrinsicLeft, rect1, rect2, rectifiedK);
+        ImageDimension rectShape = new ImageDimension();
+        RectifyImageOps.fullViewLeft(intrinsicLeft, rectifyAlg.getRectifiedRotation(),rect1, rect2, rectifiedK,rectShape);
 
         // undistorted and rectify images
         FMatrixRMaj rect1_F32 = new FMatrixRMaj(3,3);
@@ -272,6 +267,8 @@ public class ThreeViewStereoPerformance {
         ImageDistort<T,T> distortRight =
                 RectifyImageOps.rectifyImage(intrinsicRight, rect2_F32, BorderType.SKIP, distortedRight.getImageType());
 
+        rectifiedLeft.reshape(rectShape.width,rectShape.height);
+        rectifiedRight.reshape(rectShape.width,rectShape.height);
         distortLeft.apply(distortedLeft, rectifiedLeft,rectMask);
         distortRight.apply(distortedRight, rectifiedRight);
     }

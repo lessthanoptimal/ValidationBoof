@@ -139,7 +139,7 @@ public class DebugDenseStereoVideo<T extends ImageGray<T>> implements MouseListe
 		DMatrixRMaj rectK = rectifyAlg.getCalibrationMatrix();
 
 		// Adjust the rectification to make the view area more useful
-		RectifyImageOps.fullViewLeft(param.left, rect1, rect2, rectK);
+		RectifyImageOps.fullViewLeft(param.left, null, rect1, rect2, rectK, null);
 
 		// undistorted and rectify images
 		ImageDistort<T,T> imageDistortLeft =
@@ -154,7 +154,6 @@ public class DebugDenseStereoVideo<T extends ImageGray<T>> implements MouseListe
 		imageDistortRight.apply(inputRight, rectifiedRight);
 
 		alg.process(rectifiedLeft,rectifiedRight);
-
 
 		GrayF32 disparity = alg.getDisparity();
 
@@ -206,8 +205,8 @@ public class DebugDenseStereoVideo<T extends ImageGray<T>> implements MouseListe
 		config5.validateRtoL = 1;
 		config5.texture = 0.15;
 		config5.subpixel = true;
-		config5.minDisparity = 10;
-		config5.rangeDisparity = 100;
+		config5.disparityMin = 10;
+		config5.disparityRange = 100;
 		config5.errorType = DisparityError.CENSUS;
 		config5.configCensus.variant = CensusVariants.BLOCK_5_5;
 		StereoDisparity<GrayU8, GrayF32> alg =

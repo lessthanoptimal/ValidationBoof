@@ -90,9 +90,9 @@ public class GenerateTrifocalObservations {
 				outWorld.printf("%.10f %.10f %.10f\n",p.x,p.y,p.z);
 
 				AssociatedTriple o = new AssociatedTriple();
-				o.p1 = PerspectiveOps.renderPixel(new Se3_F64(), K, p);
-				o.p2 = PerspectiveOps.renderPixel(se2,K,p);
-				o.p3 = PerspectiveOps.renderPixel(se3,K,p);
+				o.p1 = PerspectiveOps.renderPixel(new Se3_F64(), K, p,null);
+				o.p2 = PerspectiveOps.renderPixel(se2,K,p,null);
+				o.p3 = PerspectiveOps.renderPixel(se3,K,p,null);
 
 
 				o.p1.x += rand.nextGaussian()*noiseSigma;

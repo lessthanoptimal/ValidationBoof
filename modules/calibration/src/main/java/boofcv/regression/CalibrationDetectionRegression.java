@@ -7,6 +7,7 @@ import boofcv.alg.geo.calibration.CalibrationObservation;
 import boofcv.common.BaseRegression;
 import boofcv.common.BoofRegressionConstants;
 import boofcv.common.ImageRegression;
+import boofcv.common.RegressionRunner;
 import boofcv.common.misc.PointFileCodec;
 import boofcv.factory.fiducial.FactoryFiducialCalibration;
 import boofcv.io.image.UtilImageIO;
@@ -70,6 +71,9 @@ public class CalibrationDetectionRegression extends BaseRegression implements Im
 		chessDirectories.add("data/calibration_mono/chessboard/ocam_ladybug");
 		chessDirectories.add("data/calibration_mono/chessboard/ocam_mini_omni");
 		chessDirectories.add("data/calibration_mono/chessboard/ocam_omni");
+		chessDirectories.add("data/calibration_mono/chessboard/stefano_2012");
+		chessDirectories.add("data/calibration_mono/chessboard/perfect");
+		chessDirectories.add("data/calibration_mono/chessboard/gaussian");
 
 		squareDirectories.add("data/calibration_stereo/Bumblebee2_Square");
 		squareDirectories.add("data/calibration_mono/square_grid/Sony_DSC-HX5V");
@@ -399,14 +403,12 @@ public class CalibrationDetectionRegression extends BaseRegression implements Im
 		}
 	}
 
-	public static void main(String[] args) throws IOException {
-		CalibrationDetectionRegression app = new CalibrationDetectionRegression();
+	public static void main(String[] args) throws IOException, IllegalAccessException, InstantiationException, ClassNotFoundException {
+		BoofRegressionConstants.clearCurrentResults();
+		RegressionRunner.main(new String[]{CalibrationDetectionRegression.class.getName(),ImageDataType.F32.toString()});
 
-
-//		app.addDetector("Default_Chess",FactoryCalibrationTarget.detectorChessboard(new ConfigChessboard(5,7)),true);
-//		app.addDetector("Default_Square",FactoryCalibrationTarget.detectorSquareGrid(new ConfigSquareGrid(5, 7)),false);
-
-		app.setOutputDirectory("./");
-		app.process(ImageDataType.F32);
+//		CalibrationDetectionRegression app = new CalibrationDetectionRegression();
+//		app.setOutputDirectory("./");
+//		app.process(ImageDataType.F32);
 	}
 }

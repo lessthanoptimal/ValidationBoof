@@ -32,8 +32,13 @@ public class EvaluateDisparity {
 		out.println("# err = average, bp = bad percent, ip = invalid percent, tbp = total bad percent");
 		out.println();
 		for( TestSubject s : subjects ) {
-			List<Score> results = evaluateAll(PATH_MIDDLEBURY,s.alg,BAD_THRESH);
-
+			List<Score> results;
+			try {
+				results = evaluateAll(PATH_MIDDLEBURY, s.alg, BAD_THRESH);
+			} catch( RuntimeException e ) {
+				e.printStackTrace(err);
+				continue;
+			}
 			GrowQueue_F64 allError = new GrowQueue_F64();
 			GrowQueue_F64 allBad = new GrowQueue_F64();
 			GrowQueue_F64 allInvalid = new GrowQueue_F64();
@@ -75,9 +80,9 @@ public class EvaluateDisparity {
 		list.add(create_BM(range,3,DisparityError.CENSUS));
 		list.add(create_BM(range,3,DisparityError.NCC));
 
-		list.add(create_SGM(range,DisparitySgmError.ABSOLUTE_DIFFERENCE));
-		list.add(create_SGM(range,DisparitySgmError.CENSUS));
-		list.add(create_SGM(range,DisparitySgmError.MUTUAL_INFORMATION));
+		list.add(create_SGM(range,true,DisparitySgmError.ABSOLUTE_DIFFERENCE));
+		list.add(create_SGM(range,true,DisparitySgmError.CENSUS));
+		list.add(create_SGM(range,true,DisparitySgmError.MUTUAL_INFORMATION));
 
 		return list;
 	}
@@ -86,7 +91,7 @@ public class EvaluateDisparity {
 		ConfigDisparityBMBest5 config = new ConfigDisparityBMBest5();
 		config.regionRadiusX = config.regionRadiusY = region;
 		config.errorType = error;
-		config.rangeDisparity = range;
+		config.disparityRange = range;
 
 		TestSubject ts = new TestSubject();
 		ts.alg = FactoryStereoDisparity.blockMatchBest5(config,GrayU8.class,GrayF32.class);
@@ -98,7 +103,7 @@ public class EvaluateDisparity {
 		ConfigDisparityBM config = new ConfigDisparityBM();
 		config.regionRadiusX = config.regionRadiusY = region;
 		config.errorType = error;
-		config.rangeDisparity = range;
+		config.disparityRange = range;
 
 		TestSubject ts = new TestSubject();
 		ts.alg = FactoryStereoDisparity.blockMatch(config,GrayU8.class,GrayF32.class);
@@ -106,11 +111,12 @@ public class EvaluateDisparity {
 		return ts;
 	}
 
-	private TestSubject create_SGM( int range , DisparitySgmError error ) {
+	private TestSubject create_SGM( int range , boolean block, DisparitySgmError error ) {
 		ConfigDisparitySGM config = new ConfigDisparitySGM();
 		config.paths = ConfigDisparitySGM.Paths.P16;
+		config.useBlocks = block;
 		config.errorType = error;
-		config.rangeDisparity = range;
+		config.disparityRange = range;
 
 		TestSubject ts = new TestSubject();
 		ts.alg = FactoryStereoDisparity.sgm(config,GrayU8.class,GrayF32.class);

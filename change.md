@@ -6,6 +6,10 @@ Description of changes to benchmarks and justifications for change in performanc
 - Revamp Chessboard detector
 - Added DetectLineRegression
 - Added DisparityRegression
+- Three View Stereo
+  * Uses Census for error now
+  * Adjusts rectified image's shape based on rotation
+  * Increased RANSAC iterations to improve stability
 
 ## Version 0.34
 2019/07/07
