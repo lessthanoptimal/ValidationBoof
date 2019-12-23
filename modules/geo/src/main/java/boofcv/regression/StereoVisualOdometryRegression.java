@@ -110,7 +110,7 @@ public class StereoVisualOdometryRegression extends BaseRegression implements Im
 		Class derivType = GImageDerivativeOps.getDerivativeType(bandType);
 
 		StereoDisparitySparse<GrayF32> disparity =
-				FactoryStereoDisparity.regionSparseWta(10, 120, 2, 2, 30, 0.1, true, bandType);
+				FactoryStereoDisparity.regionSparseWta(10, 110, 2, 2, 30, 0.1, true, bandType);
 
 		PkltConfig configKlt = new PkltConfig();
 		configKlt.pyramidScaling = new int[]{1, 2, 4, 8};
@@ -146,7 +146,7 @@ public class StereoVisualOdometryRegression extends BaseRegression implements Im
 		ret.name = "DualPnP";
 		ret.imageType = ImageType.single(bandType);
 		ret.vo = FactoryVisualOdometry.stereoDualTrackerPnP(110, 3, 1.5, 1.5, 200, 50,
-				trackerLeft, trackerRight, describe, bandType);
+				trackerLeft, trackerRight, describe,11.0, bandType);
 
 		return ret;
 	}
@@ -159,7 +159,7 @@ public class StereoVisualOdometryRegression extends BaseRegression implements Im
 		NonMaxSuppression nonmax = FactoryFeatureExtractor.nonmax(new ConfigExtract(2, 50, 0, true, false, true));
 		GeneralFeatureDetector general = new GeneralFeatureDetector(intensity,nonmax);
 		general.setMaxFeatures(600);
-		DetectorInterestPointMulti detector = new GeneralToInterestMulti(general,2,bandType,derivType);
+		DetectorInterestPointMulti detector = new GeneralToInterestMulti(general,11.0,bandType,derivType);
 		DescribeRegionPoint describe = FactoryDescribeRegionPoint.surfFast(null, bandType);
 		DetectDescribeMulti detDescMulti =  new DetectDescribeMultiFusion(detector,null,describe);
 
@@ -180,7 +180,7 @@ public class StereoVisualOdometryRegression extends BaseRegression implements Im
 	public static void main(String[] args) throws IOException, IllegalAccessException, InstantiationException, ClassNotFoundException {
 		BoofRegressionConstants.clearCurrentResults();
 		RegressionRunner.main(new String[]{StereoVisualOdometryRegression.class.getName(),ImageDataType.F32.toString()});
-		RegressionRunner.main(new String[]{StereoVisualOdometryRegression.class.getName(),ImageDataType.U8.toString()});
+//		RegressionRunner.main(new String[]{StereoVisualOdometryRegression.class.getName(),ImageDataType.U8.toString()});
 	}
 
 }

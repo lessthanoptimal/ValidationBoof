@@ -1,6 +1,6 @@
 allprojects{
     group = 'org.boofcv'
-    version = '0.35-SNAPSHOT'
+    version = '0.35'
 
     apply plugin: 'idea'
     apply plugin: 'java'
@@ -120,8 +120,7 @@ dependencies {
     compile project(':modules:common')
 }
 
-task wrapper(type: Wrapper) {
+wrapper {
     distributionType = Wrapper.DistributionType.BIN
-    gradleVersion = '4.10.2'
+    gradleVersion = '5.6.4'
 }
-

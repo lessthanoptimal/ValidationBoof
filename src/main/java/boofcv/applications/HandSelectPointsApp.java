@@ -1,7 +1,7 @@
 package boofcv.applications;
 
 import boofcv.abst.fiducial.QrCodeDetector;
-import boofcv.abst.fiducial.calib.CalibrationDetectorChessboard;
+import boofcv.abst.fiducial.calib.CalibrationDetectorChessboardX;
 import boofcv.abst.fiducial.calib.ConfigGridDimen;
 import boofcv.alg.fiducial.qrcode.QrCode;
 import boofcv.alg.geo.calibration.CalibrationObservation;
@@ -81,7 +81,7 @@ public class HandSelectPointsApp extends HandSelectBase {
 		infoPanel.handleSelectShape = ()->{
 			ConfigGridDimen configGrid = new ConfigGridDimen(10,7,1);
 
-			CalibrationDetectorChessboard detector = FactoryFiducialCalibration.chessboard(null,configGrid);
+			CalibrationDetectorChessboardX detector = FactoryFiducialCalibration.chessboardX(null,configGrid);
 
 			GrayF32 gray = new GrayF32(1,1);
 			ConvertBufferedImage.convertFrom(image,gray);

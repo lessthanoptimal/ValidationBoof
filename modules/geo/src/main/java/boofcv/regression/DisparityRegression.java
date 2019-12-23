@@ -27,7 +27,7 @@ public class DisparityRegression extends BaseRegression implements ImageRegressi
 			throw new IOException("Only supports U8 images");
 		}
 
-		PrintStream out = new PrintStream(new File(directory,"DisparityRegression.txt"));
+		PrintStream out = new PrintStream(new File(directory,"ACC_DisparityRegression.txt"));
 		BoofRegressionConstants.printGenerator(out,getClass());
 
 		PrintStream outRuntime = new PrintStream(new File(directory,"RUN_DisparityRegression.txt"));

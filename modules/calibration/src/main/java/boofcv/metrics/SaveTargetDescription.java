@@ -17,7 +17,7 @@ import java.io.PrintStream;
 public class SaveTargetDescription {
 
 	public static void main( String args[] ) throws FileNotFoundException {
-		DetectorFiducialCalibration target = FactoryFiducialCalibration.chessboard(
+		DetectorFiducialCalibration target = FactoryFiducialCalibration.chessboardX(
 				null,new ConfigGridDimen(5, 7, 30));
 
 		PrintStream out = new PrintStream(new FileOutputStream("target.txt"));

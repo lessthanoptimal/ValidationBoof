@@ -15,7 +15,7 @@ import java.util.List;
 public class CreateCalibrationFiducialLandmarkFiles {
 	public static void main(String[] args) throws FileNotFoundException {
 		ConfigGridDimen config = new ConfigGridDimen(5,7,1);
-		DetectorFiducialCalibration detector = FactoryFiducialCalibration.chessboard(null,config);
+		DetectorFiducialCalibration detector = FactoryFiducialCalibration.chessboardX(null,config);
 //		ConfigGridDimen config = new ConfigGridDimen(5,7,1,1);
 //		DetectorFiducialCalibration detector = FactoryFiducialCalibration.squareGrid(config);
 //		ConfigGridDimen config = new ConfigGridDimen(5,6,4,5);

@@ -90,21 +90,11 @@ public class CalibrationDetectionRegression extends BaseRegression implements Im
 		circleRegirectories.add("data/calibration_mono/circle_regular/large");
 		circleRegirectories.add("data/calibration_mono/circle_regular/fisheye");
 
-		addDetector("DetectCalibChess",
-				new CreateChessboardOld(),
-				CalibrationPatterns.CHESSBOARD);
-		addDetector("DetectCalibChess2",
-				new CreateChessboardNew(),
-				CalibrationPatterns.CHESSBOARD);
-		addDetector("DetectCalibSquare",
-				new CreateSquareGrid(),
-				CalibrationPatterns.SQUARE_GRID);
-		addDetector("DetectCalibCircleHexagonal",
-				new CreateCircleHexagonal(),
-				CalibrationPatterns.CIRCLE_HEXAGONAL);
-		addDetector("DetectCalibCircleRegular",
-				new CreateCircleRegular(),
-				CalibrationPatterns.CIRCLE_GRID);
+//		addDetector("DetectCalibChessBinary", new CreateChessboardOld(), CalibrationPatterns.CHESSBOARD);
+		addDetector("DetectCalibChessXCorner", new CreateChessboardXCorner(), CalibrationPatterns.CHESSBOARD);
+//		addDetector("DetectCalibSquare", new CreateSquareGrid(), CalibrationPatterns.SQUARE_GRID);
+//		addDetector("DetectCalibCircleHexagonal", new CreateCircleHexagonal(), CalibrationPatterns.CIRCLE_HEXAGONAL);
+//		addDetector("DetectCalibCircleRegular", new CreateCircleRegular(), CalibrationPatterns.CIRCLE_GRID);
 	}
 
 	public void addDetector( String name , CreateCalibration detector , CalibrationPatterns type) {
@@ -338,7 +328,7 @@ public class CalibrationDetectionRegression extends BaseRegression implements Im
 		DetectorFiducialCalibration create( File file );
 	}
 
-	static class CreateChessboardOld implements CreateCalibration {
+	static class CreateChessboardBinary implements CreateCalibration {
 		@Override
 		public DetectorFiducialCalibration create(File file) {
 			ConfigGridDimen config;
@@ -347,11 +337,11 @@ public class CalibrationDetectionRegression extends BaseRegression implements Im
 			else {
 				config = parseGridDimen3(file);
 			}
-			return FactoryFiducialCalibration.chessboardOld(null,config);
+			return FactoryFiducialCalibration.chessboardB(null,config);
 		}
 	}
 
-	static class CreateChessboardNew implements CreateCalibration {
+	static class CreateChessboardXCorner implements CreateCalibration {
 		@Override
 		public DetectorFiducialCalibration create(File file) {
 			ConfigGridDimen config;
@@ -360,7 +350,7 @@ public class CalibrationDetectionRegression extends BaseRegression implements Im
 			else {
 				config = parseGridDimen3(file);
 			}
-			return FactoryFiducialCalibration.chessboard(null,config);
+			return FactoryFiducialCalibration.chessboardX(null,config);
 		}
 	}
 

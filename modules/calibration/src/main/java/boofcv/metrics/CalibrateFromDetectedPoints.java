@@ -29,7 +29,7 @@ public class CalibrateFromDetectedPoints {
 	PrintStream err = System.err;
 
 	public void processStereo( File stereoDetections , boolean tangential ) throws IOException {
-		DetectorFiducialCalibration targetDesc = FactoryFiducialCalibration.chessboard(
+		DetectorFiducialCalibration targetDesc = FactoryFiducialCalibration.chessboardX(
 				null,new ConfigGridDimen(7, 5, 30));
 		CalibrationPlanarGridZhang99 zhang99 = new CalibrationPlanarGridZhang99(targetDesc.getLayout(),
 				new Zhang99CameraBrown(true,tangential,2));

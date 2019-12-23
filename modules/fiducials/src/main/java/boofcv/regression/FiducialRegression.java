@@ -57,9 +57,9 @@ public class FiducialRegression extends BaseRegression implements ImageRegressio
 		{return FactoryFiducial.squareImage(new ConfigFiducialImage(), fast, imageType);}};
 		process("ImageFast", new EstimateImageFiducialToCamera(factory), "square_border_image",false);
 
-		process("Chessboard", new EstimateChessboardToCameraOld(imageType), "chessboard", true);
+		process("ChessboardBinary", new EstimateChessboardToCameraBinary(imageType), "chessboard", true);
 
-		process("Chessboard2", new EstimateChessboardToCameraNew(imageType), "chessboard", true);
+		process("ChessboardXCorner", new EstimateChessboardToCameraXCorner(imageType), "chessboard", true);
 
 		process("SquareGrid", new EstimateSquareGridToCamera(imageType), "square_grid",false);
 

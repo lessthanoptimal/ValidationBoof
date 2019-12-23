@@ -13,11 +13,11 @@ import java.io.IOException;
 /**
  * @author Peter Abeles
  */
-public class EstimateChessboardToCameraOld<T extends ImageGray<T>> extends BaseEstimateSquareFiducialToCamera<T> {
+public class EstimateChessboardToCameraXCorner<T extends ImageGray<T>> extends BaseEstimateSquareFiducialToCamera<T> {
 
 	Class<T> imageType;
 
-	public EstimateChessboardToCameraOld(Class<T> imageType) {
+	public EstimateChessboardToCameraXCorner(Class<T> imageType) {
 		this.imageType = imageType;
 	}
 
@@ -27,14 +27,14 @@ public class EstimateChessboardToCameraOld<T extends ImageGray<T>> extends BaseE
 		ConfigGridDimen config = ParseCalibrationConfigFiles.parseGridDimen2(
 				new File(datasetDir,"description.txt"));
 
-		return FactoryFiducial.calibChessboardOld(null,config, imageType);
+		return FactoryFiducial.calibChessboardX(null,config, imageType);
 	}
 
 	public static void main(String[] args) throws IOException {
 
 		File outputDirectory = setupOutput();
 
-		EstimateChessboardToCameraOld app = new EstimateChessboardToCameraOld(GrayU8.class);
+		EstimateChessboardToCameraXCorner app = new EstimateChessboardToCameraXCorner(GrayU8.class);
 		app.initialize(new File("data/fiducials/chessboard"));
 		app.setOutputDirectory(outputDirectory);
 

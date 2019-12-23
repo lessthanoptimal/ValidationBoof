@@ -1,11 +1,14 @@
 Description of changes to benchmarks and justifications for change in performance from previous versions.
 
 ## Version 0.35
-2019
+2019/Dec/23
 
 - Revamp Chessboard detector
 - Added DetectLineRegression
 - Added DisparityRegression
+- Circulant's results changed slightly due to improvements in mean-shift
+- Stereo Depth's change is likely a result of how the disparity search is changed
+  * Didn't pin point the exact change and adjusted it to be similar
 - Three View Stereo
   * Uses Census for error now
   * Adjusts rectified image's shape based on rotation

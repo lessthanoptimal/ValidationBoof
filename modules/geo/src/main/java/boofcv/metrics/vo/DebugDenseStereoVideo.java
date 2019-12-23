@@ -157,8 +157,8 @@ public class DebugDenseStereoVideo<T extends ImageGray<T>> implements MouseListe
 
 		GrayF32 disparity = alg.getDisparity();
 
-		int min = alg.getMinDisparity();
-		int max = alg.getRangeDisparity()+min;
+		int min = alg.getDisparityMin();
+		int max = alg.getDisparityRange()+min-1;
 
 		BufferedImage visualized = VisualizeImageData.disparity(disparity, null, max-min, 0);
 
@@ -176,7 +176,6 @@ public class DebugDenseStereoVideo<T extends ImageGray<T>> implements MouseListe
 			rectifiedView.repaint();
 		}
 	}
-
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
