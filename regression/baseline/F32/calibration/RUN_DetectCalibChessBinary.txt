@@ -1,0 +1,32 @@
+# GENERATOR CalibrationDetectionRegression
+# DetectCalibChessBinary
+# Data set, average milliseconds
+              Bumblebee2_Chess    12.75
+                 Sony_DSC-HX5V     8.08
+                         large   111.01
+                       distant    12.69
+                distance_angle     8.96
+             distance_straight     8.87
+                          hard     8.05
+                        border    47.34
+                      fisheye1    20.86
+                      fisheye2    66.74
+                         close     9.99
+                   sloppy13x10    28.25
+                         focus     8.23
+                   focus_large    89.18
+             rotation_vertical     7.68
+                 rotation_flat    13.56
+                   motion_blur     6.56
+                        shadow    13.48
+                  large_shadow   101.37
+                 caltech_edges    15.45
+              deltille_fisheye    25.23
+               ocam_fisheye190     9.94
+              ocam_kaidan_omni    11.13
+                  ocam_ladybug    11.98
+                ocam_mini_omni    11.78
+                     ocam_omni    15.28
+                  stefano_2012    13.50
+                       perfect     3.94
+                      gaussian     7.00

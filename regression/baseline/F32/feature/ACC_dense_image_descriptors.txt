@@ -4,7 +4,7 @@ Algorithm:  HOG-SB-F32
 ======================================================================
 data/fiducials/square_border_image/standard/distance_angle/image00001.png
 
-Total Descriptions = 7154
+Total Descriptions = 7154, zeros (bad) = 0
 
 Light Scaling
   metric    0.617    0.725    0.851    1.000    1.175    1.380    1.621    1.904 
@@ -24,7 +24,7 @@ Image Scale
 ======================================================================
 data/calibration_mono/chessboard/distant/image00000.jpg
 
-Total Descriptions = 7154
+Total Descriptions = 7154, zeros (bad) = 0
 
 Light Scaling
   metric    0.617    0.725    0.851    1.000    1.175    1.380    1.621    1.904 
@@ -47,7 +47,7 @@ Algorithm:  HOG-MS-F32
 ======================================================================
 data/fiducials/square_border_image/standard/distance_angle/image00001.png
 
-Total Descriptions = 7154
+Total Descriptions = 7154, zeros (bad) = 0
 
 Light Scaling
   metric    0.617    0.725    0.851    1.000    1.175    1.380    1.621    1.904 
@@ -67,7 +67,7 @@ Image Scale
 ======================================================================
 data/calibration_mono/chessboard/distant/image00000.jpg
 
-Total Descriptions = 7154
+Total Descriptions = 7154, zeros (bad) = 0
 
 Light Scaling
   metric    0.617    0.725    0.851    1.000    1.175    1.380    1.621    1.904 
@@ -90,7 +90,7 @@ Algorithm:  HOG-F-SB-F32
 ======================================================================
 data/fiducials/square_border_image/standard/distance_angle/image00001.png
 
-Total Descriptions = 7154
+Total Descriptions = 7154, zeros (bad) = 0
 
 Light Scaling
   metric    0.617    0.725    0.851    1.000    1.175    1.380    1.621    1.904 
@@ -110,7 +110,7 @@ Image Scale
 ======================================================================
 data/calibration_mono/chessboard/distant/image00000.jpg
 
-Total Descriptions = 7154
+Total Descriptions = 7154, zeros (bad) = 0
 
 Light Scaling
   metric    0.617    0.725    0.851    1.000    1.175    1.380    1.621    1.904 
@@ -133,7 +133,7 @@ Algorithm:  HOG-F-MS-F32
 ======================================================================
 data/fiducials/square_border_image/standard/distance_angle/image00001.png
 
-Total Descriptions = 7154
+Total Descriptions = 7154, zeros (bad) = 0
 
 Light Scaling
   metric    0.617    0.725    0.851    1.000    1.175    1.380    1.621    1.904 
@@ -153,7 +153,7 @@ Image Scale
 ======================================================================
 data/calibration_mono/chessboard/distant/image00000.jpg
 
-Total Descriptions = 7154
+Total Descriptions = 7154, zeros (bad) = 0
 
 Light Scaling
   metric    0.617    0.725    0.851    1.000    1.175    1.380    1.621    1.904 
@@ -176,7 +176,7 @@ Algorithm:  SURF-F-F32
 ======================================================================
 data/fiducials/square_border_image/standard/distance_angle/image00001.png
 
-Total Descriptions = 4524
+Total Descriptions = 4524, zeros (bad) = 0
 
 Light Scaling
   metric    0.617    0.725    0.851    1.000    1.175    1.380    1.621    1.904 
@@ -196,7 +196,7 @@ Image Scale
 ======================================================================
 data/calibration_mono/chessboard/distant/image00000.jpg
 
-Total Descriptions = 4524
+Total Descriptions = 4524, zeros (bad) = 0
 
 Light Scaling
   metric    0.617    0.725    0.851    1.000    1.175    1.380    1.621    1.904 
@@ -219,7 +219,7 @@ Algorithm:  SURF-S-F32
 ======================================================================
 data/fiducials/square_border_image/standard/distance_angle/image00001.png
 
-Total Descriptions = 4524
+Total Descriptions = 4524, zeros (bad) = 0
 
 Light Scaling
   metric    0.617    0.725    0.851    1.000    1.175    1.380    1.621    1.904 
@@ -239,7 +239,7 @@ Image Scale
 ======================================================================
 data/calibration_mono/chessboard/distant/image00000.jpg
 
-Total Descriptions = 4524
+Total Descriptions = 4524, zeros (bad) = 0
 
 Light Scaling
   metric    0.617    0.725    0.851    1.000    1.175    1.380    1.621    1.904 
@@ -262,7 +262,7 @@ Algorithm:  SIFT-F32
 ======================================================================
 data/fiducials/square_border_image/standard/distance_angle/image00001.png
 
-Total Descriptions = 4524
+Total Descriptions = 4524, zeros (bad) = 0
 
 Light Scaling
   metric    0.617    0.725    0.851    1.000    1.175    1.380    1.621    1.904 
@@ -282,7 +282,7 @@ Image Scale
 ======================================================================
 data/calibration_mono/chessboard/distant/image00000.jpg
 
-Total Descriptions = 4524
+Total Descriptions = 4524, zeros (bad) = 0
 
 Light Scaling
   metric    0.617    0.725    0.851    1.000    1.175    1.380    1.621    1.904 

@@ -1,0 +1,11 @@
+# GENERATOR FiducialRegression
+# directory, number of frames, FPS
+data/fiducials/chessboard/standard/distance_angle 300  47.281
+data/fiducials/chessboard/standard/distance_straight 300  49.776
+data/fiducials/chessboard/standard/distant 300  36.036
+data/fiducials/chessboard/standard/motion_blur 300  92.081
+data/fiducials/chessboard/standard/rotation_flat 300  36.474
+data/fiducials/chessboard/standard/rotation_vertical 300  49.751
+data/fiducials/chessboard/standard/shadow 300  37.481
+data/fiducials/chessboard/static/front_close 300  75.548
+data/fiducials/chessboard/static/front_far 300  68.807

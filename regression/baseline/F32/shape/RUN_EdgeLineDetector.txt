@@ -1,10 +1,10 @@
 # GENERATOR DetectLineRegression
 # Average processing time of shape detector algorithm Polar
-                edge    7.7407 (ms)
+                edge    6.5560 (ms)
 
 # Average processing time of shape detector algorithm Foot
-                edge    7.0075 (ms)
+                edge    6.5710 (ms)
 
 # Average processing time of shape detector algorithm FootSub
-                edge    4.6622 (ms)
+                edge    4.4549 (ms)
 

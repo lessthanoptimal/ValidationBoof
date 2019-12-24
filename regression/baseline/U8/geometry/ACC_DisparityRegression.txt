@@ -1,0 +1,193 @@
+# GENERATOR DisparityRegression
+# Middlebury Results for BAD_THRESH 2.0
+# err = average, bp = bad percent, ip = invalid percent, tbp = total bad percent
+
+BM5_SAD
+             Vintage err= 1.42 bp= 12.2 ip= 27.5 tbp= 39.7
+             Recycle err= 1.14 bp=  8.5 ip= 32.3 tbp= 40.8
+             Shelves err= 2.34 bp=  9.9 ip= 51.8 tbp= 61.7
+         MotorcycleE err=14.48 bp=  4.3 ip= 93.1 tbp= 97.4
+            Playroom err= 2.59 bp=  8.2 ip= 62.0 tbp= 70.2
+               Piano err= 1.50 bp= 14.6 ip= 25.6 tbp= 40.2
+           Playtable err= 1.55 bp=  6.9 ip= 43.6 tbp= 50.5
+          PlaytableP err= 0.70 bp=  5.6 ip= 24.8 tbp= 30.5
+                ArtL err= 6.60 bp=  7.4 ip= 78.0 tbp= 85.4
+               Pipes err= 1.12 bp=  5.6 ip= 26.8 tbp= 32.4
+          Adirondack err= 4.04 bp=  7.1 ip= 68.6 tbp= 75.8
+               Teddy err= 0.50 bp=  2.9 ip= 24.6 tbp= 27.6
+              PianoL err= 8.89 bp=  4.1 ip= 88.1 tbp= 92.1
+           Jadeplant err= 2.26 bp=  3.9 ip= 47.0 tbp= 50.9
+          Motorcycle err= 0.93 bp=  4.4 ip= 31.5 tbp= 35.9
+
+Summary Mean : err= 3.34 bp=  7.0 ip= 48.4 tbp= 55.4
+Summary 50%  : err= 1.55 bp=  6.9 ip= 43.6 tbp= 50.5
+Summary 95%  : err= 8.89 bp= 12.2 ip= 88.1 tbp= 92.1
+----------------------------------------------------------------------------
+BM5_CENSUS
+             Vintage err= 0.68 bp=  2.5 ip= 44.8 tbp= 47.4
+             Recycle err= 0.40 bp=  1.9 ip= 25.9 tbp= 27.7
+             Shelves err= 0.99 bp=  5.0 ip= 44.0 tbp= 49.0
+         MotorcycleE err= 0.49 bp=  2.2 ip= 10.6 tbp= 12.8
+            Playroom err= 0.77 bp=  3.8 ip= 33.5 tbp= 37.3
+               Piano err= 0.46 bp=  2.7 ip= 28.5 tbp= 31.2
+           Playtable err= 2.40 bp=  6.0 ip= 48.4 tbp= 54.4
+          PlaytableP err= 0.47 bp=  3.2 ip= 25.5 tbp= 28.8
+                ArtL err= 0.79 bp=  4.4 ip= 13.7 tbp= 18.1
+               Pipes err= 0.81 bp=  3.5 ip= 15.0 tbp= 18.5
+          Adirondack err= 0.54 bp=  1.7 ip= 26.2 tbp= 27.9
+               Teddy err= 0.41 bp=  2.7 ip= 17.5 tbp= 20.3
+              PianoL err= 0.59 bp=  2.3 ip= 45.7 tbp= 48.1
+           Jadeplant err= 2.45 bp=  3.7 ip= 40.4 tbp= 44.1
+          Motorcycle err= 0.50 bp=  2.5 ip= 10.9 tbp= 13.4
+
+Summary Mean : err= 0.85 bp=  3.2 ip= 28.7 tbp= 31.9
+Summary 50%  : err= 0.59 bp=  2.7 ip= 26.2 tbp= 28.8
+Summary 95%  : err= 2.40 bp=  5.0 ip= 45.7 tbp= 49.0
+----------------------------------------------------------------------------
+BM5_NCC
+             Vintage err= 1.74 bp=  6.5 ip= 33.6 tbp= 40.1
+             Recycle err= 0.76 bp=  5.2 ip= 17.2 tbp= 22.3
+             Shelves err= 2.33 bp= 12.6 ip= 30.0 tbp= 42.6
+         MotorcycleE err= 0.90 bp=  5.6 ip=  7.8 tbp= 13.3
+            Playroom err= 1.80 bp=  9.0 ip= 23.9 tbp= 32.9
+               Piano err= 1.12 bp=  7.4 ip= 25.1 tbp= 32.5
+           Playtable err= 4.19 bp= 16.3 ip= 24.6 tbp= 41.0
+          PlaytableP err= 1.04 bp=  6.8 ip= 15.1 tbp= 22.0
+                ArtL err= 1.54 bp=  9.2 ip= 13.2 tbp= 22.5
+               Pipes err= 1.75 bp=  8.1 ip= 17.5 tbp= 25.7
+          Adirondack err= 1.27 bp=  5.2 ip= 15.7 tbp= 20.9
+               Teddy err= 0.76 bp=  6.5 ip= 10.0 tbp= 16.5
+              PianoL err= 2.74 bp=  9.7 ip= 39.3 tbp= 48.9
+           Jadeplant err= 6.33 bp= 12.3 ip= 28.0 tbp= 40.3
+          Motorcycle err= 0.98 bp=  6.2 ip=  8.2 tbp= 14.4
+
+Summary Mean : err= 1.95 bp=  8.4 ip= 20.6 tbp= 29.1
+Summary 50%  : err= 1.54 bp=  7.4 ip= 17.5 tbp= 25.7
+Summary 95%  : err= 4.19 bp= 12.6 ip= 33.6 tbp= 42.6
+----------------------------------------------------------------------------
+BM_SAD
+             Vintage err= 1.65 bp= 13.2 ip= 27.7 tbp= 40.9
+             Recycle err= 1.63 bp= 10.2 ip= 34.4 tbp= 44.5
+             Shelves err= 3.28 bp= 14.1 ip= 48.3 tbp= 62.4
+         MotorcycleE err=18.00 bp=  6.1 ip= 91.4 tbp= 97.5
+            Playroom err= 3.54 bp= 10.2 ip= 59.8 tbp= 70.1
+               Piano err= 1.68 bp= 15.7 ip= 25.6 tbp= 41.2
+           Playtable err= 2.02 bp=  9.8 ip= 42.9 tbp= 52.7
+          PlaytableP err= 1.05 bp=  7.5 ip= 32.3 tbp= 39.8
+                ArtL err= 9.08 bp= 10.7 ip= 75.6 tbp= 86.3
+               Pipes err= 1.50 bp=  7.4 ip= 28.7 tbp= 36.1
+          Adirondack err= 5.62 bp=  8.8 ip= 67.5 tbp= 76.2
+               Teddy err= 0.73 bp=  4.3 ip= 27.0 tbp= 31.3
+              PianoL err=13.42 bp=  6.4 ip= 86.6 tbp= 93.0
+           Jadeplant err= 3.47 bp=  6.0 ip= 47.1 tbp= 53.1
+          Motorcycle err= 1.44 bp=  6.6 ip= 33.3 tbp= 39.9
+
+Summary Mean : err= 4.54 bp=  9.1 ip= 48.5 tbp= 57.7
+Summary 50%  : err= 2.02 bp=  8.8 ip= 42.9 tbp= 52.7
+Summary 95%  : err=13.42 bp= 14.1 ip= 86.6 tbp= 93.0
+----------------------------------------------------------------------------
+BM_CENSUS
+             Vintage err= 1.20 bp=  3.2 ip= 48.4 tbp= 51.7
+             Recycle err= 0.51 bp=  2.0 ip= 31.6 tbp= 33.6
+             Shelves err= 1.20 bp=  4.9 ip= 47.1 tbp= 52.0
+         MotorcycleE err= 0.43 bp=  1.7 ip= 15.5 tbp= 17.2
+            Playroom err= 0.93 bp=  4.0 ip= 37.2 tbp= 41.2
+               Piano err= 0.52 bp=  2.7 ip= 31.4 tbp= 34.1
+           Playtable err= 2.55 bp=  7.1 ip= 50.7 tbp= 57.7
+          PlaytableP err= 0.71 bp=  3.9 ip= 37.0 tbp= 40.9
+                ArtL err= 0.72 bp=  3.4 ip= 20.4 tbp= 23.7
+               Pipes err= 0.69 bp=  3.0 ip= 19.7 tbp= 22.7
+          Adirondack err= 0.67 bp=  1.9 ip= 33.1 tbp= 35.0
+               Teddy err= 0.44 bp=  2.3 ip= 23.1 tbp= 25.5
+              PianoL err= 0.96 bp=  2.8 ip= 50.5 tbp= 53.3
+           Jadeplant err= 2.49 bp=  3.4 ip= 43.8 tbp= 47.2
+          Motorcycle err= 0.47 bp=  2.2 ip= 15.2 tbp= 17.3
+
+Summary Mean : err= 0.97 bp=  3.2 ip= 33.6 tbp= 36.9
+Summary 50%  : err= 0.71 bp=  3.0 ip= 33.1 tbp= 35.0
+Summary 95%  : err= 2.49 bp=  4.9 ip= 50.5 tbp= 53.3
+----------------------------------------------------------------------------
+BM_NCC
+             Vintage err= 2.64 bp=  6.2 ip= 42.5 tbp= 48.7
+             Recycle err= 1.09 bp=  5.1 ip= 27.0 tbp= 32.2
+             Shelves err= 2.74 bp= 11.3 ip= 36.3 tbp= 47.6
+         MotorcycleE err= 1.11 bp=  5.7 ip= 14.0 tbp= 19.7
+            Playroom err= 2.30 bp=  8.9 ip= 31.0 tbp= 39.8
+               Piano err= 1.17 bp=  6.7 ip= 27.6 tbp= 34.3
+           Playtable err= 4.61 bp= 18.1 ip= 33.1 tbp= 51.2
+          PlaytableP err= 1.81 bp= 10.8 ip= 26.3 tbp= 37.2
+                ArtL err= 2.05 bp=  9.2 ip= 21.4 tbp= 30.6
+               Pipes err= 1.78 bp=  7.9 ip= 16.9 tbp= 24.8
+          Adirondack err= 1.70 bp=  5.7 ip= 25.4 tbp= 31.0
+               Teddy err= 1.01 bp=  6.2 ip= 15.4 tbp= 21.5
+              PianoL err= 3.88 bp= 10.3 ip= 44.6 tbp= 54.8
+           Jadeplant err= 8.11 bp= 12.9 ip= 33.1 tbp= 46.1
+          Motorcycle err= 1.19 bp=  6.4 ip= 13.9 tbp= 20.3
+
+Summary Mean : err= 2.48 bp=  8.7 ip= 27.2 tbp= 36.0
+Summary 50%  : err= 1.81 bp=  7.9 ip= 27.0 tbp= 34.3
+Summary 95%  : err= 4.61 bp= 12.9 ip= 42.5 tbp= 51.2
+----------------------------------------------------------------------------
+SGM_ABSOLUTE_DIFFERENCE
+             Vintage err= 1.00 bp=  8.4 ip= 33.8 tbp= 42.3
+             Recycle err= 0.76 bp=  4.0 ip= 26.4 tbp= 30.4
+             Shelves err= 2.15 bp= 18.2 ip= 32.3 tbp= 50.5
+         MotorcycleE err= 9.10 bp= 15.5 ip= 48.9 tbp= 64.4
+            Playroom err= 1.60 bp=  9.3 ip= 31.6 tbp= 41.0
+               Piano err= 1.31 bp= 14.0 ip= 27.5 tbp= 41.5
+           Playtable err= 1.28 bp=  9.7 ip= 23.8 tbp= 33.5
+          PlaytableP err= 1.08 bp=  9.1 ip= 21.2 tbp= 30.3
+                ArtL err= 2.84 bp= 14.6 ip= 47.0 tbp= 61.7
+               Pipes err= 2.20 bp=  8.9 ip= 22.7 tbp= 31.7
+          Adirondack err= 1.99 bp=  7.9 ip= 32.4 tbp= 40.2
+               Teddy err= 0.78 bp=  8.4 ip=  9.9 tbp= 18.4
+              PianoL err=15.58 bp= 12.6 ip= 66.3 tbp= 78.9
+           Jadeplant err= 6.39 bp= 10.7 ip= 46.6 tbp= 57.4
+          Motorcycle err= 1.18 bp=  7.2 ip= 22.1 tbp= 29.2
+
+Summary Mean : err= 3.28 bp= 10.6 ip= 32.8 tbp= 43.4
+Summary 50%  : err= 1.60 bp=  9.3 ip= 31.6 tbp= 41.0
+Summary 95%  : err= 9.10 bp= 15.5 ip= 48.9 tbp= 64.4
+----------------------------------------------------------------------------
+SGM_CENSUS
+             Vintage err= 1.13 bp=  7.1 ip= 19.8 tbp= 26.9
+             Recycle err= 0.54 bp=  3.4 ip=  5.8 tbp=  9.2
+             Shelves err= 1.97 bp= 19.4 ip= 18.6 tbp= 38.0
+         MotorcycleE err= 0.64 bp=  3.5 ip=  3.4 tbp=  6.9
+            Playroom err= 1.02 bp=  8.5 ip= 12.1 tbp= 20.6
+               Piano err= 0.67 bp=  7.3 ip= 10.1 tbp= 17.3
+           Playtable err= 2.32 bp= 10.7 ip= 13.5 tbp= 24.2
+          PlaytableP err= 0.64 bp=  6.1 ip=  8.0 tbp= 14.1
+                ArtL err= 1.03 bp=  7.2 ip=  9.7 tbp= 17.0
+               Pipes err= 1.22 bp=  6.1 ip=  9.2 tbp= 15.3
+          Adirondack err= 0.56 bp=  2.6 ip=  4.6 tbp=  7.1
+               Teddy err= 0.48 bp=  4.5 ip=  5.8 tbp= 10.2
+              PianoL err= 2.15 bp=  8.2 ip= 21.3 tbp= 29.4
+           Jadeplant err= 4.30 bp= 10.3 ip= 21.1 tbp= 31.4
+          Motorcycle err= 0.66 bp=  3.8 ip=  3.5 tbp=  7.3
+
+Summary Mean : err= 1.29 bp=  7.2 ip= 11.1 tbp= 18.3
+Summary 50%  : err= 1.02 bp=  7.1 ip=  9.7 tbp= 17.0
+Summary 95%  : err= 2.32 bp= 10.7 ip= 21.1 tbp= 31.4
+----------------------------------------------------------------------------
+SGM_MUTUAL_INFORMATION
+             Vintage err= 0.91 bp=  6.3 ip= 26.5 tbp= 32.9
+             Recycle err= 0.58 bp=  3.9 ip= 13.5 tbp= 17.4
+             Shelves err= 1.99 bp= 22.0 ip= 20.9 tbp= 42.9
+         MotorcycleE err= 0.92 bp=  6.2 ip=  8.6 tbp= 14.8
+            Playroom err= 1.11 bp=  6.5 ip= 15.1 tbp= 21.7
+               Piano err= 1.00 bp= 13.6 ip= 13.9 tbp= 27.5
+           Playtable err= 0.94 bp=  7.6 ip= 16.8 tbp= 24.3
+          PlaytableP err= 0.82 bp=  7.2 ip= 15.0 tbp= 22.2
+                ArtL err= 2.49 bp= 13.6 ip= 30.6 tbp= 44.2
+               Pipes err= 1.73 bp=  7.3 ip= 14.9 tbp= 22.2
+          Adirondack err= 1.17 bp=  5.1 ip= 13.0 tbp= 18.1
+               Teddy err= 0.64 bp=  6.2 ip=  7.4 tbp= 13.6
+              PianoL err= 2.31 bp=  9.4 ip= 63.7 tbp= 73.1
+           Jadeplant err= 5.75 bp= 11.0 ip= 40.4 tbp= 51.4
+          Motorcycle err= 0.89 bp=  5.9 ip=  6.8 tbp= 12.8
+
+Summary Mean : err= 1.55 bp=  8.8 ip= 20.5 tbp= 29.3
+Summary 50%  : err= 1.00 bp=  7.2 ip= 15.0 tbp= 22.2
+Summary 95%  : err= 2.49 bp= 13.6 ip= 40.4 tbp= 51.4
+----------------------------------------------------------------------------

@@ -90,11 +90,11 @@ public class CalibrationDetectionRegression extends BaseRegression implements Im
 		circleRegirectories.add("data/calibration_mono/circle_regular/large");
 		circleRegirectories.add("data/calibration_mono/circle_regular/fisheye");
 
-//		addDetector("DetectCalibChessBinary", new CreateChessboardOld(), CalibrationPatterns.CHESSBOARD);
+		addDetector("DetectCalibChessBinary", new CreateChessboardBinary(), CalibrationPatterns.CHESSBOARD);
 		addDetector("DetectCalibChessXCorner", new CreateChessboardXCorner(), CalibrationPatterns.CHESSBOARD);
-//		addDetector("DetectCalibSquare", new CreateSquareGrid(), CalibrationPatterns.SQUARE_GRID);
-//		addDetector("DetectCalibCircleHexagonal", new CreateCircleHexagonal(), CalibrationPatterns.CIRCLE_HEXAGONAL);
-//		addDetector("DetectCalibCircleRegular", new CreateCircleRegular(), CalibrationPatterns.CIRCLE_GRID);
+		addDetector("DetectCalibSquare", new CreateSquareGrid(), CalibrationPatterns.SQUARE_GRID);
+		addDetector("DetectCalibCircleHexagonal", new CreateCircleHexagonal(), CalibrationPatterns.CIRCLE_HEXAGONAL);
+		addDetector("DetectCalibCircleRegular", new CreateCircleRegular(), CalibrationPatterns.CIRCLE_GRID);
 	}
 
 	public void addDetector( String name , CreateCalibration detector , CalibrationPatterns type) {
@@ -396,6 +396,7 @@ public class CalibrationDetectionRegression extends BaseRegression implements Im
 	public static void main(String[] args) throws IOException, IllegalAccessException, InstantiationException, ClassNotFoundException {
 		BoofRegressionConstants.clearCurrentResults();
 		RegressionRunner.main(new String[]{CalibrationDetectionRegression.class.getName(),ImageDataType.F32.toString()});
+		RegressionRunner.main(new String[]{CalibrationDetectionRegression.class.getName(),ImageDataType.U8.toString()});
 
 //		CalibrationDetectionRegression app = new CalibrationDetectionRegression();
 //		app.setOutputDirectory("./");

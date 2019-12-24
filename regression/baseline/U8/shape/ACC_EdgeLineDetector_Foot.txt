@@ -3,8 +3,8 @@
 # Match Tolerance Fraction Match = 0.75
 # Directory (expected) (detected) (true positives) (false positives) (average error)
 # Directory           E  D TP FP   Error
-chessboard           14 14 13  1  0.4613
+chessboard           14 13 12  1  0.4673
 simple_objects        9  9  6  3  0.8105
 
-Summary: matched = 19 / 23 error =   0.636 FP = 4
+Summary: matched = 18 / 23 error =   0.639 FP = 4
 

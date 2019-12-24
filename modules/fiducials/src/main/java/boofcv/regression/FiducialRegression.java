@@ -190,11 +190,13 @@ public class FiducialRegression extends BaseRegression implements ImageRegressio
 				totalExpected += evaluate.getTotalExpected();
 				totalCorrect += evaluate.getTotalCorrect();
 			} catch( DataSetDoesNotExist e ) {
+				System.out.println("DataSetDoesNotExist "+e.getMessage());
 				errorLog.println();
 				errorLog.println(e.getMessage());
 			} catch( RuntimeException e ) {
 				errorLog.println();
 				errorLog.println("ERROR in "+infoString+" processing data set "+dataSet);
+				System.out.println("ERROR in "+infoString+" processing data set "+dataSet);
 				e.printStackTrace(errorLog);
 			}
 			out.println();

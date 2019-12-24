@@ -13,6 +13,9 @@ Description of changes to benchmarks and justifications for change in performanc
   * Uses Census for error now
   * Adjusts rectified image's shape based on rotation
   * Increased RANSAC iterations to improve stability
+- Dense SIFT F32 for two test runs it was slower, last and final run it was about the same
+- SFM got slower for one test case. Replicated with 0.34. JVM change?
+- Overall it seems like most stuff is running slower for unknown reasons
 
 ## Version 0.34
 2019/07/07
