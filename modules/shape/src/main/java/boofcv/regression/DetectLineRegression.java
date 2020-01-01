@@ -23,6 +23,8 @@ public class DetectLineRegression extends BaseRegression implements ImageRegress
 
 	PrintStream outputSpeed;
 
+	int blurRadius = 3;
+
 	public DetectLineRegression() {
 		super(BoofRegressionConstants.TYPE_SHAPE);
 	}
@@ -44,29 +46,33 @@ public class DetectLineRegression extends BaseRegression implements ImageRegress
 		outputSpeed.close();
 	}
 
-	private void process(String name , boolean thin , String FooName, Class imageType)
-			throws IOException {
+	private void process(String name , boolean thin , String typeName, Class imageType) {
 
-		String outputAccuracyName = "ACC_"+FooName+"LineDetector_"+name+".txt";
+		String outputAccuracyName = "ACC_"+typeName+"LineDetector_"+name+".txt";
 
 		EvaluateHoughLineDetector evaluator = new EvaluateHoughLineDetector();
 
-		PrintStream outputAccuracy = new PrintStream(new File(directory,outputAccuracyName));
-		BoofRegressionConstants.printGenerator(outputAccuracy, getClass());
-		evaluator.setOutputResults(outputAccuracy);
+		try (PrintStream outputAccuracy = new PrintStream(new File(directory, outputAccuracyName))) {
+			BoofRegressionConstants.printGenerator(outputAccuracy, getClass());
+			outputAccuracy.println("# blur radius "+blurRadius);
+			evaluator.setOutputResults(outputAccuracy);
 
-		outputSpeed.println("# Average processing time of shape detector algorithm "+name);
+			outputSpeed.println("# Average processing time of shape detector algorithm " + name);
 
-		DetectLinesSaveToFile detection = new DetectLinesSaveToFile(thin,name,3,imageType);
-		File f = new File(baseDirectory,FooName.toLowerCase());
-		detection.processDirectory(f, workDirectory);
-		evaluator.evaluate(f, workDirectory);
-		outputAccuracy.println();
+			DetectLinesSaveToFile detection = new DetectLinesSaveToFile(thin, name, blurRadius, imageType);
+			File f = new File(baseDirectory, typeName.toLowerCase());
+			detection.processDirectory(f, workDirectory);
+			evaluator.evaluate(f, workDirectory);
+			outputAccuracy.println();
 
-		outputSpeed.printf("%20s %9.4f (ms)\n",f.getName(),detection.averageProcessingTime);
-		outputSpeed.println();
+			outputSpeed.printf("%20s %9.4f (ms)\n", f.getName(), detection.averageProcessingTime);
+			outputSpeed.println();
 
-		outputAccuracy.close();
+		} catch ( Exception e) {
+			System.out.println("Failed! " + outputAccuracyName);
+			errorLog.println(e);
+		}
+
 
 	}
 

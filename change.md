@@ -1,5 +1,11 @@
 Description of changes to benchmarks and justifications for change in performance from previous versions.
 
+## Version 0.36
+2020
+- Prunes empty ERRORLOG files
+- Modified summary to include java version and dirty flag info
+- TODO remove delete() and use version in BoofCV
+
 ## Version 0.35
 2019/Dec/23
 

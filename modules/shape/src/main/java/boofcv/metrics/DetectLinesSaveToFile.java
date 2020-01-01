@@ -48,6 +48,9 @@ public class DetectLinesSaveToFile<T extends ImageGray<T>> {
 
 	public void processDirectory( File inputDir , File outputDir ) {
 
+		if( !inputDir.exists() )
+			throw new RuntimeException("Input directory doesn't exist. "+inputDir.getPath());
+
 		if( !outputDir.exists() )
 			outputDir.mkdirs();
 

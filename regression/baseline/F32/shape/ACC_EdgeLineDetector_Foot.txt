@@ -1,4 +1,5 @@
 # GENERATOR DetectLineRegression
+# blur radius 3
 # Match Tolerance Closest Point = 6.0
 # Match Tolerance Fraction Match = 0.75
 # Directory (expected) (detected) (true positives) (false positives) (average error)
