@@ -145,9 +145,9 @@ public class ComputeRegressionSummary {
         summary += "BoofCV Git SHA:        "+ BoofVersion.GIT_SHA+"\n";
         summary += "BoofCV Build Date:     "+ BoofVersion.BUILD_DATE+"\n";
         summary += "BoofCV Dirty:          "+ (0!=BoofVersion.DIRTY)+"\n";
-        summary += "java.version           "+System.getProperty("java.version")+"\n";
-        summary += "java.vendor            "+System.getProperty("java.vendor")+"\n";
-        summary += "os.version            "+System.getProperty("os.version")+"\n";
+        summary += "java.version:          "+System.getProperty("java.version")+"\n";
+        summary += "java.vendor:           "+System.getProperty("java.vendor")+"\n";
+        summary += "os.version:            "+System.getProperty("os.version")+"\n";
         summary += "\n";
         summary += "Total Matched:         "+totalMatched+"\n\n";
 

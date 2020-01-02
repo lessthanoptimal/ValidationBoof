@@ -7,6 +7,8 @@ import boofcv.struct.image.GrayU8;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -15,9 +17,13 @@ import java.util.List;
 public class MiddleburyStereoEvaluation {
 
 	public static List<Score> evaluateAll(String path , StereoDisparity<GrayU8,GrayF32> stereo , float badThresh ) {
-		File[] tests = new File(path).listFiles();
-		if( tests == null )
+		File[] _tests = new File(path).listFiles();
+		if( _tests == null )
 			throw new RuntimeException("No children in directory?");
+
+		// Put into alphabetical order to make the printed results consistent across systems
+		List<File> tests = Arrays.asList(_tests);
+		tests.sort(Comparator.comparing(File::getName));
 
 		GrayU8 left = new GrayU8(1,1);
 		GrayU8 right = new GrayU8(1,1);
