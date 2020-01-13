@@ -2,13 +2,13 @@ package boofcv.metrics.vo;
 
 import boofcv.abst.feature.detect.interest.ConfigGeneralDetector;
 import boofcv.abst.feature.disparity.StereoDisparitySparse;
-import boofcv.abst.feature.tracker.PointTrackerTwoPass;
 import boofcv.abst.sfm.AccessPointTracks3D;
 import boofcv.abst.sfm.d3.StereoVisualOdometry;
+import boofcv.abst.tracker.PointTrackerTwoPass;
 import boofcv.alg.filter.derivative.GImageDerivativeOps;
-import boofcv.alg.tracker.klt.PkltConfig;
+import boofcv.alg.tracker.klt.ConfigPKlt;
 import boofcv.factory.feature.disparity.FactoryStereoDisparity;
-import boofcv.factory.feature.tracker.FactoryPointTrackerTwoPass;
+import boofcv.factory.tracker.FactoryPointTrackerTwoPass;
 import boofcv.gui.d3.Polygon3DSequenceViewer;
 import boofcv.gui.feature.VisualizeFeatures;
 import boofcv.gui.image.ImageGridPanel;
@@ -276,7 +276,7 @@ public class DebugVisualOdometryStereo<T extends ImageBase<T>>
 		int selection = 0;
 
 		if( selection == 0 ) {
-			PkltConfig configKlt = new PkltConfig();
+			ConfigPKlt configKlt = new ConfigPKlt();
 			configKlt.pyramidScaling = new int[]{1, 2, 4, 8};
 			configKlt.templateRadius = 3;
 

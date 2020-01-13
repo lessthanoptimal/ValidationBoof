@@ -1,13 +1,13 @@
 package boofcv.metrics.stabilization;
 
 import boofcv.abst.feature.detect.interest.ConfigGeneralDetector;
-import boofcv.abst.feature.tracker.PointTracker;
 import boofcv.abst.sfm.d2.ImageMotion2D;
 import boofcv.abst.sfm.d2.PlToGrayMotion2D;
+import boofcv.abst.tracker.PointTracker;
 import boofcv.alg.filter.derivative.GImageDerivativeOps;
 import boofcv.alg.sfm.d2.StitchingFromMotion2D;
-import boofcv.factory.feature.tracker.FactoryPointTracker;
 import boofcv.factory.sfm.FactoryMotion2D;
+import boofcv.factory.tracker.FactoryPointTracker;
 import boofcv.struct.image.ImageBase;
 import boofcv.struct.image.ImageType;
 import georegression.struct.homography.Homography2D_F64;

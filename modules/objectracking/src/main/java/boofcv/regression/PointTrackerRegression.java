@@ -15,11 +15,11 @@ import boofcv.abst.feature.detect.interest.InterestPointDetector;
 import boofcv.abst.feature.orientation.OrientationImage;
 import boofcv.abst.feature.orientation.OrientationIntegral;
 import boofcv.abst.feature.orientation.OrientationIntegralToImage;
-import boofcv.abst.feature.tracker.ConfigTrackerDda;
-import boofcv.abst.feature.tracker.PointTracker;
+import boofcv.abst.tracker.ConfigTrackerDda;
+import boofcv.abst.tracker.PointTracker;
 import boofcv.alg.feature.detect.interest.GeneralFeatureDetector;
 import boofcv.alg.filter.derivative.GImageDerivativeOps;
-import boofcv.alg.tracker.klt.PkltConfig;
+import boofcv.alg.tracker.klt.ConfigPKlt;
 import boofcv.alg.transform.ii.GIntegralImageOps;
 import boofcv.common.*;
 import boofcv.factory.feature.associate.FactoryAssociation;
@@ -28,7 +28,7 @@ import boofcv.factory.feature.detect.extract.FactoryFeatureExtractor;
 import boofcv.factory.feature.detect.intensity.FactoryIntensityPoint;
 import boofcv.factory.feature.detect.interest.FactoryInterestPoint;
 import boofcv.factory.feature.orientation.FactoryOrientationAlgs;
-import boofcv.factory.feature.tracker.FactoryPointTracker;
+import boofcv.factory.tracker.FactoryPointTracker;
 import boofcv.io.image.SimpleImageSequence;
 import boofcv.io.wrapper.DefaultMediaManager;
 import boofcv.metrics.point.EvaluateTrackerStability;
@@ -239,7 +239,7 @@ public class PointTrackerRegression extends BaseRegression implements ImageRegre
 
 	public Info createDefaultKlt(Class bandType) {
 
-		PkltConfig configKlt = new PkltConfig();
+		ConfigPKlt configKlt = new ConfigPKlt();
 		configKlt.pyramidScaling = new int[]{1,2,4,8};
 
 		ConfigGeneralDetector configDet = new ConfigGeneralDetector(800,8,1);

@@ -54,8 +54,8 @@ public class RefineHomographTransform<I extends ImageGray<I>, D extends ImageGra
 	public void setSource( I src ) {
 
 		this.src.process(src);
-		srcDericX = PyramidOps.declareOutput(this.src, derivType);
-		srcDericY = PyramidOps.declareOutput(this.src, derivType);
+		srcDericX = PyramidOps.declareOutput(this.src, ImageType.single(derivType));
+		srcDericY = PyramidOps.declareOutput(this.src, ImageType.single(derivType));
 
 		for( int i = 0; i < this.src.getNumLayers(); i++ ) {
 			D dx = srcDericX[i];

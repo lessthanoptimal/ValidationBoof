@@ -2,13 +2,13 @@ package boofcv.metrics.vo;
 
 import boofcv.abst.feature.detect.interest.ConfigGeneralDetector;
 import boofcv.abst.feature.disparity.StereoDisparitySparse;
-import boofcv.abst.feature.tracker.PointTrackerTwoPass;
 import boofcv.abst.sfm.d3.StereoVisualOdometry;
-import boofcv.alg.tracker.klt.PkltConfig;
+import boofcv.abst.tracker.PointTrackerTwoPass;
+import boofcv.alg.tracker.klt.ConfigPKlt;
 import boofcv.core.image.GeneralizedImageOps;
 import boofcv.factory.feature.disparity.FactoryStereoDisparity;
-import boofcv.factory.feature.tracker.FactoryPointTrackerTwoPass;
 import boofcv.factory.sfm.FactoryVisualOdometry;
+import boofcv.factory.tracker.FactoryPointTrackerTwoPass;
 import boofcv.io.image.ConvertBufferedImage;
 import boofcv.struct.image.GrayF32;
 import boofcv.struct.image.ImageGray;
@@ -71,7 +71,7 @@ public class OutputForKITTI {
 		Class derivType = GrayF32.class;
 
 		for( int dataSet = 0; dataSet < 11; dataSet++ ) {
-			PkltConfig configKlt = new PkltConfig();
+			ConfigPKlt configKlt = new ConfigPKlt();
 			configKlt.pyramidScaling = new int[]{1, 2, 4, 8};
 			configKlt.templateRadius = 3;
 

@@ -10,12 +10,12 @@ import boofcv.abst.feature.detect.interest.ConfigGeneralDetector;
 import boofcv.abst.feature.detect.interest.DetectorInterestPointMulti;
 import boofcv.abst.feature.detect.interest.GeneralToInterestMulti;
 import boofcv.abst.feature.disparity.StereoDisparitySparse;
-import boofcv.abst.feature.tracker.PointTracker;
-import boofcv.abst.feature.tracker.PointTrackerTwoPass;
 import boofcv.abst.sfm.d3.StereoVisualOdometry;
+import boofcv.abst.tracker.PointTracker;
+import boofcv.abst.tracker.PointTrackerTwoPass;
 import boofcv.alg.feature.detect.interest.GeneralFeatureDetector;
 import boofcv.alg.filter.derivative.GImageDerivativeOps;
-import boofcv.alg.tracker.klt.PkltConfig;
+import boofcv.alg.tracker.klt.ConfigPKlt;
 import boofcv.common.BaseRegression;
 import boofcv.common.BoofRegressionConstants;
 import boofcv.common.ImageRegression;
@@ -24,9 +24,9 @@ import boofcv.factory.feature.describe.FactoryDescribeRegionPoint;
 import boofcv.factory.feature.detect.extract.FactoryFeatureExtractor;
 import boofcv.factory.feature.detect.intensity.FactoryIntensityPoint;
 import boofcv.factory.feature.disparity.FactoryStereoDisparity;
-import boofcv.factory.feature.tracker.FactoryPointTracker;
-import boofcv.factory.feature.tracker.FactoryPointTrackerTwoPass;
 import boofcv.factory.sfm.FactoryVisualOdometry;
+import boofcv.factory.tracker.FactoryPointTracker;
+import boofcv.factory.tracker.FactoryPointTrackerTwoPass;
 import boofcv.metrics.vo.*;
 import boofcv.struct.image.GrayF32;
 import boofcv.struct.image.ImageDataType;
@@ -112,7 +112,7 @@ public class StereoVisualOdometryRegression extends BaseRegression implements Im
 		StereoDisparitySparse<GrayF32> disparity =
 				FactoryStereoDisparity.regionSparseWta(10, 110, 2, 2, 30, 0.1, true, bandType);
 
-		PkltConfig configKlt = new PkltConfig();
+		ConfigPKlt configKlt = new ConfigPKlt();
 		configKlt.pyramidScaling = new int[]{1, 2, 4, 8};
 		configKlt.templateRadius = 3;
 
@@ -130,7 +130,7 @@ public class StereoVisualOdometryRegression extends BaseRegression implements Im
 	public static Info createDualTrackerPnP( Class bandType ) {
 		Class derivType = GImageDerivativeOps.getDerivativeType(bandType);
 
-		PkltConfig kltConfig = new PkltConfig();
+		ConfigPKlt kltConfig = new ConfigPKlt();
 		kltConfig.templateRadius = 3;
 		kltConfig.pyramidScaling =  new int[]{1, 2, 4, 8};
 		kltConfig.config.maxPerPixelError = 50;

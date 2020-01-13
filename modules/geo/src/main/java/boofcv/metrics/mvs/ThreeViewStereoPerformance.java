@@ -254,7 +254,7 @@ public class ThreeViewStereoPerformance {
 
         // Adjust the rectification to make the view area more useful
         ImageDimension rectShape = new ImageDimension();
-        RectifyImageOps.fullViewLeft(intrinsicLeft, rectifyAlg.getRectifiedRotation(),rect1, rect2, rectifiedK,rectShape);
+        RectifyImageOps.fullViewLeft(intrinsicLeft, rect1, rect2, rectifiedK,rectShape);
 
         // undistorted and rectify images
         FMatrixRMaj rect1_F32 = new FMatrixRMaj(3,3);

@@ -62,8 +62,8 @@ public class WrapFusedTracker
 		// update the image pyramid
 		pyramid.process(image);
 		if( derivX == null ) {
-			derivX = PyramidOps.declareOutput(pyramid,derivType);
-			derivY = PyramidOps.declareOutput(pyramid,derivType);
+			derivX = PyramidOps.declareOutput(pyramid,ImageType.single(derivType));
+			derivY = PyramidOps.declareOutput(pyramid,ImageType.single(derivType));
 		}
 		PyramidOps.gradient(pyramid, gradient, derivX, derivY);
 

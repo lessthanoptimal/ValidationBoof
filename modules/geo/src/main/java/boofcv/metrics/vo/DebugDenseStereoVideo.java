@@ -139,7 +139,7 @@ public class DebugDenseStereoVideo<T extends ImageGray<T>> implements MouseListe
 		DMatrixRMaj rectK = rectifyAlg.getCalibrationMatrix();
 
 		// Adjust the rectification to make the view area more useful
-		RectifyImageOps.fullViewLeft(param.left, null, rect1, rect2, rectK, null);
+		RectifyImageOps.fullViewLeft(param.left, rect1, rect2, rectK, null);
 
 		// undistorted and rectify images
 		ImageDistort<T,T> imageDistortLeft =
