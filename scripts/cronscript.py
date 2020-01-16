@@ -97,6 +97,7 @@ for lib in project_list:
     error_log.write("Building {}\n".format(p))
     error_log.flush()
     check_cd(path_to_p)
+    run_command("git clean -f")            # Remove all untracked files to avoid stale auto generated code
     run_command("git checkout SNAPSHOT")
     run_command("git pull")
     if lib["autogen"]:
