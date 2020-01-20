@@ -142,6 +142,9 @@ public class CalibrationDetectionRegression extends BaseRegression implements Im
 		BoofRegressionConstants.printGenerator(output,getClass());
 		output.println("# (file name) (truth error 50%) (truth error 95%) (truth error 100%)");
 
+		// Sort it to ensure the same order
+		Collections.sort(directories);
+
 		Map<String,OverallMetrics> dirMetrics = new HashMap<>();
 		try {
 			OverallMetrics overallMetrics = new OverallMetrics();
