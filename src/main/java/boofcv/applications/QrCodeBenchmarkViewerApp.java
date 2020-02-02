@@ -101,7 +101,7 @@ public class QrCodeBenchmarkViewerApp extends JPanel{
 
     public void openFile( File file ) {
         if( file == null ) {
-            file = BoofSwingUtil.openFileChooser(null, BoofSwingUtil.FileTypes.IMAGES);
+            file = BoofSwingUtil.openFileChooser("QR Viewer", BoofSwingUtil.FileTypes.IMAGES);
             if( file == null )
                 return;
         }
@@ -180,7 +180,7 @@ public class QrCodeBenchmarkViewerApp extends JPanel{
     }
 
     public static void main(String[] args) {
-        File f = BoofSwingUtil.openFileChooser(null, BoofSwingUtil.FileTypes.IMAGES);
+        File f = BoofSwingUtil.openFileChooser("QR Viewer", BoofSwingUtil.FileTypes.IMAGES);
         if( f == null )
             return;
 

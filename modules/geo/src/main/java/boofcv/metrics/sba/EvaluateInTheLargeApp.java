@@ -11,7 +11,7 @@ import java.io.IOException;
  */
 public class EvaluateInTheLargeApp {
     public static void main(String[] args) throws IOException {
-        File f = BoofSwingUtil.openFileChooser(null);
+        File f = BoofSwingUtil.openFileChooser("EvaluateInTheLarge");
         if( f == null ) {
             return;
         }

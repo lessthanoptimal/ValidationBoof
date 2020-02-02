@@ -1,16 +1,12 @@
 package boofcv.metrics.disparity;
 
-import boofcv.alg.misc.ImageStatistics;
 import boofcv.gui.BoofSwingUtil;
 import boofcv.gui.image.ShowImages;
 import boofcv.gui.image.VisualizeImageData;
-import boofcv.io.UtilIO;
 import boofcv.struct.image.GrayF32;
-import org.apache.commons.io.output.WriterOutputStream;
 
 import java.awt.image.BufferedImage;
 import java.io.*;
-import java.nio.charset.Charset;
 
 /**
  * Reading and writing PMF files used with Middlebury stereo tests
@@ -109,7 +105,7 @@ public class CodecPFM {
 	}
 
 	public static void main(String[] args) throws IOException {
-		File f = BoofSwingUtil.fileChooser(null,true,".");
+		File f = BoofSwingUtil.fileChooser("CodecPFM",null,true,".");
 		if( f == null )
 			return;
 		GrayF32 disparity = read(new FileInputStream(f),null);
