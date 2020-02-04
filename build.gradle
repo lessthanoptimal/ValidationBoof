@@ -18,7 +18,7 @@ allprojects{
     dependencies {
         compile files("$project.rootDir/lib/ProjectBUBO.jar")
 
-        ['boofcv-core','boofcv-swing','boofcv-ffmpeg','demonstrations'].each
+        ['boofcv-core','boofcv-swing','boofcv-ffmpeg','boofcv-simulation','boofcv-kotlin','demonstrations'].each
                 { String a -> compile group: 'org.boofcv', name: a, version: version }
         compile group: 'com.google.guava', name: 'guava', version: '17.0'
         compile group: 'commons-io', name: 'commons-io', version: '2.6'
