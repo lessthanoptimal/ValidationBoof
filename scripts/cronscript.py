@@ -100,6 +100,7 @@ for lib in project_list:
     run_command("git clean -f")            # Remove all untracked files to avoid stale auto generated code
     run_command("git checkout SNAPSHOT")
     run_command("git pull")
+    run_command("git submodule update")
     if lib["autogen"]:
         run_command("./gradlew autogenerate")
     run_command("./gradlew assemble")
