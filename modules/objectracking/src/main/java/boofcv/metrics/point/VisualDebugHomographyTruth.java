@@ -1,6 +1,6 @@
 package boofcv.metrics.point;
 
-import boofcv.alg.distort.DistortImageOps;
+import boofcv.abst.distort.FDistort;
 import boofcv.alg.distort.PixelTransformHomography_F32;
 import boofcv.alg.interpolate.InterpolationType;
 import boofcv.core.image.GeneralizedImageOps;
@@ -11,7 +11,6 @@ import boofcv.io.image.ConvertBufferedImage;
 import boofcv.io.image.SimpleImageSequence;
 import boofcv.io.wrapper.DefaultMediaManager;
 import boofcv.misc.BoofMiscOps;
-import boofcv.struct.border.BorderType;
 import boofcv.struct.image.GrayF32;
 import boofcv.struct.image.ImageGray;
 import boofcv.struct.image.ImageType;
@@ -22,6 +21,7 @@ import georegression.transform.homography.HomographyPointOps_F64;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.geom.Line2D;
 import java.awt.image.BufferedImage;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -64,7 +64,7 @@ public class VisualDebugHomographyTruth<T extends ImageGray<T>> implements Mouse
 		gui.setPreferredSize(new Dimension(keyFrame.width,keyFrame.height));
 		gui.addMouseListener(this);
 
-		ShowImages.showWindow(gui,"Transformed image sequence");
+		ShowImages.showWindow(gui,"Transformed image sequence", true);
 
 		List<Point2D_F64> allFeatures = new ArrayList<Point2D_F64>();
 		if( tracker != null ) {
@@ -86,12 +86,15 @@ public class VisualDebugHomographyTruth<T extends ImageGray<T>> implements Mouse
 //			GeneralizedImageOps.fill(workImage,0);
 
 			// render the transformed image
-			DistortImageOps.distortSingle(frame, workImage, new PixelTransformHomography_F32(H),
-					InterpolationType.BILINEAR, BorderType.EXTENDED);
+			new FDistort(frame,workImage).transform(new PixelTransformHomography_F32(H)).
+					interp(InterpolationType.BILINEAR).border(0.0).apply();
 
 			ConvertBufferedImage.convertTo(workImage,out,true);
 
 			Graphics2D g2 = out.createGraphics();
+			Line2D.Double line = new Line2D.Double();
+			g2.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, RenderingHints.VALUE_STROKE_PURE);
+			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
 			HomographyPointOps_F64.transform(H_inv,0,0,c0);
 			HomographyPointOps_F64.transform(H_inv,frame.width,0,c1);
@@ -121,11 +124,12 @@ public class VisualDebugHomographyTruth<T extends ImageGray<T>> implements Mouse
 					Point2D_F64 pc = current.get(i);
 					HomographyPointOps_F64.transform(H_inv,pc.x,pc.y,c0);
 
-					VisualizeFeatures.drawPoint(g2,(int)pi.x,(int)pi.y,Color.blue);
-					VisualizeFeatures.drawPoint(g2,(int)c0.x,(int)c0.y,Color.RED);
+					VisualizeFeatures.drawPoint(g2,pi.x,pi.y,5.0,Color.blue,true);
+					VisualizeFeatures.drawPoint(g2,c0.x,c0.y,5.0,Color.RED,true);
 
 					g2.setColor(Color.BLUE);
-					g2.drawLine((int)pi.x,(int)pi.y,(int)c0.x,(int)c0.y);
+					line.setLine(pi.x,pi.y,c0.x,c0.y);
+					g2.draw(line);
 				}
 			}
 
