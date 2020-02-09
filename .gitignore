@@ -8,15 +8,8 @@ hs_err_pid*
 **/*.iml
 **/*.ipr
 
-#Data directory stuff
-data/abeles2012
-data/affinevgg
-data/denseflow
-data/DIBCO
-data/fiducials
-data/KITTI
-data/leuven07
-data/track_rect
+# Data directory stuff
+data/**
 
 email_login.txt
 
