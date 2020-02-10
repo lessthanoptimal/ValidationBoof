@@ -150,7 +150,7 @@ public class CalibrationDetectionRegression extends BaseRegression implements Im
 			OverallMetrics overallMetrics = new OverallMetrics();
 
 			for (String dir : directories) {
-				File filesArray[] = new File(dir).listFiles();
+				File[] filesArray = new File(dir).listFiles();
 				if (filesArray != null) {
 					File descFile = new File(dir, "description.txt");
 					DetectorFiducialCalibration detector = d.creator.create(descFile);
@@ -178,6 +178,10 @@ public class CalibrationDetectionRegression extends BaseRegression implements Im
 			// Print out summary results for individual directories
 			for( String dir : directories ) {
 				OverallMetrics m = dirMetrics.get(dir);
+				if( m == null ) {
+					errorLog.println("No metrics found for " + dir);
+					continue;
+				}
 				String name = new File(dir).getName();
 
 				printSummary(output, m, name);
@@ -303,8 +307,8 @@ public class CalibrationDetectionRegression extends BaseRegression implements Im
 		return best;
 	}
 
-	private class OverallMetrics {
-		GrowQueue_F64 errors = new GrowQueue_F64();
+	private static class OverallMetrics {
+		final GrowQueue_F64 errors = new GrowQueue_F64();
 		int total;
 		int failed;
 		double averageSpeedMS;
@@ -316,7 +320,7 @@ public class CalibrationDetectionRegression extends BaseRegression implements Im
 		}
 	}
 
-	private class DetectorInfo
+	private static class DetectorInfo
 	{
 		String name;
 		CreateCalibration creator;
