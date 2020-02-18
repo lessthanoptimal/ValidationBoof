@@ -2,9 +2,10 @@ Description of changes to benchmarks and justifications for change in performanc
 
 ## Version 0.36
 2020
-- Prunes empty ERRORLOG files
+- Prunes empty ERRORLOG files after running regression
 - Modified summary to include java version and dirty flag info
-- TODO remove delete() and use version in BoofCV
+- Explanation of Differences
+  * Modified Image.isInside(float,float) and that resulted in small change in results for object tracking and VO 
 
 ## Version 0.35
 2019/Dec/23

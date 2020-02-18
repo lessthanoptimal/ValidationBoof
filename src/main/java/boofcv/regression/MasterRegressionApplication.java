@@ -2,6 +2,7 @@ package boofcv.regression;
 
 import boofcv.common.BoofRegressionConstants;
 import boofcv.common.RegressionRunner;
+import boofcv.io.UtilIO;
 import boofcv.struct.image.ImageDataType;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
@@ -215,19 +216,6 @@ public class MasterRegressionApplication {
 		return out;
 	}
 
-	public static void delete( File f , FileTest test ) throws IOException {
-		if ( f.isDirectory() ) {
-			File[] files = f.listFiles();
-			if( files != null ) {
-				for (File c : files) {
-					delete(c,test);
-				}
-			}
-		}
-		if ( test.isTarget(f) && !f.delete())
-			throw new IOException("Failed to delete file: " + f);
-	}
-
 	public interface FileTest {
 		boolean isTarget( File f );
 	}
@@ -273,7 +261,7 @@ public class MasterRegressionApplication {
 		}
 
 		// Remove ERRORLOG files which are empty to make it easier to see errors
-		delete(new File(BoofRegressionConstants.CURRENT_DIRECTORY),f-> f.isFile() && f.getName().startsWith("ERRORLOG_") && f.length() == 0);
+		UtilIO.delete(new File(BoofRegressionConstants.CURRENT_DIRECTORY), f-> f.isFile() && f.getName().startsWith("ERRORLOG_") && f.length() == 0);
 
 		if( doSummary ) {
 			ComputeRegressionSummary summary = new ComputeRegressionSummary();
