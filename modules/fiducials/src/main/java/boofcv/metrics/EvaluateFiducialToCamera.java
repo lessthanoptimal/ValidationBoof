@@ -44,9 +44,10 @@ public class EvaluateFiducialToCamera extends BaseEvaluateFiducialToCamera {
 			String nameTruth = name.substring(0,name.length()-3) + "txt";
 
 			try {
-				List<Point2D_F64> truthCorners = PointFileCodec.load(new File(dataSetDir, nameTruth));
+				List<List<Point2D_F64>> truthFiducials = loadTruthSets(new File(dataSetDir, nameTruth), expected.length);
+
 				List<FiducialCommon.Detected> detected = parseDetections(new File(resultPath));
-				evaluate(name,detected,truthCorners,landmarks);
+				evaluate(name,detected,truthFiducials,landmarks);
 			} catch( RuntimeException e ) {
 				err.println("Error evaluating "+resultPath+"  in data set "+dataSetDir.getName());
 				e.printStackTrace(err);
@@ -71,6 +72,17 @@ public class EvaluateFiducialToCamera extends BaseEvaluateFiducialToCamera {
 		outputResults.println(" precision 50%         : " + error50);
 		outputResults.println(" precision 90%         : " + error90);
 		outputResults.println(" precision 100%        : " + error100);
+	}
+
+	public static List<List<Point2D_F64>> loadTruthSets( File fileTruth , int expectedFiducials ) {
+		List<List<Point2D_F64>> truthFiducials;
+		if( PointFileCodec.isPointSet(fileTruth)) {
+			truthFiducials = PointFileCodec.loadSets(fileTruth);
+		} else {
+			List<Point2D_F64> list = PointFileCodec.load(fileTruth);
+			truthFiducials = extractIndividual(list,expectedFiducials );
+		}
+		return truthFiducials;
 	}
 
 	public static void main(String[] args) {

@@ -13,6 +13,7 @@ import boofcv.struct.image.ImageBase;
 import boofcv.struct.image.ImageGray;
 import boofcv.struct.image.ImageType;
 import georegression.geometry.UtilPoint2D_F64;
+import georegression.geometry.UtilPolygons2D_F64;
 import georegression.struct.point.Point2D_F64;
 import georegression.struct.shapes.Polygon2D_F64;
 import org.apache.commons.io.FilenameUtils;
@@ -39,9 +40,10 @@ public class HandSelectPolygonsApp <T extends ImageGray<T>> extends Demonstratio
 	VisualizePanel imagePanel = new VisualizePanel();
 	ControlPanel controlPanel = new ControlPanel();
 
+	//------- Only manipulate in GUI thread
 	final List<Polygon2D_F64> polygons = new ArrayList<>();
-
-	final Polygon2D_F64 active = new Polygon2D_F64();
+	int activeIdx=-1;
+	int selectedPoint=-1;
 
 	public HandSelectPolygonsApp() {
 		super(true, false, null, ImageType.SB_U8);
@@ -80,14 +82,50 @@ public class HandSelectPolygonsApp <T extends ImageGray<T>> extends Demonstratio
 		if (SwingUtilities.isRightMouseButton(e)) {
 			imagePanel.centerView(p.x, p.y);
 		} else if(SwingUtilities.isLeftMouseButton(e)) {
+			if( checkAndHandleClickedCorner(p.x,p.y) ) {
+				imagePanel.repaint();
+				return;
+			}
+
+			// nothing is selected, start a new polygon
+			if( activeIdx == -1 ) {
+				activeIdx = polygons.size();
+				polygons.add( new Polygon2D_F64());
+			}
+			Polygon2D_F64 active = polygons.get(activeIdx);
+
+			// current polygon is at max sides. start a new one
+			if( active.size() == controlPanel.numSides ) {
+				activeIdx = polygons.size();
+				polygons.add( new Polygon2D_F64());
+				active = polygons.get(activeIdx);
+			}
+
+			selectedPoint = active.size();
 			active.vertexes.grow().set(p.x,p.y);
 			imagePanel.repaint();
+		}
+	}
 
-			if( active.size() == controlPanel.numSides ) {
-				polygons.add( active.copy() );
-				active.vertexes.reset();
+	private boolean checkAndHandleClickedCorner( double cx , double cy ) {
+		double tol = 10.0/imagePanel.getScale();
+		for( int i = 0; i < polygons.size(); i++ ) {
+			Polygon2D_F64 polygon = polygons.get(i);
+			int matched = -1;
+			for (int j = 0; j < polygon.size(); j++) {
+				if( polygon.get(j).distance(cx,cy) <= tol ) {
+					matched = j;
+					break;
+				}
+			}
+
+			if( matched >= 0 ) {
+				activeIdx = i;
+				selectedPoint = matched;
+				return true;
 			}
 		}
+		return false;
 	}
 
 	private void saveToDisk( boolean overwrite ) {
@@ -122,11 +160,12 @@ public class HandSelectPolygonsApp <T extends ImageGray<T>> extends Demonstratio
 		super.handleInputChange(source, method, width, height);
 
 		polygons.clear();
-		active.vertexes.reset();
+		activeIdx = -1;
+		selectedPoint = -1;
 
 		File outputPath = createPointPath();
 		if( outputPath != null && outputPath.exists() ) {
-			List<List<Point2D_F64>> pointSets = PointFileCodec.loadSets(outputPath.getPath());
+			List<List<Point2D_F64>> pointSets = PointFileCodec.loadSets(outputPath);
 
 			for( List<Point2D_F64> set : pointSets ) {
 				Polygon2D_F64 polygon = new Polygon2D_F64(set.size());
@@ -148,6 +187,27 @@ public class HandSelectPolygonsApp <T extends ImageGray<T>> extends Demonstratio
 			imagePanel.autoScaleAndAlign();
 			imagePanel.repaint();
 		});
+	}
+
+	void handleShiftUp() {
+		for( Polygon2D_F64 p : polygons ) {
+			UtilPolygons2D_F64.shiftUp(p);
+		}
+		imagePanel.repaint();
+	}
+
+	void handleShiftDown() {
+		for( Polygon2D_F64 p : polygons ) {
+			UtilPolygons2D_F64.shiftDown(p);
+		}
+		imagePanel.repaint();
+	}
+
+	void handleFlip() {
+		for( Polygon2D_F64 p : polygons ) {
+			UtilPolygons2D_F64.flip(p);
+		}
+		imagePanel.repaint();
 	}
 
 	class VisualizePanel extends ImageZoomPanel {
@@ -173,7 +233,7 @@ public class HandSelectPolygonsApp <T extends ImageGray<T>> extends Demonstratio
 				}
 			});
 
-			panel.addKeyListener(new KeyControls());
+			addKeyListener(new KeyControls());
 		}
 
 		@Override
@@ -185,16 +245,29 @@ public class HandSelectPolygonsApp <T extends ImageGray<T>> extends Demonstratio
 
 			Point2D_F64 center = new Point2D_F64();
 			for( int i = 0; i < polygons.size(); i++ ) {
+				if( i == activeIdx )
+					continue;
 				Polygon2D_F64 polygon = polygons.get(i);
 				VisualizeShapes.drawPolygon(polygon,true,scale,Color.CYAN,Color.BLUE,g2);
 				UtilPoint2D_F64.mean(polygon.vertexes.toList(),center);
 				VisualizeFiducial.drawLabel(center,""+i, idFont,Color.ORANGE,bgColor,g2, scale);
+				Point2D_F64 p = polygon.get(0);
+				VisualizeFeatures.drawPoint(g2,scale*p.x,scale*p.y,5,Color.RED,true);
 			}
 
-			if( active.size() > 1 )
-				VisualizeShapes.drawPolygon(active,false,scale,Color.RED,Color.BLUE,g2);
-			for( Point2D_F64 p : active.vertexes.toList() ) {
-				VisualizeFeatures.drawPoint(g2,scale*p.x,scale*p.y,5,Color.RED,true);
+			if( activeIdx >= 0 ) {
+				Polygon2D_F64 active = polygons.get(activeIdx);
+				g2.setStroke(new BasicStroke(3.0f));
+				if( active.size() >= 2 )
+					VisualizeShapes.drawPolygon(active,false,scale,Color.RED,Color.BLUE,g2);
+				for( int i = 0; i < active.vertexes.size; i++ ) {
+					Point2D_F64 p = active.get(i);
+					if( i == selectedPoint ) {
+						VisualizeFeatures.drawCircle(g2, scale * p.x, scale * p.y, 7);
+					} else {
+						VisualizeFeatures.drawPoint(g2, scale * p.x, scale * p.y, 5, Color.RED, true);
+					}
+				}
 			}
 		}
 	}
@@ -204,6 +277,9 @@ public class HandSelectPolygonsApp <T extends ImageGray<T>> extends Demonstratio
 		int numSides = 4;
 
 		JSpinner spinSides = spinner(numSides,1,100,1);
+		JButton bShiftUp = button("Shift Up",true, e-> handleShiftUp());
+		JButton bShiftDown = button("Shift Down",true, e-> handleShiftDown());
+		JButton bFlip = button("Flip",true,e->handleFlip());
 
 		public ControlPanel() {
 			selectZoom = spinner(1.0,MIN_ZOOM,MAX_ZOOM,1);
@@ -211,6 +287,7 @@ public class HandSelectPolygonsApp <T extends ImageGray<T>> extends Demonstratio
 			addLabeled(imageSizeLabel,"Size");
 			addLabeled(selectZoom,"Zoom");
 			addLabeled(spinSides,"Num Sides");
+			add(BoofSwingUtil.gridPanel(0,2,5,5,bShiftUp,bFlip,bShiftDown));
 		}
 
 		@Override
@@ -228,84 +305,76 @@ public class HandSelectPolygonsApp <T extends ImageGray<T>> extends Demonstratio
 	class KeyControls extends KeyAdapter {
 		@Override
 		public void keyPressed(KeyEvent e) {
+//			System.out.println("key pressed "+activeIdx+" "+selectedPoint);
 
-//			Point2D_F64 p = selected;
-//
-//			double delta = 1.0/scale;
-//
-//			switch( e.getKeyCode() ) {
-//				case KeyEvent.VK_S:
-//					activeSet = new ArrayList<>();
-//					break;
-//
-//				case KeyEvent.VK_T:
-//					splitAtSelected();
-//					break;
-//
-//				case KeyEvent.VK_NUMPAD4:
-//				case KeyEvent.VK_KP_LEFT:
-//					if( p != null )
-//						p.x -= delta;
-//					break;
-//
-//				case KeyEvent.VK_NUMPAD6:
-//				case KeyEvent.VK_KP_RIGHT:
-//					if( p != null )
-//						p.x += delta;
-//					break;
-//
-//				case KeyEvent.VK_NUMPAD2:
-//				case KeyEvent.VK_KP_DOWN:
-//					if( p != null )
-//						p.y += delta;
-//					break;
-//
-//				case KeyEvent.VK_NUMPAD8:
-//				case KeyEvent.VK_KP_UP:
-//					if( p != null )
-//						p.y -= delta;
-//					break;
-//
-//				case KeyEvent.VK_DELETE:
-//				case KeyEvent.VK_BACK_SPACE:
-//					if( selected != null ) {
-//						for (List<Point2D_F64> set : pointSets) {
-//							if (set.remove(selected)) {
-//								break;
-//							}
-//						}
-//						selected = null;
-//					}
-//					break;
-//
-//				case KeyEvent.VK_NUMPAD7:
-//					if( p != null ) {
-//						p.x -= delta;
-//						p.y -= delta;
-//					}
-//					break;
-//
-//				case KeyEvent.VK_NUMPAD9:
-//					if( p != null ) {
-//						p.x += delta;
-//						p.y -= delta;
-//					}
-//					break;
-//
-//				case KeyEvent.VK_NUMPAD1:
-//					if( p != null ) {
-//						p.x -= delta;
-//						p.y += delta;
-//					}
-//					break;
-//
-//				case KeyEvent.VK_NUMPAD3:
-//					if( p != null ) {
-//						p.x += delta;
-//						p.y += delta;
-//					}
-//					break;
-//			}
+			Point2D_F64 p = null;
+			if( activeIdx >= 0 && selectedPoint >= 0 ) {
+				p = polygons.get(activeIdx).get(selectedPoint);
+			}
+
+			double delta = 1.0/imagePanel.getScale();
+
+			switch( e.getKeyCode() ) {
+				case KeyEvent.VK_NUMPAD4:
+				case KeyEvent.VK_KP_LEFT:
+					if( p != null )
+						p.x -= delta;
+					break;
+
+				case KeyEvent.VK_NUMPAD6:
+				case KeyEvent.VK_KP_RIGHT:
+					if( p != null )
+						p.x += delta;
+					break;
+
+				case KeyEvent.VK_NUMPAD2:
+				case KeyEvent.VK_KP_DOWN:
+					if( p != null )
+						p.y += delta;
+					break;
+
+				case KeyEvent.VK_NUMPAD8:
+				case KeyEvent.VK_KP_UP:
+					if( p != null )
+						p.y -= delta;
+					break;
+
+				case KeyEvent.VK_DELETE:
+				case KeyEvent.VK_BACK_SPACE:
+					if( activeIdx >= 0 ) {
+						polygons.remove(activeIdx);
+						activeIdx = -1;
+					}
+					break;
+
+				case KeyEvent.VK_NUMPAD7:
+					if( p != null ) {
+						p.x -= delta;
+						p.y -= delta;
+					}
+					break;
+
+				case KeyEvent.VK_NUMPAD9:
+					if( p != null ) {
+						p.x += delta;
+						p.y -= delta;
+					}
+					break;
+
+				case KeyEvent.VK_NUMPAD1:
+					if( p != null ) {
+						p.x -= delta;
+						p.y += delta;
+					}
+					break;
+
+				case KeyEvent.VK_NUMPAD3:
+					if( p != null ) {
+						p.x += delta;
+						p.y += delta;
+					}
+					break;
+			}
 
 			repaint();
 		}

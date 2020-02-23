@@ -62,6 +62,18 @@ public class PointFileCodec {
 		}
 	}
 
+	public static boolean isPointSet( File path ) {
+		try {
+			FileReader reader = new FileReader(path);
+			BufferedReader input = new BufferedReader(reader);
+			String line = skipComments(input);
+			reader.close();
+			return line.compareTo("SETS") == 0;
+		} catch( Exception e ) {
+			throw new RuntimeException(e);
+		}
+	}
+
 	public static List<Point2D_F64> load( File path ) {
 		return load(path.getAbsolutePath());
 	}
@@ -100,7 +112,7 @@ public class PointFileCodec {
 		}
 	}
 
-	public static List<List<Point2D_F64>> loadSets( String path ) {
+	public static List<List<Point2D_F64>> loadSets( File path ) {
 		try {
 			BufferedReader reader = new BufferedReader(new FileReader(path));
 

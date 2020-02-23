@@ -35,9 +35,9 @@ public abstract class BaseEvaluateFiducialToCamera implements FiducialEvaluateIn
 
 	CameraPinholeBrown intrinsic;
 	// ID's of the detected fiducials
-	long expected[];
+	long[] expected;
 	// The number of times a fiducial was detected.  This will include wrong ID's and orientations
-	long fiducialDetected[];
+	long[] fiducialDetected;
 
 	@Override
 	public int getTotalExpected() {
@@ -50,12 +50,12 @@ public abstract class BaseEvaluateFiducialToCamera implements FiducialEvaluateIn
 	}
 
 	// normal vector for a specific truth
-	Vector3D_F64 fiducialNormal[];
-	Se3_F64 fiducialPose[];
+	Vector3D_F64[] fiducialNormal;
+	Se3_F64[] fiducialPose;
 
 	// if a fiducial was detected it's quad is stored here.  If there are multiple detections
 	// the only the first detection is saved.
-	List<Point2D_F64> detectedCorners[];
+	List<Point2D_F64>[] detectedCorners;
 
 	// average errors for all 4 corners in a fiducial for each detected fiducials
 	GrowQueue_F64 errors = new GrowQueue_F64();
@@ -153,7 +153,7 @@ public abstract class BaseEvaluateFiducialToCamera implements FiducialEvaluateIn
 	}
 
 	protected void evaluate( String fileName , List<FiducialCommon.Detected> detected ,
-							 List<Point2D_F64> truthCorners, List<FiducialCommon.Landmarks> landmarks ) {
+							 List<List<Point2D_F64>> truthCorners, List<FiducialCommon.Landmarks> landmarks ) {
 
 		totalExpected += expected.length;
 		for (int i = 0; i < expected.length; i++) {
@@ -161,14 +161,12 @@ public abstract class BaseEvaluateFiducialToCamera implements FiducialEvaluateIn
 			detectedCorners[i] = null;
 		}
 
-		List<List<Point2D_F64>> truthFiducialCorners = extractIndividual(truthCorners,expected.length );
-
 		for( int i = 0; i < detected.size(); i++ ) {
 			FiducialCommon.Detected det = detected.get(i);
 			FiducialCommon.Landmarks landmark = lookupLandmark(landmarks,det.id);
 			List<Point2D_F64> corners = project(adjustCoordinate(det.fiducialToCamera),landmark);
 
-			Assignment match = findBestAssignment(corners,truthFiducialCorners);
+			Assignment match = findBestAssignment(corners,truthCorners);
 			if( match == null ) {
 				falsePositiveIDs.add(det.id);
 				totalFalsePositive++;
@@ -212,7 +210,7 @@ public abstract class BaseEvaluateFiducialToCamera implements FiducialEvaluateIn
 		}
 	}
 
-	protected List<List<Point2D_F64>> extractIndividual(List<Point2D_F64> truthCorners, int totalFiducials) {
+	protected static List<List<Point2D_F64>> extractIndividual(List<Point2D_F64> truthCorners, int totalFiducials) {
 		List<List<Point2D_F64>> ret = new ArrayList<List<Point2D_F64>>();
 
 		int N = truthCorners.size()/totalFiducials;
@@ -257,11 +255,11 @@ public abstract class BaseEvaluateFiducialToCamera implements FiducialEvaluateIn
 		best.meanError = maxPixelError;
 		best.errors = new double[ corners.size() ];
 
-		double errorsInOrder[] = new double[ corners.size() ];
-		double errorsOutOfOrder[] = new double[ corners.size() ];
+		double[] errorsInOrder = new double[ corners.size() ];
+		double[] errorsOutOfOrder = new double[ corners.size() ];
 
-		List<Point2D_F64> reordered = new ArrayList<Point2D_F64>();
-		List<Point2D_F64> bestOrdered = new ArrayList<Point2D_F64>();
+		List<Point2D_F64> reordered = new ArrayList<>();
+		List<Point2D_F64> bestOrdered = new ArrayList<>();
 
 		for (int i = 0; i < truthFiducials.size(); i++) {
 			double errorInOrder = scoreInOrder(corners,truthFiducials.get(i),errorsInOrder);
@@ -293,7 +291,7 @@ public abstract class BaseEvaluateFiducialToCamera implements FiducialEvaluateIn
 		if( best.id != -1 ) {
 			fiducialDetected[best.index]++;
 			if( fiducialDetected[best.index] == 1 ) {
-				List<Point2D_F64> detected = new ArrayList<Point2D_F64>();
+				List<Point2D_F64> detected = new ArrayList<>();
 				for (int i = 0; i < bestOrdered.size(); i++) {
 					detected.add( bestOrdered.get(i).copy() );
 				}

@@ -203,7 +203,7 @@ public class EvaluatePolylineDetector {
 	}
 
 	protected List<Polygon2D_F64> loadTruth( File fileTruth ) {
-		List<List<Point2D_F64>> sets = PointFileCodec.loadSets(fileTruth.getPath());
+		List<List<Point2D_F64>> sets = PointFileCodec.loadSets(fileTruth);
 
 		List<Polygon2D_F64> polygons = new ArrayList<Polygon2D_F64>();
 

@@ -26,6 +26,8 @@ public class FiducialRegression extends BaseRegression implements ImageRegressio
 
 	String infoString;
 
+	PrintStream runtimeOut;
+
 	public FiducialRegression() {
 		super(BoofRegressionConstants.TYPE_FIDCUIALS);
 	}
@@ -66,6 +68,8 @@ public class FiducialRegression extends BaseRegression implements ImageRegressio
 		process("CircleHexagonal", new EstimateCircleHexagonalToCamera(imageType), "circle_hexagonal",false);
 
 		process("CircleRegular", new EstimateCircleRegularToCamera(imageType), "circle_regular",false);
+
+		process("Uchiya", new EstimateUchiyaFiducialToCamera(imageType), "uchiya",false);
 	}
 
 	private void process(String name, BaseEstimateSquareFiducialToCamera estimate, String type, boolean ignoreOrder )
@@ -78,29 +82,21 @@ public class FiducialRegression extends BaseRegression implements ImageRegressio
 		estimate.initialize(new File(baseFiducial, type));
 
 		try {
-			computeRuntimeMetrics(type, "RUN_Fiducial_" + name + ".txt", estimate); // TODO compute while doing the others
+			runtimeOut = new PrintStream(new File(directory,"RUN_Fiducial_" + name + ".txt"));
+			BoofRegressionConstants.printGenerator(runtimeOut, getClass());
+			runtimeOut.println("# Elapsed time is in milliseconds");
+			runtimeOut.println("# dataset (total images) 50% 95% 100%");
+			runtimeOut.println();
+
 			computeStandardMetrics(type, "ACC_Fiducial_Standard_" + name + ".txt", estimate,ignoreOrder, 5);
 			computeStaticMetrics(type, "ACC_Fiducial_Static_" + name + ".txt", estimate, 5);
 			computeAlwaysVisibleMetrics(type, "ACC_Fiducial_AlwaysVisible_" + name + ".txt", estimate);
 		} catch( RuntimeException e ) {
 			e.printStackTrace();
 			e.printStackTrace(errorLog);
+		} finally {
+			runtimeOut.close();
 		}
-	}
-
-	private void computeRuntimeMetrics(String type, String outName, BaseEstimateSquareFiducialToCamera factory )
-			throws IOException
-	{
-		PrintStream out = new PrintStream(new File(directory,outName));
-		BoofRegressionConstants.printGenerator(out, getClass());
-
-		RuntimePerformanceFiducialToCamera benchmark = new RuntimePerformanceFiducialToCamera(factory);
-
-		benchmark.setErrorStream(errorLog);
-		benchmark.setOutputResults(out);
-		benchmark.evaluate(new File("data/fiducials/",type));
-
-		out.close();
 	}
 
 	private void computeStandardMetrics(String type, String outName,
@@ -189,6 +185,13 @@ public class FiducialRegression extends BaseRegression implements ImageRegressio
 				evaluate.evaluate(workDirectory, dataSet);
 				totalExpected += evaluate.getTotalExpected();
 				totalCorrect += evaluate.getTotalCorrect();
+
+				estimate.speed.sort();
+				double time50 = estimate.speed.getFraction(0.5);
+				double time95 = estimate.speed.getFraction(0.95);
+				double time100 = estimate.speed.getFraction(1.00);
+				runtimeOut.printf("%30s %3d %7.3f %7.3f %7.3f\n",dataSet.getName(),estimate.speed.size,time50,time95,time100);
+
 			} catch( DataSetDoesNotExist e ) {
 				System.out.println("DataSetDoesNotExist "+e.getMessage());
 				errorLog.println();
@@ -197,6 +200,7 @@ public class FiducialRegression extends BaseRegression implements ImageRegressio
 				errorLog.println();
 				errorLog.println("ERROR in "+infoString+" processing data set "+dataSet);
 				System.out.println("ERROR in "+infoString+" processing data set "+dataSet);
+				System.out.println("  "+e.getMessage());
 				e.printStackTrace(errorLog);
 			}
 			out.println();

@@ -91,7 +91,7 @@ public class EvaluateQrCodeDetections {
     }
 
     private List<Polygon2D_F64> loadTruth( File f ) {
-        List<List<Point2D_F64>> truth = PointFileCodec.loadSets(f.getPath());
+        List<List<Point2D_F64>> truth = PointFileCodec.loadSets(f);
 
         List<Polygon2D_F64> out = new ArrayList<>();
 

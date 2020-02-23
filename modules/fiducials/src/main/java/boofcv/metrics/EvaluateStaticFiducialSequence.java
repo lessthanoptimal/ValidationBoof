@@ -1,6 +1,5 @@
 package boofcv.metrics;
 
-import boofcv.common.misc.PointFileCodec;
 import boofcv.io.UtilIO;
 import georegression.metric.UtilAngle;
 import georegression.struct.point.Point2D_F64;
@@ -14,6 +13,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import static boofcv.metrics.EvaluateFiducialToCamera.loadTruthSets;
 import static boofcv.metrics.FiducialCommon.parseDetections;
 import static boofcv.metrics.FiducialCommon.parseLandmarks;
 
@@ -53,22 +53,24 @@ public class EvaluateStaticFiducialSequence extends BaseEvaluateFiducialToCamera
 		String nameFirst = new File(results.get(0)).getName();
 		String nameTruth = nameFirst.substring(0,nameFirst.length()-3) + "txt";
 		File fileTruth = new File(dataSetDir, nameTruth);
-		List<Point2D_F64> truthCorners;
+		List<List<Point2D_F64>> truthCorners;
 
 		if( fileTruth.exists() ) {
 			// if hand selected truth exists use it
-			truthCorners = PointFileCodec.load(fileTruth);
+			truthCorners = loadTruthSets(new File(dataSetDir, nameTruth), expected.length);
 		} else {
 			// create it from the first image
 			truthCorners = new ArrayList<>();
 
 			List<FiducialCommon.Detected> detected = parseDetections(new File(results.get(0)));
 			List<FiducialCommon.Landmarks> landmarks = parseLandmarks(new File(dataSetDir, "landmarks.txt"));
+			expected = new long[detected.size()];
 			for( int i = 0; i < detected.size(); i++ ) {
 				FiducialCommon.Detected det = detected.get(i);
 				FiducialCommon.Landmarks landmark = lookupLandmark(landmarks,det.id);
 				List<Point2D_F64> corners = project(adjustCoordinate(det.fiducialToCamera),landmark);
-				truthCorners.addAll(corners);
+				truthCorners.add(corners);
+				expected[i] = det.id;
 			}
 		}
 

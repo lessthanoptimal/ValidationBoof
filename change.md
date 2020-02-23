@@ -6,6 +6,7 @@ Description of changes to benchmarks and justifications for change in performanc
 - Modified summary to include java version and dirty flag info
 - Explanation of Differences
   * Modified Image.isInside(float,float) and that resulted in small change in results for object tracking and VO 
+  * Fiducial runtime is computed at same time as other metrics
 
 ## Version 0.35
 2019/Dec/23

@@ -108,7 +108,10 @@ public class FiducialCommon {
 
 	public static Library parseScenario( File file ) {
 		Library library;
-		if( file.getPath().contains("binary") || file.getPath().contains("chessboard")) {
+		// TODO fix this horrible hack
+		if( file.getPath().contains("binary") ||
+				file.getPath().contains("chessboard") ||
+				file.getPath().contains("uchiya")) {
 			library = new LibraryBinary();
 		} else {
 			library = new LibraryImage();

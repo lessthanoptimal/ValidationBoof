@@ -41,7 +41,7 @@ public class HandSelectPointsApp extends HandSelectBase {
 		File outputFile = selectOutputFile(file);
 
 		if( outputFile.exists() ) {
-			List<List<Point2D_F64>> sets = PointFileCodec.loadSets(outputFile.getPath());
+			List<List<Point2D_F64>> sets = PointFileCodec.loadSets(outputFile);
 			if( sets == null ) {
 				gui.addPointSet(PointFileCodec.load(outputFile.getPath()));
 			} else {

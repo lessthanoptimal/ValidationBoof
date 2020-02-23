@@ -230,7 +230,7 @@ public class UtilShapeDetector {
 	}
 
 	public static List<LineSegment2D_F32> loadTruthLineSegments(File fileTruth ) {
-		List<List<Point2D_F64>> sets = PointFileCodec.loadSets(fileTruth.getPath());
+		List<List<Point2D_F64>> sets = PointFileCodec.loadSets(fileTruth);
 
 		List<LineSegment2D_F32> lines = new ArrayList<>();
 

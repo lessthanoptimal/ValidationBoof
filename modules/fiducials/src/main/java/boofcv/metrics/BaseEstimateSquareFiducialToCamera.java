@@ -10,6 +10,7 @@ import boofcv.struct.calib.CameraPinholeBrown;
 import boofcv.struct.image.ImageBase;
 import georegression.struct.point.Vector3D_F64;
 import georegression.struct.se.Se3_F64;
+import org.ddogleg.struct.GrowQueue_F64;
 import org.ejml.data.DMatrixRMaj;
 
 import java.awt.image.BufferedImage;
@@ -30,6 +31,7 @@ public abstract class BaseEstimateSquareFiducialToCamera<T extends ImageBase<T>>
 
 	File baseDirectory;
 	File outputDirectory = new File(".");
+	public GrowQueue_F64 speed = new GrowQueue_F64();
 
 	public abstract FiducialDetector<T> createDetector( File datasetDir );
 
@@ -47,6 +49,8 @@ public abstract class BaseEstimateSquareFiducialToCamera<T extends ImageBase<T>>
 			throw new DataSetDoesNotExist("The data set directory doesn't exist. "+dataSetDir.getPath());
 		}
 
+		speed.reset();
+
 		FiducialDetector<T> detector = createDetector(dataSetDir);
 		FiducialCommon.Library library = FiducialCommon.parseScenario(new File(dataSetDir, "library.txt"));
 
@@ -54,8 +58,9 @@ public abstract class BaseEstimateSquareFiducialToCamera<T extends ImageBase<T>>
 		T image = detector.getInputType().createImage(1,1);
 
 		File fileIntrinsic = new File(dataSetDir,"intrinsic.txt");
+		CameraPinholeBrown intrinsic = null;
 		if( fileIntrinsic.exists() ) {
-			CameraPinholeBrown intrinsic = FiducialCommon.parseIntrinsic(fileIntrinsic);
+			intrinsic = FiducialCommon.parseIntrinsic(fileIntrinsic);
 			detector.setLensDistortion(new LensDistortionBrown(intrinsic),intrinsic.width,intrinsic.height);
 		}
 		for( String path : files ) {
@@ -63,8 +68,15 @@ public abstract class BaseEstimateSquareFiducialToCamera<T extends ImageBase<T>>
 			image.reshape(orig.getWidth(),orig.getHeight());
 			ConvertBufferedImage.convertFrom(orig,image,true);
 
+			if( intrinsic != null && (intrinsic.width != image.width || intrinsic.height != image.height ))
+				throw new RuntimeException("Intrinsic's shape doesn't match input image shape. intrinsic = "+
+						intrinsic.width+"x"+intrinsic.height+" vs  image = "+image.width+"x"+image.height);
+
+			long time0 = System.nanoTime();
 			detector.detect(image);
-//			System.out.println("processing "+path+"  found "+detector.totalFound());
+			long time1 = System.nanoTime();
+			speed.add((time1-time0)*1e-6);
+			//			System.out.println("processing "+path+"  found "+detector.totalFound());
 
 //			if( detector.totalFound() == 0 )
 //				System.out.println("no detections in "+path);
