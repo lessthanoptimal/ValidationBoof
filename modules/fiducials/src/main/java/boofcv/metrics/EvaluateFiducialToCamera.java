@@ -29,7 +29,7 @@ public class EvaluateFiducialToCamera extends BaseEvaluateFiducialToCamera {
 		Collections.sort(results);
 
 		outputResults.println("# "+dataSetDir.getName());
-		outputResults.println("# maxPixelError = "+maxPixelError);
+		outputResults.println("# maxPixelError = "+scaledMaxPixelError);
 
 		if( !justSummary )
 			outputResults.println("# (file) (detected ID) (matched id) (out of order) (match pixel mean error)");

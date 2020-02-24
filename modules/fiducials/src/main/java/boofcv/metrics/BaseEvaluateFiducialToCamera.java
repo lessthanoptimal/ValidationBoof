@@ -29,6 +29,7 @@ import java.util.List;
  */
 public abstract class BaseEvaluateFiducialToCamera implements FiducialEvaluateInterface {
 	double maxPixelError = 5;
+	double scaledMaxPixelError;
 
 	PrintStream outputResults = System.out;
 	PrintStream err = System.err;
@@ -98,6 +99,10 @@ public abstract class BaseEvaluateFiducialToCamera implements FiducialEvaluateIn
 		library = FiducialCommon.parseScenario(new File(dataSetDir, "library.txt"));
 		List<String> visible = FiducialCommon.parseVisibleFile(new File(dataSetDir,"visible.txt"));
 
+		// Adjust the maximum allowed error for image size
+		intrinsic = FiducialCommon.parseIntrinsic(new File(dataSetDir,"intrinsic.txt"));
+		scaledMaxPixelError = maxPixelError*Math.sqrt(intrinsic.width*intrinsic.height)/Math.sqrt(640*480);
+
 		expected = new long[visible.size()];
 		for( int i = 0; i < visible.size(); i++ ) {
 			expected[i] = library.nameToID(visible.get(i));
@@ -112,7 +117,6 @@ public abstract class BaseEvaluateFiducialToCamera implements FiducialEvaluateIn
 			fiducialNormal[i] = new Vector3D_F64();
 			fiducialPose[i] = new Se3_F64();
 		}
-		intrinsic = FiducialCommon.parseIntrinsic(new File(dataSetDir,"intrinsic.txt"));
 	}
 
 	public void setOutputResults(PrintStream outputResults) {
@@ -252,7 +256,7 @@ public abstract class BaseEvaluateFiducialToCamera implements FiducialEvaluateIn
 	private Assignment findBestAssignment( List<Point2D_F64> corners , List<List<Point2D_F64>> truthFiducials ) {
 		Assignment best = new Assignment();
 		best.id = -1;
-		best.meanError = maxPixelError;
+		best.meanError = scaledMaxPixelError;
 		best.errors = new double[ corners.size() ];
 
 		double[] errorsInOrder = new double[ corners.size() ];

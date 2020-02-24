@@ -38,7 +38,7 @@ public class EvaluateStaticFiducialSequence extends BaseEvaluateFiducialToCamera
 		Collections.sort(results);
 
 		outputResults.println("# Data Set = " + dataSetDir.getName());
-		outputResults.println("# maxPixelError = "+maxPixelError);
+		outputResults.println("# maxPixelError = "+scaledMaxPixelError);
 
 		if( !justSummary )
 			outputResults.println("# (file) (detected ID) (matched id) (out of order) (match pixel error)");

@@ -1,0 +1,32 @@
+# GENERATOR FiducialRegression
+# Data Set = static01
+# maxPixelError = 4.330127018922193
+
+Summary:
+ correct            : 636
+ wrong order        : 0
+ wrong ID           : 0
+ duplicates         : 0
+ false positive     : 0
+ false negative     : 0
+Normal Angle (deg):     630
+ errors 50%         : 0.32082207004112356
+ errors 90%         : 0.9388028828191742
+ errors 100%        : 24.036744815744978
+Location            : 630
+ errors 50%         : 0.026415746106504705
+ errors 90%         : 0.09055995080267179
+ errors 100%        : 0.6502356862418789
+Precision:              2544
+ errors 50%         : 0.06302181787646519
+ errors 90%         : 0.259300951380833
+ errors 100%        : 2.3964035742546357
+Accuracy:               2544
+ errors 50%         : 0.2993382194014657
+ errors 90%         : 0.8017896673922109
+ errors 100%        : 2.3028444756620963
+
+---------------------------------------------------
+
+---------------------------------------------------
+total correct / total expected =  636 / 636
