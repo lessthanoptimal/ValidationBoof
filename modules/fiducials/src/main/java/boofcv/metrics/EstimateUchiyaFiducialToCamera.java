@@ -5,7 +5,7 @@ import boofcv.abst.fiducial.Uchiya_to_FiducialDetector;
 import boofcv.factory.fiducial.ConfigUchiyaMarker;
 import boofcv.factory.fiducial.FactoryFiducial;
 import boofcv.io.fiducial.FiducialIO;
-import boofcv.io.fiducial.UchiyaDefinition;
+import boofcv.io.fiducial.RandomDotDefinition;
 import boofcv.struct.image.ImageGray;
 import georegression.struct.point.Point2D_F64;
 
@@ -27,12 +27,12 @@ public class EstimateUchiyaFiducialToCamera<T extends ImageGray<T>> extends Base
 
 	@Override
 	public FiducialDetector<T> createDetector(File datasetDirectory) {
-		UchiyaDefinition definition = FiducialIO.loadUchiyaYaml(new File(datasetDirectory, "uchiya.yaml"));
+		RandomDotDefinition definition = FiducialIO.loadRandomDotYaml(new File(datasetDirectory, "descriptions.yaml"));
 
 		ConfigUchiyaMarker config = new ConfigUchiyaMarker();
 		config.markerLength = definition.markerWidth;
 
-		Uchiya_to_FiducialDetector<T> detector = FactoryFiducial.uchiya(config,imageType);
+		Uchiya_to_FiducialDetector<T> detector = FactoryFiducial.randomDots(config,imageType);
 
 		System.out.println("Loading marker definitions");
 		for( List<Point2D_F64> marker : definition.markers ) {
