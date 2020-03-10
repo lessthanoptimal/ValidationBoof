@@ -77,7 +77,7 @@ public class WrapFusedTracker
 
 			// save locations of the track in the first image
 			for( CombinedTrack<TD> t : tracks ) {
-				Point2D_F64 firstLoc = new Point2D_F64(t.x,t.y);
+				Point2D_F64 firstLoc = new Point2D_F64(t.pixel.x,t.pixel.y);
 				t.setCookie(firstLoc);
 			}
 
@@ -119,8 +119,12 @@ public class WrapFusedTracker
 	public List<Point2D_F64> getCurrent() {
 		List<Point2D_F64> ret = new ArrayList<Point2D_F64>();
 
-		ret.addAll(tracker.getPureKlt());
-		ret.addAll(tracker.getReactivated());
+		for( CombinedTrack<TD> t : tracker.getPureKlt() ) {
+			ret.add( t.pixel );
+		}
+		for( CombinedTrack<TD> t : tracker.getReactivated() ) {
+			ret.add( t.pixel );
+		}
 
 		return ret;
 	}

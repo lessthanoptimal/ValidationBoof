@@ -6,7 +6,8 @@ import boofcv.struct.feature.AssociatedIndex;
 import boofcv.struct.feature.TupleDesc;
 import boofcv.struct.image.ImageGray;
 import georegression.struct.point.Point2D_F64;
-import org.ddogleg.struct.FastQueue;
+import org.ddogleg.struct.FastAccess;
+import org.ddogleg.struct.FastArray;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,9 +30,9 @@ public class WrapGenericDetectTracker<I extends ImageGray<I>, TD extends TupleDe
 	// tracks that where associated in the most recent image
 	List<Info> tracksMatched = new ArrayList<Info>();
 
-	FastQueue<Point2D_F64> pointCurr = new FastQueue<Point2D_F64>(100,Point2D_F64.class,false);
-	FastQueue<TD> descKey;
-	FastQueue<TD> descCurr;
+	FastArray<Point2D_F64> pointCurr = new FastArray<>(Point2D_F64.class,100);
+	FastArray<TD> descKey;
+	FastArray<TD> descCurr;
 
 	boolean hasKeyFrame = false;
 	boolean copyDescription;
@@ -43,8 +44,8 @@ public class WrapGenericDetectTracker<I extends ImageGray<I>, TD extends TupleDe
 		this.associate = associate;
 		this.copyDescription =copyDescription;
 
-		descKey = new FastQueue<TD>(10,detector.getDescriptionType(),false);
-		descCurr = new FastQueue<TD>(10,detector.getDescriptionType(),false);
+		descKey = new FastArray<>(detector.getDescriptionType());
+		descCurr = new FastArray<>(detector.getDescriptionType());
 	}
 
 	@Override
@@ -73,7 +74,7 @@ public class WrapGenericDetectTracker<I extends ImageGray<I>, TD extends TupleDe
 			associate.associate();
 
 			// update the active track list
-			FastQueue<AssociatedIndex> matches = associate.getMatches();
+			FastAccess<AssociatedIndex> matches = associate.getMatches();
 
 			for( AssociatedIndex i : matches.toList() ) {
 				Info track = tracks.get(i.src);

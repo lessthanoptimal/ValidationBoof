@@ -34,7 +34,7 @@ public class WrapPointTracker<I extends ImageGray<I>>
 			List<PointTrack> tracks = tracker.getNewTracks(null);
 
 			for( PointTrack t : tracks ) {
-				Point2D_F64 initial = new Point2D_F64(t.x,t.y);
+				Point2D_F64 initial = new Point2D_F64(t.pixel.x,t.pixel.y);
 				t.setCookie(initial);
 			}
 		}
@@ -66,7 +66,7 @@ public class WrapPointTracker<I extends ImageGray<I>>
 		List<PointTrack> tracks = tracker.getActiveTracks(null);
 
 		for( PointTrack t : tracks ) {
-			current.add(t);
+			current.add(t.pixel);
 		}
 
 		return current;

@@ -31,7 +31,8 @@ public class CreateSyntheticBAL {
     public void smallWorld() {
         scene = new SceneStructureMetric(false);
         scene.initialize(1,3,10);
-        observations = new SceneObservations(scene.views.size);
+        observations = new SceneObservations();
+        observations.initialize(scene.views.size);
 
         double radius = 300;
         BundlePinholeSnavely camera = new BundlePinholeSnavely();

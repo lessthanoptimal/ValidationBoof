@@ -31,7 +31,8 @@ import georegression.geometry.UtilPoint2D_F64;
 import georegression.struct.homography.Homography2D_F64;
 import georegression.struct.point.Point2D_F64;
 import georegression.transform.homography.HomographyPointOps_F64;
-import org.ddogleg.struct.FastQueue;
+import org.ddogleg.struct.FastAccess;
+import org.ddogleg.struct.FastArray;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -246,8 +247,8 @@ public class BenchmarkFeatureDescribeStability {
 								  List<FeatureInfo> targetFrame,
 								  Homography2D_F64 keyToTarget) {
 
-		FastQueue<TupleDesc_F64> listSrc = new FastQueue<TupleDesc_F64>(keyFrame.size(),TupleDesc_F64.class,false);
-		FastQueue<TupleDesc_F64> listDst = new FastQueue<TupleDesc_F64>(keyFrame.size(),TupleDesc_F64.class,false);
+		FastArray<TupleDesc_F64> listSrc = new FastArray<>(TupleDesc_F64.class,keyFrame.size());
+		FastArray<TupleDesc_F64> listDst = new FastArray<>(TupleDesc_F64.class,keyFrame.size());
 
 		for( FeatureInfo f : keyFrame ) {
 			listSrc.add(f.getDescription());
@@ -261,7 +262,7 @@ public class BenchmarkFeatureDescribeStability {
 		assoc.setDestination(listDst);
 		assoc.associate();
 
-		FastQueue<AssociatedIndex> matches = assoc.getMatches();
+		FastAccess<AssociatedIndex> matches = assoc.getMatches();
 
 		Point2D_F64 expected = new Point2D_F64();
 

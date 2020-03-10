@@ -160,7 +160,7 @@ public class DebugTrackerVideo <T extends ImageGray<T>> implements MouseListener
 			alg.getAllTracks(all);
 
 			for( PointTrack p : all ) {
-				p.cookie = new Point2D_F64(p);
+				p.cookie = p.pixel.copy();
 			}
 			key.createGraphics().drawImage(rgb,0,0,null);
 		}
@@ -193,10 +193,10 @@ public class DebugTrackerVideo <T extends ImageGray<T>> implements MouseListener
 
 				g2.setColor( Color.blue);
 				g2.setStroke(new BasicStroke(2));
-				g2.drawLine((int)orig.x, h+(int) orig.y, (int)p.x, h+(int) p.y);
+				g2.drawLine((int)orig.x, h+(int) orig.y, (int)p.pixel.x, h+(int) p.pixel.y);
 
-				VisualizeFeatures.drawPoint(g2, (int)p.x, h+(int) p.y, 5, Color.WHITE, false);
-				VisualizeFeatures.drawPoint(g2, (int)p.x, h+(int) p.y, 3, Color.RED, false);
+				VisualizeFeatures.drawPoint(g2, (int)p.pixel.x, h+(int) p.pixel.y, 5, Color.WHITE, false);
+				VisualizeFeatures.drawPoint(g2, (int)p.pixel.x, h+(int) p.pixel.y, 3, Color.RED, false);
 			}
 		}
 
@@ -209,14 +209,14 @@ public class DebugTrackerVideo <T extends ImageGray<T>> implements MouseListener
 
 			g2.setColor( Color.blue);
 			g2.setStroke(new BasicStroke(2));
-			g2.drawLine((int)orig.x, h+(int) orig.y, (int)p.x, h+(int) p.y);
+			g2.drawLine((int)orig.x, h+(int) orig.y, (int)p.pixel.x, h+(int) p.pixel.y);
 
 			g2.setColor( Color.CYAN);
 			g2.setStroke(new BasicStroke(5));
-			g2.drawLine((int)orig.x, (int) orig.y, (int)p.x, h+(int) p.y);
+			g2.drawLine((int)orig.x, (int) orig.y, (int)p.pixel.x, h+(int) p.pixel.y);
 
-			VisualizeFeatures.drawPoint(g2, (int)p.x, h+(int) p.y, 5, Color.WHITE, false);
-			VisualizeFeatures.drawPoint(g2, (int)p.x, h+(int) p.y, 3, Color.RED, false);
+			VisualizeFeatures.drawPoint(g2, (int)p.pixel.x, h+(int) p.pixel.y, 5, Color.WHITE, false);
+			VisualizeFeatures.drawPoint(g2, (int)p.pixel.x, h+(int) p.pixel.y, 3, Color.RED, false);
 		}
 	}
 
@@ -246,7 +246,7 @@ public class DebugTrackerVideo <T extends ImageGray<T>> implements MouseListener
 				break;
 			}
 
-			t.set(p.x,h+p.y);
+			t.set(p.pixel.x,h+p.pixel.y);
 
 			if( w.distance(t) < 5 ) {
 				selected = i;
@@ -257,7 +257,7 @@ public class DebugTrackerVideo <T extends ImageGray<T>> implements MouseListener
 		if( selected != -1 )  {
 			if( prevSelected == selected )
 				hideTracks = true;
-			selectedPt.set(active.get(selected));
+			selectedPt.set(active.get(selected).pixel);
 			paused = true;
 		}
 		renderTracks();

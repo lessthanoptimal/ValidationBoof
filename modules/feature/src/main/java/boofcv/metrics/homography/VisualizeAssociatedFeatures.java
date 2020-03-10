@@ -28,7 +28,7 @@ import boofcv.gui.image.ShowImages;
 import boofcv.io.image.UtilImageIO;
 import boofcv.struct.feature.TupleDesc_F64;
 import georegression.struct.point.Point2D_F64;
-import org.ddogleg.struct.FastQueue;
+import org.ddogleg.struct.FastArray;
 
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -64,8 +64,8 @@ public class VisualizeAssociatedFeatures {
 		features2 = LoadHomographyBenchmarkFiles.loadDescription(directory + "DESCRIBE_" + name2 + "_" + algSuffix + ".txt");
 
 		// associate
-		FastQueue<TupleDesc_F64> listSrc = new FastQueue<TupleDesc_F64>(features1.size(),TupleDesc_F64.class,false);
-		FastQueue<TupleDesc_F64> listDst = new FastQueue<TupleDesc_F64>(features2.size(),TupleDesc_F64.class,false);
+		FastArray<TupleDesc_F64> listSrc = new FastArray<>(TupleDesc_F64.class,features1.size());
+		FastArray<TupleDesc_F64> listDst = new FastArray<>(TupleDesc_F64.class,features2.size());
 
 		for( FeatureInfo f : features1 ) {
 			listSrc.add(f.getDescription());

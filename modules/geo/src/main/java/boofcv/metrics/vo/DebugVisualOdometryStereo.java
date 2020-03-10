@@ -185,7 +185,7 @@ public class DebugVisualOdometryStereo<T extends ImageBase<T>>
 
 		Graphics2D g2 = image.createGraphics();
 
-		List<Point2D_F64> points = tracker.getAllTracks();
+		List<Point2D_F64> points = tracker.getAllTracks(null);
 		if( points.isEmpty() )
 			return;
 
@@ -233,7 +233,7 @@ public class DebugVisualOdometryStereo<T extends ImageBase<T>>
 		g2.setColor(Color.BLACK);
 		g2.fillRect(25,15,80,45);
 		g2.setColor(Color.CYAN);
-		g2.drawString("Total: " + tracker.getAllTracks().size(), 30, 30);
+		g2.drawString("Total: " + tracker.getAllTracks(null).size(), 30, 30);
 		g2.drawString("Inliers: "+numInliers,30,50);
 	}
 
