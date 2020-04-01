@@ -37,6 +37,7 @@ import boofcv.metrics.point.LogParseHomography;
 import boofcv.metrics.point.WrapPointTracker;
 import boofcv.struct.image.ImageDataType;
 import boofcv.struct.image.ImageType;
+import boofcv.struct.pyramid.ConfigDiscreteLevels;
 import georegression.struct.homography.Homography2D_F64;
 
 import java.io.*;
@@ -240,7 +241,7 @@ public class PointTrackerRegression extends BaseRegression implements ImageRegre
 	public Info createDefaultKlt(Class bandType) {
 
 		ConfigPKlt configKlt = new ConfigPKlt();
-		configKlt.pyramidScaling = new int[]{1,2,4,8};
+		configKlt.pyramidLevels = ConfigDiscreteLevels.levels(4);
 
 		ConfigGeneralDetector configDet = new ConfigGeneralDetector(800,8,1);
 

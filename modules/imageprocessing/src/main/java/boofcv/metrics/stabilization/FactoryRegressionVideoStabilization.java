@@ -30,7 +30,7 @@ public class FactoryRegressionVideoStabilization {
         Class derivClass = GImageDerivativeOps.getDerivativeType(imageClass);
 
         // Use a KLT tracker
-        PointTracker<T> tracker = FactoryPointTracker.klt(new int[]{1,2,4,8},confDetector,3,
+        PointTracker<T> tracker = FactoryPointTracker.klt(4,confDetector,3,
                 imageClass,derivClass);
 
         // This estimates the 2D image motion

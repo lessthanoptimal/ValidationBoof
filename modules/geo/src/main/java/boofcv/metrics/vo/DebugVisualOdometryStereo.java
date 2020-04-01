@@ -7,6 +7,8 @@ import boofcv.abst.sfm.d3.StereoVisualOdometry;
 import boofcv.abst.tracker.PointTrackerTwoPass;
 import boofcv.alg.filter.derivative.GImageDerivativeOps;
 import boofcv.alg.tracker.klt.ConfigPKlt;
+import boofcv.factory.feature.disparity.ConfigDisparityBM;
+import boofcv.factory.feature.disparity.DisparityError;
 import boofcv.factory.feature.disparity.FactoryStereoDisparity;
 import boofcv.factory.tracker.FactoryPointTrackerTwoPass;
 import boofcv.gui.d3.Polygon3DSequenceViewer;
@@ -18,6 +20,7 @@ import boofcv.struct.calib.StereoParameters;
 import boofcv.struct.image.GrayF32;
 import boofcv.struct.image.ImageBase;
 import boofcv.struct.image.ImageType;
+import boofcv.struct.pyramid.ConfigDiscreteLevels;
 import georegression.geometry.ConvertRotation3D_F64;
 import georegression.struct.EulerType;
 import georegression.struct.point.Point2D_F64;
@@ -191,18 +194,19 @@ public class DebugVisualOdometryStereo<T extends ImageBase<T>>
 
 
 		int numInliers = 0;
-		double ranges[] = new double[points.size() ];
+		double[] ranges = new double[points.size() ];
 
+		Point3D_F64 p3 = new Point3D_F64();
 		for( int i = 0; i < points.size(); i++ ) {
-			ranges[i] = tracker.getTrackLocation(i).z;
+			tracker.getTrackWorld3D(i,p3);
+			ranges[i] = p3.z;
 		}
 		Arrays.sort(ranges);
 		double maxRange = ranges[(int)(ranges.length*0.8)];
 
 		for( int i = 0; i < points.size(); i++ ) {
 			Point2D_F64 pixel = points.get(i);
-
-			Point3D_F64 p3 = tracker.getTrackLocation(i);
+			tracker.getTrackWorld3D(i,p3);
 
 			double r = p3.z/maxRange;
 			if( r < 0 ) r = 0;
@@ -217,12 +221,12 @@ public class DebugVisualOdometryStereo<T extends ImageBase<T>>
 		for( int i = 0; i < points.size(); i++ ) {
 			Point2D_F64 pixel = points.get(i);
 
-			if( tracker.isNew(i) ) {
+			if( tracker.isTrackNew(i) ) {
 //				VisualizeFeatures.drawPoint(g2,(int)pixel.x,(int)pixel.y,3,Color.GREEN);
 				continue;
 			}
 
-			if( tracker.isInlier(i) ) {
+			if( tracker.isTrackInlier(i) ) {
 				numInliers++;
 				VisualizeFeatures.drawPoint(g2,(int)pixel.x,(int)pixel.y,7,Color.WHITE,false);
 				VisualizeFeatures.drawPoint(g2,(int)pixel.x,(int)pixel.y,5,Color.BLACK,false);
@@ -268,8 +272,18 @@ public class DebugVisualOdometryStereo<T extends ImageBase<T>>
 		ImageType imageType = ImageType.single(bandType);
 		Class derivType = GImageDerivativeOps.getDerivativeType(bandType);
 
+		ConfigDisparityBM configDisparity = new ConfigDisparityBM();
+		configDisparity.errorType = DisparityError.SAD;
+		configDisparity.disparityMin = 10;
+		configDisparity.disparityRange = 110;
+		configDisparity.maxPerPixelError = 30;
+		configDisparity.regionRadiusX = 2;
+		configDisparity.regionRadiusY = 2;
+		configDisparity.texture = 0.1;
+		configDisparity.subpixel = true;
+
 		StereoDisparitySparse<GrayF32> disparity =
-				FactoryStereoDisparity.regionSparseWta(10, 120, 2, 2, 30, 0.1, true, bandType);
+				FactoryStereoDisparity.sparseRectifiedBM(configDisparity, bandType);
 
 		PointTrackerTwoPass tracker = null;
 
@@ -277,7 +291,7 @@ public class DebugVisualOdometryStereo<T extends ImageBase<T>>
 
 		if( selection == 0 ) {
 			ConfigPKlt configKlt = new ConfigPKlt();
-			configKlt.pyramidScaling = new int[]{1, 2, 4, 8};
+			configKlt.pyramidLevels = ConfigDiscreteLevels.levels(4);
 			configKlt.templateRadius = 3;
 
 			tracker = FactoryPointTrackerTwoPass.klt(configKlt, new ConfigGeneralDetector(600, 3, 1),

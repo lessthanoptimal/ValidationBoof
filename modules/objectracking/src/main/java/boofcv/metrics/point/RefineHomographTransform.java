@@ -9,6 +9,7 @@ import boofcv.factory.transform.pyramid.FactoryPyramid;
 import boofcv.struct.border.BorderType;
 import boofcv.struct.image.ImageGray;
 import boofcv.struct.image.ImageType;
+import boofcv.struct.pyramid.ConfigDiscreteLevels;
 import boofcv.struct.pyramid.PyramidDiscrete;
 import georegression.struct.homography.Homography2D_F64;
 import org.ddogleg.optimization.FactoryOptimization;
@@ -38,7 +39,7 @@ public class RefineHomographTransform<I extends ImageGray<I>, D extends ImageGra
 
 	Homography2D_F64 result = new Homography2D_F64();
 
-	public RefineHomographTransform( int scales[], Class<I> imageType , Class<D> derivType ) {
+	public RefineHomographTransform( int levels, Class<I> imageType , Class<D> derivType ) {
 		this.derivType = derivType;
 		InterpolatePixelS<I> interp = FactoryInterpolation.bilinearPixelS(imageType, BorderType.EXTENDED);
 
@@ -47,8 +48,10 @@ public class RefineHomographTransform<I extends ImageGray<I>, D extends ImageGra
 
 		ImageType<I> type = ImageType.single(imageType);
 
-		src = FactoryPyramid.discreteGaussian(scales,-1,2,true,type);
-		dst = FactoryPyramid.discreteGaussian(scales,-1,2,true,type);
+		ConfigDiscreteLevels configPyr = ConfigDiscreteLevels.levels(levels);
+
+		src = FactoryPyramid.discreteGaussian(configPyr,-1,2,true,type);
+		dst = FactoryPyramid.discreteGaussian(configPyr,-1,2,true,type);
 	}
 
 	public void setSource( I src ) {

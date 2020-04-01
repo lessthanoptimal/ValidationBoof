@@ -6,12 +6,15 @@ import boofcv.abst.sfm.d3.StereoVisualOdometry;
 import boofcv.abst.tracker.PointTrackerTwoPass;
 import boofcv.alg.tracker.klt.ConfigPKlt;
 import boofcv.core.image.GeneralizedImageOps;
+import boofcv.factory.feature.disparity.ConfigDisparityBM;
+import boofcv.factory.feature.disparity.DisparityError;
 import boofcv.factory.feature.disparity.FactoryStereoDisparity;
 import boofcv.factory.sfm.FactoryVisualOdometry;
 import boofcv.factory.tracker.FactoryPointTrackerTwoPass;
 import boofcv.io.image.ConvertBufferedImage;
 import boofcv.struct.image.GrayF32;
 import boofcv.struct.image.ImageGray;
+import boofcv.struct.pyramid.ConfigDiscreteLevels;
 import georegression.struct.se.Se3_F64;
 
 import java.io.FileNotFoundException;
@@ -72,16 +75,25 @@ public class OutputForKITTI {
 
 		for( int dataSet = 0; dataSet < 11; dataSet++ ) {
 			ConfigPKlt configKlt = new ConfigPKlt();
-			configKlt.pyramidScaling = new int[]{1, 2, 4, 8};
+			configKlt.pyramidLevels = ConfigDiscreteLevels.levels(4);
 			configKlt.templateRadius = 3;
 
 			PointTrackerTwoPass tracker =
 					FactoryPointTrackerTwoPass.klt(configKlt, new ConfigGeneralDetector(600, 3, 1),
 							imageType, derivType);
 
-			// TODO add stereo NCC error to handle
+			ConfigDisparityBM configDisparity = new ConfigDisparityBM();
+			configDisparity.errorType = DisparityError.SAD;
+			configDisparity.disparityMin = 10;
+			configDisparity.disparityRange = 120;
+			configDisparity.maxPerPixelError = 30;
+			configDisparity.regionRadiusX = 2;
+			configDisparity.regionRadiusY = 2;
+			configDisparity.texture = 0.1;
+			configDisparity.subpixel = true;
+
 			StereoDisparitySparse<GrayF32> disparity =
-					FactoryStereoDisparity.regionSparseWta(10, 120, 2, 2, 30, 0.1, true, imageType);
+					FactoryStereoDisparity.sparseRectifiedBM(configDisparity, imageType);
 
 			StereoVisualOdometry alg = FactoryVisualOdometry.stereoDepth(1.5,120, 2,200,50,false,disparity, tracker,imageType);
 

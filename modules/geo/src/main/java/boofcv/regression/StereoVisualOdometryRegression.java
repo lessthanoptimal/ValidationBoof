@@ -23,6 +23,8 @@ import boofcv.common.RegressionRunner;
 import boofcv.factory.feature.describe.FactoryDescribeRegionPoint;
 import boofcv.factory.feature.detect.extract.FactoryFeatureExtractor;
 import boofcv.factory.feature.detect.intensity.FactoryIntensityPoint;
+import boofcv.factory.feature.disparity.ConfigDisparityBM;
+import boofcv.factory.feature.disparity.DisparityError;
 import boofcv.factory.feature.disparity.FactoryStereoDisparity;
 import boofcv.factory.sfm.FactoryVisualOdometry;
 import boofcv.factory.tracker.FactoryPointTracker;
@@ -31,6 +33,7 @@ import boofcv.metrics.vo.*;
 import boofcv.struct.image.GrayF32;
 import boofcv.struct.image.ImageDataType;
 import boofcv.struct.image.ImageType;
+import boofcv.struct.pyramid.ConfigDiscreteLevels;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -109,11 +112,21 @@ public class StereoVisualOdometryRegression extends BaseRegression implements Im
 	public static Info createDepth( Class bandType ) {
 		Class derivType = GImageDerivativeOps.getDerivativeType(bandType);
 
+		ConfigDisparityBM configDisparity = new ConfigDisparityBM();
+		configDisparity.errorType = DisparityError.SAD;
+		configDisparity.disparityMin = 10;
+		configDisparity.disparityRange = 110;
+		configDisparity.maxPerPixelError = 30;
+		configDisparity.regionRadiusX = 2;
+		configDisparity.regionRadiusY = 2;
+		configDisparity.texture = 0.1;
+		configDisparity.subpixel = true;
+
 		StereoDisparitySparse<GrayF32> disparity =
-				FactoryStereoDisparity.regionSparseWta(10, 110, 2, 2, 30, 0.1, true, bandType);
+				FactoryStereoDisparity.sparseRectifiedBM(configDisparity, bandType);
 
 		ConfigPKlt configKlt = new ConfigPKlt();
-		configKlt.pyramidScaling = new int[]{1, 2, 4, 8};
+		configKlt.pyramidLevels = ConfigDiscreteLevels.levels(4);
 		configKlt.templateRadius = 3;
 
 		PointTrackerTwoPass tracker = FactoryPointTrackerTwoPass.klt(configKlt, new ConfigGeneralDetector(600, 3, 1),
@@ -130,15 +143,15 @@ public class StereoVisualOdometryRegression extends BaseRegression implements Im
 	public static Info createDualTrackerPnP( Class bandType ) {
 		Class derivType = GImageDerivativeOps.getDerivativeType(bandType);
 
-		ConfigPKlt kltConfig = new ConfigPKlt();
-		kltConfig.templateRadius = 3;
-		kltConfig.pyramidScaling =  new int[]{1, 2, 4, 8};
-		kltConfig.config.maxPerPixelError = 50;
+		ConfigPKlt configKlt = new ConfigPKlt();
+		configKlt.templateRadius = 3;
+		configKlt.pyramidLevels = ConfigDiscreteLevels.levels(4);
+		configKlt.config.maxPerPixelError = 50;
 
 		ConfigGeneralDetector configDetector = new ConfigGeneralDetector(600,3,1);
 
-		PointTracker trackerLeft = FactoryPointTracker.klt(kltConfig, configDetector, bandType, derivType);
-		PointTracker trackerRight = FactoryPointTracker.klt(kltConfig, configDetector, bandType, derivType);
+		PointTracker trackerLeft = FactoryPointTracker.klt(configKlt, configDetector, bandType, derivType);
+		PointTracker trackerRight = FactoryPointTracker.klt(configKlt, configDetector, bandType, derivType);
 
 		DescribeRegionPoint describe = FactoryDescribeRegionPoint.surfFast(null, bandType);
 

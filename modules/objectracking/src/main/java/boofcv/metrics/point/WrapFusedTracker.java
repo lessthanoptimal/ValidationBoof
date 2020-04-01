@@ -10,6 +10,7 @@ import boofcv.factory.transform.pyramid.FactoryPyramid;
 import boofcv.struct.feature.TupleDesc;
 import boofcv.struct.image.ImageGray;
 import boofcv.struct.image.ImageType;
+import boofcv.struct.pyramid.ConfigDiscreteLevels;
 import boofcv.struct.pyramid.PyramidDiscrete;
 import georegression.struct.point.Point2D_F64;
 
@@ -46,13 +47,12 @@ public class WrapFusedTracker
 		this.tracker = tracker;
 		this.modeKlt = modeKlt;
 
-		derivType = GImageDerivativeOps.getDerivativeType(imageType);
+		ConfigDiscreteLevels configPyr = ConfigDiscreteLevels.levels(4);
 
+		derivType = GImageDerivativeOps.getDerivativeType(imageType);
 		gradient = FactoryDerivative.sobel(imageType, derivType);
 
-		int pyramidScaling[] = tracker.getTrackerKlt().pyramidScaling;
-
-		pyramid = FactoryPyramid.discreteGaussian(pyramidScaling,-1,2,true,
+		pyramid = FactoryPyramid.discreteGaussian(configPyr,-1,2,true,
 				ImageType.single(imageType));
 	}
 

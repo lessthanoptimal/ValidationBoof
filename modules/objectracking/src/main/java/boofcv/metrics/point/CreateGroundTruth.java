@@ -78,7 +78,7 @@ public class CreateGroundTruth {
 
 	// Refines the initial estimate of the Homography matrix
 	RefineHomographTransform<GrayF32,GrayF32> refinePyramidH =
-			new RefineHomographTransform<GrayF32,GrayF32>(new int[]{1,2,4,8},GrayF32.class,GrayF32.class);
+			new RefineHomographTransform<>(4,GrayF32.class,GrayF32.class);
 
 	// working space when saving images
 	BufferedImage storage;

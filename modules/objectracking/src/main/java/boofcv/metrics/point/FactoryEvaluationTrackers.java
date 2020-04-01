@@ -18,7 +18,7 @@ import boofcv.alg.feature.detect.interest.GeneralFeatureDetector;
 import boofcv.alg.filter.derivative.GImageDerivativeOps;
 import boofcv.alg.tracker.combined.CombinedTrackerScalePoint;
 import boofcv.alg.tracker.combined.PyramidKltForCombined;
-import boofcv.alg.tracker.klt.KltConfig;
+import boofcv.alg.tracker.klt.ConfigKlt;
 import boofcv.alg.transform.ii.GIntegralImageOps;
 import boofcv.factory.feature.associate.FactoryAssociation;
 import boofcv.factory.feature.describe.FactoryDescribeRegionPoint;
@@ -189,12 +189,10 @@ public class FactoryEvaluationTrackers<T extends ImageGray<T>> {
 	}
 
 	private PyramidKltForCombined<T, T> defaultFusedKlt() {
-		KltConfig kltConfig = new KltConfig();
-		int scales[] = new int[]{1,2,4,8};
+		ConfigKlt configKlt = new ConfigKlt();
 		int featureRadius = 5;
-		kltConfig.maxPerPixelError = 10;
+		configKlt.maxPerPixelError = 10;
 
-		return new PyramidKltForCombined<T, T>(kltConfig,
-				featureRadius,scales,imageType,imageType);
+		return new PyramidKltForCombined<T, T>(configKlt,featureRadius,imageType,imageType);
 	}
 }

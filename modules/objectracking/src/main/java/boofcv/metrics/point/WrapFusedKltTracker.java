@@ -10,6 +10,7 @@ import boofcv.factory.filter.derivative.FactoryDerivative;
 import boofcv.factory.transform.pyramid.FactoryPyramid;
 import boofcv.struct.image.ImageGray;
 import boofcv.struct.image.ImageType;
+import boofcv.struct.pyramid.ConfigDiscreteLevels;
 import boofcv.struct.pyramid.PyramidDiscrete;
 import georegression.struct.point.Point2D_F64;
 
@@ -47,9 +48,7 @@ public class WrapFusedKltTracker <I extends ImageGray<I>, D extends ImageGray<D>
 
 		gradient = FactoryDerivative.sobel(imageType, derivType);
 
-		int pyramidScaling[] = tracker.pyramidScaling;
-
-		pyramid = FactoryPyramid.discreteGaussian(pyramidScaling,-1,2,true,
+		pyramid = FactoryPyramid.discreteGaussian(ConfigDiscreteLevels.levels(4),-1,2,true,
 				ImageType.single(imageType));
 	}
 

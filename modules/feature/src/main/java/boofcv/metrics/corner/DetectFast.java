@@ -35,8 +35,8 @@ public class DetectFast {
 		alg.process(raw,intensity);
 
 		QueueCorner found = new QueueCorner();
-		found.addAll(alg.getCornersHigh());
-		found.addAll(alg.getCornersLow());
+		found.copyAll(alg.getCornersHigh());
+		found.copyAll(alg.getCornersLow());
 
 		PrintStream fos = new PrintStream(outputDirectory+FILE_NAME);
 
