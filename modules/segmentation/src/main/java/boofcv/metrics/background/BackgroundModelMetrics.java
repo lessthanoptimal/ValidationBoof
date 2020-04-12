@@ -39,7 +39,7 @@ public class BackgroundModelMetrics<T extends ImageBase<T>> {
 
         Map<Integer,String> truthPaths = loadTruth(new File(directory,"motion"));
 
-        GrayU8 segment = new GrayU8(sequence.getNextWidth(),sequence.getNextHeight());
+        GrayU8 segment = new GrayU8(sequence.getWidth(),sequence.getHeight());
 
         List<ImageMetrics> results = new ArrayList<>();
 

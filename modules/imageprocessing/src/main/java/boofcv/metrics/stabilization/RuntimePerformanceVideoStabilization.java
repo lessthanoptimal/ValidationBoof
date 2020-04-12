@@ -36,7 +36,7 @@ public class RuntimePerformanceVideoStabilization< T extends ImageBase<T>> {
 			SimpleImageSequence<T> sequence = DefaultMediaManager.INSTANCE.openVideo(f.getPath(),imageType);
 			sequence.setLoop(false);
 
-			stitcher.configure(sequence.getNextWidth(), sequence.getNextHeight(), null);
+			stitcher.configure(sequence.getWidth(), sequence.getHeight(), null);
 			stitcher.reset();
 
 			try {

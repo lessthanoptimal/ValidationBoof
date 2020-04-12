@@ -136,8 +136,8 @@ public class PointTrackerRegression extends BaseRegression implements ImageRegre
 
 		ConfigFastHessian configFH = new ConfigFastHessian();
 		configFH.maxFeaturesPerScale = 200;
-		configFH.extractRadius = 2;
-		configFH.detectThreshold = 1;
+		configFH.extract.radius = 2;
+		configFH.extract.threshold = 1;
 
 		Info info = new Info();
 		info.name = "FhKltSurf";
@@ -158,8 +158,8 @@ public class PointTrackerRegression extends BaseRegression implements ImageRegre
 		OrientationImage orientation = new OrientationIntegralToImage(ori,bandType,iiType);
 
 		DescribeRegionPoint describe = FactoryDescribeRegionPoint.brief(new ConfigBrief(false),bandType);
-		ScoreAssociation score = FactoryAssociation.defaultScore(describe.getDescriptionType());
-		AssociateDescription associate = FactoryAssociation.greedy(score,Double.MAX_VALUE,true);
+		ScoreAssociation scorer = FactoryAssociation.defaultScore(describe.getDescriptionType());
+		AssociateDescription associate = DefaultConfigs.associateGreedy(scorer);
 		AssociateDescription2D associate2D = new AssociateDescTo2D(associate);
 
 		Info info = new Info();
@@ -181,8 +181,8 @@ public class PointTrackerRegression extends BaseRegression implements ImageRegre
 		GeneralFeatureDetector detector = FactoryFeatureExtractor.general(intensity,nonmax,600);
 
 		DescribeRegionPoint describe = FactoryDescribeRegionPoint.pixelNCC(7,7,bandType);
-		ScoreAssociation score = FactoryAssociation.defaultScore(describe.getDescriptionType());
-		AssociateDescription associate = FactoryAssociation.greedy(score,Double.MAX_VALUE,true);
+		ScoreAssociation scorer = FactoryAssociation.defaultScore(describe.getDescriptionType());
+		AssociateDescription associate = DefaultConfigs.associateGreedy(scorer);
 		AssociateDescription2D associate2D = new AssociateDescTo2D(associate);
 
 		Info info = new Info();
@@ -204,8 +204,8 @@ public class PointTrackerRegression extends BaseRegression implements ImageRegre
 		GeneralFeatureDetector detector = FactoryFeatureExtractor.general(intensity,nonmax,600);
 
 		DescribeRegionPoint describe = FactoryDescribeRegionPoint.pixelNCC(7,7,bandType);
-		ScoreAssociation score = FactoryAssociation.defaultScore(describe.getDescriptionType());
-		AssociateDescription associate = FactoryAssociation.greedy(score,Double.MAX_VALUE,true);
+		ScoreAssociation scorer = FactoryAssociation.defaultScore(describe.getDescriptionType());
+		AssociateDescription associate = DefaultConfigs.associateGreedy(scorer);
 		AssociateDescription2D associate2D = new AssociateDescTo2D(associate);
 
 		Info info = new Info();
@@ -226,8 +226,8 @@ public class PointTrackerRegression extends BaseRegression implements ImageRegre
 		GeneralFeatureDetector detector = FactoryFeatureExtractor.general(intensity, nonmax, 300);
 
 		DescribeRegionPoint describe = FactoryDescribeRegionPoint.pixelNCC(7,7,bandType);
-		ScoreAssociation score = FactoryAssociation.defaultScore(describe.getDescriptionType());
-		AssociateDescription associate = FactoryAssociation.greedy(score,Double.MAX_VALUE,true);
+		ScoreAssociation scorer = FactoryAssociation.defaultScore(describe.getDescriptionType());
+		AssociateDescription associate = DefaultConfigs.associateGreedy(scorer);
 		AssociateDescription2D associate2D = new AssociateDescTo2D(associate);
 
 		Info info = new Info();

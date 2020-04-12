@@ -97,7 +97,7 @@ public class GenerateCornerFeatureFiles {
 		int radius = 2;
 		ConfigGeneralDetector confDector = new ConfigGeneralDetector(200,radius,0.1f);
 
-		out.add( new AlgInfo("FAST",FactoryDetectPoint.createFast(null,confDector,inputType)) );
+		out.add( new AlgInfo("FAST",FactoryDetectPoint.createFast(confDector,null,inputType)) );
 		out.add( new AlgInfo("ShiTomasi",FactoryDetectPoint.createShiTomasi(confDector,
 				new ConfigShiTomasi(false,radius),derivType)) );
 		out.add( new AlgInfo("ShiTomasiW",FactoryDetectPoint.createShiTomasi(confDector,
@@ -113,8 +113,7 @@ public class GenerateCornerFeatureFiles {
 				FactoryIntensityPoint.hessian(HessianBlobIntensity.Type.DETERMINANT,derivType);
 		GeneralFeatureIntensity intensityHessianTrace =
 				FactoryIntensityPoint.hessian(HessianBlobIntensity.Type.TRACE,derivType);
-		GeneralFeatureIntensity intensityLaplacian =
-				FactoryIntensityPoint.laplacian();
+		GeneralFeatureIntensity intensityLaplacian = FactoryIntensityPoint.laplacian(inputType);
 
 		out.add( new AlgInfo("HessianDet",FactoryDetectPoint.createGeneral(intensityHessianDet,confDector)) );
 		out.add( new AlgInfo("HessianTrace",FactoryDetectPoint.createGeneral(intensityHessianTrace,confDector)) );

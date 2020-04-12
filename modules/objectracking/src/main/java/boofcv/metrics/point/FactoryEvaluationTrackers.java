@@ -20,6 +20,7 @@ import boofcv.alg.tracker.combined.CombinedTrackerScalePoint;
 import boofcv.alg.tracker.combined.PyramidKltForCombined;
 import boofcv.alg.tracker.klt.ConfigKlt;
 import boofcv.alg.transform.ii.GIntegralImageOps;
+import boofcv.common.DefaultConfigs;
 import boofcv.factory.feature.associate.FactoryAssociation;
 import boofcv.factory.feature.describe.FactoryDescribeRegionPoint;
 import boofcv.factory.feature.detect.extract.FactoryFeatureExtractor;
@@ -78,7 +79,7 @@ public class FactoryEvaluationTrackers<T extends ImageGray<T>> {
 				FactoryDescribeRegionPoint.surfStable(null, imageType);
 
 		ScoreAssociation<BrightFeature> scorer = FactoryAssociation.scoreEuclidean(describe.getDescriptionType(),true);
-		AssociateDescription<BrightFeature> associate = FactoryAssociation.greedy(scorer, Double.MAX_VALUE, true);
+		AssociateDescription<BrightFeature> associate = DefaultConfigs.associateGreedy(scorer);
 		OrientationImage<T> orientation = createOrientation();
 
 		DetectDescribeFusion<T,BrightFeature> fused =
@@ -93,7 +94,8 @@ public class FactoryEvaluationTrackers<T extends ImageGray<T>> {
 		if( useFast ) {
 			Class derivType = GImageDerivativeOps.getDerivativeType(imageType);
 			GeneralFeatureDetector det = FactoryDetectPoint.createFast(
-					new ConfigFastCorner(6,9), new ConfigGeneralDetector(600,10,6), imageType);
+					new ConfigGeneralDetector(600,10,6),
+					new ConfigFastCorner(6,9), imageType);
 			detector = FactoryInterestPoint.wrapPoint(det,1,imageType,derivType);
 			orientation = null;
 		} else {
@@ -104,7 +106,7 @@ public class FactoryEvaluationTrackers<T extends ImageGray<T>> {
 		DescribeRegionPoint<T,TupleDesc_B> describe = FactoryDescribeRegionPoint.
 				brief(new ConfigBrief(16, 512, -1, 4, useFast), imageType);
 		ScoreAssociation<TupleDesc_B> scorer = FactoryAssociation.scoreHamming(describe.getDescriptionType());
-		AssociateDescription<TupleDesc_B> associate = FactoryAssociation.greedy(scorer,Double.MAX_VALUE,true);
+		AssociateDescription<TupleDesc_B> associate = DefaultConfigs.associateGreedy(scorer);
 
 		DetectDescribeFusion<T,TupleDesc_B> fused =
 				new DetectDescribeFusion<T, TupleDesc_B>(detector,orientation,describe);
@@ -118,7 +120,7 @@ public class FactoryEvaluationTrackers<T extends ImageGray<T>> {
 		DescribeRegionPoint<T,BrightFeature> describe =
 				FactoryDescribeRegionPoint.surfStable(null, imageType);
 		ScoreAssociation<BrightFeature> scorer = FactoryAssociation.scoreEuclidean(describe.getDescriptionType(),true);
-		AssociateDescription<BrightFeature> associate = FactoryAssociation.greedy(scorer,Double.MAX_VALUE,true);
+		AssociateDescription<BrightFeature> associate = DefaultConfigs.associateGreedy(scorer);
 
 		OrientationImage<T> orientation = createOrientation();
 
@@ -146,7 +148,7 @@ public class FactoryEvaluationTrackers<T extends ImageGray<T>> {
 		DescribeRegionPoint<T,TupleDesc_B> describe = FactoryDescribeRegionPoint.
 				brief(new ConfigBrief(16, 512, -1, 4, isFixed), imageType);
 		ScoreAssociation<TupleDesc_B> scorer = FactoryAssociation.scoreHamming(describe.getDescriptionType());
-		AssociateDescription<TupleDesc_B> associate = FactoryAssociation.greedy(scorer,Double.MAX_VALUE,true);
+		AssociateDescription<TupleDesc_B> associate = DefaultConfigs.associateGreedy(scorer);
 
 		PyramidKltForCombined<T, T> klt = defaultFusedKlt();
 

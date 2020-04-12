@@ -23,6 +23,7 @@ import boofcv.abst.feature.associate.AssociateDescription;
 import boofcv.abst.feature.associate.ScoreAssociateEuclideanSq_F64;
 import boofcv.abst.feature.associate.ScoreAssociation;
 import boofcv.common.BoofRegressionConstants;
+import boofcv.factory.feature.associate.ConfigAssociateGreedy;
 import boofcv.factory.feature.associate.FactoryAssociation;
 import boofcv.regression.DetectDescribeRegression;
 import boofcv.struct.feature.AssociatedIndex;
@@ -323,9 +324,13 @@ public class BenchmarkFeatureDescribeStability {
 	public static void main( String args[] ) throws FileNotFoundException {
 		double tolerance = 3;
 
-		ScoreAssociation score = new ScoreAssociateEuclideanSq_F64();
 		// No backwards validation.  Want to show strength of descriptor and post processing validation
-		AssociateDescription<TupleDesc_F64> assoc = FactoryAssociation.greedy(score, Double.MAX_VALUE, false);
+		ConfigAssociateGreedy configGreedy = new ConfigAssociateGreedy();
+		configGreedy.forwardsBackwards = false;
+		configGreedy.maxErrorThreshold = -1;
+
+		ScoreAssociation<TupleDesc_F64> score = new ScoreAssociateEuclideanSq_F64();
+		AssociateDescription<TupleDesc_F64> assoc = FactoryAssociation.greedy(configGreedy,score);
 
 		BenchmarkFeatureDescribeStability app = new BenchmarkFeatureDescribeStability(assoc, "","",tolerance);
 

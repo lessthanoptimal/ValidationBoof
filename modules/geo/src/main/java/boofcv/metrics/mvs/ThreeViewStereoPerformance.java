@@ -16,6 +16,7 @@ import boofcv.alg.geo.rectify.RectifyCalibrated;
 import boofcv.alg.misc.ImageStatistics;
 import boofcv.alg.sfm.structure.ThreeViewEstimateMetricScene;
 import boofcv.core.image.ConvertImage;
+import boofcv.factory.feature.associate.ConfigAssociateGreedy;
 import boofcv.factory.feature.associate.FactoryAssociation;
 import boofcv.factory.feature.detdesc.FactoryDetectDescribe;
 import boofcv.factory.feature.disparity.ConfigDisparityBMBest5;
@@ -170,8 +171,13 @@ public class ThreeViewStereoPerformance {
             features03.grow().setTo(detDesc.getDescription(i));
         }
 
+        ConfigAssociateGreedy configGreedy = new ConfigAssociateGreedy();
+        configGreedy.forwardsBackwards = true;
+        configGreedy.maxErrorThreshold = 0.1;
+        // TODO use score ratio to improve results
+
         ScoreAssociation<BrightFeature> scorer = FactoryAssociation.scoreEuclidean(BrightFeature.class,true);
-        AssociateDescription<BrightFeature> associate = FactoryAssociation.greedy(scorer, 0.1, true);
+        AssociateDescription<BrightFeature> associate = FactoryAssociation.greedy(configGreedy,scorer);
 
         AssociateThreeByPairs<BrightFeature> associateThree = new AssociateThreeByPairs<>(associate,BrightFeature.class);
 

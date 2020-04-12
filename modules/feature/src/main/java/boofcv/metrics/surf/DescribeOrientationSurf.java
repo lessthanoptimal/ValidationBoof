@@ -80,12 +80,12 @@ public class DescribeOrientationSurf<T extends ImageGray<T>, II extends ImageGra
 	}
 
 	@Override
-	public boolean requiresRadius() {
+	public boolean isScalable() {
 		return false;
 	}
 
 	@Override
-	public boolean requiresOrientation() {
+	public boolean isOriented() {
 		return true;
 	}
 

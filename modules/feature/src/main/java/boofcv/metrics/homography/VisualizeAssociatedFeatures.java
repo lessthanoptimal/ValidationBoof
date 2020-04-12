@@ -22,6 +22,7 @@ package boofcv.metrics.homography;
 import boofcv.abst.feature.associate.AssociateDescription;
 import boofcv.abst.feature.associate.ScoreAssociateEuclideanSq_F64;
 import boofcv.abst.feature.associate.ScoreAssociation;
+import boofcv.factory.feature.associate.ConfigAssociateGreedy;
 import boofcv.factory.feature.associate.FactoryAssociation;
 import boofcv.gui.feature.AssociationPanel;
 import boofcv.gui.image.ShowImages;
@@ -107,7 +108,11 @@ public class VisualizeAssociatedFeatures {
 		ScoreAssociation score = new ScoreAssociateEuclideanSq_F64();
 
 		// No backwards validation.  Want to show strength of descriptor and post processing validation
-		AssociateDescription<TupleDesc_F64> assoc = FactoryAssociation.greedy(score, Double.MAX_VALUE, false);
+		ConfigAssociateGreedy configGreedy = new ConfigAssociateGreedy();
+		configGreedy.forwardsBackwards = false;
+		configGreedy.maxErrorThreshold = -1;
+
+		AssociateDescription<TupleDesc_F64> assoc = FactoryAssociation.greedy(configGreedy,score);
 
 		VisualizeAssociatedFeatures app = new VisualizeAssociatedFeatures(assoc,"data/bikes/",
 				"SIFT_REFERENCE","img1","img2");

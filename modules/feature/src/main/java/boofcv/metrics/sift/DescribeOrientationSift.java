@@ -108,12 +108,12 @@ public class DescribeOrientationSift
 	}
 
 	@Override
-	public boolean requiresRadius() {
+	public boolean isScalable() {
 		return true;
 	}
 
 	@Override
-	public boolean requiresOrientation() {
+	public boolean isOriented() {
 		return false;
 	}
 

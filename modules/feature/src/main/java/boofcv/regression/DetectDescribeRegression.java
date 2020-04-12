@@ -14,11 +14,7 @@ import boofcv.abst.feature.orientation.OrientationImage;
 import boofcv.abst.feature.orientation.OrientationIntegral;
 import boofcv.abst.feature.orientation.OrientationIntegralToImage;
 import boofcv.alg.transform.ii.GIntegralImageOps;
-import boofcv.common.BaseRegression;
-import boofcv.common.BoofRegressionConstants;
-import boofcv.common.ImageRegression;
-import boofcv.common.RegressionRunner;
-import boofcv.factory.feature.associate.FactoryAssociation;
+import boofcv.common.*;
 import boofcv.factory.feature.describe.FactoryDescribeRegionPoint;
 import boofcv.factory.feature.detdesc.FactoryDetectDescribe;
 import boofcv.factory.feature.detect.interest.FactoryInterestPoint;
@@ -70,8 +66,8 @@ public class DetectDescribeRegression extends BaseRegression implements ImageReg
 //		all.add(briefSoFH(bandType));  // TODO add support for binary descriptors
 		all.add(sift(bandType));
 
-		ScoreAssociation score = new ScoreAssociateEuclideanSq_F64();
-		AssociateDescription<TupleDesc_F64> assoc = FactoryAssociation.greedy(score, Double.MAX_VALUE, true);
+		ScoreAssociation<TupleDesc_F64> score = new ScoreAssociateEuclideanSq_F64();
+		AssociateDescription<TupleDesc_F64> assoc = DefaultConfigs.associateGreedy(score);
 
 		String tmp = BoofRegressionConstants.tempDir().toString();
 
