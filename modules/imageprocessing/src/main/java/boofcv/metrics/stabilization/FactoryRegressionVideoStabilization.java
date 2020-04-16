@@ -1,6 +1,6 @@
 package boofcv.metrics.stabilization;
 
-import boofcv.abst.feature.detect.interest.ConfigGeneralDetector;
+import boofcv.abst.feature.detect.interest.ConfigPointDetector;
 import boofcv.abst.sfm.d2.ImageMotion2D;
 import boofcv.abst.sfm.d2.PlToGrayMotion2D;
 import boofcv.abst.tracker.PointTracker;
@@ -21,16 +21,16 @@ public class FactoryRegressionVideoStabilization {
     Tuple2<String,StitchingFromMotion2D<T,?>> createKlt(ImageType<T> imageType )
     {
         // Configure the feature detector
-        ConfigGeneralDetector confDetector = new ConfigGeneralDetector();
-        confDetector.threshold = 10;
-        confDetector.maxFeatures = 300;
-        confDetector.radius = 2;
+        ConfigPointDetector configDet = new ConfigPointDetector();
+        configDet.general.threshold = 10;
+        configDet.general.maxFeatures = 300;
+        configDet.general.radius = 2;
 
         Class imageClass = imageType.getImageClass();
         Class derivClass = GImageDerivativeOps.getDerivativeType(imageClass);
 
         // Use a KLT tracker
-        PointTracker<T> tracker = FactoryPointTracker.klt(4,confDetector,3,
+        PointTracker<T> tracker = FactoryPointTracker.klt(4,configDet,3,
                 imageClass,derivClass);
 
         // This estimates the 2D image motion

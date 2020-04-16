@@ -10,7 +10,7 @@ import boofcv.abst.feature.detect.extract.ConfigExtract;
 import boofcv.abst.feature.detect.extract.NonMaxSuppression;
 import boofcv.abst.feature.detect.intensity.GeneralFeatureIntensity;
 import boofcv.abst.feature.detect.interest.ConfigFastHessian;
-import boofcv.abst.feature.detect.interest.ConfigGeneralDetector;
+import boofcv.abst.feature.detect.interest.ConfigPointDetector;
 import boofcv.abst.feature.detect.interest.InterestPointDetector;
 import boofcv.abst.feature.orientation.OrientationImage;
 import boofcv.abst.feature.orientation.OrientationIntegral;
@@ -18,6 +18,8 @@ import boofcv.abst.feature.orientation.OrientationIntegralToImage;
 import boofcv.abst.tracker.ConfigTrackerDda;
 import boofcv.abst.tracker.PointTracker;
 import boofcv.alg.feature.detect.interest.GeneralFeatureDetector;
+import boofcv.alg.feature.detect.selector.FeatureSelectLimit;
+import boofcv.alg.feature.detect.selector.FeatureSelectNBest;
 import boofcv.alg.filter.derivative.GImageDerivativeOps;
 import boofcv.alg.tracker.klt.ConfigPKlt;
 import boofcv.alg.transform.ii.GIntegralImageOps;
@@ -178,7 +180,8 @@ public class PointTrackerRegression extends BaseRegression implements ImageRegre
 		configExtract.detectMaximums = intensity.localMaximums();
 		configExtract.detectMinimums = intensity.localMinimums();
 		NonMaxSuppression nonmax = FactoryFeatureExtractor.nonmax(configExtract);
-		GeneralFeatureDetector detector = FactoryFeatureExtractor.general(intensity,nonmax,600);
+		FeatureSelectLimit select = new FeatureSelectNBest();
+		GeneralFeatureDetector detector = FactoryFeatureExtractor.general(intensity,nonmax,select,600);
 
 		DescribeRegionPoint describe = FactoryDescribeRegionPoint.pixelNCC(7,7,bandType);
 		ScoreAssociation scorer = FactoryAssociation.defaultScore(describe.getDescriptionType());
@@ -201,7 +204,8 @@ public class PointTrackerRegression extends BaseRegression implements ImageRegre
 		configExtract.detectMaximums = intensity.localMaximums();
 		configExtract.detectMinimums = intensity.localMinimums();
 		NonMaxSuppression nonmax = FactoryFeatureExtractor.nonmax(configExtract);
-		GeneralFeatureDetector detector = FactoryFeatureExtractor.general(intensity,nonmax,600);
+		FeatureSelectLimit select = new FeatureSelectNBest();
+		GeneralFeatureDetector detector = FactoryFeatureExtractor.general(intensity,nonmax,select,600);
 
 		DescribeRegionPoint describe = FactoryDescribeRegionPoint.pixelNCC(7,7,bandType);
 		ScoreAssociation scorer = FactoryAssociation.defaultScore(describe.getDescriptionType());
@@ -223,7 +227,8 @@ public class PointTrackerRegression extends BaseRegression implements ImageRegre
 		configExtract.detectMaximums = intensity.localMaximums();
 		configExtract.detectMinimums = intensity.localMinimums();
 		NonMaxSuppression nonmax = FactoryFeatureExtractor.nonmax(configExtract);
-		GeneralFeatureDetector detector = FactoryFeatureExtractor.general(intensity, nonmax, 300);
+		FeatureSelectLimit select = new FeatureSelectNBest();
+		GeneralFeatureDetector detector = FactoryFeatureExtractor.general(intensity, nonmax, select,300);
 
 		DescribeRegionPoint describe = FactoryDescribeRegionPoint.pixelNCC(7,7,bandType);
 		ScoreAssociation scorer = FactoryAssociation.defaultScore(describe.getDescriptionType());
@@ -243,7 +248,10 @@ public class PointTrackerRegression extends BaseRegression implements ImageRegre
 		ConfigPKlt configKlt = new ConfigPKlt();
 		configKlt.pyramidLevels = ConfigDiscreteLevels.levels(4);
 
-		ConfigGeneralDetector configDet = new ConfigGeneralDetector(800,8,1);
+		ConfigPointDetector configDet = new ConfigPointDetector();
+		configDet.general.maxFeatures = 800;
+		configDet.general.radius = 8;
+		configDet.general.threshold = 1;
 
 		Info info = new Info();
 		info.name = "DefaultKLT";

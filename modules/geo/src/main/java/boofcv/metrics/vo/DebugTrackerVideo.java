@@ -1,6 +1,6 @@
 package boofcv.metrics.vo;
 
-import boofcv.abst.feature.detect.interest.ConfigGeneralDetector;
+import boofcv.abst.feature.detect.interest.ConfigPointDetector;
 import boofcv.abst.tracker.PointTrack;
 import boofcv.abst.tracker.PointTracker;
 import boofcv.alg.tracker.klt.ConfigPKlt;
@@ -299,12 +299,16 @@ public class DebugTrackerVideo <T extends ImageGray<T>> implements MouseListener
 
 		ConfigPKlt configPKlt = new ConfigPKlt();
 		configPKlt.templateRadius = 3;
+		ConfigPointDetector configDet = new ConfigPointDetector();
+		configDet.general.maxFeatures = -1;
+		configDet.general.radius = 5;
+		configDet.general.threshold = 300;
 
 //		ImagePointTracker<GrayF32> tracker = FactoryPointSequentialTracker.dda_ST_BRIEF(-1,200,5,500,imageType,null);
 //		ImagePointTracker<GrayF32> tracker =
 //				FactoryPointSequentialTracker.dda_FH_SURF(500,2,200,1,true,imageType);
 		PointTracker<GrayF32> tracker =
-				FactoryPointTracker.klt(configPKlt, new ConfigGeneralDetector(-2,5,300), imageType, GrayF32.class);
+				FactoryPointTracker.klt(configPKlt, configDet, imageType, GrayF32.class);
 
 		DebugTrackerVideo app = new DebugTrackerVideo(tracker,data,imageType);
 		app.processSequence();

@@ -7,6 +7,7 @@ import boofcv.abst.feature.detect.extract.ConfigExtract;
 import boofcv.abst.feature.detect.extract.NonMaxSuppression;
 import boofcv.abst.feature.detect.intensity.GeneralFeatureIntensity;
 import boofcv.abst.feature.detect.interest.ConfigGeneralDetector;
+import boofcv.abst.feature.detect.interest.ConfigPointDetector;
 import boofcv.abst.feature.detect.interest.DetectorInterestPointMulti;
 import boofcv.abst.feature.detect.interest.GeneralToInterestMulti;
 import boofcv.abst.feature.disparity.StereoDisparitySparse;
@@ -14,6 +15,7 @@ import boofcv.abst.sfm.d3.StereoVisualOdometry;
 import boofcv.abst.tracker.PointTracker;
 import boofcv.abst.tracker.PointTrackerTwoPass;
 import boofcv.alg.feature.detect.interest.GeneralFeatureDetector;
+import boofcv.alg.feature.detect.selector.FeatureSelectNBest;
 import boofcv.alg.filter.derivative.GImageDerivativeOps;
 import boofcv.alg.tracker.klt.ConfigPKlt;
 import boofcv.common.BaseRegression;
@@ -148,10 +150,13 @@ public class StereoVisualOdometryRegression extends BaseRegression implements Im
 		configKlt.pyramidLevels = ConfigDiscreteLevels.levels(4);
 		configKlt.config.maxPerPixelError = 50;
 
-		ConfigGeneralDetector configDetector = new ConfigGeneralDetector(600,3,1);
+		ConfigPointDetector configDet = new ConfigPointDetector();
+		configDet.general.maxFeatures = 600;
+		configDet.general.radius = 3;
+		configDet.general.threshold = 1;
 
-		PointTracker trackerLeft = FactoryPointTracker.klt(configKlt, configDetector, bandType, derivType);
-		PointTracker trackerRight = FactoryPointTracker.klt(configKlt, configDetector, bandType, derivType);
+		PointTracker trackerLeft = FactoryPointTracker.klt(configKlt, configDet, bandType, derivType);
+		PointTracker trackerRight = FactoryPointTracker.klt(configKlt, configDet, bandType, derivType);
 
 		DescribeRegionPoint describe = FactoryDescribeRegionPoint.surfFast(null, bandType);
 
@@ -170,7 +175,7 @@ public class StereoVisualOdometryRegression extends BaseRegression implements Im
 		GeneralFeatureIntensity intensity =
 				FactoryIntensityPoint.shiTomasi(1, false, derivType);
 		NonMaxSuppression nonmax = FactoryFeatureExtractor.nonmax(new ConfigExtract(2, 50, 0, true, false, true));
-		GeneralFeatureDetector general = new GeneralFeatureDetector(intensity,nonmax);
+		GeneralFeatureDetector general = new GeneralFeatureDetector(intensity,nonmax, new FeatureSelectNBest());
 		general.setMaxFeatures(600);
 		DetectorInterestPointMulti detector = new GeneralToInterestMulti(general,11.0,bandType,derivType);
 		DescribeRegionPoint describe = FactoryDescribeRegionPoint.surfFast(null, bandType);
