@@ -13,6 +13,7 @@ import georegression.struct.point.Point2D_I32;
 import georegression.struct.shapes.Polygon2D_F64;
 
 import java.io.*;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,7 +26,7 @@ public class UtilShapeDetector {
 		PolylineSettings settings = new PolylineSettings();
 
 		try {
-			BufferedReader reader = new BufferedReader(new FileReader(file));
+			BufferedReader reader = Files.newBufferedReader(file.toPath());
 
 			String line = ParseHelper.skipComments(reader);
 

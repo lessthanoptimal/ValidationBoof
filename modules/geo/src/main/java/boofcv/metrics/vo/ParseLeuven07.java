@@ -8,8 +8,9 @@ import org.ejml.data.DMatrixRMaj;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 /**
  * Parse for Leuven07 stereo visual odometry dataset
@@ -73,10 +74,11 @@ public class ParseLeuven07 {
 	 */
 	private void loadCalibration(String fileName, DMatrixRMaj K, Se3_F64 motion) {
 		try {
-			BufferedReader reader = new BufferedReader(new FileReader(fileName));
+
+			BufferedReader reader = Files.newBufferedReader(Paths.get(fileName));
 
 			// calibration matrix
-			double line[] = readNumbers(reader);
+			double[] line = readNumbers(reader);
 			K.set(0,0,line[0]); K.set(0,1,line[1]); K.set(0,2,line[2]);
 			line = readNumbers(reader);
 			K.set(1,0,line[0]); K.set(1,1,line[1]); K.set(1,2,line[2]);
