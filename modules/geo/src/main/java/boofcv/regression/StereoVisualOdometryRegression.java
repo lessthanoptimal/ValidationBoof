@@ -6,14 +6,13 @@ import boofcv.abst.feature.detdesc.DetectDescribeMultiFusion;
 import boofcv.abst.feature.detect.extract.ConfigExtract;
 import boofcv.abst.feature.detect.extract.NonMaxSuppression;
 import boofcv.abst.feature.detect.intensity.GeneralFeatureIntensity;
-import boofcv.abst.feature.detect.interest.ConfigGeneralDetector;
 import boofcv.abst.feature.detect.interest.ConfigPointDetector;
 import boofcv.abst.feature.detect.interest.DetectorInterestPointMulti;
 import boofcv.abst.feature.detect.interest.GeneralToInterestMulti;
+import boofcv.abst.feature.detect.interest.PointDetectorTypes;
 import boofcv.abst.feature.disparity.StereoDisparitySparse;
 import boofcv.abst.sfm.d3.StereoVisualOdometry;
 import boofcv.abst.tracker.PointTracker;
-import boofcv.abst.tracker.PointTrackerTwoPass;
 import boofcv.alg.feature.detect.interest.GeneralFeatureDetector;
 import boofcv.alg.feature.detect.selector.FeatureSelectNBest;
 import boofcv.alg.filter.derivative.GImageDerivativeOps;
@@ -25,12 +24,14 @@ import boofcv.common.RegressionRunner;
 import boofcv.factory.feature.describe.FactoryDescribeRegionPoint;
 import boofcv.factory.feature.detect.extract.FactoryFeatureExtractor;
 import boofcv.factory.feature.detect.intensity.FactoryIntensityPoint;
+import boofcv.factory.feature.detect.selector.ConfigSelectLimit;
 import boofcv.factory.feature.disparity.ConfigDisparityBM;
 import boofcv.factory.feature.disparity.DisparityError;
 import boofcv.factory.feature.disparity.FactoryStereoDisparity;
+import boofcv.factory.sfm.ConfigVisOdomDepthPnP;
 import boofcv.factory.sfm.FactoryVisualOdometry;
 import boofcv.factory.tracker.FactoryPointTracker;
-import boofcv.factory.tracker.FactoryPointTrackerTwoPass;
+import boofcv.factory.transform.census.CensusVariants;
 import boofcv.metrics.vo.*;
 import boofcv.struct.image.GrayF32;
 import boofcv.struct.image.ImageDataType;
@@ -115,29 +116,48 @@ public class StereoVisualOdometryRegression extends BaseRegression implements Im
 		Class derivType = GImageDerivativeOps.getDerivativeType(bandType);
 
 		ConfigDisparityBM configDisparity = new ConfigDisparityBM();
-		configDisparity.errorType = DisparityError.SAD;
-		configDisparity.disparityMin = 10;
-		configDisparity.disparityRange = 110;
+		configDisparity.errorType = DisparityError.CENSUS;
+		configDisparity.configCensus.variant = CensusVariants.BLOCK_5_5;
+		configDisparity.disparityMin = 0;
+		configDisparity.disparityRange = 100;
 		configDisparity.maxPerPixelError = 30;
-		configDisparity.regionRadiusX = 2;
-		configDisparity.regionRadiusY = 2;
-		configDisparity.texture = 0.1;
+		configDisparity.regionRadiusX = 3;
+		configDisparity.regionRadiusY = 3;
+		configDisparity.texture = 0.05;
+		configDisparity.validateRtoL = 1;
 		configDisparity.subpixel = true;
 
-		StereoDisparitySparse<GrayF32> disparity =
-				FactoryStereoDisparity.sparseRectifiedBM(configDisparity, bandType);
-
 		ConfigPKlt configKlt = new ConfigPKlt();
-		configKlt.pyramidLevels = ConfigDiscreteLevels.levels(4);
-		configKlt.templateRadius = 3;
+		configKlt.pyramidLevels = ConfigDiscreteLevels.levels(7);
+		configKlt.templateRadius = 5;
+		configKlt.pruneClose = true;
+		configKlt.config.maxIterations = 20;
+		configKlt.config.maxPerPixelError = 25;
+		configKlt.toleranceFB = 3;
 
-		PointTrackerTwoPass tracker = FactoryPointTrackerTwoPass.klt(configKlt, new ConfigGeneralDetector(600, 3, 1),
-				bandType, derivType);
+		ConfigPointDetector configDet = new ConfigPointDetector();
+		configDet.type = PointDetectorTypes.SHI_TOMASI;
+		configDet.general.radius = 6;
+		configDet.general.threshold = 50f;
+		configDet.general.maxFeatures = 600;
+		configDet.general.selector = ConfigSelectLimit.selectBestN();
+
+		ConfigVisOdomDepthPnP configVO = new ConfigVisOdomDepthPnP();
+		configVO.dropOutlierTracks = 2;
+		configVO.maxKeyFrames = 5;
+		configVO.bundleIterations = 3;
+		configVO.bundleMaxFeaturesPerFrame = 200;
+		configVO.bundleMinObservations = 3;
+		configVO.keyframes.geoMinCoverage = 0.4;
+
+		StereoDisparitySparse<GrayF32> disparity = FactoryStereoDisparity.sparseRectifiedBM(configDisparity, bandType);
+		PointTracker tracker = FactoryPointTracker.klt(configKlt, configDet,bandType, derivType);
+		StereoVisualOdometry visodom = FactoryVisualOdometry.stereoDepthPnP(configVO,disparity,tracker,bandType);
 
 		Info ret = new Info();
 		ret.name = "StereoDepth";
 		ret.imageType = ImageType.single(bandType);
-		ret.vo = FactoryVisualOdometry.stereoDepth(1.5, 120, 2, 200, 50, false, disparity, tracker, bandType);
+		ret.vo = visodom;
 
 		return ret;
 	}
