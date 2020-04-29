@@ -111,7 +111,7 @@ public class FiducialCommon {
 		// TODO fix this horrible hack
 		if( file.getPath().contains("binary") ||
 				file.getPath().contains("chessboard") ||
-				file.getPath().contains("uchiya")) {
+				file.getPath().contains("random_dots")) {
 			library = new LibraryBinary();
 		} else {
 			library = new LibraryImage();

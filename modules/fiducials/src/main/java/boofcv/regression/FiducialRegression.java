@@ -69,7 +69,7 @@ public class FiducialRegression extends BaseRegression implements ImageRegressio
 
 		process("CircleRegular", new EstimateCircleRegularToCamera(imageType), "circle_regular",false);
 
-		process("Uchiya", new EstimateUchiyaFiducialToCamera(imageType), "uchiya",false);
+		process("Uchiya", new EstimateUchiyaFiducialToCamera(imageType), "random_dots",false);
 	}
 
 	private void process(String name, BaseEstimateSquareFiducialToCamera estimate, String type, boolean ignoreOrder )
@@ -108,6 +108,8 @@ public class FiducialRegression extends BaseRegression implements ImageRegressio
 		PrintStream out = new PrintStream(new File(directory,outName));
 		BoofRegressionConstants.printGenerator(out,getClass());
 
+		estimate.needsIntrinsic = true;
+
 		EvaluateFiducialToCamera evaluate = new EvaluateFiducialToCamera();
 		evaluate.setJustSummary(true);
 		evaluate.setIgnoreWrongOrder(ignoreOrder);
@@ -128,6 +130,8 @@ public class FiducialRegression extends BaseRegression implements ImageRegressio
 		PrintStream out = new PrintStream(new File(directory,outName));
 		BoofRegressionConstants.printGenerator(out,getClass());
 
+		estimate.needsIntrinsic = true;
+
 		EvaluateStaticFiducialSequence evaluate = new EvaluateStaticFiducialSequence();
 		evaluate.setJustSummary(true);
 		evaluate.setMaxPixelError(maxPixelError);
@@ -144,6 +148,8 @@ public class FiducialRegression extends BaseRegression implements ImageRegressio
 	{
 		PrintStream out = new PrintStream(new File(directory,outName));
 		BoofRegressionConstants.printGenerator(out,getClass());
+
+		estimate.needsIntrinsic = false;
 
 		EvaluateAlwaysVisibleSequence evaluate = new EvaluateAlwaysVisibleSequence();
 		evaluate.setErrorStream(errorLog);
@@ -197,6 +203,7 @@ public class FiducialRegression extends BaseRegression implements ImageRegressio
 				errorLog.println();
 				errorLog.println(e.getMessage());
 			} catch( RuntimeException e ) {
+				out.println("\n\nFatal exception processing "+dataSet);
 				errorLog.println();
 				errorLog.println("ERROR in "+infoString+" processing data set "+dataSet);
 				System.out.println("ERROR in "+infoString+" processing data set "+dataSet);

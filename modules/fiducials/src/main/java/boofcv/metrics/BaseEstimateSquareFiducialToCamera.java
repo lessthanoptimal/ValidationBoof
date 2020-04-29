@@ -33,6 +33,9 @@ public abstract class BaseEstimateSquareFiducialToCamera<T extends ImageBase<T>>
 	File outputDirectory = new File(".");
 	public GrowQueue_F64 speed = new GrowQueue_F64();
 
+	// If true an intrinsic file is required to process the input
+	public boolean needsIntrinsic = true;
+
 	public abstract FiducialDetector<T> createDetector( File datasetDir );
 
 	public void initialize( File baseDirectory ) {
@@ -57,20 +60,29 @@ public abstract class BaseEstimateSquareFiducialToCamera<T extends ImageBase<T>>
 		List<String> files = loadImageFilesByPrefix(dataSetDir);
 		T image = detector.getInputType().createImage(1,1);
 
-		File fileIntrinsic = new File(dataSetDir,"intrinsic.txt");
 		CameraPinholeBrown intrinsic = null;
-		if( fileIntrinsic.exists() ) {
-			intrinsic = FiducialCommon.parseIntrinsic(fileIntrinsic);
-			detector.setLensDistortion(new LensDistortionBrown(intrinsic),intrinsic.width,intrinsic.height);
+		File fileIntrinsic = new File(dataSetDir, "intrinsic.txt");
+		if (fileIntrinsic.exists()) {
+			if (!needsIntrinsic) {
+				System.err.println("Intrinsic file when it doesn't need one. "+fileIntrinsic.getPath());
+			} else {
+				intrinsic = FiducialCommon.parseIntrinsic(fileIntrinsic);
+				detector.setLensDistortion(new LensDistortionBrown(intrinsic), intrinsic.width, intrinsic.height);
+			}
+		} else if( needsIntrinsic ) {
+			throw new RuntimeException("Intrinsic file required and not found. "+fileIntrinsic.getPath());
 		}
+
 		for( String path : files ) {
 			BufferedImage orig = UtilImageIO.loadImage(path);
 			image.reshape(orig.getWidth(),orig.getHeight());
 			ConvertBufferedImage.convertFrom(orig,image,true);
 
-			if( intrinsic != null && (intrinsic.width != image.width || intrinsic.height != image.height ))
-				throw new RuntimeException("Intrinsic's shape doesn't match input image shape. intrinsic = "+
-						intrinsic.width+"x"+intrinsic.height+" vs  image = "+image.width+"x"+image.height);
+			if( intrinsic != null && (intrinsic.width != image.width || intrinsic.height != image.height )) {
+				System.err.println("Intrinsic and image shape doesn't match. "+fileIntrinsic.getPath());
+				throw new RuntimeException("Intrinsic's shape doesn't match input image shape. intrinsic = " +
+						intrinsic.width + "x" + intrinsic.height + " vs  image = " + image.width + "x" + image.height);
+			}
 
 			long time0 = System.nanoTime();
 			detector.detect(image);
@@ -90,22 +102,27 @@ public abstract class BaseEstimateSquareFiducialToCamera<T extends ImageBase<T>>
 			Se3_F64 fiducialToSensor = new Se3_F64();
 			for (int i = 0; i < detector.totalFound(); i++) {
 				long which = detector.getId(i);
-				double fiducialWidth = library != null ? library.getWidth(which) : 1;
-				detector.getFiducialToCamera(i,fiducialToSensor);
-
-
-				DMatrixRMaj R = fiducialToSensor.getR();
-				Vector3D_F64 T = fiducialToSensor.getT();
-
-				// adjust translation for actual fiducial size
-				T.x *= fiducialWidth;
-				T.y *= fiducialWidth;
-				T.z *= fiducialWidth;
-
 				out.println(which);
-				out.printf("%.15f %.15f %.15f %.15f\n",R.get(0,0),R.get(0,1),R.get(0,2),T.x);
-				out.printf("%.15f %.15f %.15f %.15f\n",R.get(1,0),R.get(1,1),R.get(1,2),T.y);
-				out.printf("%.15f %.15f %.15f %.15f\n",R.get(2,0),R.get(2,1),R.get(2,2),T.z);
+
+				if( detector.is3D() ) {
+					detector.getFiducialToCamera(i, fiducialToSensor);
+					DMatrixRMaj R = fiducialToSensor.getR();
+					Vector3D_F64 T = fiducialToSensor.getT();
+
+					// adjust translation for actual fiducial size
+					double fiducialWidth = library != null ? library.getWidth(which) : 1;
+					T.x *= fiducialWidth;
+					T.y *= fiducialWidth;
+					T.z *= fiducialWidth;
+
+					out.printf("%.15f %.15f %.15f %.15f\n",R.get(0,0),R.get(0,1),R.get(0,2),T.x);
+					out.printf("%.15f %.15f %.15f %.15f\n",R.get(1,0),R.get(1,1),R.get(1,2),T.y);
+					out.printf("%.15f %.15f %.15f %.15f\n",R.get(2,0),R.get(2,1),R.get(2,2),T.z);
+				} else {
+					out.printf("%.15f %.15f %.15f %.15f\n",0.0,0.0,0.0,0.0);
+					out.printf("%.15f %.15f %.15f %.15f\n",0.0,0.0,0.0,0.0);
+					out.printf("%.15f %.15f %.15f %.15f\n",0.0,0.0,0.0,0.0);
+				}
 			}
 			out.close();
 		}
