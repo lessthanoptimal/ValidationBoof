@@ -46,34 +46,36 @@ public class CalibrationDetectionRegression extends BaseRegression implements Im
 		super(BoofRegressionConstants.TYPE_CALIBRATION);
 
 		chessDirectories.add("data/calibration_stereo/Bumblebee2_Chess");
-		chessDirectories.add("data/calibration_mono/chessboard/Sony_DSC-HX5V");
-		chessDirectories.add("data/calibration_mono/chessboard/large");
-		chessDirectories.add("data/calibration_mono/chessboard/distant");
+		chessDirectories.add("data/calibration_mono/chessboard/border");
+		chessDirectories.add("data/calibration_mono/chessboard/caltech_edges");
+		chessDirectories.add("data/calibration_mono/chessboard/challenge");
+		chessDirectories.add("data/calibration_mono/chessboard/close");
+		chessDirectories.add("data/calibration_mono/chessboard/deltille_fisheye");
 		chessDirectories.add("data/calibration_mono/chessboard/distance_angle");
 		chessDirectories.add("data/calibration_mono/chessboard/distance_straight");
-		chessDirectories.add("data/calibration_mono/chessboard/hard");
-		chessDirectories.add("data/calibration_mono/chessboard/border");
-		chessDirectories.add("data/calibration_mono/chessboard/fisheye1");
-		chessDirectories.add("data/calibration_mono/chessboard/fisheye2");
-		chessDirectories.add("data/calibration_mono/chessboard/close");
-		chessDirectories.add("data/calibration_mono/chessboard/sloppy13x10");
+		chessDirectories.add("data/calibration_mono/chessboard/distant");
 		chessDirectories.add("data/calibration_mono/chessboard/focus");
 		chessDirectories.add("data/calibration_mono/chessboard/focus_large");
-		chessDirectories.add("data/calibration_mono/chessboard/rotation_vertical");
-		chessDirectories.add("data/calibration_mono/chessboard/rotation_flat");
-		chessDirectories.add("data/calibration_mono/chessboard/motion_blur");
-		chessDirectories.add("data/calibration_mono/chessboard/shadow");
+		chessDirectories.add("data/calibration_mono/chessboard/gaus_fisheye");
+		chessDirectories.add("data/calibration_mono/chessboard/gaus_perfect");
+		chessDirectories.add("data/calibration_mono/chessboard/hard");
+		chessDirectories.add("data/calibration_mono/chessboard/large");
 		chessDirectories.add("data/calibration_mono/chessboard/large_shadow");
-		chessDirectories.add("data/calibration_mono/chessboard/caltech_edges");
-		chessDirectories.add("data/calibration_mono/chessboard/deltille_fisheye");
+		chessDirectories.add("data/calibration_mono/chessboard/motion_blur");
 		chessDirectories.add("data/calibration_mono/chessboard/ocam_fisheye190");
 		chessDirectories.add("data/calibration_mono/chessboard/ocam_kaidan_omni");
 		chessDirectories.add("data/calibration_mono/chessboard/ocam_ladybug");
 		chessDirectories.add("data/calibration_mono/chessboard/ocam_mini_omni");
 		chessDirectories.add("data/calibration_mono/chessboard/ocam_omni");
-		chessDirectories.add("data/calibration_mono/chessboard/stefano_2012");
 		chessDirectories.add("data/calibration_mono/chessboard/perfect");
-		chessDirectories.add("data/calibration_mono/chessboard/gaussian");
+		chessDirectories.add("data/calibration_mono/chessboard/ricoh_theta_5");
+		chessDirectories.add("data/calibration_mono/chessboard/ricoh_theta_v");
+		chessDirectories.add("data/calibration_mono/chessboard/rotation_flat");
+		chessDirectories.add("data/calibration_mono/chessboard/rotation_vertical");
+		chessDirectories.add("data/calibration_mono/chessboard/shadow");
+		chessDirectories.add("data/calibration_mono/chessboard/sloppy13x10");
+		chessDirectories.add("data/calibration_mono/chessboard/Sony_DSC-HX5V");
+		chessDirectories.add("data/calibration_mono/chessboard/stefano_2012");
 
 		squareDirectories.add("data/calibration_stereo/Bumblebee2_Square");
 		squareDirectories.add("data/calibration_mono/square_grid/Sony_DSC-HX5V");
@@ -101,8 +103,7 @@ public class CalibrationDetectionRegression extends BaseRegression implements Im
 		switch( type ) {
 			case CHESSBOARD:chessDetectors.add(new DetectorInfo(name,detector));break;
 			case SQUARE_GRID:squareDetectors.add(new DetectorInfo(name,detector));break;
-			case CIRCLE_HEXAGONAL:
-				circleHexDetctors.add(new DetectorInfo(name,detector));break;
+			case CIRCLE_HEXAGONAL: circleHexDetctors.add(new DetectorInfo(name,detector));break;
 			case CIRCLE_GRID:circleRegDetectors.add(new DetectorInfo(name,detector));break;
 		}
 	}
@@ -403,7 +404,7 @@ public class CalibrationDetectionRegression extends BaseRegression implements Im
 	public static void main(String[] args) throws IOException, IllegalAccessException, InstantiationException, ClassNotFoundException {
 		BoofRegressionConstants.clearCurrentResults();
 		RegressionRunner.main(new String[]{CalibrationDetectionRegression.class.getName(),ImageDataType.F32.toString()});
-		RegressionRunner.main(new String[]{CalibrationDetectionRegression.class.getName(),ImageDataType.U8.toString()});
+//		RegressionRunner.main(new String[]{CalibrationDetectionRegression.class.getName(),ImageDataType.U8.toString()});
 
 //		CalibrationDetectionRegression app = new CalibrationDetectionRegression();
 //		app.setOutputDirectory("./");
