@@ -119,33 +119,36 @@ public class StereoVisualOdometryRegression extends BaseRegression implements Im
 		configDisparity.errorType = DisparityError.CENSUS;
 		configDisparity.configCensus.variant = CensusVariants.BLOCK_5_5;
 		configDisparity.disparityMin = 0;
-		configDisparity.disparityRange = 100;
+		configDisparity.disparityRange = 50;
 		configDisparity.maxPerPixelError = 30;
 		configDisparity.regionRadiusX = 3;
 		configDisparity.regionRadiusY = 3;
 		configDisparity.texture = 0.05;
-		configDisparity.validateRtoL = 1;
+		configDisparity.validateRtoL = 3;
 		configDisparity.subpixel = true;
 
 		ConfigPKlt configKlt = new ConfigPKlt();
-		configKlt.pyramidLevels = ConfigDiscreteLevels.levels(7);
-		configKlt.templateRadius = 5;
+		configKlt.pyramidLevels = ConfigDiscreteLevels.minSize(40);
+		configKlt.templateRadius = 4;
 		configKlt.pruneClose = true;
-		configKlt.config.maxIterations = 20;
+		configKlt.config.maxIterations = 25;
 		configKlt.config.maxPerPixelError = 25;
 		configKlt.toleranceFB = 3;
 
 		ConfigPointDetector configDet = new ConfigPointDetector();
 		configDet.type = PointDetectorTypes.SHI_TOMASI;
-		configDet.general.radius = 6;
-		configDet.general.threshold = 50f;
-		configDet.general.maxFeatures = 600;
+		configDet.shiTomasi.radius = 6;
+		configDet.general.radius = 5;
+		configDet.general.threshold = 1f;
+		configDet.general.maxFeatures = 300;
 		configDet.general.selector = ConfigSelectLimit.selectBestN();
 
 		ConfigVisOdomDepthPnP configVO = new ConfigVisOdomDepthPnP();
+		configVO.ransacIterations = 500;
+		configVO.ransacInlierTol = 0.5;
 		configVO.dropOutlierTracks = 2;
 		configVO.maxKeyFrames = 5;
-		configVO.bundleIterations = 3;
+		configVO.bundleIterations = 1;
 		configVO.bundleMaxFeaturesPerFrame = 200;
 		configVO.bundleMinObservations = 3;
 		configVO.keyframes.geoMinCoverage = 0.4;
