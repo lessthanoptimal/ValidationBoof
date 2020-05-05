@@ -28,7 +28,7 @@ import boofcv.factory.feature.detect.selector.ConfigSelectLimit;
 import boofcv.factory.feature.disparity.ConfigDisparityBM;
 import boofcv.factory.feature.disparity.DisparityError;
 import boofcv.factory.feature.disparity.FactoryStereoDisparity;
-import boofcv.factory.sfm.ConfigVisOdomDepthPnP;
+import boofcv.factory.sfm.ConfigVisOdomTrackPnP;
 import boofcv.factory.sfm.FactoryVisualOdometry;
 import boofcv.factory.tracker.FactoryPointTracker;
 import boofcv.factory.transform.census.CensusVariants;
@@ -143,19 +143,19 @@ public class StereoVisualOdometryRegression extends BaseRegression implements Im
 		configDet.general.maxFeatures = 300;
 		configDet.general.selector = ConfigSelectLimit.selectBestN();
 
-		ConfigVisOdomDepthPnP configVO = new ConfigVisOdomDepthPnP();
-		configVO.ransacIterations = 500;
-		configVO.ransacInlierTol = 0.5;
+		ConfigVisOdomTrackPnP configVO = new ConfigVisOdomTrackPnP();
+		configVO.ransac.iterations = 500;
+		configVO.ransac.inlierThreshold = 0.5;
 		configVO.dropOutlierTracks = 2;
 		configVO.maxKeyFrames = 5;
-		configVO.bundleIterations = 1;
+		configVO.sbaConverge.maxIterations = 1;
 		configVO.bundleMaxFeaturesPerFrame = 200;
 		configVO.bundleMinObservations = 3;
 		configVO.keyframes.geoMinCoverage = 0.4;
 
 		StereoDisparitySparse<GrayF32> disparity = FactoryStereoDisparity.sparseRectifiedBM(configDisparity, bandType);
 		PointTracker tracker = FactoryPointTracker.klt(configKlt, configDet,bandType, derivType);
-		StereoVisualOdometry visodom = FactoryVisualOdometry.stereoDepthPnP(configVO,disparity,tracker,bandType);
+		StereoVisualOdometry visodom = FactoryVisualOdometry.stereoMonoPnP(configVO,disparity,tracker,bandType);
 
 		Info ret = new Info();
 		ret.name = "StereoDepth";

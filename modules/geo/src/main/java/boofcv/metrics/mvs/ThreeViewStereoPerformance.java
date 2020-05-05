@@ -69,7 +69,7 @@ public class ThreeViewStereoPerformance {
         // Run the reconstruction algorithm. This is the heart of what we are testing
         ThreeViewEstimateMetricScene alg = new ThreeViewEstimateMetricScene();
 
-        alg.configRansac.maxIterations = 2000;
+        alg.configRansac.iterations = 2000;
 
         if( !alg.process(associated.toList(),width,height) )
             return false;
