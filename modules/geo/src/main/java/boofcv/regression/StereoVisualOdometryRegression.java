@@ -148,7 +148,7 @@ public class StereoVisualOdometryRegression extends BaseRegression implements Im
 		configVO.ransac.inlierThreshold = 0.5;
 		configVO.dropOutlierTracks = 2;
 		configVO.maxKeyFrames = 5;
-		configVO.sbaConverge.maxIterations = 1;
+		configVO.bundleConverge.maxIterations = 1;
 		configVO.bundleMaxFeaturesPerFrame = 200;
 		configVO.bundleMinObservations = 3;
 		configVO.keyframes.geoMinCoverage = 0.4;
