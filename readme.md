@@ -22,6 +22,7 @@ Look at the command line arguments for regression.jar with the --Help flag to se
 ```
 4) Run regression
 ```
+git clean -fd regression/baseline/
 java -jar regression.jar
 ```
 5) Check e-mail for summary of changes from baseline
