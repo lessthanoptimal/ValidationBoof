@@ -25,6 +25,9 @@ public class UtilShapeDetector {
 	public static PolylineSettings loadPolylineSettings(File file ) {
 		PolylineSettings settings = new PolylineSettings();
 
+		if( !file.exists() )
+			return settings;
+
 		try {
 			BufferedReader reader = Files.newBufferedReader(file.toPath());
 

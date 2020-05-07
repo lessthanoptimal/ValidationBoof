@@ -10,6 +10,7 @@ import boofcv.struct.image.ImageType;
 import georegression.geometry.UtilPolygons2D_F64;
 import georegression.struct.shapes.Quadrilateral_F64;
 import georegression.struct.shapes.Rectangle2D_F64;
+import org.ddogleg.struct.GrowQueue_F64;
 
 import java.awt.image.BufferedImage;
 import java.io.*;
@@ -29,6 +30,9 @@ public class GenerateDetectionsMilTrackData<T extends ImageBase<T>> {
 
 	File outputDirectory = BoofRegressionConstants.tempDir();
 
+	// Processing time for each frame
+	public GrowQueue_F64 periodMS = new GrowQueue_F64();
+
 	public GenerateDetectionsMilTrackData(ImageType<T> type) {
 		input = type.createImage(1,1);
 	}
@@ -41,7 +45,7 @@ public class GenerateDetectionsMilTrackData<T extends ImageBase<T>> {
 		try {
 			BufferedReader reader = new BufferedReader(new FileReader(fileName));
 			String line = reader.readLine();
-			String words[] = line.split(",");
+			String[] words = line.split(",");
 
 			Rectangle2D_F64 ret = new Rectangle2D_F64();
 			ret.p0.x = Double.parseDouble(words[0]);
@@ -50,8 +54,6 @@ public class GenerateDetectionsMilTrackData<T extends ImageBase<T>> {
 			ret.p1.y = ret.p0.y + Double.parseDouble(words[3]);
 
 			return ret;
-		} catch (FileNotFoundException e) {
-			throw new RuntimeException(e);
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
@@ -61,11 +63,9 @@ public class GenerateDetectionsMilTrackData<T extends ImageBase<T>> {
 		try {
 			BufferedReader reader = new BufferedReader(new FileReader(fileName));
 			String line = reader.readLine();
-			String words[] = line.split(",");
+			String[] words = line.split(",");
 
 			return new int[]{Integer.parseInt(words[0]),Integer.parseInt(words[1])};
-		} catch (FileNotFoundException e) {
-			throw new RuntimeException(e);
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
@@ -74,8 +74,10 @@ public class GenerateDetectionsMilTrackData<T extends ImageBase<T>> {
 	public void evaluate( String dataName , String outputName , TrackerObjectQuad<T> tracker ) {
 		System.out.println("Processing "+dataName);
 
+		periodMS.reset();
 		if( !outputDirectory.exists() )
-			outputDirectory.mkdirs();
+			if( !outputDirectory.mkdirs() )
+				throw new RuntimeException("Couldn't create directories. "+outputDirectory.getPath());
 
 		String path = "data/track_rect/MILTrack/"+dataName;
 		Quadrilateral_F64 initial = new Quadrilateral_F64();
@@ -92,7 +94,7 @@ public class GenerateDetectionsMilTrackData<T extends ImageBase<T>> {
 			throw new RuntimeException(e);
 		}
 
-		int frames[] = parseFramesFile(path + "/" + dataName + "_frames.txt");
+		int[] frames = parseFramesFile(path + "/" + dataName + "_frames.txt");
 
 		int imageNum = frames[0];
 		boolean firstImage = true;
@@ -120,15 +122,16 @@ public class GenerateDetectionsMilTrackData<T extends ImageBase<T>> {
 			}
 			boolean detected;
 
+			long time0 = System.nanoTime();
 			if( firstImage ) {
 				firstImage = false;
-
 				detected = tracker.initialize(input,initial);
-
 				found.set(initial);
 			} else {
 				detected = tracker.process(input,found);
 			}
+			long time1 = System.nanoTime();
+			periodMS.add((time1-time0)*1e-6);
 
 			if( !detected ) {
 //				System.out.print("-");

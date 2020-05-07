@@ -10,6 +10,7 @@ import boofcv.struct.image.ImageType;
 import georegression.geometry.UtilPolygons2D_F64;
 import georegression.struct.shapes.Quadrilateral_F64;
 import georegression.struct.shapes.Rectangle2D_F64;
+import org.ddogleg.struct.GrowQueue_F64;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -28,6 +29,9 @@ public class GenerateDetectionsTldData<T extends ImageBase<T>> {
 
 	File outputDirectory = BoofRegressionConstants.tempDir();
 
+	// Processing time for each frame
+	public GrowQueue_F64 periodMS = new GrowQueue_F64();
+
 	public GenerateDetectionsTldData(ImageType<T> type) {
 		input = type.createImage(1,1);
 	}
@@ -38,6 +42,7 @@ public class GenerateDetectionsTldData<T extends ImageBase<T>> {
 
 	public void evaluate( String dataName , String outputName , TrackerObjectQuad<T> tracker ) {
 		System.out.println("Processing "+dataName);
+		periodMS.reset();
 
 		if( !outputDirectory.exists() )
 			outputDirectory.mkdirs();
@@ -71,12 +76,14 @@ public class GenerateDetectionsTldData<T extends ImageBase<T>> {
 
 			boolean detected;
 
+			long time0 = System.nanoTime();
 			if( imageNum == 0 ) {
 				detected = tracker.initialize(input,initial);
 			} else {
 				detected = tracker.process(input,found);
 			}
-
+			long time1 = System.nanoTime();
+			periodMS.add((time1-time0)*1e-6);
 			if( !detected ) {
 				System.out.print("-");
 				out.println("nan,nan,nan,nan");

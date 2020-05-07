@@ -1,10 +1,7 @@
 package boofcv.regression;
 
 import boofcv.abst.shapes.polyline.PointsToPolyline;
-import boofcv.common.BaseRegression;
-import boofcv.common.BoofRegressionConstants;
-import boofcv.common.FactoryObject;
-import boofcv.common.ImageRegression;
+import boofcv.common.*;
 import boofcv.metrics.DetectPolylineSaveToFile;
 import boofcv.metrics.EvaluatePolylineDetector;
 import boofcv.metrics.FactoryPolylineSplitMerge;
@@ -90,12 +87,10 @@ public class FitPolylineRegression extends BaseRegression implements ImageRegres
 		outputAccuracy.println(String.format("Final Summary: TP/(TP+FN) = %d / %d    FP = %d\n",totalTruePositive,totalExpected,totalFalsePositive));
 
 		outputAccuracy.close();
-
 	}
 
-	public static void main(String[] args) throws IOException {
-		FitPolylineRegression app = new FitPolylineRegression();
-		app.setOutputDirectory(".");
-		app.process(ImageDataType.F32);
+	public static void main(String[] args) throws IOException, IllegalAccessException, InstantiationException, ClassNotFoundException {
+		BoofRegressionConstants.clearCurrentResults();
+		RegressionRunner.main(new String[]{FitPolylineRegression.class.getName(),ImageDataType.F32.toString()});
 	}
 }
