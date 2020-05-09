@@ -1,6 +1,6 @@
 # GENERATOR FiducialRegression
 # distance_angle
-# maxPixelError = 5.0
+# maxPixelError = 6.25
 
 Summary:
  correct            :   10 /   11
@@ -17,7 +17,7 @@ Corner errors:
 ---------------------------------------------------
 
 # distance_straight
-# maxPixelError = 5.0
+# maxPixelError = 6.25
 
 Summary:
  correct            :   12 /   12
@@ -34,7 +34,7 @@ Corner errors:
 ---------------------------------------------------
 
 # motion_blur
-# maxPixelError = 5.0
+# maxPixelError = 5.00
 
 Summary:
  correct            :    9 /   13
@@ -44,14 +44,14 @@ Summary:
  false positives    : 0
  false negative     : 4
 Corner errors:
- precision 50%         : 0.6810437139910918
- precision 90%         : 1.161728212297436
- precision 100%        : 1.7519744474153587
+ precision 50%         : 0.5241672250599364
+ precision 90%         : 1.1130765720430562
+ precision 100%        : 2.180735770689796
 
 ---------------------------------------------------
 
 # rotation
-# maxPixelError = 5.0
+# maxPixelError = 6.25
 
 Summary:
  correct            :    4 /    9

@@ -1,23 +1,23 @@
 # GENERATOR FiducialRegression
 # distance
-# maxPixelError = 5.412658773652741
+# maxPixelError = 5.41
 
 Summary:
- correct            :   79 /  144
+ correct            :  115 /  144
  wrong order        : 0
  wrong ID           : 0
  duplicates         : 0
  false positives    : 0
- false negative     : 65
+ false negative     : 29
 Corner errors:
- precision 50%         : 0.42472113328420114
- precision 90%         : 0.8515672359784876
- precision 100%        : 3.4208990309631435
+ precision 50%         : 0.4111007013656809
+ precision 90%         : 0.8087938587757264
+ precision 100%        : 1.9160526853706086
 
 ---------------------------------------------------
 
 # highres_lots
-# maxPixelError = 31.499999999999996
+# maxPixelError = 31.50
 
 Summary:
  correct            :  288 /  288
@@ -27,14 +27,14 @@ Summary:
  false positives    : 0
  false negative     : 0
 Corner errors:
- precision 50%         : 1.0508162047637144
- precision 90%         : 2.412429676763739
- precision 100%        : 10.105772998083866
+ precision 50%         : 1.041081398431619
+ precision 90%         : 2.3306515977016047
+ precision 100%        : 7.3972315172971586
 
 ---------------------------------------------------
 
 # highres_rotate_z
-# maxPixelError = 31.499999999999996
+# maxPixelError = 31.50
 
 Summary:
  correct            :   38 /   38
@@ -44,48 +44,48 @@ Summary:
  false positives    : 0
  false negative     : 0
 Corner errors:
- precision 50%         : 3.055266686941531
- precision 90%         : 5.6438926330113945
- precision 100%        : 10.541023391999891
+ precision 50%         : 2.9338195178607323
+ precision 90%         : 5.604064665857072
+ precision 100%        : 10.159340607488927
 
 ---------------------------------------------------
 
 # motion_blur
-# maxPixelError = 5.412658773652741
+# maxPixelError = 5.41
 
 Summary:
- correct            :   23 /   30
+ correct            :   15 /   30
  wrong order        : 0
  wrong ID           : 0
  duplicates         : 0
- false positives    : 0
- false negative     : 7
+ false positives    : 2
+ false negative     : 15
 Corner errors:
- precision 50%         : 2.0589008377476192
- precision 90%         : 5.555803234451102
- precision 100%        : 9.583193415388529
+ precision 50%         : 1.846663291643252
+ precision 90%         : 5.153604192398342
+ precision 100%        : 7.578140513295277
 
 ---------------------------------------------------
 
 # rotate_x
-# maxPixelError = 6.249999999999999
+# maxPixelError = 6.25
 
 Summary:
- correct            :   23 /   32
+ correct            :   27 /   32
  wrong order        : 0
  wrong ID           : 0
  duplicates         : 0
  false positives    : 0
- false negative     : 9
+ false negative     : 5
 Corner errors:
- precision 50%         : 1.0399328156123744
- precision 90%         : 1.842395655107673
- precision 100%        : 5.76515211290017
+ precision 50%         : 1.0201562409655487
+ precision 90%         : 1.9372922585693946
+ precision 100%        : 5.173044016247632
 
 ---------------------------------------------------
 
 # rotate_z
-# maxPixelError = 5.0
+# maxPixelError = 5.00
 
 Summary:
  correct            :   38 /   38
@@ -95,28 +95,28 @@ Summary:
  false positives    : 0
  false negative     : 0
 Corner errors:
- precision 50%         : 0.528138855287831
- precision 90%         : 0.8996150019525674
- precision 100%        : 1.5119005114557729
+ precision 50%         : 0.5558252585545038
+ precision 90%         : 0.8994352659269856
+ precision 100%        : 1.5052754081581134
 
 ---------------------------------------------------
 
 # shadow_overlapping
-# maxPixelError = 5.0
+# maxPixelError = 5.00
 
 Summary:
- correct            :   62 /   66
+ correct            :   66 /   66
  wrong order        : 0
  wrong ID           : 0
  duplicates         : 0
  false positives    : 0
- false negative     : 4
+ false negative     : 0
 Corner errors:
- precision 50%         : 0.5654529800576422
- precision 90%         : 1.1969775814664818
- precision 100%        : 2.559559365202623
+ precision 50%         : 0.5081879123550923
+ precision 90%         : 1.070799196901472
+ precision 100%        : 1.8931444660067045
 
 ---------------------------------------------------
 
 ---------------------------------------------------
-total correct / total expected =  551 / 636
+total correct / total expected =  587 / 636
