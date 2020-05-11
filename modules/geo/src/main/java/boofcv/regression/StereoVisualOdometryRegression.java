@@ -1,35 +1,27 @@
 package boofcv.regression;
 
-import boofcv.abst.feature.describe.DescribeRegionPoint;
-import boofcv.abst.feature.detdesc.DetectDescribeMulti;
-import boofcv.abst.feature.detdesc.DetectDescribeMultiFusion;
-import boofcv.abst.feature.detect.extract.ConfigExtract;
-import boofcv.abst.feature.detect.extract.NonMaxSuppression;
-import boofcv.abst.feature.detect.intensity.GeneralFeatureIntensity;
 import boofcv.abst.feature.detect.interest.ConfigPointDetector;
-import boofcv.abst.feature.detect.interest.DetectorInterestPointMulti;
-import boofcv.abst.feature.detect.interest.GeneralToInterestMulti;
 import boofcv.abst.feature.detect.interest.PointDetectorTypes;
 import boofcv.abst.feature.disparity.StereoDisparitySparse;
 import boofcv.abst.sfm.d3.StereoVisualOdometry;
 import boofcv.abst.tracker.PointTracker;
-import boofcv.alg.feature.detect.interest.GeneralFeatureDetector;
-import boofcv.alg.feature.detect.selector.FeatureSelectNBest;
 import boofcv.alg.filter.derivative.GImageDerivativeOps;
 import boofcv.alg.tracker.klt.ConfigPKlt;
 import boofcv.common.BaseRegression;
 import boofcv.common.BoofRegressionConstants;
 import boofcv.common.ImageRegression;
 import boofcv.common.RegressionRunner;
-import boofcv.factory.feature.describe.FactoryDescribeRegionPoint;
-import boofcv.factory.feature.detect.extract.FactoryFeatureExtractor;
-import boofcv.factory.feature.detect.intensity.FactoryIntensityPoint;
+import boofcv.factory.feature.describe.ConfigDescribeRegionPoint;
+import boofcv.factory.feature.detect.interest.ConfigDetectInterestPoint;
 import boofcv.factory.feature.detect.selector.ConfigSelectLimit;
 import boofcv.factory.feature.disparity.ConfigDisparityBM;
 import boofcv.factory.feature.disparity.DisparityError;
 import boofcv.factory.feature.disparity.FactoryStereoDisparity;
+import boofcv.factory.sfm.ConfigStereoDualTrackPnP;
+import boofcv.factory.sfm.ConfigStereoQuadPnP;
 import boofcv.factory.sfm.ConfigVisOdomTrackPnP;
 import boofcv.factory.sfm.FactoryVisualOdometry;
+import boofcv.factory.tracker.ConfigPointTracker;
 import boofcv.factory.tracker.FactoryPointTracker;
 import boofcv.factory.transform.census.CensusVariants;
 import boofcv.metrics.vo.*;
@@ -64,7 +56,7 @@ public class StereoVisualOdometryRegression extends BaseRegression implements Im
 
 		all.add( createDepth(bandType));
 		all.add( createDualTrackerPnP(bandType));
-		all.add( createQuadPnP(bandType));
+//		all.add( createQuadPnP(bandType));
 
 		outputRuntime = new PrintStream(new File(directory,"RUN_StereoVisOdom.txt"));
 		BoofRegressionConstants.printGenerator(outputRuntime, getClass());
@@ -166,48 +158,98 @@ public class StereoVisualOdometryRegression extends BaseRegression implements Im
 	}
 
 	public static Info createDualTrackerPnP( Class bandType ) {
-		Class derivType = GImageDerivativeOps.getDerivativeType(bandType);
 
-		ConfigPKlt configKlt = new ConfigPKlt();
-		configKlt.templateRadius = 3;
-		configKlt.pyramidLevels = ConfigDiscreteLevels.levels(4);
-		configKlt.config.maxPerPixelError = 50;
+		ConfigStereoDualTrackPnP config = new ConfigStereoDualTrackPnP();
+		config.tracker.typeTracker = ConfigPointTracker.TrackerType.KLT;
+		config.tracker.klt.pyramidLevels = ConfigDiscreteLevels.levels(4);
 
-		ConfigPointDetector configDet = new ConfigPointDetector();
-		configDet.general.maxFeatures = 600;
-		configDet.general.radius = 3;
-		configDet.general.threshold = 1;
+		config.tracker.detDesc.typeDescribe = ConfigDescribeRegionPoint.DescriptorType.SURF_FAST;
+		config.tracker.detDesc.typeDetector = ConfigDetectInterestPoint.DetectorType.POINT;
+		config.tracker.detDesc.detectPoint.type = PointDetectorTypes.SHI_TOMASI;
+		config.tracker.detDesc.detectPoint.scaleRadius = 11.0;
+		config.tracker.detDesc.detectPoint.shiTomasi.radius = 6;
+		config.tracker.detDesc.detectPoint.general.maxFeatures = 500;
+		config.tracker.detDesc.detectPoint.general.radius = 4;
+		config.tracker.detDesc.detectPoint.general.threshold = 1;
 
-		PointTracker trackerLeft = FactoryPointTracker.klt(configKlt, configDet, bandType, derivType);
-		PointTracker trackerRight = FactoryPointTracker.klt(configKlt, configDet, bandType, derivType);
+		config.epipolarTol = 1.5;
 
-		DescribeRegionPoint describe = FactoryDescribeRegionPoint.surfFast(null, bandType);
+		config.scene.ransac.inlierThreshold = 1.5;
+		config.scene.ransac.iterations = 200;
+		config.scene.refineIterations = 25;
+		config.scene.bundleConverge.maxIterations = 1;
+		config.scene.bundleMaxFeaturesPerFrame = 200;
+		config.scene.bundleMinObservations = 3;
+		config.scene.keyframes.geoMinCoverage = 0.4;
+
+
+//		Class derivType = GImageDerivativeOps.getDerivativeType(bandType);
+//
+//		ConfigPKlt configKlt = new ConfigPKlt();
+//		configKlt.templateRadius = 3;
+//		configKlt.pyramidLevels = ConfigDiscreteLevels.levels(4);
+//		configKlt.config.maxPerPixelError = 50;
+//
+//		ConfigPointDetector configDet = new ConfigPointDetector();
+//		configDet.general.maxFeatures = 600;
+//		configDet.general.radius = 3;
+//		configDet.general.threshold = 1;
+//
+//		PointTracker trackerLeft = FactoryPointTracker.klt(configKlt, configDet, bandType, derivType);
+//		PointTracker trackerRight = FactoryPointTracker.klt(configKlt, configDet, bandType, derivType);
+//
+//		DescribeRegionPoint describe = FactoryDescribeRegionPoint.surfFast(null, bandType);
 
 		Info ret = new Info();
 		ret.name = "DualPnP";
 		ret.imageType = ImageType.single(bandType);
-		ret.vo = FactoryVisualOdometry.stereoDualTrackerPnP(110, 3, 1.5, 1.5, 200, 50,
-				trackerLeft, trackerRight, describe,11.0, bandType);
+//		ret.vo = FactoryVisualOdometry.stereoDualTrackerPnP(110, 3, 1.5, 1.5, 200, 50,
+//				trackerLeft, trackerRight, describe,11.0, bandType);
+		ret.vo = FactoryVisualOdometry.stereoDualTrackerPnP(config,bandType);
 
 		return ret;
 	}
 
 	public static Info createQuadPnP( Class bandType ) {
-		Class derivType = GImageDerivativeOps.getDerivativeType(bandType);
+		ConfigStereoQuadPnP config = new ConfigStereoQuadPnP();
 
-		GeneralFeatureIntensity intensity =
-				FactoryIntensityPoint.shiTomasi(1, false, derivType);
-		NonMaxSuppression nonmax = FactoryFeatureExtractor.nonmax(new ConfigExtract(2, 50, 0, true, false, true));
-		GeneralFeatureDetector general = new GeneralFeatureDetector(intensity,nonmax, new FeatureSelectNBest());
-		general.setMaxFeatures(600);
-		DetectorInterestPointMulti detector = new GeneralToInterestMulti(general,11.0,bandType,derivType);
-		DescribeRegionPoint describe = FactoryDescribeRegionPoint.surfFast(null, bandType);
-		DetectDescribeMulti detDescMulti =  new DetectDescribeMultiFusion(detector,null,describe);
+//		config.detectDescribe.typeDetector = ConfigDetectInterestPoint.DetectorType.FAST_HESSIAN;
+//		config.detectDescribe.detectFastHessian.extract.radius = 3;
+//		config.detectDescribe.detectFastHessian.maxFeaturesPerScale = 400;
+//		config.detectDescribe.detectFastHessian.numberScalesPerOctave = 3;
+//		config.detectDescribe.detectFastHessian.numberOfOctaves = 3;
+//		config.detectDescribe.detectFastHessian.maxFeaturesPerScale = 400;
+//		config.detectDescribe.detectFastHessian.numberScalesPerOctave = 3;
+//		config.detectDescribe.detectFastHessian.numberOfOctaves = 3;
+
+		// TODO How is it possible that it used SURF before? Just describing SURF features slows it down too much
+
+		config.ransac.iterations = 400;
+		config.ransac.inlierThreshold = 1.5;
+		config.refineIterations = 50;
+		config.bundleConverge.maxIterations = 0; // yes turning it off made it slightly more accurate
+
+		config.detectDescribe.typeDetector = ConfigDetectInterestPoint.DetectorType.POINT;
+		config.detectDescribe.detectPoint.type = PointDetectorTypes.SHI_TOMASI;
+		config.detectDescribe.detectPoint.scaleRadius = 11;
+		config.detectDescribe.detectPoint.shiTomasi.radius = 2;
+		config.detectDescribe.detectPoint.general.radius = 2;
+		config.detectDescribe.detectPoint.general.maxFeatures = 600;
+		config.detectDescribe.detectPoint.general.threshold = 50;
+
+		config.detectDescribe.typeDescribe = ConfigDescribeRegionPoint.DescriptorType.BRIEF;
+		config.detectDescribe.describeBrief.fixed = true;
+//		config.detectDescribe.typeDescribe = ConfigDescribeRegionPoint.DescriptorType.SURF_FAST;
+
+		config.associateF2F.forwardsBackwards = false;
+		config.associateF2F.scoreRatioThreshold = 1.0;
+
+		config.epipolarTol = 0.5;
 
 		Info ret = new Info();
 		ret.name = "QuadPnP";
 		ret.imageType = ImageType.single(bandType);
-		ret.vo = FactoryVisualOdometry.stereoQuadPnP(1.5, 0.5 ,75, Double.MAX_VALUE, 300, 50, detDescMulti, bandType);
+		ret.vo = FactoryVisualOdometry.stereoQuadPnP(config, bandType);
 
 		return ret;
 	}

@@ -202,6 +202,7 @@ public class EvaluateVisualOdometryStereo<T extends ImageBase<T>> {
 		double averageSkipRotation = totalErrorRotationSkip/integralTrueDistance;
 
 		if( out != null ) {
+			out.println("Total Frames = "+frame);
 			out.println("Total Faults = "+numFaults);
 			out.println("Fraction with no update "+(numSkipUpdate/(double)frame));
 			out.printf("Ave per estimate:      distance %9.7f  rotation %11.9f\n",

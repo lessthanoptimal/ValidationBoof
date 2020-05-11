@@ -174,7 +174,7 @@ public class ThreeViewStereoPerformance {
         ConfigAssociateGreedy configGreedy = new ConfigAssociateGreedy();
         configGreedy.forwardsBackwards = true;
         configGreedy.maxErrorThreshold = 0.1;
-        // TODO use score ratio to improve results
+        configGreedy.scoreRatioThreshold = 1.0; // Unexpectedly, using this ratio made things worse
 
         ScoreAssociation<BrightFeature> scorer = FactoryAssociation.scoreEuclidean(BrightFeature.class,true);
         AssociateDescription<BrightFeature> associate = FactoryAssociation.greedy(configGreedy,scorer);

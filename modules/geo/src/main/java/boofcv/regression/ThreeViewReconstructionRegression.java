@@ -3,9 +3,12 @@ package boofcv.regression;
 import boofcv.common.BaseRegression;
 import boofcv.common.BoofRegressionConstants;
 import boofcv.common.ImageRegression;
+import boofcv.common.RegressionRunner;
 import boofcv.io.UtilIO;
 import boofcv.metrics.mvs.ThreeViewStereoPerformance;
 import boofcv.struct.image.ImageDataType;
+import org.ddogleg.stats.UtilStatisticsQueue;
+import org.ddogleg.struct.GrowQueue_F64;
 
 import java.io.File;
 import java.io.IOException;
@@ -49,15 +52,17 @@ public class ThreeViewReconstructionRegression extends BaseRegression implements
             return;
         }
 
-        double averageScore = 0;
-        double averageRuntime = 0;
+        GrowQueue_F64 scores = new GrowQueue_F64();
+        GrowQueue_F64 areas = new GrowQueue_F64();
+        GrowQueue_F64 runtimes = new GrowQueue_F64();
         int totalFailed = 0;
         for( String image : images ) {
             System.out.println("Evaluating "+image);
             try {
                 if (evaluator.process(new File(inputDir, image).getPath(), "jpg")) {
-                    averageScore += evaluator.getScore();
-                    averageRuntime += evaluator.getElapsedTime();
+                    scores.add( evaluator.getScore() );
+                    areas.add( evaluator.getAreaFraction() );
+                    runtimes.add( evaluator.getElapsedTime() );
                     out.printf("%30s %6.2f %6.2f\n", image, evaluator.getScore() * 100,100*evaluator.getAreaFraction());
                     outputRuntime.printf("%30s %d\n", image, evaluator.getElapsedTime());
                 } else {
@@ -70,17 +75,28 @@ public class ThreeViewReconstructionRegression extends BaseRegression implements
             }
         }
 
-        averageScore /= (images.size()-totalFailed);
-        averageRuntime /= (images.size()-totalFailed);
         out.println();
         out.println("Summary:");
-        out.printf("  average = %6.2f\n",averageScore*100);
-        out.println("  failed  = "+totalFailed);
+        out.println("total = "+images.size()+"  failed = "+totalFailed);
+        out.printf("%10s %7s %7s %7s %7s\n","metric","mean","P03","P50","P97");
+        printSummary(out,"%7.5f","score",scores);
+        printSummary(out,"%7.5f","area",areas);
 
         outputRuntime.println();
         outputRuntime.println("Summary:");
-        outputRuntime.printf("  average = %.1f (ms)\n",averageRuntime);
+        outputRuntime.println("total = "+runtimes.size);
+        outputRuntime.printf("%10s %7s %7s %7s %7s\n","metric","mean","P03","P50","P97");
+        printSummary(outputRuntime,"%7.1f","(ms)",runtimes);
         outputRuntime.close();
+    }
+
+    private void printSummary( PrintStream out, String format, String metric , GrowQueue_F64 values ) {
+        values.sort();
+        double mean = UtilStatisticsQueue.mean(values);
+        double p03 = values.getFraction(0.03);
+        double p50 = values.getFraction(0.5);
+        double p97 = values.getFraction(0.97);
+        out.printf("%10s "+format+" "+format+" "+format+" "+format+"\n",metric,mean,p03,p50,p97);
     }
 
     private List<String> findUniquePrefixes(File directory ) {
@@ -99,8 +115,11 @@ public class ThreeViewReconstructionRegression extends BaseRegression implements
         return prefixes;
     }
 
-    public static void main(String[] args) throws IOException {
-        ThreeViewReconstructionRegression regression = new ThreeViewReconstructionRegression();
-        regression.process(ImageDataType.U8);
+    public static void main(String[] args) throws IOException, IllegalAccessException, InstantiationException, ClassNotFoundException {
+        BoofRegressionConstants.clearCurrentResults();
+//        RegressionRunner.main(new String[]{ThreeViewReconstructionRegression.class.getName(),ImageDataType.F32.toString()});
+        RegressionRunner.main(new String[]{ThreeViewReconstructionRegression.class.getName(),ImageDataType.U8.toString()});
+//        ThreeViewReconstructionRegression regression = new ThreeViewReconstructionRegression();
+//        regression.process(ImageDataType.U8);
     }
 }
