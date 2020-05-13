@@ -8,6 +8,8 @@ Description of changes to benchmarks and justifications for change in performanc
   * Modified Image.isInside(float,float) and that resulted in small change in results for object tracking and VO 
   * Fiducial runtime is computed at same time as other metrics
   * Fiducial max error is now image size dependent
+  * Stereo Visual Odometry: All changed to include bundle adjustment plus other modifications
+  * Three-View Reconstruction: ????
 
 ## Version 0.35
 2019/Dec/23

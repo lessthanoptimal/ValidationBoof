@@ -56,7 +56,7 @@ public class StereoVisualOdometryRegression extends BaseRegression implements Im
 
 		all.add( createDepth(bandType));
 		all.add( createDualTrackerPnP(bandType));
-//		all.add( createQuadPnP(bandType));
+		all.add( createQuadPnP(bandType));
 
 		outputRuntime = new PrintStream(new File(directory,"RUN_StereoVisOdom.txt"));
 		BoofRegressionConstants.printGenerator(outputRuntime, getClass());

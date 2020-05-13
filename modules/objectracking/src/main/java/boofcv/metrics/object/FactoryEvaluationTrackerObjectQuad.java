@@ -32,7 +32,7 @@ public class FactoryEvaluationTrackerObjectQuad {
 		Info info = new Info();
 		info.name = "BoofCV-TLD";
 		info.imageType = new ImageType(ImageType.Family.GRAY,dataType,1);
-		info.tracker = FactoryTrackerObjectQuad.tld(new ConfigTld(true),ImageDataType.typeToSingleClass(dataType));
+		info.tracker = FactoryTrackerObjectQuad.tld(new ConfigTrackerTld(true),ImageDataType.typeToSingleClass(dataType));
 		return info;
 	}
 
