@@ -1,0 +1,61 @@
+# GENERATOR FiducialRegression
+# Data Set = static01
+# maxPixelError = 4.330127018922193
+
+Summary:
+ correct            : 636
+ wrong order        : 0
+ wrong ID           : 0
+ duplicates         : 0
+ false positive     : 0
+ false negative     : 0
+Normal Angle (deg):     630
+ errors 50%         : 0.4309786614114321
+ errors 90%         : 1.3863056312698543
+ errors 100%        : 18.72027450224687
+Location            : 630
+ errors 50%         : 0.03586247432936563
+ errors 90%         : 0.11965704831719429
+ errors 100%        : 0.5320023488814897
+Precision:              2544
+ errors 50%         : 0.07320564607056632
+ errors 90%         : 0.5096871054564504
+ errors 100%        : 1.936281314571966
+Accuracy:               2544
+ errors 50%         : 0.3166846740012066
+ errors 90%         : 0.7380355892045772
+ errors 100%        : 2.31519394482769
+
+---------------------------------------------------
+
+# Data Set = static02
+# maxPixelError = 5.412658773652741
+
+Summary:
+ correct            : 642
+ wrong order        : 0
+ wrong ID           : 0
+ duplicates         : 0
+ false positive     : 0
+ false negative     : 0
+Normal Angle (deg):     636
+ errors 50%         : 1.0504913258237152
+ errors 90%         : 13.932081278358568
+ errors 100%        : 23.950777249553102
+Location            : 636
+ errors 50%         : 0.09882579505966968
+ errors 90%         : 0.3378888041979355
+ errors 100%        : 0.6656010080736547
+Precision:              2568
+ errors 50%         : 0.08937007836763186
+ errors 90%         : 0.2964644946581079
+ errors 100%        : 1.020122773446675
+Accuracy:               2568
+ errors 50%         : 0.35307297561133344
+ errors 90%         : 0.7592379948899058
+ errors 100%        : 1.2929484387048322
+
+---------------------------------------------------
+
+---------------------------------------------------
+total correct / total expected = 1278 /1278

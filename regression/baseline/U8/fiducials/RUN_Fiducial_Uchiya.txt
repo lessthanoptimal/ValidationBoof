@@ -1,0 +1,14 @@
+# GENERATOR FiducialRegression
+# Elapsed time is in milliseconds
+# dataset (total images) 50% 95% 100%
+
+                      distance  24  39.460  57.575 118.339
+                  highres_lots   8 621.870 758.992 841.548
+              highres_rotate_z  19 870.608 1209.625 1266.091
+                   motion_blur  15  22.522  51.792  85.939
+                      rotate_x  16  39.235  41.815  44.113
+                      rotate_z  19  45.903  54.832 110.916
+            shadow_overlapping  11  42.600  48.803  48.864
+                      static01 106  34.239  38.005  65.909
+                      static02 107  40.309  42.684  55.441
+                     visible01 211  43.965  49.423  66.130
