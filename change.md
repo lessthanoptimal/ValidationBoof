@@ -9,6 +9,8 @@ Description of changes to benchmarks and justifications for change in performanc
   * Fiducial runtime is computed at same time as other metrics
   * Fiducial max error is now image size dependent
   * Stereo Visual Odometry: All changed to include bundle adjustment plus other modifications
+  * Quad Stereo VO has a runtime regression because association using image location was removed, but was 
+    compensated for by switching from SURF to BRIEF
   * Three-View Reconstruction: ????
 
 ## Version 0.35
