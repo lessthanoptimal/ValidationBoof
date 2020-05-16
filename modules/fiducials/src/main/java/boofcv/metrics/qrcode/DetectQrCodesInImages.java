@@ -71,7 +71,7 @@ public class DetectQrCodesInImages<T extends ImageGray<T>> {
                     out.printf("%.20f %.20f",p.x,p.y);
                 }
                 out.println();
-                out.println(qr.message.toString());
+                out.println(qr.message.replaceAll("\\r\\n|\\r|\\n", ""));
             }
 
             out.close();

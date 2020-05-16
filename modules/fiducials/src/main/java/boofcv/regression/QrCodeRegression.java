@@ -142,5 +142,6 @@ public class QrCodeRegression extends BaseRegression implements ImageRegression 
 	public static void main(String[] args) throws IOException, IllegalAccessException, InstantiationException, ClassNotFoundException {
 		BoofRegressionConstants.clearCurrentResults();
 		RegressionRunner.main(new String[]{QrCodeRegression.class.getName(),ImageDataType.F32.toString()});
+		RegressionRunner.main(new String[]{QrCodeRegression.class.getName(),ImageDataType.U8.toString()});
 	}
 }

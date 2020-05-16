@@ -26,9 +26,11 @@ public class QrCodeFileCodec {
             boolean pointsLine = true;
             while( line != null ) {
                 if( pointsLine ) {
-                    String words[] = line.split(" ");
-                    if( words.length != 8 )
-                        throw new RuntimeException("Expected 8 words not "+words.length);
+                    String[] words = line.split(" ");
+                    if( words.length != 8 ) {
+                        System.err.println("The Line: "+line);
+                        throw new RuntimeException("Expected 8 words not " + words.length);
+                    }
                     Polygon2D_F64 q = new Polygon2D_F64(4);
                     for (int i = 0; i < words.length; i += 2 ) {
                         Point2D_F64 p = new Point2D_F64();

@@ -13,6 +13,7 @@ Description of changes to benchmarks and justifications for change in performanc
     compensated for by switching from SURF to BRIEF
   * Three-View Reconstruction: Change in how the rectified view was computed improved image fill
 - Fixed long-standing issue of multi band descriptors crashing when they encounter a single band image
+- Fixed encoding/decoding issue in QR regression
 
 ## Version 0.35
 2019/Dec/23
