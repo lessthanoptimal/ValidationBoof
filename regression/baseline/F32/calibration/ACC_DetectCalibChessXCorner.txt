@@ -96,6 +96,7 @@ challenge/image046.jpg               0.2277  0.4462  0.5728
 challenge/image047.jpg               0.1965  0.4178  0.6598
 challenge/image048.jpg               0.2402  0.4812  0.7292
 challenge/image049.jpg               0.2062  0.3626  0.6120
+challenge/image050.jpg               0.2442  0.5048  0.6677
 challenge/image052.jpg               0.2595  0.5002  0.8591
 challenge/image053.jpg               0.2843  0.5766  0.7396
 challenge/image054.jpg               0.2128  0.3958  0.4931
@@ -605,7 +606,7 @@ Bumblebee2_Chess/right11.jpg         0.3169  0.5150  0.6146
 Sony_DSC-HX5V                       Errors{ 50%  0.314 , 95%  0.621 , MAX  0.853 }, Success : 13 / 13
 border                              Errors{ 50%  0.290 , 95%  0.795 , MAX  2.339 }, Success : 16 / 16
 caltech_edges                       Errors{ 50%  0.255 , 95%  0.543 , MAX  0.892 }, Success : 19 / 20
-challenge                           Errors{ 50%  0.233 , 95%  0.502 , MAX 12.307 }, Success : 63 / 85
+challenge                           Errors{ 50%  0.233 , 95%  0.503 , MAX 12.307 }, Success : 63 / 85
 close                               Errors{ 50%  0.420 , 95%  0.917 , MAX  1.398 }, Success : 12 / 12
 deltille_fisheye                    Errors{ 50%  0.209 , 95%  0.458 , MAX  1.082 }, Success : 55 / 58
 distance_angle                      Errors{ 50%  0.208 , 95%  0.389 , MAX  0.591 }, Success :  6 /  6
@@ -636,4 +637,4 @@ Bumblebee2_Chess                    Errors{ 50%  0.264 , 95%  0.515 , MAX  0.703
 
 --------------------------------------------------------------------------------
 
-Summary                             Errors{ 50%  0.240 , 95%  0.867 , MAX 28.111 }, Success : 568 / 600
+Summary                             Errors{ 50%  0.240 , 95%  0.864 , MAX 28.111 }, Success : 568 / 600

@@ -266,7 +266,7 @@ public class CalibrationDetectionRegression extends BaseRegression implements Im
 
 					CalibrationObservation found = detector.getDetectedPoints();
 					if( found.size() != groundTruth.size() ) {
-						errorLog.println(dataSetName+" different sizes. "+found.size()+" "+groundTruth.size());
+						errorLog.println(dataSetName+" different point counts. found="+found.size()+" truth="+groundTruth.size());
 					} else {
 						for (int i = 0; i < found.size(); i++) {
 							errors[i] = distanceFromClosest(found.points.get(i),groundTruth);
