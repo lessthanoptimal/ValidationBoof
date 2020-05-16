@@ -12,6 +12,7 @@ Description of changes to benchmarks and justifications for change in performanc
   * Quad Stereo VO has a runtime regression because association using image location was removed, but was 
     compensated for by switching from SURF to BRIEF
   * Three-View Reconstruction: Change in how the rectified view was computed improved image fill
+  * Disparity changed because NCC had how it handled texture error modified with a new score function
 - Fixed long-standing issue of multi band descriptors crashing when they encounter a single band image
 - Fixed encoding/decoding issue in QR regression
 

@@ -92,6 +92,9 @@ public class EvaluateDisparity {
 		config.regionRadiusX = config.regionRadiusY = region;
 		config.errorType = error;
 		config.disparityRange = range;
+		if( DisparityError.NCC == error ) {
+			config.texture = 0.005;
+		}
 
 		TestSubject ts = new TestSubject();
 		ts.alg = FactoryStereoDisparity.blockMatchBest5(config,GrayU8.class,GrayF32.class);
@@ -104,6 +107,9 @@ public class EvaluateDisparity {
 		config.regionRadiusX = config.regionRadiusY = region;
 		config.errorType = error;
 		config.disparityRange = range;
+		if( DisparityError.NCC == error ) {
+			config.texture = 0.005;
+		}
 
 		TestSubject ts = new TestSubject();
 		ts.alg = FactoryStereoDisparity.blockMatch(config,GrayU8.class,GrayF32.class);
