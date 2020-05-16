@@ -34,7 +34,7 @@ public class BenchmarkRuntimeDetectSurf {
 	public static void main( String args[] ) throws IOException {
 
 		InterestPointDetector<GrayF32> alg = FactoryInterestPoint.
-				fastHessian(new ConfigFastHessian(100, 2, -1, 1, 9, 4, 4));
+				fastHessian(new ConfigFastHessian(100, 2, -1, 1, 9, 4, 4),GrayF32.class);
 
 
 		BenchmarkFeatureDetectRuntime<GrayF32> benchmark =

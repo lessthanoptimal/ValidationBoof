@@ -24,6 +24,7 @@ import boofcv.io.image.ConvertBufferedImage;
 import boofcv.io.image.UtilImageIO;
 import boofcv.struct.feature.TupleDesc_F64;
 import boofcv.struct.image.ImageBase;
+import boofcv.struct.image.ImageDataType;
 import boofcv.struct.image.ImageType;
 import georegression.struct.point.Point2D_F64;
 
@@ -43,6 +44,8 @@ import java.io.PrintStream;
 @SuppressWarnings("unchecked")
 public class CreateDetectDescribeFile<T extends ImageBase<T>, D extends TupleDesc_F64> {
 
+	// Creates the descriptor once the input image type is fully known
+	Factory factory;
 	// algorithm that detects the features
 	DetectDescribePoint<T,D> alg;
 	// type of input image
@@ -56,14 +59,13 @@ public class CreateDetectDescribeFile<T extends ImageBase<T>, D extends TupleDes
 	/**
 	 * Configures detector
 	 *
-	 * @param alg Algorithm used to detect and describe interest points.
-	 * @param imageType Primitive of input image that is processed.
+	 * @param factory Creates a DetectDescribePoint once image type is known
 	 * @param algName Name of the detector.  Put into output file name.
 	 */
-	public CreateDetectDescribeFile(DetectDescribePoint<T,D> alg,
-									ImageType<T> imageType, String algName) {
-		this.alg = alg;
-		this.imageType = imageType;
+	public CreateDetectDescribeFile(Factory factory,
+									ImageType.Family imageFamily, ImageDataType dataType, String algName) {
+		this.factory = factory;
+		this.imageType = new ImageType<>(imageFamily,dataType,3);
 		this.algName = algName;
 	}
 
@@ -82,6 +84,8 @@ public class CreateDetectDescribeFile<T extends ImageBase<T>, D extends TupleDes
 		totalImagesProcessed = 0;
 		totalProcessingTime = 0;
 
+		alg = factory.create(imageType);
+
 		String dataSetName = dir.getName();
 
 		System.out.println(inputDirectory);
@@ -97,7 +101,6 @@ public class CreateDetectDescribeFile<T extends ImageBase<T>, D extends TupleDes
 			BufferedImage image = UtilImageIO.loadImage(f.getPath());
 
 			String imageName = f.getName();
-			inputDirectory = f.getParent();
 			imageName = imageName.substring(0,imageName.length()-4);
 
 			String detectName = new File(outputDirectory , "DETECTED_" + dataSetName + "_" + imageName + "_" + algName + ".txt").getPath();
@@ -118,6 +121,13 @@ public class CreateDetectDescribeFile<T extends ImageBase<T>, D extends TupleDes
 	public void process( BufferedImage input , String detectName , String describeName ) throws FileNotFoundException {
 		T image = imageType.createImage(input.getWidth(),input.getHeight());
 		ConvertBufferedImage.convertFrom(input, image, true);
+
+		// If the input image gray scale it will not have the expected number of bands. This isn't known until the
+		// image has been loaded. The number of bands is needed since it changes the descriptor size so it
+		// can't be dynamically determined by the descriptor
+		if( alg.getInputType().numBands != image.getImageType().numBands ) {
+			alg = factory.create(image.getImageType());
+		}
 
 		long timeBefore = System.nanoTime();
 		alg.detect(image);
@@ -158,5 +168,10 @@ public class CreateDetectDescribeFile<T extends ImageBase<T>, D extends TupleDes
 
 	public double getAverageProcessingTime() {
 		return totalProcessingTime/totalImagesProcessed;
+	}
+
+	public interface Factory {
+		<T extends ImageBase<T>, D extends TupleDesc_F64>
+		DetectDescribePoint<T,D> create( ImageType<T> imageType );
 	}
 }

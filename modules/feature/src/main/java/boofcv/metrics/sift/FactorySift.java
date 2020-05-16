@@ -53,6 +53,6 @@ public class FactorySift {
 
 	public static DetectDescribePoint<GrayF32,BrightFeature>
 	detectDescribe() {
-		return FactoryDetectDescribe.sift(null);
+		return FactoryDetectDescribe.sift(null,GrayF32.class);
 	}
 }

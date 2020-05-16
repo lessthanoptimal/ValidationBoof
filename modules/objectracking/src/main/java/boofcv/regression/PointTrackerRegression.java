@@ -155,7 +155,7 @@ public class PointTrackerRegression extends BaseRegression implements ImageRegre
 		ConfigFastHessian configFH = new ConfigFastHessian();
 		configFH.maxFeaturesPerScale = 200;
 
-		InterestPointDetector detector = FactoryInterestPoint.fastHessian(configFH);
+		InterestPointDetector detector = FactoryInterestPoint.fastHessian(configFH,bandType);
 		OrientationIntegral ori = FactoryOrientationAlgs.average_ii(null,iiType );
 		OrientationImage orientation = new OrientationIntegralToImage(ori,bandType,iiType);
 

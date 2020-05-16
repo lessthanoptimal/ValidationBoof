@@ -23,9 +23,8 @@ import boofcv.metrics.homography.BenchmarkFeatureDescribeStability;
 import boofcv.metrics.homography.BenchmarkFeatureDetectStability;
 import boofcv.metrics.homography.CreateDetectDescribeFile;
 import boofcv.metrics.homography.LoadHomographyBenchmarkFiles;
-import boofcv.struct.feature.BrightFeature;
-import boofcv.struct.feature.TupleDesc_B;
 import boofcv.struct.feature.TupleDesc_F64;
+import boofcv.struct.image.ImageBase;
 import boofcv.struct.image.ImageDataType;
 import boofcv.struct.image.ImageGray;
 import boofcv.struct.image.ImageType;
@@ -39,6 +38,7 @@ import java.util.List;
 /**
  * @author Peter Abeles
  */
+@SuppressWarnings("unchecked")
 public class DetectDescribeRegression extends BaseRegression implements ImageRegression {
 
 	public static final String path = "data/affinevgg/";
@@ -53,18 +53,16 @@ public class DetectDescribeRegression extends BaseRegression implements ImageReg
 	}
 
 	@Override
-	public void process( ImageDataType type ) throws IOException {
+	public void process( ImageDataType dataType ) throws IOException {
 
-		List<Info> all = new ArrayList<Info>();
+		List<Info> all = new ArrayList<>();
 
-		Class bandType = ImageDataType.typeToSingleClass(type);
-
-		all.add(surf(false,false,bandType));
-		all.add(surf(false,true,bandType));
-		all.add(surf(true,false,bandType));
-		all.add(surf(true,true,bandType));
-//		all.add(briefSoFH(bandType));  // TODO add support for binary descriptors
-		all.add(sift(bandType));
+		all.add(surf(false,false));
+		all.add(surf(false,true));
+		all.add(surf(true,false));
+		all.add(surf(true,true));
+//		all.add(briefSoFH());  // TODO add support for binary descriptors
+		all.add(sift());
 
 		ScoreAssociation<TupleDesc_F64> score = new ScoreAssociateEuclideanSq_F64();
 		AssociateDescription<TupleDesc_F64> assoc = DefaultConfigs.associateGreedy(score);
@@ -88,7 +86,7 @@ public class DetectDescribeRegression extends BaseRegression implements ImageReg
 		outputRuntime.println("# <directory> <average time in ms>\n");
 		for( Info i : all ) {
 			outputRuntime.println(i.name);
-			CreateDetectDescribeFile creator = new CreateDetectDescribeFile(i.detdesc,i.imageType,i.name);
+			CreateDetectDescribeFile creator = new CreateDetectDescribeFile(i.factory,i.imageFamily,dataType,i.name);
 			for( String d : LoadHomographyBenchmarkFiles.DATA_SETS ) {
 				try {
 					creator.directory(new File(path,d).getPath(),tmp);
@@ -107,13 +105,11 @@ public class DetectDescribeRegression extends BaseRegression implements ImageReg
 	}
 
 	public static <T extends ImageGray<T>>
-	Info surf( boolean stable , boolean color , Class<T> bandType  ) {
+	Info surf( boolean stable , boolean color ) {
 
 		ConfigFastHessian configDetect = new ConfigFastHessian(3, 2, -1,1, 9, 4, 4);
 
-		ImageType imageType;
 		String variant;
-		DetectDescribePoint<T,BrightFeature> detdesc;
 
 		if( stable )
 			variant="Stable";
@@ -122,56 +118,61 @@ public class DetectDescribeRegression extends BaseRegression implements ImageReg
 		if( color )
 			variant+="_Color";
 
-		if( color ) {
-			imageType = ImageType.pl(3,bandType);
-			if( stable )
-				detdesc = FactoryDetectDescribe.surfColorStable(configDetect, null, null, imageType);
-			else
-				detdesc = FactoryDetectDescribe.surfColorFast(configDetect,null,null,imageType);
-		} else {
-			imageType = ImageType.single(bandType);
-			if( stable )
-				detdesc = FactoryDetectDescribe.surfStable(configDetect,null,null,bandType);
-			else
-				detdesc = FactoryDetectDescribe.surfFast(configDetect,null,null,bandType);
-		}
 
 		Info ret = new Info();
 		ret.name = "BoofSURF-"+variant;
-		ret.detdesc = detdesc;
-		ret.imageType = imageType;
+		ret.factory = new CreateDetectDescribeFile.Factory() {
+			@Override
+			public <IT extends ImageBase<IT>, D extends TupleDesc_F64>
+			DetectDescribePoint<IT, D> create(ImageType<IT> imageType) {
+				Class type = imageType.getImageClass();
+				if( color ) {
+					if( stable )
+						return FactoryDetectDescribe.surfColorStable(configDetect, null, null, (ImageType)imageType);
+					else
+						return FactoryDetectDescribe.surfColorFast(configDetect,null,null,(ImageType)imageType);
+				} else {
+					if( stable )
+						return FactoryDetectDescribe.surfStable(configDetect,null,null,type);
+					else
+						return FactoryDetectDescribe.surfFast(configDetect,null,null,type);
+				}
+			}
+		};
+		ret.imageFamily = color ? ImageType.Family.PLANAR : ImageType.Family.GRAY;
 
 		return ret;
 	}
 
 	public static <T extends ImageGray<T>>
-	Info briefSoFH( Class<T> bandType  ) {
-
+	Info briefSoFH() {
 		ConfigFastHessian configDetect = new ConfigFastHessian(3, 2, -1,1, 9, 4, 4);
 		ConfigBrief configDesc = new ConfigBrief(false);
 
-		InterestPointDetector<T> detector = FactoryInterestPoint.fastHessian(configDetect);
-		DescribeRegionPoint<T,TupleDesc_B> describe = FactoryDescribeRegionPoint.brief(configDesc,bandType);
-
-		Class iiType = GIntegralImageOps.getIntegralType(bandType);
-		OrientationIntegral ori = FactoryOrientationAlgs.average_ii(null,iiType );
-		OrientationImage<T> orientation = new OrientationIntegralToImage(ori,bandType,iiType);
-
-		DetectDescribePoint<T,TupleDesc_B> detdesc =
-				FactoryDetectDescribe.fuseTogether(detector,orientation,describe);
 
 		Info ret = new Info();
 		ret.name = "BriefSO-FastHess";
-		ret.detdesc = detdesc;
-		ret.imageType = ImageType.single(bandType);
+		ret.factory = new CreateDetectDescribeFile.Factory() {
+			@Override
+			public <IT extends ImageBase<IT>, D extends TupleDesc_F64>
+			DetectDescribePoint<IT, D> create(ImageType<IT> imageType) {
+				Class type = imageType.getImageClass();
+				InterestPointDetector detector = FactoryInterestPoint.fastHessian(configDetect,type);
+				DescribeRegionPoint describe = FactoryDescribeRegionPoint.brief(configDesc,type);
+
+				Class iiType = GIntegralImageOps.getIntegralType(type);
+				OrientationIntegral ori = FactoryOrientationAlgs.average_ii(null,iiType );
+				OrientationImage orientation = new OrientationIntegralToImage(ori,type,iiType);
+				return FactoryDetectDescribe.fuseTogether(detector,orientation,describe);
+			}
+		};
+		ret.imageFamily = ImageType.Family.GRAY;
 
 		return ret;
 	}
 
 	public static <T extends ImageGray<T>>
-	Info sift( Class<T> bandType  ) {
-
-		ImageType imageType = ImageType.single(bandType);
+	Info sift() {
 
 		ConfigCompleteSift config = new ConfigCompleteSift();
 		ConfigSiftDetector configDet = config.detector;
@@ -179,27 +180,29 @@ public class DetectDescribeRegression extends BaseRegression implements ImageReg
 		configDet.extract.threshold = 0f;
 		configDet.maxFeaturesPerScale = 3500;
 
-//		ConfigSiftOrientation configOri = config.orientation;
-//		ConfigSiftDescribe configDesc = config.describe;
-
-		DetectDescribePoint<T,BrightFeature> sift = FactoryDetectDescribe.sift(config);
-
 		Info ret = new Info();
 		ret.name = "BoofSIFT";
-		ret.detdesc = sift;
-		ret.imageType = imageType;
+		ret.factory = new CreateDetectDescribeFile.Factory() {
+			@Override
+			public <IT extends ImageBase<IT>, D extends TupleDesc_F64>
+			DetectDescribePoint<IT, D> create(ImageType<IT> imageType) {
+				return FactoryDetectDescribe.sift(config,imageType.getImageClass());
+			}
+		};
+		ret.imageFamily = ImageType.Family.GRAY;
 
 		return ret;
 	}
 
 	public static class Info {
 		public String name;
-		public ImageType imageType;
-		public DetectDescribePoint detdesc;
+		public ImageType.Family imageFamily;
+		public CreateDetectDescribeFile.Factory factory;
 	}
 
 	public static void main(String[] args) throws IOException, IllegalAccessException, InstantiationException, ClassNotFoundException {
 		BoofRegressionConstants.clearCurrentResults();
 		RegressionRunner.main(new String[]{DetectDescribeRegression.class.getName(),ImageDataType.F32.toString()});
+		RegressionRunner.main(new String[]{DetectDescribeRegression.class.getName(),ImageDataType.U8.toString()});
 	}
 }

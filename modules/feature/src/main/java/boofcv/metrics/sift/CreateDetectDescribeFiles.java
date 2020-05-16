@@ -20,9 +20,13 @@
 package boofcv.metrics.sift;
 
 import boofcv.abst.feature.detdesc.DetectDescribePoint;
+import boofcv.factory.feature.detdesc.FactoryDetectDescribe;
 import boofcv.metrics.homography.CreateDetectDescribeFile;
 import boofcv.struct.feature.BrightFeature;
+import boofcv.struct.feature.TupleDesc_F64;
 import boofcv.struct.image.GrayF32;
+import boofcv.struct.image.ImageBase;
+import boofcv.struct.image.ImageDataType;
 import boofcv.struct.image.ImageType;
 
 import java.io.FileNotFoundException;
@@ -33,18 +37,20 @@ import java.io.FileNotFoundException;
 public class CreateDetectDescribeFiles {
 	public static void doStuff(String directory) throws FileNotFoundException {
 
-		ImageType<GrayF32> imageType = ImageType.single(GrayF32.class);
-
-		DetectDescribePoint<GrayF32,BrightFeature> alg =
-				FactorySift.detectDescribe();
+		CreateDetectDescribeFile.Factory factory = new CreateDetectDescribeFile.Factory() {
+			@Override
+			public <T extends ImageBase<T>, D extends TupleDesc_F64> DetectDescribePoint<T, D> create(ImageType<T> imageType) {
+				return FactoryDetectDescribe.sift(null,imageType.getImageClass());
+			}
+		};
 
 		CreateDetectDescribeFile<GrayF32,BrightFeature> cdf =
-				new CreateDetectDescribeFile<GrayF32,BrightFeature>(alg,imageType,"BOOFCV_SIFTN");
+				new CreateDetectDescribeFile<>(factory, ImageType.Family.GRAY, ImageDataType.F32,"BOOFCV_SIFTN");
 
 		cdf.directory(directory,"./");
 	}
 
-	public static void main( String args[] ) throws FileNotFoundException {
+	public static void main( String[] args ) throws FileNotFoundException {
 		doStuff("data/bikes/");
 		doStuff("data/boat/");
 		doStuff("data/graf/");

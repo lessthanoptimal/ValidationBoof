@@ -187,7 +187,7 @@ public class FactoryEvaluationTrackers<T extends ImageGray<T>> {
 		FastHessianFeatureDetector<T> feature = new FastHessianFeatureDetector<T>(extractor,maxFeaturesPerScale,
 				initialSampleSize, initialSize,numberScalesPerOctave,numberOfOctaves,6);
 
-		return new WrapFHtoInterestPoint(feature);
+		return new WrapFHtoInterestPoint(feature,imageType);
 	}
 
 	private PyramidKltForCombined<T, T> defaultFusedKlt() {

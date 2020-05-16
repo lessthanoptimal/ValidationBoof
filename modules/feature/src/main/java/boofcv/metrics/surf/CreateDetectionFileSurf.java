@@ -37,7 +37,7 @@ public class CreateDetectionFileSurf {
 	void doStuff( String directory , String suffix , Class<T> imageType ) throws FileNotFoundException {
 		// below are the settings used for detect stability test
 		// graf image 1 with 2000 features
-		InterestPointDetector<T> alg = FactoryInterestPoint.fastHessian(new ConfigFastHessian(80,1,-1,1,9,4,4));
+		InterestPointDetector<T> alg = FactoryInterestPoint.fastHessian(new ConfigFastHessian(80,1,-1,1,9,4,4),imageType);
 		// below is the settings used for describe stability test
 //		InterestPointDetector<T> alg = FactoryInterestPoint.fastHessian(3, 2, -1, 1, 9, 4, 4);
 

@@ -11,7 +11,8 @@ Description of changes to benchmarks and justifications for change in performanc
   * Stereo Visual Odometry: All changed to include bundle adjustment plus other modifications
   * Quad Stereo VO has a runtime regression because association using image location was removed, but was 
     compensated for by switching from SURF to BRIEF
-  * Three-View Reconstruction: ????
+  * Three-View Reconstruction: Change in how the rectified view was computed improved image fill
+- Fixed long-standing issue of multi band descriptors crashing when they encounter a single band image
 
 ## Version 0.35
 2019/Dec/23
