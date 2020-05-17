@@ -9,6 +9,11 @@ img2 img3 img4 img5 img6
 0.7459 0.7217 0.6342 0.5907 0.5094 
 0.8122 0.7914 0.7131 0.6663 0.5387 
 ---------- Directory: data/affinevgg/boat
+img2 img3 img4 img5 img6 
+3604 3024 2325 1987 1869 
+0.6694 0.5777 0.4689 0.3103 0.0902 
+0.5164 0.3932 0.2890 0.1787 0.0487 
+0.5830 0.4679 0.3576 0.2268 0.0632 
 ---------- Directory: data/affinevgg/graf
 img2 img3 img4 img5 img6 
 2719 2408 1938 1703 1551 
@@ -46,8 +51,8 @@ img2 img3 img4 img5 img6
 0.5125 0.3505 0.1978 0.1479 0.0599 
 0.5783 0.3818 0.2350 0.1787 0.0739 
 Summary Score:
-   num features  = 175461
-   max matches   = 101586
-   sumPrecision  = 20.35594497068928
-   sumRecall     = 15.628096719102436
-   sumFMeasure   = 17.63658766758408
+   num features  = 199534
+   max matches   = 114395
+   sumPrecision  = 22.472564072129803
+   sumRecall     = 17.0540379440945
+   sumFMeasure   = 19.33517374398647
