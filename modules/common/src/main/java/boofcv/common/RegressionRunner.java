@@ -1,11 +1,13 @@
 package boofcv.common;
 
+import boofcv.BoofVersion;
 import boofcv.concurrency.BoofConcurrency;
 import boofcv.struct.image.ImageDataType;
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Date;
 
 import static boofcv.common.BoofRegressionConstants.CURRENT_DIRECTORY;
 
@@ -110,5 +112,6 @@ public class RegressionRunner {
         } else {
             throw new RuntimeException("Unexpected number of arguments "+args.length);
         }
+        System.out.println("\n\nDone. BOOFCV-SHA "+ BoofVersion.GIT_SHA+" at "+new Date().toString());
     }
 }
