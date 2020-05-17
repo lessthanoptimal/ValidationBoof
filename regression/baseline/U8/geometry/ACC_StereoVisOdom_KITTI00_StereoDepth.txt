@@ -1,10 +1,11 @@
 # GENERATOR StereoVisualOdometryRegression
 # Visual Odometry Performance metrics. StereoDepth in KITTI00
 
+Total Frames = 4540
 Total Faults = 0
 Fraction with no update 0.0
-Ave per estimate:      distance 0.1722937  rotation 0.010079421
-Ave per distance:      distance  21.00360% deg/unit = 7.04e-01
-Ave Skip 20:           distance  12.87707% deg/unit = 3.21e-01
-Absolute:              location 501.80316  rotation 142.98 degrees
-Integral per distance: distance  13.57609% deg/unit = 3.53e-01
+Ave per estimate:      distance 0.0211285  rotation 0.000860150
+Ave per distance:      distance   2.57568% deg/unit = 6.01e-02
+Ave Skip 20:           distance   1.88443% deg/unit = 2.05e-02
+Absolute:              location  19.01785  rotation   3.59 degrees
+Integral per distance: distance   0.61436% deg/unit = 1.72e-03

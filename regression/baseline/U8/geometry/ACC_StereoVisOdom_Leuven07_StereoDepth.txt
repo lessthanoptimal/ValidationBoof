@@ -1,10 +1,11 @@
 # GENERATOR StereoVisualOdometryRegression
 # Visual Odometry Performance metrics. StereoDepth in Leuven07
 
+Total Frames = 1174
 Total Faults = 0
 Fraction with no update 0.0
-Ave per estimate:      distance 0.5412689  rotation 0.001489637
-Ave per distance:      distance  10.66550% deg/unit = 1.68e-02
-Ave Skip 20:           distance   1.86554% deg/unit = 2.98e-03
-Absolute:              location  32.93307  rotation   1.90 degrees
-Integral per distance: distance   0.36858% deg/unit = 1.38e-03
+Ave per estimate:      distance 0.2635574  rotation 0.000762674
+Ave per distance:      distance   5.19330% deg/unit = 8.61e-03
+Ave Skip 20:           distance   2.16098% deg/unit = 2.49e-03
+Absolute:              location  94.33090  rotation   4.48 degrees
+Integral per distance: distance   0.16245% deg/unit = 3.12e-04

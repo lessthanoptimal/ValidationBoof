@@ -54,7 +54,7 @@ public class StereoVisualOdometryRegression extends BaseRegression implements Im
 
 		Class bandType = ImageDataType.typeToSingleClass(type);
 
-		all.add( createDepth(bandType));
+		all.add( createMonoDepth(bandType));
 		all.add( createDualTrackerPnP(bandType));
 		all.add( createQuadPnP(bandType));
 
@@ -104,7 +104,7 @@ public class StereoVisualOdometryRegression extends BaseRegression implements Im
 		out.close();
 	}
 
-	public static Info createDepth( Class bandType ) {
+	public static Info createMonoDepth(Class bandType ) {
 		Class derivType = GImageDerivativeOps.getDerivativeType(bandType);
 
 		ConfigDisparityBM configDisparity = new ConfigDisparityBM();
@@ -161,50 +161,40 @@ public class StereoVisualOdometryRegression extends BaseRegression implements Im
 
 		ConfigStereoDualTrackPnP config = new ConfigStereoDualTrackPnP();
 		config.tracker.typeTracker = ConfigPointTracker.TrackerType.KLT;
-		config.tracker.klt.pyramidLevels = ConfigDiscreteLevels.levels(4);
+		config.tracker.klt.pyramidLevels = ConfigDiscreteLevels.minSize(40);
+		config.tracker.klt.templateRadius = 4; // 3 = 17.2 fps
+		config.tracker.klt.pruneClose = true;
+		config.tracker.klt.config.maxIterations = 25;
+		config.tracker.klt.config.maxPerPixelError = 25;
+		config.tracker.klt.toleranceFB = 3;
 
-		config.tracker.detDesc.typeDescribe = ConfigDescribeRegionPoint.DescriptorType.SURF_FAST;
+		// for stereo associations
+		config.tracker.detDesc.typeDescribe = ConfigDescribeRegionPoint.DescriptorType.BRIEF;
+		config.tracker.detDesc.describeBrief.fixed = true;
+
 		config.tracker.detDesc.typeDetector = ConfigDetectInterestPoint.DetectorType.POINT;
 		config.tracker.detDesc.detectPoint.type = PointDetectorTypes.SHI_TOMASI;
 		config.tracker.detDesc.detectPoint.scaleRadius = 11.0;
-		config.tracker.detDesc.detectPoint.shiTomasi.radius = 6;
-		config.tracker.detDesc.detectPoint.general.maxFeatures = 500;
+		config.tracker.detDesc.detectPoint.shiTomasi.radius = 4;
+		config.tracker.detDesc.detectPoint.general.maxFeatures = 400;
 		config.tracker.detDesc.detectPoint.general.radius = 4;
 		config.tracker.detDesc.detectPoint.general.threshold = 1;
 
 		config.epipolarTol = 1.5;
 
-		config.scene.ransac.inlierThreshold = 1.5;
-		config.scene.ransac.iterations = 200;
+		config.scene.ransac.iterations = 400;
+		config.scene.ransac.inlierThreshold = 0.5;
+
 		config.scene.refineIterations = 25;
 		config.scene.bundleConverge.maxIterations = 1;
 		config.scene.bundleMaxFeaturesPerFrame = 200;
 		config.scene.bundleMinObservations = 3;
-		config.scene.keyframes.geoMinCoverage = 0.4;
+		config.scene.keyframes.geoMinCoverage = 0.3;
 
-
-//		Class derivType = GImageDerivativeOps.getDerivativeType(bandType);
-//
-//		ConfigPKlt configKlt = new ConfigPKlt();
-//		configKlt.templateRadius = 3;
-//		configKlt.pyramidLevels = ConfigDiscreteLevels.levels(4);
-//		configKlt.config.maxPerPixelError = 50;
-//
-//		ConfigPointDetector configDet = new ConfigPointDetector();
-//		configDet.general.maxFeatures = 600;
-//		configDet.general.radius = 3;
-//		configDet.general.threshold = 1;
-//
-//		PointTracker trackerLeft = FactoryPointTracker.klt(configKlt, configDet, bandType, derivType);
-//		PointTracker trackerRight = FactoryPointTracker.klt(configKlt, configDet, bandType, derivType);
-//
-//		DescribeRegionPoint describe = FactoryDescribeRegionPoint.surfFast(null, bandType);
 
 		Info ret = new Info();
 		ret.name = "DualPnP";
 		ret.imageType = ImageType.single(bandType);
-//		ret.vo = FactoryVisualOdometry.stereoDualTrackerPnP(110, 3, 1.5, 1.5, 200, 50,
-//				trackerLeft, trackerRight, describe,11.0, bandType);
 		ret.vo = FactoryVisualOdometry.stereoDualTrackerPnP(config,bandType);
 
 		return ret;
@@ -262,8 +252,8 @@ public class StereoVisualOdometryRegression extends BaseRegression implements Im
 
 	public static void main(String[] args) throws IOException, IllegalAccessException, InstantiationException, ClassNotFoundException {
 		BoofRegressionConstants.clearCurrentResults();
-		RegressionRunner.main(new String[]{StereoVisualOdometryRegression.class.getName(),ImageDataType.F32.toString()});
-//		RegressionRunner.main(new String[]{StereoVisualOdometryRegression.class.getName(),ImageDataType.U8.toString()});
+//		RegressionRunner.main(new String[]{StereoVisualOdometryRegression.class.getName(),ImageDataType.F32.toString()});
+		RegressionRunner.main(new String[]{StereoVisualOdometryRegression.class.getName(),ImageDataType.U8.toString()});
 	}
 
 }

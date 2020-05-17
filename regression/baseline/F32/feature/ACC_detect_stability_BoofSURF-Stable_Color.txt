@@ -7,6 +7,9 @@ img2 img3 img4 img5 img6
 5620 5671 5566 5605 5646 
 0.5162 0.4281 0.2819 0.1843 0.0811 
 ---------- Directory: data/affinevgg/boat
+img2 img3 img4 img5 img6 
+5675 5699 5772 5779 5792 
+0.3232 0.2088 0.1040 0.0524 0.0171 
 ---------- Directory: data/affinevgg/graf
 img2 img3 img4 img5 img6 
 4603 4854 4691 4570 4714 
@@ -32,6 +35,6 @@ img2 img3 img4 img5 img6
 3237 3065 3716 3714 3723 
 0.2444 0.0783 0.0635 0.0560 0.0244 
 Summary Score:
-   num matches     = 198615
-   total correct   = 9.04993577522876
-   total ambiguous = 1.3674539507633505
+   num matches     = 227332
+   total correct   = 9.75539000616194
+   total ambiguous = 1.4193417954867693

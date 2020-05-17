@@ -1,10 +1,11 @@
 # GENERATOR StereoVisualOdometryRegression
 # Visual Odometry Performance metrics. DualPnP in KITTI00
 
+Total Frames = 4540
 Total Faults = 0
 Fraction with no update 0.0
-Ave per estimate:      distance 0.4576944  rotation 0.018072177
-Ave per distance:      distance  55.79561% deg/unit = 1.26e+00
-Ave Skip 20:           distance  31.14155% deg/unit = 4.97e-01
-Absolute:              location 611.10283  rotation  98.45 degrees
-Integral per distance: distance  47.09616% deg/unit = 8.38e-01
+Ave per estimate:      distance 0.0212907  rotation 0.000852349
+Ave per distance:      distance   2.59546% deg/unit = 5.95e-02
+Ave Skip 20:           distance   1.87184% deg/unit = 2.07e-02
+Absolute:              location  18.05487  rotation   6.43 degrees
+Integral per distance: distance   0.65543% deg/unit = 1.44e-03
