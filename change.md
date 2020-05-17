@@ -1,9 +1,11 @@
 Description of changes to benchmarks and justifications for change in performance from previous versions.
 
 ## Version 0.36
-2020
+2020/May/18
 - Prunes empty ERRORLOG files after running regression
 - Modified summary to include java version and dirty flag info
+- Fixed long-standing issue of multi band descriptors crashing when they encounter a single band image
+- Fixed encoding/decoding issue in QR regression
 - Explanation of Differences
   * Modified Image.isInside(float,float) and that resulted in small change in results for object tracking and VO 
   * Fiducial runtime is computed at same time as other metrics
@@ -13,8 +15,8 @@ Description of changes to benchmarks and justifications for change in performanc
     compensated for by switching from SURF to BRIEF
   * Three-View Reconstruction: Change in how the rectified view was computed improved image fill
   * Disparity changed because NCC had how it handled texture error modified with a new score function
-- Fixed long-standing issue of multi band descriptors crashing when they encounter a single band image
-- Fixed encoding/decoding issue in QR regression
+  * BRIEF produces slightly different results because of Image.isInside() change.
+  * DDA trackers produce different results because of a bug fix involving PointTrack
 
 ## Version 0.35
 2019/Dec/23
@@ -23,7 +25,7 @@ Description of changes to benchmarks and justifications for change in performanc
 - Added DetectLineRegression
 - Added DisparityRegression
 - Circulant's results changed slightly due to improvements in mean-shift
-- Stereo Depth's change is likely a result of how the disparity search is changed
+- Stereo Depth's change is likely a result of how the disparity search changed
   * Didn't pin point the exact change and adjusted it to be similar
 - Three View Stereo
   * Uses Census for error now
