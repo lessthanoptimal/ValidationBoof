@@ -1,4 +1,4 @@
 # GENERATOR DetectLineRegression
 # Average processing time of shape detector algorithm Polar
-                thin   22.8774 (ms)
+                thin   16.8754 (ms)
 

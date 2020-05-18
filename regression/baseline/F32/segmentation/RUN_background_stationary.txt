@@ -3,32 +3,32 @@
 # algorithm, average time (ms)
 
 # basic-gray
-       firerubixcube  0.2234 (ms)
+       firerubixcube  0.2301 (ms)
       yaser_lighting  0.0281 (ms)
-       yaser_walking  0.1731 (ms)
+       yaser_walking  0.1573 (ms)
 
 # gaussian-gray
-       firerubixcube  0.3900 (ms)
-      yaser_lighting  0.0675 (ms)
-       yaser_walking  0.4219 (ms)
+       firerubixcube  0.3989 (ms)
+      yaser_lighting  0.0690 (ms)
+       yaser_walking  0.4297 (ms)
 
 # gmm-gray
-       firerubixcube  3.9824 (ms)
-      yaser_lighting  0.4183 (ms)
-       yaser_walking  1.9894 (ms)
+       firerubixcube  3.9052 (ms)
+      yaser_lighting  0.4017 (ms)
+       yaser_walking  1.8811 (ms)
 
 # basic-rgb
-       firerubixcube  1.7356 (ms)
-      yaser_lighting  0.2473 (ms)
-       yaser_walking  1.1537 (ms)
+       firerubixcube  1.7628 (ms)
+      yaser_lighting  0.2508 (ms)
+       yaser_walking  1.1785 (ms)
 
 # gaussian-rgb
-       firerubixcube  3.7563 (ms)
-      yaser_lighting  0.6073 (ms)
-       yaser_walking  2.6778 (ms)
+       firerubixcube  3.9376 (ms)
+      yaser_lighting  0.6288 (ms)
+       yaser_walking  2.7840 (ms)
 
 # gmm-rgb
-       firerubixcube  7.0727 (ms)
-      yaser_lighting  0.7213 (ms)
-       yaser_walking  3.3878 (ms)
+       firerubixcube  7.7779 (ms)
+      yaser_lighting  0.7862 (ms)
+       yaser_walking  3.6379 (ms)
 

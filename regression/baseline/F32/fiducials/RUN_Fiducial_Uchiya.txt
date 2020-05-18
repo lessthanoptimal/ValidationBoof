@@ -2,12 +2,13 @@
 # Elapsed time is in milliseconds
 # dataset (total images) 50% 95% 100%
 
-                      distance  24  36.496  69.388 278.164
-                  highres_lots   8 726.688 873.271 947.806
-              highres_rotate_z  19 928.172 1283.997 1422.769
-                   motion_blur  15  26.432  38.869  88.543
-                      rotate_x  16  35.669  39.939  88.817
-                      rotate_z  19  59.779  78.740 125.937
-            shadow_overlapping  11  38.147  42.179  46.679
-                      static01 106  37.309  39.970  66.522
-                     visible01 211  44.406  48.943  60.245
+                      distance  24  38.369  49.334  89.047
+                  highres_lots   8 613.298 730.864 816.188
+              highres_rotate_z  19 820.847 1175.172 1356.191
+                   motion_blur  15  20.528  46.196 121.061
+                      rotate_x  16  38.703  43.881  95.629
+                      rotate_z  19  45.624  54.357  82.621
+            shadow_overlapping  11  44.056  49.610  49.678
+                      static01 106  33.653  36.251  37.914
+                      static02 107  39.957  42.747  68.307
+                     visible01 211  43.141  48.713  51.494

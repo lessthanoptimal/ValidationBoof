@@ -1,10 +1,13 @@
 # GENERATOR FiducialRegression
-# directory, number of frames, FPS
-data/fiducials/square_border_image/standard/distance_angle 300 102.145
-data/fiducials/square_border_image/standard/distance_straight 300 117.463
-data/fiducials/square_border_image/standard/hard 300  53.295
-data/fiducials/square_border_image/standard/motion_blur 300 130.152
-data/fiducials/square_border_image/standard/rotation 300  89.206
-data/fiducials/square_border_image/static/static_front_close 300 299.103
-data/fiducials/square_border_image/static/static_front_far 300 274.977
-data/fiducials/square_border_image/static/static_scene 300 126.743
+# Elapsed time is in milliseconds
+# dataset (total images) 50% 95% 100%
+
+                distance_angle   9  10.075  11.640  12.164
+             distance_straight   9   7.875  11.596  12.393
+                          hard  11  19.108  26.381  27.863
+                   motion_blur   8   7.325  10.094  11.398
+                      rotation  13  11.826  13.339  16.941
+            static_front_close 193   3.401   3.575   4.492
+              static_front_far 100   3.698   4.221   4.526
+                  static_scene 308   7.439   7.886   8.557
+                         set01 411   3.782   4.601   5.306

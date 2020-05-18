@@ -1,6 +1,6 @@
 Runtime.getRuntime().availableProcessors(): 8
-Runtime.getRuntime().freeMemory(): 520093696
-Runtime.getRuntime().totalMemory(): 526385152
+Runtime.getRuntime().freeMemory(): 10701792
+Runtime.getRuntime().totalMemory(): 14680064
 =========== sun.desktop
 gnome
 =========== awt.toolkit
@@ -32,7 +32,7 @@ US
 =========== sun.boot.library.path
 /opt/jdk/zulu11.35.15-ca-jdk11.0.5-linux_x64/lib
 =========== sun.java.command
-regression.jar --TestName CalibrationDetection
+regression.jar
 =========== jdk.debug
 release
 =========== sun.cpu.endian
@@ -69,7 +69,7 @@ pja
 =========== path.separator
 :
 =========== os.version
-4.15.0-72-generic
+4.15.0-99-generic
 =========== java.runtime.name
 OpenJDK Runtime Environment
 =========== file.encoding

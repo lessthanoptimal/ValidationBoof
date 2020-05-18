@@ -1,116 +1,116 @@
 # GENERATOR ObjectTrackingRegression
 Tracker: BoofCV-TLD
-              cliffbar N  328 ave   52.61 p50   52.02 p97   56.97
-                coke11 N  292 ave   39.71 p50   39.26 p97   46.41
-                 david N  462 ave   54.57 p50   58.77 p97   69.72
-                dollar N  327 ave   20.81 p50   22.89 p97   26.30
-               faceocc N  886 ave   52.99 p50   51.93 p97   67.82
-              faceocc2 N  812 ave   50.21 p50   50.84 p97   61.33
-                  girl N  502 ave   37.97 p50   37.04 p97   50.72
-                surfer N  376 ave   38.07 p50   38.82 p97   47.95
-                  sylv N 1344 ave   31.24 p50   30.80 p97   51.96
-                tiger1 N  354 ave   41.44 p50   42.17 p97   50.46
-                tiger2 N  365 ave   41.76 p50   42.20 p97   50.96
-              twinings N  467 ave   47.53 p50   47.48 p97   51.45
-              01_david N  761 ave  105.69 p50  107.71 p97  118.71
-            02_jumping N  313 ave   75.61 p50   77.30 p97   86.38
-        03_pedestrian1 N  140 ave   33.29 p50   32.49 p97   39.65
-        04_pedestrian2 N  338 ave   13.33 p50   16.78 p97   20.66
-        05_pedestrian3 N  184 ave   17.41 p50   15.29 p97   25.82
-                06_car N  945 ave   14.22 p50   15.42 p97   20.52
-          07_motocross N 2665 ave   30.64 p50   30.74 p97   57.29
-         08_volkswagen N 8576 ave  120.23 p50  120.09 p97  165.09
-           09_carchase N 9928 ave   77.25 p50   76.68 p97  110.42
-              10_panda N 3000 ave   31.71 p50   36.75 p97   45.01
+              cliffbar N  328 ave   52.85 p50   52.34 p97   57.52
+                coke11 N  292 ave   40.03 p50   39.40 p97   47.11
+                 david N  462 ave   54.86 p50   59.48 p97   70.53
+                dollar N  327 ave   20.98 p50   23.08 p97   26.47
+               faceocc N  886 ave   53.43 p50   52.48 p97   68.52
+              faceocc2 N  812 ave   50.39 p50   51.06 p97   61.31
+                  girl N  502 ave   38.15 p50   37.09 p97   51.08
+                surfer N  376 ave   38.30 p50   39.27 p97   48.59
+                  sylv N 1344 ave   31.54 p50   31.06 p97   52.39
+                tiger1 N  354 ave   41.77 p50   42.24 p97   50.63
+                tiger2 N  365 ave   42.11 p50   42.41 p97   51.67
+              twinings N  467 ave   47.86 p50   47.85 p97   51.49
+              01_david N  761 ave  106.39 p50  107.85 p97  119.90
+            02_jumping N  313 ave   76.40 p50   78.15 p97   87.52
+        03_pedestrian1 N  140 ave   33.62 p50   32.80 p97   40.50
+        04_pedestrian2 N  338 ave   13.51 p50   17.13 p97   20.81
+        05_pedestrian3 N  184 ave   17.55 p50   15.37 p97   26.03
+                06_car N  945 ave   14.43 p50   15.62 p97   20.65
+          07_motocross N 2665 ave   31.07 p50   31.16 p97   58.71
+         08_volkswagen N 8576 ave  119.42 p50  119.44 p97  162.65
+           09_carchase N 9928 ave   77.48 p50   76.62 p97  110.91
+              10_panda N 3000 ave   31.68 p50   36.87 p97   45.09
 Tracker: BoofCV-Circulant
-              cliffbar N  328 ave    1.04 p50    0.76 p97    2.88
-                coke11 N  292 ave    0.74 p50    0.73 p97    0.82
+              cliffbar N  328 ave    1.07 p50    0.75 p97    3.40
+                coke11 N  292 ave    0.74 p50    0.73 p97    0.83
                  david N  462 ave    0.79 p50    0.77 p97    0.93
-                dollar N  327 ave    0.77 p50    0.76 p97    0.86
-               faceocc N  886 ave    0.77 p50    0.76 p97    0.86
-              faceocc2 N  812 ave    0.69 p50    0.68 p97    0.84
-                  girl N  502 ave    0.74 p50    0.73 p97    0.84
-                surfer N  376 ave    0.75 p50    0.73 p97    0.83
-                  sylv N 1344 ave    0.75 p50    0.74 p97    0.82
-                tiger1 N  354 ave    0.75 p50    0.74 p97    0.82
-                tiger2 N  365 ave    0.75 p50    0.74 p97    0.84
-              twinings N  467 ave    0.74 p50    0.73 p97    0.81
-              01_david N  761 ave    0.73 p50    0.72 p97    0.81
-            02_jumping N  313 ave    0.74 p50    0.74 p97    0.80
-        03_pedestrian1 N  140 ave    0.75 p50    0.74 p97    0.79
-        04_pedestrian2 N  338 ave    0.74 p50    0.73 p97    0.83
-        05_pedestrian3 N  184 ave    0.71 p50    0.71 p97    0.80
-                06_car N  945 ave    0.74 p50    0.73 p97    0.80
-          07_motocross N 2665 ave    0.72 p50    0.71 p97    0.80
-         08_volkswagen N 8576 ave    0.73 p50    0.72 p97    0.81
-           09_carchase N 9928 ave    0.70 p50    0.69 p97    0.78
-              10_panda N 3000 ave    0.74 p50    0.73 p97    0.81
+                dollar N  327 ave    0.76 p50    0.75 p97    0.85
+               faceocc N  886 ave    0.77 p50    0.77 p97    0.86
+              faceocc2 N  812 ave    0.69 p50    0.68 p97    0.80
+                  girl N  502 ave    0.73 p50    0.71 p97    0.85
+                surfer N  376 ave    0.73 p50    0.72 p97    0.81
+                  sylv N 1344 ave    0.73 p50    0.72 p97    0.83
+                tiger1 N  354 ave    0.73 p50    0.72 p97    0.82
+                tiger2 N  365 ave    0.72 p50    0.71 p97    0.80
+              twinings N  467 ave    0.72 p50    0.71 p97    0.81
+              01_david N  761 ave    0.71 p50    0.70 p97    0.78
+            02_jumping N  313 ave    0.71 p50    0.70 p97    0.78
+        03_pedestrian1 N  140 ave    0.71 p50    0.70 p97    0.76
+        04_pedestrian2 N  338 ave    0.72 p50    0.71 p97    0.80
+        05_pedestrian3 N  184 ave    0.70 p50    0.70 p97    0.77
+                06_car N  945 ave    0.71 p50    0.70 p97    0.78
+          07_motocross N 2665 ave    0.70 p50    0.70 p97    0.78
+         08_volkswagen N 8576 ave    0.72 p50    0.71 p97    0.79
+           09_carchase N 9928 ave    0.70 p50    0.70 p97    0.78
+              10_panda N 3000 ave    0.71 p50    0.70 p97    0.79
 Tracker: BoofCV-Comaniciu
-              cliffbar N  328 ave    1.08 p50    0.96 p97    1.65
-                coke11 N  292 ave    0.96 p50    0.95 p97    1.06
-                 david N  462 ave    0.46 p50    0.44 p97    0.54
-                dollar N  327 ave    0.95 p50    0.95 p97    1.05
-               faceocc N  886 ave    0.47 p50    0.46 p97    0.53
-              faceocc2 N  812 ave    0.96 p50    0.95 p97    1.04
-                  girl N  502 ave    0.97 p50    0.96 p97    1.11
-                surfer N  376 ave    0.96 p50    0.95 p97    1.03
-                  sylv N 1344 ave    0.45 p50    0.44 p97    0.51
-                tiger1 N  354 ave    0.96 p50    0.96 p97    1.08
-                tiger2 N  365 ave    0.96 p50    0.96 p97    1.05
-              twinings N  467 ave    0.96 p50    0.95 p97    1.03
-              01_david N  761 ave    0.74 p50    1.05 p97    1.18
-            02_jumping N  313 ave    0.96 p50    0.94 p97    1.09
-        03_pedestrian1 N  140 ave    0.94 p50    0.94 p97    1.00
-        04_pedestrian2 N  338 ave    0.97 p50    0.96 p97    1.15
-        05_pedestrian3 N  184 ave    0.88 p50    0.94 p97    1.08
-                06_car N  945 ave    0.97 p50    0.96 p97    1.10
-          07_motocross N 2665 ave    1.08 p50    1.08 p97    1.17
-         08_volkswagen N 8576 ave    0.44 p50    0.51 p97    0.65
-           09_carchase N 9928 ave    1.06 p50    1.06 p97    1.16
-              10_panda N 3000 ave    1.02 p50    1.03 p97    1.13
+              cliffbar N  328 ave    0.75 p50    0.59 p97    1.99
+                coke11 N  292 ave    0.59 p50    0.57 p97    0.69
+                 david N  462 ave    0.37 p50    0.34 p97    0.47
+                dollar N  327 ave    0.59 p50    0.57 p97    0.69
+               faceocc N  886 ave    0.38 p50    0.37 p97    0.47
+              faceocc2 N  812 ave    0.59 p50    0.57 p97    0.66
+                  girl N  502 ave    0.65 p50    0.61 p97    0.82
+                surfer N  376 ave    0.58 p50    0.57 p97    0.67
+                  sylv N 1344 ave    0.35 p50    0.34 p97    0.42
+                tiger1 N  354 ave    0.59 p50    0.57 p97    0.75
+                tiger2 N  365 ave    0.58 p50    0.57 p97    0.65
+              twinings N  467 ave    0.58 p50    0.57 p97    0.67
+              01_david N  761 ave    0.48 p50    0.68 p97    0.76
+            02_jumping N  313 ave    0.61 p50    0.60 p97    0.69
+        03_pedestrian1 N  140 ave    0.60 p50    0.59 p97    0.68
+        04_pedestrian2 N  338 ave    0.64 p50    0.61 p97    0.86
+        05_pedestrian3 N  184 ave    0.52 p50    0.54 p97    0.69
+                06_car N  945 ave    0.59 p50    0.55 p97    0.77
+          07_motocross N 2665 ave    0.68 p50    0.63 p97    1.08
+         08_volkswagen N 8576 ave    0.43 p50    0.50 p97    0.59
+           09_carchase N 9928 ave    1.05 p50    1.05 p97    1.16
+              10_panda N 3000 ave    0.95 p50    0.95 p97    1.04
 Tracker: BoofCV-MeanShiftHist
-              cliffbar N  328 ave    0.09 p50    0.05 p97    0.37
-                coke11 N  292 ave    0.02 p50    0.01 p97    0.04
-                 david N  462 ave    0.04 p50    0.00 p97    0.24
+              cliffbar N  328 ave    0.08 p50    0.05 p97    0.25
+                coke11 N  292 ave    0.02 p50    0.01 p97    0.03
+                 david N  462 ave    0.04 p50    0.00 p97    0.21
                 dollar N  327 ave    0.12 p50    0.08 p97    0.29
-               faceocc N  886 ave    0.18 p50    0.12 p97    0.50
-              faceocc2 N  812 ave    0.16 p50    0.14 p97    0.24
-                  girl N  502 ave    0.28 p50    0.25 p97    0.61
-                surfer N  376 ave    0.03 p50    0.02 p97    0.06
-                  sylv N 1344 ave    0.03 p50    0.02 p97    0.05
+               faceocc N  886 ave    0.18 p50    0.12 p97    0.49
+              faceocc2 N  812 ave    0.16 p50    0.14 p97    0.25
+                  girl N  502 ave    0.28 p50    0.26 p97    0.61
+                surfer N  376 ave    0.03 p50    0.02 p97    0.07
+                  sylv N 1344 ave    0.03 p50    0.03 p97    0.05
                 tiger1 N  354 ave    0.03 p50    0.02 p97    0.07
                 tiger2 N  365 ave    0.02 p50    0.02 p97    0.04
-              twinings N  467 ave    0.06 p50    0.05 p97    0.11
-              01_david N  761 ave    0.02 p50    0.00 p97    0.07
+              twinings N  467 ave    0.06 p50    0.05 p97    0.12
+              01_david N  761 ave    0.02 p50    0.00 p97    0.06
             02_jumping N  313 ave    0.04 p50    0.04 p97    0.10
         03_pedestrian1 N  140 ave    0.03 p50    0.02 p97    0.06
         04_pedestrian2 N  338 ave    0.02 p50    0.02 p97    0.06
         05_pedestrian3 N  184 ave    0.02 p50    0.02 p97    0.06
-                06_car N  945 ave    0.07 p50    0.06 p97    0.21
+                06_car N  945 ave    0.07 p50    0.06 p97    0.20
           07_motocross N 2665 ave    0.00 p50    0.00 p97    0.00
          08_volkswagen N 8576 ave    0.00 p50    0.00 p97    0.01
            09_carchase N 9928 ave    0.00 p50    0.00 p97    0.03
               10_panda N 3000 ave    0.01 p50    0.01 p97    0.02
 Tracker: BoofCV-SparseFlow
-              cliffbar N  328 ave    2.20 p50    0.00 p97   12.56
-                coke11 N  292 ave    0.20 p50    0.00 p97    0.01
-                 david N  462 ave    6.45 p50    8.93 p97   13.24
-                dollar N  327 ave    6.29 p50    5.71 p97   10.94
-               faceocc N  886 ave    5.20 p50    6.02 p97   11.33
-              faceocc2 N  812 ave    3.17 p50    0.00 p97    9.08
-                  girl N  502 ave    1.45 p50    0.00 p97   17.22
-                surfer N  376 ave    0.38 p50    0.00 p97    1.78
-                  sylv N 1344 ave    3.33 p50    0.00 p97   10.05
-                tiger1 N  354 ave    0.40 p50    0.00 p97    8.94
-                tiger2 N  365 ave    1.31 p50    0.00 p97   13.03
-              twinings N  467 ave    2.29 p50    0.00 p97    8.16
-              01_david N  761 ave    0.06 p50    0.00 p97    0.00
-            02_jumping N  313 ave    0.45 p50    0.00 p97    8.42
-        03_pedestrian1 N  140 ave    4.08 p50    0.00 p97   15.69
-        04_pedestrian2 N  338 ave    0.39 p50    0.00 p97    0.66
-        05_pedestrian3 N  184 ave    2.95 p50    0.00 p97   11.88
-                06_car N  945 ave    1.89 p50    0.00 p97   10.54
+              cliffbar N  328 ave    2.24 p50    0.00 p97   12.62
+                coke11 N  292 ave    0.21 p50    0.00 p97    0.00
+                 david N  462 ave    6.48 p50    8.88 p97   13.27
+                dollar N  327 ave    6.32 p50    5.74 p97   10.77
+               faceocc N  886 ave    5.20 p50    5.97 p97   11.23
+              faceocc2 N  812 ave    3.21 p50    0.00 p97    9.35
+                  girl N  502 ave    1.45 p50    0.00 p97   17.13
+                surfer N  376 ave    0.37 p50    0.00 p97    1.59
+                  sylv N 1344 ave    3.31 p50    0.00 p97    9.87
+                tiger1 N  354 ave    0.39 p50    0.00 p97    8.68
+                tiger2 N  365 ave    1.30 p50    0.00 p97   12.96
+              twinings N  467 ave    2.27 p50    0.00 p97    7.98
+              01_david N  761 ave    0.04 p50    0.00 p97    0.00
+            02_jumping N  313 ave    0.45 p50    0.00 p97    8.48
+        03_pedestrian1 N  140 ave    4.12 p50    0.00 p97   16.02
+        04_pedestrian2 N  338 ave    0.39 p50    0.00 p97    0.64
+        05_pedestrian3 N  184 ave    2.95 p50    0.00 p97   11.58
+                06_car N  945 ave    1.86 p50    0.00 p97   10.41
           07_motocross N 2665 ave    0.07 p50    0.00 p97    0.00
          08_volkswagen N 8576 ave    0.00 p50    0.00 p97    0.00
            09_carchase N 9928 ave    0.01 p50    0.00 p97    0.00
-              10_panda N 3000 ave    0.14 p50    0.00 p97    0.00
+              10_panda N 3000 ave    0.13 p50    0.00 p97    0.00
