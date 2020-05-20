@@ -34,11 +34,11 @@ public class EstimateUchiyaFiducialToCamera<T extends ImageGray<T>> extends Base
 
 		Uchiya_to_FiducialDetector<T> detector = FactoryFiducial.randomDots(config,imageType);
 
-		System.out.println("Loading marker definitions");
+//		System.out.println("Loading marker definitions");
 		for( List<Point2D_F64> marker : definition.markers ) {
 			detector.addMarker(marker);
 		}
-		System.out.println("       ... done with definitions");
+//		System.out.println("       ... done with definitions");
 
 		return detector;
 	}

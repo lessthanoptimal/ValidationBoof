@@ -36,6 +36,13 @@ public class FiducialRegression extends BaseRegression implements ImageRegressio
 
 	@Override
 	public void process(ImageDataType type) throws IOException {
+
+		runtime = new RuntimeSummary();
+		runtime.out = new PrintStream(new File(directoryRuntime,"RUN_Fiducials.txt"));
+		BoofRegressionConstants.printGenerator(runtime.out, getClass());
+		runtime.out.println("# Elapsed time in milliseconds");
+		runtime.out.println();
+
 		final Class imageType = ImageDataType.typeToSingleClass(type);
 
 		final ConfigThreshold robust = ConfigThreshold.local(ThresholdType.LOCAL_MEAN,20);
@@ -72,6 +79,9 @@ public class FiducialRegression extends BaseRegression implements ImageRegressio
 		process("CircleRegular", new EstimateCircleRegularToCamera(imageType), "circle_regular",false);
 
 		process("Uchiya", new EstimateUchiyaFiducialToCamera(imageType), "random_dots",false);
+
+		runtime.printSummary();
+		runtime.out.close();
 	}
 
 	private void process(String name, BaseEstimateSquareFiducialToCamera estimate, String type, boolean ignoreOrder )
@@ -85,11 +95,7 @@ public class FiducialRegression extends BaseRegression implements ImageRegressio
 
 		try {
 			summaryPeriodMS.reset();
-			runtime = new RuntimeSummary();
-			runtime.out = new PrintStream(new File(directoryRuntime,"RUN_Fiducial_" + name + ".txt"));
-			BoofRegressionConstants.printGenerator(runtime.out, getClass());
-			runtime.out.println("# Elapsed time in milliseconds");
-			runtime.out.println();
+			runtime.out.println(name);
 			runtime.printHeader(false);
 
 			computeStandardMetrics(type, "ACC_Fiducial_Standard_" + name + ".txt", estimate,ignoreOrder, 5);
@@ -97,13 +103,10 @@ public class FiducialRegression extends BaseRegression implements ImageRegressio
 			computeAlwaysVisibleMetrics(type, "ACC_Fiducial_AlwaysVisible_" + name + ".txt", estimate);
 
 			runtime.out.println();
-			runtime.printHeader(true);
-			runtime.printStats("Summary",summaryPeriodMS);
+			runtime.saveSummary(name,summaryPeriodMS);
 		} catch( RuntimeException e ) {
 			e.printStackTrace();
 			e.printStackTrace(errorLog);
-		} finally {
-			runtime.out.close();
 		}
 	}
 

@@ -43,8 +43,7 @@ public class EvalauteDescribeImageDense<T extends ImageBase<T>>
     List<TupleDesc_F64> original;
     GrowQueue_F64 magnitude = new GrowQueue_F64();
 
-    double totalTimeMilli;
-    int totalImages;
+    public final GrowQueue_F64 processingTimeMS = new GrowQueue_F64();
 
     public EvalauteDescribeImageDense( List<String> images , ImageType<T> imageType ) {
         this.images = images;
@@ -56,8 +55,7 @@ public class EvalauteDescribeImageDense<T extends ImageBase<T>>
     public void evaluate( DescribeImageDense<T, TupleDesc_F64> alg ) {
         this.alg = alg;
 
-        totalTimeMilli = 0;
-        totalImages = 0;
+        processingTimeMS.reset();
 
         for (int i = 0; i < images.size(); i++) {
             T input = UtilImageIO.loadImage(new File(images.get(i)),true,imageType);
@@ -65,7 +63,11 @@ public class EvalauteDescribeImageDense<T extends ImageBase<T>>
                 throw new RuntimeException("Can't open "+images.get(i));
             workImage.reshape(input.width,input.height);
 
+            long time0 = System.currentTimeMillis();
             alg.process(input);
+            long time1 = System.currentTimeMillis();
+            processingTimeMS.add((time1-time0)*1e-6);
+
             original = copy(alg.getDescriptions());
 
             // precompute the norm for original descriptors.  Used later to normalize the scale of a descriptor
@@ -96,7 +98,6 @@ public class EvalauteDescribeImageDense<T extends ImageBase<T>>
             printMetric(imageScale(input),"Image Scale");
             out.println();
         }
-
     }
 
     public void setOutputStream(PrintStream out) {
@@ -128,9 +129,7 @@ public class EvalauteDescribeImageDense<T extends ImageBase<T>>
             long before = System.nanoTime();
             alg.process(workImage);
             long after = System.nanoTime();
-
-            totalTimeMilli += (after-before)*1e-6;
-            totalImages++;
+            processingTimeMS.add((after-before)*1e-6);
 
             List<TupleDesc_F64> descriptions = alg.getDescriptions();
 
@@ -153,10 +152,7 @@ public class EvalauteDescribeImageDense<T extends ImageBase<T>>
             long before = System.nanoTime();
             alg.process(workImage);
             long after = System.nanoTime();
-
-            totalTimeMilli += (after-before)*1e-6;
-            totalImages++;
-
+            processingTimeMS.add((after-before)*1e-6);
 
             List<TupleDesc_F64> descriptions = alg.getDescriptions();
 
@@ -182,10 +178,7 @@ public class EvalauteDescribeImageDense<T extends ImageBase<T>>
             long before = System.nanoTime();
             alg.process(workImage);
             long after = System.nanoTime();
-
-            totalTimeMilli += (after-before)*1e-6;
-            totalImages++;
-
+            processingTimeMS.add((after-before)*1e-6);
 
             List<TupleDesc_F64> descriptions = alg.getDescriptions();
 
@@ -226,10 +219,7 @@ public class EvalauteDescribeImageDense<T extends ImageBase<T>>
                 long before = System.nanoTime();
                 alg.process(workImage);
                 long after = System.nanoTime();
-
-                totalTimeMilli += (after-before)*1e-6;
-                totalImages++;
-
+                processingTimeMS.add((after-before)*1e-6);
 
                 List<TupleDesc_F64> descriptions = alg.getDescriptions();
 
@@ -261,10 +251,7 @@ public class EvalauteDescribeImageDense<T extends ImageBase<T>>
             long before = System.nanoTime();
             alg.process(workImage);
             long after = System.nanoTime();
-
-            totalTimeMilli += (after-before)*1e-6;
-            totalImages++;
-
+            processingTimeMS.add((after-before)*1e-6);
 
             List<TupleDesc_F64> descriptions = alg.getDescriptions();
 
@@ -315,10 +302,6 @@ public class EvalauteDescribeImageDense<T extends ImageBase<T>>
         }
 
         return output;
-    }
-
-    public double getAverageTimeMilli() {
-        return totalTimeMilli/totalImages;
     }
 
     private static class Metric {

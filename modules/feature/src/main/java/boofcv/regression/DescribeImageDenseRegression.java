@@ -1,10 +1,7 @@
 package boofcv.regression;
 
 import boofcv.abst.feature.dense.DescribeImageDense;
-import boofcv.common.BaseRegression;
-import boofcv.common.BoofRegressionConstants;
-import boofcv.common.ImageRegression;
-import boofcv.common.RegressionRunner;
+import boofcv.common.*;
 import boofcv.factory.feature.dense.*;
 import boofcv.metrics.dense.EvalauteDescribeImageDense;
 import boofcv.struct.image.ImageDataType;
@@ -31,8 +28,7 @@ public class DescribeImageDenseRegression extends BaseRegression implements Imag
 
 	@Override
 	public void process(ImageDataType type) throws IOException {
-
-		List<Info> algs = new ArrayList<Info>();
+		List<Info> algs = new ArrayList<>();
 
 		Class imageType = ImageDataType.typeToSingleClass(type);
 
@@ -45,9 +41,9 @@ public class DescribeImageDenseRegression extends BaseRegression implements Imag
 
 
 		algs.add(new Info("HOG-SB-"+type, FactoryDescribeImageDense.hog(hogOrig,ImageType.single(imageType))));
-		algs.add(new Info("HOG-MS-"+type, FactoryDescribeImageDense.hog(hogOrig,ImageType.pl(3,imageType))));
+		algs.add(new Info("HOG-PL-"+type, FactoryDescribeImageDense.hog(hogOrig,ImageType.pl(3,imageType))));
 		algs.add(new Info("HOG-F-SB-"+type, FactoryDescribeImageDense.hog(hogFast,ImageType.single(imageType))));
-		algs.add(new Info("HOG-F-MS-"+type, FactoryDescribeImageDense.hog(hogFast,ImageType.pl(3,imageType))));
+		algs.add(new Info("HOG-F-PL-"+type, FactoryDescribeImageDense.hog(hogFast,ImageType.pl(3,imageType))));
 		algs.add(new Info("SURF-F-"+type, FactoryDescribeImageDense.surfFast(new ConfigDenseSurfFast(sampling),imageType)));
 		algs.add(new Info("SURF-S-"+type, FactoryDescribeImageDense.surfStable(new ConfigDenseSurfStable(sampling),imageType)));
 		algs.add(new Info("SIFT-"+type, FactoryDescribeImageDense.sift(new ConfigDenseSift(sampling),imageType)));
@@ -60,9 +56,12 @@ public class DescribeImageDenseRegression extends BaseRegression implements Imag
 		PrintStream outputAccuracy = new PrintStream(new FileOutputStream(new File(directoryMetrics,"ACC_dense_image_descriptors.txt")));
 		BoofRegressionConstants.printGenerator(outputAccuracy,getClass());
 
-		PrintStream outputSpeed = new PrintStream(new FileOutputStream(new File(directoryMetrics,"RUN_dense_image_descriptors.txt")));
-		BoofRegressionConstants.printGenerator(outputSpeed,getClass());
-		outputSpeed.println("# Average runtime speed in milliseconds for dense image descriptors\n");
+		RuntimeSummary outputRuntime = new RuntimeSummary();
+		outputRuntime.out = new PrintStream(new File(directoryRuntime, "RUN_dense_image_descriptors.txt"));
+		BoofRegressionConstants.printGenerator(outputRuntime.out, getClass());
+		outputRuntime.out.println("# All times are in milliseconds");
+		outputRuntime.out.println();
+		outputRuntime.printHeader(true);
 
 		for( Info info : algs) {
 			System.out.println("Working on "+info.name);
@@ -73,7 +72,7 @@ public class DescribeImageDenseRegression extends BaseRegression implements Imag
 			try {
 				evaluator.setOutputStream(outputAccuracy);
 				evaluator.evaluate(info.desc);
-				outputSpeed.printf("%20s %6.1f\n",info.name,evaluator.getAverageTimeMilli());
+				outputRuntime.printStats(info.name, evaluator.processingTimeMS);
 			} catch( RuntimeException e ) {
 				e.printStackTrace();
 				errorLog.println(e);
@@ -81,7 +80,7 @@ public class DescribeImageDenseRegression extends BaseRegression implements Imag
 			outputAccuracy.println();
 		}
 		outputAccuracy.close();
-		outputSpeed.close();
+		outputRuntime.out.close();
 		System.out.println("   done");
 
 	}

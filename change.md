@@ -6,7 +6,7 @@ Description of changes to benchmarks and justifications for change in performanc
 - Improved timing information in summary
 - Added a summary and runtime to point trackers
 - Created a common format for runtime results summary
-- TODO Switch all runtime in FPS to milliseconds
+- All runtime metrics are reported in a unit of time (milliseconds) and not in FPS
 - TODO different directory for runtime results that is machine specific
 
 ## Version 0.36

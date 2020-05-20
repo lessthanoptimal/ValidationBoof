@@ -1,10 +1,7 @@
 package boofcv.regression;
 
 import boofcv.alg.sfm.d2.StitchingFromMotion2D;
-import boofcv.common.BaseRegression;
-import boofcv.common.BoofRegressionConstants;
-import boofcv.common.ImageRegression;
-import boofcv.common.RegressionRunner;
+import boofcv.common.*;
 import boofcv.metrics.stabilization.FactoryRegressionVideoStabilization;
 import boofcv.metrics.stabilization.RuntimePerformanceVideoStabilization;
 import boofcv.struct.image.ImageDataType;
@@ -24,6 +21,7 @@ import java.util.List;
  */
 public class VideoStabilizeRegression extends BaseRegression implements ImageRegression {
 
+    RuntimeSummary outputSpeed;
     List<File> videos = new ArrayList<>();
 
     public VideoStabilizeRegression() {
@@ -33,13 +31,23 @@ public class VideoStabilizeRegression extends BaseRegression implements ImageReg
 
     @Override
     public void process(ImageDataType type) throws IOException {
+        outputSpeed = new RuntimeSummary();
+        outputSpeed.out = new PrintStream(new File(directoryRuntime, "RUN_VideoStabilization.txt"));
+        BoofRegressionConstants.printGenerator(outputSpeed.out, getClass());
+        outputSpeed.out.println("# All times are in milliseconds");
+        outputSpeed.out.println();
+
         process(ImageType.pl(3,type));
         process(ImageType.single(type));
+
+        outputSpeed.printSummary();
+        outputSpeed.out.close();
     }
 
     public void process(ImageType imageType) throws IOException {
         List<Tuple2<String,StitchingFromMotion2D>> algorithms = new ArrayList<>();
         algorithms.add(FactoryRegressionVideoStabilization.createKlt(imageType));
+
 
         for( Tuple2<String,StitchingFromMotion2D> a : algorithms ) {
             performRuntime(a.data0,a.data1,imageType);
@@ -57,23 +65,22 @@ public class VideoStabilizeRegression extends BaseRegression implements ImageReg
             default: throw new RuntimeException("Unknown image family");
         }
 
+        outputSpeed.out.println(name);
+
         RuntimePerformanceVideoStabilization benchmark = new RuntimePerformanceVideoStabilization(alg,imageType);
 
         PrintStream outputAcc = new PrintStream(new File(directoryMetrics,"ACC_VideoStabilization_"+name+".txt"));
         BoofRegressionConstants.printGenerator(outputAcc, getClass());
         outputAcc.println("# Runtime Performance of "+name);
 
-        PrintStream outputRuntime = new PrintStream(new File(directoryMetrics,"RUN_VideoStabilization_"+name+".txt"));
-        BoofRegressionConstants.printGenerator(outputRuntime, getClass());
-        outputRuntime.println("# Runtime Performance of "+name);
-
         benchmark.setOutputMetrics(outputAcc);
-        benchmark.setOutputRuntime(outputRuntime);
+        benchmark.setOutputRuntime(outputSpeed);
         benchmark.setErrorStream(errorLog);
         benchmark.evaluate(videos);
 
+        outputSpeed.saveSummary(name,benchmark.summaryTimesMS);
         outputAcc.close();
-        outputRuntime.close();
+        outputSpeed.out.println();
     }
 
     public static void main(String[] args) throws ClassNotFoundException, IOException, InstantiationException, IllegalAccessException {

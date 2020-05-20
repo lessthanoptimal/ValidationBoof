@@ -14,7 +14,7 @@ import java.util.List;
  */
 public class RuntimeSummary {
     public int digits = 7;
-    public PrintStream out;
+    public PrintStream out = System.out;
 
     public List<SummaryInfo> summary = new ArrayList<>();
 

@@ -1,10 +1,7 @@
 package boofcv.regression;
 
 import boofcv.abst.segmentation.ImageSuperpixels;
-import boofcv.common.BaseRegression;
-import boofcv.common.BoofRegressionConstants;
-import boofcv.common.ImageRegression;
-import boofcv.common.ValidationConstants;
+import boofcv.common.*;
 import boofcv.factory.segmentation.ConfigSlic;
 import boofcv.factory.segmentation.FactoryImageSegmentation;
 import boofcv.metrics.ComputeSuperPixelsMetrics;
@@ -25,6 +22,7 @@ public class SuperPixelRegression extends BaseRegression implements ImageRegress
     public static String pathToData = ValidationConstants.PATH_DATA+"segmentation/";
 
     PrintStream out;
+    RuntimeSummary outputSpeed;
     ComputeSuperPixelsMetrics metrics;
 
     public SuperPixelRegression() {
@@ -39,8 +37,15 @@ public class SuperPixelRegression extends BaseRegression implements ImageRegress
 
         out = new PrintStream(new File(directoryMetrics,"ACC_SuperPixels.txt"));
         BoofRegressionConstants.printGenerator(out, getClass());
-        metrics = new ComputeSuperPixelsMetrics(pathToData,imageType);
 
+        outputSpeed = new RuntimeSummary();
+        outputSpeed.out = new PrintStream(new File(directoryRuntime, "RUN_SuperPixels.txt"));
+        BoofRegressionConstants.printGenerator(outputSpeed.out, getClass());
+        outputSpeed.out.println("# All times are in milliseconds");
+        outputSpeed.out.println();
+        outputSpeed.printHeader(true);
+
+        metrics = new ComputeSuperPixelsMetrics(pathToData,imageType);
         metrics.err = errorLog;
         metrics.out = out;
 
@@ -59,15 +64,14 @@ public class SuperPixelRegression extends BaseRegression implements ImageRegress
 
         try {
             metrics.process(name, alg);
+            outputSpeed.printStats(name,metrics.timesMS);
         } catch( RuntimeException e ) {
             e.printStackTrace(errorLog);
         }
     }
 
-    public static void main(String[] args) throws IOException {
-        SuperPixelRegression regression = new SuperPixelRegression();
-
-        regression.setMetricsDirectory(".");
-        regression.process(ImageDataType.F32);
+    public static void main(String[] args) throws IOException, IllegalAccessException, InstantiationException, ClassNotFoundException {
+        BoofRegressionConstants.clearCurrentResults();
+        RegressionRunner.main(new String[]{SuperPixelRegression.class.getName(),ImageDataType.F32.toString()});
     }
 }

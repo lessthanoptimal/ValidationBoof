@@ -79,6 +79,7 @@ public class PointTrackerRegression extends BaseRegression implements ImageRegre
 		BoofRegressionConstants.printGenerator(outputSpeed.out, getClass());
 		outputSpeed.out.println("# Processing time statics across entire test set for each tracker");
 		outputSpeed.out.println("# All times are in milliseconds");
+		outputSpeed.out.println();
 		outputSpeed.printHeader(true);
 
 		List<Info> all = new ArrayList<>();

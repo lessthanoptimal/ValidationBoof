@@ -7,6 +7,7 @@ import boofcv.core.image.GeneralizedImageOps;
 import boofcv.io.image.ConvertBufferedImage;
 import boofcv.io.image.UtilImageIO;
 import boofcv.struct.image.*;
+import org.ddogleg.struct.GrowQueue_F64;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -24,6 +25,7 @@ public class ComputeSuperPixelsMetrics<T extends ImageBase<T>> {
 
     public PrintStream out = System.out;
     public PrintStream err = System.err;
+    public final GrowQueue_F64 timesMS = new GrowQueue_F64();
 
     List<String> names = new ArrayList<>();
     List<T> images = new ArrayList<>();
@@ -49,6 +51,7 @@ public class ComputeSuperPixelsMetrics<T extends ImageBase<T>> {
 
     public void process( String algName , ImageSuperpixels<T> alg ) {
 
+        timesMS.reset();
         out.println(algName);
 
         GrayS32 segmented = new GrayS32(1,1);
@@ -56,7 +59,10 @@ public class ComputeSuperPixelsMetrics<T extends ImageBase<T>> {
         for (int i = 0; i < images.size(); i++) {
             T image = images.get(i);
             segmented.reshape(image.width,image.height);
+            long time0 = System.nanoTime();
             alg.segment(image,segmented);
+            long time1 = System.nanoTime();
+            timesMS.add((time1-time0)*1e-6);
 
             int regions = alg.getTotalSuperpixels();
             out.printf("  %20s regions=%4d",names.get(i),regions);

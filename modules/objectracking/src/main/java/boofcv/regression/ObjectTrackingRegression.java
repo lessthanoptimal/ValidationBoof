@@ -6,7 +6,6 @@ import boofcv.metrics.object.*;
 import boofcv.struct.image.ImageBase;
 import boofcv.struct.image.ImageDataType;
 import boofcv.struct.image.ImageType;
-import org.ddogleg.stats.UtilStatisticsQueue;
 import org.ddogleg.struct.GrowQueue_F64;
 
 import java.io.File;
@@ -37,17 +36,21 @@ public class ObjectTrackingRegression extends BaseRegression implements ImageReg
 		outputSpeed = new RuntimeSummary();
 		outputSpeed.out = new PrintStream(new File(directoryRuntime, "RUN_ObjectTracking.txt"));
 		BoofRegressionConstants.printGenerator(outputSpeed.out, getClass());
+		outputSpeed.out.println("# All times are in milliseconds");
+		outputSpeed.out.println();
 
 		// compute raw detections
 		for( FactoryEvaluationTrackerObjectQuad.Info info : all ) {
 			summaryPeriod.reset();
-			outputSpeed.out.println("Tracker: "+info.name);
+			outputSpeed.out.println(info.name);
+			outputSpeed.printHeader(false);
 			performMILData(info.name, info.tracker, info.imageType);
 			EvaluateResultsMilTrackData.process(directoryMetrics,info.name,trackingOutputDir);
 
 			performTLD(info.name,info.tracker,info.imageType);
 			EvaluateResultsTldData.process(directoryMetrics, info.name,trackingOutputDir);
 
+			outputSpeed.out.println();
 			outputSpeed.saveSummary(info.name,summaryPeriod);
 		}
 
@@ -61,19 +64,14 @@ public class ObjectTrackingRegression extends BaseRegression implements ImageReg
 		GenerateDetectionsMilTrackData<Input> generator = new GenerateDetectionsMilTrackData<>(imageType);
 		generator.setOutputDirectory(trackingOutputDir);
 
-		for( String m : GenerateDetectionsMilTrackData.videos ) {
+		for( String videoName : GenerateDetectionsMilTrackData.videos ) {
 			try {
-				generator.evaluate(m,trackerName,tracker);
+				generator.evaluate(videoName,trackerName,tracker);
 				summaryPeriod.addAll(generator.periodMS);
-				generator.periodMS.sort();
-				double mean = UtilStatisticsQueue.mean(generator.periodMS);
-				double p50 = generator.periodMS.getFraction(0.5);
-				double p97 = generator.periodMS.getFraction(0.97);
-				outputSpeed.out.printf("  %20s N %4d ave %7.2f p50 %7.2f p97 %7.2f\n",
-						m,generator.periodMS.size,mean,p50,p97);
+				outputSpeed.printStats(videoName,generator.periodMS);
 			} catch( RuntimeException e ) {
-				outputSpeed.out.printf("  %20s FAILED\n",m);
-				errorLog.println("FAILED "+trackerName+" on "+m);
+				outputSpeed.out.printf("  %20s FAILED\n",videoName);
+				errorLog.println("FAILED "+trackerName+" on "+videoName);
 				errorLog.println(e);
 				e.printStackTrace(errorLog);
 			} finally {
@@ -92,12 +90,7 @@ public class ObjectTrackingRegression extends BaseRegression implements ImageReg
 			try {
 				generator.evaluate(dataName,trackerName,tracker);
 				summaryPeriod.addAll(generator.periodMS);
-				generator.periodMS.sort();
-				double mean = UtilStatisticsQueue.mean(generator.periodMS);
-				double p50 = generator.periodMS.getFraction(0.5);
-				double p97 = generator.periodMS.getFraction(0.97);
-				outputSpeed.out.printf("  %20s N %4d ave %7.2f p50 %7.2f p97 %7.2f\n",
-						dataName,generator.periodMS.size,mean,p50,p97);
+				outputSpeed.printStats(dataName,generator.periodMS);
 			} catch( RuntimeException e ) {
 				outputSpeed.out.printf("  %20s FAILED\n",dataName);
 				errorLog.println("FAILED "+trackerName+" on "+dataName);

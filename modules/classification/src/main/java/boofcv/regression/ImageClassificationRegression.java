@@ -46,32 +46,43 @@ public class ImageClassificationRegression extends BaseRegression implements Ima
 		out.println("# Regression tests which outputs image classification results.  A change indicates");
 		out.println("# that the algorithm has changed in some way and should be inspected more closely.");
 
-		List<ClassifierAndSource> classifiers = new ArrayList<>();
-		classifiers.add(FactoryImageClassifier.nin_imagenet());
-		classifiers.add(FactoryImageClassifier.vgg_cifar10());
+		List<Info> classifiers = new ArrayList<>();
+		classifiers.add(new Info(FactoryImageClassifier.nin_imagenet(),"NIN"));
+		classifiers.add(new Info(FactoryImageClassifier.vgg_cifar10(),"VGG"));
 
 		ClassifyImageSaveResults<Planar<GrayF32>> regression = new ClassifyImageSaveResults<>();
 		regression.setOutput(out);
 
-		for( ClassifierAndSource cas : classifiers ) {
-			ImageClassifier<Planar<GrayF32>> classifier = cas.getClassifier();
+		for( Info info : classifiers ) {
+			String name = info.name;
+			ImageClassifier<Planar<GrayF32>> classifier = info.cas.getClassifier();
 
-			out.println("\nEvaluating "+classifier.getClass().getSimpleName());
+			out.println("\nEvaluating "+name);
 			out.flush();
 			System.out.println("Downloading model for "+classifier.getClass().getSimpleName());
-			File path = DeepBoofDataBaseOps.downloadModel(cas.getSource(),new File("download_data"));
+			File path = DeepBoofDataBaseOps.downloadModel(info.cas.getSource(),new File("download_data"));
 
 			System.out.println("Loading model");
 			classifier.loadModel(path);
 
 			regression.process(classifier);
-			runtime.saveSummary(classifier.getClass().getSimpleName(),regression.processingTimeMS);
+			runtime.saveSummary(name,regression.processingTimeMS);
 			out.flush();
 		}
 
 		runtime.printSummary();
 		runtime.out.close();
 		out.close();
+	}
+
+	public static class Info {
+		ClassifierAndSource cas;
+		String name;
+
+		public Info(ClassifierAndSource cas, String name) {
+			this.cas = cas;
+			this.name = name;
+		}
 	}
 
 	public static void main(String[] args) throws IOException, IllegalAccessException, InstantiationException, ClassNotFoundException {

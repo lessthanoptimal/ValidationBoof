@@ -1,9 +1,6 @@
 package boofcv.regression;
 
-import boofcv.common.BaseRegression;
-import boofcv.common.BoofRegressionConstants;
-import boofcv.common.ImageRegression;
-import boofcv.common.RegressionRunner;
+import boofcv.common.*;
 import boofcv.io.UtilIO;
 import boofcv.metrics.mvs.ThreeViewStereoPerformance;
 import boofcv.struct.image.ImageDataType;
@@ -24,7 +21,7 @@ import java.util.List;
  */
 public class ThreeViewReconstructionRegression extends BaseRegression implements ImageRegression {
 
-    PrintStream outputRuntime;
+    RuntimeSummary outputRuntime;
 
     ThreeViewStereoPerformance evaluator = new ThreeViewStereoPerformance();
 
@@ -34,9 +31,11 @@ public class ThreeViewReconstructionRegression extends BaseRegression implements
 
     @Override
     public void process(ImageDataType type) throws IOException {
-        outputRuntime = new PrintStream(new File(directoryMetrics,"RUN_ThreeViewReconstruction.txt"));
-        BoofRegressionConstants.printGenerator(outputRuntime, getClass());
-        outputRuntime.println("# Runtime for each triplet of images in milliseconds\n");
+        outputRuntime = new RuntimeSummary();
+        outputRuntime.out = new PrintStream(new File(directoryRuntime, "RUN_ThreeViewReconstruction.txt"));
+        BoofRegressionConstants.printGenerator(outputRuntime.out, getClass());
+        outputRuntime.out.println("# All times are in milliseconds");
+        outputRuntime.out.println();
 
         PrintStream out = new PrintStream(new File(directoryMetrics,"ACC_ThreeViewReconstruction.txt"));
         BoofRegressionConstants.printGenerator(out, getClass());
@@ -64,11 +63,11 @@ public class ThreeViewReconstructionRegression extends BaseRegression implements
                     areas.add( evaluator.getAreaFraction() );
                     runtimes.add( evaluator.getElapsedTime() );
                     out.printf("%30s %6.2f %6.2f\n", image, evaluator.getScore() * 100,100*evaluator.getAreaFraction());
-                    outputRuntime.printf("%30s %d\n", image, evaluator.getElapsedTime());
+                    outputRuntime.out.printf("%30s %d\n", image, evaluator.getElapsedTime());
                 } else {
                     totalFailed++;
                     out.printf("%30s failed!\n", image);
-                    outputRuntime.printf("%30s failed!\n", image);
+                    outputRuntime.out.printf("%30s failed!\n", image);
                 }
             } catch( Exception e ) {
                 errorLog.println(e);
@@ -82,12 +81,10 @@ public class ThreeViewReconstructionRegression extends BaseRegression implements
         printSummary(out,"%7.5f","score",scores);
         printSummary(out,"%7.5f","area",areas);
 
-        outputRuntime.println();
-        outputRuntime.println("Summary:");
-        outputRuntime.println("total = "+runtimes.size);
-        outputRuntime.printf("%10s %7s %7s %7s %7s\n","metric","mean","P03","P50","P97");
-        printSummary(outputRuntime,"%7.1f","(ms)",runtimes);
-        outputRuntime.close();
+        outputRuntime.out.println();
+        outputRuntime.printHeader(true);
+        outputRuntime.printStats("summary",runtimes);
+        outputRuntime.out.close();
     }
 
     private void printSummary( PrintStream out, String format, String metric , GrowQueue_F64 values ) {

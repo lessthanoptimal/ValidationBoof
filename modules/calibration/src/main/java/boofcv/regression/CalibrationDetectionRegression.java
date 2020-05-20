@@ -4,10 +4,7 @@ import boofcv.abst.fiducial.calib.CalibrationPatterns;
 import boofcv.abst.fiducial.calib.ConfigGridDimen;
 import boofcv.abst.geo.calibration.DetectorFiducialCalibration;
 import boofcv.alg.geo.calibration.CalibrationObservation;
-import boofcv.common.BaseRegression;
-import boofcv.common.BoofRegressionConstants;
-import boofcv.common.ImageRegression;
-import boofcv.common.RegressionRunner;
+import boofcv.common.*;
 import boofcv.common.misc.PointFileCodec;
 import boofcv.factory.fiducial.FactoryFiducialCalibration;
 import boofcv.io.image.UtilImageIO;
@@ -41,6 +38,8 @@ public class CalibrationDetectionRegression extends BaseRegression implements Im
 	List<DetectorInfo> squareDetectors = new ArrayList<>();
 	List<DetectorInfo> circleHexDetctors = new ArrayList<>();
 	List<DetectorInfo> circleRegDetectors = new ArrayList<>();
+
+	RuntimeSummary outputRuntime;
 
 	public CalibrationDetectionRegression() {
 		super(BoofRegressionConstants.TYPE_CALIBRATION);
@@ -92,11 +91,11 @@ public class CalibrationDetectionRegression extends BaseRegression implements Im
 		circleRegirectories.add("data/calibration_mono/circle_regular/large");
 		circleRegirectories.add("data/calibration_mono/circle_regular/fisheye");
 
-		addDetector("DetectCalibChessBinary", new CreateChessboardBinary(), CalibrationPatterns.CHESSBOARD);
-		addDetector("DetectCalibChessXCorner", new CreateChessboardXCorner(), CalibrationPatterns.CHESSBOARD);
-		addDetector("DetectCalibSquare", new CreateSquareGrid(), CalibrationPatterns.SQUARE_GRID);
-		addDetector("DetectCalibCircleHexagonal", new CreateCircleHexagonal(), CalibrationPatterns.CIRCLE_HEXAGONAL);
-		addDetector("DetectCalibCircleRegular", new CreateCircleRegular(), CalibrationPatterns.CIRCLE_GRID);
+		addDetector("ChessBinary", new CreateChessboardBinary(), CalibrationPatterns.CHESSBOARD);
+		addDetector("ChessXCorner", new CreateChessboardXCorner(), CalibrationPatterns.CHESSBOARD);
+		addDetector("Square", new CreateSquareGrid(), CalibrationPatterns.SQUARE_GRID);
+		addDetector("CircleHexagonal", new CreateCircleHexagonal(), CalibrationPatterns.CIRCLE_HEXAGONAL);
+		addDetector("CircleRegular", new CreateCircleRegular(), CalibrationPatterns.CIRCLE_GRID);
 	}
 
 	public void addDetector( String name , CreateCalibration detector , CalibrationPatterns type) {
@@ -110,6 +109,12 @@ public class CalibrationDetectionRegression extends BaseRegression implements Im
 
 	@Override
 	public void process(ImageDataType type) throws IOException {
+
+		outputRuntime = new RuntimeSummary();
+		outputRuntime.out = new PrintStream(new File(directoryRuntime, "RUN_CalibrationDetection.txt"));
+		BoofRegressionConstants.printGenerator(outputRuntime.out, getClass());
+		outputRuntime.out.println("# All times are in milliseconds");
+		outputRuntime.out.println();
 
 		if( type != ImageDataType.F32 ) {
 			throw new IOException("Only supports floating point images");
@@ -131,20 +136,22 @@ public class CalibrationDetectionRegression extends BaseRegression implements Im
 			evaluate(d, circleRegirectories);
 		}
 
+		outputRuntime.printSummary();
+		outputRuntime.out.close();
 	}
 
 	private void evaluate( DetectorInfo d , List<String> directories ) throws FileNotFoundException {
-		PrintStream runtimeOut = new PrintStream(new File(directoryMetrics,"RUN_"+d.name+".txt"));
-		BoofRegressionConstants.printGenerator(runtimeOut, getClass());
-		runtimeOut.println("# "+d.name);
-		runtimeOut.println("# Data set, average milliseconds");
+		outputRuntime.out.println(d.name);
+		outputRuntime.printHeader(false);
 
-		PrintStream output = new PrintStream(new File(directoryMetrics,"ACC_"+d.name+".txt"));
+		PrintStream output = new PrintStream(new File(directoryMetrics,"ACC_DetectCalib"+d.name+".txt"));
 		BoofRegressionConstants.printGenerator(output,getClass());
 		output.println("# (file name) (truth error 50%) (truth error 95%) (truth error 100%)");
 
 		// Sort it to ensure the same order
-		Collections.sort(directories);
+		directories.sort(String.CASE_INSENSITIVE_ORDER);
+
+		GrowQueue_F64 summaryTimeMS = new GrowQueue_F64();
 
 		Map<String,OverallMetrics> dirMetrics = new HashMap<>();
 		try {
@@ -165,14 +172,15 @@ public class CalibrationDetectionRegression extends BaseRegression implements Im
 					dirMetrics.put(dir,directoryMetrics);
 					if( directoryMetrics.total == 0 ) {
 						errorLog.println("Failed to find images in dir");
-						runtimeOut.printf("%30s NaN\n",new File(dir).getName());
-					} else {
-						runtimeOut.printf("%30s %8.2f\n",new File(dir).getName(),directoryMetrics.averageSpeedMS);
 					}
+					summaryTimeMS.addAll(directoryMetrics.processingTimeMS);
+					outputRuntime.printStats(new File(dir).getName(),directoryMetrics.processingTimeMS);
 				} else {
 					errorLog.println("No files found in " + dir);
 				}
 			}
+			outputRuntime.out.println();
+			outputRuntime.saveSummary(d.name,summaryTimeMS);
 
 			output.println("\n"+ Strings.repeat("-",80)+"\n");
 
@@ -197,9 +205,7 @@ public class CalibrationDetectionRegression extends BaseRegression implements Im
 			e.printStackTrace(errorLog);
 		} finally {
 			output.close();
-			runtimeOut.close();
 		}
-
 	}
 
 	private void printSummary(PrintStream output, OverallMetrics m, String name) {
@@ -223,6 +229,7 @@ public class CalibrationDetectionRegression extends BaseRegression implements Im
 
 	private void evaluate(DetectorFiducialCalibration detector, String detectorName,
 						  OverallMetrics metrics, PrintStream output, List<File> files) {
+		metrics.processingTimeMS.reset();
 		for( File f : files ) {
 			String extension = FilenameUtils.getExtension(f.getName()).toLowerCase();
 			if( !(extension.equals("jpg") || extension.equals("png")) )
@@ -260,7 +267,8 @@ public class CalibrationDetectionRegression extends BaseRegression implements Im
 				long time0 = System.nanoTime();
 				boolean success = detector.process(image);
 				long time1 = System.nanoTime();
-				metrics.averageSpeedMS += (time1-time0)*1e-6;
+				metrics.processingTimeMS.add((time1-time0)*1e-6);
+
 				if( success ) {
 					double[] errors = new double[ groundTruth.size() ];
 
@@ -290,8 +298,6 @@ public class CalibrationDetectionRegression extends BaseRegression implements Im
 				metrics.failed++;
 			}
 		}
-
-		metrics.averageSpeedMS /= metrics.total;
 	}
 
 	private double distanceFromClosest( Point2D_F64 target , List<Point2D_F64> points ) {
@@ -312,7 +318,7 @@ public class CalibrationDetectionRegression extends BaseRegression implements Im
 		final GrowQueue_F64 errors = new GrowQueue_F64();
 		int total;
 		int failed;
-		double averageSpeedMS;
+		final GrowQueue_F64 processingTimeMS = new GrowQueue_F64();
 
 		public void add( OverallMetrics src ) {
 			errors.addAll(src.errors);

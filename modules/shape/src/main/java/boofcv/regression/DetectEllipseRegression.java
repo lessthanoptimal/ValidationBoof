@@ -62,7 +62,7 @@ public class DetectEllipseRegression extends BaseRegression implements ImageRegr
 		List<File> files = BoofRegressionConstants.listAndSort(baseDataSetDirectory);
 
 		summaryRuntime.reset();
-		runtime.out.println("Detector "+name);
+		runtime.out.println(name);
 		runtime.printHeader(false);
 
 		for( File f : files  ) {
