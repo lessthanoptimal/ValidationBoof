@@ -22,7 +22,7 @@ public class CornerDetectorChangeRegression extends BaseRegression implements Im
 
 	@Override
 	public void process( ImageDataType type ) throws IOException {
-		PrintStream out = new PrintStream(new File(directory,"ACC_detect_corner_change.txt"));
+		PrintStream out = new PrintStream(new File(directoryMetrics,"ACC_detect_corner_change.txt"));
 		BoofRegressionConstants.printGenerator(out,getClass());
 		out.println("# Checks to change in the behavior of corner detectors");
 		out.println("# detector (change in total features) (difference in location)");

@@ -37,7 +37,7 @@ public class SuperPixelRegression extends BaseRegression implements ImageRegress
 
         ImageType imageType = ImageType.pl(3,type);
 
-        out = new PrintStream(new File(directory,"ACC_SuperPixels.txt"));
+        out = new PrintStream(new File(directoryMetrics,"ACC_SuperPixels.txt"));
         BoofRegressionConstants.printGenerator(out, getClass());
         metrics = new ComputeSuperPixelsMetrics(pathToData,imageType);
 
@@ -67,7 +67,7 @@ public class SuperPixelRegression extends BaseRegression implements ImageRegress
     public static void main(String[] args) throws IOException {
         SuperPixelRegression regression = new SuperPixelRegression();
 
-        regression.setOutputDirectory(".");
+        regression.setMetricsDirectory(".");
         regression.process(ImageDataType.F32);
     }
 }

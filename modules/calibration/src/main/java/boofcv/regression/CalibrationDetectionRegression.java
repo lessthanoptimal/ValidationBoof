@@ -134,12 +134,12 @@ public class CalibrationDetectionRegression extends BaseRegression implements Im
 	}
 
 	private void evaluate( DetectorInfo d , List<String> directories ) throws FileNotFoundException {
-		PrintStream runtimeOut = new PrintStream(new File(directory,"RUN_"+d.name+".txt"));
+		PrintStream runtimeOut = new PrintStream(new File(directoryMetrics,"RUN_"+d.name+".txt"));
 		BoofRegressionConstants.printGenerator(runtimeOut, getClass());
 		runtimeOut.println("# "+d.name);
 		runtimeOut.println("# Data set, average milliseconds");
 
-		PrintStream output = new PrintStream(new File(directory,"ACC_"+d.name+".txt"));
+		PrintStream output = new PrintStream(new File(directoryMetrics,"ACC_"+d.name+".txt"));
 		BoofRegressionConstants.printGenerator(output,getClass());
 		output.println("# (file name) (truth error 50%) (truth error 95%) (truth error 100%)");
 

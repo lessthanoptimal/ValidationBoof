@@ -189,14 +189,16 @@ public class MasterRegressionApplication {
 		long stopTime = System.currentTimeMillis();
 		elapsedTime = stopTime-startTime;
 
-		System.out.println("\n\n"+printTiming(elapsedTime));
+		System.out.println("\n\n" +
+				"Elapsed: "+formatElapsed(elapsedTime)+"\n"+
+				"Date:    "+formatDate(new Date())+"\n");
 
 		errorStream.close();
 
 		return true;
 	}
 
-	public static String printTiming(long elapsedTime ){
+	public static String formatElapsed(long elapsedTime ){
 		double elapsedSeconds = elapsedTime/1000.0;
 
 		double secondsPerDay = 24*60*60;
@@ -209,11 +211,13 @@ public class MasterRegressionApplication {
 		double seconds = elapsedSeconds-days*secondsPerDay-hours*secondsPerHour-minute*secondsPerMinute;
 
 		String out = "";
-		out += String.format("%d Days %02d Hours %02d Minutes %6.2f Seconds\n",days,hours,minute,seconds);
-		out += "\n";
-		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-		out += dateFormat.format(new Date())+"\n";
+		out += String.format("%d Days %02d Hours %02d Minutes %6.2f Seconds",days,hours,minute,seconds);
 		return out;
+	}
+
+	public static String formatDate( Date date ) {
+		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss zzz");
+		return dateFormat.format(date);
 	}
 
 	public interface FileTest {
@@ -266,7 +270,7 @@ public class MasterRegressionApplication {
 		if( doSummary ) {
 			ComputeRegressionSummary summary = new ComputeRegressionSummary();
 			if( doBenchmark)
-				summary.setEllapsedTime(regression.elapsedTime);
+				summary.setElapsedTime(regression.elapsedTime);
 			summary.generateSummary();
 			File f = new File("email_login.txt");
 			if( f.exists() ) {

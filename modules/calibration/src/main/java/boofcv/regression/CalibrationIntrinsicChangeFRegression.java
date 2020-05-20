@@ -26,7 +26,7 @@ public class CalibrationIntrinsicChangeFRegression extends BaseRegression implem
 	public void process() throws IOException {
 		CalibrateFromDetectedPoints alg = new CalibrateFromDetectedPoints();
 
-		PrintStream output = new PrintStream(new File(directory, "ACC_estimated_calibration.txt"));
+		PrintStream output = new PrintStream(new File(directoryMetrics, "ACC_estimated_calibration.txt"));
 		BoofRegressionConstants.printGenerator(output,getClass());
 
 		alg.setErrorStream(errorLog);

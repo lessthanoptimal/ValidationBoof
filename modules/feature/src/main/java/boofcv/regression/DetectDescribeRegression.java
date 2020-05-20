@@ -28,6 +28,7 @@ import boofcv.struct.image.ImageBase;
 import boofcv.struct.image.ImageDataType;
 import boofcv.struct.image.ImageGray;
 import boofcv.struct.image.ImageType;
+import org.ddogleg.struct.GrowQueue_F64;
 
 import java.io.File;
 import java.io.IOException;
@@ -70,9 +71,9 @@ public class DetectDescribeRegression extends BaseRegression implements ImageReg
 		String tmp = BoofRegressionConstants.tempDir().toString();
 
 		BenchmarkFeatureDescribeStability describeStability =
-				new BenchmarkFeatureDescribeStability(assoc, directory,tmp,describeTolerance);
+				new BenchmarkFeatureDescribeStability(assoc, directoryMetrics,tmp,describeTolerance);
 		BenchmarkFeatureDetectStability detectorStability =
-				new BenchmarkFeatureDetectStability(directory, tmp,detectTolerance);
+				new BenchmarkFeatureDetectStability(directoryMetrics, tmp,detectTolerance);
 
 		for( String d : LoadHomographyBenchmarkFiles.DATA_SETS )
 		{
@@ -80,28 +81,39 @@ public class DetectDescribeRegression extends BaseRegression implements ImageReg
 			describeStability.addDirectory(new File(path,d).getPath());
 		}
 
-		PrintStream outputRuntime = new PrintStream(new File(directory,"RUN_detect_describe.txt"));
-		BoofRegressionConstants.printGenerator(outputRuntime,getClass());
-		outputRuntime.println("# Runtime for feature detect describe");
-		outputRuntime.println("# <directory> <average time in ms>\n");
+		RuntimeSummary runtime = new RuntimeSummary();
+		runtime.out = new PrintStream(new File(directoryRuntime,"RUN_detect_describe.txt"));
+		BoofRegressionConstants.printGenerator(runtime.out, getClass());
+		runtime.out.println("# Runtime for feature detection and describing");
+		runtime.out.println("# Elapsed time in milliseconds");
+		runtime.out.println();
 		for( Info i : all ) {
-			outputRuntime.println(i.name);
+			// Print header info for per dataset results
+			GrowQueue_F64 summaryTimeMS = new GrowQueue_F64();
+			runtime.out.println(i.name);
+			runtime.printHeader(false);
+
 			CreateDetectDescribeFile creator = new CreateDetectDescribeFile(i.factory,i.imageFamily,dataType,i.name);
 			for( String d : LoadHomographyBenchmarkFiles.DATA_SETS ) {
 				try {
 					creator.directory(new File(path,d).getPath(),tmp);
-					outputRuntime.printf(" %10s %.2f\n",d,creator.getAverageProcessingTime() );
+					summaryTimeMS.addAll(creator.processingTimeMS);
+					runtime.printStats(d,creator.processingTimeMS);
 				} catch( RuntimeException e ) {
 					errorLog.println("FAILED "+i.name+" on "+d);
 					errorLog.println(e);
 					e.printStackTrace(errorLog);
 				}
 			}
-			outputRuntime.println();
+			// save summary runtime statistics for this algorithm to print later
+			runtime.saveSummary(i.name,summaryTimeMS);
+			runtime.out.println();
 			detectorStability.evaluate(i.name);
 			describeStability.evaluate(i.name);
 		}
-		outputRuntime.close();
+		runtime.out.println();
+		runtime.printSummary();
+		runtime.out.close();
 	}
 
 	public static <T extends ImageGray<T>>
@@ -203,6 +215,6 @@ public class DetectDescribeRegression extends BaseRegression implements ImageReg
 	public static void main(String[] args) throws IOException, IllegalAccessException, InstantiationException, ClassNotFoundException {
 		BoofRegressionConstants.clearCurrentResults();
 		RegressionRunner.main(new String[]{DetectDescribeRegression.class.getName(),ImageDataType.F32.toString()});
-		RegressionRunner.main(new String[]{DetectDescribeRegression.class.getName(),ImageDataType.U8.toString()});
+//		RegressionRunner.main(new String[]{DetectDescribeRegression.class.getName(),ImageDataType.U8.toString()});
 	}
 }

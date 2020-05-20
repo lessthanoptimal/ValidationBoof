@@ -29,8 +29,7 @@ public class BenchmarkMiddleburyFlow<T extends ImageBase<T>> {
 
 	PrintStream outputAccuracy;
 
-	double totalTimeMilli;
-	int totalProcessed;
+	public GrowQueue_F64 processingTimeMS = new GrowQueue_F64();
 
 	public BenchmarkMiddleburyFlow( String dataDirectory ,
 									DenseOpticalFlow<T> algorithm ,
@@ -42,8 +41,7 @@ public class BenchmarkMiddleburyFlow<T extends ImageBase<T>> {
 	}
 
 	public void evaluate() throws IOException {
-		totalTimeMilli = 0;
-		totalProcessed = 0;
+		processingTimeMS.reset();
 
 		outputAccuracy.println("# dataset totalValid (error 50%) (error 90%) (error 95%)");
 
@@ -70,8 +68,7 @@ public class BenchmarkMiddleburyFlow<T extends ImageBase<T>> {
 			long before = System.nanoTime();
 			algorithm.process(input0,input1,flowFound);
 			long after = System.nanoTime();
-			totalTimeMilli += (after-before)*1e-6;
-			totalProcessed++;
+			processingTimeMS.add((after-before)*1e-6);
 
 			// score the results
 			errors.reset();
@@ -100,10 +97,6 @@ public class BenchmarkMiddleburyFlow<T extends ImageBase<T>> {
 				System.out.printf("%20s %6d %7.2f %7.2f %7.2f\n",which,errors.size,error50,error90,error95);
 			}
 		}
-	}
-
-	public double getAverageTimeMilli() {
-		return totalTimeMilli/totalProcessed;
 	}
 
 	public static void main(String[] args) throws IOException {

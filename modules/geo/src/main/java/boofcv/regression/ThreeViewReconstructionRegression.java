@@ -34,11 +34,11 @@ public class ThreeViewReconstructionRegression extends BaseRegression implements
 
     @Override
     public void process(ImageDataType type) throws IOException {
-        outputRuntime = new PrintStream(new File(directory,"RUN_ThreeViewReconstruction.txt"));
+        outputRuntime = new PrintStream(new File(directoryMetrics,"RUN_ThreeViewReconstruction.txt"));
         BoofRegressionConstants.printGenerator(outputRuntime, getClass());
         outputRuntime.println("# Runtime for each triplet of images in milliseconds\n");
 
-        PrintStream out = new PrintStream(new File(directory,"ACC_ThreeViewReconstruction.txt"));
+        PrintStream out = new PrintStream(new File(directoryMetrics,"ACC_ThreeViewReconstruction.txt"));
         BoofRegressionConstants.printGenerator(out, getClass());
         out.println("# Uncalibrated Three View Reconstruction Performance. Stereo association percentage");
         out.println("# (name) (score: higher better) (rectified area: higher better)");

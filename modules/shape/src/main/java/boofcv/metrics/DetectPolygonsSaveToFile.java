@@ -13,6 +13,7 @@ import boofcv.io.image.UtilImageIO;
 import boofcv.struct.image.GrayU8;
 import boofcv.struct.image.ImageGray;
 import georegression.struct.shapes.Polygon2D_F64;
+import org.ddogleg.struct.GrowQueue_F64;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -31,8 +32,7 @@ public class DetectPolygonsSaveToFile<T extends ImageGray<T>> {
 	T gray;
 	GrayU8 binary = new GrayU8(1,1);
 
-	// average amount of time in milliseconds to process each image in the directory
-	public double averageProcessingTime;
+	public final GrowQueue_F64 processingTimeMS = new GrowQueue_F64();
 
 	public DetectPolygonsSaveToFile( DetectPolygonBinaryGrayRefine<T> detector , boolean binaryLocal) {
 
@@ -53,10 +53,8 @@ public class DetectPolygonsSaveToFile<T extends ImageGray<T>> {
 		if( !outputDir.exists() )
 			outputDir.mkdirs();
 
-
-		averageProcessingTime = 0;
-		int total = 0;
-		File files[] = inputDir.listFiles();
+		processingTimeMS.reset();
+		File[] files = inputDir.listFiles();
 		for( File f : files ) {
 			if( !f.isFile() || f.getName().endsWith("txt"))
 				continue;
@@ -68,9 +66,7 @@ public class DetectPolygonsSaveToFile<T extends ImageGray<T>> {
 			String name = UtilShapeDetector.imageToDetectedName(f.getName());
 			File outputFile = new File(outputDir,name);
 			process(buffered,outputFile);
-			total++;
 		}
-		averageProcessingTime /= total;
 	}
 
 	private void process( BufferedImage buffered , File outputFile ) {
@@ -87,7 +83,7 @@ public class DetectPolygonsSaveToFile<T extends ImageGray<T>> {
 		detector.refineAll();
 		List<Polygon2D_F64> found = detector.getPolygons(null,null);
 		long stopNano = System.nanoTime();
-		averageProcessingTime += (stopNano-startNano)/1e6;
+		processingTimeMS.add((stopNano-startNano)/1e6);
 
 //		System.out.println("Found = "+found.size);
 

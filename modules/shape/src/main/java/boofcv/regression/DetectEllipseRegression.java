@@ -6,6 +6,7 @@ import boofcv.metrics.DetectEllipseSaveToFile;
 import boofcv.metrics.EvaluateEllipseDetector;
 import boofcv.metrics.FactoryBinaryEllipse;
 import boofcv.struct.image.ImageDataType;
+import org.ddogleg.struct.GrowQueue_F64;
 
 import java.io.File;
 import java.io.IOException;
@@ -20,7 +21,8 @@ public class DetectEllipseRegression extends BaseRegression implements ImageRegr
 	File workDirectory = new File("./tmp");
 	File baseDataSetDirectory = new File("data/shape/ellipse");
 
-	PrintStream outputRuntime;
+	RuntimeSummary runtime;
+	GrowQueue_F64 summaryRuntime = new GrowQueue_F64();
 
 	public DetectEllipseRegression() {
 		super(BoofRegressionConstants.TYPE_SHAPE);
@@ -30,15 +32,20 @@ public class DetectEllipseRegression extends BaseRegression implements ImageRegr
 	public void process(ImageDataType type) throws IOException {
 		final Class imageType = ImageDataType.typeToSingleClass(type);
 
-		outputRuntime = new PrintStream(new File(directory,"RUN_EllipseDetector.txt"));
-		BoofRegressionConstants.printGenerator(outputRuntime, getClass());
-		outputRuntime.println("# Runtime for black ellipse detectors");
+		runtime = new RuntimeSummary();
+		runtime.out = new PrintStream(new File(directoryRuntime,"RUN_EllipseDetector.txt"));
+		BoofRegressionConstants.printGenerator(runtime.out, getClass());
+		runtime.out.println("# Runtime for black ellipse detectors");
+		runtime.out.println("# Elapsed time in milliseconds");
+		runtime.out.println();
 
 		process("Global", false, new FactoryBinaryEllipse(true,imageType));
 		process("Local", true, new FactoryBinaryEllipse(true,imageType));
 		process("LocalPixel", true, new FactoryBinaryEllipse(false,imageType));
 
-		outputRuntime.close();
+		runtime.out.println();
+		runtime.printSummary();
+		runtime.out.close();
 	}
 
 	private void process(String name, boolean localBinary , FactoryObject<BinaryEllipseDetector> factory)
@@ -48,13 +55,15 @@ public class DetectEllipseRegression extends BaseRegression implements ImageRegr
 
 		EvaluateEllipseDetector evaluator = new EvaluateEllipseDetector();
 
-		PrintStream outputAccuracy = new PrintStream(new File(directory,outputName));
+		PrintStream outputAccuracy = new PrintStream(new File(directoryMetrics,outputName));
 		BoofRegressionConstants.printGenerator(outputAccuracy, getClass());
 		evaluator.setOutputResults(outputAccuracy);
 
 		List<File> files = BoofRegressionConstants.listAndSort(baseDataSetDirectory);
 
-		outputRuntime.println("Detector "+name);
+		summaryRuntime.reset();
+		runtime.out.println("Detector "+name);
+		runtime.printHeader(false);
 
 		for( File f : files  ) {
 			if( !f.isDirectory() )
@@ -68,10 +77,11 @@ public class DetectEllipseRegression extends BaseRegression implements ImageRegr
 			detection.processDirectory(f, workDirectory);
 			evaluator.evaluate(f, workDirectory);
 			outputAccuracy.println();
-
-			outputRuntime.printf("%20s %9.4f (ms)\n",f.getName(),detection.averageProcessingTime);
+			runtime.printStats(f.getName(),detection.processingTimeMS);
+			summaryRuntime.addAll(detection.processingTimeMS);
 		}
-		outputRuntime.println();
+		runtime.out.println();
+		runtime.saveSummary(name,summaryRuntime);
 
 		outputAccuracy.close();
 	}

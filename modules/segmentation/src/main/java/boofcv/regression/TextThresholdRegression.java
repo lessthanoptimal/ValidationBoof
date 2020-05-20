@@ -1,8 +1,6 @@
 package boofcv.regression;
 
-import boofcv.common.BaseRegression;
-import boofcv.common.BoofRegressionConstants;
-import boofcv.common.ImageRegression;
+import boofcv.common.*;
 import boofcv.metrics.threshold.EvaluateTextThresholdDIBCO;
 import boofcv.metrics.threshold.FactoryThresholdAlgs;
 import boofcv.struct.image.ImageDataType;
@@ -24,13 +22,20 @@ public class TextThresholdRegression extends BaseRegression implements ImageRegr
 	public void process(ImageDataType type) throws IOException {
 		System.out.println(getClass().getSimpleName());
 
+		RuntimeSummary runtime = new RuntimeSummary();
 		try {
 			EvaluateTextThresholdDIBCO app = new EvaluateTextThresholdDIBCO();
 
-			PrintStream out = new PrintStream(new File(directory,"ACC_text_threshold.txt"));
+			runtime.out = new PrintStream(new File(directoryRuntime,"RUN_text_threshold.txt"));
+			BoofRegressionConstants.printGenerator(runtime.out, getClass());
+			runtime.out.println("# Elapsed time in milliseconds");
+			runtime.out.println();
+
+			PrintStream out = new PrintStream(new File(directoryMetrics,"ACC_text_threshold.txt"));
 			BoofRegressionConstants.printGenerator(out, getClass());
 
 			app.setOutputResults(out);
+			app.runtime = runtime;
 
 			app.addAlgorithm(FactoryThresholdAlgs.globalMean(), "global Mean");
 			app.addAlgorithm(FactoryThresholdAlgs.globalOtsu(), "global Otsu");
@@ -47,11 +52,15 @@ public class TextThresholdRegression extends BaseRegression implements ImageRegr
 			app.evaluate();
 		} catch( RuntimeException e ) {
 			e.printStackTrace(errorLog);
+		} finally {
+			runtime.out.close();
 		}
 	}
 
-	public static void main(String[] args) throws IOException {
-		TextThresholdRegression regression = new TextThresholdRegression();
-		regression.process(ImageDataType.U8);
+	public static void main(String[] args)
+			throws IOException, IllegalAccessException, InstantiationException, ClassNotFoundException
+	{
+		BoofRegressionConstants.clearCurrentResults();
+		RegressionRunner.main(new String[]{TextThresholdRegression.class.getName(),ImageDataType.U8.toString()});
 	}
 }

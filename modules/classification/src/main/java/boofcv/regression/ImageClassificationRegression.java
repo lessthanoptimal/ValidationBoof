@@ -1,10 +1,7 @@
 package boofcv.regression;
 
 import boofcv.abst.scene.ImageClassifier;
-import boofcv.common.BaseRegression;
-import boofcv.common.BoofRegressionConstants;
-import boofcv.common.ImageRegression;
-import boofcv.common.RegressionRunner;
+import boofcv.common.*;
 import boofcv.factory.scene.ClassifierAndSource;
 import boofcv.factory.scene.FactoryImageClassifier;
 import boofcv.metrics.ClassifyImageSaveResults;
@@ -38,7 +35,13 @@ public class ImageClassificationRegression extends BaseRegression implements Ima
 			throw new RuntimeException("Only F32 images supported.  Skipping");
 		}
 
-		PrintStream out = new PrintStream(new File(directory,"ACC_image_classification_change.txt"));
+		RuntimeSummary runtime = new RuntimeSummary();
+		runtime.out = new PrintStream(new File(directoryRuntime,"RUN_image_classification_change.txt"));
+		BoofRegressionConstants.printGenerator(runtime.out, getClass());
+		runtime.out.println("# Elapsed time in milliseconds");
+		runtime.out.println();
+
+		PrintStream out = new PrintStream(new File(directoryMetrics,"ACC_image_classification_change.txt"));
 		BoofRegressionConstants.printGenerator(out,getClass());
 		out.println("# Regression tests which outputs image classification results.  A change indicates");
 		out.println("# that the algorithm has changed in some way and should be inspected more closely.");
@@ -62,8 +65,12 @@ public class ImageClassificationRegression extends BaseRegression implements Ima
 			classifier.loadModel(path);
 
 			regression.process(classifier);
+			runtime.saveSummary(classifier.getClass().getSimpleName(),regression.processingTimeMS);
 			out.flush();
 		}
+
+		runtime.printSummary();
+		runtime.out.close();
 		out.close();
 	}
 

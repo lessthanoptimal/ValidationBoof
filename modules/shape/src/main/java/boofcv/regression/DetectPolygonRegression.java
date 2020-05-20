@@ -1,14 +1,12 @@
 package boofcv.regression;
 
 import boofcv.alg.shapes.polygon.DetectPolygonBinaryGrayRefine;
-import boofcv.common.BaseRegression;
-import boofcv.common.BoofRegressionConstants;
-import boofcv.common.FactoryObject;
-import boofcv.common.ImageRegression;
+import boofcv.common.*;
 import boofcv.metrics.DetectPolygonsSaveToFile;
 import boofcv.metrics.EvaluatePolygonDetector;
 import boofcv.metrics.FactoryBinaryPolygon;
 import boofcv.struct.image.ImageDataType;
+import org.ddogleg.struct.GrowQueue_F64;
 
 import java.io.File;
 import java.io.IOException;
@@ -23,7 +21,7 @@ public class DetectPolygonRegression extends BaseRegression implements ImageRegr
 	File workDirectory = new File("./tmp");
 	File baseDataSetDirectory = new File("data/shape/polygon");
 
-	PrintStream outputSpeed;
+	RuntimeSummary runtime;
 
 	public DetectPolygonRegression() {
 		super(BoofRegressionConstants.TYPE_SHAPE);
@@ -33,13 +31,17 @@ public class DetectPolygonRegression extends BaseRegression implements ImageRegr
 	public void process(ImageDataType type) throws IOException {
 		final Class imageType = ImageDataType.typeToSingleClass(type);
 
-		outputSpeed = new PrintStream(new File(directory,"RUN_PolygonDetector.txt"));
-		BoofRegressionConstants.printGenerator(outputSpeed, getClass());
+		runtime = new RuntimeSummary();
+		runtime.out = new PrintStream(new File(directoryRuntime,"RUN_PolygonDetector.txt"));
+		BoofRegressionConstants.printGenerator(runtime.out, getClass());
+		runtime.out.println("# Elapsed time in milliseconds");
+		runtime.out.println();
 
 		process("BinaryGlobal", false, new FactoryBinaryPolygon(imageType));
 		process("BinaryLocal", true, new FactoryBinaryPolygon(imageType));
 
-		outputSpeed.close();
+		runtime.printSummary();
+		runtime.out.close();
 	}
 
 	private void process(String name, boolean localBinary , FactoryObject<DetectPolygonBinaryGrayRefine> factory)
@@ -49,11 +51,13 @@ public class DetectPolygonRegression extends BaseRegression implements ImageRegr
 
 		EvaluatePolygonDetector evaluator = new EvaluatePolygonDetector();
 
-		PrintStream outputAccuracy = new PrintStream(new File(directory,outputAccuracyName));
+		PrintStream outputAccuracy = new PrintStream(new File(directoryMetrics,outputAccuracyName));
 		BoofRegressionConstants.printGenerator(outputAccuracy, getClass());
 		evaluator.setOutputResults(outputAccuracy);
 
-		outputSpeed.println("# Average processing time of shape detector algorithm "+name);
+		GrowQueue_F64 summaryTimeMS = new GrowQueue_F64();
+		runtime.out.println(name);
+		runtime.printHeader(false);
 
 		List<File> files = BoofRegressionConstants.listAndSort(baseDataSetDirectory);
 
@@ -77,9 +81,11 @@ public class DetectPolygonRegression extends BaseRegression implements ImageRegr
 			totalExpected += evaluator.summaryExpected;
 			totalFalsePositive += evaluator.summaryFalsePositive;
 
-			outputSpeed.printf("%20s %9.4f (ms)\n",f.getName(),detection.averageProcessingTime);
+			summaryTimeMS.addAll(detection.processingTimeMS);
+			runtime.printStats(f.getName(),detection.processingTimeMS);
 		}
-		outputSpeed.println();
+		runtime.saveSummary(name,summaryTimeMS);
+		runtime.out.println();
 
 		outputAccuracy.println();
 		outputAccuracy.println(String.format("Final Summary: TP/(TP+FN) = %d / %d    FP = %d\n",totalTruePositive,totalExpected,totalFalsePositive));
@@ -87,9 +93,9 @@ public class DetectPolygonRegression extends BaseRegression implements ImageRegr
 
 	}
 
-	public static void main(String[] args) throws IOException {
-		DetectPolygonRegression app = new DetectPolygonRegression();
-		app.setOutputDirectory(".");
-		app.process(ImageDataType.F32);
+	public static void main(String[] args)
+			throws IOException, IllegalAccessException, InstantiationException, ClassNotFoundException {
+		BoofRegressionConstants.clearCurrentResults();
+		RegressionRunner.main(new String[]{DetectPolygonRegression.class.getName(),ImageDataType.F32.toString()});
 	}
 }

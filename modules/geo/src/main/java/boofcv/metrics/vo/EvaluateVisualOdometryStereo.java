@@ -8,6 +8,7 @@ import georegression.geometry.ConvertRotation3D_F64;
 import georegression.metric.UtilAngle;
 import georegression.struct.EulerType;
 import georegression.struct.se.Se3_F64;
+import org.ddogleg.struct.GrowQueue_F64;
 import org.ejml.data.DMatrixRMaj;
 
 import java.io.PrintStream;
@@ -54,7 +55,7 @@ public class EvaluateVisualOdometryStereo<T extends ImageBase<T>> {
 
 	PrintStream out;
 
-	double totalTimeMilli = 0;
+	public GrowQueue_F64 processingTimeMS = new GrowQueue_F64();
 
 	public EvaluateVisualOdometryStereo( SequenceStereoImages data,
 										 StereoVisualOdometry<T> alg,
@@ -84,7 +85,7 @@ public class EvaluateVisualOdometryStereo<T extends ImageBase<T>> {
 		integralTrueDistance = 0;
 		integralTrueRotation = 0;
 
-		totalTimeMilli = 0.0;
+		processingTimeMS.reset();
 
 		numEstimates = 0;
 
@@ -127,8 +128,9 @@ public class EvaluateVisualOdometryStereo<T extends ImageBase<T>> {
 		boolean updated = alg.process(inputLeft,inputRight);
 		long after = System.nanoTime();
 
-		totalTimeMilli += (after-before)*1e-6;
-		double fps = (frame+1) / (totalTimeMilli*1e-3);
+		double periodMS = (after-before)*1e-6;
+		processingTimeMS.add(periodMS);
+		double fps = 1000.0/periodMS;
 
 		if( !updated ) {
 			numSkipUpdate++;
@@ -220,7 +222,7 @@ public class EvaluateVisualOdometryStereo<T extends ImageBase<T>> {
 	}
 
 	private double rotationMatrixToRadian(DMatrixRMaj a) {
-		double angles[] = ConvertRotation3D_F64.matrixToEuler(a,EulerType.XYZ,null);
+		double[] angles = ConvertRotation3D_F64.matrixToEuler(a,EulerType.XYZ,null);
 
 		double sum = angles[0]*angles[0] + angles[1]*angles[1] + angles[1]*angles[1];
 
@@ -229,9 +231,5 @@ public class EvaluateVisualOdometryStereo<T extends ImageBase<T>> {
 
 	public void setVerbose(boolean verbose) {
 		this.verbose = verbose;
-	}
-
-	public double getAverageFPS() {
-		return frame/(totalTimeMilli*1e-3);
 	}
 }

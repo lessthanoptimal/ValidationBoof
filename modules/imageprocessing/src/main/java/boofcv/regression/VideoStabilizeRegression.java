@@ -59,11 +59,11 @@ public class VideoStabilizeRegression extends BaseRegression implements ImageReg
 
         RuntimePerformanceVideoStabilization benchmark = new RuntimePerformanceVideoStabilization(alg,imageType);
 
-        PrintStream outputAcc = new PrintStream(new File(directory,"ACC_VideoStabilization_"+name+".txt"));
+        PrintStream outputAcc = new PrintStream(new File(directoryMetrics,"ACC_VideoStabilization_"+name+".txt"));
         BoofRegressionConstants.printGenerator(outputAcc, getClass());
         outputAcc.println("# Runtime Performance of "+name);
 
-        PrintStream outputRuntime = new PrintStream(new File(directory,"RUN_VideoStabilization_"+name+".txt"));
+        PrintStream outputRuntime = new PrintStream(new File(directoryMetrics,"RUN_VideoStabilization_"+name+".txt"));
         BoofRegressionConstants.printGenerator(outputRuntime, getClass());
         outputRuntime.println("# Runtime Performance of "+name);
 

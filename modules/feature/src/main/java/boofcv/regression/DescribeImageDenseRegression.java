@@ -57,10 +57,10 @@ public class DescribeImageDenseRegression extends BaseRegression implements Imag
 		images.add("data/fiducials/square_border_image/standard/distance_angle/image00001.png");
 		images.add("data/calibration_mono/chessboard/distant/image00000.jpg");
 
-		PrintStream outputAccuracy = new PrintStream(new FileOutputStream(new File(directory,"ACC_dense_image_descriptors.txt")));
+		PrintStream outputAccuracy = new PrintStream(new FileOutputStream(new File(directoryMetrics,"ACC_dense_image_descriptors.txt")));
 		BoofRegressionConstants.printGenerator(outputAccuracy,getClass());
 
-		PrintStream outputSpeed = new PrintStream(new FileOutputStream(new File(directory,"RUN_dense_image_descriptors.txt")));
+		PrintStream outputSpeed = new PrintStream(new FileOutputStream(new File(directoryMetrics,"RUN_dense_image_descriptors.txt")));
 		BoofRegressionConstants.printGenerator(outputSpeed,getClass());
 		outputSpeed.println("# Average runtime speed in milliseconds for dense image descriptors\n");
 

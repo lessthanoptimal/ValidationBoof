@@ -27,6 +27,7 @@ import boofcv.struct.image.ImageBase;
 import boofcv.struct.image.ImageDataType;
 import boofcv.struct.image.ImageType;
 import georegression.struct.point.Point2D_F64;
+import org.ddogleg.struct.GrowQueue_F64;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -53,8 +54,7 @@ public class CreateDetectDescribeFile<T extends ImageBase<T>, D extends TupleDes
 	// name of the detector
 	String algName;
 
-	int totalImagesProcessed;
-	double totalProcessingTime;
+	public final GrowQueue_F64 processingTimeMS = new GrowQueue_F64();
 
 	/**
 	 * Configures detector
@@ -81,8 +81,7 @@ public class CreateDetectDescribeFile<T extends ImageBase<T>, D extends TupleDes
 		if( !dir.isDirectory() )
 			throw new IllegalArgumentException("Path does not point to a directory!");
 
-		totalImagesProcessed = 0;
-		totalProcessingTime = 0;
+		processingTimeMS.reset();
 
 		alg = factory.create(imageType);
 
@@ -133,8 +132,7 @@ public class CreateDetectDescribeFile<T extends ImageBase<T>, D extends TupleDes
 		alg.detect(image);
 		long timeAfter = System.nanoTime();
 
-		totalImagesProcessed++;
-		totalProcessingTime += (timeAfter-timeBefore)*1e-6;
+		processingTimeMS.add((timeAfter-timeBefore)*1e-6);
 
 		PrintStream outDetect = new PrintStream(new FileOutputStream(detectName));
 		PrintStream outDescribe = new PrintStream(new FileOutputStream(describeName));
@@ -164,10 +162,6 @@ public class CreateDetectDescribeFile<T extends ImageBase<T>, D extends TupleDes
 		}
 		outDetect.close();
 		outDescribe.close();
-	}
-
-	public double getAverageProcessingTime() {
-		return totalProcessingTime/totalImagesProcessed;
 	}
 
 	public interface Factory {

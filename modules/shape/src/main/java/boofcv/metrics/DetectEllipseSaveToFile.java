@@ -14,6 +14,7 @@ import boofcv.io.image.UtilImageIO;
 import boofcv.struct.image.GrayU8;
 import boofcv.struct.image.ImageGray;
 import georegression.struct.curve.EllipseRotated_F64;
+import org.ddogleg.struct.GrowQueue_F64;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -32,7 +33,7 @@ public class DetectEllipseSaveToFile<T extends ImageGray<T>> {
 	T gray;
 	GrayU8 binary = new GrayU8(1,1);
 
-	public double averageProcessingTime;
+	public GrowQueue_F64 processingTimeMS = new GrowQueue_F64();
 
 	public DetectEllipseSaveToFile(BinaryEllipseDetector<T> detector , boolean binaryLocal) {
 
@@ -50,14 +51,13 @@ public class DetectEllipseSaveToFile<T extends ImageGray<T>> {
 
 	public void processDirectory( File inputDir , File outputDir ) {
 
-		averageProcessingTime = 0;
-		int totalProcessed = 0;
+		processingTimeMS.reset();
 
 		if( !outputDir.exists() )
 			if( !outputDir.mkdirs() )
 				throw new RuntimeException("Can't make output directory");
 
-		File files[] = inputDir.listFiles();
+		File[] files = inputDir.listFiles();
 
 		for( File f : files ) {
 			if( !f.isFile() || f.getName().endsWith("txt"))
@@ -70,9 +70,7 @@ public class DetectEllipseSaveToFile<T extends ImageGray<T>> {
 			String name = UtilShapeDetector.imageToDetectedName(f.getName());
 			File outputFile = new File(outputDir,name);
 			process(buffered,outputFile);
-			totalProcessed++;
 		}
-		averageProcessingTime /= totalProcessed;
 	}
 
 	private void process( BufferedImage buffered , File outputFile ) {
@@ -87,7 +85,7 @@ public class DetectEllipseSaveToFile<T extends ImageGray<T>> {
 		detector.process(gray, binary);
 		long after = System.nanoTime();
 
-		averageProcessingTime += (after-before)*1e-6;
+		processingTimeMS.add((after-before)*1e-6);
 
 		List<EllipseRotated_F64> found = detector.getFoundEllipses(null);
 //		System.out.println("Found = "+found.size);

@@ -8,6 +8,7 @@ import boofcv.factory.filter.binary.ConfigThreshold;
 import boofcv.factory.filter.binary.ThresholdType;
 import boofcv.metrics.*;
 import boofcv.struct.image.ImageDataType;
+import org.ddogleg.struct.GrowQueue_F64;
 
 import java.io.File;
 import java.io.IOException;
@@ -26,7 +27,8 @@ public class FiducialRegression extends BaseRegression implements ImageRegressio
 
 	String infoString;
 
-	PrintStream runtimeOut;
+	RuntimeSummary runtime;
+	GrowQueue_F64 summaryPeriodMS = new GrowQueue_F64();
 
 	public FiducialRegression() {
 		super(BoofRegressionConstants.TYPE_FIDCUIALS);
@@ -82,20 +84,26 @@ public class FiducialRegression extends BaseRegression implements ImageRegressio
 		estimate.initialize(new File(baseFiducial, type));
 
 		try {
-			runtimeOut = new PrintStream(new File(directory,"RUN_Fiducial_" + name + ".txt"));
-			BoofRegressionConstants.printGenerator(runtimeOut, getClass());
-			runtimeOut.println("# Elapsed time is in milliseconds");
-			runtimeOut.println("# dataset (total images) 50% 95% 100%");
-			runtimeOut.println();
+			summaryPeriodMS.reset();
+			runtime = new RuntimeSummary();
+			runtime.out = new PrintStream(new File(directoryRuntime,"RUN_Fiducial_" + name + ".txt"));
+			BoofRegressionConstants.printGenerator(runtime.out, getClass());
+			runtime.out.println("# Elapsed time in milliseconds");
+			runtime.out.println();
+			runtime.printHeader(false);
 
 			computeStandardMetrics(type, "ACC_Fiducial_Standard_" + name + ".txt", estimate,ignoreOrder, 5);
 			computeStaticMetrics(type, "ACC_Fiducial_Static_" + name + ".txt", estimate, 5);
 			computeAlwaysVisibleMetrics(type, "ACC_Fiducial_AlwaysVisible_" + name + ".txt", estimate);
+
+			runtime.out.println();
+			runtime.printHeader(true);
+			runtime.printStats("Summary",summaryPeriodMS);
 		} catch( RuntimeException e ) {
 			e.printStackTrace();
 			e.printStackTrace(errorLog);
 		} finally {
-			runtimeOut.close();
+			runtime.out.close();
 		}
 	}
 
@@ -105,7 +113,7 @@ public class FiducialRegression extends BaseRegression implements ImageRegressio
 										double maxPixelError )
 			throws IOException
 	{
-		PrintStream out = new PrintStream(new File(directory,outName));
+		PrintStream out = new PrintStream(new File(directoryMetrics,outName));
 		BoofRegressionConstants.printGenerator(out,getClass());
 
 		estimate.needsIntrinsic = true;
@@ -127,7 +135,7 @@ public class FiducialRegression extends BaseRegression implements ImageRegressio
 										double maxPixelError  )
 			throws IOException
 	{
-		PrintStream out = new PrintStream(new File(directory,outName));
+		PrintStream out = new PrintStream(new File(directoryMetrics,outName));
 		BoofRegressionConstants.printGenerator(out,getClass());
 
 		estimate.needsIntrinsic = true;
@@ -146,7 +154,7 @@ public class FiducialRegression extends BaseRegression implements ImageRegressio
 											 BaseEstimateSquareFiducialToCamera estimate)
 			throws IOException
 	{
-		PrintStream out = new PrintStream(new File(directory,outName));
+		PrintStream out = new PrintStream(new File(directoryMetrics,outName));
 		BoofRegressionConstants.printGenerator(out,getClass());
 
 		estimate.needsIntrinsic = false;
@@ -192,12 +200,8 @@ public class FiducialRegression extends BaseRegression implements ImageRegressio
 				totalExpected += evaluate.getTotalExpected();
 				totalCorrect += evaluate.getTotalCorrect();
 
-				estimate.speed.sort();
-				double time50 = estimate.speed.getFraction(0.5);
-				double time95 = estimate.speed.getFraction(0.95);
-				double time100 = estimate.speed.getFraction(1.00);
-				runtimeOut.printf("%30s %3d %7.3f %7.3f %7.3f\n",dataSet.getName(),estimate.speed.size,time50,time95,time100);
-
+				summaryPeriodMS.addAll(estimate.speed);
+				runtime.printStats(dataSet.getName(),estimate.speed);
 			} catch( DataSetDoesNotExist e ) {
 				System.out.println("DataSetDoesNotExist "+e.getMessage());
 				errorLog.println();

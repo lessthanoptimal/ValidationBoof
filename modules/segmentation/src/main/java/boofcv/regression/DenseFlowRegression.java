@@ -1,9 +1,7 @@
 package boofcv.regression;
 
 import boofcv.abst.flow.DenseOpticalFlow;
-import boofcv.common.BaseRegression;
-import boofcv.common.BoofRegressionConstants;
-import boofcv.common.ImageRegression;
+import boofcv.common.*;
 import boofcv.factory.flow.FactoryDenseOpticalFlow;
 import boofcv.metrics.flow.BenchmarkMiddleburyFlow;
 import boofcv.struct.image.ImageDataType;
@@ -38,21 +36,24 @@ public class DenseFlowRegression extends BaseRegression implements ImageRegressi
 		all.add(new Info("HornSchunckPyr",FactoryDenseOpticalFlow.hornSchunckPyramid(null, bandType)));
 		all.add(new Info("Brox",FactoryDenseOpticalFlow.broxWarping(null, bandType)));
 
-		PrintStream outputRuntime = new PrintStream(new File(directory,"RUN_DenseFlow.txt"));
-		BoofRegressionConstants.printGenerator(outputRuntime,getClass());
-		outputRuntime.println("# Runtime dense optical flow");
-		outputRuntime.println("# <algorithm> <average time in ms>\n");
+
+		RuntimeSummary runtime = new RuntimeSummary();
+		runtime.out = new PrintStream(new File(directoryRuntime,"RUN_DenseFlow.txt"));
+		BoofRegressionConstants.printGenerator(runtime.out, getClass());
+		runtime.out.println("# Runtime dense optical flow");
+		runtime.out.println("# Elapsed time in milliseconds");
+		runtime.printHeader(true);
 
 		for( Info i : all ) {
 			System.out.println("Regression "+i.name);
-			PrintStream outputAccurcy = new PrintStream(new File(directory,"ACC_DenseFlow"+i.name+".txt"));;
+			PrintStream outputAccurcy = new PrintStream(new File(directoryMetrics,"ACC_DenseFlow"+i.name+".txt"));;
 			try {
 				BoofRegressionConstants.printGenerator(outputAccurcy, getClass());
 				BenchmarkMiddleburyFlow benchmark = new BenchmarkMiddleburyFlow(path,i.detdesc,outputAccurcy);
 				benchmark.evaluate();
 				outputAccurcy.flush();
 
-				outputRuntime.printf("%20s %7.1f\n",i.name,benchmark.getAverageTimeMilli());
+				runtime.printStats(i.name,benchmark.processingTimeMS);
 			} catch( RuntimeException e ) {
 				errorLog.print(e);
 			} finally {
@@ -60,7 +61,7 @@ public class DenseFlowRegression extends BaseRegression implements ImageRegressi
 			}
 		}
 
-		outputRuntime.close();
+		runtime.out.close();
 	}
 
 	public static class Info {
@@ -73,11 +74,8 @@ public class DenseFlowRegression extends BaseRegression implements ImageRegressi
 		}
 	}
 
-	public static void main(String[] args) throws IOException {
-
-		DenseFlowRegression app = new DenseFlowRegression();
-
-		app.setOutputDirectory(BoofRegressionConstants.CURRENT_DIRECTORY+"/"+ImageDataType.F32+"/");
-		app.process(ImageDataType.F32);
+	public static void main(String[] args) throws IOException, IllegalAccessException, InstantiationException, ClassNotFoundException {
+		BoofRegressionConstants.clearCurrentResults();
+		RegressionRunner.main(new String[]{DenseFlowRegression.class.getName(),ImageDataType.F32.toString()});
 	}
 }

@@ -41,13 +41,13 @@ public class TrifocalTensorFRegression extends BaseRegression implements FileReg
 
 
         // performance output
-        evaulator.out = new PrintStream( new File(directory, "ACC_TrifocalTensor.txt") );
+        evaulator.out = new PrintStream( new File(directoryMetrics, "ACC_TrifocalTensor.txt") );
         BoofRegressionConstants.printGenerator(evaulator.out, getClass());
         evaulator.directoryObservations = new File(SIMULATED_PATH);
         evaulator.directoryResults = new File(SIMULATED_PATH+"/estimated");
 
         // set up runtime results file
-        outputRuntime = new PrintStream(new File(directory, "RUN_TrifocalTensor.txt"));
+        outputRuntime = new PrintStream(new File(directoryMetrics, "RUN_TrifocalTensor.txt"));
         BoofRegressionConstants.printGenerator(outputRuntime, getClass());
         outputRuntime.println();
 

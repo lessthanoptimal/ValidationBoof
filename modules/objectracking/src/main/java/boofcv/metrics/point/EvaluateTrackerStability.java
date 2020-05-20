@@ -9,6 +9,7 @@ import boofcv.struct.image.ImageType;
 import georegression.struct.homography.Homography2D_F64;
 import georegression.struct.point.Point2D_F64;
 import georegression.transform.homography.HomographyPointOps_F64;
+import org.ddogleg.struct.GrowQueue_F64;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -43,6 +44,9 @@ public class EvaluateTrackerStability<T extends ImageGray<T>> {
 	double meanF;
 	double meanFA;
 
+	// keeps track of per frame processing time
+	public GrowQueue_F64 elapsedTimeMS = new GrowQueue_F64();
+
 	BufferedImage imageDebug = null;// = new BufferedImage(640,480,BufferedImage.TYPE_INT_BGR);
 	ImagePanel gui;
 
@@ -57,11 +61,11 @@ public class EvaluateTrackerStability<T extends ImageGray<T>> {
 						  SimpleImageSequence<T> sequence ,
 						  List<Homography2D_F64> transforms ,
 						  PrintStream out ) {
-
+		elapsedTimeMS.reset();
 		if( out != null )
 			out.println("# (time tick) ( F ) ( F all inside) (precision) (recall) (recall all inside) (tracks)");
 
-		alwaysInside = new ArrayList<Point2D_F64>();
+		alwaysInside = new ArrayList<>();
 		int totalFrames = 0;
 		Point2D_F64 p = new Point2D_F64();
 
@@ -86,7 +90,11 @@ public class EvaluateTrackerStability<T extends ImageGray<T>> {
 			T image = sequence.next();
 
 			if( totalFrames % dropRate == 0 ) {
+				long time0 = System.nanoTime();
 				tracker.track(image);
+				long time1 = System.nanoTime();
+				elapsedTimeMS.add((time1-time0)*1e-6); // record how long it to process a single frame
+
 				if( totalFrames == 0 ) {
 					List<Point2D_F64> tracks = tracker.getInitial();
 					for( Point2D_F64 t : tracks ) {

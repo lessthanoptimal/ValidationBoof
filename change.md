@@ -1,5 +1,14 @@
 Description of changes to benchmarks and justifications for change in performance from previous versions.
 
+## Version 0.37
+2020/
+
+- Improved timing information in summary
+- Added a summary and runtime to point trackers
+- Created a common format for runtime results summary
+- TODO Switch all runtime in FPS to milliseconds
+- TODO different directory for runtime results that is machine specific
+
 ## Version 0.36
 2020/May/18
 - Prunes empty ERRORLOG files after running regression

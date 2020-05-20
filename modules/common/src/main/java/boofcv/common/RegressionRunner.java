@@ -84,7 +84,7 @@ public class RegressionRunner {
                 System.exit(1);
                 return;
             }
-            regression.setOutputDirectory(new File(CURRENT_DIRECTORY,imageType.toString()).getPath());
+            regression.setMetricsDirectory(new File(CURRENT_DIRECTORY,imageType.toString()).getPath());
             try {
                 regression.process(imageType);
             } catch( RuntimeException e ) {
@@ -102,7 +102,7 @@ public class RegressionRunner {
                 System.exit(1);
                 return;
             }
-            regression.setOutputDirectory(new File(CURRENT_DIRECTORY,"other").getPath());
+            regression.setMetricsDirectory(new File(CURRENT_DIRECTORY,"other").getPath());
             try {
                 regression.process();
             } catch( RuntimeException e ) {

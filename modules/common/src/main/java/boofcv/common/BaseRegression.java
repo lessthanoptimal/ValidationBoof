@@ -11,7 +11,8 @@ import java.io.PrintStream;
  */
 public abstract class BaseRegression implements TestRegression {
 
-	protected String directory;
+	protected String directoryMetrics;
+	protected String directoryRuntime;
 	protected PrintStream errorLog = System.err;
 	// determines the sub-directory that the results will be written to
 	protected String resultsType;
@@ -21,14 +22,15 @@ public abstract class BaseRegression implements TestRegression {
 	}
 
 	@Override
-	public void setOutputDirectory(String directory) {
+	public void setMetricsDirectory(String directory) {
 		File f = new File(directory,resultsType);
 		if( !f.exists() ) {
 			if( !f.mkdirs() ) {
 				throw new RuntimeException("Can't make output directory "+f.getPath());
 			}
 		}
-		this.directory = f.getPath();
+		this.directoryMetrics = f.getPath();
+		this.directoryRuntime = directoryMetrics;
 
 		File tmp = BoofRegressionConstants.tempDir();
 		if( !tmp.exists() ) {

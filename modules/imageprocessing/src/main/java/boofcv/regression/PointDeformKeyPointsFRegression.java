@@ -29,7 +29,7 @@ public class PointDeformKeyPointsFRegression extends BaseRegression implements F
     @Override
     public void process() throws IOException {
 
-        out = new PrintStream(new File(directory,"ACC_PointDeformKeyPointsChange.txt"));
+        out = new PrintStream(new File(directoryMetrics,"ACC_PointDeformKeyPointsChange.txt"));
         BoofRegressionConstants.printGenerator(out, getClass());
 
         metrics.err = errorLog;

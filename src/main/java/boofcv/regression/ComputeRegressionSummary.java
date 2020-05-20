@@ -37,7 +37,7 @@ public class ComputeRegressionSummary {
     String emailUsername;
     String emailPassword;
     String emailDestination;
-    private long ellapsedTime;
+    private long elapsedTime;
 
     /**
      * E-mail out a summary of the results
@@ -135,11 +135,9 @@ public class ComputeRegressionSummary {
     private String createSummary() {
         String summary;
 
-        if( ellapsedTime == 0 ) {
-            summary = ""+new Date()+"\n\n";
-        } else {
-            summary = MasterRegressionApplication.printTiming(ellapsedTime)+"\n";
-        }
+        summary =  "Finished Time:         "+MasterRegressionApplication.formatDate(new Date())+"\n";
+        summary += "Elapsed Time:          "+MasterRegressionApplication.formatElapsed(elapsedTime)+"\n";
+        summary += "\n";
 
         summary += "BoofCV Version:        "+ BoofVersion.VERSION+"\n";
         summary += "BoofCV Git SHA:        "+ BoofVersion.GIT_SHA+"\n";
@@ -213,8 +211,8 @@ public class ComputeRegressionSummary {
         }
     }
 
-    public void setEllapsedTime(long ellapsedTime) {
-        this.ellapsedTime = ellapsedTime;
+    public void setElapsedTime(long elapsedTime) {
+        this.elapsedTime = elapsedTime;
     }
 
     public static void main(String[] args) throws IOException {

@@ -1,15 +1,14 @@
 package boofcv.regression;
 
 import boofcv.alg.background.BackgroundModelStationary;
-import boofcv.common.BaseRegression;
-import boofcv.common.BoofRegressionConstants;
-import boofcv.common.ImageRegression;
+import boofcv.common.*;
 import boofcv.factory.background.ConfigBackgroundBasic;
 import boofcv.factory.background.ConfigBackgroundGaussian;
 import boofcv.factory.background.FactoryBackgroundModel;
 import boofcv.metrics.background.BackgroundModelMetrics;
 import boofcv.struct.image.ImageDataType;
 import boofcv.struct.image.ImageType;
+import org.ddogleg.struct.GrowQueue_F64;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -49,23 +48,34 @@ public class BackgroundModelRegression extends BaseRegression implements ImageRe
 
         List<File> files = BoofRegressionConstants.listAndSort(dataPath);
 
-        PrintStream out = new PrintStream(new FileOutputStream(new File(directory,"ACC_background_stationary.txt")));
+        PrintStream out = new PrintStream(new FileOutputStream(new File(directoryMetrics,"ACC_background_stationary.txt")));
         BoofRegressionConstants.printGenerator(out, getClass());
         out.println("# Stationary Background Model Detection Metrics");
         out.println("# <data set> <# truth> <mean F> <mean precision> <mean recall>");
         out.println();
 
-        PrintStream outputRuntime = new PrintStream(new File(directory,"RUN_background_stationary.txt"));
-        BoofRegressionConstants.printGenerator(outputRuntime, getClass());
-        outputRuntime.println("# Stationary Background Model Runtime Metrics");
-        outputRuntime.println("# algorithm, average time (ms)");
-        outputRuntime.println();
+
+        RuntimeSummary runtime = new RuntimeSummary();
+        runtime.out = new PrintStream(new File(directoryRuntime,"RUN_background_stationary.txt"));
+        BoofRegressionConstants.printGenerator(runtime.out, getClass());
+        runtime.out.println("# Stationary Background Model Runtime Metrics");
+        runtime.out.println("# Elapsed time in milliseconds");
+        runtime.out.println();
+
+//        PrintStream outputRuntime = new PrintStream(new File(directoryMetrics,"RUN_background_stationary.txt"));
+//        BoofRegressionConstants.printGenerator(outputRuntime, getClass());
+//        outputRuntime.println("# Stationary Background Model Runtime Metrics");
+//        outputRuntime.println("# algorithm, average time (ms)");
+//        outputRuntime.println();
 
         for( Info info : stationary ) {
             BackgroundModelMetrics metrics = new BackgroundModelMetrics();
             metrics.out = out;
             out.println("# "+info.name);
-            outputRuntime.println("# "+info.name);
+
+            GrowQueue_F64 summaryTimeMS = new GrowQueue_F64();
+            runtime.out.println(info.name);
+            runtime.printHeader(false);
 
             for( File f : files ) {
                 if( !new File(f,"motion").isDirectory() )
@@ -74,14 +84,19 @@ public class BackgroundModelRegression extends BaseRegression implements ImageRe
                 System.out.println(info.name+" "+f.getName());
 
                 metrics.evaluate(f,info.algorithm);
-                outputRuntime.printf("%20s %7.4f (ms)\n",f.getName(),metrics.averageTimeMS);
+
+                summaryTimeMS.addAll(metrics.periodMS);
+                runtime.printStats(f.getName(),metrics.periodMS);
             }
             out.println();
-            outputRuntime.println();
+            runtime.out.println();
+            runtime.saveSummary(info.name,summaryTimeMS);
         }
 
+        runtime.printSummary();
+        runtime.out.close();
+
         out.close();
-        outputRuntime.close();
     }
 
 
@@ -95,10 +110,10 @@ public class BackgroundModelRegression extends BaseRegression implements ImageRe
         }
     }
 
-    public static void main(String[] args) throws IOException {
-        BackgroundModelRegression regression = new BackgroundModelRegression();
-        regression.setOutputDirectory("tmp");
-
-        regression.process(ImageDataType.U8);
+    public static void main(String[] args)
+            throws IOException, IllegalAccessException, InstantiationException, ClassNotFoundException
+    {
+        BoofRegressionConstants.clearCurrentResults();
+        RegressionRunner.main(new String[]{BackgroundModelRegression.class.getName(),ImageDataType.U8.toString()});
     }
 }

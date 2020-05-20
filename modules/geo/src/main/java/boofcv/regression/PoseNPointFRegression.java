@@ -40,7 +40,7 @@ public class PoseNPointFRegression extends BaseRegression implements FileRegress
         generator.generateUniformImageDiscreteDistances(new DiscreteRange(1,10,20),45,4000);
         generator.generateUniformImageDiscreteAngles(new DiscreteRange(0,45,10),1.5,4000);
 
-        PrintStream out = new PrintStream( new File(directory, name) );
+        PrintStream out = new PrintStream( new File(directoryMetrics, name) );
         BoofRegressionConstants.printGenerator(out, getClass());
 
         out.println("Planar square target. Pixel Stdev = "+generator.getStdevPixel());

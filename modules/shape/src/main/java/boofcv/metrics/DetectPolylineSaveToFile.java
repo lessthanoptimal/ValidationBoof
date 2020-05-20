@@ -16,6 +16,7 @@ import boofcv.struct.image.GrayS32;
 import boofcv.struct.image.GrayU8;
 import boofcv.struct.image.ImageGray;
 import georegression.struct.point.Point2D_I32;
+import org.ddogleg.struct.GrowQueue_F64;
 import org.ddogleg.struct.GrowQueue_I32;
 
 import java.awt.image.BufferedImage;
@@ -40,8 +41,7 @@ public class DetectPolylineSaveToFile<T extends ImageGray<T>> {
 	GrayU8 binary = new GrayU8(1,1);
 	GrayS32 labeled = new GrayS32(1,1);
 
-	// average amount of time in milliseconds to process each image in the directory
-	public double averageProcessingTime;
+	public final GrowQueue_F64 processingTimeMS = new GrowQueue_F64();
 
 	public DetectPolylineSaveToFile(PointsToPolyline contourToPolyline , boolean binaryLocal, Class<T> imageType ) {
 
@@ -65,8 +65,7 @@ public class DetectPolylineSaveToFile<T extends ImageGray<T>> {
 		List<File> files = Arrays.asList(inputDir.listFiles());
 		Collections.sort(files);
 
-		averageProcessingTime = 0;
-		int total = 0;
+		processingTimeMS.reset();
 		for( File f : files ) {
 			if( !f.isFile() || f.getName().endsWith("txt"))
 				continue;
@@ -78,10 +77,7 @@ public class DetectPolylineSaveToFile<T extends ImageGray<T>> {
 			String name = UtilShapeDetector.imageToDetectedName(f.getName());
 			File outputFile = new File(outputDir,name);
 			process(buffered,outputFile);
-			total++;
 		}
-
-		averageProcessingTime /= total;
 	}
 
 	private void process( BufferedImage buffered , File outputFile ) {
@@ -116,7 +112,7 @@ public class DetectPolylineSaveToFile<T extends ImageGray<T>> {
 		long stopNano = System.nanoTime();
 		UtilShapeDetector.saveResultsPolyline(polylines,outputFile);
 
-		averageProcessingTime += (stopNano-startNano)/1e6;
+		processingTimeMS.add((stopNano-startNano)/1e6);
 	}
 
 }

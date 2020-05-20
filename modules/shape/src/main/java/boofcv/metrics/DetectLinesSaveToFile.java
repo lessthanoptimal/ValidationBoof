@@ -8,6 +8,7 @@ import boofcv.io.image.UtilImageIO;
 import boofcv.struct.image.ImageGray;
 import georegression.struct.line.LineParametric2D_F32;
 import org.apache.commons.io.FilenameUtils;
+import org.ddogleg.struct.GrowQueue_F64;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -31,8 +32,7 @@ public class DetectLinesSaveToFile<T extends ImageGray<T>> {
 
 	Class<T> imageType;
 
-	// average amount of time in milliseconds to process each image in the directory
-	public double averageProcessingTime;
+	public final GrowQueue_F64 processingTimeMS = new GrowQueue_F64();
 
 	public DetectLinesSaveToFile(boolean thinDetector, String detectorName , int blurRadius ,
 								 Class<T> imageType ) {
@@ -57,8 +57,7 @@ public class DetectLinesSaveToFile<T extends ImageGray<T>> {
 		List<File> files = Arrays.asList(inputDir.listFiles());
 		Collections.sort(files);
 
-		averageProcessingTime = 0;
-		int total = 0;
+		processingTimeMS.reset();
 		for( File f : files ) {
 			if( !f.isFile() || f.getName().endsWith("txt"))
 				continue;
@@ -74,10 +73,8 @@ public class DetectLinesSaveToFile<T extends ImageGray<T>> {
 			String outputName = UtilShapeDetector.imageToDetectedName(f.getName());
 			File outputFile = new File(outputDir,outputName);
 			process(buffered,expectedLines,outputFile);
-			total++;
 		}
 
-		averageProcessingTime /= total;
 	}
 
 	private void process( BufferedImage buffered , int expectedLines, File outputFile ) {
@@ -99,7 +96,7 @@ public class DetectLinesSaveToFile<T extends ImageGray<T>> {
 
 		UtilShapeDetector.saveResultsLines(lines,outputFile);
 
-		averageProcessingTime += (stopNano-startNano)/1e6;
+		processingTimeMS.add((stopNano-startNano)*1e-6);
 	}
 
 }

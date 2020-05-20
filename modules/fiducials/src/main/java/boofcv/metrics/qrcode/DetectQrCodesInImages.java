@@ -9,6 +9,7 @@ import boofcv.io.image.UtilImageIO;
 import boofcv.struct.image.ImageGray;
 import georegression.struct.point.Point2D_F64;
 import org.apache.commons.io.FilenameUtils;
+import org.ddogleg.struct.GrowQueue_F64;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -26,7 +27,7 @@ import static boofcv.metrics.BaseEstimateSquareFiducialToCamera.loadImageFilesBy
 public class DetectQrCodesInImages<T extends ImageGray<T>> {
     File outputDirectory = new File(".");
 
-    public double averageMS = 0;
+    public GrowQueue_F64 periodMS = new GrowQueue_F64();
 
     public void setOutputDirectory(File outputDirectory) {
         this.outputDirectory = outputDirectory;
@@ -42,6 +43,7 @@ public class DetectQrCodesInImages<T extends ImageGray<T>> {
 
         T image = GeneralizedImageOps.createSingleBand(detector.getImageType(),1,1);
 
+        periodMS.reset();
         for( String path : files ) {
             BufferedImage orig = UtilImageIO.loadImage(path);
             ConvertBufferedImage.convertFrom(orig,image,true);
@@ -59,7 +61,7 @@ public class DetectQrCodesInImages<T extends ImageGray<T>> {
             detector.process(image);
             long after= System.nanoTime();
 
-            averageMS += (after-before)*1e-6;
+            periodMS.add((after-before)*1e-6);
 
             List<QrCode> found = detector.getDetections();
             for (int i = 0; i < found.size(); i++) {
@@ -76,6 +78,5 @@ public class DetectQrCodesInImages<T extends ImageGray<T>> {
 
             out.close();
         }
-        averageMS /= files.size();
     }
 }

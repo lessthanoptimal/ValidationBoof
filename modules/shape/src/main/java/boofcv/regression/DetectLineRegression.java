@@ -1,9 +1,6 @@
 package boofcv.regression;
 
-import boofcv.common.BaseRegression;
-import boofcv.common.BoofRegressionConstants;
-import boofcv.common.ImageRegression;
-import boofcv.common.RegressionRunner;
+import boofcv.common.*;
 import boofcv.metrics.DetectLinesSaveToFile;
 import boofcv.metrics.EvaluateHoughLineDetector;
 import boofcv.metrics.FactoryLineDetector;
@@ -21,7 +18,7 @@ public class DetectLineRegression extends BaseRegression implements ImageRegress
 	File workDirectory = new File("./tmp");
 	File baseDirectory = new File("data/shape/line/");
 
-	PrintStream outputSpeed;
+	RuntimeSummary runtime;
 
 	int blurRadius = 3;
 
@@ -38,12 +35,17 @@ public class DetectLineRegression extends BaseRegression implements ImageRegress
 	}
 
 	private void processFamily(Class imageType, String typeName, boolean thin, String[] algs ) throws IOException {
-		outputSpeed = new PrintStream(new File(directory,"RUN_"+typeName+"LineDetector.txt"));
-		BoofRegressionConstants.printGenerator(outputSpeed, getClass());
+		runtime = new RuntimeSummary();
+		runtime.out = new PrintStream(new File(directoryRuntime,"RUN_"+typeName+"LineDetector.txt"));
+		BoofRegressionConstants.printGenerator(runtime.out, getClass());
+		runtime.out.println("# Elapsed time in milliseconds");
+		runtime.out.println();
+
+		runtime.printHeader(true);
 		for( String detectorName : algs ) {
 			process(detectorName,thin,typeName,imageType);
 		}
-		outputSpeed.close();
+		runtime.out.close();
 	}
 
 	private void process(String name , boolean thin , String typeName, Class imageType) {
@@ -52,12 +54,10 @@ public class DetectLineRegression extends BaseRegression implements ImageRegress
 
 		EvaluateHoughLineDetector evaluator = new EvaluateHoughLineDetector();
 
-		try (PrintStream outputAccuracy = new PrintStream(new File(directory, outputAccuracyName))) {
+		try (PrintStream outputAccuracy = new PrintStream(new File(directoryMetrics, outputAccuracyName))) {
 			BoofRegressionConstants.printGenerator(outputAccuracy, getClass());
 			outputAccuracy.println("# blur radius "+blurRadius);
 			evaluator.setOutputResults(outputAccuracy);
-
-			outputSpeed.println("# Average processing time of shape detector algorithm " + name);
 
 			DetectLinesSaveToFile detection = new DetectLinesSaveToFile(thin, name, blurRadius, imageType);
 			File f = new File(baseDirectory, typeName.toLowerCase());
@@ -65,15 +65,12 @@ public class DetectLineRegression extends BaseRegression implements ImageRegress
 			evaluator.evaluate(f, workDirectory);
 			outputAccuracy.println();
 
-			outputSpeed.printf("%20s %9.4f (ms)\n", f.getName(), detection.averageProcessingTime);
-			outputSpeed.println();
+			runtime.printStats(name,detection.processingTimeMS);
 
 		} catch ( Exception e) {
 			System.out.println("Failed! " + outputAccuracyName);
 			errorLog.println(e);
 		}
-
-
 	}
 
 	public static void main(String[] args) throws IOException, IllegalAccessException, InstantiationException, ClassNotFoundException {

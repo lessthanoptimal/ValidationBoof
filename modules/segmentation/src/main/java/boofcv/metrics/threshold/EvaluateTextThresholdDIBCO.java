@@ -1,9 +1,11 @@
 package boofcv.metrics.threshold;
 
 import boofcv.alg.filter.binary.ThresholdImageOps;
+import boofcv.common.RuntimeSummary;
 import boofcv.io.image.UtilImageIO;
 import boofcv.struct.image.GrayF32;
 import boofcv.struct.image.GrayU8;
+import org.ddogleg.struct.GrowQueue_F64;
 
 import java.io.PrintStream;
 import java.util.ArrayList;
@@ -24,6 +26,7 @@ public class EvaluateTextThresholdDIBCO {
     double totalTP,totalFP,totalTN,totalFN;
 
     PrintStream out;
+    public RuntimeSummary runtime;
 
     public void addAlgorithm( ThresholdText alg , String name ) {
         algorithms.add( new Alg(alg,name));
@@ -40,9 +43,11 @@ public class EvaluateTextThresholdDIBCO {
             load(String.format("P%02d.bmp",i),String.format("P%02d_truth.bmp",i));
         }
 
+        runtime.printHeader(true);
         GrayU8 found = new GrayU8(1,1);
         for( Alg alg : algorithms ) {
 
+            GrowQueue_F64 processingTimeMS = new GrowQueue_F64();
             totalTP=totalFP=totalTN=totalFN=0;
 
             for (int i = 0; i < input.size(); i++) {
@@ -51,7 +56,10 @@ public class EvaluateTextThresholdDIBCO {
                 GrayU8 expected = truth.get(i);
                 found.reshape(in.width,in.height);
 
+                long time0 = System.nanoTime();
                 alg.alg.process(in.clone(), found);
+                long time1 = System.nanoTime();
+                processingTimeMS.add((time1-time0)*1e-6);
 
                 //				ShowImages.showWindow(VisualizeBinaryData.renderBinary(expected,null),"expected");
                 //				ShowImages.showWindow(VisualizeBinaryData.renderBinary(found,null),"found");
@@ -88,6 +96,8 @@ public class EvaluateTextThresholdDIBCO {
                 totalTN += TN/N;
                 totalFN += FN/N;
             }
+
+            runtime.printStats(alg.name,processingTimeMS);
 
             totalTP /= input.size();
             totalFP /= input.size();

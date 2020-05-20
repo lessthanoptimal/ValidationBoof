@@ -7,10 +7,7 @@ import boofcv.abst.sfm.d3.StereoVisualOdometry;
 import boofcv.abst.tracker.PointTracker;
 import boofcv.alg.filter.derivative.GImageDerivativeOps;
 import boofcv.alg.tracker.klt.ConfigPKlt;
-import boofcv.common.BaseRegression;
-import boofcv.common.BoofRegressionConstants;
-import boofcv.common.ImageRegression;
-import boofcv.common.RegressionRunner;
+import boofcv.common.*;
 import boofcv.factory.feature.describe.ConfigDescribeRegionPoint;
 import boofcv.factory.feature.detect.interest.ConfigDetectInterestPoint;
 import boofcv.factory.feature.detect.selector.ConfigSelectLimit;
@@ -29,6 +26,7 @@ import boofcv.struct.image.GrayF32;
 import boofcv.struct.image.ImageDataType;
 import boofcv.struct.image.ImageType;
 import boofcv.struct.pyramid.ConfigDiscreteLevels;
+import org.ddogleg.struct.GrowQueue_F64;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -42,7 +40,8 @@ import java.util.List;
  */
 public class StereoVisualOdometryRegression extends BaseRegression implements ImageRegression {
 
-	PrintStream outputRuntime;
+	RuntimeSummary runtime;
+	GrowQueue_F64 summaryRuntimeMS = new GrowQueue_F64();
 
 	public StereoVisualOdometryRegression() {
 		super(BoofRegressionConstants.TYPE_GEOMETRY);
@@ -58,12 +57,16 @@ public class StereoVisualOdometryRegression extends BaseRegression implements Im
 		all.add( createDualTrackerPnP(bandType));
 		all.add( createQuadPnP(bandType));
 
-		outputRuntime = new PrintStream(new File(directory,"RUN_StereoVisOdom.txt"));
-		BoofRegressionConstants.printGenerator(outputRuntime, getClass());
-		outputRuntime.println("# Runtime speed (average FPS) of stereo vision odometry algorithms\n");
+		runtime = new RuntimeSummary();
+		runtime.out = new PrintStream(new File(directoryRuntime,"RUN_StereoVisOdom.txt"));
+		BoofRegressionConstants.printGenerator(runtime.out, getClass());
+		runtime.out.println("# Elapsed time in milliseconds");
+		runtime.out.println();
 
 		for( Info a : all ) {
-			outputRuntime.println(a.name);
+			summaryRuntimeMS.reset();
+			runtime.out.println(a.name);
+			runtime.printHeader(false);
 			try {
 				SequenceStereoImages data = new WrapParseLeuven07(new ParseLeuven07("data/leuven07"));
 				evaluate(a,data,"Leuven07");
@@ -77,14 +80,18 @@ public class StereoVisualOdometryRegression extends BaseRegression implements Im
 				e.printStackTrace(errorLog);
 				errorLog.println("---------------------------------------------------");
 			}
+			runtime.saveSummary(a.name,summaryRuntimeMS);
 		}
 
-		outputRuntime.close();
+		runtime.out.println();
+		runtime.printSummary();
+
+		runtime.out.close();
 	}
 
 	private void evaluate( Info vo , SequenceStereoImages data , String dataName ) throws FileNotFoundException {
 
-		PrintStream out = new PrintStream(new File(directory,"ACC_StereoVisOdom_"+dataName+"_"+vo.name+".txt"));
+		PrintStream out = new PrintStream(new File(directoryMetrics,"ACC_StereoVisOdom_"+dataName+"_"+vo.name+".txt"));
 		BoofRegressionConstants.printGenerator(out, getClass());
 		out.println("# Visual Odometry Performance metrics. "+vo.name+" in "+dataName);
 		out.println();
@@ -95,7 +102,8 @@ public class StereoVisualOdometryRegression extends BaseRegression implements Im
 			evaluator.setOutputStream(out);
 			evaluator.initialize();
 			while( evaluator.nextFrame() ){}
-			outputRuntime.printf("%20s %5.2f\n",dataName,evaluator.getAverageFPS());
+			summaryRuntimeMS.addAll(evaluator.processingTimeMS);
+			runtime.printStats(dataName,evaluator.processingTimeMS);
 		} catch( RuntimeException e ) {
 			errorLog.println("FAILED "+vo.name+" on "+dataName);
 			e.printStackTrace(errorLog);

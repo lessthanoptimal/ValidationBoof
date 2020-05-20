@@ -4,6 +4,7 @@ import boofcv.abst.scene.ImageClassifier;
 import boofcv.io.image.ConvertBufferedImage;
 import boofcv.io.image.UtilImageIO;
 import boofcv.struct.image.ImageBase;
+import org.ddogleg.struct.GrowQueue_F64;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -21,11 +22,15 @@ public class ClassifyImageSaveResults<T extends ImageBase<T>> {
 	List<File> images = new ArrayList<>();
 	PrintStream out;
 
+	public GrowQueue_F64 processingTimeMS = new GrowQueue_F64();
+
 	public ClassifyImageSaveResults() {
 		images.add( new File("data/recognition/image_classification/outdoors01.jpg"));
 	}
 
 	public void process(ImageClassifier<T> alg) {
+
+		processingTimeMS.reset();
 		for( File f : images ) {
 			out.println("Processing "+f.getName());
 			BufferedImage buffered = UtilImageIO.loadImage(f.getPath());
@@ -38,7 +43,10 @@ public class ClassifyImageSaveResults<T extends ImageBase<T>> {
 			T input = alg.getInputType().createImage(buffered.getWidth(),buffered.getHeight());
 			ConvertBufferedImage.convertFrom(buffered,input,true);
 
+			long time0 = System.nanoTime();
 			alg.classify(input);
+			long time1 = System.nanoTime();
+			processingTimeMS.add((time1-time0)*1e-6);
 
 			List<String> categories = alg.getCategories();
 			out.println("   best = "+categories.get(alg.getBestResult()));

@@ -1,16 +1,14 @@
 package boofcv.regression;
 
 import boofcv.abst.fiducial.QrCodeDetector;
-import boofcv.common.BaseRegression;
-import boofcv.common.BoofRegressionConstants;
-import boofcv.common.ImageRegression;
-import boofcv.common.RegressionRunner;
+import boofcv.common.*;
 import boofcv.factory.fiducial.ConfigQrCode;
 import boofcv.factory.fiducial.FactoryFiducial;
 import boofcv.metrics.qrcode.DetectQrCodesInImages;
 import boofcv.metrics.qrcode.EvaluateQrCodeDecoding;
 import boofcv.metrics.qrcode.EvaluateQrCodeDetections;
 import boofcv.struct.image.ImageDataType;
+import org.ddogleg.struct.GrowQueue_F64;
 
 import java.io.File;
 import java.io.IOException;
@@ -38,7 +36,7 @@ public class QrCodeRegression extends BaseRegression implements ImageRegression 
 		final Class imageType = ImageDataType.typeToSingleClass(type);
 
 
-		evaluateMessage.out = new PrintStream(new File(directory,"ACC_QRCodeMessage.txt"));
+		evaluateMessage.out = new PrintStream(new File(directoryMetrics,"ACC_QRCodeMessage.txt"));
 		evaluateMessage.err = errorLog;
 		BoofRegressionConstants.printGenerator(evaluateMessage.out, getClass());
 
@@ -69,12 +67,15 @@ public class QrCodeRegression extends BaseRegression implements ImageRegression 
 
 		infoString = name;
 
-		PrintStream runtimeOut = new PrintStream(new File(directory,"RUN_QRCode_"+name+".txt"));
-		BoofRegressionConstants.printGenerator(runtimeOut, getClass());
-		runtimeOut.println("# "+name+" detector");
-		runtimeOut.println("# Data set, average milliseconds");
+		RuntimeSummary runtime = new RuntimeSummary();
+		GrowQueue_F64 summaryPeriodMS = new GrowQueue_F64();
+		runtime.out = new PrintStream(new File(directoryRuntime,"RUN_QRCode_"+name+".txt"));
+		BoofRegressionConstants.printGenerator(runtime.out, getClass());
+		runtime.out.println("# "+name+" detector");
+		runtime.out.println("# Times in milliseconds");
+		runtime.printHeader(false);
 
-		PrintStream metricsOut = new PrintStream(new File(directory,"ACC_QRCodeDetection_"+name+".txt"));
+		PrintStream metricsOut = new PrintStream(new File(directoryMetrics,"ACC_QRCodeDetection_"+name+".txt"));
 		BoofRegressionConstants.printGenerator(metricsOut, getClass());
 
 		metricsOut.println("# QR Code Detection Metrics for "+name);
@@ -111,7 +112,8 @@ public class QrCodeRegression extends BaseRegression implements ImageRegression 
 			try {
 				evaluateDetect.setOutputDirectory(workDirectory);
 				evaluateDetect.process(detector, f);
-				runtimeOut.printf("%20s %8.3f (ms)\n",f.getName(),+evaluateDetect.averageMS);
+				summaryPeriodMS.addAll(evaluateDetect.periodMS);
+				runtime.printStats(f.getName(),evaluateDetect.periodMS);
 				evaluateMetrics.evaluate(workDirectory,f);
 			} catch( RuntimeException e ) {
 				errorLog.println(e.toString());
@@ -131,7 +133,11 @@ public class QrCodeRegression extends BaseRegression implements ImageRegression 
 
 		metricsOut.printf("\nSummary N %3d TP %3d FP %3d\n", totalN,totalTP,totalFP);
 
-		runtimeOut.close();
+		runtime.out.println();
+		runtime.out.println();
+		runtime.printHeader(true);
+		runtime.printStats("Overall",summaryPeriodMS);
+		runtime.out.close();
 		metricsOut.close();
 
 		if( !foundDataSets ) {
@@ -142,6 +148,6 @@ public class QrCodeRegression extends BaseRegression implements ImageRegression 
 	public static void main(String[] args) throws IOException, IllegalAccessException, InstantiationException, ClassNotFoundException {
 		BoofRegressionConstants.clearCurrentResults();
 		RegressionRunner.main(new String[]{QrCodeRegression.class.getName(),ImageDataType.F32.toString()});
-		RegressionRunner.main(new String[]{QrCodeRegression.class.getName(),ImageDataType.U8.toString()});
+//		RegressionRunner.main(new String[]{QrCodeRegression.class.getName(),ImageDataType.U8.toString()});
 	}
 }

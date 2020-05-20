@@ -67,13 +67,13 @@ public class BundleAdjustmentFRegression extends BaseRegression implements FileR
     private void evaluate(BundleAdjustment<SceneStructureMetric> bundleAdjustment , String algorithm ) throws FileNotFoundException {
         bundleAdjustment.setVerbose(System.out,1);
         System.out.println("BundleAdjustment Evaluating "+algorithm);
-        outputQuality = new PrintStream( new File(directory, "ACC_BundleAdjustment_"+algorithm+".txt"));
+        outputQuality = new PrintStream( new File(directoryMetrics, "ACC_BundleAdjustment_"+algorithm+".txt"));
         BoofRegressionConstants.printGenerator(outputQuality, getClass());
         outputQuality.println("# Bundle Adjustment "+algorithm);
         outputQuality.println("# ftol="+ftol+"  gtol="+gtol+"  max_iterations="+maxIterations);
         outputQuality.flush();
 
-        outputRuntime = new PrintStream(new File(directory, "RUN_BundleAdjustment_"+algorithm+".txt"));
+        outputRuntime = new PrintStream(new File(directoryMetrics, "RUN_BundleAdjustment_"+algorithm+".txt"));
         BoofRegressionConstants.printGenerator(outputRuntime, getClass());
         outputRuntime.flush();
 

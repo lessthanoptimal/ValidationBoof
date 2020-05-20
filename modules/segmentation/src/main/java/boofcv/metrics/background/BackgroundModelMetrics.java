@@ -9,6 +9,7 @@ import boofcv.struct.image.GrayU8;
 import boofcv.struct.image.ImageBase;
 import boofcv.struct.image.ImageType;
 import org.apache.commons.io.FilenameUtils;
+import org.ddogleg.struct.GrowQueue_F64;
 
 import java.io.File;
 import java.io.PrintStream;
@@ -24,7 +25,7 @@ public class BackgroundModelMetrics<T extends ImageBase<T>> {
 
     public PrintStream out = System.out;
 
-    public double averageTimeMS;
+    public GrowQueue_F64 periodMS = new GrowQueue_F64();
 
     public void evaluate(File directory , BackgroundModelStationary<T> model ) {
         ImageType<T> imageType = model.getImageType();
@@ -45,14 +46,13 @@ public class BackgroundModelMetrics<T extends ImageBase<T>> {
 
         model.reset();
         int frame = 0;
-        long totalProcessing = 0;
         while( sequence.hasNext() ) {
             T input = sequence.next();
             long before = System.nanoTime();
             model.updateBackground(input,segment);
             long after = System.nanoTime();
 
-            totalProcessing += after-before;
+            periodMS.add((after-before)*1e-6);
 
             if( truthPaths.containsKey(frame)) {
                 results.add( evalute(segment,truthPaths.get(frame)));
@@ -78,8 +78,6 @@ public class BackgroundModelMetrics<T extends ImageBase<T>> {
         meanF /= totalF;
         meanRecall /= totalWithPositive;
         meanPrecision /= totalWithPositive;
-
-        averageTimeMS = (totalProcessing/1e6)/frame;
 
         out.printf("%20s %4d %5.2f %5.2f %5.2f\n",directory.getName(),truthPaths.size(),meanF,meanRecall,meanPrecision);
     }
