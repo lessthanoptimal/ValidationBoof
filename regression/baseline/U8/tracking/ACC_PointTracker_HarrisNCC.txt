@@ -1,36 +1,39 @@
 # GENERATOR PointTrackerRegression
 # Inlier Tolerance 5.0  Algorithm HarrisNCC
-# (File) (Skip) (F) (F all inside) (Precision) (Recall) (Recall all inside) (Tracks)
-./data/abeles2012/bricks/skew  1  0.217  0.276  0.346  0.160  0.231  192.0
-./data/abeles2012/bricks/skew  4  0.208  0.267  0.334  0.153  0.224  191.0
-./data/abeles2012/bricks/skew  8  0.207  0.270  0.334  0.152  0.227  190.0
-./data/abeles2012/bricks/rotate  1  0.092  0.101  0.135  0.069  0.080  189.0
-./data/abeles2012/bricks/rotate  4  0.099  0.106  0.144  0.076  0.085  190.0
-./data/abeles2012/bricks/rotate  8  0.105  0.113  0.150  0.081  0.091  193.0
-./data/abeles2012/bricks/move_out  1  0.035  0.035  0.052  0.026  0.026  183.0
-./data/abeles2012/bricks/move_out  4  0.039  0.039  0.057  0.030  0.030  184.0
-./data/abeles2012/bricks/move_out  8  0.039  0.039  0.059  0.030  0.030  181.0
-./data/abeles2012/bricks/move_in  1  0.075  0.091  0.121  0.055  0.073  188.0
-./data/abeles2012/bricks/move_in  4  0.095  0.115  0.150  0.070  0.093  188.0
-./data/abeles2012/bricks/move_in  8  0.098  0.118  0.153  0.072  0.096  188.0
-./data/abeles2012/carpet/skew  1  0.104  0.142  0.176  0.074  0.130  142.0
-./data/abeles2012/carpet/skew  4  0.135  0.185  0.213  0.099  0.177  154.0
-./data/abeles2012/carpet/skew  8  0.137  0.188  0.213  0.102  0.180  158.0
-./data/abeles2012/carpet/rotate  1  0.046  0.050  0.071  0.034  0.039  161.0
-./data/abeles2012/carpet/rotate  4  0.050  0.055  0.076  0.037  0.043  165.0
-./data/abeles2012/carpet/rotate  8  0.048  0.052  0.073  0.036  0.041  166.0
-./data/abeles2012/carpet/move_out  1  0.030  0.030  0.051  0.021  0.021  166.0
-./data/abeles2012/carpet/move_out  4  0.038  0.038  0.064  0.028  0.028  167.0
-./data/abeles2012/carpet/move_out  8  0.039  0.039  0.064  0.028  0.028  168.0
-./data/abeles2012/carpet/move_in  1  0.114  0.147  0.176  0.085  0.132  177.0
-./data/abeles2012/carpet/move_in  4  0.145  0.188  0.214  0.110  0.173  183.0
-./data/abeles2012/carpet/move_in  8  0.151  0.198  0.221  0.115  0.185  184.0
-./data/abeles2012/various/lighting  1  0.219  0.218  0.350  0.159  0.159  163.0
-./data/abeles2012/various/lighting  4  0.262  0.262  0.408  0.194  0.194  169.0
-./data/abeles2012/various/lighting  8  0.271  0.271  0.419  0.201  0.201  171.0
-./data/abeles2012/various/compressed  1  0.005  0.007  0.010  0.004  0.005  161.0
-./data/abeles2012/various/compressed  4  0.007  0.009  0.012  0.005  0.007  168.0
-./data/abeles2012/various/compressed  8  0.007  0.009  0.013  0.005  0.007  172.0
-./data/abeles2012/various/urban  1  0.125  0.147  0.208  0.089  0.116  160.0
-./data/abeles2012/various/urban  4  0.168  0.200  0.269  0.122  0.161  170.0
-./data/abeles2012/various/urban  8  0.174  0.207  0.280  0.127  0.166  169.0
+
+# (Data Set) (Skip) (F) (F all inside) (Precision) (Recall) (Recall all inside) (Tracks)
+bricks/skew               1  0.217  0.276  0.346  0.160  0.231  192.0
+bricks/skew               4  0.208  0.267  0.334  0.153  0.224  191.0
+bricks/skew               8  0.207  0.270  0.334  0.152  0.227  190.0
+bricks/rotate             1  0.092  0.101  0.135  0.069  0.080  189.0
+bricks/rotate             4  0.099  0.106  0.144  0.076  0.085  190.0
+bricks/rotate             8  0.105  0.113  0.150  0.081  0.091  193.0
+bricks/move_out           1  0.035  0.035  0.052  0.026  0.026  183.0
+bricks/move_out           4  0.039  0.039  0.057  0.030  0.030  184.0
+bricks/move_out           8  0.039  0.039  0.059  0.030  0.030  181.0
+bricks/move_in            1  0.075  0.091  0.121  0.055  0.073  188.0
+bricks/move_in            4  0.095  0.115  0.150  0.070  0.093  188.0
+bricks/move_in            8  0.098  0.118  0.153  0.072  0.096  188.0
+carpet/skew               1  0.104  0.142  0.176  0.074  0.130  142.0
+carpet/skew               4  0.135  0.185  0.213  0.099  0.177  154.0
+carpet/skew               8  0.137  0.188  0.213  0.102  0.180  158.0
+carpet/rotate             1  0.046  0.050  0.071  0.034  0.039  161.0
+carpet/rotate             4  0.050  0.055  0.076  0.037  0.043  165.0
+carpet/rotate             8  0.048  0.052  0.073  0.036  0.041  166.0
+carpet/move_out           1  0.030  0.030  0.051  0.021  0.021  166.0
+carpet/move_out           4  0.038  0.038  0.064  0.028  0.028  167.0
+carpet/move_out           8  0.039  0.039  0.064  0.028  0.028  168.0
+carpet/move_in            1  0.114  0.147  0.176  0.085  0.132  177.0
+carpet/move_in            4  0.145  0.188  0.214  0.110  0.173  183.0
+carpet/move_in            8  0.151  0.198  0.221  0.115  0.185  184.0
+various/lighting          1  0.219  0.218  0.350  0.159  0.159  163.0
+various/lighting          4  0.262  0.262  0.408  0.194  0.194  169.0
+various/lighting          8  0.271  0.271  0.419  0.201  0.201  171.0
+various/compressed        1  0.005  0.007  0.010  0.004  0.005  161.0
+various/compressed        4  0.007  0.009  0.012  0.005  0.007  168.0
+various/compressed        8  0.007  0.009  0.013  0.005  0.007  172.0
+various/urban             1  0.125  0.147  0.208  0.089  0.116  160.0
+various/urban             4  0.168  0.200  0.269  0.122  0.161  170.0
+various/urban             8  0.174  0.207  0.280  0.127  0.166  169.0
+
+SUMMARY: F= 0.109 FA= 0.128 PR= 0.170 RE= 0.080 MT= 174.3

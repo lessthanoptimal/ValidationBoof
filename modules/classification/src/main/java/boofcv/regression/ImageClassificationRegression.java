@@ -30,16 +30,12 @@ public class ImageClassificationRegression extends BaseRegression implements Ima
 
 	@Override
 	public void process(ImageDataType type) throws IOException {
-
 		if( type.isInteger() ) {
-			throw new RuntimeException("Only F32 images supported.  Skipping");
+			throw new ImageTypeNotSupportedException("Only F32 images supported.  Skipping");
 		}
 
 		RuntimeSummary runtime = new RuntimeSummary();
-		runtime.out = new PrintStream(new File(directoryRuntime,"RUN_image_classification_change.txt"));
-		BoofRegressionConstants.printGenerator(runtime.out, getClass());
-		runtime.out.println("# Elapsed time in milliseconds");
-		runtime.out.println();
+		runtime.initializeLog(directoryRuntime,getClass(),"RUN_image_classification_change.txt");
 
 		PrintStream out = new PrintStream(new File(directoryMetrics,"ACC_image_classification_change.txt"));
 		BoofRegressionConstants.printGenerator(out,getClass());
@@ -47,8 +43,8 @@ public class ImageClassificationRegression extends BaseRegression implements Ima
 		out.println("# that the algorithm has changed in some way and should be inspected more closely.");
 
 		List<Info> classifiers = new ArrayList<>();
-		classifiers.add(new Info(FactoryImageClassifier.nin_imagenet(),"NIN"));
-		classifiers.add(new Info(FactoryImageClassifier.vgg_cifar10(),"VGG"));
+		classifiers.add(new Info(FactoryImageClassifier.nin_imagenet(),"NiN ImageNet"));
+		classifiers.add(new Info(FactoryImageClassifier.vgg_cifar10(),"VGG CIFAR10"));
 
 		ClassifyImageSaveResults<Planar<GrayF32>> regression = new ClassifyImageSaveResults<>();
 		regression.setOutput(out);
@@ -70,7 +66,7 @@ public class ImageClassificationRegression extends BaseRegression implements Ima
 			out.flush();
 		}
 
-		runtime.printSummary();
+		runtime.printSummaryResults();
 		runtime.out.close();
 		out.close();
 	}

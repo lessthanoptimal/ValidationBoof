@@ -58,15 +58,12 @@ public class StereoVisualOdometryRegression extends BaseRegression implements Im
 		all.add( createQuadPnP(bandType));
 
 		runtime = new RuntimeSummary();
-		runtime.out = new PrintStream(new File(directoryRuntime,"RUN_StereoVisOdom.txt"));
-		BoofRegressionConstants.printGenerator(runtime.out, getClass());
-		runtime.out.println("# Elapsed time in milliseconds");
-		runtime.out.println();
+		runtime.initializeLog(directoryRuntime,getClass(),"RUN_StereoVisOdom.txt");
 
 		for( Info a : all ) {
 			summaryRuntimeMS.reset();
 			runtime.out.println(a.name);
-			runtime.printHeader(false);
+			runtime.printUnitsRow(false);
 			try {
 				SequenceStereoImages data = new WrapParseLeuven07(new ParseLeuven07("data/leuven07"));
 				evaluate(a,data,"Leuven07");
@@ -80,11 +77,12 @@ public class StereoVisualOdometryRegression extends BaseRegression implements Im
 				e.printStackTrace(errorLog);
 				errorLog.println("---------------------------------------------------");
 			}
+			runtime.out.println();
 			runtime.saveSummary(a.name,summaryRuntimeMS);
 		}
 
 		runtime.out.println();
-		runtime.printSummary();
+		runtime.printSummaryResults();
 
 		runtime.out.close();
 	}
@@ -103,7 +101,7 @@ public class StereoVisualOdometryRegression extends BaseRegression implements Im
 			evaluator.initialize();
 			while( evaluator.nextFrame() ){}
 			summaryRuntimeMS.addAll(evaluator.processingTimeMS);
-			runtime.printStats(dataName,evaluator.processingTimeMS);
+			runtime.printStatsRow(dataName,evaluator.processingTimeMS);
 		} catch( RuntimeException e ) {
 			errorLog.println("FAILED "+vo.name+" on "+dataName);
 			e.printStackTrace(errorLog);

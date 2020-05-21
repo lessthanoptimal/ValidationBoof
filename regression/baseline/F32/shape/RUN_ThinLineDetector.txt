@@ -1,4 +1,6 @@
 # GENERATOR DetectLineRegression
-# Average processing time of shape detector algorithm Polar
-                thin   16.8754 (ms)
+# Elapsed time in milliseconds
 
+Summary:
+                              N       Mean      P05      P50      P95      MAX
+  Polar                         3  16.8937  9.10609  18.3373  18.3373  23.2376

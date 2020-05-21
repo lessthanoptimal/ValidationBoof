@@ -1,10 +1,8 @@
 # GENERATOR DetectLineRegression
-# Average processing time of shape detector algorithm Polar
-                edge    7.0465 (ms)
+# Elapsed time in milliseconds
 
-# Average processing time of shape detector algorithm Foot
-                edge    7.2961 (ms)
-
-# Average processing time of shape detector algorithm FootSub
-                edge    4.4070 (ms)
-
+Summary:
+                              N       Mean      P05      P50      P95      MAX
+  Polar                         2  7.48654  6.89655  6.89655  6.89655  8.07654
+  Foot                          2  6.62829  6.15573  6.15573  6.15573  7.10085
+  FootSub                       2  3.97494  3.95749  3.95749  3.95749  3.99238

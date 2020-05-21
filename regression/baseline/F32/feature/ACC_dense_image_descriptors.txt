@@ -43,7 +43,7 @@ Image Scale
    error  0.57842  0.54405  0.49438  0.41015  0.00000  0.40077  0.46132  0.48285  0.49065  0.50410  0.50634  0.50962  0.51107 
 
 
-Algorithm:  HOG-MS-F32
+Algorithm:  HOG-PL-F32
 ======================================================================
 data/fiducials/square_border_image/standard/distance_angle/image00001.png
 
@@ -129,7 +129,7 @@ Image Scale
    error  0.67127  0.64581  0.60199  0.53069  0.00000  0.52264  0.57222  0.58997  0.59730  0.61137  0.61043  0.61367  0.61201 
 
 
-Algorithm:  HOG-F-MS-F32
+Algorithm:  HOG-F-PL-F32
 ======================================================================
 data/fiducials/square_border_image/standard/distance_angle/image00001.png
 

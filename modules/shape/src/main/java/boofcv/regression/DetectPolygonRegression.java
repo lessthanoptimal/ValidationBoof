@@ -32,15 +32,12 @@ public class DetectPolygonRegression extends BaseRegression implements ImageRegr
 		final Class imageType = ImageDataType.typeToSingleClass(type);
 
 		runtime = new RuntimeSummary();
-		runtime.out = new PrintStream(new File(directoryRuntime,"RUN_PolygonDetector.txt"));
-		BoofRegressionConstants.printGenerator(runtime.out, getClass());
-		runtime.out.println("# Elapsed time in milliseconds");
-		runtime.out.println();
+		runtime.initializeLog(directoryRuntime,getClass(),"RUN_PolygonDetector.txt");
 
 		process("BinaryGlobal", false, new FactoryBinaryPolygon(imageType));
 		process("BinaryLocal", true, new FactoryBinaryPolygon(imageType));
 
-		runtime.printSummary();
+		runtime.printSummaryResults();
 		runtime.out.close();
 	}
 
@@ -57,7 +54,7 @@ public class DetectPolygonRegression extends BaseRegression implements ImageRegr
 
 		GrowQueue_F64 summaryTimeMS = new GrowQueue_F64();
 		runtime.out.println(name);
-		runtime.printHeader(false);
+		runtime.printUnitsRow(false);
 
 		List<File> files = BoofRegressionConstants.listAndSort(baseDataSetDirectory);
 
@@ -82,7 +79,7 @@ public class DetectPolygonRegression extends BaseRegression implements ImageRegr
 			totalFalsePositive += evaluator.summaryFalsePositive;
 
 			summaryTimeMS.addAll(detection.processingTimeMS);
-			runtime.printStats(f.getName(),detection.processingTimeMS);
+			runtime.printStatsRow(f.getName(),detection.processingTimeMS);
 		}
 		runtime.saveSummary(name,summaryTimeMS);
 		runtime.out.println();

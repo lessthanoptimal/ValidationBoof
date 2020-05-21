@@ -4,6 +4,8 @@ import boofcv.abst.feature.disparity.StereoDisparity;
 import boofcv.io.image.UtilImageIO;
 import boofcv.struct.image.GrayF32;
 import boofcv.struct.image.GrayU8;
+import boofcv.struct.image.ImageGray;
+import boofcv.struct.image.ImageType;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -14,9 +16,10 @@ import java.util.List;
 /**
  * @author Peter Abeles
  */
-public class MiddleburyStereoEvaluation {
+public class MiddleburyStereoEvaluation<T extends ImageGray<T>> {
 
-	public static List<Score> evaluateAll(String path , StereoDisparity<GrayU8,GrayF32> stereo , float badThresh ) {
+	public static <T extends ImageGray<T>>
+	List<Score> evaluateAll(String path , StereoDisparity<T,GrayF32> stereo , float badThresh ) {
 		File[] _tests = new File(path).listFiles();
 		if( _tests == null )
 			throw new RuntimeException("No children in directory?");
@@ -25,8 +28,8 @@ public class MiddleburyStereoEvaluation {
 		List<File> tests = Arrays.asList(_tests);
 		tests.sort(Comparator.comparing(File::getName));
 
-		GrayU8 left = new GrayU8(1,1);
-		GrayU8 right = new GrayU8(1,1);
+		T left = stereo.getInputType().createImage(1,1);
+		T right = stereo.getInputType().createImage(1,1);
 		GrayF32 gtDisp = new GrayF32(1,1);
 		GrayU8 mask = new GrayU8(1,1);
 
@@ -76,10 +79,11 @@ public class MiddleburyStereoEvaluation {
 	}
 
 
-	public static void loadTraining(File directory , GrayU8 left , GrayU8 right , GrayF32 gtDisp , GrayU8 mask ) {
+	public static <T extends ImageGray<T>>
+	void loadTraining(File directory , T left , T right , GrayF32 gtDisp , GrayU8 mask ) {
 		left.setTo(UtilImageIO.loadImage(new File(directory,"im0.png"),true, left.getImageType()));
 		right.setTo(UtilImageIO.loadImage(new File(directory,"im1.png"),true, right.getImageType()));
-		mask.setTo(UtilImageIO.loadImage(new File(directory,"mask0nocc.png"),true, right.getImageType()));
+		mask.setTo(UtilImageIO.loadImage(new File(directory,"mask0nocc.png"),true, ImageType.SB_U8));
 		CodecPFM.read(new File(directory,"disp0GT.pfm"),gtDisp);
 	}
 

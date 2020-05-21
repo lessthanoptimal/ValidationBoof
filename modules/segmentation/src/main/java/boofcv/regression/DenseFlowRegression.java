@@ -38,11 +38,8 @@ public class DenseFlowRegression extends BaseRegression implements ImageRegressi
 
 
 		RuntimeSummary runtime = new RuntimeSummary();
-		runtime.out = new PrintStream(new File(directoryRuntime,"RUN_DenseFlow.txt"));
-		BoofRegressionConstants.printGenerator(runtime.out, getClass());
-		runtime.out.println("# Runtime dense optical flow");
-		runtime.out.println("# Elapsed time in milliseconds");
-		runtime.printHeader(true);
+		runtime.initializeLog(directoryRuntime,getClass(),"RUN_DenseFlow.txt");
+		runtime.printUnitsRow(true);
 
 		for( Info i : all ) {
 			System.out.println("Regression "+i.name);
@@ -53,7 +50,7 @@ public class DenseFlowRegression extends BaseRegression implements ImageRegressi
 				benchmark.evaluate();
 				outputAccurcy.flush();
 
-				runtime.printStats(i.name,benchmark.processingTimeMS);
+				runtime.printStatsRow(i.name,benchmark.processingTimeMS);
 			} catch( RuntimeException e ) {
 				errorLog.print(e);
 			} finally {

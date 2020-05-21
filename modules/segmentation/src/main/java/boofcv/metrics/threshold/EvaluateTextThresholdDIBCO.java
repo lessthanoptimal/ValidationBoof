@@ -43,7 +43,7 @@ public class EvaluateTextThresholdDIBCO {
             load(String.format("P%02d.bmp",i),String.format("P%02d_truth.bmp",i));
         }
 
-        runtime.printHeader(true);
+        runtime.printUnitsRow(true);
         GrayU8 found = new GrayU8(1,1);
         for( Alg alg : algorithms ) {
 
@@ -97,7 +97,7 @@ public class EvaluateTextThresholdDIBCO {
                 totalFN += FN/N;
             }
 
-            runtime.printStats(alg.name,processingTimeMS);
+            runtime.printStatsRow(alg.name,processingTimeMS);
 
             totalTP /= input.size();
             totalFP /= input.size();

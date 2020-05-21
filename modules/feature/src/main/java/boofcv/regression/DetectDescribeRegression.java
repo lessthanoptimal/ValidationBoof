@@ -32,7 +32,6 @@ import org.ddogleg.struct.GrowQueue_F64;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -82,23 +81,20 @@ public class DetectDescribeRegression extends BaseRegression implements ImageReg
 		}
 
 		RuntimeSummary runtime = new RuntimeSummary();
-		runtime.out = new PrintStream(new File(directoryRuntime,"RUN_detect_describe.txt"));
-		BoofRegressionConstants.printGenerator(runtime.out, getClass());
-		runtime.out.println("# Runtime for feature detection and describing");
-		runtime.out.println("# Elapsed time in milliseconds");
-		runtime.out.println();
+		runtime.initializeLog(directoryRuntime,getClass(),"RUN_detect_describe.txt");
+
 		for( Info i : all ) {
 			// Print header info for per dataset results
 			GrowQueue_F64 summaryTimeMS = new GrowQueue_F64();
 			runtime.out.println(i.name);
-			runtime.printHeader(false);
+			runtime.printUnitsRow(false);
 
 			CreateDetectDescribeFile creator = new CreateDetectDescribeFile(i.factory,i.imageFamily,dataType,i.name);
 			for( String d : LoadHomographyBenchmarkFiles.DATA_SETS ) {
 				try {
 					creator.directory(new File(path,d).getPath(),tmp);
 					summaryTimeMS.addAll(creator.processingTimeMS);
-					runtime.printStats(d,creator.processingTimeMS);
+					runtime.printStatsRow(d,creator.processingTimeMS);
 				} catch( RuntimeException e ) {
 					errorLog.println("FAILED "+i.name+" on "+d);
 					errorLog.println(e);
@@ -112,7 +108,7 @@ public class DetectDescribeRegression extends BaseRegression implements ImageReg
 			describeStability.evaluate(i.name);
 		}
 		runtime.out.println();
-		runtime.printSummary();
+		runtime.printSummaryResults();
 		runtime.out.close();
 	}
 

@@ -1,19 +1,5 @@
 # GENERATOR CalibrationDetectionRegression
 # (file name) (truth error 50%) (truth error 95%) (truth error 100%)
-Sony_DSC-HX5V/frame01.jpg            0.7847  1.1822  1.4474
-Sony_DSC-HX5V/frame02.jpg            0.4425  0.8640  1.0659
-Sony_DSC-HX5V/frame03.jpg            0.7046  1.1976  1.9535
-Sony_DSC-HX5V/frame04.jpg            0.5986  1.0648  1.1578
-Sony_DSC-HX5V/frame05.jpg            0.7030  1.1012  1.5546
-Sony_DSC-HX5V/frame06.jpg            0.6110  0.9796  1.1766
-Sony_DSC-HX5V/frame07.jpg            0.6196  1.0936  1.2043
-Sony_DSC-HX5V/frame08.jpg            0.4901  1.0138  1.2463
-Sony_DSC-HX5V/frame09.jpg            0.3796  0.7294  1.0049
-Sony_DSC-HX5V/frame10.jpg            0.5558  0.8725  0.9843
-Sony_DSC-HX5V/frame11.jpg            0.3968  0.9645  1.0875
-Sony_DSC-HX5V/frame12.jpg            0.5530  0.9358  1.0277
-Sony_DSC-HX5V/frame13.jpg            0.3861  0.8458  1.0787
-Sony_DSC-HX5V/frame14.jpg            0.4559  0.8026  0.9664
 distant/image00000.jpg               0.2078  0.3846  0.5356
 distant/image00001.jpg               0.3329  0.5719  0.7477
 distant/image00002.jpg               0.2621  0.5858  0.7415
@@ -43,6 +29,20 @@ large/large01.jpg                    0.4772  0.8284  1.2904
 large/large02.jpg                    0.3691  0.7102  0.9775
 large/large03.jpg                    0.4114  0.7385  0.9793
 large/large04.jpg                    0.4234  0.6746  0.8833
+Sony_DSC-HX5V/frame01.jpg            0.7847  1.1822  1.4474
+Sony_DSC-HX5V/frame02.jpg            0.4425  0.8640  1.0659
+Sony_DSC-HX5V/frame03.jpg            0.7046  1.1976  1.9535
+Sony_DSC-HX5V/frame04.jpg            0.5986  1.0648  1.1578
+Sony_DSC-HX5V/frame05.jpg            0.7030  1.1012  1.5546
+Sony_DSC-HX5V/frame06.jpg            0.6110  0.9796  1.1766
+Sony_DSC-HX5V/frame07.jpg            0.6196  1.0936  1.2043
+Sony_DSC-HX5V/frame08.jpg            0.4901  1.0138  1.2463
+Sony_DSC-HX5V/frame09.jpg            0.3796  0.7294  1.0049
+Sony_DSC-HX5V/frame10.jpg            0.5558  0.8725  0.9843
+Sony_DSC-HX5V/frame11.jpg            0.3968  0.9645  1.0875
+Sony_DSC-HX5V/frame12.jpg            0.5530  0.9358  1.0277
+Sony_DSC-HX5V/frame13.jpg            0.3861  0.8458  1.0787
+Sony_DSC-HX5V/frame14.jpg            0.4559  0.8026  0.9664
 Bumblebee2_Square/left01.jpg         0.5384  0.8329  1.1876
 Bumblebee2_Square/left02.jpg         0.3955  0.6424  0.7208
 Bumblebee2_Square/left03.jpg         0.8160  1.6071  1.8273
@@ -72,10 +72,10 @@ Bumblebee2_Square/right13.jpg        0.4859  0.9134  1.1165
 
 --------------------------------------------------------------------------------
 
-Sony_DSC-HX5V                       Errors{ 50%  0.540 , 95%  1.069 , MAX  1.953 }, Success : 14 / 14
 distant                             Errors{ 50%  0.248 , 95%  0.564 , MAX  0.895 }, Success :  7 /  7
 fisheye                             Errors{ 50%  0.473 , 95%  1.328 , MAX  2.706 }, Success : 14 / 17
 large                               Errors{ 50%  0.444 , 95%  1.001 , MAX  2.221 }, Success :  5 /  5
+Sony_DSC-HX5V                       Errors{ 50%  0.540 , 95%  1.069 , MAX  1.953 }, Success : 14 / 14
 Bumblebee2_Square                   Errors{ 50%  0.479 , 95%  1.095 , MAX  1.829 }, Success : 26 / 26
 
 --------------------------------------------------------------------------------

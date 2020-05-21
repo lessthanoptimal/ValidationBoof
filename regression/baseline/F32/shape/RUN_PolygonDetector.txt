@@ -1,21 +1,29 @@
 # GENERATOR DetectPolygonRegression
-# Average processing time of shape detector algorithm BinaryGlobal
-            border01   10.5262 (ms)
-            border02    4.1518 (ms)
-             concave    4.6398 (ms)
-    quadrilaterals01   10.0113 (ms)
-               set01    2.4895 (ms)
-               set02    1.9543 (ms)
-               set03    2.5991 (ms)
-               set04    0.8881 (ms)
+# Elapsed time in milliseconds
 
-# Average processing time of shape detector algorithm BinaryLocal
-            border01   24.8224 (ms)
-            border02    7.8862 (ms)
-             concave    6.0643 (ms)
-    quadrilaterals01   14.8856 (ms)
-               set01   14.2028 (ms)
-               set02    4.9607 (ms)
-               set03    4.5150 (ms)
-               set04    0.8424 (ms)
+BinaryGlobal
+                              N       Mean      P05      P50      P95      MAX
+  border01                      7  10.5911  1.30732  3.36519  19.7779  31.6055
+  border02                      4  4.10639  3.12834  3.35143  4.05665  5.88913
+  concave                       8  4.59795  2.30495  3.07301  3.94373  14.9648
+  quadrilaterals01              7  10.1147  6.36753  8.41938  12.4167  20.9516
+  set01                         9  2.49244  1.12406  1.88385  3.76956  5.23641
+  set02                         9  1.92151   1.4748   1.8875  2.24925  2.55024
+  set03                         9  2.57158  1.48781    2.468  3.55614  3.66703
+  set04                        10  .895761  .499174  .888461  1.05635  1.20215
 
+BinaryLocal
+                              N       Mean      P05      P50      P95      MAX
+  border01                      7  26.6402  5.00685  28.9937  30.4189  47.1689
+  border02                      4  7.60541  7.08357  7.56479  7.65878  8.11451
+  concave                       8  5.89022  3.81949  5.07642   5.7901  12.7547
+  quadrilaterals01              7  14.7212  6.66834   10.238  13.4179  43.2567
+  set01                         9  13.9518   8.2645  14.2393  21.1821  24.4153
+  set02                         9  4.65931  4.03378  4.68197  4.87887  5.72806
+  set03                         9  4.18495  3.48238  4.29284   4.5152  5.03469
+  set04                        10  .829201  .637745  .846354   .91354  .951883
+
+Summary:
+                              N       Mean      P05      P50      P95      MAX
+  BinaryGlobal                 63  4.28535   .86602  2.55024  12.4167  31.6055
+  BinaryLocal                  63  9.21476  .833289  5.07642  28.9937  47.1689

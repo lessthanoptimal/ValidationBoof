@@ -10,7 +10,6 @@ import org.ddogleg.struct.GrowQueue_F64;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.PrintStream;
 import java.util.List;
 
 /**
@@ -34,16 +33,13 @@ public class ObjectTrackingRegression extends BaseRegression implements ImageReg
 				FactoryEvaluationTrackerObjectQuad.createRegression(type);
 
 		outputSpeed = new RuntimeSummary();
-		outputSpeed.out = new PrintStream(new File(directoryRuntime, "RUN_ObjectTracking.txt"));
-		BoofRegressionConstants.printGenerator(outputSpeed.out, getClass());
-		outputSpeed.out.println("# All times are in milliseconds");
-		outputSpeed.out.println();
+		outputSpeed.initializeLog(directoryRuntime, getClass(),"RUN_ObjectTracking.txt");
 
 		// compute raw detections
 		for( FactoryEvaluationTrackerObjectQuad.Info info : all ) {
 			summaryPeriod.reset();
 			outputSpeed.out.println(info.name);
-			outputSpeed.printHeader(false);
+			outputSpeed.printUnitsRow(false);
 			performMILData(info.name, info.tracker, info.imageType);
 			EvaluateResultsMilTrackData.process(directoryMetrics,info.name,trackingOutputDir);
 
@@ -54,7 +50,7 @@ public class ObjectTrackingRegression extends BaseRegression implements ImageReg
 			outputSpeed.saveSummary(info.name,summaryPeriod);
 		}
 
-		outputSpeed.printSummary();
+		outputSpeed.printSummaryResults();
 		outputSpeed.out.close();
 	}
 
@@ -68,7 +64,7 @@ public class ObjectTrackingRegression extends BaseRegression implements ImageReg
 			try {
 				generator.evaluate(videoName,trackerName,tracker);
 				summaryPeriod.addAll(generator.periodMS);
-				outputSpeed.printStats(videoName,generator.periodMS);
+				outputSpeed.printStatsRow(videoName,generator.periodMS);
 			} catch( RuntimeException e ) {
 				outputSpeed.out.printf("  %20s FAILED\n",videoName);
 				errorLog.println("FAILED "+trackerName+" on "+videoName);
@@ -90,7 +86,7 @@ public class ObjectTrackingRegression extends BaseRegression implements ImageReg
 			try {
 				generator.evaluate(dataName,trackerName,tracker);
 				summaryPeriod.addAll(generator.periodMS);
-				outputSpeed.printStats(dataName,generator.periodMS);
+				outputSpeed.printStatsRow(dataName,generator.periodMS);
 			} catch( RuntimeException e ) {
 				outputSpeed.out.printf("  %20s FAILED\n",dataName);
 				errorLog.println("FAILED "+trackerName+" on "+dataName);

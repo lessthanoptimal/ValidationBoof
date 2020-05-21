@@ -1,18 +1,5 @@
 # GENERATOR CalibrationDetectionRegression
 # (file name) (truth error 50%) (truth error 95%) (truth error 100%)
-Sony_DSC-HX5V/frame01.jpg            0.3054  0.6117  0.6985
-Sony_DSC-HX5V/frame02.jpg            0.3268  0.5662  0.6440
-Sony_DSC-HX5V/frame03.jpg            0.3708  0.6178  0.6521
-Sony_DSC-HX5V/frame04.jpg            0.3437  0.6214  0.7090
-Sony_DSC-HX5V/frame05.jpg            0.2824  0.5956  0.7275
-Sony_DSC-HX5V/frame06.jpg            0.3318  0.5668  0.6512
-Sony_DSC-HX5V/frame07.jpg            0.3172  0.4707  0.7656
-Sony_DSC-HX5V/frame08.jpg            0.3022  0.4876  0.6092
-Sony_DSC-HX5V/frame09.jpg            0.3458  0.5642  0.6826
-Sony_DSC-HX5V/frame10.jpg            0.2708  0.4832  0.5301
-Sony_DSC-HX5V/frame11.jpg            0.4013  0.6816  0.8528
-Sony_DSC-HX5V/frame12.jpg            0.3232  0.5841  0.6307
-Sony_DSC-HX5V/frame13.jpg            0.3000  0.5377  0.8228
 border/image00000.jpg                0.2348  0.3541  0.4894
 border/image00001.jpg                0.2321  0.3905  0.6379
 border/image00002.jpg                0.2223  0.4536  0.5605
@@ -548,6 +535,19 @@ sloppy13x10/image09.jpg              0.2931  0.6121  0.8007
 sloppy13x10/image10.jpg              0.3548  0.7631  1.1554
 sloppy13x10/image11.jpg              0.3724  0.9075  1.9538
 sloppy13x10/image12.jpg              0.4937  1.0126  1.6634
+Sony_DSC-HX5V/frame01.jpg            0.3054  0.6117  0.6985
+Sony_DSC-HX5V/frame02.jpg            0.3268  0.5662  0.6440
+Sony_DSC-HX5V/frame03.jpg            0.3708  0.6178  0.6521
+Sony_DSC-HX5V/frame04.jpg            0.3437  0.6214  0.7090
+Sony_DSC-HX5V/frame05.jpg            0.2824  0.5956  0.7275
+Sony_DSC-HX5V/frame06.jpg            0.3318  0.5668  0.6512
+Sony_DSC-HX5V/frame07.jpg            0.3172  0.4707  0.7656
+Sony_DSC-HX5V/frame08.jpg            0.3022  0.4876  0.6092
+Sony_DSC-HX5V/frame09.jpg            0.3458  0.5642  0.6826
+Sony_DSC-HX5V/frame10.jpg            0.2708  0.4832  0.5301
+Sony_DSC-HX5V/frame11.jpg            0.4013  0.6816  0.8528
+Sony_DSC-HX5V/frame12.jpg            0.3232  0.5841  0.6307
+Sony_DSC-HX5V/frame13.jpg            0.3000  0.5377  0.8228
 stefano_2012/Left1.jpg               0.2589  0.5076  0.8295
 stefano_2012/Left10.jpg              0.2284  0.4741  0.6962
 stefano_2012/Left11.jpg              detection_failed
@@ -603,7 +603,6 @@ Bumblebee2_Chess/right11.jpg         0.3112  0.4991  0.6621
 
 --------------------------------------------------------------------------------
 
-Sony_DSC-HX5V                       Errors{ 50%  0.313 , 95%  0.632 , MAX  0.853 }, Success : 13 / 13
 border                              Errors{ 50%  0.268 , 95%  0.740 , MAX  1.494 }, Success : 13 / 16
 caltech_edges                       Errors{ 50%    NaN , 95%    NaN , MAX    NaN }, Success :  0 / 20
 challenge                           Errors{ 50%    NaN , 95%    NaN , MAX    NaN }, Success :  0 / 85
@@ -632,6 +631,7 @@ rotation_flat                       Errors{ 50%  0.282 , 95%  0.568 , MAX  0.908
 rotation_vertical                   Errors{ 50%  0.242 , 95%  0.526 , MAX  0.727 }, Success :  7 /  7
 shadow                              Errors{ 50%  0.216 , 95%  0.445 , MAX  0.660 }, Success : 14 / 15
 sloppy13x10                         Errors{ 50%  0.417 , 95%  1.238 , MAX  2.062 }, Success : 13 / 13
+Sony_DSC-HX5V                       Errors{ 50%  0.313 , 95%  0.632 , MAX  0.853 }, Success : 13 / 13
 stefano_2012                        Errors{ 50%  0.208 , 95%  0.458 , MAX  1.471 }, Success : 21 / 30
 Bumblebee2_Chess                    Errors{ 50%  0.273 , 95%  0.539 , MAX  0.880 }, Success : 22 / 22
 

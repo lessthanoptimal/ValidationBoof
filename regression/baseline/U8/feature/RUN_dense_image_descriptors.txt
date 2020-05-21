@@ -1,10 +1,12 @@
 # GENERATOR DescribeImageDenseRegression
-# Average runtime speed in milliseconds for dense image descriptors
+# All times are in milliseconds
 
-           HOG-SB-U8  120.1
-           HOG-MS-U8  130.8
-         HOG-F-SB-U8   25.8
-         HOG-F-MS-U8   37.1
-           SURF-F-U8   45.3
-           SURF-S-U8   66.5
-             SIFT-U8  239.4
+Summary:
+                              N       Mean      P05      P50      P95      MAX
+  HOG-SB-U8                   262  120.144  118.396  121.082  123.915  125.572
+  HOG-PL-U8                   262  130.102  129.078  131.109  133.465  135.426
+  HOG-F-SB-U8                 262  25.7814  23.0935  26.3302  28.7809  29.2445
+  HOG-F-PL-U8                 262  37.1997  35.3733  37.4875  39.6126   40.224
+  SURF-F-U8                   262  44.6884  44.4797  44.8653  45.9813  49.2748
+  SURF-S-U8                   262  65.7973  65.5201   66.218  67.2489  68.1851
+  SIFT-U8                     262  145.743  142.834  147.299  149.699  153.367

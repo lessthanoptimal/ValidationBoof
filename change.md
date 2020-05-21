@@ -3,11 +3,11 @@ Description of changes to benchmarks and justifications for change in performanc
 ## Version 0.37
 2020/
 
-- Improved timing information in summary
-- Added a summary and runtime to point trackers
-- Created a common format for runtime results summary
-- All runtime metrics are reported in a unit of time (milliseconds) and not in FPS
-- TODO different directory for runtime results that is machine specific
+- Improved runtime metrics across all regression and put into a common format to make automatic checking possible
+- Added more runtime regressions and compacted others into a single file
+- TODO create config_local.yaml to specify local benchmark behavior and information
+- TODO Moved runtime regressions into a separate directory that is machine specific
+- TODO Add regression for template matching
 
 ## Version 0.36
 2020/May/18

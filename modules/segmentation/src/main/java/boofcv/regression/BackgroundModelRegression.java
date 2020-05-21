@@ -56,17 +56,7 @@ public class BackgroundModelRegression extends BaseRegression implements ImageRe
 
 
         RuntimeSummary runtime = new RuntimeSummary();
-        runtime.out = new PrintStream(new File(directoryRuntime,"RUN_background_stationary.txt"));
-        BoofRegressionConstants.printGenerator(runtime.out, getClass());
-        runtime.out.println("# Stationary Background Model Runtime Metrics");
-        runtime.out.println("# Elapsed time in milliseconds");
-        runtime.out.println();
-
-//        PrintStream outputRuntime = new PrintStream(new File(directoryMetrics,"RUN_background_stationary.txt"));
-//        BoofRegressionConstants.printGenerator(outputRuntime, getClass());
-//        outputRuntime.println("# Stationary Background Model Runtime Metrics");
-//        outputRuntime.println("# algorithm, average time (ms)");
-//        outputRuntime.println();
+        runtime.initializeLog(directoryRuntime, getClass(),"RUN_background_stationary.txt");
 
         for( Info info : stationary ) {
             BackgroundModelMetrics metrics = new BackgroundModelMetrics();
@@ -75,7 +65,7 @@ public class BackgroundModelRegression extends BaseRegression implements ImageRe
 
             GrowQueue_F64 summaryTimeMS = new GrowQueue_F64();
             runtime.out.println(info.name);
-            runtime.printHeader(false);
+            runtime.printUnitsRow(false);
 
             for( File f : files ) {
                 if( !new File(f,"motion").isDirectory() )
@@ -86,14 +76,14 @@ public class BackgroundModelRegression extends BaseRegression implements ImageRe
                 metrics.evaluate(f,info.algorithm);
 
                 summaryTimeMS.addAll(metrics.periodMS);
-                runtime.printStats(f.getName(),metrics.periodMS);
+                runtime.printStatsRow(f.getName(),metrics.periodMS);
             }
             out.println();
             runtime.out.println();
             runtime.saveSummary(info.name,summaryTimeMS);
         }
 
-        runtime.printSummary();
+        runtime.printSummaryResults();
         runtime.out.close();
 
         out.close();

@@ -1,0 +1,7 @@
+# GENERATOR ImageClassificationRegression
+# Elapsed time in milliseconds
+
+Summary:
+                              N       Mean      P05      P50      P95      MAX
+  NiN ImageNet                  1  1500.69  1500.69  1500.69  1500.69  1500.69
+  VGG CIFAR10                   1  345.988  345.988  345.988  345.988  345.988

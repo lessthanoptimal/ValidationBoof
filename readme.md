@@ -1,4 +1,4 @@
-ValidationBoof is a set of utilities for validating the correctness of  algorithms in BoofCV.  This validation is often done by comparing the performance of BoofCV against datasets with ground truth and against external libraries.
+ValidationBoof is a set of utilities for validating the correctness of  algorithms in BoofCV.  This validation done by comparing the performance of BoofCV against datasets with ground truth and against external libraries.
 
 * website: [boofcv.org](http://boofcv.org)
 * contact: peter.abeles@gmail.com
@@ -11,7 +11,7 @@ https://github.com/lessthanoptimal/ValidationBoof
 
 # Running Regressions
 
-To run every benchmark do the following. Module jars need to be rebuilt if BoofCV is every changes.
+To run every benchmark do the following. Module jars need to be rebuilt if BoofCV is ever changes.
 Look at the command line arguments for regression.jar with the --Help flag to see other options.
 
 1) Set up e-mail file if desired

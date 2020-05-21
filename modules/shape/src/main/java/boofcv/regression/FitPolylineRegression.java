@@ -33,17 +33,14 @@ public class FitPolylineRegression extends BaseRegression implements ImageRegres
 		final Class imageType = ImageDataType.typeToSingleClass(type);
 
 		runtime = new RuntimeSummary();
-		runtime.out = new PrintStream(new File(directoryRuntime,"RUN_Polyline.txt"));
-		BoofRegressionConstants.printGenerator(runtime.out, getClass());
-		runtime.out.println("# Elapsed time in milliseconds");
-		runtime.out.println();
+		runtime.initializeLog(directoryRuntime,getClass(),"RUN_Polyline.txt");
 
 		process("SplitMerge_Global", false, new FactoryPolylineSplitMerge(),imageType);
 		process("SplitMerge_Local", true, new FactoryPolylineSplitMerge(),imageType);
 		process("SplitMergeOld_Global", false, new FactoryPolylineSplitMergeOld(),imageType);
 		process("SplitMergeOld_Local", true, new FactoryPolylineSplitMergeOld(),imageType);
 
-		runtime.printSummary();
+		runtime.printSummaryResults();
 		runtime.out.close();
 	}
 
@@ -60,7 +57,7 @@ public class FitPolylineRegression extends BaseRegression implements ImageRegres
 
 		GrowQueue_F64 summaryTimeMS = new GrowQueue_F64();
 		runtime.out.println(name);
-		runtime.printHeader(false);
+		runtime.printUnitsRow(false);
 
 		List<File> files = BoofRegressionConstants.listAndSort(baseDataSetDirectory);
 
@@ -87,7 +84,7 @@ public class FitPolylineRegression extends BaseRegression implements ImageRegres
 			totalFalsePositive += evaluator.summaryFalsePositive;
 
 			summaryTimeMS.addAll(detection.processingTimeMS);
-			runtime.printStats(f.getName(),detection.processingTimeMS);
+			runtime.printStatsRow(f.getName(),detection.processingTimeMS);
 		}
 		runtime.saveSummary(name,summaryTimeMS);
 		runtime.out.println();

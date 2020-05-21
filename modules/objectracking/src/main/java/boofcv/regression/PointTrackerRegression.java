@@ -44,13 +44,18 @@ import georegression.struct.homography.Homography2D_F64;
 import org.ddogleg.struct.GrowQueue_F64;
 import org.ejml.UtilEjml;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.PrintStream;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * @author Peter Abeles
  */
+@SuppressWarnings({"unchecked", "rawtypes"})
 public class PointTrackerRegression extends BaseRegression implements ImageRegression {
 
 	public static String pathToData = ValidationConstants.PATH_DATA+"abeles2012/";
@@ -75,12 +80,8 @@ public class PointTrackerRegression extends BaseRegression implements ImageRegre
 
 		// A single file which summarizes runtime for all trackers
 		outputSpeed = new RuntimeSummary();
-		outputSpeed.out = new PrintStream(new File(directoryMetrics, "RUN_PointTracker.txt"));
-		BoofRegressionConstants.printGenerator(outputSpeed.out, getClass());
-		outputSpeed.out.println("# Processing time statics across entire test set for each tracker");
-		outputSpeed.out.println("# All times are in milliseconds");
-		outputSpeed.out.println();
-		outputSpeed.printHeader(true);
+		outputSpeed.initializeLog(directoryMetrics, getClass(),"RUN_PointTracker.txt");
+		outputSpeed.printUnitsRow(true);
 
 		List<Info> all = new ArrayList<>();
 		Class bandType = ImageDataType.typeToSingleClass(type);
@@ -110,10 +111,11 @@ public class PointTrackerRegression extends BaseRegression implements ImageRegre
 		summaryMeanF=summaryMeanFA=summaryMeanPrecision=summaryMeanRecall=summaryMeanTracks=0;
 		runtimeSummary.reset();
 
-		PrintStream outSummary = new PrintStream(new FileOutputStream(new File(directoryMetrics,"ACC_PointTracker_"+info.name+".txt")));
+		PrintStream outSummary = new PrintStream(new File(directoryMetrics,"ACC_PointTracker_"+info.name+".txt"));
 		BoofRegressionConstants.printGenerator(outSummary, getClass());
 		outSummary.println("# Inlier Tolerance " + tolerance + "  Algorithm " + info.name);
-		outSummary.println("# (File) (Skip) (F) (F all inside) (Precision) (Recall) (Recall all inside) (Tracks)");
+		outSummary.println();
+		outSummary.println("# (Data Set) (Skip) (F) (F all inside) (Precision) (Recall) (Recall all inside) (Tracks)");
 
 		int totalTrials = 0;
 		for( String directory : dataDirectories ) {
@@ -138,7 +140,7 @@ public class PointTrackerRegression extends BaseRegression implements ImageRegre
 			}
 		}
 
-		outputSpeed.printStats(info.name,runtimeSummary);
+		outputSpeed.printStatsRow(info.name,runtimeSummary);
 
 		outSummary.println();
 		summaryMeanF /= totalTrials;
@@ -155,20 +157,23 @@ public class PointTrackerRegression extends BaseRegression implements ImageRegre
 
 	private void computeResults(Class imageType,
 								EvaluationTracker tracker ,
-								String whichData, int skip,
+								String pathData, int skip,
 								PrintStream outSummary)
 			throws FileNotFoundException
 	{
 		SimpleImageSequence sequence =
-				DefaultMediaManager.INSTANCE.openVideo(whichData + "_undistorted.mjpeg", ImageType.single(imageType));
+				DefaultMediaManager.INSTANCE.openVideo(pathData + "_undistorted.mjpeg", ImageType.single(imageType));
 
-		List<Homography2D_F64> groundTruth = LogParseHomography.parse(whichData + "_homography.txt");
+		// Remove redundant directory to make file name more compact
+		String dataName = Paths.get("data/abeles2012").relativize(Paths.get(pathData)).toString();
+
+		List<Homography2D_F64> groundTruth = LogParseHomography.parse(pathData + "_homography.txt");
 
 		EvaluateTrackerStability app = new EvaluateTrackerStability(tolerance,skip);
 
 		app.evaluate(tracker,sequence,groundTruth,null);
 
-		outSummary.printf("%s %2d %6.3f %6.3f %6.3f %6.3f %6.3f %6.1f\n", whichData, skip,
+		outSummary.printf("%-24s %2d %6.3f %6.3f %6.3f %6.3f %6.3f %6.1f\n", dataName, skip,
 				app.getMeanF(), app.getMeanFA(), app.getMeanPrecision(), app.getMeanRecall(), app.getMeanRecallA(),
 				app.getMeanTrackCount());
 
@@ -313,6 +318,7 @@ public class PointTrackerRegression extends BaseRegression implements ImageRegre
 		return info;
 	}
 
+	@SuppressWarnings("rawtypes")
 	public static class Info {
 		public String name;
 		public ImageType imageType;

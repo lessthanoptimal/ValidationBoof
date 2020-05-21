@@ -1,12 +1,24 @@
 # GENERATOR StereoVisualOdometryRegression
-# Runtime speed (average FPS) of stereo vision odometry algorithms
+# Elapsed time in milliseconds
 
 StereoDepth
-            Leuven07 52.26
-             KITTI00 27.58
+                              N       Mean      P05      P50      P95      MAX
+  Leuven07                   1174  19.9017  16.7982  19.3116   23.394  155.422
+  KITTI00                    4540  36.1231  28.3689  37.3611  40.4325  62.9535
+
 DualPnP
-            Leuven07 52.43
-             KITTI00 22.77
+                              N       Mean      P05      P50      P95      MAX
+  Leuven07                   1174  19.0781   12.792  18.9685  24.1363  46.5029
+  KITTI00                    4540  44.0402  25.4218  47.1219  51.4665  60.0594
+
 QuadPnP
-            Leuven07 36.80
-             KITTI00 23.17
+                              N       Mean      P05      P50      P95      MAX
+  Leuven07                   1174  27.1119  26.4202  27.0323  28.0614   39.121
+  KITTI00                    4540   42.886  41.6722  42.7886  44.3746  56.7363
+
+
+Summary:
+                              N       Mean      P05      P50      P95      MAX
+  StereoDepth                5714  32.7902  17.7539  36.7005  40.1567  155.422
+  DualPnP                    5714  38.9115  16.7907  45.5887  51.2382  60.0594
+  QuadPnP                    5714   39.645  26.7298  42.5414  44.2417  56.7363

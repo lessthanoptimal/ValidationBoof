@@ -32,10 +32,7 @@ public class ThreeViewReconstructionRegression extends BaseRegression implements
     @Override
     public void process(ImageDataType type) throws IOException {
         outputRuntime = new RuntimeSummary();
-        outputRuntime.out = new PrintStream(new File(directoryRuntime, "RUN_ThreeViewReconstruction.txt"));
-        BoofRegressionConstants.printGenerator(outputRuntime.out, getClass());
-        outputRuntime.out.println("# All times are in milliseconds");
-        outputRuntime.out.println();
+        outputRuntime.initializeLog(directoryRuntime,getClass(),"RUN_ThreeViewReconstruction.txt");
 
         PrintStream out = new PrintStream(new File(directoryMetrics,"ACC_ThreeViewReconstruction.txt"));
         BoofRegressionConstants.printGenerator(out, getClass());
@@ -82,8 +79,8 @@ public class ThreeViewReconstructionRegression extends BaseRegression implements
         printSummary(out,"%7.5f","area",areas);
 
         outputRuntime.out.println();
-        outputRuntime.printHeader(true);
-        outputRuntime.printStats("summary",runtimes);
+        outputRuntime.printUnitsRow(true);
+        outputRuntime.printStatsRow("summary",runtimes);
         outputRuntime.out.close();
     }
 

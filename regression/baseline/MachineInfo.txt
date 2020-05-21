@@ -1,6 +1,6 @@
 Runtime.getRuntime().availableProcessors(): 8
-Runtime.getRuntime().freeMemory(): 10701792
-Runtime.getRuntime().totalMemory(): 14680064
+Runtime.getRuntime().freeMemory(): 517996544
+Runtime.getRuntime().totalMemory(): 526385152
 =========== sun.desktop
 gnome
 =========== awt.toolkit

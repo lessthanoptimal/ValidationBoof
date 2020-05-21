@@ -33,18 +33,13 @@ public class DetectEllipseRegression extends BaseRegression implements ImageRegr
 		final Class imageType = ImageDataType.typeToSingleClass(type);
 
 		runtime = new RuntimeSummary();
-		runtime.out = new PrintStream(new File(directoryRuntime,"RUN_EllipseDetector.txt"));
-		BoofRegressionConstants.printGenerator(runtime.out, getClass());
-		runtime.out.println("# Runtime for black ellipse detectors");
-		runtime.out.println("# Elapsed time in milliseconds");
-		runtime.out.println();
+		runtime.initializeLog(directoryRuntime, getClass(),"RUN_EllipseDetector.txt");
 
 		process("Global", false, new FactoryBinaryEllipse(true,imageType));
 		process("Local", true, new FactoryBinaryEllipse(true,imageType));
 		process("LocalPixel", true, new FactoryBinaryEllipse(false,imageType));
 
-		runtime.out.println();
-		runtime.printSummary();
+		runtime.printSummaryResults();
 		runtime.out.close();
 	}
 
@@ -63,7 +58,7 @@ public class DetectEllipseRegression extends BaseRegression implements ImageRegr
 
 		summaryRuntime.reset();
 		runtime.out.println(name);
-		runtime.printHeader(false);
+		runtime.printUnitsRow(false);
 
 		for( File f : files  ) {
 			if( !f.isDirectory() )
@@ -77,7 +72,7 @@ public class DetectEllipseRegression extends BaseRegression implements ImageRegr
 			detection.processDirectory(f, workDirectory);
 			evaluator.evaluate(f, workDirectory);
 			outputAccuracy.println();
-			runtime.printStats(f.getName(),detection.processingTimeMS);
+			runtime.printStatsRow(f.getName(),detection.processingTimeMS);
 			summaryRuntime.addAll(detection.processingTimeMS);
 		}
 		runtime.out.println();

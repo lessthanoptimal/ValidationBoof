@@ -1,34 +1,47 @@
 # GENERATOR BackgroundModelRegression
-# Stationary Background Model Runtime Metrics
-# algorithm, average time (ms)
+# Elapsed time in milliseconds
 
-# basic-gray
-       firerubixcube  0.2301 (ms)
-      yaser_lighting  0.0281 (ms)
-       yaser_walking  0.1573 (ms)
+basic-gray
+                              N       Mean      P05      P50      P95      MAX
+  firerubixcube              1373  .232099  .183207  .214384  .274822  6.38987
+  yaser_lighting             7263  .066502  .026452   .02726  .233843  6.38987
+  yaser_walking              7763  .072454  .026454  .027332  .233105  6.38987
 
-# gaussian-gray
-       firerubixcube  0.3989 (ms)
-      yaser_lighting  0.0690 (ms)
-       yaser_walking  0.4297 (ms)
+gaussian-gray
+                              N       Mean      P05      P50      P95      MAX
+  firerubixcube              1373  .409269  .295369  .327511  .753459  11.7751
+  yaser_lighting             7263  .134938  .045125  .047927  .409389  11.7751
+  yaser_walking              7763   .15387  .045133  .050269  .488692  11.7751
 
-# gmm-gray
-       firerubixcube  3.9052 (ms)
-      yaser_lighting  0.4017 (ms)
-       yaser_walking  1.8811 (ms)
+gmm-gray
+                              N       Mean      P05      P50      P95      MAX
+  firerubixcube              1373  4.25098  3.08273  4.37075  4.88708  7.85915
+  yaser_lighting             7263  1.16329  .327004  .417173  4.60997  7.85915
+  yaser_walking              7763  1.22442  .329677  .423789  4.59291  7.85915
 
-# basic-rgb
-       firerubixcube  1.7628 (ms)
-      yaser_lighting  0.2508 (ms)
-       yaser_walking  1.1785 (ms)
+basic-rgb
+                              N       Mean      P05      P50      P95      MAX
+  firerubixcube              1373  1.78266  1.67588  1.75444  1.87054  9.63663
+  yaser_lighting             7263  .540873  .242722  .248928  1.79175  9.63663
+  yaser_walking              7763  .581504  .242723  .248965  1.78852  9.63663
 
-# gaussian-rgb
-       firerubixcube  3.9376 (ms)
-      yaser_lighting  0.6288 (ms)
-       yaser_walking  2.7840 (ms)
+gaussian-rgb
+                              N       Mean      P05      P50      P95      MAX
+  firerubixcube              1373   3.8221  3.52787  3.75484  4.08822  33.5412
+  yaser_lighting             7263  1.22244  .507564  .542486  3.89378  33.5412
+  yaser_walking              7763  1.31989  .507574  .556336  3.88726  33.5412
 
-# gmm-rgb
-       firerubixcube  7.7779 (ms)
-      yaser_lighting  0.7862 (ms)
-       yaser_walking  3.6379 (ms)
+gmm-rgb
+                              N       Mean      P05      P50      P95      MAX
+  firerubixcube              1373  7.23081  5.98443  7.28044  8.29105  9.77148
+  yaser_lighting             7263  1.96671  .574323  .701929  7.87499  9.77148
+  yaser_walking              7763  2.06258  .576649  .717079  7.84803  9.77148
 
+Summary:
+                              N       Mean      P05      P50      P95      MAX
+  basic-gray                16399  .083184  .026457  .027683  .241666  6.38987
+  gaussian-gray             16399  .166868  .045139  .052446  .494952  11.7751
+  gmm-gray                  16399  1.45074   .33233  .434866  4.67971  7.85915
+  basic-rgb                 16399  .664075  .242725  .248998  1.80776  9.63663
+  gaussian-rgb              16399  1.48622  .507586  .569467  3.93407  33.5412
+  gmm-rgb                   16399  2.45283  .579282  .735212  7.99063  9.77148

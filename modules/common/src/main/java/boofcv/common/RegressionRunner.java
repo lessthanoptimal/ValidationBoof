@@ -87,6 +87,8 @@ public class RegressionRunner {
             regression.setMetricsDirectory(new File(CURRENT_DIRECTORY,imageType.toString()).getPath());
             try {
                 regression.process(imageType);
+            } catch( ImageTypeNotSupportedException e ) {
+                System.out.println("Image type not supported. Skipping. "+e.getMessage());
             } catch( RuntimeException e ) {
                 e.printStackTrace(regression.getErrorStream());
             }

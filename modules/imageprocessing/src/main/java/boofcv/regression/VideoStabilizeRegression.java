@@ -32,15 +32,12 @@ public class VideoStabilizeRegression extends BaseRegression implements ImageReg
     @Override
     public void process(ImageDataType type) throws IOException {
         outputSpeed = new RuntimeSummary();
-        outputSpeed.out = new PrintStream(new File(directoryRuntime, "RUN_VideoStabilization.txt"));
-        BoofRegressionConstants.printGenerator(outputSpeed.out, getClass());
-        outputSpeed.out.println("# All times are in milliseconds");
-        outputSpeed.out.println();
+        outputSpeed.initializeLog(directoryRuntime, getClass(),"RUN_VideoStabilization.txt");
 
         process(ImageType.pl(3,type));
         process(ImageType.single(type));
 
-        outputSpeed.printSummary();
+        outputSpeed.printSummaryResults();
         outputSpeed.out.close();
     }
 

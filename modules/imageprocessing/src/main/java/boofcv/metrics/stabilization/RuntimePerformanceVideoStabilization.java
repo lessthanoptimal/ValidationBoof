@@ -36,7 +36,7 @@ public class RuntimePerformanceVideoStabilization< T extends ImageBase<T>> {
 	public void evaluate( List<File> videos ) {
 
 		summaryTimesMS.reset();
-		outputRuntime.printHeader(false);
+		outputRuntime.printUnitsRow(false);
 		outputMetrics.println("# Video Name, total frames, total faults");
 
 		for( File f : videos ) {
@@ -67,7 +67,7 @@ public class RuntimePerformanceVideoStabilization< T extends ImageBase<T>> {
 				}
 
 				summaryTimesMS.addAll(timesMS);
-				outputRuntime.printStats(f.getName(),timesMS);
+				outputRuntime.printStatsRow(f.getName(),timesMS);
 				outputMetrics.printf("%20s  %4d %4d\n",f.getName(),totalFrames,totalFaults);
 
 			} catch( RuntimeException e ) {

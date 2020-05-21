@@ -22,6 +22,9 @@ public class QrCodeRegression extends BaseRegression implements ImageRegression 
 
 	EvaluateQrCodeDecoding evaluateMessage = new EvaluateQrCodeDecoding();
 
+	RuntimeSummary runtime;
+	GrowQueue_F64 summaryPeriodMS = new GrowQueue_F64();
+
 	File workDirectory = new File("./tmp");
 	File baseFiducial = new File("data/fiducials/qrcodes");
 
@@ -35,6 +38,8 @@ public class QrCodeRegression extends BaseRegression implements ImageRegression 
 	public void process(ImageDataType type) throws IOException {
 		final Class imageType = ImageDataType.typeToSingleClass(type);
 
+		runtime = new RuntimeSummary();
+		runtime.initializeLog(directoryRuntime,getClass(),"RUN_QRCode.txt");
 
 		evaluateMessage.out = new PrintStream(new File(directoryMetrics,"ACC_QRCodeMessage.txt"));
 		evaluateMessage.err = errorLog;
@@ -48,6 +53,8 @@ public class QrCodeRegression extends BaseRegression implements ImageRegression 
 
 		process("default",defaultDetector);
 
+		runtime.printSummaryResults();
+		runtime.out.close();
 		evaluateMessage.out.close();
 	}
 
@@ -67,13 +74,11 @@ public class QrCodeRegression extends BaseRegression implements ImageRegression 
 
 		infoString = name;
 
-		RuntimeSummary runtime = new RuntimeSummary();
-		GrowQueue_F64 summaryPeriodMS = new GrowQueue_F64();
-		runtime.out = new PrintStream(new File(directoryRuntime,"RUN_QRCode_"+name+".txt"));
+		summaryPeriodMS.reset();
+		runtime.out.println(name);
+		runtime.printUnitsRow(false);
+
 		BoofRegressionConstants.printGenerator(runtime.out, getClass());
-		runtime.out.println("# "+name+" detector");
-		runtime.out.println("# Times in milliseconds");
-		runtime.printHeader(false);
 
 		PrintStream metricsOut = new PrintStream(new File(directoryMetrics,"ACC_QRCodeDetection_"+name+".txt"));
 		BoofRegressionConstants.printGenerator(metricsOut, getClass());
@@ -113,7 +118,7 @@ public class QrCodeRegression extends BaseRegression implements ImageRegression 
 				evaluateDetect.setOutputDirectory(workDirectory);
 				evaluateDetect.process(detector, f);
 				summaryPeriodMS.addAll(evaluateDetect.periodMS);
-				runtime.printStats(f.getName(),evaluateDetect.periodMS);
+				runtime.printStatsRow(f.getName(),evaluateDetect.periodMS);
 				evaluateMetrics.evaluate(workDirectory,f);
 			} catch( RuntimeException e ) {
 				errorLog.println(e.toString());
@@ -132,13 +137,10 @@ public class QrCodeRegression extends BaseRegression implements ImageRegression 
 		}
 
 		metricsOut.printf("\nSummary N %3d TP %3d FP %3d\n", totalN,totalTP,totalFP);
+		metricsOut.close();
 
 		runtime.out.println();
-		runtime.out.println();
-		runtime.printHeader(true);
-		runtime.printStats("Overall",summaryPeriodMS);
-		runtime.out.close();
-		metricsOut.close();
+		runtime.saveSummary(name,summaryPeriodMS);
 
 		if( !foundDataSets ) {
 			throw new IOException("no data set directories found in "+baseFiducial.getPath());

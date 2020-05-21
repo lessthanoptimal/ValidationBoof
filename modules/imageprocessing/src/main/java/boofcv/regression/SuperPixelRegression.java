@@ -39,11 +39,8 @@ public class SuperPixelRegression extends BaseRegression implements ImageRegress
         BoofRegressionConstants.printGenerator(out, getClass());
 
         outputSpeed = new RuntimeSummary();
-        outputSpeed.out = new PrintStream(new File(directoryRuntime, "RUN_SuperPixels.txt"));
-        BoofRegressionConstants.printGenerator(outputSpeed.out, getClass());
-        outputSpeed.out.println("# All times are in milliseconds");
-        outputSpeed.out.println();
-        outputSpeed.printHeader(true);
+        outputSpeed.initializeLog(directoryRuntime,getClass(), "RUN_SuperPixels.txt");
+        outputSpeed.printUnitsRow(true);
 
         metrics = new ComputeSuperPixelsMetrics(pathToData,imageType);
         metrics.err = errorLog;
@@ -64,7 +61,7 @@ public class SuperPixelRegression extends BaseRegression implements ImageRegress
 
         try {
             metrics.process(name, alg);
-            outputSpeed.printStats(name,metrics.timesMS);
+            outputSpeed.printStatsRow(name,metrics.timesMS);
         } catch( RuntimeException e ) {
             e.printStackTrace(errorLog);
         }

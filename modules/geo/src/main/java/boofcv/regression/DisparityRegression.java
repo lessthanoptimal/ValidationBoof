@@ -1,11 +1,9 @@
 package boofcv.regression;
 
-import boofcv.common.BaseRegression;
-import boofcv.common.BoofRegressionConstants;
-import boofcv.common.ImageRegression;
-import boofcv.common.RegressionRunner;
+import boofcv.common.*;
 import boofcv.metrics.disparity.EvaluateDisparity;
 import boofcv.struct.image.ImageDataType;
+import boofcv.struct.image.ImageType;
 
 import java.io.File;
 import java.io.IOException;
@@ -23,34 +21,30 @@ public class DisparityRegression extends BaseRegression implements ImageRegressi
 
 	@Override
 	public void process(ImageDataType type) throws IOException {
-		if( type != ImageDataType.U8 ) {
-			throw new IOException("Only supports U8 images");
-		}
-
 		PrintStream out = new PrintStream(new File(directoryMetrics,"ACC_DisparityRegression.txt"));
 		BoofRegressionConstants.printGenerator(out,getClass());
 
-		PrintStream outRuntime = new PrintStream(new File(directoryMetrics,"RUN_DisparityRegression.txt"));
-		BoofRegressionConstants.printGenerator(outRuntime,getClass());
+		RuntimeSummary runtime = new RuntimeSummary();
+		runtime.initializeLog(directoryRuntime,getClass(),"RUN_DisparityRegression.txt");
 
-		EvaluateDisparity evaluator = new EvaluateDisparity();
+		EvaluateDisparity evaluator = new EvaluateDisparity(ImageType.getImageClass(ImageType.Family.GRAY,type));
 		evaluator.out = out;
-		evaluator.outRun = outRuntime;
 		evaluator.err = getErrorStream();
+		evaluator.runtime = runtime;
 
 		try {
 			evaluator.process();
 		} catch( RuntimeException e ) {
-			errorLog.println(e);
+			e.printStackTrace(errorLog);
 		} finally {
 			out.close();
-			outRuntime.close();
+			runtime.out.close();
 			errorLog.close();
 		}
 	}
 
 	public static void main(String[] args) throws ClassNotFoundException, IOException, InstantiationException, IllegalAccessException {
 		BoofRegressionConstants.clearCurrentResults();
-		RegressionRunner.main(new String[]{DisparityRegression.class.getName(),ImageDataType.U8.toString()});
+		RegressionRunner.main(new String[]{DisparityRegression.class.getName(),ImageDataType.F32.toString()});
 	}
 }

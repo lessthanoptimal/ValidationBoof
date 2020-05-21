@@ -26,10 +26,7 @@ public class TextThresholdRegression extends BaseRegression implements ImageRegr
 		try {
 			EvaluateTextThresholdDIBCO app = new EvaluateTextThresholdDIBCO();
 
-			runtime.out = new PrintStream(new File(directoryRuntime,"RUN_text_threshold.txt"));
-			BoofRegressionConstants.printGenerator(runtime.out, getClass());
-			runtime.out.println("# Elapsed time in milliseconds");
-			runtime.out.println();
+			runtime.initializeLog(directoryRuntime,getClass(),"RUN_text_threshold.txt");
 
 			PrintStream out = new PrintStream(new File(directoryMetrics,"ACC_text_threshold.txt"));
 			BoofRegressionConstants.printGenerator(out, getClass());
@@ -40,6 +37,8 @@ public class TextThresholdRegression extends BaseRegression implements ImageRegr
 			app.addAlgorithm(FactoryThresholdAlgs.globalMean(), "global Mean");
 			app.addAlgorithm(FactoryThresholdAlgs.globalOtsu(), "global Otsu");
 			app.addAlgorithm(FactoryThresholdAlgs.globalEntropy(), "global Entropy");
+			app.addAlgorithm(FactoryThresholdAlgs.globalLi(), "global Li");
+			app.addAlgorithm(FactoryThresholdAlgs.globalHuang(), "global Huang");
 			app.addAlgorithm(FactoryThresholdAlgs.localMean(), "local Mean");
 			app.addAlgorithm(FactoryThresholdAlgs.localGaussian(), "local Gaussian");
 			app.addAlgorithm(FactoryThresholdAlgs.localOtsu(), "local Otsu");

@@ -61,7 +61,7 @@ public class DescribeImageDenseRegression extends BaseRegression implements Imag
 		BoofRegressionConstants.printGenerator(outputRuntime.out, getClass());
 		outputRuntime.out.println("# All times are in milliseconds");
 		outputRuntime.out.println();
-		outputRuntime.printHeader(true);
+		outputRuntime.printUnitsRow(true);
 
 		for( Info info : algs) {
 			System.out.println("Working on "+info.name);
@@ -72,7 +72,7 @@ public class DescribeImageDenseRegression extends BaseRegression implements Imag
 			try {
 				evaluator.setOutputStream(outputAccuracy);
 				evaluator.evaluate(info.desc);
-				outputRuntime.printStats(info.name, evaluator.processingTimeMS);
+				outputRuntime.printStatsRow(info.name, evaluator.processingTimeMS);
 			} catch( RuntimeException e ) {
 				e.printStackTrace();
 				errorLog.println(e);

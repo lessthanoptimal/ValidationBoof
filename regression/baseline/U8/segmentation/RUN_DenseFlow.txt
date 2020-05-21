@@ -1,9 +1,10 @@
 # GENERATOR DenseFlowRegression
-# Runtime dense optical flow
-# <algorithm> <average time in ms>
+# Elapsed time in milliseconds
 
-                 KLT  6025.1
-              Region  7002.7
-         HornSchunck  3687.9
-      HornSchunckPyr  4228.5
-                Brox  7374.0
+Summary:
+                              N       Mean      P05      P50      P95      MAX
+  KLT                           8  6091.53  3835.89  5400.84  7616.46  8157.71
+  Region                        8  7032.17  4274.35  6137.61  8485.52  8490.16
+  HornSchunck                   8  3684.22  2054.17   3586.2  4978.42  4997.76
+  HornSchunckPyr                8   4206.3  2658.68  3802.45  5510.57  5613.88
+  Brox                          8  7325.18   1713.9  6557.12  11758.1  13488.9

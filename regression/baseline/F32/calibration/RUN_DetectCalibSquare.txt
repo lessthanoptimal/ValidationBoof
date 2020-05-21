@@ -1,8 +1,0 @@
-# GENERATOR CalibrationDetectionRegression
-# DetectCalibSquare
-# Data set, average milliseconds
-                 Sony_DSC-HX5V     3.82
-                       distant     7.90
-                       fisheye    14.34
-                         large    93.15
-             Bumblebee2_Square     2.57

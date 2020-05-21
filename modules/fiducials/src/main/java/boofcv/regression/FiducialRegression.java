@@ -38,10 +38,7 @@ public class FiducialRegression extends BaseRegression implements ImageRegressio
 	public void process(ImageDataType type) throws IOException {
 
 		runtime = new RuntimeSummary();
-		runtime.out = new PrintStream(new File(directoryRuntime,"RUN_Fiducials.txt"));
-		BoofRegressionConstants.printGenerator(runtime.out, getClass());
-		runtime.out.println("# Elapsed time in milliseconds");
-		runtime.out.println();
+		runtime.initializeLog(directoryRuntime,getClass(),"RUN_Fiducials.txt");
 
 		final Class imageType = ImageDataType.typeToSingleClass(type);
 
@@ -80,7 +77,7 @@ public class FiducialRegression extends BaseRegression implements ImageRegressio
 
 		process("Uchiya", new EstimateUchiyaFiducialToCamera(imageType), "random_dots",false);
 
-		runtime.printSummary();
+		runtime.printSummaryResults();
 		runtime.out.close();
 	}
 
@@ -96,7 +93,7 @@ public class FiducialRegression extends BaseRegression implements ImageRegressio
 		try {
 			summaryPeriodMS.reset();
 			runtime.out.println(name);
-			runtime.printHeader(false);
+			runtime.printUnitsRow(false);
 
 			computeStandardMetrics(type, "ACC_Fiducial_Standard_" + name + ".txt", estimate,ignoreOrder, 5);
 			computeStaticMetrics(type, "ACC_Fiducial_Static_" + name + ".txt", estimate, 5);
@@ -204,7 +201,7 @@ public class FiducialRegression extends BaseRegression implements ImageRegressio
 				totalCorrect += evaluate.getTotalCorrect();
 
 				summaryPeriodMS.addAll(estimate.speed);
-				runtime.printStats(dataSet.getName(),estimate.speed);
+				runtime.printStatsRow(dataSet.getName(),estimate.speed);
 			} catch( DataSetDoesNotExist e ) {
 				System.out.println("DataSetDoesNotExist "+e.getMessage());
 				errorLog.println();

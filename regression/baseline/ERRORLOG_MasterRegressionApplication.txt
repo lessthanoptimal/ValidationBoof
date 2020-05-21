@@ -1,2 +1,1 @@
-FAILED U8  CalibrationDetectionRegression
 FAILED F32  DisparityRegression

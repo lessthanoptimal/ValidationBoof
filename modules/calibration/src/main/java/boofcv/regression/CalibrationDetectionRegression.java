@@ -110,15 +110,15 @@ public class CalibrationDetectionRegression extends BaseRegression implements Im
 	@Override
 	public void process(ImageDataType type) throws IOException {
 
+		if( type != ImageDataType.F32 ) {
+			throw new ImageTypeNotSupportedException("Only supports floating point images");
+		}
+
 		outputRuntime = new RuntimeSummary();
 		outputRuntime.out = new PrintStream(new File(directoryRuntime, "RUN_CalibrationDetection.txt"));
 		BoofRegressionConstants.printGenerator(outputRuntime.out, getClass());
 		outputRuntime.out.println("# All times are in milliseconds");
 		outputRuntime.out.println();
-
-		if( type != ImageDataType.F32 ) {
-			throw new IOException("Only supports floating point images");
-		}
 
 		for( DetectorInfo d : chessDetectors ) {
 			evaluate(d,chessDirectories);
@@ -136,13 +136,13 @@ public class CalibrationDetectionRegression extends BaseRegression implements Im
 			evaluate(d, circleRegirectories);
 		}
 
-		outputRuntime.printSummary();
+		outputRuntime.printSummaryResults();
 		outputRuntime.out.close();
 	}
 
 	private void evaluate( DetectorInfo d , List<String> directories ) throws FileNotFoundException {
 		outputRuntime.out.println(d.name);
-		outputRuntime.printHeader(false);
+		outputRuntime.printUnitsRow(false);
 
 		PrintStream output = new PrintStream(new File(directoryMetrics,"ACC_DetectCalib"+d.name+".txt"));
 		BoofRegressionConstants.printGenerator(output,getClass());
@@ -174,7 +174,7 @@ public class CalibrationDetectionRegression extends BaseRegression implements Im
 						errorLog.println("Failed to find images in dir");
 					}
 					summaryTimeMS.addAll(directoryMetrics.processingTimeMS);
-					outputRuntime.printStats(new File(dir).getName(),directoryMetrics.processingTimeMS);
+					outputRuntime.printStatsRow(new File(dir).getName(),directoryMetrics.processingTimeMS);
 				} else {
 					errorLog.println("No files found in " + dir);
 				}

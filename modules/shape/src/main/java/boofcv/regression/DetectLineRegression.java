@@ -36,12 +36,9 @@ public class DetectLineRegression extends BaseRegression implements ImageRegress
 
 	private void processFamily(Class imageType, String typeName, boolean thin, String[] algs ) throws IOException {
 		runtime = new RuntimeSummary();
-		runtime.out = new PrintStream(new File(directoryRuntime,"RUN_"+typeName+"LineDetector.txt"));
-		BoofRegressionConstants.printGenerator(runtime.out, getClass());
-		runtime.out.println("# Elapsed time in milliseconds");
-		runtime.out.println();
+		runtime.initializeLog(directoryRuntime,getClass(),"RUN_"+typeName+"LineDetector.txt");
 
-		runtime.printHeader(true);
+		runtime.printUnitsRow(true);
 		for( String detectorName : algs ) {
 			process(detectorName,thin,typeName,imageType);
 		}
@@ -65,7 +62,7 @@ public class DetectLineRegression extends BaseRegression implements ImageRegress
 			evaluator.evaluate(f, workDirectory);
 			outputAccuracy.println();
 
-			runtime.printStats(name,detection.processingTimeMS);
+			runtime.printStatsRow(name,detection.processingTimeMS);
 
 		} catch ( Exception e) {
 			System.out.println("Failed! " + outputAccuracyName);

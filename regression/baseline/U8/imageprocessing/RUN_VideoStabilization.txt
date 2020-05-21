@@ -1,0 +1,15 @@
+# GENERATOR VideoStabilizeRegression
+# Elapsed time in milliseconds
+
+KLT_Homography_planar
+                              N       Mean      P05      P50      P95      MAX
+  shake.mjpeg                  71  21.2461  14.4517   18.002  27.7829  122.558
+
+KLT_Homography_gray
+                              N       Mean      P05      P50      P95      MAX
+  shake.mjpeg                  71   10.927  8.21756  10.5469  14.4548  15.2616
+
+Summary:
+                              N       Mean      P05      P50      P95      MAX
+  KLT_Homography_planar        71  21.2461  14.4517   18.002  27.7829  122.558
+  KLT_Homography_gray          71   10.927  8.21756  10.5469  14.4548  15.2616
