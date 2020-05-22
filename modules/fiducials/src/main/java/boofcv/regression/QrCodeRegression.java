@@ -78,8 +78,6 @@ public class QrCodeRegression extends BaseRegression implements ImageRegression 
 		runtime.out.println(name);
 		runtime.printUnitsRow(false);
 
-		BoofRegressionConstants.printGenerator(runtime.out, getClass());
-
 		PrintStream metricsOut = new PrintStream(new File(directoryMetrics,"ACC_QRCodeDetection_"+name+".txt"));
 		BoofRegressionConstants.printGenerator(metricsOut, getClass());
 

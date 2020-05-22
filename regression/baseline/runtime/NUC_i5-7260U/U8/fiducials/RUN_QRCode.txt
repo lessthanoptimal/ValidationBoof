@@ -3,7 +3,6 @@
 
 default
                               N       Mean      P05      P50      P95      MAX
-# GENERATOR QrCodeRegression
   blurred                      45  49.4733  2.31579  13.6805  147.295  191.882
   bright_spots                 32  106.806  1.38511  138.136  163.224  168.023
   brightness                   28  94.6868  3.44215  108.603  150.178  165.255
