@@ -2,6 +2,8 @@ package boofcv.regression;
 
 import boofcv.common.BoofRegressionConstants;
 import boofcv.common.RegressionRunner;
+import boofcv.common.SettingsLocal;
+import boofcv.common.SystemInfo;
 import boofcv.io.UtilIO;
 import boofcv.struct.image.ImageDataType;
 import org.apache.commons.io.FileUtils;
@@ -115,9 +117,23 @@ public class MasterRegressionApplication {
 	}
 
 	public static void saveMachineInfo() {
-		try {
-			PrintStream out = new PrintStream(new File(BoofRegressionConstants.CURRENT_DIRECTORY,"MachineInfo.txt"));
+		SettingsLocal.loadStdErrIfFail();
 
+		try {
+			PrintStream out = new PrintStream(new File(SettingsLocal.getPathToCurrentRuntimeDirectory(),"MachineInfo.txt"));
+
+			// This won't work on every system
+			try {
+				double[] load = SystemInfo.lookupSystemLoad();
+
+				out.println("---- Native Access Info");
+				out.println("OS: "+SystemInfo.readOSVersion());
+				out.println("CPU: "+SystemInfo.readCpu());
+				out.println("Ave Load: 1m="+load[0]+" 5m="+load[1]+" 15m="+load[2]);
+			} catch( RuntimeException ignore ){}
+
+			// This should work on every system
+			out.println("----");
 			out.println("Runtime.getRuntime().availableProcessors(): " +Runtime.getRuntime().availableProcessors());
 			out.println("Runtime.getRuntime().freeMemory(): " +Runtime.getRuntime().freeMemory());
 			out.println("Runtime.getRuntime().totalMemory(): " + Runtime.getRuntime().totalMemory());

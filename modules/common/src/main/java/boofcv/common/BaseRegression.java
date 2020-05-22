@@ -23,14 +23,8 @@ public abstract class BaseRegression implements TestRegression {
 
 	@Override
 	public void setMetricsDirectory(String directory) {
-		File f = new File(directory,resultsType);
-		if( !f.exists() ) {
-			if( !f.mkdirs() ) {
-				throw new RuntimeException("Can't make output directory "+f.getPath());
-			}
-		}
+		File f = checkAndCreatePath(directory);
 		this.directoryMetrics = f.getPath();
-		this.directoryRuntime = directoryMetrics;
 
 		File tmp = BoofRegressionConstants.tempDir();
 		if( !tmp.exists() ) {
@@ -43,6 +37,22 @@ public abstract class BaseRegression implements TestRegression {
 		} catch (FileNotFoundException e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	private File checkAndCreatePath(String directory) {
+		File f = new File(directory,resultsType);
+		if( !f.exists() ) {
+			if( !f.mkdirs() ) {
+				throw new RuntimeException("Can't make output directory "+f.getPath());
+			}
+		}
+		return f;
+	}
+
+	@Override
+	public void setRuntimeDirectory(String directory) {
+		File f = checkAndCreatePath(directory);
+		this.directoryRuntime = f.getPath();
 	}
 
 	@Override

@@ -14,7 +14,7 @@ public interface TestRegression {
     /**
      * Specifies where runtime performance metrics are saved to
      */
-//    void setRuntimeDirectory(String directory );
+    void setRuntimeDirectory(String directory );
 
     PrintStream getErrorStream();
 }

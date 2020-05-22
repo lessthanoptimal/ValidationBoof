@@ -12,5 +12,6 @@ hs_err_pid*
 data/**
 
 email_login.txt
+settings_local.yaml
 
 

@@ -73,7 +73,7 @@ public class BundleAdjustmentFRegression extends BaseRegression implements FileR
         outputQuality.println("# ftol="+ftol+"  gtol="+gtol+"  max_iterations="+maxIterations);
         outputQuality.flush();
 
-        outputRuntime = new PrintStream(new File(directoryMetrics, "RUN_BundleAdjustment_"+algorithm+".txt"));
+        outputRuntime = new PrintStream(new File(directoryRuntime, "RUN_BundleAdjustment_"+algorithm+".txt"));
         BoofRegressionConstants.printGenerator(outputRuntime, getClass());
         outputRuntime.flush();
 

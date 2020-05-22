@@ -20,7 +20,7 @@ import static boofcv.common.BoofRegressionConstants.CURRENT_DIRECTORY;
 public class RegressionRunner {
 
     public static void clearWorkDirectory() {
-        File files[] = new File(".").listFiles();
+        File[] files = new File(".").listFiles();
 
         // sanity check the directory before it starts deleting shit
         if( !contains(files,"src"))
@@ -68,6 +68,7 @@ public class RegressionRunner {
         BoofConcurrency.USE_CONCURRENT = false;
 
         clearWorkDirectory();
+        SettingsLocal.loadExitIfFail();
 
         Class regressionClass = Class.forName(args[0]);
         Object o = regressionClass.newInstance();
@@ -84,7 +85,13 @@ public class RegressionRunner {
                 System.exit(1);
                 return;
             }
-            regression.setMetricsDirectory(new File(CURRENT_DIRECTORY,imageType.toString()).getPath());
+
+            File pathToMetricImage = new File(SettingsLocal.getPathToCurrentMetricsDirectory(),imageType.toString());
+            File pathToRuntime = new File(SettingsLocal.getPathToCurrentRuntimeDirectory(),imageType.toString());
+
+            regression.setMetricsDirectory(pathToMetricImage.getPath());
+            regression.setRuntimeDirectory(pathToRuntime.getPath());
+
             try {
                 regression.process(imageType);
             } catch( ImageTypeNotSupportedException e ) {

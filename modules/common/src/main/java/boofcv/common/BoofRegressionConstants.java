@@ -40,12 +40,6 @@ public class BoofRegressionConstants {
         BoofRegressionConstants.delete( new File(BoofRegressionConstants.CURRENT_DIRECTORY),null);
         if( !new File(BoofRegressionConstants.CURRENT_DIRECTORY).mkdir() )
             throw new RuntimeException("Can't create directory");
-        if( !new File(BoofRegressionConstants.CURRENT_DIRECTORY,"other").mkdir() )
-            throw new RuntimeException("Can't create directory");
-        if( !new File(BoofRegressionConstants.CURRENT_DIRECTORY,"U8").mkdir() )
-            throw new RuntimeException("Can't create directory");
-        if( !new File(BoofRegressionConstants.CURRENT_DIRECTORY,"F32").mkdir() )
-            throw new RuntimeException("Can't create directory");
     }
 
     public static void delete( File f , PrintStream error ) {
