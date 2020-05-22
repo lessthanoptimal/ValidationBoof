@@ -1,0 +1,26 @@
+# GENERATOR StereoVisualOdometryRegression
+# Evaluating: DualPnP
+
+###################################################################################
+# Dataset: Leuven07
+
+Total Frames = 1174
+Total Faults = 1
+Fraction with no update 0.0017035775127768314
+Ave per estimate:      distance 0.2587763  rotation 0.000639273
+Ave per distance:      distance   5.09041% deg/unit = 7.21e-03
+Ave Skip 20:           distance   1.55729% deg/unit = 1.93e-03
+Absolute:              location  49.79490  rotation   0.40 degrees
+Integral per distance: distance   0.72283% deg/unit = 1.19e-04
+
+###################################################################################
+# Dataset: KITTI00
+
+Total Frames = 4540
+Total Faults = 0
+Fraction with no update 0.0
+Ave per estimate:      distance 0.0208929  rotation 0.000848757
+Ave per distance:      distance   2.54697% deg/unit = 5.93e-02
+Ave Skip 20:           distance   1.83155% deg/unit = 2.05e-02
+Absolute:              location  15.26588  rotation   5.07 degrees
+Integral per distance: distance   0.57694% deg/unit = 4.23e-05

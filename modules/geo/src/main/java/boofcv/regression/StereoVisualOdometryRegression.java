@@ -29,7 +29,6 @@ import boofcv.struct.pyramid.ConfigDiscreteLevels;
 import org.ddogleg.struct.GrowQueue_F64;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.util.ArrayList;
@@ -42,6 +41,8 @@ public class StereoVisualOdometryRegression extends BaseRegression implements Im
 
 	RuntimeSummary runtime;
 	GrowQueue_F64 summaryRuntimeMS = new GrowQueue_F64();
+
+	PrintStream out;
 
 	public StereoVisualOdometryRegression() {
 		super(BoofRegressionConstants.TYPE_GEOMETRY);
@@ -64,6 +65,11 @@ public class StereoVisualOdometryRegression extends BaseRegression implements Im
 			summaryRuntimeMS.reset();
 			runtime.out.println(a.name);
 			runtime.printUnitsRow(false);
+
+			out = new PrintStream(new File(directoryMetrics,"ACC_StereoVisOdom_"+a.name+".txt"));
+			BoofRegressionConstants.printGenerator(out, getClass());
+			out.println("# Evaluating: "+a.name);
+
 			try {
 				SequenceStereoImages data = new WrapParseLeuven07(new ParseLeuven07("data/leuven07"));
 				evaluate(a,data,"Leuven07");
@@ -79,6 +85,8 @@ public class StereoVisualOdometryRegression extends BaseRegression implements Im
 			}
 			runtime.out.println();
 			runtime.saveSummary(a.name,summaryRuntimeMS);
+
+			out.close();
 		}
 
 		runtime.out.println();
@@ -87,11 +95,10 @@ public class StereoVisualOdometryRegression extends BaseRegression implements Im
 		runtime.out.close();
 	}
 
-	private void evaluate( Info vo , SequenceStereoImages data , String dataName ) throws FileNotFoundException {
+	private void evaluate( Info vo , SequenceStereoImages data , String dataName ) {
 
-		PrintStream out = new PrintStream(new File(directoryMetrics,"ACC_StereoVisOdom_"+dataName+"_"+vo.name+".txt"));
-		BoofRegressionConstants.printGenerator(out, getClass());
-		out.println("# Visual Odometry Performance metrics. "+vo.name+" in "+dataName);
+		out.println("\n###################################################################################");
+		out.println("# Dataset: "+dataName);
 		out.println();
 
 		try {
@@ -107,7 +114,7 @@ public class StereoVisualOdometryRegression extends BaseRegression implements Im
 			e.printStackTrace(errorLog);
 			errorLog.println("---------------------------------------------------");
 		}
-		out.close();
+		out.flush();
 	}
 
 	public static Info createMonoDepth(Class bandType ) {
@@ -258,7 +265,7 @@ public class StereoVisualOdometryRegression extends BaseRegression implements Im
 
 	public static void main(String[] args) throws IOException, IllegalAccessException, InstantiationException, ClassNotFoundException {
 		BoofRegressionConstants.clearCurrentResults();
-//		RegressionRunner.main(new String[]{StereoVisualOdometryRegression.class.getName(),ImageDataType.F32.toString()});
+		RegressionRunner.main(new String[]{StereoVisualOdometryRegression.class.getName(),ImageDataType.F32.toString()});
 		RegressionRunner.main(new String[]{StereoVisualOdometryRegression.class.getName(),ImageDataType.U8.toString()});
 	}
 

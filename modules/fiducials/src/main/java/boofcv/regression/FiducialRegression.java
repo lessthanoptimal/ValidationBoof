@@ -90,32 +90,42 @@ public class FiducialRegression extends BaseRegression implements ImageRegressio
 		estimate.setOutputDirectory(workDirectory);
 		estimate.initialize(new File(baseFiducial, type));
 
+		PrintStream out = new PrintStream(new File(directoryMetrics,"ACC_Fiducial_"+name+".txt"));
+		BoofRegressionConstants.printGenerator(out,getClass());
+
 		try {
 			summaryPeriodMS.reset();
 			runtime.out.println(name);
 			runtime.printUnitsRow(false);
 
-			computeStandardMetrics(type, "ACC_Fiducial_Standard_" + name + ".txt", estimate,ignoreOrder, 5);
-			computeStaticMetrics(type, "ACC_Fiducial_Static_" + name + ".txt", estimate, 5);
-			computeAlwaysVisibleMetrics(type, "ACC_Fiducial_AlwaysVisible_" + name + ".txt", estimate);
+			out.println("##########################################################################################");
+			out.println("######                Standard Metrics\n");
+			computeStandardMetrics(type, out, estimate,ignoreOrder, 5);
+			out.println("\n");
+			out.println("##########################################################################################");
+			out.println("######                Static Metrics\n");
+			computeStaticMetrics(type, out, estimate, 5);
+			out.println("\n");
+			out.println("##########################################################################################");
+			out.println("######                Always Visible Metrics\n");
+			computeAlwaysVisibleMetrics(type, out, estimate);
 
 			runtime.out.println();
 			runtime.saveSummary(name,summaryPeriodMS);
 		} catch( RuntimeException e ) {
 			e.printStackTrace();
 			e.printStackTrace(errorLog);
+		} finally {
+			out.close();
 		}
 	}
 
-	private void computeStandardMetrics(String type, String outName,
+	private void computeStandardMetrics(String type, PrintStream out,
 										BaseEstimateSquareFiducialToCamera estimate ,
 										boolean ignoreOrder ,
 										double maxPixelError )
 			throws IOException
 	{
-		PrintStream out = new PrintStream(new File(directoryMetrics,outName));
-		BoofRegressionConstants.printGenerator(out,getClass());
-
 		estimate.needsIntrinsic = true;
 
 		EvaluateFiducialToCamera evaluate = new EvaluateFiducialToCamera();
@@ -126,18 +136,13 @@ public class FiducialRegression extends BaseRegression implements ImageRegressio
 		evaluate.setOutputResults(out);
 
 		processDataSets(estimate, new File(new File(baseFiducial,type),"standard"), out, evaluate);
-
-		out.close();
 	}
 
-	private void computeStaticMetrics(String type, String outName,
+	private void computeStaticMetrics(String type, PrintStream out,
 										BaseEstimateSquareFiducialToCamera estimate ,
 										double maxPixelError  )
 			throws IOException
 	{
-		PrintStream out = new PrintStream(new File(directoryMetrics,outName));
-		BoofRegressionConstants.printGenerator(out,getClass());
-
 		estimate.needsIntrinsic = true;
 
 		EvaluateStaticFiducialSequence evaluate = new EvaluateStaticFiducialSequence();
@@ -147,16 +152,12 @@ public class FiducialRegression extends BaseRegression implements ImageRegressio
 		evaluate.setOutputResults(out);
 
 		processDataSets(estimate, new File(new File(baseFiducial,type),"static"), out, evaluate);
-		out.close();
 	}
 
-	private void computeAlwaysVisibleMetrics(String type, String outName,
+	private void computeAlwaysVisibleMetrics(String type, PrintStream out,
 											 BaseEstimateSquareFiducialToCamera estimate)
 			throws IOException
 	{
-		PrintStream out = new PrintStream(new File(directoryMetrics,outName));
-		BoofRegressionConstants.printGenerator(out,getClass());
-
 		estimate.needsIntrinsic = false;
 
 		EvaluateAlwaysVisibleSequence evaluate = new EvaluateAlwaysVisibleSequence();
@@ -164,8 +165,6 @@ public class FiducialRegression extends BaseRegression implements ImageRegressio
 		evaluate.setOutputResults(out);
 
 		processDataSets(estimate, new File(new File(baseFiducial,type),"always_visible"), out, evaluate);
-
-		out.close();
 	}
 
 	private void processDataSets(BaseEstimateSquareFiducialToCamera estimate, File dataSetsRoot,

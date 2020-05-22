@@ -1,0 +1,203 @@
+# GENERATOR FiducialRegression
+##########################################################################################
+######                Standard Metrics
+
+# distance_angle
+# maxPixelError = 6.25
+
+Summary:
+ correct            :    5 /    6
+ wrong order        : 0
+ wrong ID           : 0
+ duplicates         : 0
+ false positives    : 0
+ false negative     : 1
+Corner errors:
+ precision 50%         : 0.2078735701381691
+ precision 90%         : 0.3799331034312149
+ precision 100%        : 0.5973556345917878
+
+---------------------------------------------------
+
+# distance_straight
+# maxPixelError = 6.25
+
+Summary:
+ correct            :    8 /    8
+ wrong order        : 0
+ wrong ID           : 0
+ duplicates         : 0
+ false positives    : 0
+ false negative     : 0
+Corner errors:
+ precision 50%         : 0.19730073132475634
+ precision 90%         : 0.38645004142467093
+ precision 100%        : 0.6476919168120583
+
+---------------------------------------------------
+
+# distant
+# maxPixelError = 6.25
+
+Summary:
+ correct            :    7 /    7
+ wrong order        : 0
+ wrong ID           : 0
+ duplicates         : 0
+ false positives    : 0
+ false negative     : 0
+Corner errors:
+ precision 50%         : 0.20526613597795831
+ precision 90%         : 0.3451495144665147
+ precision 100%        : 0.7304064101607345
+
+---------------------------------------------------
+
+# motion_blur
+# maxPixelError = 5.00
+
+Summary:
+ correct            :    9 /   13
+ wrong order        : 0
+ wrong ID           : 0
+ duplicates         : 0
+ false positives    : 0
+ false negative     : 4
+Corner errors:
+ precision 50%         : 1.4537359979233915
+ precision 90%         : 2.8127697945943217
+ precision 100%        : 5.665624504657715
+
+---------------------------------------------------
+
+# rotation_flat
+# maxPixelError = 6.25
+
+Summary:
+ correct            :   12 /   12
+ wrong order        : 0
+ wrong ID           : 0
+ duplicates         : 0
+ false positives    : 0
+ false negative     : 0
+Corner errors:
+ precision 50%         : 0.3575868680899083
+ precision 90%         : 0.6645646705895328
+ precision 100%        : 0.9579134375834069
+
+---------------------------------------------------
+
+# rotation_vertical
+# maxPixelError = 6.25
+
+Summary:
+ correct            :    7 /    7
+ wrong order        : 0
+ wrong ID           : 0
+ duplicates         : 0
+ false positives    : 0
+ false negative     : 0
+Corner errors:
+ precision 50%         : 0.24555227350854059
+ precision 90%         : 0.46512061291150675
+ precision 100%        : 0.6890071744031323
+
+---------------------------------------------------
+
+# shadow
+# maxPixelError = 6.25
+
+Summary:
+ correct            :   14 /   15
+ wrong order        : 0
+ wrong ID           : 0
+ duplicates         : 0
+ false positives    : 0
+ false negative     : 1
+Corner errors:
+ precision 50%         : 0.5156533744829656
+ precision 90%         : 0.9547378944477645
+ precision 100%        : 1.4964525811725558
+
+---------------------------------------------------
+
+---------------------------------------------------
+total correct / total expected =   62 /  68
+
+##########################################################################################
+######                Static Metrics
+
+# Data Set = front_close
+# maxPixelError = 5.0
+
+Summary:
+ correct            : 201
+ wrong order        : 0
+ wrong ID           : 0
+ duplicates         : 0
+ false positive     : 0
+ false negative     : 0
+Normal Angle (deg):     200
+ errors 50%         : 0.08794439472107711
+ errors 90%         : 0.17440720437303858
+ errors 100%        : 0.34634380890260197
+Location            : 200
+ errors 50%         : 8.276488898386242E-4
+ errors 90%         : 0.0023808598546801525
+ errors 100%        : 0.006779407472714738
+Precision:              4824
+ errors 50%         : 0.02631288961876439
+ errors 90%         : 0.07874442372280349
+ errors 100%        : 0.5451441535957976
+Accuracy:               4824
+ errors 50%         : 0.33393843478517343
+ errors 90%         : 0.5807182942539978
+ errors 100%        : 1.1604472034964102
+
+---------------------------------------------------
+
+# Data Set = front_far
+# maxPixelError = 5.0
+
+Summary:
+ correct            : 201
+ wrong order        : 0
+ wrong ID           : 0
+ duplicates         : 0
+ false positive     : 0
+ false negative     : 0
+Normal Angle (deg):     200
+ errors 50%         : 0.322781937813863
+ errors 90%         : 0.7199230795414309
+ errors 100%        : 16.678148040549925
+Location            : 200
+ errors 50%         : 0.012167538769180586
+ errors 90%         : 0.03098475011609655
+ errors 100%        : 0.05858740919660174
+Precision:              4824
+ errors 50%         : 0.3936999505536371
+ errors 90%         : 0.8089033697694182
+ errors 100%        : 2.017173685732866
+Accuracy:               4824
+ errors 50%         : 1.8717160287620567
+ errors 90%         : 2.4571837827460987
+ errors 100%        : 2.8668471061804217
+
+---------------------------------------------------
+
+---------------------------------------------------
+total correct / total expected =  402 / 402
+
+##########################################################################################
+######                Always Visible Metrics
+
+# set01   sequence with known always visible targets
+total frames 959
+false positives 0
+ fiducial id | visible | multiple 
+00000           959            0
+
+---------------------------------------------------
+
+---------------------------------------------------
+total correct / total expected =  959 / 959
