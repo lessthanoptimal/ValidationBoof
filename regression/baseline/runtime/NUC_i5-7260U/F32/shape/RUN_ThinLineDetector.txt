@@ -1,0 +1,6 @@
+# GENERATOR DetectLineRegression
+# Elapsed time in milliseconds
+
+Summary:
+                              N       Mean      P05      P50      P95      MAX
+  Polar                         3  35.8736  11.0107  24.1018  24.1018  72.5081

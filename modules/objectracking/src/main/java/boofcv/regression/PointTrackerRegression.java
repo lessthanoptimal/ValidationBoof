@@ -80,7 +80,7 @@ public class PointTrackerRegression extends BaseRegression implements ImageRegre
 
 		// A single file which summarizes runtime for all trackers
 		outputSpeed = new RuntimeSummary();
-		outputSpeed.initializeLog(directoryMetrics, getClass(),"RUN_PointTracker.txt");
+		outputSpeed.initializeLog(directoryRuntime, getClass(),"RUN_PointTracker.txt");
 		outputSpeed.printUnitsRow(true);
 
 		List<Info> all = new ArrayList<>();

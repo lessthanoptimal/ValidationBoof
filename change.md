@@ -8,6 +8,9 @@ Description of changes to benchmarks and justifications for change in performanc
 - config_local.yaml to specify local benchmark behavior and information
 - Moved runtime regressions into a separate directory that is machine specific
 - Add CPU info to MachineInfo.txt
+- TODO Combine Fiducial into a single file for each algorithm
+- TODO Combine StereoVisOdom into one file for each algorithm
+- TODO List the files which changed the first time they changed to reduce clutter
 - TODO Add regression for template matching
 
 ## Version 0.36

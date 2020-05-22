@@ -1,0 +1,66 @@
+# GENERATOR ThreeViewReconstructionRegression
+# Elapsed time in milliseconds
+
+               apartment_bush_ 9088
+             apartment_road_a_ 10311
+                       barrel_ 13792
+                      bobcats_ 17536
+                        books_ 21920
+                         bowl_ 11844
+                   building_a_ 9797
+                      chicken_ 13514
+         christmass_display_a_ 8750
+                         deer_ 9101
+                       dinner_ 20004
+                 dinner_table_ 13575
+                         eggs_ 11165
+                fence_grass_a_ 16683
+                fence_grass_b_ 18292
+                   fig_leaves_ 11421
+                     figuresA_ 7196
+                      house_a_ 18014
+                      house_b_ 9070
+                     kitchenA_ 18147
+                     kitchenB_ 15115
+                      library_ 21629
+              minecraft_cave1_ 8390
+              minecraft_cave2_ 11475
+            minecraft_distant_ 12009
+               minecraft_high_ 14878
+                    mono_wall_ 12784
+              parking_meter_a_ 16664
+                      pebbles_ 20765
+                      pelican_ 26153
+                     people_a_ 11508
+                     people_b_ 8282
+                     person_a_ 10872
+                        power_ 12140
+                       puddle_ 18948
+                   pumpkintop_ 17491
+                       road_a_ 17790
+                         rock_ 12130
+                  rock_leaves_ 22794
+                     rockview_ 22491
+                      safeway_ 12199
+                      santa_a_ 13465
+                         seal_ 22683
+                sf_building_a_ 14190
+                sf_building_b_ 14118
+                sf_building_c_ 13672
+                sf_building_d_ 13432
+                  sf_bus_stop_ 8136
+                   sf_grass_a_ 12862
+            sf_intersection_a_ 10814
+                     sf_thing_ 20506
+               shuffleboard_a_ 16341
+               shuffleboard_b_ 15011
+                        skull_ 12835
+                   succulents_ 4624
+                   triflowers_ 12125
+                       turkey_ 17544
+                  uni_pacific_ 16676
+                    waterdrip_ 21339
+
+Summary:
+                              N       Mean      P05      P50      P95      MAX
+  summary                      59  14510.2     8136    13575    22491    26153
