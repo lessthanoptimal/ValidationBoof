@@ -1,6 +1,6 @@
 allprojects{
     group = 'org.boofcv'
-    version = '0.36'
+    version = '0.37-SNAPSHOT'
 
     apply plugin: 'idea'
     apply plugin: 'java'
@@ -125,5 +125,5 @@ dependencies {
 
 wrapper {
     distributionType = Wrapper.DistributionType.BIN
-    gradleVersion = '6.4'
+    gradleVersion = '6.4.1'
 }
