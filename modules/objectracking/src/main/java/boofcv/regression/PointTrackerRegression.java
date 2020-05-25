@@ -1,35 +1,15 @@
 package boofcv.regression;
 
-import boofcv.abst.feature.associate.AssociateDescTo2D;
-import boofcv.abst.feature.associate.AssociateDescription;
-import boofcv.abst.feature.associate.AssociateDescription2D;
-import boofcv.abst.feature.associate.ScoreAssociation;
-import boofcv.abst.feature.describe.ConfigBrief;
-import boofcv.abst.feature.describe.DescribeRegionPoint;
-import boofcv.abst.feature.detect.extract.ConfigExtract;
-import boofcv.abst.feature.detect.extract.NonMaxSuppression;
-import boofcv.abst.feature.detect.intensity.GeneralFeatureIntensity;
-import boofcv.abst.feature.detect.interest.ConfigFastHessian;
+import boofcv.abst.feature.describe.ConfigTemplateDescribe;
 import boofcv.abst.feature.detect.interest.ConfigPointDetector;
-import boofcv.abst.feature.detect.interest.InterestPointDetector;
-import boofcv.abst.feature.orientation.OrientationImage;
-import boofcv.abst.feature.orientation.OrientationIntegral;
-import boofcv.abst.feature.orientation.OrientationIntegralToImage;
-import boofcv.abst.tracker.ConfigTrackerDda;
+import boofcv.abst.feature.detect.interest.PointDetectorTypes;
+import boofcv.abst.feature.orientation.ConfigOrientation2;
 import boofcv.abst.tracker.PointTracker;
-import boofcv.alg.feature.detect.interest.GeneralFeatureDetector;
-import boofcv.alg.feature.detect.selector.FeatureSelectLimit;
-import boofcv.alg.feature.detect.selector.FeatureSelectNBest;
-import boofcv.alg.filter.derivative.GImageDerivativeOps;
 import boofcv.alg.tracker.klt.ConfigPKlt;
-import boofcv.alg.transform.ii.GIntegralImageOps;
 import boofcv.common.*;
-import boofcv.factory.feature.associate.FactoryAssociation;
-import boofcv.factory.feature.describe.FactoryDescribeRegionPoint;
-import boofcv.factory.feature.detect.extract.FactoryFeatureExtractor;
-import boofcv.factory.feature.detect.intensity.FactoryIntensityPoint;
-import boofcv.factory.feature.detect.interest.FactoryInterestPoint;
-import boofcv.factory.feature.orientation.FactoryOrientationAlgs;
+import boofcv.factory.feature.describe.ConfigDescribeRegionPoint;
+import boofcv.factory.feature.detect.interest.ConfigDetectInterestPoint;
+import boofcv.factory.tracker.ConfigPointTracker;
 import boofcv.factory.tracker.FactoryPointTracker;
 import boofcv.io.image.SimpleImageSequence;
 import boofcv.io.wrapper.DefaultMediaManager;
@@ -193,109 +173,111 @@ public class PointTrackerRegression extends BaseRegression implements ImageRegre
 
 	public Info createFhKltSurf( Class bandType ) {
 
-		ConfigFastHessian configFH = new ConfigFastHessian();
-		configFH.maxFeaturesPerScale = 200;
-		configFH.extract.radius = 2;
-		configFH.extract.threshold = 1;
+		ConfigPointTracker config = new ConfigPointTracker();
+		config.typeTracker = ConfigPointTracker.TrackerType.HYBRID;
+		config.hybrid.reactivateThreshold = 200;
+		config.detDesc.typeDescribe = ConfigDescribeRegionPoint.DescriptorType.SURF_STABLE;
+		config.detDesc.typeDetector = ConfigDetectInterestPoint.DetectorType.FAST_HESSIAN;
+		config.detDesc.detectFastHessian.maxFeaturesPerScale = 200;
+		config.detDesc.detectFastHessian.extract.radius = 2;
+		config.detDesc.detectFastHessian.extract.threshold = 1;
+		config.detDesc.orientation.type = ConfigOrientation2.Type.SLIDING;
 
 		Info info = new Info();
 		info.name = "FhKltSurf";
 		info.imageType = ImageType.single(bandType);
-		info.tracker = FactoryPointTracker.combined_FH_SURF_KLT(null,200,configFH,null,null,bandType);
+		info.tracker = FactoryPointTracker.tracker(config,bandType,null);
 
 		return info;
 	}
 
 	public Info createFhBrief( Class bandType ) {
-		Class iiType = GIntegralImageOps.getIntegralType(bandType);
 
-		ConfigFastHessian configFH = new ConfigFastHessian();
-		configFH.maxFeaturesPerScale = 200;
-
-		InterestPointDetector detector = FactoryInterestPoint.fastHessian(configFH,bandType);
-		OrientationIntegral ori = FactoryOrientationAlgs.average_ii(null,iiType );
-		OrientationImage orientation = new OrientationIntegralToImage(ori,bandType,iiType);
-
-		DescribeRegionPoint describe = FactoryDescribeRegionPoint.brief(new ConfigBrief(false),bandType);
-		ScoreAssociation scorer = FactoryAssociation.defaultScore(describe.getDescriptionType());
-		AssociateDescription associate = DefaultConfigs.associateGreedy(scorer);
-		AssociateDescription2D associate2D = new AssociateDescTo2D(associate);
+		ConfigPointTracker config = new ConfigPointTracker();
+		config.typeTracker = ConfigPointTracker.TrackerType.DDA;
+		config.detDesc.typeDescribe = ConfigDescribeRegionPoint.DescriptorType.BRIEF;
+		config.detDesc.describeBrief.fixed = false;
+		config.detDesc.typeDetector = ConfigDetectInterestPoint.DetectorType.FAST_HESSIAN;
+		config.detDesc.detectFastHessian.maxFeaturesPerScale = 200;
+		config.detDesc.orientation.type = ConfigOrientation2.Type.AVERAGE;
 
 		Info info = new Info();
 		info.name = "FhBrief";
 		info.imageType = ImageType.single(bandType);
-		info.tracker = FactoryPointTracker.dda(detector,orientation, describe , associate2D, new ConfigTrackerDda());
+		info.tracker = FactoryPointTracker.tracker(config,bandType,null);
 
 		return info;
 	}
 
 	public Info createHarrisNCC( Class bandType ) {
-		Class derivType = GImageDerivativeOps.getDerivativeType(bandType);
-
-		GeneralFeatureIntensity intensity = FactoryIntensityPoint.harris(3, 0.04f, false, derivType);
-		ConfigExtract configExtract = new ConfigExtract(10,0.01f);
-		configExtract.detectMaximums = intensity.localMaximums();
-		configExtract.detectMinimums = intensity.localMinimums();
-		NonMaxSuppression nonmax = FactoryFeatureExtractor.nonmax(configExtract);
-		FeatureSelectLimit select = new FeatureSelectNBest();
-		GeneralFeatureDetector detector = FactoryFeatureExtractor.general(intensity,nonmax,select,600);
-
-		DescribeRegionPoint describe = FactoryDescribeRegionPoint.pixelNCC(7,7,bandType);
-		ScoreAssociation scorer = FactoryAssociation.defaultScore(describe.getDescriptionType());
-		AssociateDescription associate = DefaultConfigs.associateGreedy(scorer);
-		AssociateDescription2D associate2D = new AssociateDescTo2D(associate);
+		ConfigPointTracker config = new ConfigPointTracker();
+		config.typeTracker = ConfigPointTracker.TrackerType.DDA;
+		config.detDesc.typeDescribe = ConfigDescribeRegionPoint.DescriptorType.TEMPLATE;
+		config.detDesc.describeTemplate.type = ConfigTemplateDescribe.Type.NCC;
+		config.detDesc.describeTemplate.width = 7;
+		config.detDesc.describeTemplate.height = 7;
+		config.detDesc.typeDetector = ConfigDetectInterestPoint.DetectorType.POINT;
+		config.detDesc.detectPoint.type = PointDetectorTypes.HARRIS;
+		config.detDesc.detectPoint.harris.kappa = 0.04;
+		config.detDesc.detectPoint.harris.radius = 3;
+		config.detDesc.detectPoint.scaleRadius = 2.0;
+		config.detDesc.detectPoint.general.radius = 10;
+		config.detDesc.detectPoint.general.threshold = 0.01f;
+		config.detDesc.detectPoint.general.maxFeatures = 600;
 
 		Info info = new Info();
 		info.name = "HarrisNCC";
 		info.imageType = ImageType.single(bandType);
-		info.tracker = FactoryPointTracker.dda(detector, describe , associate2D, 2,bandType);
+		info.tracker = FactoryPointTracker.tracker(config,bandType,null);
 
 		return info;
 	}
 
 	public Info createShiNCC( Class bandType ) {
-		Class derivType = GImageDerivativeOps.getDerivativeType(bandType);
 
-		GeneralFeatureIntensity intensity = FactoryIntensityPoint.shiTomasi(3, false, derivType);
-		ConfigExtract configExtract = new ConfigExtract(10,0.01f);
-		configExtract.detectMaximums = intensity.localMaximums();
-		configExtract.detectMinimums = intensity.localMinimums();
-		NonMaxSuppression nonmax = FactoryFeatureExtractor.nonmax(configExtract);
-		FeatureSelectLimit select = new FeatureSelectNBest();
-		GeneralFeatureDetector detector = FactoryFeatureExtractor.general(intensity,nonmax,select,600);
-
-		DescribeRegionPoint describe = FactoryDescribeRegionPoint.pixelNCC(7,7,bandType);
-		ScoreAssociation scorer = FactoryAssociation.defaultScore(describe.getDescriptionType());
-		AssociateDescription associate = DefaultConfigs.associateGreedy(scorer);
-		AssociateDescription2D associate2D = new AssociateDescTo2D(associate);
+		ConfigPointTracker config = new ConfigPointTracker();
+		config.typeTracker = ConfigPointTracker.TrackerType.DDA;
+		config.detDesc.typeDescribe = ConfigDescribeRegionPoint.DescriptorType.TEMPLATE;
+		config.detDesc.describeTemplate.type = ConfigTemplateDescribe.Type.NCC;
+		config.detDesc.describeTemplate.width = 7;
+		config.detDesc.describeTemplate.height = 7;
+		config.detDesc.typeDetector = ConfigDetectInterestPoint.DetectorType.POINT;
+		config.detDesc.detectPoint.type = PointDetectorTypes.SHI_TOMASI;
+		config.detDesc.detectPoint.shiTomasi.radius = 3;
+		config.detDesc.detectPoint.scaleRadius = 2.0;
+		config.detDesc.detectPoint.general.radius = 10;
+		config.detDesc.detectPoint.general.threshold = 0.01f;
+		config.detDesc.detectPoint.general.maxFeatures = 600;
 
 		Info info = new Info();
 		info.name = "ShiTomasiNCC";
 		info.imageType = ImageType.single(bandType);
-		info.tracker = FactoryPointTracker.dda(detector, describe , associate2D, 2,bandType);
+		info.tracker = FactoryPointTracker.tracker(config,bandType,null);
 
 		return info;
 	}
 
 	public Info createFastNCC( Class bandType ) {
 
-		GeneralFeatureIntensity intensity = FactoryIntensityPoint.fast(6, 9, bandType);
-		ConfigExtract configExtract = new ConfigExtract(10,6);
-		configExtract.detectMaximums = intensity.localMaximums();
-		configExtract.detectMinimums = intensity.localMinimums();
-		NonMaxSuppression nonmax = FactoryFeatureExtractor.nonmax(configExtract);
-		FeatureSelectLimit select = new FeatureSelectNBest();
-		GeneralFeatureDetector detector = FactoryFeatureExtractor.general(intensity, nonmax, select,300);
-
-		DescribeRegionPoint describe = FactoryDescribeRegionPoint.pixelNCC(7,7,bandType);
-		ScoreAssociation scorer = FactoryAssociation.defaultScore(describe.getDescriptionType());
-		AssociateDescription associate = DefaultConfigs.associateGreedy(scorer);
-		AssociateDescription2D associate2D = new AssociateDescTo2D(associate);
+		ConfigPointTracker config = new ConfigPointTracker();
+		config.typeTracker = ConfigPointTracker.TrackerType.DDA;
+		config.detDesc.typeDescribe = ConfigDescribeRegionPoint.DescriptorType.TEMPLATE;
+		config.detDesc.describeTemplate.type = ConfigTemplateDescribe.Type.NCC;
+		config.detDesc.describeTemplate.width = 7;
+		config.detDesc.describeTemplate.height = 7;
+		config.detDesc.typeDetector = ConfigDetectInterestPoint.DetectorType.POINT;
+		config.detDesc.detectPoint.type = PointDetectorTypes.FAST;
+		config.detDesc.detectPoint.fast.pixelTol = 6;
+		config.detDesc.detectPoint.fast.minContinuous = 9;
+		config.detDesc.detectPoint.scaleRadius = 2.0;
+		config.detDesc.detectPoint.general.radius = 10;
+		config.detDesc.detectPoint.general.threshold = 6f;
+		config.detDesc.detectPoint.general.maxFeatures = 300;
 
 		Info info = new Info();
 		info.name = "FastNCC";
 		info.imageType = ImageType.single(bandType);
-		info.tracker = FactoryPointTracker.dda(detector, describe , associate2D, 2,bandType);
+		info.tracker = FactoryPointTracker.tracker(config,bandType,null);
 
 		return info;
 	}
@@ -328,5 +310,6 @@ public class PointTrackerRegression extends BaseRegression implements ImageRegre
 	public static void main(String[] args) throws IOException, IllegalAccessException, InstantiationException, ClassNotFoundException {
 		BoofRegressionConstants.clearCurrentResults();
 		RegressionRunner.main(new String[]{PointTrackerRegression.class.getName(),ImageDataType.F32.toString()});
+		RegressionRunner.main(new String[]{PointTrackerRegression.class.getName(),ImageDataType.U8.toString()});
 	}
 }
