@@ -1,39 +1,39 @@
 # GENERATOR PointTrackerRegression
 # Inlier Tolerance 5.0  Algorithm DefaultKLT
 
-# (Data Set) (Skip) (F) (F all inside) (Precision) (Recall) (Recall all inside) (Tracks)
-bricks/skew               1  0.711  0.997  0.998  0.572  0.996  458.0
-bricks/skew               4  0.398  0.534  0.560  0.325  0.511  414.0
-bricks/skew               8  0.156  0.180  0.195  0.136  0.169  318.0
-bricks/rotate             1  0.823  0.977  0.977  0.716  0.976  565.0
-bricks/rotate             4  0.101  0.120  0.189  0.073  0.092  258.0
-bricks/rotate             8  0.032  0.036  0.081  0.022  0.026  131.0
-bricks/move_out           1  0.998  0.998  0.998  0.998  0.998  754.0
-bricks/move_out           4  0.928  0.928  0.936  0.920  0.920  741.0
-bricks/move_out           8  0.494  0.494  0.585  0.427  0.427  551.0
-bricks/move_in            1  0.575  0.939  0.940  0.466  0.938  339.0
-bricks/move_in            4  0.576  0.942  0.942  0.466  0.942  340.0
-bricks/move_in            8  0.488  0.745  0.738  0.403  0.752  340.0
-carpet/skew               1  0.492  0.857  0.863  0.388  0.850  273.0
-carpet/skew               4  0.452  0.771  0.795  0.359  0.749  261.0
-carpet/skew               8  0.324  0.505  0.635  0.265  0.443  206.0
-carpet/rotate             1  0.604  0.689  0.700  0.536  0.677  471.0
-carpet/rotate             4  0.510  0.582  0.634  0.439  0.543  408.0
-carpet/rotate             8  0.238  0.271  0.505  0.176  0.206  177.0
-carpet/move_out           1  0.875  0.875  0.880  0.869  0.869  782.0
-carpet/move_out           4  0.901  0.901  0.906  0.896  0.896  784.0
-carpet/move_out           8  0.750  0.750  0.799  0.707  0.707  698.0
-carpet/move_in            1  0.579  0.889  0.890  0.469  0.888  321.0
-carpet/move_in            4  0.590  0.930  0.931  0.475  0.930  319.0
-carpet/move_in            8  0.561  0.882  0.887  0.451  0.876  311.0
-various/lighting          1  0.466  0.466  0.548  0.410  0.410  465.0
-various/lighting          4  0.447  0.447  0.522  0.397  0.397  465.0
-various/lighting          8  0.423  0.423  0.501  0.375  0.375  443.0
-various/compressed        1  0.239  0.331  0.663  0.163  0.232  129.0
-various/compressed        4  0.208  0.266  0.430  0.159  0.209  157.0
-various/compressed        8  0.120  0.134  0.170  0.100  0.117  142.0
-various/urban             1  0.491  0.647  0.709  0.394  0.598  350.0
-various/urban             4  0.132  0.146  0.186  0.113  0.130  172.0
-various/urban             8  0.059  0.061    NaN  0.052  0.056   94.0
+# (Data Set) (Skip) (F) (F all inside) (Precision) (Recall) (Recall all inside) (Tracks) (Image Area)
+bricks/skew               1  0.710  0.996  0.999  0.571  0.993  457.0  76
+bricks/skew               4  0.680  0.963  0.984  0.539  0.943  438.0  75
+bricks/skew               8  0.570  0.796  0.831  0.452  0.766  422.0  73
+bricks/rotate             1  0.835  0.991  0.991  0.726  0.991  566.0  69
+bricks/rotate             4  0.674  0.801  0.837  0.570  0.769  521.0  66
+bricks/rotate             8  0.271  0.322  0.440  0.207  0.262  327.0  48
+bricks/move_out           1  0.997  0.997  0.997  0.997  0.997  754.0  35
+bricks/move_out           4  0.994  0.994  0.996  0.991  0.991  750.0  34
+bricks/move_out           8  0.943  0.943  0.957  0.929  0.929  732.0  34
+bricks/move_in            1  0.575  0.939  0.939  0.465  0.939  339.0  75
+bricks/move_in            4  0.578  0.953  0.955  0.467  0.951  338.0  75
+bricks/move_in            8  0.571  0.944  0.944  0.460  0.944  334.0  75
+carpet/skew               1  0.492  0.858  0.867  0.388  0.850  272.0  63
+carpet/skew               4  0.491  0.855  0.859  0.387  0.851  270.0  64
+carpet/skew               8  0.485  0.863  0.880  0.378  0.848  262.0  62
+carpet/rotate             1  0.609  0.694  0.708  0.539  0.681  469.0  71
+carpet/rotate             4  0.587  0.668  0.679  0.522  0.658  471.0  70
+carpet/rotate             8  0.506  0.578  0.635  0.433  0.537  403.0  63
+carpet/move_out           1  0.876  0.876  0.881  0.871  0.871  783.0  39
+carpet/move_out           4  0.904  0.904  0.910  0.898  0.898  782.0  38
+carpet/move_out           8  0.920  0.920  0.925  0.915  0.915  784.0  38
+carpet/move_in            1  0.582  0.897  0.898  0.471  0.896  321.0  75
+carpet/move_in            4  0.591  0.934  0.938  0.476  0.930  317.0  75
+carpet/move_in            8  0.590  0.941  0.943  0.473  0.938  313.0  74
+various/lighting          1  0.461  0.461  0.541  0.407  0.407  466.0  75
+various/lighting          4  0.444  0.444  0.520  0.393  0.393  462.0  76
+various/lighting          8  0.421  0.421  0.499  0.373  0.373  441.0  73
+various/compressed        1  0.244  0.342  0.690  0.166  0.239  129.0  38
+various/compressed        4  0.371  0.528  0.773  0.267  0.412  193.0  51
+various/compressed        8  0.378  0.522  0.675  0.285  0.436  227.0  55
+various/urban             1  0.516  0.687  0.747  0.414  0.639  356.0  56
+various/urban             4  0.327  0.412  0.514  0.268  0.364  287.0  48
+various/urban             8  0.195  0.224  0.359  0.167  0.199  194.0  33
 
-SUMMARY: F= 0.477 FA= 0.597 PR= 0.645 RE= 0.416 MT= 382.9
+SUMMARY: F= 0.587 FA= 0.748 PR= 0.797 RE= 0.511 MT= 429.7 AREA= 60

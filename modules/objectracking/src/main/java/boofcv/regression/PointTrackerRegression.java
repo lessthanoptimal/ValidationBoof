@@ -19,7 +19,6 @@ import boofcv.metrics.point.LogParseHomography;
 import boofcv.metrics.point.WrapPointTracker;
 import boofcv.struct.image.ImageDataType;
 import boofcv.struct.image.ImageType;
-import boofcv.struct.pyramid.ConfigDiscreteLevels;
 import georegression.struct.homography.Homography2D_F64;
 import org.ddogleg.struct.GrowQueue_F64;
 import org.ejml.UtilEjml;
@@ -49,7 +48,7 @@ public class PointTrackerRegression extends BaseRegression implements ImageRegre
 	GrowQueue_F64 runtimeSummary = new GrowQueue_F64();
 
 	// summary for a tracker
-	double summaryMeanF,summaryMeanFA,summaryMeanPrecision,summaryMeanRecall,summaryMeanTracks;
+	double summaryMeanF,summaryMeanFA,summaryMeanPrecision,summaryMeanRecall,summaryMeanTracks,summaryImageArea;
 
 	public PointTrackerRegression() {
 		super(BoofRegressionConstants.TYPE_TRACKING);
@@ -88,14 +87,14 @@ public class PointTrackerRegression extends BaseRegression implements ImageRegre
 
 	protected void process( Info info , Class bandType ) throws FileNotFoundException {
 		// reset summary statistics
-		summaryMeanF=summaryMeanFA=summaryMeanPrecision=summaryMeanRecall=summaryMeanTracks=0;
+		summaryMeanF=summaryMeanFA=summaryMeanPrecision=summaryMeanRecall=summaryMeanTracks=summaryImageArea=0;
 		runtimeSummary.reset();
 
 		PrintStream outSummary = new PrintStream(new File(directoryMetrics,"ACC_PointTracker_"+info.name+".txt"));
 		BoofRegressionConstants.printGenerator(outSummary, getClass());
 		outSummary.println("# Inlier Tolerance " + tolerance + "  Algorithm " + info.name);
 		outSummary.println();
-		outSummary.println("# (Data Set) (Skip) (F) (F all inside) (Precision) (Recall) (Recall all inside) (Tracks)");
+		outSummary.println("# (Data Set) (Skip) (F) (F all inside) (Precision) (Recall) (Recall all inside) (Tracks) (Image Area)");
 
 		int totalTrials = 0;
 		for( String directory : dataDirectories ) {
@@ -128,8 +127,9 @@ public class PointTrackerRegression extends BaseRegression implements ImageRegre
 		summaryMeanPrecision /= totalTrials;
 		summaryMeanRecall /= totalTrials;
 		summaryMeanTracks /= totalTrials;
-		outSummary.printf("SUMMARY: F=%6.3f FA=%6.3f PR=%6.3f RE=%6.3f MT=%6.1f\n",
-				summaryMeanF,summaryMeanFA,summaryMeanPrecision,summaryMeanRecall,summaryMeanTracks);
+		summaryImageArea /= totalTrials;
+		outSummary.printf("SUMMARY: F=%6.3f FA=%6.3f PR=%6.3f RE=%6.3f MT=%6.1f AREA=%3d\n",
+				summaryMeanF,summaryMeanFA,summaryMeanPrecision,summaryMeanRecall,summaryMeanTracks,(int)summaryImageArea);
 
 
 		outSummary.close();
@@ -153,9 +153,9 @@ public class PointTrackerRegression extends BaseRegression implements ImageRegre
 
 		app.evaluate(tracker,sequence,groundTruth,null);
 
-		outSummary.printf("%-24s %2d %6.3f %6.3f %6.3f %6.3f %6.3f %6.1f\n", dataName, skip,
+		outSummary.printf("%-24s %2d %6.3f %6.3f %6.3f %6.3f %6.3f %6.1f %3d\n", dataName, skip,
 				app.getMeanF(), app.getMeanFA(), app.getMeanPrecision(), app.getMeanRecall(), app.getMeanRecallA(),
-				app.getMeanTrackCount());
+				app.getMeanTrackCount(),(int)app.getMeanImageArea());
 
 		runtimeSummary.addAll(app.elapsedTimeMS);
 		summaryMeanF = addOnlyIfCountable(summaryMeanF,app.getMeanF());
@@ -163,6 +163,7 @@ public class PointTrackerRegression extends BaseRegression implements ImageRegre
 		summaryMeanPrecision = addOnlyIfCountable(summaryMeanPrecision,app.getMeanPrecision());
 		summaryMeanRecall = addOnlyIfCountable(summaryMeanRecall,app.getMeanRecall());
 		summaryMeanTracks = addOnlyIfCountable(summaryMeanTracks,app.getMeanTrackCount());
+		summaryImageArea = addOnlyIfCountable(summaryImageArea,app.getMeanImageArea());
 	}
 
 	public static double addOnlyIfCountable( double value , double additive ) {
@@ -285,7 +286,7 @@ public class PointTrackerRegression extends BaseRegression implements ImageRegre
 	public Info createDefaultKlt(Class bandType) {
 
 		ConfigPKlt configKlt = new ConfigPKlt();
-		configKlt.pyramidLevels = ConfigDiscreteLevels.levels(4);
+//		configKlt.pyramidLevels = ConfigDiscreteLevels.levels(4); <-- made it much worse!
 
 		ConfigPointDetector configDet = new ConfigPointDetector();
 		configDet.general.maxFeatures = 800;

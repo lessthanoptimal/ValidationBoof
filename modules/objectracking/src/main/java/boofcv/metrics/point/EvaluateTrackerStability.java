@@ -1,5 +1,6 @@
 package boofcv.metrics.point;
 
+import boofcv.alg.misc.ImageCoverage;
 import boofcv.gui.image.ImagePanel;
 import boofcv.io.image.SimpleImageSequence;
 import boofcv.io.wrapper.DefaultMediaManager;
@@ -35,6 +36,11 @@ public class EvaluateTrackerStability<T extends ImageGray<T>> {
 	// tolerance for how close a feature needs to be
 	double tol;
 
+	// used to compute the area covered by image features
+	// Image area is used as a sanity check. There was a bug where a tracker returned the same point 500 times and it
+	// scored very well.
+	ImageCoverage coverage = new ImageCoverage();
+
 	Point2D_F64 p = new Point2D_F64();
 
 	double meanPrecision;
@@ -43,6 +49,7 @@ public class EvaluateTrackerStability<T extends ImageGray<T>> {
 	double meanTrackCount;
 	double meanF;
 	double meanFA;
+	double meanImageArea;
 
 	// keeps track of per frame processing time
 	public GrowQueue_F64 elapsedTimeMS = new GrowQueue_F64();
@@ -74,6 +81,7 @@ public class EvaluateTrackerStability<T extends ImageGray<T>> {
 		double sumRecall = 0;
 		double sumF = 0;
 		double sumFA = 0;
+		double sumArea = 0;
 		int sumTotalTracks = 0;
 
 		int totalEvaluations = 0;
@@ -90,6 +98,8 @@ public class EvaluateTrackerStability<T extends ImageGray<T>> {
 			Homography2D_F64 H = transforms.get(totalFrames);
 
 			T image = sequence.next();
+
+			coverage.reset(500,image.width, image.height);
 
 			if( totalFrames % dropRate == 0 ) {
 				long time0 = System.nanoTime();
@@ -126,12 +136,19 @@ public class EvaluateTrackerStability<T extends ImageGray<T>> {
 					List<Point2D_F64> initial = tracker.getInitial();
 					List<Point2D_F64> current = tracker.getCurrent();
 
+					for( Point2D_F64 pixel : current ) {
+						coverage.markPixel((int)pixel.x,(int)pixel.y);
+					}
+
 					double truePositive = computeTruePositives(initial,current,H,false);
 					double truePositiveA = computeTruePositives(initial,current,H,true);
 
 					double precision = truePositive/(double)initial.size();
 					double recallA = truePositiveA/(double)alwaysInside.size();
 					double recall = truePositive/(double)originalSize;
+
+					coverage.process();
+					double imageArea = coverage.getFraction();
 
 					double FA = 2.0*(precision*recallA)/(precision+recallA);
 					double F = 2.0*(precision*recall)/(precision+recall);
@@ -143,8 +160,8 @@ public class EvaluateTrackerStability<T extends ImageGray<T>> {
 						out.printf("%04d %6.3f %6.3f %6.3f %6.3f %6.3f %d\n",totalFrames,F,FA,
 								precision,recall,recallA,initial.size());
 
-					System.out.printf("%4d  F = %6.3f FA = %6.3f NT = %3d NA = %3d\n",
-							totalFrames,F,FA,initial.size(),alwaysInside.size());
+					System.out.printf("%4d  F = %6.3f FA = %6.3f NT = %3d NA = %3d AREA=%2d\n",
+							totalFrames,F,FA,initial.size(),alwaysInside.size(),(int)(100.0*imageArea));
 
 					sumPrecision += precision;
 					sumRecallA += recallA;
@@ -153,6 +170,7 @@ public class EvaluateTrackerStability<T extends ImageGray<T>> {
 					sumFA += FA;
 					totalEvaluations++;
 					sumTotalTracks += initial.size();
+					sumArea += imageArea;
 				}
 			}
 
@@ -167,7 +185,7 @@ public class EvaluateTrackerStability<T extends ImageGray<T>> {
 		meanTrackCount = sumTotalTracks / totalEvaluations;
 		meanF = sumF / totalEvaluations;
 		meanFA = sumFA / totalEvaluations;
-
+		meanImageArea = sumArea / totalEvaluations;
 
 		System.out.println();
 		System.out.printf("Mean Summary:  F %7.3f  FA %7.3f \n",meanF,meanFA);
@@ -274,7 +292,11 @@ public class EvaluateTrackerStability<T extends ImageGray<T>> {
 		return meanFA;
 	}
 
-	public static void main( String args[] ) throws FileNotFoundException {
+	public double getMeanImageArea() {
+		return 100*meanImageArea;
+	}
+
+	public static void main(String args[] ) throws FileNotFoundException {
 
 		Class imageType = GrayF32.class;
 
