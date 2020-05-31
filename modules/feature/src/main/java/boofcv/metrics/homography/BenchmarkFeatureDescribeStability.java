@@ -20,7 +20,7 @@
 package boofcv.metrics.homography;
 
 import boofcv.abst.feature.associate.AssociateDescription;
-import boofcv.abst.feature.associate.ScoreAssociateEuclideanSq_F64;
+import boofcv.abst.feature.associate.ScoreAssociateEuclideanSq;
 import boofcv.abst.feature.associate.ScoreAssociation;
 import boofcv.common.BoofRegressionConstants;
 import boofcv.factory.feature.associate.ConfigAssociateGreedy;
@@ -329,7 +329,7 @@ public class BenchmarkFeatureDescribeStability {
 		configGreedy.forwardsBackwards = false;
 		configGreedy.maxErrorThreshold = -1;
 
-		ScoreAssociation<TupleDesc_F64> score = new ScoreAssociateEuclideanSq_F64();
+		ScoreAssociation<TupleDesc_F64> score = new ScoreAssociateEuclideanSq.F64();
 		AssociateDescription<TupleDesc_F64> assoc = FactoryAssociation.greedy(configGreedy,score);
 
 		BenchmarkFeatureDescribeStability app = new BenchmarkFeatureDescribeStability(assoc, "","",tolerance);

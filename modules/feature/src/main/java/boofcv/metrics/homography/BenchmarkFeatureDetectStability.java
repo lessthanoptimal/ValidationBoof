@@ -19,8 +19,6 @@
 
 package boofcv.metrics.homography;
 
-import boofcv.abst.feature.associate.ScoreAssociateEuclideanSq_F64;
-import boofcv.abst.feature.associate.ScoreAssociation;
 import boofcv.common.BoofRegressionConstants;
 import boofcv.io.image.UtilImageIO;
 import boofcv.regression.DetectDescribeRegression;
@@ -284,8 +282,6 @@ public class BenchmarkFeatureDetectStability {
 
 	public static void main( String args[] ) throws FileNotFoundException {
 		double tolerance = 1.5;
-
-		ScoreAssociation score = new ScoreAssociateEuclideanSq_F64();
 
 		BenchmarkFeatureDetectStability app = new BenchmarkFeatureDetectStability( "","",tolerance);
 

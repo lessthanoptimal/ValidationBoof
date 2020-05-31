@@ -105,7 +105,7 @@ public class CodecPFM {
 	}
 
 	public static void main(String[] args) throws IOException {
-		File f = BoofSwingUtil.fileChooser("CodecPFM",null,true,".");
+		File f = BoofSwingUtil.fileChooser("CodecPFM",null,true,".",null);
 		if( f == null )
 			return;
 		GrayF32 disparity = read(new FileInputStream(f),null);

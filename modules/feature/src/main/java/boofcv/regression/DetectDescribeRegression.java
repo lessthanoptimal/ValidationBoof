@@ -1,7 +1,7 @@
 package boofcv.regression;
 
 import boofcv.abst.feature.associate.AssociateDescription;
-import boofcv.abst.feature.associate.ScoreAssociateEuclideanSq_F64;
+import boofcv.abst.feature.associate.ScoreAssociateEuclideanSq;
 import boofcv.abst.feature.associate.ScoreAssociation;
 import boofcv.abst.feature.describe.ConfigBrief;
 import boofcv.abst.feature.describe.DescribeRegionPoint;
@@ -64,7 +64,7 @@ public class DetectDescribeRegression extends BaseRegression implements ImageReg
 //		all.add(briefSoFH());  // TODO add support for binary descriptors
 		all.add(sift());
 
-		ScoreAssociation<TupleDesc_F64> score = new ScoreAssociateEuclideanSq_F64();
+		ScoreAssociation<TupleDesc_F64> score = new ScoreAssociateEuclideanSq.F64();
 		AssociateDescription<TupleDesc_F64> assoc = DefaultConfigs.associateGreedy(score);
 
 		String tmp = BoofRegressionConstants.tempDir().toString();

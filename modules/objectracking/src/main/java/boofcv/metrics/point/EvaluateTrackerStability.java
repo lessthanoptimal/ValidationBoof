@@ -78,6 +78,8 @@ public class EvaluateTrackerStability<T extends ImageGray<T>> {
 
 		int totalEvaluations = 0;
 
+		tracker.reset();
+
 		while( sequence.hasNext() ) {
 
 			if( totalFrames >= transforms.size() ) {
@@ -292,7 +294,7 @@ public class EvaluateTrackerStability<T extends ImageGray<T>> {
 //		EvaluationTracker tracker = trackers.createSurf(false);
 //		EvaluationTracker tracker = trackers.createSurfWithScale(false);
 //		EvaluationTracker tracker = trackers.createFused();
-		EvaluationTracker tracker = trackers.createKlt();
+		EvaluationTracker tracker = trackers.create(EvaluatedAlgorithm.KLT);
 
 		app.evaluate(tracker,sequence,groundTruth,null);
 	}

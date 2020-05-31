@@ -20,7 +20,7 @@
 package boofcv.metrics.homography;
 
 import boofcv.abst.feature.associate.AssociateDescription;
-import boofcv.abst.feature.associate.ScoreAssociateEuclideanSq_F64;
+import boofcv.abst.feature.associate.ScoreAssociateEuclideanSq;
 import boofcv.abst.feature.associate.ScoreAssociation;
 import boofcv.factory.feature.associate.ConfigAssociateGreedy;
 import boofcv.factory.feature.associate.FactoryAssociation;
@@ -105,7 +105,7 @@ public class VisualizeAssociatedFeatures {
 	}
 
 	public static void main( String args[] ) {
-		ScoreAssociation score = new ScoreAssociateEuclideanSq_F64();
+		ScoreAssociation score = new ScoreAssociateEuclideanSq.F64();
 
 		// No backwards validation.  Want to show strength of descriptor and post processing validation
 		ConfigAssociateGreedy configGreedy = new ConfigAssociateGreedy();

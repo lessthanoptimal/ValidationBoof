@@ -30,7 +30,7 @@ public class EstimateUchiyaFiducialToCamera<T extends ImageGray<T>> extends Base
 		RandomDotDefinition definition = FiducialIO.loadRandomDotYaml(new File(datasetDirectory, "descriptions.yaml"));
 
 		ConfigUchiyaMarker config = new ConfigUchiyaMarker();
-		config.markerLength = definition.markerWidth;
+		config.markerHeight = config.markerWidth = definition.markerWidth;
 
 		Uchiya_to_FiducialDetector<T> detector = FactoryFiducial.randomDots(config,imageType);
 
