@@ -179,11 +179,7 @@ public class VisualDebugHomographyTruth<T extends ImageGray<T>> implements Mouse
 		List<Homography2D_F64> groundTruth = LogParseHomography.parse(pathToData+whichData+"_homography.txt");
 
 		FactoryEvaluationTrackers trackers = new FactoryEvaluationTrackers(imageType);
-//		EvaluationTracker tracker = trackers.createFhSurf(false);
-//		EvaluationTracker tracker = trackers.createFhSurfKlt();
-		EvaluationTracker tracker = trackers.createFhBriefKlt(false);
-//		EvaluationTracker tracker = trackers.createKlt();
-//		EvaluationTracker tracker = trackers.createBrief(false,false);
+		EvaluationTracker tracker = trackers.create(EvaluatedAlgorithm.KLT);
 
 
 		VisualDebugHomographyTruth app = new VisualDebugHomographyTruth(imageType);

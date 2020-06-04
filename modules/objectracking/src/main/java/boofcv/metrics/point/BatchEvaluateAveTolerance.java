@@ -36,9 +36,7 @@ public class BatchEvaluateAveTolerance {
 			EvaluateTrackerStability app = new EvaluateTrackerStability(tol,skip);
 
 			FactoryEvaluationTrackers trackers = new FactoryEvaluationTrackers(imageType);
-//			EvaluationTracker tracker = trackers.createSurf(false);
-			EvaluationTracker tracker = trackers.createFhSurfKlt();
-//			EvaluationTracker tracker = trackers.createKlt();
+			EvaluationTracker tracker = trackers.create(EvaluatedAlgorithm.KLT);
 
 			app.evaluate(tracker,sequence,groundTruth,null);
 

@@ -33,6 +33,7 @@ import boofcv.struct.image.*;
 import georegression.struct.point.Point2D_F64;
 import georegression.struct.se.Se3_F64;
 import org.ddogleg.struct.FastQueue;
+import org.ddogleg.struct.GrowQueue_I32;
 import org.ejml.data.DMatrixRMaj;
 import org.ejml.data.FMatrixRMaj;
 import org.ejml.ops.ConvertMatrixData;
@@ -143,6 +144,10 @@ public class ThreeViewStereoPerformance {
         FastQueue<BrightFeature> features02 = UtilFeature.createQueue(detDesc,100);
         FastQueue<BrightFeature> features03 = UtilFeature.createQueue(detDesc,100);
 
+        GrowQueue_I32 sets01 = new GrowQueue_I32();
+        GrowQueue_I32 sets02 = new GrowQueue_I32();
+        GrowQueue_I32 sets03 = new GrowQueue_I32();
+
         time0 = System.currentTimeMillis();
         detDesc.detect(image01);
 
@@ -157,18 +162,21 @@ public class ThreeViewStereoPerformance {
             Point2D_F64 pixel = detDesc.getLocation(i);
             locations01.grow().set(pixel.x-cx,pixel.y-cy);
             features01.grow().setTo(detDesc.getDescription(i));
+            sets01.add(detDesc.getSet(i));
         }
         detDesc.detect(image02);
         for (int i = 0; i < detDesc.getNumberOfFeatures(); i++) {
             Point2D_F64 pixel = detDesc.getLocation(i);
             locations02.grow().set(pixel.x-cx,pixel.y-cy);
             features02.grow().setTo(detDesc.getDescription(i));
+            sets02.add(detDesc.getSet(i));
         }
         detDesc.detect(image03);
         for (int i = 0; i < detDesc.getNumberOfFeatures(); i++) {
             Point2D_F64 pixel = detDesc.getLocation(i);
             locations03.grow().set(pixel.x-cx,pixel.y-cy);
             features03.grow().setTo(detDesc.getDescription(i));
+            sets03.add(detDesc.getSet(i));
         }
 
         ConfigAssociateGreedy configGreedy = new ConfigAssociateGreedy();
@@ -181,10 +189,11 @@ public class ThreeViewStereoPerformance {
 
         AssociateThreeByPairs<BrightFeature> associateThree = new AssociateThreeByPairs<>(associate,BrightFeature.class);
 
-        associateThree.setFeaturesA(features01);
-        associateThree.setFeaturesB(features02);
-        associateThree.setFeaturesC(features03);
+        associateThree.setFeaturesA(features01, sets01);
+        associateThree.setFeaturesB(features02, sets02);
+        associateThree.setFeaturesC(features03, sets03);
 
+        associateThree.initialize(detDesc.getNumberOfSets());
         associateThree.associate();
 
         FastQueue<AssociatedTripleIndex> associatedIdx = associateThree.getMatches();

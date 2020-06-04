@@ -39,7 +39,8 @@ import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import static boofcv.metrics.point.BatchEvaluateSummaryAndTime.pathToData;
+import static boofcv.regression.PointTrackerRegression.pathToData;
+
 
 /**
  * Post processes image sequences to create groups truth.  Image transforms are assumed to be well described
@@ -100,7 +101,7 @@ public class CreateGroundTruth {
 
 		FactoryEvaluationTrackers<GrayF32> factory = new FactoryEvaluationTrackers<GrayF32>(GrayF32.class);
 
-		tracker = factory.createFhSurfKlt();
+		tracker = factory.create(EvaluatedAlgorithm.FH_SURF_KLT);
 	}
 
 	public void process( SimpleImageSequence<GrayF32> sequence ) throws FileNotFoundException {

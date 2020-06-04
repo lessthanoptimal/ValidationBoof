@@ -17,6 +17,7 @@ import boofcv.metrics.point.EvaluateTrackerStability;
 import boofcv.metrics.point.EvaluationTracker;
 import boofcv.metrics.point.LogParseHomography;
 import boofcv.metrics.point.WrapPointTracker;
+import boofcv.struct.ConfigLength;
 import boofcv.struct.image.ImageDataType;
 import boofcv.struct.image.ImageType;
 import georegression.struct.homography.Homography2D_F64;
@@ -176,13 +177,17 @@ public class PointTrackerRegression extends BaseRegression implements ImageRegre
 
 		ConfigPointTracker config = new ConfigPointTracker();
 		config.typeTracker = ConfigPointTracker.TrackerType.HYBRID;
-		config.hybrid.reactivateThreshold = 200;
+		config.hybrid.pruneCloseTracks = false; // it's evaluated by how long tracks last. Pruning these would be bad
+		config.hybrid.maxInactiveTracks = 10000; // essentially unlimited tracks since this never spawns new tracks
+		config.hybrid.thresholdRespawn.setTo(ConfigLength.relative(0.5,100));
 		config.detDesc.typeDescribe = ConfigDescribeRegionPoint.DescriptorType.SURF_STABLE;
 		config.detDesc.typeDetector = ConfigDetectInterestPoint.DetectorType.FAST_HESSIAN;
 		config.detDesc.detectFastHessian.maxFeaturesPerScale = 200;
 		config.detDesc.detectFastHessian.extract.radius = 2;
 		config.detDesc.detectFastHessian.extract.threshold = 1;
 		config.detDesc.orientation.type = ConfigOrientation2.Type.SLIDING;
+		config.associate.greedy.forwardsBackwards = true;
+		config.associate.greedy.scoreRatioThreshold = 0.75;
 
 		Info info = new Info();
 		info.name = "FhKltSurf";
@@ -311,6 +316,6 @@ public class PointTrackerRegression extends BaseRegression implements ImageRegre
 	public static void main(String[] args) throws IOException, IllegalAccessException, InstantiationException, ClassNotFoundException {
 		BoofRegressionConstants.clearCurrentResults();
 		RegressionRunner.main(new String[]{PointTrackerRegression.class.getName(),ImageDataType.F32.toString()});
-		RegressionRunner.main(new String[]{PointTrackerRegression.class.getName(),ImageDataType.U8.toString()});
+//		RegressionRunner.main(new String[]{PointTrackerRegression.class.getName(),ImageDataType.U8.toString()});
 	}
 }
