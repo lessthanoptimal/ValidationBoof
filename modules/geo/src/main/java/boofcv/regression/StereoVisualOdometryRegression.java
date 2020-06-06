@@ -244,8 +244,9 @@ public class StereoVisualOdometryRegression extends BaseRegression implements Im
 		config.detectDescribe.describeBrief.fixed = true;
 //		config.detectDescribe.typeDescribe = ConfigDescribeRegionPoint.DescriptorType.SURF_FAST;
 
-		config.associateF2F.forwardsBackwards = false;
-		config.associateF2F.scoreRatioThreshold = 1.0;
+		config.associateF2F.greedy.forwardsBackwards = false;
+		config.associateF2F.greedy.scoreRatioThreshold = 1.0;
+		config.associateF2F.maximumDistancePixels.setRelative(0.15,0);
 
 		config.epipolarTol = 0.5;
 
