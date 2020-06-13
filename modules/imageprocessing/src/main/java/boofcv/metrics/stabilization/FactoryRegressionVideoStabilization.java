@@ -4,12 +4,13 @@ import boofcv.abst.feature.detect.interest.ConfigPointDetector;
 import boofcv.abst.sfm.d2.ImageMotion2D;
 import boofcv.abst.sfm.d2.PlToGrayMotion2D;
 import boofcv.abst.tracker.PointTracker;
-import boofcv.alg.filter.derivative.GImageDerivativeOps;
 import boofcv.alg.sfm.d2.StitchingFromMotion2D;
+import boofcv.alg.tracker.klt.ConfigPKlt;
 import boofcv.factory.sfm.FactoryMotion2D;
 import boofcv.factory.tracker.FactoryPointTracker;
 import boofcv.struct.image.ImageBase;
 import boofcv.struct.image.ImageType;
+import boofcv.struct.pyramid.ConfigDiscreteLevels;
 import georegression.struct.homography.Homography2D_F64;
 import org.ddogleg.struct.Tuple2;
 
@@ -23,15 +24,17 @@ public class FactoryRegressionVideoStabilization {
         // Configure the feature detector
         ConfigPointDetector configDet = new ConfigPointDetector();
         configDet.general.threshold = 10;
-        configDet.general.maxFeatures = 300;
         configDet.general.radius = 2;
 
+        ConfigPKlt configKlt = new ConfigPKlt();
+        configKlt.pyramidLevels = ConfigDiscreteLevels.levels(4);
+        configKlt.templateRadius = 3;
+        configKlt.maximumTracks = 300;
+
         Class imageClass = imageType.getImageClass();
-        Class derivClass = GImageDerivativeOps.getDerivativeType(imageClass);
 
         // Use a KLT tracker
-        PointTracker<T> tracker = FactoryPointTracker.klt(4,configDet,3,
-                imageClass,derivClass);
+        PointTracker<T> tracker = FactoryPointTracker.klt(configKlt,configDet,imageClass,null);
 
         // This estimates the 2D image motion
         // An Affine2D_F64 model also works quite well.

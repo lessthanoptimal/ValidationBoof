@@ -10,6 +10,7 @@ import boofcv.alg.feature.detect.interest.GeneralFeatureDetector;
 import boofcv.alg.filter.derivative.DerivativeType;
 import boofcv.alg.filter.derivative.GImageDerivativeOps;
 import boofcv.common.misc.PointFileCodec;
+import boofcv.concurrency.BoofConcurrency;
 import boofcv.factory.feature.detect.intensity.FactoryIntensityPoint;
 import boofcv.factory.feature.detect.interest.FactoryDetectPoint;
 import boofcv.io.image.UtilImageIO;
@@ -29,6 +30,8 @@ import java.util.List;
  * @author Peter Abeles
  */
 public class GenerateCornerFeatureFiles {
+
+	public final static int MAX_FEATURES = 200;
 
 	public static String ImagePath = "data/outdoors_gray.png";
 
@@ -68,7 +71,13 @@ public class GenerateCornerFeatureFiles {
 			AlgInfo info = detectors.get(i);
 			info.detector.process(input, derivX, derivY, derivXX, derivYY, derivXY);
 
-			List<Point2D_F64> points = new ArrayList<Point2D_F64>();
+			// sanity check. There was a bug where only maximums were being saved
+			if( MAX_FEATURES != info.detector.getMinimums().size + info.detector.getMaximums().size)
+				throw new RuntimeException("Unexpected number of features found");
+			assert(info.detector.isDetectMinimums() && info.detector.getMinimums().size > 0);
+			assert(info.detector.isDetectMaximums() && info.detector.getMaximums().size > 0);
+
+			List<Point2D_F64> points = new ArrayList<>();
 			if( info.detector.isDetectMaximums()) {
 				QueueCorner corners = info.detector.getMaximums();
 				for (int j = 0; j < corners.size; j++) {
@@ -88,14 +97,12 @@ public class GenerateCornerFeatureFiles {
 		}
 	}
 
-
-
 	public static List<AlgInfo> createAlgorithms( Class inputType, Class derivType ) {
 
 		List<AlgInfo> out = new ArrayList<AlgInfo>();
 
 		int radius = 2;
-		ConfigGeneralDetector confDector = new ConfigGeneralDetector(200,radius,0.1f);
+		ConfigGeneralDetector confDector = new ConfigGeneralDetector(MAX_FEATURES,radius,0.1f);
 
 		out.add( new AlgInfo("FAST",FactoryDetectPoint.createFast(confDector,null,inputType)) );
 		out.add( new AlgInfo("ShiTomasi",FactoryDetectPoint.createShiTomasi(confDector,
@@ -133,6 +140,7 @@ public class GenerateCornerFeatureFiles {
 	}
 
 	public static void main(String[] args) {
+		BoofConcurrency.USE_CONCURRENT = false;
 		GenerateCornerFeatureFiles generator = new GenerateCornerFeatureFiles();
 
 		generator.generateAll();

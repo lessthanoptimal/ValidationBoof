@@ -139,13 +139,13 @@ public class StereoVisualOdometryRegression extends BaseRegression implements Im
 		configKlt.config.maxIterations = 25;
 		configKlt.config.maxPerPixelError = 25;
 		configKlt.toleranceFB = 3;
+		configKlt.maximumTracks = 300;
 
 		ConfigPointDetector configDet = new ConfigPointDetector();
 		configDet.type = PointDetectorTypes.SHI_TOMASI;
 		configDet.shiTomasi.radius = 6;
 		configDet.general.radius = 5;
 		configDet.general.threshold = 1f;
-		configDet.general.maxFeatures = 300;
 		configDet.general.selector = ConfigSelectLimit.selectBestN();
 
 		ConfigVisOdomTrackPnP configVO = new ConfigVisOdomTrackPnP();
@@ -180,6 +180,7 @@ public class StereoVisualOdometryRegression extends BaseRegression implements Im
 		config.tracker.klt.config.maxIterations = 25;
 		config.tracker.klt.config.maxPerPixelError = 25;
 		config.tracker.klt.toleranceFB = 3;
+		config.tracker.klt.maximumTracks = 400;
 
 		// for stereo associations
 		config.tracker.detDesc.typeDescribe = ConfigDescribeRegionPoint.DescriptorType.BRIEF;
@@ -189,7 +190,6 @@ public class StereoVisualOdometryRegression extends BaseRegression implements Im
 		config.tracker.detDesc.detectPoint.type = PointDetectorTypes.SHI_TOMASI;
 		config.tracker.detDesc.detectPoint.scaleRadius = 11.0;
 		config.tracker.detDesc.detectPoint.shiTomasi.radius = 4;
-		config.tracker.detDesc.detectPoint.general.maxFeatures = 400;
 		config.tracker.detDesc.detectPoint.general.radius = 4;
 		config.tracker.detDesc.detectPoint.general.threshold = 1;
 
@@ -267,7 +267,7 @@ public class StereoVisualOdometryRegression extends BaseRegression implements Im
 	public static void main(String[] args) throws IOException, IllegalAccessException, InstantiationException, ClassNotFoundException {
 		BoofRegressionConstants.clearCurrentResults();
 		RegressionRunner.main(new String[]{StereoVisualOdometryRegression.class.getName(),ImageDataType.F32.toString()});
-		RegressionRunner.main(new String[]{StereoVisualOdometryRegression.class.getName(),ImageDataType.U8.toString()});
+//		RegressionRunner.main(new String[]{StereoVisualOdometryRegression.class.getName(),ImageDataType.U8.toString()});
 	}
 
 }

@@ -278,7 +278,7 @@ public class PointTrackerRegression extends BaseRegression implements ImageRegre
 		config.detDesc.detectPoint.scaleRadius = 2.0;
 		config.detDesc.detectPoint.general.radius = 10;
 		config.detDesc.detectPoint.general.threshold = 6f;
-		config.detDesc.detectPoint.general.maxFeatures = 300;
+		config.detDesc.detectPoint.general.maxFeatures = 600;
 
 		Info info = new Info();
 		info.name = "FastNCC";
@@ -291,10 +291,10 @@ public class PointTrackerRegression extends BaseRegression implements ImageRegre
 	public Info createDefaultKlt(Class bandType) {
 
 		ConfigPKlt configKlt = new ConfigPKlt();
+		configKlt.maximumTracks = 800;
 //		configKlt.pyramidLevels = ConfigDiscreteLevels.levels(4); <-- made it much worse!
 
 		ConfigPointDetector configDet = new ConfigPointDetector();
-		configDet.general.maxFeatures = 800;
 		configDet.general.radius = 8;
 		configDet.general.threshold = 1;
 

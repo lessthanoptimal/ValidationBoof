@@ -49,7 +49,6 @@ public class RuntimePerformanceVideoStabilization< T extends ImageBase<T>> {
 			stitcher.reset();
 
 			try {
-				long timeStart = System.currentTimeMillis();
 				int totalFrames = 0;
 				int totalFaults = 0;
 

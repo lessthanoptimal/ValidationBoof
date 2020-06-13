@@ -10,6 +10,10 @@ Description of changes to benchmarks and justifications for change in performanc
 - Add CPU info to MachineInfo.txt
 - PointTrackers
   * There was a mistake (for a long time) where reset was not called at the start of a new trial
+- Corners
+  * Needed to update ground truth list because the original BoofCV code was buggy when there were multiple sets
+    Only maximums were saved because the factory created the wrong extractor. Even if that wasn't there it would have
+    not returned the correct number of features.
 - TODO List the files which changed the first time they changed to reduce clutter
 - TODO Add regression for template matching
 
