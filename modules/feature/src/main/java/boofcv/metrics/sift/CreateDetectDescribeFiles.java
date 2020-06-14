@@ -22,7 +22,6 @@ package boofcv.metrics.sift;
 import boofcv.abst.feature.detdesc.DetectDescribePoint;
 import boofcv.factory.feature.detdesc.FactoryDetectDescribe;
 import boofcv.metrics.homography.CreateDetectDescribeFile;
-import boofcv.struct.feature.BrightFeature;
 import boofcv.struct.feature.TupleDesc_F64;
 import boofcv.struct.image.GrayF32;
 import boofcv.struct.image.ImageBase;
@@ -44,7 +43,7 @@ public class CreateDetectDescribeFiles {
 			}
 		};
 
-		CreateDetectDescribeFile<GrayF32,BrightFeature> cdf =
+		CreateDetectDescribeFile<GrayF32,TupleDesc_F64> cdf =
 				new CreateDetectDescribeFile<>(factory, ImageType.Family.GRAY, ImageDataType.F32,"BOOFCV_SIFTN");
 
 		cdf.directory(directory,"./");

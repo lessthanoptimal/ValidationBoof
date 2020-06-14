@@ -21,7 +21,7 @@ package boofcv.metrics.sift;
 
 import boofcv.abst.feature.describe.DescribeRegionPoint;
 import boofcv.metrics.homography.CreateDescriptionFile;
-import boofcv.struct.feature.BrightFeature;
+import boofcv.struct.feature.TupleDesc_F64;
 import boofcv.struct.image.GrayF32;
 import boofcv.struct.image.ImageType;
 
@@ -33,11 +33,10 @@ import java.io.FileNotFoundException;
 public class CreateDescriptionFileSift {
 	public static void doStuff( String directory , String imageSuffix ) throws FileNotFoundException {
 
-		DescribeRegionPoint<GrayF32,BrightFeature> alg =
-				FactorySift.createDescriptor();
+		DescribeRegionPoint<GrayF32, TupleDesc_F64> alg = FactorySift.createDescriptor();
 
-		CreateDescriptionFile<GrayF32,BrightFeature> cdf =
-				new CreateDescriptionFile<GrayF32,BrightFeature>(alg, ImageType.single(GrayF32.class),"BOOFCV_SIFT1");
+		CreateDescriptionFile<GrayF32,TupleDesc_F64> cdf =
+				new CreateDescriptionFile<>(alg, ImageType.single(GrayF32.class),"BOOFCV_SIFT1");
 
 		cdf.directory(directory,imageSuffix,"OpenIMAJ_SIFT.txt");
 	}

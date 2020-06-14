@@ -27,7 +27,7 @@ import boofcv.io.image.UtilImageIO;
 import boofcv.struct.border.BorderType;
 import boofcv.struct.calib.CameraPinholeBrown;
 import boofcv.struct.feature.AssociatedTripleIndex;
-import boofcv.struct.feature.BrightFeature;
+import boofcv.struct.feature.TupleDesc_F64;
 import boofcv.struct.geo.AssociatedTriple;
 import boofcv.struct.image.*;
 import georegression.struct.point.Point2D_F64;
@@ -133,23 +133,22 @@ public class ThreeViewStereoPerformance {
         image02 = ConvertImage.average(color02,null);
         image03 = ConvertImage.average(color03,null);
 
-        DetectDescribePoint<GrayU8, BrightFeature> detDesc = FactoryDetectDescribe.surfStable(
+        DetectDescribePoint<GrayU8, TupleDesc_F64> detDesc = FactoryDetectDescribe.surfStable(
                 new ConfigFastHessian(0, 4, 1000, 1, 9, 4, 2), null,null, GrayU8.class);
 
         FastQueue<Point2D_F64> locations01 = new FastQueue<>(Point2D_F64::new);
         FastQueue<Point2D_F64> locations02 = new FastQueue<>(Point2D_F64::new);
         FastQueue<Point2D_F64> locations03 = new FastQueue<>(Point2D_F64::new);
 
-        FastQueue<BrightFeature> features01 = UtilFeature.createQueue(detDesc,100);
-        FastQueue<BrightFeature> features02 = UtilFeature.createQueue(detDesc,100);
-        FastQueue<BrightFeature> features03 = UtilFeature.createQueue(detDesc,100);
+        FastQueue<TupleDesc_F64> features01 = UtilFeature.createQueue(detDesc,100);
+        FastQueue<TupleDesc_F64> features02 = UtilFeature.createQueue(detDesc,100);
+        FastQueue<TupleDesc_F64> features03 = UtilFeature.createQueue(detDesc,100);
 
         GrowQueue_I32 sets01 = new GrowQueue_I32();
         GrowQueue_I32 sets02 = new GrowQueue_I32();
         GrowQueue_I32 sets03 = new GrowQueue_I32();
 
         time0 = System.currentTimeMillis();
-        detDesc.detect(image01);
 
         int width = image01.width, height = image01.height;
         System.out.println("Image Shape "+width+" x "+height);
@@ -158,36 +157,22 @@ public class ThreeViewStereoPerformance {
 //		double scale = Math.max(cx,cy);
 
         // COMMENT ON center point zero
-        for (int i = 0; i < detDesc.getNumberOfFeatures(); i++) {
-            Point2D_F64 pixel = detDesc.getLocation(i);
-            locations01.grow().set(pixel.x-cx,pixel.y-cy);
-            features01.grow().setTo(detDesc.getDescription(i));
-            sets01.add(detDesc.getSet(i));
-        }
+        detDesc.detect(image01);
+        copyResults(detDesc, locations01, features01, sets01);
         detDesc.detect(image02);
-        for (int i = 0; i < detDesc.getNumberOfFeatures(); i++) {
-            Point2D_F64 pixel = detDesc.getLocation(i);
-            locations02.grow().set(pixel.x-cx,pixel.y-cy);
-            features02.grow().setTo(detDesc.getDescription(i));
-            sets02.add(detDesc.getSet(i));
-        }
+        copyResults(detDesc, locations02, features02, sets02);
         detDesc.detect(image03);
-        for (int i = 0; i < detDesc.getNumberOfFeatures(); i++) {
-            Point2D_F64 pixel = detDesc.getLocation(i);
-            locations03.grow().set(pixel.x-cx,pixel.y-cy);
-            features03.grow().setTo(detDesc.getDescription(i));
-            sets03.add(detDesc.getSet(i));
-        }
+        copyResults(detDesc, locations03, features03, sets03);
 
         ConfigAssociateGreedy configGreedy = new ConfigAssociateGreedy();
         configGreedy.forwardsBackwards = true;
         configGreedy.maxErrorThreshold = 0.1;
         configGreedy.scoreRatioThreshold = 1.0; // Unexpectedly, using this ratio made things worse
 
-        ScoreAssociation<BrightFeature> scorer = FactoryAssociation.scoreEuclidean(BrightFeature.class,true);
-        AssociateDescription<BrightFeature> associate = FactoryAssociation.greedy(configGreedy,scorer);
+        ScoreAssociation<TupleDesc_F64> scorer = FactoryAssociation.scoreEuclidean(TupleDesc_F64.class,true);
+        AssociateDescription<TupleDesc_F64> associate = FactoryAssociation.greedy(configGreedy,scorer);
 
-        AssociateThreeByPairs<BrightFeature> associateThree = new AssociateThreeByPairs<>(associate,BrightFeature.class);
+        AssociateThreeByPairs<TupleDesc_F64> associateThree = new AssociateThreeByPairs<>(associate,TupleDesc_F64.class);
 
         associateThree.setFeaturesA(features01, sets01);
         associateThree.setFeaturesB(features02, sets02);
@@ -201,6 +186,23 @@ public class ThreeViewStereoPerformance {
         for (int i = 0; i < associatedIdx.size; i++) {
             AssociatedTripleIndex p = associatedIdx.get(i);
             associated.grow().set(locations01.get(p.a),locations02.get(p.b),locations03.get(p.c));
+        }
+    }
+
+    private void copyResults(DetectDescribePoint<GrayU8, TupleDesc_F64> detDesc,
+                             FastQueue<Point2D_F64> locations,
+                             FastQueue<TupleDesc_F64> features,
+                             GrowQueue_I32 sets)
+    {
+        final int N = detDesc.getNumberOfFeatures();
+        locations.resize(N);
+        features.resize(N);
+        sets.resize(N);
+        for (int i = 0; i < detDesc.getNumberOfFeatures(); i++) {
+            Point2D_F64 pixel = detDesc.getLocation(i);
+            locations.get(i).set(pixel.x - cx, pixel.y - cy);
+            features.get(i).setTo(detDesc.getDescription(i));
+            sets.data[i] = detDesc.getSet(i);
         }
     }
 

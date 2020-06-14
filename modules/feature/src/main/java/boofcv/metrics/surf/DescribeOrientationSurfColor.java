@@ -26,7 +26,7 @@ import boofcv.alg.feature.describe.DescribePointSurfPlanar;
 import boofcv.alg.transform.ii.GIntegralImageOps;
 import boofcv.core.image.GConvertImage;
 import boofcv.core.image.GeneralizedImageOps;
-import boofcv.struct.feature.BrightFeature;
+import boofcv.struct.feature.TupleDesc_F64;
 import boofcv.struct.image.ImageGray;
 import boofcv.struct.image.ImageType;
 import boofcv.struct.image.Planar;
@@ -37,7 +37,7 @@ import boofcv.struct.image.Planar;
  * @author Peter Abeles
  */
 public class DescribeOrientationSurfColor<T extends ImageGray<T>, II extends ImageGray<II>>
-		implements DescribeRegionPoint<Planar<T>,BrightFeature>
+		implements DescribeRegionPoint<Planar<T>, TupleDesc_F64>
 {
 	private OrientationIntegral<II> orientation;
 	private DescribePointSurfPlanar<II> describe;
@@ -77,12 +77,12 @@ public class DescribeOrientationSurfColor<T extends ImageGray<T>, II extends Ima
 	}
 
 	@Override
-	public BrightFeature createDescription() {
+	public TupleDesc_F64 createDescription() {
 		return describe.createDescription();
 	}
 
 	@Override
-	public boolean process(double x, double y, double angle, double radius, BrightFeature ret) {
+	public boolean process(double x, double y, double angle, double radius, TupleDesc_F64 ret) {
 
 		double scale = radius/ BoofDefaults.SURF_SCALE_TO_RADIUS;
 		orientation.setObjectRadius(radius);
@@ -113,7 +113,7 @@ public class DescribeOrientationSurfColor<T extends ImageGray<T>, II extends Ima
 	}
 
 	@Override
-	public Class<BrightFeature> getDescriptionType() {
-		return BrightFeature.class;
+	public Class<TupleDesc_F64> getDescriptionType() {
+		return TupleDesc_F64.class;
 	}
 }

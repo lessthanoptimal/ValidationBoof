@@ -21,7 +21,7 @@ package boofcv.metrics.sift;
 
 import boofcv.abst.feature.detdesc.DetectDescribePoint;
 import boofcv.metrics.homography.BenchmarkFeatureAllRuntime;
-import boofcv.struct.feature.BrightFeature;
+import boofcv.struct.feature.TupleDesc_F64;
 import boofcv.struct.image.GrayF32;
 
 import java.io.IOException;
@@ -32,11 +32,10 @@ import java.io.IOException;
 public class BenchmarkRuntimeAllSift {
 	public static void main( String args[] ) throws IOException {
 
-		DetectDescribePoint<GrayF32,BrightFeature>
-				alg = FactorySift.detectDescribe();
+		DetectDescribePoint<GrayF32, TupleDesc_F64> alg = FactorySift.detectDescribe();
 
-		BenchmarkFeatureAllRuntime<GrayF32,BrightFeature> benchmark =
-				new BenchmarkFeatureAllRuntime<GrayF32,BrightFeature>(GrayF32.class,alg);
+		BenchmarkFeatureAllRuntime<GrayF32,TupleDesc_F64> benchmark =
+				new BenchmarkFeatureAllRuntime<GrayF32,TupleDesc_F64>(GrayF32.class,alg);
 
 		benchmark.benchmark("data/graf", 1);
 	}

@@ -25,7 +25,7 @@ import boofcv.alg.feature.describe.DescribePointSift;
 import boofcv.alg.feature.detect.interest.SiftScaleSpace;
 import boofcv.alg.feature.detect.interest.UnrollSiftScaleSpaceGradient;
 import boofcv.alg.feature.orientation.OrientationHistogramSift;
-import boofcv.struct.feature.BrightFeature;
+import boofcv.struct.feature.TupleDesc_F64;
 import boofcv.struct.image.GrayF32;
 import boofcv.struct.image.ImageType;
 import org.ddogleg.struct.GrowQueue_F64;
@@ -39,7 +39,7 @@ import java.util.List;
  * @author Peter Abeles
  */
 public class DescribeOrientationSift
-		implements DescribeRegionPoint<GrayF32,BrightFeature>
+		implements DescribeRegionPoint<GrayF32, TupleDesc_F64>
 {
 	UnrollSiftScaleSpaceGradient ss;
 
@@ -60,12 +60,12 @@ public class DescribeOrientationSift
 	}
 
 	@Override
-	public BrightFeature createDescription() {
-		return new BrightFeature(describe.getDescriptorLength());
+	public TupleDesc_F64 createDescription() {
+		return new TupleDesc_F64(describe.getDescriptorLength());
 	}
 
 	@Override
-	public boolean process(double x, double y, double angle, double radius, BrightFeature ret) {
+	public boolean process(double x, double y, double angle, double radius, TupleDesc_F64 ret) {
 
 		double sigma = radius / BoofDefaults.SIFT_SCALE_TO_RADIUS;
 
@@ -81,7 +81,7 @@ public class DescribeOrientationSift
 		return true;
 	}
 
-	public List<BrightFeature> process( double x , double y , double radius ) {
+	public List<TupleDesc_F64> process( double x , double y , double radius ) {
 
 		double sigma = radius / BoofDefaults.SIFT_SCALE_TO_RADIUS;
 
@@ -94,11 +94,11 @@ public class DescribeOrientationSift
 
 		GrowQueue_F64 found = orientation.getOrientations();
 
-		List<BrightFeature> ret = new ArrayList<BrightFeature>();
+		List<TupleDesc_F64> ret = new ArrayList<TupleDesc_F64>();
 		for( int i = 0; i < found.size; i++ ) {
 			double angle = found.get(i);
 
-			BrightFeature f = createDescription();
+			TupleDesc_F64 f = createDescription();
 			describe.process(x,y,sigma,angle,f);
 
 			ret.add(f);
@@ -128,7 +128,7 @@ public class DescribeOrientationSift
 	}
 
 	@Override
-	public Class<BrightFeature> getDescriptionType() {
-		return BrightFeature.class;
+	public Class<TupleDesc_F64> getDescriptionType() {
+		return TupleDesc_F64.class;
 	}
 }

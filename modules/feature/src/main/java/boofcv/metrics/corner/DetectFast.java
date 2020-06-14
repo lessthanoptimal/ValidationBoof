@@ -35,8 +35,8 @@ public class DetectFast {
 		alg.process(raw,intensity);
 
 		QueueCorner found = new QueueCorner();
-		found.appendAll(alg.getCandidatesHigh());
-		found.appendAll(alg.getCandidatesLow());
+		alg.getCandidatesHigh().copyInto(found);
+		alg.getCandidatesLow().copyInto(found);
 
 		PrintStream fos = new PrintStream(outputDirectory+FILE_NAME);
 
@@ -52,7 +52,7 @@ public class DetectFast {
 		NonMaxSuppression nonmax = FactoryFeatureExtractor.nonmax(new ConfigExtract(1,0,3,true, false, true));
 
 		QueueCorner peaks = new QueueCorner(1000);
-		nonmax.process(intensity,null,found,null,peaks);
+		nonmax.process(intensity,alg.getCandidatesLow(),alg.getCandidatesHigh(),null,peaks);
 
 		System.out.println("Nonmax "+peaks.size);
 	}

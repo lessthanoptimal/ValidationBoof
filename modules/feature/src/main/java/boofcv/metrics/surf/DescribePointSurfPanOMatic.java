@@ -22,7 +22,7 @@ package boofcv.metrics.surf;
 import boofcv.alg.descriptor.UtilFeature;
 import boofcv.alg.feature.describe.DescribePointSurf;
 import boofcv.factory.filter.kernel.FactoryKernelGaussian;
-import boofcv.struct.feature.BrightFeature;
+import boofcv.struct.feature.TupleDesc_F64;
 import boofcv.struct.image.ImageGray;
 import boofcv.struct.sparse.GradientValue;
 
@@ -74,7 +74,8 @@ public class DescribePointSurfPanOMatic<II extends ImageGray<II>> extends Descri
 	@Override
 	public void describe(double c_x, double c_y,
 						 double angle, double radius,
-						 BrightFeature ret)
+						 boolean normalize,
+						 TupleDesc_F64 ret)
 	{
 
 		double c = Math.cos(angle);
@@ -82,7 +83,7 @@ public class DescribePointSurfPanOMatic<II extends ImageGray<II>> extends Descri
 
 		// declare the feature if needed
 		if( ret == null )
-			ret = new BrightFeature(featureDOF);
+			ret = new TupleDesc_F64(featureDOF);
 		else if( ret.value.length != featureDOF )
 			throw new IllegalArgumentException("Provided feature must have "+featureDOF+" values");
 
@@ -111,13 +112,9 @@ public class DescribePointSurfPanOMatic<II extends ImageGray<II>> extends Descri
 			}
 		}
 
-		// normalize feature vector to have an Euclidean length of 1
-		// adds light invariance
-		UtilFeature.normalizeL2(ret);
-
-		// Laplacian's sign
-
-//TODO		ret.laplacianPositive = computeLaplaceSign((int) Math.round(c_x),(int) Math.round(c_y), scale);
+		// normalize feature vector to have an Euclidean length of 1 adds light invariance
+		if( normalize )
+			UtilFeature.normalizeL2(ret);
 	}
 
 	private void zeroCmp() {

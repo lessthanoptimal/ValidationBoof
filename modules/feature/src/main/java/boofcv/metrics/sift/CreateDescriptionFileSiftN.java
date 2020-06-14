@@ -20,7 +20,7 @@
 package boofcv.metrics.sift;
 
 import boofcv.metrics.homography.CreateDescriptionFile;
-import boofcv.struct.feature.BrightFeature;
+import boofcv.struct.feature.TupleDesc_F64;
 import boofcv.struct.image.GrayF32;
 import boofcv.struct.image.ImageType;
 
@@ -31,7 +31,7 @@ import java.util.List;
 /**
  * @author Peter Abeles
  */
-public class CreateDescriptionFileSiftN extends CreateDescriptionFile<GrayF32,BrightFeature> {
+public class CreateDescriptionFileSiftN extends CreateDescriptionFile<GrayF32, TupleDesc_F64> {
 	/**
 	 * Defines the set of images and detection files that are to be processed.
 	 *
@@ -48,7 +48,7 @@ public class CreateDescriptionFileSiftN extends CreateDescriptionFile<GrayF32,Br
 
 		DescribeOrientationSift sift = (DescribeOrientationSift)describe;
 
-		List<BrightFeature> found = sift.process(x,y,scale);
+		List<TupleDesc_F64> found = sift.process(x,y,scale);
 
 		for( int i = 0; i < found.size(); i++ ) {
 			Description d = new Description();

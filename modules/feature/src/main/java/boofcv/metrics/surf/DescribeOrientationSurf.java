@@ -24,7 +24,7 @@ import boofcv.abst.feature.describe.DescribeRegionPoint;
 import boofcv.abst.feature.orientation.OrientationIntegral;
 import boofcv.alg.feature.describe.DescribePointSurf;
 import boofcv.alg.transform.ii.GIntegralImageOps;
-import boofcv.struct.feature.BrightFeature;
+import boofcv.struct.feature.TupleDesc_F64;
 import boofcv.struct.image.ImageGray;
 import boofcv.struct.image.ImageType;
 
@@ -34,7 +34,7 @@ import boofcv.struct.image.ImageType;
  * @author Peter Abeles
  */
 public class DescribeOrientationSurf<T extends ImageGray<T>, II extends ImageGray<II>>
-		implements DescribeRegionPoint<T,BrightFeature>
+		implements DescribeRegionPoint<T,TupleDesc_F64>
 {
 	private OrientationIntegral<II> orientation;
 	private DescribePointSurf<II> describe;
@@ -64,17 +64,17 @@ public class DescribeOrientationSurf<T extends ImageGray<T>, II extends ImageGra
 	}
 
 	@Override
-	public BrightFeature createDescription() {
+	public TupleDesc_F64 createDescription() {
 		return describe.createDescription();
 	}
 
 	@Override
-	public boolean process(double x, double y, double angle, double radius, BrightFeature ret) {
+	public boolean process(double x, double y, double angle, double radius, TupleDesc_F64 ret) {
 
 		double scale = radius/ BoofDefaults.SURF_SCALE_TO_RADIUS;
 		orientation.setObjectRadius(radius);
 		angle = orientation.compute(x,y);
-		describe.describe(x,y, angle, scale, ret);
+		describe.describe(x,y, angle, scale, true, ret);
 
 		return true;
 	}
@@ -100,7 +100,7 @@ public class DescribeOrientationSurf<T extends ImageGray<T>, II extends ImageGra
 	}
 
 	@Override
-	public Class<BrightFeature> getDescriptionType() {
-		return BrightFeature.class;
+	public Class<TupleDesc_F64> getDescriptionType() {
+		return TupleDesc_F64.class;
 	}
 }

@@ -21,7 +21,7 @@ package boofcv.metrics.surf;
 
 import boofcv.abst.feature.detdesc.DetectDescribePoint;
 import boofcv.metrics.homography.BenchmarkFeatureAllRuntime;
-import boofcv.struct.feature.BrightFeature;
+import boofcv.struct.feature.TupleDesc_F64;
 import boofcv.struct.image.GrayF32;
 
 import java.io.IOException;
@@ -33,11 +33,10 @@ public class BenchmarkRuntimeAllSurf {
 
 	public static void main( String args[] ) throws IOException {
 
-		DetectDescribePoint<GrayF32,BrightFeature>
-				alg = FactorySurf.detectDescribe(true,false, GrayF32.class);
+		DetectDescribePoint<GrayF32, TupleDesc_F64> alg = FactorySurf.detectDescribe(true,false, GrayF32.class);
 
-		BenchmarkFeatureAllRuntime<GrayF32,BrightFeature> benchmark =
-				new BenchmarkFeatureAllRuntime<GrayF32,BrightFeature>(GrayF32.class,alg);
+		BenchmarkFeatureAllRuntime<GrayF32,TupleDesc_F64> benchmark =
+				new BenchmarkFeatureAllRuntime<GrayF32,TupleDesc_F64>(GrayF32.class,alg);
 
 		benchmark.benchmark("data/graf", 1);
 	}

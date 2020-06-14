@@ -29,7 +29,7 @@ import boofcv.factory.feature.describe.FactoryDescribePointAlgs;
 import boofcv.factory.feature.detdesc.FactoryDetectDescribe;
 import boofcv.factory.feature.detect.interest.FactoryInterestPoint;
 import boofcv.factory.feature.orientation.FactoryOrientationAlgs;
-import boofcv.struct.feature.BrightFeature;
+import boofcv.struct.feature.TupleDesc_F64;
 import boofcv.struct.image.GrayF32;
 
 /**
@@ -37,7 +37,7 @@ import boofcv.struct.image.GrayF32;
  */
 public class FactorySift {
 
-	public static DescribeRegionPoint<GrayF32,BrightFeature>
+	public static DescribeRegionPoint<GrayF32, TupleDesc_F64>
 	createDescriptor() {
 		SiftScaleSpace ss = new SiftScaleSpace(-1,5,3,2.75f);
 		OrientationHistogramSift orientation = FactoryOrientationAlgs.sift(null,GrayF32.class);
@@ -51,7 +51,7 @@ public class FactorySift {
 		return FactoryInterestPoint.sift(null,null,GrayF32.class);
 	}
 
-	public static DetectDescribePoint<GrayF32,BrightFeature>
+	public static DetectDescribePoint<GrayF32,TupleDesc_F64>
 	detectDescribe() {
 		return FactoryDetectDescribe.sift(null,GrayF32.class);
 	}

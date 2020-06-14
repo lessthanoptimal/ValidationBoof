@@ -21,7 +21,7 @@ package boofcv.metrics.surf;
 
 import boofcv.abst.feature.describe.DescribeRegionPoint;
 import boofcv.metrics.homography.CreateDescriptionFile;
-import boofcv.struct.feature.BrightFeature;
+import boofcv.struct.feature.TupleDesc_F64;
 import boofcv.struct.image.GrayF32;
 import boofcv.struct.image.ImageGray;
 import boofcv.struct.image.ImageType;
@@ -34,13 +34,13 @@ import java.io.FileNotFoundException;
 public class CreateDescriptionFileSurf {
 	public static <T extends ImageGray<T>>
 	void doStuff( String directory , String imageSuffix , ImageType<T> imageType ) throws FileNotFoundException {
-		DescribeRegionPoint<T,BrightFeature> alg;
-		CreateDescriptionFile<T,BrightFeature> cdf;
+		DescribeRegionPoint<T, TupleDesc_F64> alg;
+		CreateDescriptionFile<T,TupleDesc_F64> cdf;
 
 		String suffix = imageType.getFamily() == ImageType.Family.GRAY ? "" : "_COLOR";
 
 		alg = FactorySurf.surf(true, imageType);
-		cdf = new CreateDescriptionFile<T,BrightFeature>(alg,imageType,"BoofCV_MSURF"+suffix);
+		cdf = new CreateDescriptionFile<T,TupleDesc_F64>(alg,imageType,"BoofCV_MSURF"+suffix);
 		cdf.directory(directory,imageSuffix,"SURF_COMMON.txt");
 
 //		alg = FactorySurf.surf(false, imageType);
