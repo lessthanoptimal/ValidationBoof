@@ -18,7 +18,7 @@ public class FactoryLineDetector {
 		ConfigHoughBinary configBinary = new ConfigHoughBinary(maxLines);
 		switch( name ) {
 			case "Polar":
-				return FactoryDetectLine.houghLinePolar(configBinary,null, null,imageType);
+				return FactoryDetectLine.houghLinePolar(configBinary,null,imageType);
 			default:
 				throw new RuntimeException("Unknown "+name);
 		}
