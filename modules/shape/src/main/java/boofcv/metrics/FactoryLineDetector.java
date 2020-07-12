@@ -16,6 +16,7 @@ public class FactoryLineDetector {
 
 	public static <T extends ImageGray<T>> DetectLine<T> createThin( String name , int maxLines, Class<T> imageType ) {
 		ConfigHoughBinary configBinary = new ConfigHoughBinary(maxLines);
+		configBinary.binarization = ConfigHoughBinary.Binarization.IMAGE;
 		switch( name ) {
 			case "Polar":
 				return FactoryDetectLine.houghLinePolar(configBinary,null,imageType);
