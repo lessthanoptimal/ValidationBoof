@@ -1,13 +1,16 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
 
-import urllib
+import urllib.request
 from subprocess import call
 
 files = ["triple_v1.zip"]
 
 for f in files:
     print("retrieving "+f)
-    thefile = urllib.URLopener()
-    thefile.retrieve("https://boofcv.org/notwiki/regression/multiview/"+f,f)
-    call(["unzip",f])
+    g = urllib.request.urlopen("https://boofcv.org/notwiki/regression/multiview/"+f)
+    with open(f, 'b+w') as o:
+        o.write(g.read())
+        call(["unzip",f])
+
+
 
