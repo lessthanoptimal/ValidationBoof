@@ -47,7 +47,7 @@ public class VideoStabilizeRegression extends BaseRegression implements ImageReg
 
 
         for( Tuple2<String,StitchingFromMotion2D> a : algorithms ) {
-            performRuntime(a.data0,a.data1,imageType);
+            performRuntime(a.d0,a.d1,imageType);
         }
     }
 
