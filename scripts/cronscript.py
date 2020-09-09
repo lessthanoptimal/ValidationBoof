@@ -85,7 +85,7 @@ def check_cd(path):
 project_list = [{"name":"ejml","autogen":True},
                 {"name":"ddogleg","autogen":False},
                 {"name":"georegression","autogen":True},
-                {"name":"boofcv","autogen":False}]
+                {"name":"boofcv","autogen":True}]
 
 for lib in project_list:
     p = lib["name"]
