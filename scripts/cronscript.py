@@ -103,8 +103,11 @@ for lib in project_list:
     run_command("git submodule update")
     if lib["autogen"]:
         run_command("./gradlew autogenerate")
-    run_command("./gradlew assemble")
-    run_command("./gradlew install")
+    run_command("./gradlew clean")
+    if p == "boofcv":
+        run_command("./gradlew PublishToMavenLocal")
+    else:
+        run_command("./gradlew install")
 
 # Now it's time to build
 error_log.write("Building regression\n")
