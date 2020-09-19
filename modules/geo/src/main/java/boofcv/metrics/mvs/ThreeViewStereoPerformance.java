@@ -1,27 +1,28 @@
 package boofcv.metrics.mvs;
 
+import boofcv.abst.disparity.StereoDisparity;
 import boofcv.abst.feature.associate.AssociateDescription;
 import boofcv.abst.feature.associate.ScoreAssociation;
 import boofcv.abst.feature.detdesc.DetectDescribePoint;
 import boofcv.abst.feature.detect.interest.ConfigFastHessian;
-import boofcv.abst.feature.disparity.StereoDisparity;
 import boofcv.abst.geo.bundle.SceneStructureMetric;
 import boofcv.alg.descriptor.UtilFeature;
 import boofcv.alg.distort.ImageDistort;
 import boofcv.alg.feature.associate.AssociateThreeByPairs;
 import boofcv.alg.geo.PerspectiveOps;
+import boofcv.alg.geo.RectifyDistortImageOps;
 import boofcv.alg.geo.RectifyImageOps;
 import boofcv.alg.geo.bundle.cameras.BundlePinholeSimplified;
 import boofcv.alg.geo.rectify.RectifyCalibrated;
 import boofcv.alg.misc.ImageStatistics;
 import boofcv.alg.sfm.structure.ThreeViewEstimateMetricScene;
 import boofcv.core.image.ConvertImage;
+import boofcv.factory.disparity.ConfigDisparityBMBest5;
+import boofcv.factory.disparity.DisparityError;
+import boofcv.factory.disparity.FactoryStereoDisparity;
 import boofcv.factory.feature.associate.ConfigAssociateGreedy;
 import boofcv.factory.feature.associate.FactoryAssociation;
 import boofcv.factory.feature.detdesc.FactoryDetectDescribe;
-import boofcv.factory.feature.disparity.ConfigDisparityBMBest5;
-import boofcv.factory.feature.disparity.DisparityError;
-import boofcv.factory.feature.disparity.FactoryStereoDisparity;
 import boofcv.io.image.ConvertBufferedImage;
 import boofcv.io.image.UtilImageIO;
 import boofcv.struct.border.BorderType;
@@ -92,7 +93,7 @@ public class ThreeViewStereoPerformance {
         intrinsic02.fsetK(cp.f,cp.f,0,cx,cy,width,height);
         intrinsic02.fsetRadial(cp.k1,cp.k2);
 
-        Se3_F64 leftToRight = structure.views.data[1].worldToView;
+        Se3_F64 leftToRight = structure.getParentToView(1);
 
         int max = 200;
 
@@ -280,9 +281,9 @@ public class ThreeViewStereoPerformance {
         ConvertMatrixData.convert(rect2, rect2_F32);
 
         ImageDistort<T,T> distortLeft =
-                RectifyImageOps.rectifyImage(intrinsicLeft, rect1_F32, BorderType.SKIP, distortedLeft.getImageType());
+                RectifyDistortImageOps.rectifyImage(intrinsicLeft, rect1_F32, BorderType.SKIP, distortedLeft.getImageType());
         ImageDistort<T,T> distortRight =
-                RectifyImageOps.rectifyImage(intrinsicRight, rect2_F32, BorderType.SKIP, distortedRight.getImageType());
+                RectifyDistortImageOps.rectifyImage(intrinsicRight, rect2_F32, BorderType.SKIP, distortedRight.getImageType());
 
         rectifiedLeft.reshape(rectShape.width,rectShape.height);
         rectifiedRight.reshape(rectShape.width,rectShape.height);

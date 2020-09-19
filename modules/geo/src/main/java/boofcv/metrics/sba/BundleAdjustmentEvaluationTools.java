@@ -35,7 +35,7 @@ public class BundleAdjustmentEvaluationTools {
                 int pointId = obsView.point.get(pointIdx);
                 structure.points.data[pointId].get(worldPt);
 
-                view.worldToView.transform(worldPt,cameraPt);
+                structure.getParentToView(viewIdx).transform(worldPt,cameraPt);
 
                 camera.project(cameraPt.x,cameraPt.y,cameraPt.z,predicted);
 

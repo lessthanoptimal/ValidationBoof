@@ -1,8 +1,8 @@
 package boofcv.metrics.disparity;
 
-import boofcv.abst.feature.disparity.StereoDisparity;
+import boofcv.abst.disparity.StereoDisparity;
 import boofcv.common.RuntimeSummary;
-import boofcv.factory.feature.disparity.*;
+import boofcv.factory.disparity.*;
 import boofcv.metrics.disparity.MiddleburyStereoEvaluation.Score;
 import boofcv.struct.image.GrayF32;
 import boofcv.struct.image.GrayU8;

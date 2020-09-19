@@ -43,8 +43,8 @@ public class CreateSyntheticBAL {
 
         Rodrigues_F64 rod = new Rodrigues_F64();
         for (int i = 0; i < scene.views.size; i++) {
-            Se3_F64 worldToView = new Se3_F64();
-            worldToView.T.x = -0.5 + i;
+            Se3_F64 world_to_view = new Se3_F64();
+            world_to_view.T.x = -0.5 + i;
 
             // Small rotation to avoid edge conditions in optimizer. Easier to compare methods
             rod.unitAxisRotation.x = rand.nextGaussian();
@@ -52,10 +52,9 @@ public class CreateSyntheticBAL {
             rod.unitAxisRotation.z = rand.nextGaussian();
             rod.unitAxisRotation.normalize();
             rod.theta = rand.nextGaussian()*0.001;
-            ConvertRotation3D_F64.rodriguesToMatrix(rod,worldToView.R);
+            ConvertRotation3D_F64.rodriguesToMatrix(rod,world_to_view.R);
 
-            scene.setView(i,false,worldToView);
-            scene.connectViewToCamera(i,0);
+            scene.setView(i,0,false,world_to_view);
         }
 
 
@@ -70,8 +69,8 @@ public class CreateSyntheticBAL {
             scene.setPoint(pixelIdx,p.x,p.y,p.z);
 
             for (int viewIdx = 0; viewIdx < scene.views.size; viewIdx++) {
-                Se3_F64 worldToView = scene.views.data[viewIdx].worldToView;
-                worldToView.transform(p,viewPt);
+                Se3_F64 world_to_view = scene.getParentToView(viewIdx);
+                world_to_view.transform(p,viewPt);
 
                 if( viewPt.z >= 0 ) {
                     System.out.println("Egads");

@@ -1,15 +1,16 @@
 package boofcv.metrics.vo;
 
-import boofcv.abst.feature.disparity.StereoDisparity;
+import boofcv.abst.disparity.StereoDisparity;
 import boofcv.alg.distort.ImageDistort;
 import boofcv.alg.geo.PerspectiveOps;
+import boofcv.alg.geo.RectifyDistortImageOps;
 import boofcv.alg.geo.RectifyImageOps;
 import boofcv.alg.geo.rectify.RectifyCalibrated;
 import boofcv.alg.misc.GImageMiscOps;
 import boofcv.core.image.GeneralizedImageOps;
-import boofcv.factory.feature.disparity.ConfigDisparityBMBest5;
-import boofcv.factory.feature.disparity.DisparityError;
-import boofcv.factory.feature.disparity.FactoryStereoDisparity;
+import boofcv.factory.disparity.ConfigDisparityBMBest5;
+import boofcv.factory.disparity.DisparityError;
+import boofcv.factory.disparity.FactoryStereoDisparity;
 import boofcv.factory.transform.census.CensusVariants;
 import boofcv.gui.image.ImagePanel;
 import boofcv.gui.image.ShowImages;
@@ -143,9 +144,9 @@ public class DebugDenseStereoVideo<T extends ImageGray<T>> implements MouseListe
 
 		// undistorted and rectify images
 		ImageDistort<T,T> imageDistortLeft =
-				RectifyImageOps.rectifyImage(param.getLeft(), rect1_F32, BorderType.ZERO, inputLeft.getImageType());
+				RectifyDistortImageOps.rectifyImage(param.getLeft(), rect1_F32, BorderType.ZERO, inputLeft.getImageType());
 		ImageDistort<T,T> imageDistortRight =
-				RectifyImageOps.rectifyImage(param.getRight(), rect2_F32, BorderType.ZERO, inputRight.getImageType());
+				RectifyDistortImageOps.rectifyImage(param.getRight(), rect2_F32, BorderType.ZERO, inputRight.getImageType());
 
 		GImageMiscOps.fill(rectifiedLeft, 0);
 		GImageMiscOps.fill(rectifiedRight,0);

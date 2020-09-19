@@ -25,7 +25,7 @@ public class WrapParseLeuven07 implements SequenceStereoImages {
 		stereoParam = new StereoParameters();
 		stereoParam.left = new CameraPinholeBrown();
 		stereoParam.right = new CameraPinholeBrown();
-		stereoParam.rightToLeft = new Se3_F64();
+		stereoParam.right_to_left = new Se3_F64();
 
 		stereoParam.left.radial = new double[2];
 		stereoParam.right.radial = new double[2];
@@ -62,7 +62,7 @@ public class WrapParseLeuven07 implements SequenceStereoImages {
 		PerspectiveOps.matrixToPinhole(data.getLeftK(),360,288,stereoParam.left);
 		PerspectiveOps.matrixToPinhole(data.getRightK(),360,288,stereoParam.right);
 
-		data.getRightToWorld().concat(worldToLeft,stereoParam.rightToLeft);
+		data.getRightToWorld().concat(worldToLeft,stereoParam.right_to_left);
 
 		return stereoParam;
 	}

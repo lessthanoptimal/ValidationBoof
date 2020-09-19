@@ -12,6 +12,7 @@ import boofcv.struct.calib.CameraPinholeBrown;
 import georegression.geometry.ConvertRotation3D_F64;
 import georegression.struct.point.Point2D_F64;
 import georegression.struct.point.Vector3D_F64;
+import georegression.struct.se.Se3_F64;
 import georegression.struct.so.Rodrigues_F64;
 
 import java.io.*;
@@ -70,7 +71,7 @@ public class CalibrateFromDetectedPoints {
 		while( (line = reader.readLine()) != null ) {
 			CalibrationObservation target = new CalibrationObservation(0,0);
 
-			String s[] = line.split(" ");
+			String[] s = line.split(" ");
 			String fileName = s[0];
 
 			int N = Integer.parseInt(s[1]);
@@ -115,12 +116,13 @@ public class CalibrateFromDetectedPoints {
 		outputResults.println(structure.views.size);
 		Rodrigues_F64 rod = new Rodrigues_F64();
 		for( SceneStructureMetric.View v : structure.views.toList() ) {
-			ConvertRotation3D_F64.matrixToRodrigues(v.worldToView.R,rod);
+			Se3_F64 world_to_view = structure.motions.get(v.parent_to_view).motion;
+			ConvertRotation3D_F64.matrixToRodrigues(world_to_view.R,rod);
 			double rx = rod.unitAxisRotation.x * rod.theta;
 			double ry = rod.unitAxisRotation.y * rod.theta;
 			double rz = rod.unitAxisRotation.z * rod.theta;
 
-			Vector3D_F64 T = v.worldToView.T;
+			Vector3D_F64 T = world_to_view.T;
 
 			outputResults.println("# Extrinsic");
 			outputResults.printf("%1.15f %1.15f %1.15f %1.15f %1.15f %1.15f\n",rx,ry,rz,T.x,T.y,T.z);
@@ -138,7 +140,7 @@ public class CalibrateFromDetectedPoints {
 		}
 	}
 
-	public static void main( String args[] ) throws IOException {
+	public static void main(String[] args) throws IOException {
 		CalibrateFromDetectedPoints app = new CalibrateFromDetectedPoints();
 
 		app.processStereo(new File("data/calib/stereo/points/bumblebee2_chess.txt"),false);

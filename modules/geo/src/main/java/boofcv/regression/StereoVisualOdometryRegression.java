@@ -1,19 +1,19 @@
 package boofcv.regression;
 
+import boofcv.abst.disparity.StereoDisparitySparse;
 import boofcv.abst.feature.detect.interest.ConfigPointDetector;
 import boofcv.abst.feature.detect.interest.PointDetectorTypes;
-import boofcv.abst.feature.disparity.StereoDisparitySparse;
 import boofcv.abst.sfm.d3.StereoVisualOdometry;
 import boofcv.abst.tracker.PointTracker;
 import boofcv.alg.filter.derivative.GImageDerivativeOps;
 import boofcv.alg.tracker.klt.ConfigPKlt;
 import boofcv.common.*;
+import boofcv.factory.disparity.ConfigDisparityBM;
+import boofcv.factory.disparity.DisparityError;
+import boofcv.factory.disparity.FactoryStereoDisparity;
 import boofcv.factory.feature.describe.ConfigDescribeRegionPoint;
 import boofcv.factory.feature.detect.interest.ConfigDetectInterestPoint;
 import boofcv.factory.feature.detect.selector.ConfigSelectLimit;
-import boofcv.factory.feature.disparity.ConfigDisparityBM;
-import boofcv.factory.feature.disparity.DisparityError;
-import boofcv.factory.feature.disparity.FactoryStereoDisparity;
 import boofcv.factory.sfm.ConfigStereoDualTrackPnP;
 import boofcv.factory.sfm.ConfigStereoQuadPnP;
 import boofcv.factory.sfm.ConfigVisOdomTrackPnP;

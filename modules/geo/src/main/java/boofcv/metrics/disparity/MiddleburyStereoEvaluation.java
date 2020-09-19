@@ -1,6 +1,6 @@
 package boofcv.metrics.disparity;
 
-import boofcv.abst.feature.disparity.StereoDisparity;
+import boofcv.abst.disparity.StereoDisparity;
 import boofcv.io.image.UtilImageIO;
 import boofcv.struct.image.GrayF32;
 import boofcv.struct.image.GrayU8;

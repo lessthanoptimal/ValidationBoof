@@ -41,8 +41,8 @@ public class ConvertKittiToBoofStereoCalibration {
 		param.right.radial = new double[0];
 
 
-		param.rightToLeft = new Se3_F64();
-		param.rightToLeft.getT().set(-rightP.get(0,3),-rightP.get(1,3),-rightP.get(2,3));
+		param.right_to_left = new Se3_F64();
+		param.right_to_left.getT().set(-rightP.get(0,3),-rightP.get(1,3),-rightP.get(2,3));
 
 		CalibrationIO.save(param,new File(path,"boofcv_stereo.yaml"));
 	}
