@@ -9,6 +9,7 @@ import boofcv.core.image.GeneralizedImageOps;
 import boofcv.factory.disparity.ConfigDisparityBM;
 import boofcv.factory.disparity.DisparityError;
 import boofcv.factory.disparity.FactoryStereoDisparity;
+import boofcv.factory.sfm.ConfigVisOdomTrackPnP;
 import boofcv.factory.sfm.FactoryVisualOdometry;
 import boofcv.factory.tracker.FactoryPointTrackerTwoPass;
 import boofcv.io.image.ConvertBufferedImage;
@@ -95,7 +96,13 @@ public class OutputForKITTI {
 			StereoDisparitySparse<GrayF32> disparity =
 					FactoryStereoDisparity.sparseRectifiedBM(configDisparity, imageType);
 
-			StereoVisualOdometry alg = FactoryVisualOdometry.stereoDepth(1.5,120, 2,200,50,false,disparity, tracker,imageType);
+			ConfigVisOdomTrackPnP configVO = new ConfigVisOdomTrackPnP();
+			configVO.ransac.inlierThreshold = 1.5;
+			configVO.ransac.iterations = 200;
+			configVO.dropOutlierTracks = 2;
+			configVO.refineIterations = 50;
+
+			StereoVisualOdometry alg = FactoryVisualOdometry.stereoMonoPnP(configVO,disparity,tracker,imageType);
 
 			String dataID = String.format("%02d",dataSet);
 
