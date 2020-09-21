@@ -67,6 +67,7 @@ public class ThreeViewReconstructionRegression extends BaseRegression implements
                     outputRuntime.out.printf("%30s failed!\n", image);
                 }
             } catch( Exception e ) {
+                errorLog.println("Image Name: "+image);
                 errorLog.println(e);
             }
         }

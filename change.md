@@ -14,6 +14,10 @@ Description of changes to benchmarks and justifications for change in performanc
   * Needed to update ground truth list because the original BoofCV code was buggy when there were multiple sets
     Only maximums were saved because the factory created the wrong extractor. Even if that wasn't there it would have
     not returned the correct number of features.
+- Three View Metric Scene
+  * Re-tuned and is much faster, but a little bit less stable
+  * Couldn't tune to get exactly the same results as before, but the speed had degraded too much
+  * Suspicious recent changes to feature selection result in slightly worse selection or redundant information
 - TODO List the files which changed the first time they changed to reduce clutter
 - TODO Add regression for template matching
 

@@ -2,9 +2,7 @@ package boofcv.metrics.mvs;
 
 import boofcv.abst.disparity.StereoDisparity;
 import boofcv.abst.feature.associate.AssociateDescription;
-import boofcv.abst.feature.associate.ScoreAssociation;
 import boofcv.abst.feature.detdesc.DetectDescribePoint;
-import boofcv.abst.feature.detect.interest.ConfigFastHessian;
 import boofcv.abst.geo.bundle.SceneStructureMetric;
 import boofcv.alg.descriptor.UtilFeature;
 import boofcv.alg.distort.ImageDistort;
@@ -20,9 +18,13 @@ import boofcv.core.image.ConvertImage;
 import boofcv.factory.disparity.ConfigDisparityBMBest5;
 import boofcv.factory.disparity.DisparityError;
 import boofcv.factory.disparity.FactoryStereoDisparity;
-import boofcv.factory.feature.associate.ConfigAssociateGreedy;
+import boofcv.factory.feature.associate.ConfigAssociate;
 import boofcv.factory.feature.associate.FactoryAssociation;
+import boofcv.factory.feature.describe.ConfigDescribeRegionPoint;
+import boofcv.factory.feature.detdesc.ConfigDetectDescribe;
 import boofcv.factory.feature.detdesc.FactoryDetectDescribe;
+import boofcv.factory.feature.detect.interest.ConfigDetectInterestPoint;
+import boofcv.factory.transform.census.CensusVariants;
 import boofcv.io.image.ConvertBufferedImage;
 import boofcv.io.image.UtilImageIO;
 import boofcv.struct.border.BorderType;
@@ -71,7 +73,8 @@ public class ThreeViewStereoPerformance {
         // Run the reconstruction algorithm. This is the heart of what we are testing
         ThreeViewEstimateMetricScene alg = new ThreeViewEstimateMetricScene();
 
-        alg.configRansac.iterations = 2000;
+        alg.configRansac.iterations = 3000;
+        alg.convergeSBA.maxIterations = 40;
 
         if( !alg.process(associated.toList(),width,height) )
             return false;
@@ -134,8 +137,15 @@ public class ThreeViewStereoPerformance {
         image02 = ConvertImage.average(color02,null);
         image03 = ConvertImage.average(color03,null);
 
-        DetectDescribePoint<GrayU8, TupleDesc_F64> detDesc = FactoryDetectDescribe.surfStable(
-                new ConfigFastHessian(0, 4, 1000, 1, 9, 4, 2), null,null, GrayU8.class);
+        ConfigDetectDescribe configDetDesc = new ConfigDetectDescribe();
+        configDetDesc.typeDetector = ConfigDetectInterestPoint.DetectorType.FAST_HESSIAN;
+        configDetDesc.detectFastHessian.extract.radius = 12;
+        configDetDesc.detectFastHessian.maxFeaturesPerScale = 500;
+//        configDetDesc.detectFastHessian.maxFeaturesAll = 1000;
+
+        configDetDesc.typeDescribe = ConfigDescribeRegionPoint.DescriptorType.SURF_STABLE;
+
+        DetectDescribePoint<GrayU8, TupleDesc_F64> detDesc = FactoryDetectDescribe.generic(configDetDesc,GrayU8.class);
 
         FastQueue<Point2D_F64> locations01 = new FastQueue<>(Point2D_F64::new);
         FastQueue<Point2D_F64> locations02 = new FastQueue<>(Point2D_F64::new);
@@ -152,7 +162,7 @@ public class ThreeViewStereoPerformance {
         time0 = System.currentTimeMillis();
 
         int width = image01.width, height = image01.height;
-        System.out.println("Image Shape "+width+" x "+height);
+//        System.out.println("Image Shape "+width+" x "+height);
         cx = width/2;
         cy = height/2;
 //		double scale = Math.max(cx,cy);
@@ -165,13 +175,13 @@ public class ThreeViewStereoPerformance {
         detDesc.detect(image03);
         copyResults(detDesc, locations03, features03, sets03);
 
-        ConfigAssociateGreedy configGreedy = new ConfigAssociateGreedy();
-        configGreedy.forwardsBackwards = true;
-        configGreedy.maxErrorThreshold = 0.1;
-        configGreedy.scoreRatioThreshold = 1.0; // Unexpectedly, using this ratio made things worse
+        ConfigAssociate configAssociate = new ConfigAssociate();
+        configAssociate.type = ConfigAssociate.AssociationType.GREEDY;
+        configAssociate.greedy.scoreRatioThreshold = 0.95;
+        configAssociate.greedy.forwardsBackwards = true;
+        configAssociate.greedy.maxErrorThreshold = 0.1;
 
-        ScoreAssociation<TupleDesc_F64> scorer = FactoryAssociation.scoreEuclidean(TupleDesc_F64.class,true);
-        AssociateDescription<TupleDesc_F64> associate = FactoryAssociation.greedy(configGreedy,scorer);
+        AssociateDescription<TupleDesc_F64> associate = FactoryAssociation.generic(configAssociate,detDesc);
 
         AssociateThreeByPairs<TupleDesc_F64> associateThree = new AssociateThreeByPairs<>(associate,TupleDesc_F64.class);
 
@@ -183,6 +193,7 @@ public class ThreeViewStereoPerformance {
         associateThree.associate();
 
         FastQueue<AssociatedTripleIndex> associatedIdx = associateThree.getMatches();
+//        System.out.println("Associated: "+associatedIdx.size);
         associated.reset();
         for (int i = 0; i < associatedIdx.size; i++) {
             AssociatedTripleIndex p = associatedIdx.get(i);
@@ -228,6 +239,7 @@ public class ThreeViewStereoPerformance {
         // compute disparity
         ConfigDisparityBMBest5 config5 = new ConfigDisparityBMBest5();
         config5.errorType = DisparityError.CENSUS;
+        config5.configCensus.variant = CensusVariants.BLOCK_5_5;
         config5.regionRadiusX = config5.regionRadiusY = 6;
         config5.maxPerPixelError = 30;
         config5.validateRtoL = 3;
