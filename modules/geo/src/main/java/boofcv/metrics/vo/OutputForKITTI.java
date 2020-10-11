@@ -1,9 +1,10 @@
 package boofcv.metrics.vo;
 
 import boofcv.abst.disparity.StereoDisparitySparse;
-import boofcv.abst.feature.detect.interest.ConfigGeneralDetector;
+import boofcv.abst.feature.detect.interest.ConfigPointDetector;
+import boofcv.abst.feature.detect.interest.PointDetectorTypes;
 import boofcv.abst.sfm.d3.StereoVisualOdometry;
-import boofcv.abst.tracker.PointTrackerTwoPass;
+import boofcv.abst.tracker.PointTracker;
 import boofcv.alg.tracker.klt.ConfigPKlt;
 import boofcv.core.image.GeneralizedImageOps;
 import boofcv.factory.disparity.ConfigDisparityBM;
@@ -11,7 +12,7 @@ import boofcv.factory.disparity.DisparityError;
 import boofcv.factory.disparity.FactoryStereoDisparity;
 import boofcv.factory.sfm.ConfigVisOdomTrackPnP;
 import boofcv.factory.sfm.FactoryVisualOdometry;
-import boofcv.factory.tracker.FactoryPointTrackerTwoPass;
+import boofcv.factory.tracker.FactoryPointTracker;
 import boofcv.io.image.ConvertBufferedImage;
 import boofcv.struct.image.GrayF32;
 import boofcv.struct.image.ImageGray;
@@ -79,9 +80,13 @@ public class OutputForKITTI {
 			configKlt.pyramidLevels = ConfigDiscreteLevels.levels(4);
 			configKlt.templateRadius = 3;
 
-			PointTrackerTwoPass tracker =
-					FactoryPointTrackerTwoPass.klt(configKlt, new ConfigGeneralDetector(600, 3, 1),
-							imageType, derivType);
+			ConfigPointDetector configDet = new ConfigPointDetector();
+			configDet.type = PointDetectorTypes.SHI_TOMASI;
+			configDet.general.maxFeatures = 600;
+			configDet.general.radius = 3;
+			configDet.general.threshold = 1;
+
+			PointTracker<GrayF32> tracker = FactoryPointTracker.klt(configKlt, configDet, imageType, derivType);
 
 			ConfigDisparityBM configDisparity = new ConfigDisparityBM();
 			configDisparity.errorType = DisparityError.SAD;

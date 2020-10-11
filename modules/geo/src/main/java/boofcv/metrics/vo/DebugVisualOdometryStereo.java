@@ -1,16 +1,17 @@
 package boofcv.metrics.vo;
 
 import boofcv.abst.disparity.StereoDisparitySparse;
-import boofcv.abst.feature.detect.interest.ConfigGeneralDetector;
+import boofcv.abst.feature.detect.interest.ConfigPointDetector;
+import boofcv.abst.feature.detect.interest.PointDetectorTypes;
 import boofcv.abst.sfm.AccessPointTracks3D;
 import boofcv.abst.sfm.d3.StereoVisualOdometry;
-import boofcv.abst.tracker.PointTrackerTwoPass;
+import boofcv.abst.tracker.PointTracker;
 import boofcv.alg.filter.derivative.GImageDerivativeOps;
 import boofcv.alg.tracker.klt.ConfigPKlt;
 import boofcv.factory.disparity.ConfigDisparityBM;
 import boofcv.factory.disparity.DisparityError;
 import boofcv.factory.disparity.FactoryStereoDisparity;
-import boofcv.factory.tracker.FactoryPointTrackerTwoPass;
+import boofcv.factory.tracker.FactoryPointTracker;
 import boofcv.gui.d3.Polygon3DSequenceViewer;
 import boofcv.gui.feature.VisualizeFeatures;
 import boofcv.gui.image.ImageGridPanel;
@@ -285,7 +286,7 @@ public class DebugVisualOdometryStereo<T extends ImageBase<T>>
 		StereoDisparitySparse<GrayF32> disparity =
 				FactoryStereoDisparity.sparseRectifiedBM(configDisparity, bandType);
 
-		PointTrackerTwoPass tracker = null;
+		PointTracker tracker = null;
 
 		int selection = 0;
 
@@ -294,8 +295,13 @@ public class DebugVisualOdometryStereo<T extends ImageBase<T>>
 			configKlt.pyramidLevels = ConfigDiscreteLevels.levels(4);
 			configKlt.templateRadius = 3;
 
-			tracker = FactoryPointTrackerTwoPass.klt(configKlt, new ConfigGeneralDetector(600, 3, 1),
-					bandType, derivType);
+			ConfigPointDetector configDet = new ConfigPointDetector();
+			configDet.type = PointDetectorTypes.SHI_TOMASI;
+			configDet.general.maxFeatures = 600;
+			configDet.general.radius = 3;
+			configDet.general.threshold = 1;
+
+			tracker = FactoryPointTracker.klt(configKlt, configDet, bandType, derivType);
 		}
 
 		StereoVisualOdometry alg = StereoVisualOdometryRegression.createDualTrackerPnP(bandType).vo;
