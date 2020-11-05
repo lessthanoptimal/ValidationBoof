@@ -53,7 +53,7 @@ public class EvaluateQrCodeDetections {
                 for (int j = 0; j < results.size(); j++) {
                     Polygon2D_F64 r = results.get(j);
 
-                    double f = Intersection2D_F64.intersection(t,r)/areaTruth;
+                    double f = Intersection2D_F64.intersectionArea(t,r)/areaTruth;
 
                     if( f >= MATCH_MINIMUM_FRACTION ) {
                         matchedTruth[i]++;
