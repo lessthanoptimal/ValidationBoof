@@ -36,7 +36,7 @@ public class QrCodeFileCodec {
                         Point2D_F64 p = new Point2D_F64();
                         p.x = Double.parseDouble(words[i]);
                         p.y = Double.parseDouble(words[i+1]);
-                        q.get(i/2).set(p);
+                        q.get(i/2).setTo(p);
                     }
                     sets.add(q);
                 } else {

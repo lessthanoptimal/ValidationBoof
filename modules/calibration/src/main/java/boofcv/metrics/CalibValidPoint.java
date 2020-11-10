@@ -15,12 +15,11 @@ public class CalibValidPoint {
 	Vector2D_F64 darkVector = new Vector2D_F64();
 
 	public CalibValidPoint( double x , double y , double vx , double vy ) {
-		p.set(x,y);
-		darkVector.set(vx,vy);
+		p.setTo(x,y);
+		darkVector.setTo(vx,vy);
 	}
 
-	public CalibValidPoint() {
-	}
+	public CalibValidPoint() {}
 
 	@Override
 	public String toString() {

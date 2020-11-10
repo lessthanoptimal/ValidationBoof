@@ -239,7 +239,7 @@ public class DebugTrackerVideo <T extends ImageGray<T>> implements MouseListener
 
 		for( int i = 0; i < active.size(); i++ ) {
 			PointTrack p = active.get(i);
-			t.set((Point2D_F64)p.getCookie());
+			t.setTo((Point2D_F64)p.getCookie());
 			t.y += h;
 
 			if( w.distance(t) < 5 ) {
@@ -247,7 +247,7 @@ public class DebugTrackerVideo <T extends ImageGray<T>> implements MouseListener
 				break;
 			}
 
-			t.set(p.pixel.x,h+p.pixel.y);
+			t.setTo(p.pixel.x,h+p.pixel.y);
 
 			if( w.distance(t) < 5 ) {
 				selected = i;
@@ -258,7 +258,7 @@ public class DebugTrackerVideo <T extends ImageGray<T>> implements MouseListener
 		if( selected != -1 )  {
 			if( prevSelected == selected )
 				hideTracks = true;
-			selectedPt.set(active.get(selected).pixel);
+			selectedPt.setTo(active.get(selected).pixel);
 			paused = true;
 		}
 		renderTracks();

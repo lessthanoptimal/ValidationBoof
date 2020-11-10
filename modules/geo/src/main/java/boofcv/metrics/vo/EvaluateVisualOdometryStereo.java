@@ -99,10 +99,10 @@ public class EvaluateVisualOdometryStereo<T extends ImageBase<T>> {
 
 		previousWorldToLeftFound.reset();
 		data.getLeftToWorld().invert(previousWorldToLeft);
-		initialWorldToLeft.set(previousWorldToLeft);
+		initialWorldToLeft.setTo(previousWorldToLeft);
 
 		prevSkipEstimated.reset();
-		prevSkipTruth.set(data.getLeftToWorld());
+		prevSkipTruth.setTo(data.getLeftToWorld());
 
 		if( data.isCalibrationFixed() )
 			alg.setCalibration(data.getCalibration());
@@ -165,8 +165,8 @@ public class EvaluateVisualOdometryStereo<T extends ImageBase<T>> {
 				totalErrorDistanceSkip += error.getT().norm();
 				totalErrorRotationSkip += rotationMatrixToRadian(error.getR());
 
-				prevSkipEstimated.set(alg.getCameraToWorld());
-				prevSkipTruth.set(data.getLeftToWorld());
+				prevSkipEstimated.setTo(alg.getCameraToWorld());
+				prevSkipTruth.setTo(data.getLeftToWorld());
 			}
 
 			alg.getCameraToWorld().invert(previousWorldToLeftFound);

@@ -102,7 +102,7 @@ public class HandSelectPolygonsApp <T extends ImageGray<T>> extends Demonstratio
 			}
 
 			selectedPoint = active.size();
-			active.vertexes.grow().set(p.x,p.y);
+			active.vertexes.grow().setTo(p.x,p.y);
 			imagePanel.repaint();
 		}
 	}
@@ -171,7 +171,7 @@ public class HandSelectPolygonsApp <T extends ImageGray<T>> extends Demonstratio
 				Polygon2D_F64 polygon = new Polygon2D_F64(set.size());
 				polygon.vertexes.reset();
 				for( Point2D_F64 p : set ) {
-					polygon.vertexes.grow().set(p);
+					polygon.vertexes.grow().setTo(p);
 				}
 				polygons.add( polygon );
 			}

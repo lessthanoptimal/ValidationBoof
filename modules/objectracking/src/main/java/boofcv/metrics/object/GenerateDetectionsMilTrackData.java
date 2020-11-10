@@ -126,7 +126,7 @@ public class GenerateDetectionsMilTrackData<T extends ImageBase<T>> {
 			if( firstImage ) {
 				firstImage = false;
 				detected = tracker.initialize(input,initial);
-				found.set(initial);
+				found.setTo(initial);
 			} else {
 				detected = tracker.process(input,found);
 			}

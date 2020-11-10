@@ -72,7 +72,7 @@ public class VisualizeResultsMilTrackData {
 			if( lineTruth != null )
 				UtilTldData.parseRectWH(lineTruth,expected);
 			else
-				expected.set(0,0,0,0);
+				expected.setTo(0,0,0,0);
 			UtilTldData.parseFRect(readerRect.readLine(),found);
 
 			Graphics2D g2 = output.createGraphics();

@@ -179,7 +179,7 @@ public abstract class BaseEvaluateFiducialToCamera implements FiducialEvaluateIn
 				normal.x = det.fiducialToCamera.getR().get(0,2);
 				normal.y = det.fiducialToCamera.getR().get(1,2);
 				normal.z = det.fiducialToCamera.getR().get(2,2);
-				fiducialPose[match.index].set(det.fiducialToCamera);
+				fiducialPose[match.index].setTo(det.fiducialToCamera);
 
 				if( match.id == det.id ) {
 					if( !ignoreWrongOrder && match.outOfOrder )

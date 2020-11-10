@@ -197,7 +197,7 @@ public class ThreeViewStereoPerformance {
         associated.reset();
         for (int i = 0; i < associatedIdx.size; i++) {
             AssociatedTripleIndex p = associatedIdx.get(i);
-            associated.grow().set(locations01.get(p.a),locations02.get(p.b),locations03.get(p.c));
+            associated.grow().setTo(locations01.get(p.a),locations02.get(p.b),locations03.get(p.c));
         }
     }
 
@@ -212,7 +212,7 @@ public class ThreeViewStereoPerformance {
         sets.resize(N);
         for (int i = 0; i < detDesc.getNumberOfFeatures(); i++) {
             Point2D_F64 pixel = detDesc.getLocation(i);
-            locations.get(i).set(pixel.x - cx, pixel.y - cy);
+            locations.get(i).setTo(pixel.x - cx, pixel.y - cy);
             features.get(i).setTo(detDesc.getDescription(i));
             sets.data[i] = detDesc.getSet(i);
         }

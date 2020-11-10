@@ -22,8 +22,8 @@ import static boofcv.metrics.FiducialCommon.parseLandmarks;
  */
 public class EvaluateStaticFiducialSequence extends BaseEvaluateFiducialToCamera {
 
-	Vector3D_F64 normalsPrev[];
-	Se3_F64 posePrev[];
+	Vector3D_F64[] normalsPrev;
+	Se3_F64[] posePrev;
 
 	public EvaluateStaticFiducialSequence() {
 		maxPixelError = 10;
@@ -44,7 +44,7 @@ public class EvaluateStaticFiducialSequence extends BaseEvaluateFiducialToCamera
 			outputResults.println("# (file) (detected ID) (matched id) (out of order) (match pixel error)");
 
 		// list of all detections for each fiducial.  used to compute precision
-		List<List<Point2D_F64>> allDetections[] = new ArrayList[expected.length];
+		List<List<Point2D_F64>>[] allDetections = new ArrayList[expected.length];
 		for (int i = 0; i < allDetections.length; i++) {
 			allDetections[i] = new ArrayList<>();
 		}
@@ -117,8 +117,8 @@ public class EvaluateStaticFiducialSequence extends BaseEvaluateFiducialToCamera
 							}
 						}
 					}
-					normalsPrev[j].set(fiducialNormal[j]);
-					posePrev[j].set(fiducialPose[j]);
+					normalsPrev[j].setTo(fiducialNormal[j]);
+					posePrev[j].setTo(fiducialPose[j]);
 				}
 
 			} catch( RuntimeException e ) {
@@ -180,12 +180,12 @@ public class EvaluateStaticFiducialSequence extends BaseEvaluateFiducialToCamera
 	 * Computes the precision by finding the average corner for each detection.  Then it computes
 	 * the error for all corners
 	 */
-	public static GrowQueue_F64 computePrecision( List<List<Point2D_F64>> allDetections[] ) {
+	public static GrowQueue_F64 computePrecision(List<List<Point2D_F64>>[] allDetections) {
 		GrowQueue_F64 errors = new GrowQueue_F64();
 
 		int numPoints = allDetections[0].get(0).size();
 
-		Point2D_F64 average[] = new Point2D_F64[numPoints];
+		Point2D_F64[] average = new Point2D_F64[numPoints];
 		for (int i = 0; i < numPoints; i++) {
 			average[i] = new Point2D_F64();
 		}
@@ -195,7 +195,7 @@ public class EvaluateStaticFiducialSequence extends BaseEvaluateFiducialToCamera
 				continue;
 
 			for (int i = 0; i < numPoints; i++) {
-				average[i].set(0,0);
+				average[i].setTo(0,0);
 			}
 
 			for( List<Point2D_F64> corners : detections ) {

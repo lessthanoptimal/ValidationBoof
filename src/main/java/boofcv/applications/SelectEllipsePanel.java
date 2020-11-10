@@ -198,7 +198,7 @@ public class SelectEllipsePanel extends HandSelectBase.VisualizePanel
 			if( selected == null) {
 				mode = Mode.DRAW_CIRCLE;
 				selected = new EllipseRotated_F64(p.x, p.y, 0, 0, 0);
-				seedPoint.set(p);
+				seedPoint.setTo(p);
 				synchronized (list) {
 					list.add(selected);
 				}
@@ -392,7 +392,7 @@ public class SelectEllipsePanel extends HandSelectBase.VisualizePanel
 			adjustAngle(p);
 			repaint();
 		} else if( mode == Mode.TRANSLATE ) {
-			selected.center.set(p);
+			selected.center.setTo(p);
 			repaint();
 		} else if( mode == Mode.ROTATE ) {
 			adjustAngle(p);

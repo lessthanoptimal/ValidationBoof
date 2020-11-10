@@ -166,13 +166,13 @@ public class QrCodeBenchmarkViewerApp extends JPanel{
             if( line.startsWith("milliseconds"))
                 continue;
 
-            String words[] = line.split(" ");
+            String[] words = line.split(" ");
             if( words.length != 8 )
                 throw new IOException("Unexpected number of words. "+words.length);
 
             Polygon2D_F64 poly = new Polygon2D_F64(4);
             for (int i = 0; i < 4; i++) {
-                poly.get(i).set(Double.parseDouble(words[i*2]),Double.parseDouble(words[i*2+1]));
+                poly.get(i).setTo(Double.parseDouble(words[i*2]),Double.parseDouble(words[i*2+1]));
             }
             found.add(poly);
         }

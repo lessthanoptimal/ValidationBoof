@@ -237,11 +237,11 @@ public class BenchmarkFeatureDetectStability {
 		Point2D_F32 sampleDst = new Point2D_F32();
 
 		for( DetectionInfo k : keyFrame ) {
-			src.set((float)k.location.x,(float)k.location.y);
-			sample[0].set(src.x + 1, src.y);
-			sample[1].set(src.x - 1, src.y);
-			sample[2].set(src.x,src.y+1);
-			sample[3].set(src.x,src.y-1);
+			src.setTo((float)k.location.x,(float)k.location.y);
+			sample[0].setTo(src.x + 1, src.y);
+			sample[1].setTo(src.x - 1, src.y);
+			sample[2].setTo(src.x,src.y+1);
+			sample[3].setTo(src.x,src.y-1);
 
 			HomographyPointOps_F32.transform(keyToTarget, src, expected);
 			// estimate how the transform would rescale the image

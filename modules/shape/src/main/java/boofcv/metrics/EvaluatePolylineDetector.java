@@ -193,7 +193,7 @@ public class EvaluatePolylineDetector {
 
 		for (int i = 0; i < b.size(); i++) {
 			Point2D_I32 p = b.get(i);
-			polyB.get(i).set(p.x,p.y);
+			polyB.get(i).setTo(p.x,p.y);
 		}
 
 		double error0 = UtilPolygons2D_F64.averageOfClosestPointError(a,polyB,100);

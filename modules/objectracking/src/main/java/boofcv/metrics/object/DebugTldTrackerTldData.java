@@ -64,7 +64,7 @@ public class DebugTldTrackerTldData<T extends ImageGray<T>> implements TldVisual
 				detected = true;
 			} else {
 				detected = tracker.track(input);
-				found.set(tracker.getTargetRegion());
+				found.setTo(tracker.getTargetRegion());
 			}
 
 			if( !detected ) {

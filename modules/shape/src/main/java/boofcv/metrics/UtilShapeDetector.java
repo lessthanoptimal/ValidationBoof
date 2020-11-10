@@ -244,12 +244,12 @@ public class UtilShapeDetector {
 			List<Point2D_F64> set = sets.get(i);
 
 			if( set.size() == 2 ) {
-				line64.set(set.get(0),set.get(1));
+				line64.setTo(set.get(0),set.get(1));
 
 				lines.add( ConvertFloatType.convert(line64,null));
 			} else {
 				for (int j = 0,k=set.size()-1; j < set.size(); j++) {
-					line64.set(set.get(j),set.get(k));
+					line64.setTo(set.get(j),set.get(k));
 					lines.add(ConvertFloatType.convert(line64,null));
 				}
 			}
