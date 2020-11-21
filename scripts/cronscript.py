@@ -74,6 +74,12 @@ def run_command(command):
         caller_info = "File: %s Line: %d" % (caller.filename, caller.lineno)
         fatal_error("Failed to execute '"+command+"'\n"+caller_info+"\n")
 
+def run_command_project(command, project_name):
+    if os.system(command):
+        caller = getframeinfo(stack()[1][0])
+        caller_info = "File: %s Line: %d" % (caller.filename, caller.lineno)
+        fatal_error("Failed to execute '"+command+"'\n"+caller_info+"\nWhile building "+project_name+"\n")
+
 def check_cd(path):
     try:
         os.chdir(path)
@@ -97,17 +103,17 @@ for lib in project_list:
     error_log.write("Building {}\n".format(p))
     error_log.flush()
     check_cd(path_to_p)
-    run_command("git clean -f")            # Remove all untracked files to avoid stale auto generated code
-    run_command("git checkout SNAPSHOT")
-    run_command("git pull")
-    run_command("git submodule update")
+    run_command_project("git clean -f", p)         # Remove all untracked files to avoid stale auto generated code
+    run_command_project("git checkout SNAPSHOT", p)
+    run_command_project("git pull", p)
+    run_command_project("git submodule update", p)
     if lib["autogen"]:
-        run_command("./gradlew autogenerate")
+        run_command_project("./gradlew autogenerate", p)
     run_command("./gradlew clean")
     if p == "boofcv":
-        run_command("./gradlew PublishToMavenLocal")
+        run_command_project("./gradlew PublishToMavenLocal", p)
     else:
-        run_command("./gradlew install")
+        run_command_project("./gradlew install", p)
 
 # Now it's time to build
 error_log.write("Building regression\n")
@@ -115,7 +121,7 @@ error_log.flush()
 check_cd(project_home)
 run_command("git checkout SNAPSHOT")
 run_command("git pull")
-# run_command("git clean -f") <-- can'tdo this because it will zap the email_login.txt file!
+# run_command("git clean -f") <-- can't do this because it will zap the email_login.txt file!
 run_command("./gradlew clean")
 run_command("./gradlew moduleJars")
 run_command("./gradlew regressionJar")
