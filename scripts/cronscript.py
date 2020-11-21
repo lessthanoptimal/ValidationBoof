@@ -55,7 +55,6 @@ def send_email( message ):
         error_log.write('  Line {}\n'.format(sys.exc_info()[-1].tb_lineno))
 
 
-
 def fatal_error(message):
     error_log.write(message+"\n")
     error_log.write("\n\nFATAL ERROR\n\n")
@@ -68,17 +67,13 @@ def fatal_error(message):
     send_email(email_txt)
     sys.exit(1)
 
+
 def run_command(command):
     if os.system(command):
         caller = getframeinfo(stack()[1][0])
         caller_info = "File: %s Line: %d" % (caller.filename, caller.lineno)
-        fatal_error("Failed to execute '"+command+"'\n"+caller_info+"\n")
+        fatal_error("\n  Failed to execute '"+command+"'\n  "+caller_info+"\n")
 
-def run_command_project(command, project_name):
-    if os.system(command):
-        caller = getframeinfo(stack()[1][0])
-        caller_info = "File: %s Line: %d" % (caller.filename, caller.lineno)
-        fatal_error("Failed to execute '"+command+"'\n"+caller_info+"\nWhile building "+project_name+"\n")
 
 def check_cd(path):
     try:
@@ -95,7 +90,7 @@ project_list = [{"name":"ejml","autogen":True},
 
 for lib in project_list:
     p = lib["name"]
-    path_to_p = os.path.join(project_home,"..",p)
+    path_to_p = os.path.join(project_home, "..", p)
     if not os.path.isdir(path_to_p):
         error_log.write("Skipping {} directory does not exist\n".format(p))
         error_log.flush()
@@ -103,17 +98,17 @@ for lib in project_list:
     error_log.write("Building {}\n".format(p))
     error_log.flush()
     check_cd(path_to_p)
-    run_command_project("git clean -f", p)         # Remove all untracked files to avoid stale auto generated code
-    run_command_project("git checkout SNAPSHOT", p)
-    run_command_project("git pull", p)
-    run_command_project("git submodule update", p)
+    run_command("git clean -fd")            # Remove all untracked files to avoid stale auto generated code
+    run_command("git checkout SNAPSHOT")
+    run_command("git pull")
+    run_command("git submodule update")
     if lib["autogen"]:
-        run_command_project("./gradlew autogenerate", p)
+        run_command("./gradlew autogenerate")
     run_command("./gradlew clean")
     if p == "boofcv":
-        run_command_project("./gradlew PublishToMavenLocal", p)
+        run_command("./gradlew PublishToMavenLocal")
     else:
-        run_command_project("./gradlew install", p)
+        run_command("./gradlew install")
 
 # Now it's time to build
 error_log.write("Building regression\n")
