@@ -1,9 +1,13 @@
 package boofcv.regression;
 
 import boofcv.BoofVersion;
+import boofcv.ValidationBoofVersion;
 import boofcv.common.BoofRegressionConstants;
+import georegression.GeoRegressionVersion;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.filefilter.FileFilterUtils;
+import org.ddogleg.DDoglegVersion;
+import org.ejml.EjmlVersion;
 
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
@@ -138,11 +142,15 @@ public class ComputeRegressionSummary {
         summary =  "Finished Time:         "+MasterRegressionApplication.formatDate(new Date())+"\n";
         summary += "Elapsed Time:          "+MasterRegressionApplication.formatElapsed(elapsedTime)+"\n";
         summary += "\n";
-
         summary += "BoofCV Version:        "+ BoofVersion.VERSION+"\n";
-        summary += "BoofCV Git SHA:        "+ BoofVersion.GIT_SHA+"\n";
         summary += "BoofCV Build Date:     "+ BoofVersion.BUILD_DATE+"\n";
-        summary += "BoofCV Dirty:          "+ (0!=BoofVersion.DIRTY)+"\n";
+        summary += "\n";
+        summary += String.format("%15s SHA %s Dirty %s\n","ValidationBoof",ValidationBoofVersion.GIT_SHA,(0!=ValidationBoofVersion.DIRTY));
+        summary += String.format("%15s SHA %s Dirty %s\n","BoofCV",BoofVersion.GIT_SHA,(0!=BoofVersion.DIRTY));
+        summary += String.format("%15s SHA %s Dirty %s\n","GeoRegression", GeoRegressionVersion.GIT_SHA,(0!=GeoRegressionVersion.DIRTY));
+        summary += String.format("%15s SHA %s Dirty %s\n","DDogleg", DDoglegVersion.GIT_SHA,(0!=DDoglegVersion.DIRTY));
+        summary += String.format("%15s SHA %s Dirty %s\n","EJML", EjmlVersion.GIT_SHA,(0!=EjmlVersion.DIRTY));
+        summary += "\n";
         summary += "java.version:          "+System.getProperty("java.version")+"\n";
         summary += "java.vendor:           "+System.getProperty("java.vendor")+"\n";
         summary += "os.version:            "+System.getProperty("os.version")+"\n";

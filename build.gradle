@@ -1,3 +1,13 @@
+plugins {
+    id "com.peterabeles.gversion" version "1.8.3"
+}
+
+gversion {
+    srcDir       = "src/main/java"
+    classPackage = "boofcv"
+    className    = "ValidationBoofVersion"
+}
+
 allprojects{
     group = 'org.boofcv'
     version = '0.37-SNAPSHOT'
@@ -55,7 +65,7 @@ subprojects {
     }
 }
 
-
+project.compileJava.dependsOn(createVersionFile)
 
 task pointLabelJar(type: Jar) {
     manifest {

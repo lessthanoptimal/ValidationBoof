@@ -9,8 +9,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Date;
 
-import static boofcv.common.BoofRegressionConstants.CURRENT_DIRECTORY;
-
 /**
  * Runs a single regression class. Before the regression is run the work space is cleaned up. The output in
  * regression/current is assumed to be already set up.
@@ -111,7 +109,7 @@ public class RegressionRunner {
                 System.exit(1);
                 return;
             }
-            regression.setMetricsDirectory(new File(CURRENT_DIRECTORY,"other").getPath());
+            regression.setMetricsDirectory(new File(SettingsLocal.getPathToCurrentMetricsDirectory(),"other").getPath());
             try {
                 regression.process();
             } catch( RuntimeException e ) {
