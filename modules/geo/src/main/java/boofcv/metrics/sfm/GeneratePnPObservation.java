@@ -186,7 +186,7 @@ public class GeneratePnPObservation {
         ConvertRotation3D_F64.eulerToMatrix(EulerType.XYZ, 0, 0, 0, BodyToUp.R);
 
         // Moves the marker to the specified distance from the camera's origin
-        TiltToZ.T.set(0, 0, distance);
+        TiltToZ.T.setTo(0, 0, distance);
 
         // Specifies transform from body to camera reference frames
         InvertibleTransformSequence<Se3_F64> sequence = new InvertibleTransformSequence<>();

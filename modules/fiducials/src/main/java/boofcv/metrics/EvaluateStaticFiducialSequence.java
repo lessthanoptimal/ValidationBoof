@@ -91,7 +91,7 @@ public class EvaluateStaticFiducialSequence extends BaseEvaluateFiducialToCamera
 
 			// mark them all as not observed
 			for (int j = 0; j < expected.length; j++) {
-				fiducialNormal[j].set(0,0,0);
+				fiducialNormal[j].setTo(0,0,0);
 			}
 
 			try {

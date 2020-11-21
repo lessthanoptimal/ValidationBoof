@@ -105,7 +105,7 @@ public class ParseLeuven07 {
 
 			// translation vector
 			line = readNumbers(reader);
-			motion.getT().set(line[0],line[1],line[2]);
+			motion.getT().setTo(line[0],line[1],line[2]);
 
 			// convert into meters
 			GeometryMath_F64.scale(motion.getT(),0.49603);
