@@ -18,6 +18,9 @@ Description of changes to benchmarks and justifications for change in performanc
   * Re-tuned and is much faster, but a little bit less stable
   * Couldn't tune to get exactly the same results as before, but the speed had degraded too much
   * Suspicious recent changes to feature selection result in slightly worse selection or redundant information
+- Visual Odometry
+  * DualPnP and StereoDepth changed due to a bug fix in PruneCloseTracks 
+    9605be22ae62e7095ad5ba04ca512003eb72f915
 - TODO List the files which changed the first time they changed to reduce clutter
 - TODO Add regression for template matching
 
