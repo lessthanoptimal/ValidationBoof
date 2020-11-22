@@ -21,6 +21,8 @@ Description of changes to benchmarks and justifications for change in performanc
 - Visual Odometry
   * DualPnP and StereoDepth changed due to a bug fix in PruneCloseTracks 
     9605be22ae62e7095ad5ba04ca512003eb72f915
+- Calibration
+  * Results changed insignificantly when DDogleg removed O(N^2) matrix multiplication on 2020/OCT/1
 - TODO List the files which changed the first time they changed to reduce clutter
 - TODO Add regression for template matching
 
