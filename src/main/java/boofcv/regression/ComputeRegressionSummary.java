@@ -155,8 +155,9 @@ public class ComputeRegressionSummary {
         summary += String.format("%18s %15s %20.20s %5s\n","EJML",
                 EjmlVersion.VERSION, EjmlVersion.GIT_SHA,(0!=EjmlVersion.DIRTY));
         summary += "\n";
-        summary += "java.version:          "+System.getProperty("java.version")+"\n";
+        summary += "java.runtime.version:  "+System.getProperty("java.runtime.version")+"\n";
         summary += "java.vendor:           "+System.getProperty("java.vendor")+"\n";
+        summary += "os.name+arch:          "+System.getProperty("os.name")+" "+System.getProperty("os.arch")+"\n";
         summary += "os.version:            "+System.getProperty("os.version")+"\n";
         summary += "\n";
         summary += "Total Matched:         "+totalMatched+"\n\n";
