@@ -142,14 +142,18 @@ public class ComputeRegressionSummary {
         summary =  "Finished Time:         "+MasterRegressionApplication.formatDate(new Date())+"\n";
         summary += "Elapsed Time:          "+MasterRegressionApplication.formatElapsed(elapsedTime)+"\n";
         summary += "\n";
-        summary += "BoofCV Version:        "+ BoofVersion.VERSION+"\n";
-        summary += "Validation Version:    "+ ValidationBoofVersion.VERSION+"\n";
-        summary += "\n";
-        summary += String.format("%15s SHA %s Dirty %s\n","ValidationBoof",ValidationBoofVersion.GIT_SHA,(0!=ValidationBoofVersion.DIRTY));
-        summary += String.format("%15s SHA %s Dirty %s\n","BoofCV",BoofVersion.GIT_SHA,(0!=BoofVersion.DIRTY));
-        summary += String.format("%15s SHA %s Dirty %s\n","GeoRegression", GeoRegressionVersion.GIT_SHA,(0!=GeoRegressionVersion.DIRTY));
-        summary += String.format("%15s SHA %s Dirty %s\n","DDogleg", DDoglegVersion.GIT_SHA,(0!=DDoglegVersion.DIRTY));
-        summary += String.format("%15s SHA %s Dirty %s\n","EJML", EjmlVersion.GIT_SHA,(0!=EjmlVersion.DIRTY));
+
+        summary += String.format("%18s %15s %20.20s %5s\n","Name","Version","SHA","Dirty");
+        summary += String.format("%18s %15s %20.20s %5s\n","BoofCV",
+                BoofVersion.VERSION, BoofVersion.GIT_SHA,(0!=BoofVersion.DIRTY));
+        summary += String.format("%18s %15s %20.20s %5s\n","ValidationBoof",
+                ValidationBoofVersion.VERSION, ValidationBoofVersion.GIT_SHA,(0!=ValidationBoofVersion.DIRTY));
+        summary += String.format("%18s %15s %20.20s %5s\n","GeoRegression",
+                GeoRegressionVersion.VERSION, GeoRegressionVersion.GIT_SHA,(0!=GeoRegressionVersion.DIRTY));
+        summary += String.format("%18s %15s %20.20s %5s\n","DDogleg",
+                DDoglegVersion.VERSION, DDoglegVersion.GIT_SHA,(0!=DDoglegVersion.DIRTY));
+        summary += String.format("%18s %15s %20.20s %5s\n","EJML",
+                EjmlVersion.VERSION, EjmlVersion.GIT_SHA,(0!=EjmlVersion.DIRTY));
         summary += "\n";
         summary += "java.version:          "+System.getProperty("java.version")+"\n";
         summary += "java.vendor:           "+System.getProperty("java.vendor")+"\n";
