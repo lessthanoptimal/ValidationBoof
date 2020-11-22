@@ -143,7 +143,7 @@ public class ComputeRegressionSummary {
         summary += "Elapsed Time:          "+MasterRegressionApplication.formatElapsed(elapsedTime)+"\n";
         summary += "\n";
         summary += "BoofCV Version:        "+ BoofVersion.VERSION+"\n";
-        summary += "BoofCV Build Date:     "+ BoofVersion.BUILD_DATE+"\n";
+        summary += "Validation Version:    "+ ValidationBoofVersion.VERSION+"\n";
         summary += "\n";
         summary += String.format("%15s SHA %s Dirty %s\n","ValidationBoof",ValidationBoofVersion.GIT_SHA,(0!=ValidationBoofVersion.DIRTY));
         summary += String.format("%15s SHA %s Dirty %s\n","BoofCV",BoofVersion.GIT_SHA,(0!=BoofVersion.DIRTY));
