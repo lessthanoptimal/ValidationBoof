@@ -13,7 +13,7 @@ import boofcv.struct.feature.TupleDesc_F64;
 import boofcv.struct.image.GrayU8;
 import boofcv.struct.image.ImageBase;
 import boofcv.struct.image.ImageType;
-import org.ddogleg.struct.GrowQueue_F64;
+import org.ddogleg.struct.DogArray_F64;
 
 import java.io.File;
 import java.io.PrintStream;
@@ -41,9 +41,9 @@ public class EvalauteDescribeImageDense<T extends ImageBase<T>>
     PrintStream out = System.out;
 
     List<TupleDesc_F64> original;
-    GrowQueue_F64 magnitude = new GrowQueue_F64();
+    DogArray_F64 magnitude = new DogArray_F64();
 
-    public final GrowQueue_F64 processingTimeMS = new GrowQueue_F64();
+    public final DogArray_F64 processingTimeMS = new DogArray_F64();
 
     public EvalauteDescribeImageDense( List<String> images , ImageType<T> imageType ) {
         this.images = images;
@@ -305,8 +305,8 @@ public class EvalauteDescribeImageDense<T extends ImageBase<T>>
     }
 
     private static class Metric {
-        GrowQueue_F64 parameter = new GrowQueue_F64();
-        GrowQueue_F64 error = new GrowQueue_F64();
+        DogArray_F64 parameter = new DogArray_F64();
+        DogArray_F64 error = new DogArray_F64();
         // number of times the descriptor
         int zeros;
     }

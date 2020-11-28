@@ -9,7 +9,7 @@ import boofcv.struct.image.GrayU8;
 import boofcv.struct.image.ImageBase;
 import boofcv.struct.image.ImageType;
 import org.apache.commons.io.FilenameUtils;
-import org.ddogleg.struct.GrowQueue_F64;
+import org.ddogleg.struct.DogArray_F64;
 
 import java.io.File;
 import java.io.PrintStream;
@@ -25,7 +25,7 @@ public class BackgroundModelMetrics<T extends ImageBase<T>> {
 
     public PrintStream out = System.out;
 
-    public GrowQueue_F64 periodMS = new GrowQueue_F64();
+    public DogArray_F64 periodMS = new DogArray_F64();
 
     public void evaluate(File directory , BackgroundModelStationary<T> model ) {
         ImageType<T> imageType = model.getImageType();

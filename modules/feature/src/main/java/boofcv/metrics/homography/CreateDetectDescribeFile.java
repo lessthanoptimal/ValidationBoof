@@ -27,7 +27,7 @@ import boofcv.struct.image.ImageBase;
 import boofcv.struct.image.ImageDataType;
 import boofcv.struct.image.ImageType;
 import georegression.struct.point.Point2D_F64;
-import org.ddogleg.struct.GrowQueue_F64;
+import org.ddogleg.struct.DogArray_F64;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -54,7 +54,7 @@ public class CreateDetectDescribeFile<T extends ImageBase<T>, D extends TupleDes
 	// name of the detector
 	String algName;
 
-	public final GrowQueue_F64 processingTimeMS = new GrowQueue_F64();
+	public final DogArray_F64 processingTimeMS = new DogArray_F64();
 
 	/**
 	 * Configures detector

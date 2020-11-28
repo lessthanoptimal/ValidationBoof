@@ -1,7 +1,7 @@
 package boofcv.common;
 
-import org.ddogleg.stats.UtilStatisticsQueue;
-import org.ddogleg.struct.GrowQueue_F64;
+import org.ddogleg.stats.StatisticsDogArray;
+import org.ddogleg.struct.DogArray_F64;
 import org.ejml.FancyPrint;
 
 import java.io.File;
@@ -46,13 +46,13 @@ public class RuntimeSummary {
         out.printf("  %24s    N   "+format+" "+format+" "+format+" "+format+" "+format+"\n","","Mean","P05","P50","P95","MAX");
     }
 
-    public void printStatsRow(String name , GrowQueue_F64 measurements)
+    public void printStatsRow(String name , DogArray_F64 measurements)
     {
         FancyPrint f = new FancyPrint(new DecimalFormat("#"),digits+1,4);
 
         measurements.sort();
         int N = measurements.size;
-        String mean = f.p(UtilStatisticsQueue.mean(measurements));
+        String mean = f.p(StatisticsDogArray.mean(measurements));
         String P05 = f.p(measurements.getFraction(0.05));
         String P50 = f.p(measurements.getFraction(0.50));
         String P95 = f.p(measurements.getFraction(0.95));
@@ -72,7 +72,7 @@ public class RuntimeSummary {
         }
     }
 
-    public void saveSummary( String name , GrowQueue_F64 measurements ) {
+    public void saveSummary( String name , DogArray_F64 measurements ) {
         SummaryInfo info = new SummaryInfo();
         info.name = name;
         info.measurements.addAll(measurements);
@@ -81,7 +81,7 @@ public class RuntimeSummary {
 
     private static class SummaryInfo
     {
-        GrowQueue_F64 measurements = new GrowQueue_F64();
+        DogArray_F64 measurements = new DogArray_F64();
         String name;
     }
 }

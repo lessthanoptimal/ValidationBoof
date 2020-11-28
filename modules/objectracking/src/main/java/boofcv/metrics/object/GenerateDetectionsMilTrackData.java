@@ -10,7 +10,7 @@ import boofcv.struct.image.ImageType;
 import georegression.geometry.UtilPolygons2D_F64;
 import georegression.struct.shapes.Quadrilateral_F64;
 import georegression.struct.shapes.Rectangle2D_F64;
-import org.ddogleg.struct.GrowQueue_F64;
+import org.ddogleg.struct.DogArray_F64;
 
 import java.awt.image.BufferedImage;
 import java.io.*;
@@ -31,7 +31,7 @@ public class GenerateDetectionsMilTrackData<T extends ImageBase<T>> {
 	File outputDirectory = BoofRegressionConstants.tempDir();
 
 	// Processing time for each frame
-	public GrowQueue_F64 periodMS = new GrowQueue_F64();
+	public DogArray_F64 periodMS = new DogArray_F64();
 
 	public GenerateDetectionsMilTrackData(ImageType<T> type) {
 		input = type.createImage(1,1);

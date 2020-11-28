@@ -7,7 +7,7 @@ import boofcv.metrics.EvaluatePolylineDetector;
 import boofcv.metrics.FactoryPolylineSplitMerge;
 import boofcv.metrics.FactoryPolylineSplitMergeOld;
 import boofcv.struct.image.ImageDataType;
-import org.ddogleg.struct.GrowQueue_F64;
+import org.ddogleg.struct.DogArray_F64;
 
 import java.io.File;
 import java.io.IOException;
@@ -55,7 +55,7 @@ public class FitPolylineRegression extends BaseRegression implements ImageRegres
 		BoofRegressionConstants.printGenerator(outputAccuracy, getClass());
 		evaluator.setOutputResults(outputAccuracy);
 
-		GrowQueue_F64 summaryTimeMS = new GrowQueue_F64();
+		DogArray_F64 summaryTimeMS = new DogArray_F64();
 		runtime.out.println(name);
 		runtime.printUnitsRow(false);
 

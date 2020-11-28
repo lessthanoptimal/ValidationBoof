@@ -28,7 +28,7 @@ import boofcv.struct.image.ImageBase;
 import boofcv.struct.image.ImageDataType;
 import boofcv.struct.image.ImageGray;
 import boofcv.struct.image.ImageType;
-import org.ddogleg.struct.GrowQueue_F64;
+import org.ddogleg.struct.DogArray_F64;
 
 import java.io.File;
 import java.io.IOException;
@@ -85,7 +85,7 @@ public class DetectDescribeRegression extends BaseRegression implements ImageReg
 
 		for( Info i : all ) {
 			// Print header info for per dataset results
-			GrowQueue_F64 summaryTimeMS = new GrowQueue_F64();
+			DogArray_F64 summaryTimeMS = new DogArray_F64();
 			runtime.out.println(i.name);
 			runtime.printUnitsRow(false);
 

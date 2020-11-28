@@ -10,7 +10,7 @@ import boofcv.struct.calib.CameraPinholeBrown;
 import boofcv.struct.image.ImageBase;
 import georegression.struct.point.Vector3D_F64;
 import georegression.struct.se.Se3_F64;
-import org.ddogleg.struct.GrowQueue_F64;
+import org.ddogleg.struct.DogArray_F64;
 import org.ejml.data.DMatrixRMaj;
 
 import java.awt.image.BufferedImage;
@@ -31,7 +31,7 @@ public abstract class BaseEstimateSquareFiducialToCamera<T extends ImageBase<T>>
 
 	File baseDirectory;
 	File outputDirectory = new File(".");
-	public GrowQueue_F64 speed = new GrowQueue_F64();
+	public DogArray_F64 speed = new DogArray_F64();
 
 	// If true an intrinsic file is required to process the input
 	public boolean needsIntrinsic = true;

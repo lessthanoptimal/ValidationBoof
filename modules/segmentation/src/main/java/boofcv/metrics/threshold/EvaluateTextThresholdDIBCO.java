@@ -5,7 +5,7 @@ import boofcv.common.RuntimeSummary;
 import boofcv.io.image.UtilImageIO;
 import boofcv.struct.image.GrayF32;
 import boofcv.struct.image.GrayU8;
-import org.ddogleg.struct.GrowQueue_F64;
+import org.ddogleg.struct.DogArray_F64;
 
 import java.io.PrintStream;
 import java.util.ArrayList;
@@ -47,7 +47,7 @@ public class EvaluateTextThresholdDIBCO {
         GrayU8 found = new GrayU8(1,1);
         for( Alg alg : algorithms ) {
 
-            GrowQueue_F64 processingTimeMS = new GrowQueue_F64();
+            DogArray_F64 processingTimeMS = new DogArray_F64();
             totalTP=totalFP=totalTN=totalFN=0;
 
             for (int i = 0; i < input.size(); i++) {

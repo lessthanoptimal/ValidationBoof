@@ -10,7 +10,7 @@ import boofcv.struct.image.ImageType;
 import georegression.struct.homography.Homography2D_F64;
 import georegression.struct.point.Point2D_F64;
 import georegression.transform.homography.HomographyPointOps_F64;
-import org.ddogleg.struct.GrowQueue_F64;
+import org.ddogleg.struct.DogArray_F64;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -52,7 +52,7 @@ public class EvaluateTrackerStability<T extends ImageGray<T>> {
 	double meanImageArea;
 
 	// keeps track of per frame processing time
-	public GrowQueue_F64 elapsedTimeMS = new GrowQueue_F64();
+	public DogArray_F64 elapsedTimeMS = new DogArray_F64();
 
 	BufferedImage imageDebug = null;// = new BufferedImage(640,480,BufferedImage.TYPE_INT_BGR);
 	ImagePanel gui;

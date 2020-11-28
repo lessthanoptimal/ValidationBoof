@@ -6,7 +6,7 @@ import boofcv.metrics.DetectEllipseSaveToFile;
 import boofcv.metrics.EvaluateEllipseDetector;
 import boofcv.metrics.FactoryBinaryEllipse;
 import boofcv.struct.image.ImageDataType;
-import org.ddogleg.struct.GrowQueue_F64;
+import org.ddogleg.struct.DogArray_F64;
 
 import java.io.File;
 import java.io.IOException;
@@ -22,7 +22,7 @@ public class DetectEllipseRegression extends BaseRegression implements ImageRegr
 	File baseDataSetDirectory = new File("data/shape/ellipse");
 
 	RuntimeSummary runtime;
-	GrowQueue_F64 summaryRuntime = new GrowQueue_F64();
+	DogArray_F64 summaryRuntime = new DogArray_F64();
 
 	public DetectEllipseRegression() {
 		super(BoofRegressionConstants.TYPE_SHAPE);

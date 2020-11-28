@@ -5,7 +5,7 @@ import boofcv.abst.geo.bundle.SceneObservations;
 import boofcv.abst.geo.bundle.SceneStructureMetric;
 import georegression.struct.point.Point2D_F64;
 import georegression.struct.point.Point3D_F64;
-import org.ddogleg.struct.GrowQueue_F64;
+import org.ddogleg.struct.DogArray_F64;
 
 /**
  * Tools for evaluating bundle adjustment
@@ -23,7 +23,7 @@ public class BundleAdjustmentEvaluationTools {
         Point3D_F64 worldPt = new Point3D_F64();
         Point3D_F64 cameraPt = new Point3D_F64();
 
-        GrowQueue_F64 errors = new GrowQueue_F64(observations.getObservationCount());
+        DogArray_F64 errors = new DogArray_F64(observations.getObservationCount());
 
         for (int viewIdx = 0; viewIdx < observations.views.size; viewIdx++) {
             SceneObservations.View obsView = observations.views.data[viewIdx];

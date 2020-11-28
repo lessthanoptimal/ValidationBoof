@@ -13,7 +13,7 @@ import boofcv.io.image.UtilImageIO;
 import boofcv.struct.image.GrayU8;
 import boofcv.struct.image.ImageGray;
 import georegression.struct.shapes.Polygon2D_F64;
-import org.ddogleg.struct.GrowQueue_F64;
+import org.ddogleg.struct.DogArray_F64;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -32,7 +32,7 @@ public class DetectPolygonsSaveToFile<T extends ImageGray<T>> {
 	T gray;
 	GrayU8 binary = new GrayU8(1,1);
 
-	public final GrowQueue_F64 processingTimeMS = new GrowQueue_F64();
+	public final DogArray_F64 processingTimeMS = new DogArray_F64();
 
 	public DetectPolygonsSaveToFile( DetectPolygonBinaryGrayRefine<T> detector , boolean binaryLocal) {
 

@@ -6,7 +6,7 @@ import boofcv.io.image.SimpleImageSequence;
 import boofcv.io.wrapper.DefaultMediaManager;
 import boofcv.struct.image.ImageBase;
 import boofcv.struct.image.ImageType;
-import org.ddogleg.struct.GrowQueue_F64;
+import org.ddogleg.struct.DogArray_F64;
 
 import java.io.File;
 import java.io.PrintStream;
@@ -24,8 +24,8 @@ public class RuntimePerformanceVideoStabilization< T extends ImageBase<T>> {
 	StitchingFromMotion2D<T,?> stitcher;
 	ImageType<T> imageType;
 
-	public final GrowQueue_F64 timesMS = new GrowQueue_F64();
-	public final GrowQueue_F64 summaryTimesMS = new GrowQueue_F64();
+	public final DogArray_F64 timesMS = new DogArray_F64();
+	public final DogArray_F64 summaryTimesMS = new DogArray_F64();
 
 	public RuntimePerformanceVideoStabilization(StitchingFromMotion2D<T,?> stitcher,
 												ImageType<T> imageType ) {

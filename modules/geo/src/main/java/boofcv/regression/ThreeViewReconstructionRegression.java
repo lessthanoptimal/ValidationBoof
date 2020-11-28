@@ -4,8 +4,8 @@ import boofcv.common.*;
 import boofcv.io.UtilIO;
 import boofcv.metrics.mvs.ThreeViewStereoPerformance;
 import boofcv.struct.image.ImageDataType;
-import org.ddogleg.stats.UtilStatisticsQueue;
-import org.ddogleg.struct.GrowQueue_F64;
+import org.ddogleg.stats.StatisticsDogArray;
+import org.ddogleg.struct.DogArray_F64;
 
 import java.io.File;
 import java.io.IOException;
@@ -48,9 +48,9 @@ public class ThreeViewReconstructionRegression extends BaseRegression implements
             return;
         }
 
-        GrowQueue_F64 scores = new GrowQueue_F64();
-        GrowQueue_F64 areas = new GrowQueue_F64();
-        GrowQueue_F64 runtimes = new GrowQueue_F64();
+        DogArray_F64 scores = new DogArray_F64();
+        DogArray_F64 areas = new DogArray_F64();
+        DogArray_F64 runtimes = new DogArray_F64();
         int totalFailed = 0;
         for( String image : images ) {
             System.out.println("Evaluating "+image);
@@ -85,9 +85,9 @@ public class ThreeViewReconstructionRegression extends BaseRegression implements
         outputRuntime.out.close();
     }
 
-    private void printSummary( PrintStream out, String format, String metric , GrowQueue_F64 values ) {
+    private void printSummary( PrintStream out, String format, String metric , DogArray_F64 values ) {
         values.sort();
-        double mean = UtilStatisticsQueue.mean(values);
+        double mean = StatisticsDogArray.mean(values);
         double p03 = values.getFraction(0.03);
         double p50 = values.getFraction(0.5);
         double p97 = values.getFraction(0.97);

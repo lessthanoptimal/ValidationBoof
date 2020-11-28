@@ -7,14 +7,14 @@ import boofcv.metrics.disparity.MiddleburyStereoEvaluation.Score;
 import boofcv.struct.image.GrayF32;
 import boofcv.struct.image.GrayU8;
 import boofcv.struct.image.ImageGray;
-import org.ddogleg.struct.GrowQueue_F64;
+import org.ddogleg.struct.DogArray_F64;
 
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 
 import static boofcv.metrics.disparity.MiddleburyStereoEvaluation.evaluateAll;
-import static org.ddogleg.stats.UtilStatisticsQueue.mean;
+import static org.ddogleg.stats.StatisticsDogArray.mean;
 
 /**
  * @author Peter Abeles
@@ -49,12 +49,12 @@ public class EvaluateDisparity<T extends ImageGray<T>> {
 				e.printStackTrace(err);
 				continue;
 			}
-			GrowQueue_F64 allError = new GrowQueue_F64();
-			GrowQueue_F64 allBad = new GrowQueue_F64();
-			GrowQueue_F64 allInvalid = new GrowQueue_F64();
-			GrowQueue_F64 allTotalBad = new GrowQueue_F64();
+			DogArray_F64 allError = new DogArray_F64();
+			DogArray_F64 allBad = new DogArray_F64();
+			DogArray_F64 allInvalid = new DogArray_F64();
+			DogArray_F64 allTotalBad = new DogArray_F64();
 
-			GrowQueue_F64 processingTimeMS = new GrowQueue_F64();
+			DogArray_F64 processingTimeMS = new DogArray_F64();
 			out.println(s.name);
 			for( Score r : results ) {
 				out.printf("%20s err=%5.2f bp=%5.1f ip=%5.1f tbp=%5.1f\n",r.name,r.aveError,r.badPercent,r.invalidPercent,r.totalBadPercent);

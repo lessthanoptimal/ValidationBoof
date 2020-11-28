@@ -7,8 +7,8 @@ import georegression.struct.point.Point2D_F64;
 import georegression.struct.point.Point3D_F64;
 import georegression.struct.point.Vector3D_F64;
 import georegression.struct.se.Se3_F64;
-import org.ddogleg.struct.GrowQueue_F64;
-import org.ddogleg.struct.GrowQueue_I32;
+import org.ddogleg.struct.DogArray_F64;
+import org.ddogleg.struct.DogArray_I32;
 
 import java.io.File;
 import java.io.PrintStream;
@@ -59,12 +59,12 @@ public abstract class BaseEvaluateFiducialToCamera implements FiducialEvaluateIn
 	List<Point2D_F64>[] detectedCorners;
 
 	// average errors for all 4 corners in a fiducial for each detected fiducials
-	GrowQueue_F64 errors = new GrowQueue_F64();
+	DogArray_F64 errors = new DogArray_F64();
 
 	FiducialCommon.Library library;
 
 	// Fiducial IDs that were assigned to false positive
-	GrowQueue_I32 falsePositiveIDs = new GrowQueue_I32();
+	DogArray_I32 falsePositiveIDs = new DogArray_I32();
 
 	// Should it consider "wrong order" as correct? This should be true if there's rotational ambiguity
 	boolean ignoreWrongOrder = false;

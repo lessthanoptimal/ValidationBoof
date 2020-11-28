@@ -28,7 +28,7 @@ import boofcv.alg.feature.orientation.OrientationHistogramSift;
 import boofcv.struct.feature.TupleDesc_F64;
 import boofcv.struct.image.GrayF32;
 import boofcv.struct.image.ImageType;
-import org.ddogleg.struct.GrowQueue_F64;
+import org.ddogleg.struct.DogArray_F64;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -92,7 +92,7 @@ public class DescribeOrientationSift
 
 		orientation.process(x,y,sigma);
 
-		GrowQueue_F64 found = orientation.getOrientations();
+		DogArray_F64 found = orientation.getOrientations();
 
 		List<TupleDesc_F64> ret = new ArrayList<TupleDesc_F64>();
 		for( int i = 0; i < found.size; i++ ) {

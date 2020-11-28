@@ -8,7 +8,7 @@ import georegression.geometry.ConvertRotation3D_F64;
 import georegression.metric.UtilAngle;
 import georegression.struct.EulerType;
 import georegression.struct.se.Se3_F64;
-import org.ddogleg.struct.GrowQueue_F64;
+import org.ddogleg.struct.DogArray_F64;
 import org.ejml.data.DMatrixRMaj;
 
 import java.io.PrintStream;
@@ -55,7 +55,7 @@ public class EvaluateVisualOdometryStereo<T extends ImageBase<T>> {
 
 	PrintStream out;
 
-	public GrowQueue_F64 processingTimeMS = new GrowQueue_F64();
+	public DogArray_F64 processingTimeMS = new DogArray_F64();
 
 	public EvaluateVisualOdometryStereo( SequenceStereoImages data,
 										 StereoVisualOdometry<T> alg,

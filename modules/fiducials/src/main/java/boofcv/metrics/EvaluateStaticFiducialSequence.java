@@ -5,7 +5,7 @@ import georegression.metric.UtilAngle;
 import georegression.struct.point.Point2D_F64;
 import georegression.struct.point.Vector3D_F64;
 import georegression.struct.se.Se3_F64;
-import org.ddogleg.struct.GrowQueue_F64;
+import org.ddogleg.struct.DogArray_F64;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -81,8 +81,8 @@ public class EvaluateStaticFiducialSequence extends BaseEvaluateFiducialToCamera
 			posePrev[i] = new Se3_F64();
 		}
 
-		GrowQueue_F64 errorNormals = new GrowQueue_F64();
-		GrowQueue_F64 errorLocation = new GrowQueue_F64();
+		DogArray_F64 errorNormals = new DogArray_F64();
+		DogArray_F64 errorLocation = new DogArray_F64();
 
 		resetStatistics();
 		for (int i = 0; i < results.size(); i++) {
@@ -132,7 +132,7 @@ public class EvaluateStaticFiducialSequence extends BaseEvaluateFiducialToCamera
 		double accuracy90 = errors.size == 0 ? 0 : errors.get( (int)(errors.size()*0.9));
 		double accuracy100 = errors.size == 0 ? 0 :errors.get( errors.size()-1);
 
-		GrowQueue_F64 precision = computePrecision(allDetections);
+		DogArray_F64 precision = computePrecision(allDetections);
 		Arrays.sort(precision.data, 0, precision.size);
 
 		double precision50 = precision.size ==0 ? 0 : precision.get( (int)(precision.size()*0.5));
@@ -180,8 +180,8 @@ public class EvaluateStaticFiducialSequence extends BaseEvaluateFiducialToCamera
 	 * Computes the precision by finding the average corner for each detection.  Then it computes
 	 * the error for all corners
 	 */
-	public static GrowQueue_F64 computePrecision(List<List<Point2D_F64>>[] allDetections) {
-		GrowQueue_F64 errors = new GrowQueue_F64();
+	public static DogArray_F64 computePrecision(List<List<Point2D_F64>>[] allDetections) {
+		DogArray_F64 errors = new DogArray_F64();
 
 		int numPoints = allDetections[0].get(0).size();
 

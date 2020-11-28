@@ -26,7 +26,7 @@ import boofcv.struct.image.GrayF32;
 import boofcv.struct.image.ImageDataType;
 import boofcv.struct.image.ImageType;
 import boofcv.struct.pyramid.ConfigDiscreteLevels;
-import org.ddogleg.struct.GrowQueue_F64;
+import org.ddogleg.struct.DogArray_F64;
 
 import java.io.File;
 import java.io.IOException;
@@ -40,7 +40,7 @@ import java.util.List;
 public class StereoVisualOdometryRegression extends BaseRegression implements ImageRegression {
 
 	RuntimeSummary runtime;
-	GrowQueue_F64 summaryRuntimeMS = new GrowQueue_F64();
+	DogArray_F64 summaryRuntimeMS = new DogArray_F64();
 
 	PrintStream out;
 

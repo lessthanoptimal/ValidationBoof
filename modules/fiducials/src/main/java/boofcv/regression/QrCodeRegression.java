@@ -8,7 +8,7 @@ import boofcv.metrics.qrcode.DetectQrCodesInImages;
 import boofcv.metrics.qrcode.EvaluateQrCodeDecoding;
 import boofcv.metrics.qrcode.EvaluateQrCodeDetections;
 import boofcv.struct.image.ImageDataType;
-import org.ddogleg.struct.GrowQueue_F64;
+import org.ddogleg.struct.DogArray_F64;
 
 import java.io.File;
 import java.io.IOException;
@@ -23,7 +23,7 @@ public class QrCodeRegression extends BaseRegression implements ImageRegression 
 	EvaluateQrCodeDecoding evaluateMessage = new EvaluateQrCodeDecoding();
 
 	RuntimeSummary runtime;
-	GrowQueue_F64 summaryPeriodMS = new GrowQueue_F64();
+	DogArray_F64 summaryPeriodMS = new DogArray_F64();
 
 	File workDirectory = new File("./tmp");
 	File baseFiducial = new File("data/fiducials/qrcodes");

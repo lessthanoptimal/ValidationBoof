@@ -128,8 +128,8 @@ public class DebugDenseStereoVideo<T extends ImageGray<T>> implements MouseListe
 		rectifyAlg.process(K1,new Se3_F64(),K2,leftToRight);
 
 		// rectification matrix for each image
-		DMatrixRMaj rect1 = rectifyAlg.getRect1();
-		DMatrixRMaj rect2 = rectifyAlg.getRect2();
+		DMatrixRMaj rect1 = rectifyAlg.getUndistToRectPixels1();
+		DMatrixRMaj rect2 = rectifyAlg.getUndistToRectPixels2();
 
 		FMatrixRMaj rect1_F32 = new FMatrixRMaj(rect1.numRows,rect1.numCols);
 		FMatrixRMaj rect2_F32 = new FMatrixRMaj(rect2.numRows,rect2.numCols);

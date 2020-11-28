@@ -8,7 +8,7 @@ import boofcv.factory.filter.binary.ConfigThreshold;
 import boofcv.factory.filter.binary.ThresholdType;
 import boofcv.metrics.*;
 import boofcv.struct.image.ImageDataType;
-import org.ddogleg.struct.GrowQueue_F64;
+import org.ddogleg.struct.DogArray_F64;
 
 import java.io.File;
 import java.io.IOException;
@@ -28,7 +28,7 @@ public class FiducialRegression extends BaseRegression implements ImageRegressio
 	String infoString;
 
 	RuntimeSummary runtime;
-	GrowQueue_F64 summaryPeriodMS = new GrowQueue_F64();
+	DogArray_F64 summaryPeriodMS = new DogArray_F64();
 
 	public FiducialRegression() {
 		super(BoofRegressionConstants.TYPE_FIDCUIALS);

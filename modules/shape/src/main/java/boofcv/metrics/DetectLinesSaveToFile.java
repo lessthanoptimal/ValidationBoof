@@ -8,7 +8,7 @@ import boofcv.io.image.UtilImageIO;
 import boofcv.struct.image.ImageGray;
 import georegression.struct.line.LineParametric2D_F32;
 import org.apache.commons.io.FilenameUtils;
-import org.ddogleg.struct.GrowQueue_F64;
+import org.ddogleg.struct.DogArray_F64;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -32,7 +32,7 @@ public class DetectLinesSaveToFile<T extends ImageGray<T>> {
 
 	Class<T> imageType;
 
-	public final GrowQueue_F64 processingTimeMS = new GrowQueue_F64();
+	public final DogArray_F64 processingTimeMS = new DogArray_F64();
 
 	public DetectLinesSaveToFile(boolean thinDetector, String detectorName , int blurRadius ,
 								 Class<T> imageType ) {

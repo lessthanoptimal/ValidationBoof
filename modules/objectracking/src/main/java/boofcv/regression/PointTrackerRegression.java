@@ -21,7 +21,7 @@ import boofcv.struct.ConfigLength;
 import boofcv.struct.image.ImageDataType;
 import boofcv.struct.image.ImageType;
 import georegression.struct.homography.Homography2D_F64;
-import org.ddogleg.struct.GrowQueue_F64;
+import org.ddogleg.struct.DogArray_F64;
 import org.ejml.UtilEjml;
 
 import java.io.File;
@@ -46,7 +46,7 @@ public class PointTrackerRegression extends BaseRegression implements ImageRegre
 	int[] skips = new int[]{1,4,8};
 
 	RuntimeSummary outputSpeed;
-	GrowQueue_F64 runtimeSummary = new GrowQueue_F64();
+	DogArray_F64 runtimeSummary = new DogArray_F64();
 
 	// summary for a tracker
 	double summaryMeanF,summaryMeanFA,summaryMeanPrecision,summaryMeanRecall,summaryMeanTracks,summaryImageArea;

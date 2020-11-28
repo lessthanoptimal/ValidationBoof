@@ -35,8 +35,8 @@ import boofcv.struct.geo.AssociatedTriple;
 import boofcv.struct.image.*;
 import georegression.struct.point.Point2D_F64;
 import georegression.struct.se.Se3_F64;
-import org.ddogleg.struct.FastQueue;
-import org.ddogleg.struct.GrowQueue_I32;
+import org.ddogleg.struct.DogArray;
+import org.ddogleg.struct.DogArray_I32;
 import org.ejml.data.DMatrixRMaj;
 import org.ejml.data.FMatrixRMaj;
 import org.ejml.ops.ConvertMatrixData;
@@ -56,7 +56,7 @@ public class ThreeViewStereoPerformance {
     GrayU8 image01,image02,image03;
     double cx,cy;
 
-    FastQueue<AssociatedTriple> associated = new FastQueue<>(AssociatedTriple::new);
+    DogArray<AssociatedTriple> associated = new DogArray<>(AssociatedTriple::new);
 
     double score;
     double areaFraction;
@@ -147,17 +147,17 @@ public class ThreeViewStereoPerformance {
 
         DetectDescribePoint<GrayU8, TupleDesc_F64> detDesc = FactoryDetectDescribe.generic(configDetDesc,GrayU8.class);
 
-        FastQueue<Point2D_F64> locations01 = new FastQueue<>(Point2D_F64::new);
-        FastQueue<Point2D_F64> locations02 = new FastQueue<>(Point2D_F64::new);
-        FastQueue<Point2D_F64> locations03 = new FastQueue<>(Point2D_F64::new);
+        DogArray<Point2D_F64> locations01 = new DogArray<>(Point2D_F64::new);
+        DogArray<Point2D_F64> locations02 = new DogArray<>(Point2D_F64::new);
+        DogArray<Point2D_F64> locations03 = new DogArray<>(Point2D_F64::new);
 
-        FastQueue<TupleDesc_F64> features01 = UtilFeature.createQueue(detDesc,100);
-        FastQueue<TupleDesc_F64> features02 = UtilFeature.createQueue(detDesc,100);
-        FastQueue<TupleDesc_F64> features03 = UtilFeature.createQueue(detDesc,100);
+        DogArray<TupleDesc_F64> features01 = UtilFeature.createQueue(detDesc,100);
+        DogArray<TupleDesc_F64> features02 = UtilFeature.createQueue(detDesc,100);
+        DogArray<TupleDesc_F64> features03 = UtilFeature.createQueue(detDesc,100);
 
-        GrowQueue_I32 sets01 = new GrowQueue_I32();
-        GrowQueue_I32 sets02 = new GrowQueue_I32();
-        GrowQueue_I32 sets03 = new GrowQueue_I32();
+        DogArray_I32 sets01 = new DogArray_I32();
+        DogArray_I32 sets02 = new DogArray_I32();
+        DogArray_I32 sets03 = new DogArray_I32();
 
         time0 = System.currentTimeMillis();
 
@@ -192,7 +192,7 @@ public class ThreeViewStereoPerformance {
         associateThree.initialize(detDesc.getNumberOfSets());
         associateThree.associate();
 
-        FastQueue<AssociatedTripleIndex> associatedIdx = associateThree.getMatches();
+        DogArray<AssociatedTripleIndex> associatedIdx = associateThree.getMatches();
 //        System.out.println("Associated: "+associatedIdx.size);
         associated.reset();
         for (int i = 0; i < associatedIdx.size; i++) {
@@ -202,9 +202,9 @@ public class ThreeViewStereoPerformance {
     }
 
     private void copyResults(DetectDescribePoint<GrayU8, TupleDesc_F64> detDesc,
-                             FastQueue<Point2D_F64> locations,
-                             FastQueue<TupleDesc_F64> features,
-                             GrowQueue_I32 sets)
+                             DogArray<Point2D_F64> locations,
+                             DogArray<TupleDesc_F64> features,
+                             DogArray_I32 sets)
     {
         final int N = detDesc.getNumberOfFeatures();
         locations.resize(N);
@@ -275,8 +275,8 @@ public class ThreeViewStereoPerformance {
         rectifyAlg.process(K1, new Se3_F64(), K2, leftToRight);
 
         // rectification matrix for each image
-        DMatrixRMaj rect1 = rectifyAlg.getRect1();
-        DMatrixRMaj rect2 = rectifyAlg.getRect2();
+        DMatrixRMaj rect1 = rectifyAlg.getUndistToRectPixels1();
+        DMatrixRMaj rect2 = rectifyAlg.getUndistToRectPixels2();
         rectifiedR.set(rectifyAlg.getRectifiedRotation());
 
         // New calibration matrix,

@@ -94,7 +94,7 @@ public class HandSelectPointsApp extends HandSelectBase {
 					CalibrationObservation found = detector.getDetectedPoints();
 					List<Point2D_F64> list = new ArrayList<>();
 					for (int i = 0; i < found.size(); i++) {
-						list.add(found.get(i));
+						list.add(found.get(i).p);
 					}
 					gui.addPointSet(list);
 					gui.repaint();

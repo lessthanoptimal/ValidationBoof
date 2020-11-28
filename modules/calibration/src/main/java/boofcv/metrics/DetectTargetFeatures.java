@@ -53,7 +53,7 @@ public class DetectTargetFeatures {
 
 //				out.printf("%s %d ",new File(name).getName(),points.size());
 				for( PointIndex2D_F64 p : points.points ) {
-					out.printf("%f %f\n",p.x,p.y);
+					out.printf("%f %f\n",p.p.x,p.p.y);
 				}
 
 			} else {

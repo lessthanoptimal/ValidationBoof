@@ -7,7 +7,7 @@ import boofcv.io.image.UtilImageIO;
 import boofcv.struct.flow.ImageFlow;
 import boofcv.struct.image.GrayF32;
 import boofcv.struct.image.ImageBase;
-import org.ddogleg.struct.GrowQueue_F64;
+import org.ddogleg.struct.DogArray_F64;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -29,7 +29,7 @@ public class BenchmarkMiddleburyFlow<T extends ImageBase<T>> {
 
 	PrintStream outputAccuracy;
 
-	public GrowQueue_F64 processingTimeMS = new GrowQueue_F64();
+	public DogArray_F64 processingTimeMS = new DogArray_F64();
 
 	public BenchmarkMiddleburyFlow( String dataDirectory ,
 									DenseOpticalFlow<T> algorithm ,
@@ -45,7 +45,7 @@ public class BenchmarkMiddleburyFlow<T extends ImageBase<T>> {
 
 		outputAccuracy.println("# dataset totalValid (error 50%) (error 90%) (error 95%)");
 
-		GrowQueue_F64 errors = new GrowQueue_F64();
+		DogArray_F64 errors = new DogArray_F64();
 
 		for( String which : dataSets ) {
 			String nameTruth = dataDirectory+"/other-gt-flow/"+which+"/flow10.flo";

@@ -14,7 +14,7 @@ import boofcv.io.image.UtilImageIO;
 import boofcv.struct.image.GrayU8;
 import boofcv.struct.image.ImageGray;
 import georegression.struct.curve.EllipseRotated_F64;
-import org.ddogleg.struct.GrowQueue_F64;
+import org.ddogleg.struct.DogArray_F64;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -33,7 +33,7 @@ public class DetectEllipseSaveToFile<T extends ImageGray<T>> {
 	T gray;
 	GrayU8 binary = new GrayU8(1,1);
 
-	public GrowQueue_F64 processingTimeMS = new GrowQueue_F64();
+	public DogArray_F64 processingTimeMS = new DogArray_F64();
 
 	public DetectEllipseSaveToFile(BinaryEllipseDetector<T> detector , boolean binaryLocal) {
 

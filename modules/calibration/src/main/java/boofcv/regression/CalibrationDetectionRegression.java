@@ -13,7 +13,7 @@ import boofcv.struct.image.ImageDataType;
 import com.google.common.base.Strings;
 import georegression.struct.point.Point2D_F64;
 import org.apache.commons.io.FilenameUtils;
-import org.ddogleg.struct.GrowQueue_F64;
+import org.ddogleg.struct.DogArray_F64;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -151,7 +151,7 @@ public class CalibrationDetectionRegression extends BaseRegression implements Im
 		// Sort it to ensure the same order
 		directories.sort(String.CASE_INSENSITIVE_ORDER);
 
-		GrowQueue_F64 summaryTimeMS = new GrowQueue_F64();
+		DogArray_F64 summaryTimeMS = new DogArray_F64();
 
 		Map<String,OverallMetrics> dirMetrics = new HashMap<>();
 		try {
@@ -277,7 +277,7 @@ public class CalibrationDetectionRegression extends BaseRegression implements Im
 						errorLog.println(dataSetName+" different point counts. found="+found.size()+" truth="+groundTruth.size());
 					} else {
 						for (int i = 0; i < found.size(); i++) {
-							errors[i] = distanceFromClosest(found.points.get(i),groundTruth);
+							errors[i] = distanceFromClosest(found.points.get(i).p,groundTruth);
 							metrics.errors.add(errors[i]);
 						}
 
@@ -315,10 +315,10 @@ public class CalibrationDetectionRegression extends BaseRegression implements Im
 	}
 
 	private static class OverallMetrics {
-		final GrowQueue_F64 errors = new GrowQueue_F64();
+		final DogArray_F64 errors = new DogArray_F64();
 		int total;
 		int failed;
-		final GrowQueue_F64 processingTimeMS = new GrowQueue_F64();
+		final DogArray_F64 processingTimeMS = new DogArray_F64();
 
 		public void add( OverallMetrics src ) {
 			errors.addAll(src.errors);

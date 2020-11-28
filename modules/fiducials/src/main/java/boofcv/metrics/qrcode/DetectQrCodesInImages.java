@@ -9,7 +9,7 @@ import boofcv.io.image.UtilImageIO;
 import boofcv.struct.image.ImageGray;
 import georegression.struct.point.Point2D_F64;
 import org.apache.commons.io.FilenameUtils;
-import org.ddogleg.struct.GrowQueue_F64;
+import org.ddogleg.struct.DogArray_F64;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -27,7 +27,7 @@ import static boofcv.metrics.BaseEstimateSquareFiducialToCamera.loadImageFilesBy
 public class DetectQrCodesInImages<T extends ImageGray<T>> {
     File outputDirectory = new File(".");
 
-    public GrowQueue_F64 periodMS = new GrowQueue_F64();
+    public DogArray_F64 periodMS = new DogArray_F64();
 
     public void setOutputDirectory(File outputDirectory) {
         this.outputDirectory = outputDirectory;

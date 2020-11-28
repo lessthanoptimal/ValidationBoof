@@ -16,8 +16,8 @@ import boofcv.struct.image.GrayS32;
 import boofcv.struct.image.GrayU8;
 import boofcv.struct.image.ImageGray;
 import georegression.struct.point.Point2D_I32;
-import org.ddogleg.struct.GrowQueue_F64;
-import org.ddogleg.struct.GrowQueue_I32;
+import org.ddogleg.struct.DogArray_F64;
+import org.ddogleg.struct.DogArray_I32;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -41,7 +41,7 @@ public class DetectPolylineSaveToFile<T extends ImageGray<T>> {
 	GrayU8 binary = new GrayU8(1,1);
 	GrayS32 labeled = new GrayS32(1,1);
 
-	public final GrowQueue_F64 processingTimeMS = new GrowQueue_F64();
+	public final DogArray_F64 processingTimeMS = new DogArray_F64();
 
 	public DetectPolylineSaveToFile(PointsToPolyline contourToPolyline , boolean binaryLocal, Class<T> imageType ) {
 
@@ -93,7 +93,7 @@ public class DetectPolylineSaveToFile<T extends ImageGray<T>> {
 		List<Contour> contours = BinaryImageOps.convertContours(binaryToContour);
 
 		long startNano = System.nanoTime();
-		GrowQueue_I32 vertexes = new GrowQueue_I32();
+		DogArray_I32 vertexes = new DogArray_I32();
 		List<List<Point2D_I32>> polylines = new ArrayList<>();
 		for (int i = 0; i < contours.size(); i++) {
 			Contour c = contours.get(i);

@@ -12,7 +12,7 @@ import georegression.geometry.ConvertRotation3D_F64;
 import georegression.struct.se.Se3_F64;
 import georegression.struct.so.Rodrigues_F64;
 import org.apache.commons.io.FilenameUtils;
-import org.ddogleg.struct.GrowQueue_F64;
+import org.ddogleg.struct.DogArray_F64;
 import org.ejml.data.DMatrixRMaj;
 import org.ejml.dense.row.CommonOps_DDRM;
 
@@ -39,8 +39,8 @@ public class EvaluatePnPObservations {
 
     Rodrigues_F64 rod = new Rodrigues_F64();
 
-    GrowQueue_F64 errorAngle = new GrowQueue_F64();
-    GrowQueue_F64 errorTranslation = new GrowQueue_F64();
+    DogArray_F64 errorAngle = new DogArray_F64();
+    DogArray_F64 errorTranslation = new DogArray_F64();
     int totalFailures,totalEstimated;
     DMatrixRMaj R = new DMatrixRMaj(3,3);
 
