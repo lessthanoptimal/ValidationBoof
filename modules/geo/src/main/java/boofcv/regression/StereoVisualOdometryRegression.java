@@ -139,7 +139,7 @@ public class StereoVisualOdometryRegression extends BaseRegression implements Im
 		configKlt.config.maxIterations = 25;
 		configKlt.config.maxPerPixelError = 25;
 		configKlt.toleranceFB = 3;
-		configKlt.maximumTracks = 300;
+		configKlt.maximumTracks.setFixed(300);
 
 		ConfigPointDetector configDet = new ConfigPointDetector();
 		configDet.type = PointDetectorTypes.SHI_TOMASI;
@@ -180,7 +180,7 @@ public class StereoVisualOdometryRegression extends BaseRegression implements Im
 		config.tracker.klt.config.maxIterations = 25;
 		config.tracker.klt.config.maxPerPixelError = 25;
 		config.tracker.klt.toleranceFB = 3;
-		config.tracker.klt.maximumTracks = 400;
+		config.tracker.klt.maximumTracks.setFixed(400);
 
 		// for stereo associations
 		config.tracker.detDesc.typeDescribe = ConfigDescribeRegionPoint.DescriptorType.BRIEF;

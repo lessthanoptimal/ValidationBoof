@@ -291,7 +291,7 @@ public class PointTrackerRegression extends BaseRegression implements ImageRegre
 	public Info createDefaultKlt(Class bandType) {
 
 		ConfigPKlt configKlt = new ConfigPKlt();
-		configKlt.maximumTracks = 800;
+		configKlt.maximumTracks.setFixed(800);
 //		configKlt.pyramidLevels = ConfigDiscreteLevels.levels(4); <-- made it much worse!
 
 		ConfigPointDetector configDet = new ConfigPointDetector();

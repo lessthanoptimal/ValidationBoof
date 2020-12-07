@@ -29,7 +29,7 @@ public class FactoryRegressionVideoStabilization {
         ConfigPKlt configKlt = new ConfigPKlt();
         configKlt.pyramidLevels = ConfigDiscreteLevels.levels(4);
         configKlt.templateRadius = 3;
-        configKlt.maximumTracks = 300;
+        configKlt.maximumTracks.setFixed(300);
 
         Class imageClass = imageType.getImageClass();
 
