@@ -1,10 +1,10 @@
 ---- Native Access Info
 OS: Ubuntu 18.04.5 LTS
 CPU: Intel(R) Core(TM) i7-6700 CPU @ 3.40GHz
-Ave Load: 1m=0.58 5m=1.17 15m=2.05
+Ave Load: 1m=1.19 5m=2.21 15m=1.87
 ----
 Runtime.getRuntime().availableProcessors(): 8
-Runtime.getRuntime().freeMemory(): 516638624
+Runtime.getRuntime().freeMemory(): 516638584
 Runtime.getRuntime().totalMemory(): 530579456
 =========== java.specification.version
 14
@@ -25,7 +25,7 @@ Azul Systems, Inc.
 =========== sun.arch.data.model
 64
 =========== os.version
-4.15.0-123-generic
+4.15.0-128-generic
 =========== java.runtime.name
 OpenJDK Runtime Environment
 =========== file.encoding
@@ -47,7 +47,7 @@ US
 =========== sun.boot.library.path
 /opt/jdk/zulu14.27.1-ca-jdk14-linux_x64/lib
 =========== sun.java.command
-regression.jar -t CalibrationIntrinsicChangeFRegression
+regression.jar
 =========== java.vendor.url.bug
 http://www.azulsystems.com/support/
 =========== java.io.tmpdir

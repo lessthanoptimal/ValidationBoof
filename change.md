@@ -1,7 +1,7 @@
 Description of changes to benchmarks and justifications for change in performance from previous versions.
 
 ## Version 0.37
-2020/
+2020/12/21
 
 - Improved runtime metrics across all regression and put into a common format to make automatic checking possible
 - Added more runtime regressions and compacted others into a single file
@@ -12,10 +12,10 @@ Description of changes to benchmarks and justifications for change in performanc
   * There was a mistake (for a long time) where reset was not called at the start of a new trial
 - Corners
   * Needed to update ground truth list because the original BoofCV code was buggy when there were multiple sets
-    Only maximums were saved because the factory created the wrong extractor. Even if that wasn't there it would have
+    Only maximums were saved because the factory created the wrong extractor. Even if that wasn't there, it would have
     not returned the correct number of features.
 - Three View Metric Scene
-  * Re-tuned and is much faster, but a little bit less stable
+  * Re-tuned and is much faster, but a little less stable
   * Couldn't tune to get exactly the same results as before, but the speed had degraded too much
   * Suspicious recent changes to feature selection result in slightly worse selection or redundant information
 - Visual Odometry
@@ -23,8 +23,16 @@ Description of changes to benchmarks and justifications for change in performanc
     9605be22ae62e7095ad5ba04ca512003eb72f915
 - Calibration
   * Results changed insignificantly when DDogleg removed O(N^2) matrix multiplication on 2020/OCT/1
-- TODO List the files which changed the first time they changed to reduce clutter
-- TODO Add regression for template matching
+- Disparity
+  * Results degraded slightly due to a bug fix
+  * The issue was that disparity range was being returned as max-min instead of the actual range. 
+    This lead to the allowed disparity values being clipped. Effectively the last (and can't be subpixel)
+    value was discarded
+  * This should act as a hint on increasing reliability of results
+- Dense Feature SIFT F32
+  * Metrics show it 2x slower, when re-running old version it matched the new slower results.
+  * The faster result appear in multiple times but could not reproduce now even with old code/Java
+  * Worth noting that some old results also show the slower time.
 
 ## Version 0.36
 2020/May/18

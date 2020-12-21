@@ -1,3 +1,8 @@
+- Create a history of SHAs for use in future binary search
+- Add support for --Quick which will only run very fast tests for change detection
+  * Need to create "quick" datasets
+- Command Line
+  * Specify U8 or F32 only
 - New Regressions
   * Visual odometry - RGB-D
   * Visual odometry - Mono-Plane
