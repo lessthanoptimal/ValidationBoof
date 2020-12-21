@@ -12,6 +12,7 @@ import boofcv.io.image.ConvertBufferedImage;
 import boofcv.struct.ConfigLength;
 import boofcv.struct.image.GrayU8;
 import georegression.struct.curve.EllipseRotated_F64;
+import georegression.struct.point.Point2D_F64;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -116,8 +117,10 @@ public class HandSelectEllipseGridApp extends HandSelectBase {
 		ellipsePath = ellipsePath.substring(0,ellipsePath.length()-4)+"_ellipse.txt";
 
 		EllipseFileCodec.save(ellipsePath," rotated ellipses. x y a b phi",gui.list);
-		PointFileCodec.save(outputFile.getPath(), " list of hand selected 2D points from ellipse tangents",
-				keyAlg.getKeyPoints().toList());
+		List<Point2D_F64> keyPoints = new ArrayList<>();
+		keyAlg.getKeyPoints().forEach(a->keyPoints.add(a.p));
+		PointFileCodec.save(outputFile.getPath(),
+				" list of hand selected 2D points from ellipse tangents", keyPoints);
 	}
 
 	@Override

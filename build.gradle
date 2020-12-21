@@ -1,5 +1,5 @@
 plugins {
-    id "com.peterabeles.gversion" version "1.8.3"
+    id "com.peterabeles.gversion" version "1.10"
 }
 
 gversion {
@@ -10,7 +10,7 @@ gversion {
 
 allprojects{
     group = 'org.boofcv'
-    version = '0.37-SNAPSHOT'
+    version = '0.37'
 
     apply plugin: 'idea'
     apply plugin: 'java'
@@ -20,9 +20,7 @@ allprojects{
         mavenCentral()
         mavenLocal()
 
-        maven {
-            url = "https://oss.sonatype.org/content/repositories/snapshots/"
-        }
+        maven { url = "https://oss.sonatype.org/content/repositories/snapshots/" }
     }
 
     dependencies {
@@ -55,14 +53,10 @@ subprojects {
             exclude 'META-INF/*.RSA', 'META-INF/*.SF', 'META-INF/*.DSA'
         } with jar
 
-        doLast {
-            archivePath.renameTo(file('module_regression.jar'))
-        }
+        doLast {  archivePath.renameTo(file('module_regression.jar')) }
     }
 
-    clean.doFirst {
-        delete "module_regression.jar"
-    }
+    clean.doFirst { delete "module_regression.jar" }
 }
 
 project.compileJava.dependsOn(createVersionFile)
@@ -83,9 +77,7 @@ task pointLabelJar(type: Jar) {
         it.isDirectory() ? it :  zipTree(it) } }
     with jar
 
-    doLast {
-        archivePath.renameTo(file('label_points.jar'))
-    }
+    doLast { archivePath.renameTo(file('label_points.jar')) }
 }
 
 // Create a jar which contains all the applications
@@ -103,14 +95,10 @@ task regressionJar(type: Jar, dependsOn: ':build' ) {
         exclude 'META-INF/*.RSA', 'META-INF/*.SF', 'META-INF/*.DSA'
     } with jar
 
-    doLast {
-        archivePath.renameTo(file('regression.jar'))
-    }
+    doLast { archivePath.renameTo(file('regression.jar')) }
 }
 
-clean.doFirst {
-    delete "regression.jar"
-}
+clean.doFirst { delete "regression.jar" }
 
 def not_modules = new ArrayList();
 not_modules.addAll(subprojects.findAll{x->x.path.startsWith(':thirdparty')})
