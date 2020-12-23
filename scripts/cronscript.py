@@ -100,7 +100,8 @@ for lib in project_list:
     check_cd(path_to_p)
     run_command("git clean -fd")            # Remove all untracked files to avoid stale auto generated code
     run_command("git checkout SNAPSHOT")
-    run_command("git pull")
+    run_command("git fetch")
+    run_command("git reset --hard origin/SNAPSHOT") # Won't fail if some idiot rewrote git history
     run_command("git submodule update")
     if lib["autogen"]:
         run_command("./gradlew autogenerate")
