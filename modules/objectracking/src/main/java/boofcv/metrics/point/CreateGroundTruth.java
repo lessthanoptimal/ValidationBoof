@@ -139,7 +139,7 @@ public class CreateGroundTruth {
 
 			if( robustH.getMatchSet().size() < minimumInliers ) {
 				System.out.println("**** Changing KeyFrame ****");
-				globalToKey.set(H);
+				globalToKey.setTo(H);
 				keyFrame.setTo(current);
 				tracker.reset();
 				tracker.track(keyFrame);

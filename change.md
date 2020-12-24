@@ -1,5 +1,12 @@
 Description of changes to benchmarks and justifications for change in performance from previous versions.
 
+## Version 0.38
+2021/
+
+- TODO Automated checks for runtime performance
+- TODO add regression for sparse reconstruction. Compare against known parameters and approximate known motion
+- TODO cloud sharpness test for planar
+
 ## Version 0.37
 2020/12/21
 

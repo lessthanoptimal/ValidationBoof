@@ -89,7 +89,7 @@ public class RefineHomographTransform<I extends ImageGray<I>, D extends ImageGra
 			H_scale_inv.concat(H_layer,null).concat(H_scale,H);
 		}
 
-		result.set(H);
+		result.setTo(H);
 
 		return true;
 	}

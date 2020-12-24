@@ -277,10 +277,10 @@ public class ThreeViewStereoPerformance {
         // rectification matrix for each image
         DMatrixRMaj rect1 = rectifyAlg.getUndistToRectPixels1();
         DMatrixRMaj rect2 = rectifyAlg.getUndistToRectPixels2();
-        rectifiedR.set(rectifyAlg.getRectifiedRotation());
+        rectifiedR.setTo(rectifyAlg.getRectifiedRotation());
 
         // New calibration matrix,
-        rectifiedK.set(rectifyAlg.getCalibrationMatrix());
+        rectifiedK.setTo(rectifyAlg.getCalibrationMatrix());
 
         // Adjust the rectification to make the view area more useful
         ImageDimension rectShape = new ImageDimension();
