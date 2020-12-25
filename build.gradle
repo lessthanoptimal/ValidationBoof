@@ -59,6 +59,10 @@ subprojects {
     clean.doFirst { delete "module_regression.jar" }
 }
 
+dependencies {
+    compile project(':modules:common')
+}
+
 project.compileJava.dependsOn(createVersionFile)
 
 task pointLabelJar(type: Jar) {

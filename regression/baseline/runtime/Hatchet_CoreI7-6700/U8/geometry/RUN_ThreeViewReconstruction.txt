@@ -1,6 +1,8 @@
 # GENERATOR ThreeViewReconstructionRegression
 # Elapsed time in milliseconds
 
+Individual
+                               Milliseconds
                apartment_bush_ 3373
              apartment_road_a_ 2948
                        barrel_ 2727

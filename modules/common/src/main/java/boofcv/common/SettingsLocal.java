@@ -17,7 +17,6 @@ public class SettingsLocal {
     public static final String FILE_NAME = "settings_local.yaml";
     public static final String DEFAULT_MACHINE_NAME = "Default";
 
-
     public static final String KEY_VERSION = "version";
     public static final String KEY_MACHINE_NAME = "machine_name";
 
@@ -40,6 +39,16 @@ public class SettingsLocal {
         File f = new File(path);
         if( !f.exists() && !f.mkdirs() )
             throw new RuntimeException("Can't create runtime directory");
+        return f;
+    }
+
+    public static File getPathToBaselineRuntimeDirectory() {
+        String path = BoofRegressionConstants.BASELINE_DIRECTORY;
+        path += File.separator+"runtime";
+        path += File.separator+machineName;
+        File f = new File(path);
+        if( !f.exists() )
+            throw new RuntimeException("Baseline does not exist?!");
         return f;
     }
 

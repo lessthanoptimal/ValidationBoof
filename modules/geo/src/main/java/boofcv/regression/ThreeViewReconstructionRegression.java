@@ -48,6 +48,9 @@ public class ThreeViewReconstructionRegression extends BaseRegression implements
             return;
         }
 
+        outputRuntime.out.println("Individual");
+        outputRuntime.out.printf("%30s %s\n","","Milliseconds");
+
         DogArray_F64 scores = new DogArray_F64();
         DogArray_F64 areas = new DogArray_F64();
         DogArray_F64 runtimes = new DogArray_F64();

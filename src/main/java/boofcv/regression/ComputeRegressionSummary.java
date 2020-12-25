@@ -170,22 +170,33 @@ public class ComputeRegressionSummary {
             summary += "Total Current Unique:  " + currentUnique.size() + "\n";
             summary += "\n";
 
-            summary += "Miss Matched\n";
-            for (String s : missmatched) {
-                summary += "  " + s + "\n";
+            if (missmatched.size()>0) {
+                summary += "Miss Matched\n";
+                for (String s : missmatched) {
+                    summary += "  " + s + "\n";
+                }
+                summary += "\n";
             }
-            summary += "\n";
-            summary += "Baseline Unique\n";
-            for (String s : baselineUnique) {
-                summary += "  " + s + "\n";
+
+            if (baselineUnique.size()>0) {
+                summary += "Baseline Unique\n";
+                for (String s : baselineUnique) {
+                    summary += "  " + s + "\n";
+                }
+                summary += "\n";
             }
-            summary += "\n";
-            summary += "Current Unique\n";
-            for (String s : currentUnique) {
-                summary += "  " + s + "\n";
+            if (currentUnique.size()>0) {
+                summary += "Current Unique\n";
+                for (String s : currentUnique) {
+                    summary += "  " + s + "\n";
+                }
+                summary += "\n";
             }
-            summary += "\n";
         }
+
+        var runtimeSummary = new ComputeRuntimeRegressionSummary();
+        summary += "------------------------------------------------------------------------\n";
+        summary += runtimeSummary.computeSummary();
 
         return summary;
     }

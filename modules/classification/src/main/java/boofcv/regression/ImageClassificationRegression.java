@@ -43,8 +43,8 @@ public class ImageClassificationRegression extends BaseRegression implements Ima
 		out.println("# that the algorithm has changed in some way and should be inspected more closely.");
 
 		List<Info> classifiers = new ArrayList<>();
-		classifiers.add(new Info(FactoryImageClassifier.nin_imagenet(),"NiN ImageNet"));
-		classifiers.add(new Info(FactoryImageClassifier.vgg_cifar10(),"VGG CIFAR10"));
+		classifiers.add(new Info(FactoryImageClassifier.nin_imagenet(),"NiN_ImageNet"));
+		classifiers.add(new Info(FactoryImageClassifier.vgg_cifar10(),"VGG_CIFAR10"));
 
 		ClassifyImageSaveResults<Planar<GrayF32>> regression = new ClassifyImageSaveResults<>();
 		regression.setOutput(out);

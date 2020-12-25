@@ -34,19 +34,19 @@ public class TextThresholdRegression extends BaseRegression implements ImageRegr
 			app.setOutputResults(out);
 			app.runtime = runtime;
 
-			app.addAlgorithm(FactoryThresholdAlgs.globalMean(), "global Mean");
-			app.addAlgorithm(FactoryThresholdAlgs.globalOtsu(), "global Otsu");
-			app.addAlgorithm(FactoryThresholdAlgs.globalEntropy(), "global Entropy");
-			app.addAlgorithm(FactoryThresholdAlgs.globalLi(), "global Li");
-			app.addAlgorithm(FactoryThresholdAlgs.globalHuang(), "global Huang");
-			app.addAlgorithm(FactoryThresholdAlgs.localMean(), "local Mean");
-			app.addAlgorithm(FactoryThresholdAlgs.localGaussian(), "local Gaussian");
-			app.addAlgorithm(FactoryThresholdAlgs.localOtsu(), "local Otsu");
-			app.addAlgorithm(FactoryThresholdAlgs.localSauvola(), "local Sauvola");
-			app.addAlgorithm(FactoryThresholdAlgs.localNick(), "local NICK");
-			app.addAlgorithm(FactoryThresholdAlgs.localBlockMinMax(), "block Min-Max");
-			app.addAlgorithm(FactoryThresholdAlgs.localBlockMean(), "block Mean");
-			app.addAlgorithm(FactoryThresholdAlgs.localBlockOtsu(), "block Otsu");
+			app.addAlgorithm(FactoryThresholdAlgs.globalMean(), "Global_Mean");
+			app.addAlgorithm(FactoryThresholdAlgs.globalOtsu(), "Global_Otsu");
+			app.addAlgorithm(FactoryThresholdAlgs.globalEntropy(), "Global_Entropy");
+			app.addAlgorithm(FactoryThresholdAlgs.globalLi(), "Global_Li");
+			app.addAlgorithm(FactoryThresholdAlgs.globalHuang(), "Global_Huang");
+			app.addAlgorithm(FactoryThresholdAlgs.localMean(), "Local_Mean");
+			app.addAlgorithm(FactoryThresholdAlgs.localGaussian(), "Local_Gaussian");
+			app.addAlgorithm(FactoryThresholdAlgs.localOtsu(), "Local_Otsu");
+			app.addAlgorithm(FactoryThresholdAlgs.localSauvola(), "Local_Sauvola");
+			app.addAlgorithm(FactoryThresholdAlgs.localNick(), "Local_NICK");
+			app.addAlgorithm(FactoryThresholdAlgs.localBlockMinMax(), "Block_Min-Max");
+			app.addAlgorithm(FactoryThresholdAlgs.localBlockMean(), "Block_Mean");
+			app.addAlgorithm(FactoryThresholdAlgs.localBlockOtsu(), "Block_Otsu");
 
 			app.evaluate();
 		} catch( RuntimeException e ) {
