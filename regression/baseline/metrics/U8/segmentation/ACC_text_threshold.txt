@@ -1,14 +1,14 @@
 # GENERATOR TextThresholdRegression
-              global Mean F = 0.567899 P = 0.396862 R = 0.998019
-              global Otsu F = 0.774520 P = 0.655751 R = 0.945827
-           global Entropy F = 0.860363 P = 0.786356 R = 0.949748
-                global Li F = 0.776169 P = 0.682551 R = 0.899550
-             global Huang F = 0.675616 P = 0.515977 R = 0.978292
-               local Mean F = 0.468250 P = 0.306758 R = 0.988803
-           local Gaussian F = 0.457436 P = 0.297910 R = 0.984755
-               local Otsu F = 0.872756 P = 0.930905 R = 0.821445
-            local Sauvola F = 0.892239 P = 0.867919 R = 0.917961
-               local NICK F = 0.891157 P = 0.885251 R = 0.897143
-            block Min-Max F = 0.706716 P = 0.605441 R = 0.848678
-               block Mean F = 0.740959 P = 0.593602 R = 0.985636
-               block Otsu F = 0.848028 P = 0.790474 R = 0.914622
+              Global_Mean F = 0.567899 P = 0.396862 R = 0.998019
+              Global_Otsu F = 0.774520 P = 0.655751 R = 0.945827
+           Global_Entropy F = 0.860363 P = 0.786356 R = 0.949748
+                Global_Li F = 0.776169 P = 0.682551 R = 0.899550
+             Global_Huang F = 0.675616 P = 0.515977 R = 0.978292
+               Local_Mean F = 0.468250 P = 0.306758 R = 0.988803
+           Local_Gaussian F = 0.457436 P = 0.297910 R = 0.984755
+               Local_Otsu F = 0.872756 P = 0.930905 R = 0.821445
+            Local_Sauvola F = 0.892239 P = 0.867919 R = 0.917961
+               Local_NICK F = 0.891157 P = 0.885251 R = 0.897143
+            Block_Min-Max F = 0.706716 P = 0.605441 R = 0.848678
+               Block_Mean F = 0.740959 P = 0.593602 R = 0.985636
+               Block_Otsu F = 0.848028 P = 0.790474 R = 0.914622

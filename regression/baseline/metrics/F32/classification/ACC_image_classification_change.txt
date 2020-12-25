@@ -2,7 +2,7 @@
 # Regression tests which outputs image classification results.  A change indicates
 # that the algorithm has changed in some way and should be inspected more closely.
 
-Evaluating NiN ImageNet
+Evaluating NiN_ImageNet
 Processing outdoors01.jpg
    best = birdhouse
    total scores 1000
@@ -18,7 +18,7 @@ Processing outdoors01.jpg
       3.886483669281006  912
 
 
-Evaluating VGG CIFAR10
+Evaluating VGG_CIFAR10
 Processing outdoors01.jpg
    best = cat
    total scores 10
