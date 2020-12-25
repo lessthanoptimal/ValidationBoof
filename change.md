@@ -44,6 +44,7 @@ Description of changes to benchmarks and justifications for change in performanc
 
 ## Version 0.36
 2020/May/18
+
 - Prunes empty ERRORLOG files after running regression
 - Modified summary to include java version and dirty flag info
 - Fixed long-standing issue of multi band descriptors crashing when they encounter a single band image

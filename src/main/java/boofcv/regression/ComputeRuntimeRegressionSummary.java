@@ -18,8 +18,6 @@ import java.util.List;
 @SuppressWarnings("StringConcatenationInLoop")
 public class ComputeRuntimeRegressionSummary {
 
-    String targetMetric = "P50";
-
     // Trigger a warning if it changed by this amount
     double threshold = 0.4;
 
@@ -32,7 +30,6 @@ public class ComputeRuntimeRegressionSummary {
 
     final ParseRuntimeResults rawBaseline = new ParseRuntimeResults();
     final ParseRuntimeResults rawCurrent = new ParseRuntimeResults();
-
 
     public String computeSummary() {
         try {
@@ -52,39 +49,26 @@ public class ComputeRuntimeRegressionSummary {
     }
 
     private String resultsToString() {
-        String message = "Runtime Summary: Significant="+threshold+" Metric="+targetMetric+"\n\n";
+        String message = "Runtime Summary: Significant="+threshold+" Metric="+ParseRuntimeResults.DEFAULT_METRIC+"\n\n";
         message += "compared    flagged   miss_match  exceptions\n";
         message += String.format("%5d       %5d      %5d      %5d\n",
                 resultsCompared,flagged.size(),missMatches.size(),exceptions.size());
         if (!flagged.isEmpty()) {
             message += String.format("\nflagged.size=%d\n", flagged.size());
-            Flagged prev = new Flagged("", "", "");
             for (Flagged f : flagged) {
-                boolean match = true;
-                String spaces = "    ";
-                if (!f.file.equals(prev.file)) {
-                    message += spaces + f.file + "\n";
-                } else {
-                    match = false;
-                }
-                spaces += "    ";
-                if (match && !f.group.equals(prev.group)) {
-                    message += spaces + f.group + "\n";
-                }
-                spaces += "    ";
-                message += spaces + f.field + "\n";
+                message += "  "+f.file +":"+ f.group+":"+ f.field + String.format(" %3.1f%%\n",100.0*(f.currentOverBaseline));
             }
         }
         if (!missMatches.isEmpty()) {
             message += "\nMissMatches.size=" + missMatches.size() + "\n";
             for (String s : missMatches) {
-                message += "    " + s + "\n";
+                message += "  " + s + "\n";
             }
         }
         if (!exceptions.isEmpty()) {
             message += "\nExceptions.size=" + exceptions.size() + "\n";
             for (String s : exceptions) {
-                message += "    " + s + "\n";
+                message += "  " + s + "\n";
             }
         }
         return message;
@@ -110,7 +94,7 @@ public class ComputeRuntimeRegressionSummary {
                 continue;
             }
 
-            // Try parsing the results and if there are exceptions log them
+            // Try parsing the results and if there are any exceptions log them
             try {
                 rawBaseline.parse(new FileInputStream(baselinePath));
             } catch (IOException e) {
@@ -124,6 +108,11 @@ public class ComputeRuntimeRegressionSummary {
                 continue;
             }
 
+            // See if the file override this metric
+            String targetMetric = rawBaseline.targetMetric;
+
+            // indicates that the target metric was found at least once
+            boolean foundTargetMetric = false;
             for( ParseRuntimeResults.Group groupBaseline : rawBaseline.groups ) {
                 ParseRuntimeResults.Group groupCurrent = rawCurrent.findGroup(groupBaseline.name);
                 if (groupCurrent==null) {
@@ -141,6 +130,7 @@ public class ComputeRuntimeRegressionSummary {
                 // The targeted metric is not in this group so skip it
                 if (targetBaseline==-1)
                     continue;
+                foundTargetMetric = true;
 
                 int unmatched = 0;
                 for (int idxResults = 0; idxResults < groupBaseline.results.size(); idxResults++) {
@@ -161,9 +151,8 @@ public class ComputeRuntimeRegressionSummary {
                     }
                     resultsCompared++;
 
-                    double fraction = b/c;
-                    if (fraction-1.0>threshold||1.0-fraction>threshold) {
-                        flagged.add(new Flagged(baselinePath,groupBaseline.name,resultBaseline.name));
+                    if (threshold<(c>b?c/b:b/c)-1.0) {
+                        flagged.add(new Flagged(shortBaselinePath,groupBaseline.name,resultBaseline.name,c/b));
                     }
                 }
 
@@ -173,6 +162,11 @@ public class ComputeRuntimeRegressionSummary {
 
                 missMatches.add("Unmatched results: "+shortBaselinePath+" "+groupBaseline.name+
                         " "+unmatched+"/"+groupBaseline.results.size());
+            }
+
+            // Print an error if it couldn't perform any runtime regression on this file
+            if (!foundTargetMetric) {
+                exceptions.add("Metric not found. "+shortBaselinePath);
             }
         }
     }
@@ -231,11 +225,14 @@ public class ComputeRuntimeRegressionSummary {
         String file;
         String group;
         String field;
+        // value of metric
+        double currentOverBaseline;
 
-        public Flagged(String file, String group, String field) {
+        public Flagged(String file, String group, String field, double currentOverBaseline) {
             this.file = file;
             this.group = group;
             this.field = field;
+            this.currentOverBaseline = currentOverBaseline;
         }
     }
 

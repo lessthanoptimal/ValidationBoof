@@ -1,25 +1,40 @@
 package boofcv.regression;
 
+import boofcv.common.ValidationConstants;
 import boofcv.io.UtilIO;
 import org.ddogleg.struct.DogArray_F64;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UncheckedIOException;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * Parses runtime results
+ *
+ * @author  Peter Abeles
+ */
 public class ParseRuntimeResults {
+    public static final String DEFAULT_METRIC = "P50";
+
     List<Group> groups = new ArrayList<>();
 
     StringBuilder buffer = new StringBuilder(1025);
     InputStream input;
 
+    // The file can contain an override for the metric which is to be evaluated
+    String targetMetric = DEFAULT_METRIC;
+
+    // line number in the file
+    int linesRead;
+
     public void parse( InputStream input ) throws IOException {
         this.input = input;
+        this.linesRead = 0;
+        this.targetMetric = DEFAULT_METRIC;
 
         groups = new ArrayList<>();
 
@@ -36,39 +51,38 @@ public class ParseRuntimeResults {
                     line = line.strip();
                     if (line.isEmpty())
                         continue;
+
+                    // See if the file has provided an override for the target metric
+                    if (line.startsWith(ValidationConstants.TARGET_OVERRIDE)) {
+                        targetMetric = line.substring(ValidationConstants.TARGET_OVERRIDE.length());
+                        continue;
+                    }
                     group = new Group();
                     group.name = line;
                     state = State.METRICS;
                 }
                 case METRICS -> {
                     String[] words = line.strip().split("\\s+");
-                    Objects.requireNonNull(group).metrics.addAll(Arrays.asList(words));
+                    Objects.requireNonNull(group);
+
+                    // If there are just two words then it's individual results
+                    if (words.length==2) {
+                        group.metrics.add("Time");
+                        addResultsToGroup(group, words);
+                    } else {
+                        group.metrics.addAll(Arrays.asList(words));
+                    }
                     state = State.RESULTS;
                 }
                 case RESULTS -> {
-                    if (!line.startsWith("  ")) {
-                        if (!line.strip().isEmpty())
-                            throw new IOException("Expected empty line after results");
+                    if (line.isEmpty()) {
                         state = State.HOME;
                         groups.add(group);
                         group = null;
                         break;
                     }
                     String[] words = line.strip().split("\\s+");
-                    if (words.length==0)
-                        throw new IOException("Line with no results");
-                    Result r = new Result();
-                    r.name = words[0];
-                    try {
-                        for (int i = 1; i < words.length; i++) {
-                            r.results.add(Double.parseDouble(words[i]));
-                        }
-                    } catch( NumberFormatException e) {
-                        throw new IOException("parseDouble: "+e.getMessage());
-                    }
-                    Objects.requireNonNull(group).results.add(r);
-                    if (words.length-1 != group.metrics.size())
-                        throw new IOException("Number of results and metrics do not match");
+                    addResultsToGroup(group, words);
                 }
             }
         }
@@ -78,14 +92,28 @@ public class ParseRuntimeResults {
         }
     }
 
+    private void addResultsToGroup(Group group, String[] words) throws IOException {
+        Result r = new Result();
+        r.name = words[0];
+        try {
+            for (int i = 1; i < words.length; i++) {
+                r.results.add(Double.parseDouble(words[i]));
+            }
+        } catch( NumberFormatException e) {
+            throw new IOException("parseDouble: "+e.getMessage());
+        }
+        Objects.requireNonNull(group).results.add(r);
+        if (words.length-1 != group.metrics.size())
+            throw new IOException("Number of results and metrics do not match");
+    }
+
     private String readLine() {
         try {
             while (input.available()>0) {
+                linesRead++;
                 String line = UtilIO.readLine(input, buffer);
-                if (line.length()==0)
-                    continue;
                 // skip over comment lines
-                if (line.charAt(0)!='#')
+                if (line.isEmpty() || line.charAt(0)!='#')
                     return line;
             }
             return null;

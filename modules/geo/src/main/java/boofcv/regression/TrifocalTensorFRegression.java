@@ -4,6 +4,7 @@ import boofcv.abst.geo.Estimate1ofTrifocalTensor;
 import boofcv.common.BaseRegression;
 import boofcv.common.BoofRegressionConstants;
 import boofcv.common.FileRegression;
+import boofcv.common.ValidationConstants;
 import boofcv.factory.geo.ConfigTrifocal;
 import boofcv.factory.geo.EnumTrifocal;
 import boofcv.factory.geo.FactoryMultiView;
@@ -49,7 +50,9 @@ public class TrifocalTensorFRegression extends BaseRegression implements FileReg
         // set up runtime results file
         outputRuntime = new PrintStream(new File(directoryRuntime, "RUN_TrifocalTensor.txt"));
         BoofRegressionConstants.printGenerator(outputRuntime, getClass());
-        outputRuntime.println();
+        outputRuntime.println("\n"+ValidationConstants.TARGET_OVERRIDE+"Milliseconds");
+        outputRuntime.println("\nIndividual");
+        outputRuntime.printf("%30s Milliseconds\n","");
 
         System.out.println("Generating trifocal data");
         new GenerateTrifocalObservations().initialize(SIMULATED_PATH).generate();

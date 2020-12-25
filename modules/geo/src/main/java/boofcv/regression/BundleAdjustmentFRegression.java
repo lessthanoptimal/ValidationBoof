@@ -6,6 +6,7 @@ import boofcv.abst.geo.bundle.SceneStructureMetric;
 import boofcv.common.BaseRegression;
 import boofcv.common.BoofRegressionConstants;
 import boofcv.common.FileRegression;
+import boofcv.common.ValidationConstants;
 import boofcv.factory.geo.ConfigBundleAdjustment;
 import boofcv.factory.geo.FactoryMultiView;
 import boofcv.io.geo.CodecBundleAdjustmentInTheLarge;
@@ -75,6 +76,9 @@ public class BundleAdjustmentFRegression extends BaseRegression implements FileR
 
         outputRuntime = new PrintStream(new File(directoryRuntime, "RUN_BundleAdjustment_"+algorithm+".txt"));
         BoofRegressionConstants.printGenerator(outputRuntime, getClass());
+        outputRuntime.println("\n"+ValidationConstants.TARGET_OVERRIDE+"Seconds");
+        outputRuntime.println("\nIndividual");
+        outputRuntime.printf("%30s Seconds\n","");
         outputRuntime.flush();
 
         for (String path : datasets) {
@@ -113,8 +117,7 @@ public class BundleAdjustmentFRegression extends BaseRegression implements FileR
 
         long stopTime = System.currentTimeMillis();
 
-
-        outputRuntime.printf("%-45s %s\n", path, BoofMiscOps.milliToHuman(stopTime - startTime));
+        outputRuntime.printf("  %-45s %.1f\n", path, (stopTime - startTime)/1000.0);
         outputRuntime.flush();
 
 

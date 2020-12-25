@@ -49,7 +49,7 @@ public class ThreeViewReconstructionRegression extends BaseRegression implements
         }
 
         outputRuntime.out.println("Individual");
-        outputRuntime.out.printf("%30s %s\n","","Milliseconds");
+        outputRuntime.out.printf("  %30s %s\n","","Milliseconds");
 
         DogArray_F64 scores = new DogArray_F64();
         DogArray_F64 areas = new DogArray_F64();
@@ -63,11 +63,11 @@ public class ThreeViewReconstructionRegression extends BaseRegression implements
                     areas.add( evaluator.getAreaFraction() );
                     runtimes.add( evaluator.getElapsedTime() );
                     out.printf("%30s %6.2f %6.2f\n", image, evaluator.getScore() * 100,100*evaluator.getAreaFraction());
-                    outputRuntime.out.printf("%30s %d\n", image, evaluator.getElapsedTime());
+                    outputRuntime.out.printf("  %-30s %d\n", image, evaluator.getElapsedTime());
                 } else {
                     totalFailed++;
                     out.printf("%30s failed!\n", image);
-                    outputRuntime.out.printf("%30s failed!\n", image);
+                    outputRuntime.out.printf("  %-30s failed!\n", image);
                 }
             } catch( Exception e ) {
                 errorLog.println("Image Name: "+image);

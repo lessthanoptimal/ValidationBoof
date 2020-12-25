@@ -13,7 +13,7 @@ allprojects{
     version = '0.38-SNAPSHOT'
 
     apply plugin: 'idea'
-    apply plugin: 'java'
+    apply plugin: 'java-library'
     apply plugin: 'maven'
 
     repositories {
@@ -24,16 +24,16 @@ allprojects{
     }
 
     dependencies {
-        compile files("$project.rootDir/lib/ProjectBUBO.jar")
+        api files("$project.rootDir/lib/ProjectBUBO.jar")
 
         ['boofcv-core','boofcv-swing','boofcv-ffmpeg','boofcv-simulation','boofcv-kotlin','demonstrations'].each
-                { String a -> compile group: 'org.boofcv', name: a, version: version }
-        compile group: 'com.google.guava', name: 'guava', version: '17.0'
-        compile group: 'commons-io', name: 'commons-io', version: '2.6'
-        compile group: 'args4j', name: 'args4j', version: '2.33'
-        compile 'org.apache.commons:commons-lang3:3.7'
+                { String a -> api group: 'org.boofcv', name: a, version: version }
+        api group: 'com.google.guava', name: 'guava', version: '17.0'
+        api group: 'commons-io', name: 'commons-io', version: '2.6'
+        api group: 'args4j', name: 'args4j', version: '2.33'
+        api 'org.apache.commons:commons-lang3:3.7'
 
-        compile 'com.sun.mail:javax.mail:1.6.0'
+        api 'com.sun.mail:javax.mail:1.6.0'
 
         testCompile group: 'junit', name: 'junit', version: '4.12'
     }
@@ -49,9 +49,16 @@ subprojects {
 
         outputs.upToDateWhen { false }
 
-        from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }{
+        from sourceSets.main.output
+
+        dependsOn configurations.runtimeClasspath
+        from { configurations.runtimeClasspath.findAll { it.name.endsWith('jar') }.collect { zipTree(it) } } {
             exclude 'META-INF/*.RSA', 'META-INF/*.SF', 'META-INF/*.DSA'
-        } with jar
+        }
+
+//        from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }{
+//            exclude 'META-INF/*.RSA', 'META-INF/*.SF', 'META-INF/*.DSA'
+//        } with jar
 
         doLast {  archivePath.renameTo(file('module_regression.jar')) }
     }
@@ -60,7 +67,7 @@ subprojects {
 }
 
 dependencies {
-    compile project(':modules:common')
+    api project(':modules:common')
 }
 
 project.compileJava.dependsOn(createVersionFile)
@@ -95,9 +102,16 @@ task regressionJar(type: Jar, dependsOn: ':build' ) {
 
     outputs.upToDateWhen { false }
 
-    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } } {
+    from sourceSets.main.output
+
+    dependsOn configurations.runtimeClasspath
+    from { configurations.runtimeClasspath.findAll { it.name.endsWith('jar') }.collect { zipTree(it) } } {
         exclude 'META-INF/*.RSA', 'META-INF/*.SF', 'META-INF/*.DSA'
-    } with jar
+    }
+
+//    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } } {
+//        exclude 'META-INF/*.RSA', 'META-INF/*.SF', 'META-INF/*.DSA'
+//    } with jar
 
     doLast { archivePath.renameTo(file('regression.jar')) }
 }
