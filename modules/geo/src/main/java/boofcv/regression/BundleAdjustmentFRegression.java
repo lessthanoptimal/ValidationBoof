@@ -78,7 +78,7 @@ public class BundleAdjustmentFRegression extends BaseRegression implements FileR
         BoofRegressionConstants.printGenerator(outputRuntime, getClass());
         outputRuntime.println("\n"+ValidationConstants.TARGET_OVERRIDE+"Seconds");
         outputRuntime.println("\nIndividual");
-        outputRuntime.printf("%30s Seconds\n","");
+        outputRuntime.printf("  %-45s Seconds\n","");
         outputRuntime.flush();
 
         for (String path : datasets) {
@@ -117,7 +117,7 @@ public class BundleAdjustmentFRegression extends BaseRegression implements FileR
 
         long stopTime = System.currentTimeMillis();
 
-        outputRuntime.printf("  %-45s %.1f\n", path, (stopTime - startTime)/1000.0);
+        outputRuntime.printf("  %-45s %7.2f\n", path, (stopTime - startTime)/1000.0);
         outputRuntime.flush();
 
 

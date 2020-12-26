@@ -27,7 +27,6 @@ java -jar regression.jar
 ```
 5) Check e-mail for summary of changes from baseline
 
-
 # Settings Up Results E-Mailing
 
 Create a file called "email_login.txt". DO NOT ADD TO GIT.

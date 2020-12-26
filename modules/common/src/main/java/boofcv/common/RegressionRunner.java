@@ -109,7 +109,10 @@ public class RegressionRunner {
                 System.exit(1);
                 return;
             }
+
             regression.setMetricsDirectory(new File(SettingsLocal.getPathToCurrentMetricsDirectory(),"other").getPath());
+            regression.setRuntimeDirectory( new File(SettingsLocal.getPathToCurrentRuntimeDirectory(),"other").getPath());
+
             try {
                 regression.process();
             } catch( RuntimeException e ) {

@@ -1,4 +1,8 @@
 # GENERATOR TrifocalTensorFRegression
 
-                    algebraic7 4928
-                       linear7 195
+target_metric=Milliseconds
+
+Individual
+                               Milliseconds
+                    algebraic7 4976
+                       linear7 197
