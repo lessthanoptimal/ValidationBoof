@@ -47,8 +47,8 @@ public class ParseRuntimeResults {
                 break;
 
             switch (state) {
-                case HOME -> {
-                    line = line.strip();
+                case HOME: {
+                    line = line.trim();
                     if (line.isEmpty())
                         continue;
 
@@ -60,9 +60,9 @@ public class ParseRuntimeResults {
                     group = new Group();
                     group.name = line;
                     state = State.METRICS;
-                }
-                case METRICS -> {
-                    String[] words = line.strip().split("\\s+");
+                } break;
+                case METRICS: {
+                    String[] words = line.trim().split("\\s+");
                     Objects.requireNonNull(group);
 
                     // If there are just two words then it's individual results
@@ -73,17 +73,18 @@ public class ParseRuntimeResults {
                         group.metrics.addAll(Arrays.asList(words));
                     }
                     state = State.RESULTS;
-                }
-                case RESULTS -> {
+                } break;
+                case RESULTS: {
                     if (line.isEmpty()) {
                         state = State.HOME;
                         groups.add(group);
                         group = null;
                         break;
                     }
-                    String[] words = line.strip().split("\\s+");
+                    String[] words = line.trim().split("\\s+");
                     addResultsToGroup(group, words);
-                }
+                } break;
+                default: throw new RuntimeException("BUG");
             }
         }
 

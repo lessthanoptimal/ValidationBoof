@@ -237,7 +237,6 @@ public class ComputeRuntimeRegressionSummary {
     }
 
     public static void main(String[] args) {
-        var runtime = new ComputeRuntimeRegressionSummary();
-        System.out.println(runtime.computeSummary());
+        System.out.println(new ComputeRuntimeRegressionSummary().computeSummary());
     }
 }

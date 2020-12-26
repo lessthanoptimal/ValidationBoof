@@ -194,7 +194,7 @@ public class ComputeRegressionSummary {
             }
         }
 
-        var runtimeSummary = new ComputeRuntimeRegressionSummary();
+        ComputeRuntimeRegressionSummary runtimeSummary = new ComputeRuntimeRegressionSummary();
         summary += "\n";
         summary += "------------------------------------------------------------------------\n";
         summary += runtimeSummary.computeSummary();
