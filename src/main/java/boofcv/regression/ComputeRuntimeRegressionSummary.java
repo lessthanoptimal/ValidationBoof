@@ -56,7 +56,7 @@ public class ComputeRuntimeRegressionSummary {
         if (!flagged.isEmpty()) {
             message += String.format("\nflagged.size=%d\n", flagged.size());
             for (Flagged f : flagged) {
-                message += "  "+f.file +":"+ f.group+":"+ f.field + String.format(" %3.1f%%\n",100.0*(f.currentOverBaseline));
+                message += String.format("  %5.1f%% %s\n",100.0*(f.currentOverBaseline),f.file +":"+ f.group+":"+ f.field);
             }
         }
         if (!missMatches.isEmpty()) {

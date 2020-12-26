@@ -4,7 +4,7 @@ Description of changes to benchmarks and justifications for change in performanc
 2021/
 
 - Automated checks for runtime performance
-- TODO Format e-mail with HTML and use fixed sized font
+- Format e-mail with HTML and use fixed sized font
 - TODO add regression for sparse reconstruction. Compare against known parameters and approximate known motion
 - TODO cloud sharpness test for planar
 

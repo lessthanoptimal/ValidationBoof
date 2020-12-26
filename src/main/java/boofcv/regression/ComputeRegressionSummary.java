@@ -125,7 +125,7 @@ public class ComputeRegressionSummary {
             message.setFrom(new InternetAddress(emailUsername+"@gmail.com"));
             message.setRecipients(Message.RecipientType.TO,InternetAddress.parse(emailDestination));
             message.setSubject("ValidationBoof Summary"+noticed);
-            message.setText(summary);
+            message.setContent(summary, "text/html; charset=utf-8");
 
             Transport.send(message);
 
@@ -137,9 +137,10 @@ public class ComputeRegressionSummary {
     }
 
     private String createSummary() {
-        String summary;
+        String summary = "";
 
-        summary =  "Finished Time:         "+MasterRegressionApplication.formatDate(new Date())+"\n";
+        summary += "<!DOCTYPE html><html lang=\"en\"><body><pre>\n";
+        summary += "Finished Time:         "+MasterRegressionApplication.formatDate(new Date())+"\n";
         summary += "Elapsed Time:          "+MasterRegressionApplication.formatElapsed(elapsedTime)+"\n";
         summary += "\n";
 
@@ -198,6 +199,7 @@ public class ComputeRegressionSummary {
         summary += "\n";
         summary += "------------------------------------------------------------------------\n";
         summary += runtimeSummary.computeSummary();
+        summary += "</pre></body></html>\n";
 
         return summary;
     }
