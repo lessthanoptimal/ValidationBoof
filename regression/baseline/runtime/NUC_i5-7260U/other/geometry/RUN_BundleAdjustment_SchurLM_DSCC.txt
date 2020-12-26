@@ -1,0 +1,10 @@
+# GENERATOR BundleAdjustmentFRegression
+
+target_metric=Seconds
+
+Individual
+                                                Seconds
+  dubrovnik/problem-16-22106-pre.txt              11.23
+  final/problem-93-61203-pre.txt                  56.52
+  ladybug/problem-49-7776-pre.txt                  4.17
+  trafalgar/problem-21-11315-pre.txt               1.66
