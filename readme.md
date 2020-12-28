@@ -44,6 +44,5 @@ command then end the line at the bottom. It will run the task at noon on Wednesd
 be saved to USER's home directory.
 
 ```commandline
-00 12 * * 3,6 export PATH="/opt/jdk/latest/bin:$PATH";/usr/bin/python3 /home/USER/projects/ValidationBoof/scripts/cronscript.py > /home/USER/cron_output.log 2>&\
-1
+00 12 * * 3,6 export PATH="/path/to/JDK/bin:$PATH";/usr/bin/python3 /home/USER/ValidationBoof/scripts/cronscript.py > /home/USER/cron_output.log 2>&1
 ```
