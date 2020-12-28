@@ -3,8 +3,9 @@ Description of changes to benchmarks and justifications for change in performanc
 ## Version 0.38
 2021/
 
-- Automated checks for runtime performance
-- Format e-mail with HTML and use fixed sized font
+- Tooling
+  * Automated checks for runtime performance
+  * Format summary e-mail with HTML and uses fixed sized font
 - TODO add regression for sparse reconstruction. Compare against known parameters and approximate known motion
 - TODO cloud sharpness test for planar
 

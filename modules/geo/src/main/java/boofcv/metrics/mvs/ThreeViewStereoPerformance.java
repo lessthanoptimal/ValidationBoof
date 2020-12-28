@@ -151,9 +151,9 @@ public class ThreeViewStereoPerformance {
         DogArray<Point2D_F64> locations02 = new DogArray<>(Point2D_F64::new);
         DogArray<Point2D_F64> locations03 = new DogArray<>(Point2D_F64::new);
 
-        DogArray<TupleDesc_F64> features01 = UtilFeature.createQueue(detDesc,100);
-        DogArray<TupleDesc_F64> features02 = UtilFeature.createQueue(detDesc,100);
-        DogArray<TupleDesc_F64> features03 = UtilFeature.createQueue(detDesc,100);
+        DogArray<TupleDesc_F64> features01 = UtilFeature.createArray(detDesc,100);
+        DogArray<TupleDesc_F64> features02 = UtilFeature.createArray(detDesc,100);
+        DogArray<TupleDesc_F64> features03 = UtilFeature.createArray(detDesc,100);
 
         DogArray_I32 sets01 = new DogArray_I32();
         DogArray_I32 sets02 = new DogArray_I32();

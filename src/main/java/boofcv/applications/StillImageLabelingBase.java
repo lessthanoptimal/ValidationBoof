@@ -20,15 +20,11 @@ import java.util.Collections;
  *
  * @author Peter Abeles
  */
-public abstract class HandSelectBase {
+public abstract class StillImageLabelingBase {
 
 	protected JComponent gui = new JPanel();
-
+	private ImageZoomPanel imagePanel;
 	JFrame frame;
-	InfoHandSelectPanel infoPanel = new InfoHandSelectPanel(this);
-	VisualizePanel imagePanel;
-
-	VisualizePanel panel;
 
 	File inputFile;
 
@@ -47,7 +43,6 @@ public abstract class HandSelectBase {
 		try {
 			// In Mac OS X Display the menubar in the correct location
 			System.setProperty("apple.laf.useScreenMenuBar", "true");
-
 			// smoother font
 			System.setProperty("apple.awt.textantialiasing", "true");
 		} catch( Exception ignore ) {
@@ -55,13 +50,11 @@ public abstract class HandSelectBase {
 		}
 	}
 
-	public HandSelectBase( VisualizePanel imagePanel, File openFile ) {
-		this.imagePanel = imagePanel;
+	protected void initialize( File openFile ) {
 		gui.setLayout(new BorderLayout());
-		gui.add(imagePanel,BorderLayout.CENTER);
-		gui.add(infoPanel, BorderLayout.EAST);
-
-		imagePanel.addMouseWheelListener(infoPanel);
+		initializeGui(gui);
+		if (imagePanel ==null)
+			throw new RuntimeException("Must assign 'imagePanel' inside of initializeGui()");
 
 		if( openFile == null ) {
 			BoofSwingUtil.invokeNowOrLater(() -> {
@@ -74,9 +67,13 @@ public abstract class HandSelectBase {
 		} else if( !openImage(openFile,false) ) {
 			System.err.println("Failed to open file passed into constructor");
 		}
-
-		this.imagePanel.setControls(infoPanel);
 	}
+
+	protected void setImagePanel(ImageZoomPanel panel) {
+		this.imagePanel = panel;
+	}
+
+	protected abstract void initializeGui(JComponent panel);
 
 	protected void createMenuBar() {
 		menuBar = new JMenuBar();
@@ -90,19 +87,18 @@ public abstract class HandSelectBase {
 		menuItemFile.addActionListener(e-> openImageDialog());
 		menuFile.add(menuItemFile);
 
-
 		JMenuItem menuItemNext = new JMenuItem("Next Image");
 		BoofSwingUtil.setMenuItemKeys(menuItemNext, KeyEvent.VK_I, KeyEvent.VK_I);
 		menuItemNext.addActionListener(e->openNextImage());
 		menuFile.add(menuItemNext);
 
 		JMenuItem menuItemClear = new JMenuItem("Clear");
-		menuItemClear.addActionListener(e-> clearPoints());
+		menuItemClear.addActionListener(e-> clearLabels());
 		menuFile.add(menuItemClear);
 
 		JMenuItem menuItemSave = new JMenuItem("Save");
 		BoofSwingUtil.setMenuItemKeys(menuItemSave, KeyEvent.VK_S, KeyEvent.VK_S);
-		menuItemClear.addActionListener(e-> save());
+		menuItemSave.addActionListener(e-> save());
 		menuFile.add(menuItemSave);
 
 		frame.setJMenuBar(menuBar);
@@ -180,7 +176,7 @@ public abstract class HandSelectBase {
 		this.image = image;
 		this.inputFile = f;
 
-		clearPoints();
+		clearLabels();
 		process(f, image);
 
 		if( firstImage ) {
@@ -201,7 +197,7 @@ public abstract class HandSelectBase {
 	private void adjustImageScale() {
 		double scale = BoofSwingUtil.selectZoomToShowAll(imagePanel,image.getWidth(),image.getHeight());
 		scale = Math.min(1,scale);
-		infoPanel.setScale(scale);
+		imagePanel.setScale(scale);
 		setScale(scale);
 	}
 
@@ -215,64 +211,17 @@ public abstract class HandSelectBase {
 		}
 	}
 
-	public void openNextImage() {
-		if( inputFile == null )
-			return;
-
-		// save current results
-		if( infoPanel.prefix.length() == 0 ) { // Only save automatically if the user is not viewing generated results
-			boolean save = true;
-			if( selectOutputFile(inputFile).exists() ) {
-				save = false;
-//				int dialogResult = JOptionPane.showConfirmDialog(gui, "Output already exists. Save? ",
-//						"Warning",JOptionPane.OK_CANCEL_OPTION);
-//				if(dialogResult == JOptionPane.CANCEL_OPTION){
-//					save = false;
-//				}
-			}
-			if( save )
-				save();
-		}
-
-		// select the next file
-		for (selectedFile += 1; selectedFile < files.size(); selectedFile++) {
-			File f = files.get(selectedFile);
-
-			if( f.isDirectory() )
-				continue;
-			if( f.getName().endsWith("txt"))
-				continue;
-
-			File n = selectOutputFile(f);
-			if( n != null && !(infoPanel.skipLabeled && n.exists()) ) {
-				if( openImage(f,true) ) {
-					return;
-				}
-			}
-		}
-
-		System.err.println("Couldn't find next");
-	}
-
-	public File selectOutputFile( File input ) {
-
-		String path = input.getParent();
-		String name = input.getName();
-		//strip the suffic
-		int s = name.lastIndexOf('.');
-		if( s < 0 )
-			return null;
-
-		return new File(path,infoPanel.prefix+name.substring(0,s)+".txt");
-	}
+	public abstract void openNextImage();
 
 	public abstract String getApplicationName();
 
 	public abstract void setScale( double scale );
 
-	public abstract void clearPoints();
-
+	/** Called when the user wishes to save the current results to disk */
 	public abstract void save();
+
+	/** Called when the user wishes to clear all labels inside the image */
+	public abstract void clearLabels();
 
 	public void repaint() {
 		gui.repaint();
@@ -283,18 +232,6 @@ public abstract class HandSelectBase {
 			System.err.println("Still opening a file");
 			return;
 		}
-		new Thread(){
-			public void run() {
-				openImage(inputFile,true);
-			}
-		}.start();
+		new Thread(() -> openImage(inputFile,true)).start();
 	}
-
-	public static abstract class VisualizePanel extends ImageZoomPanel {
-		public abstract void setControls( InfoHandSelectPanel controls );
-	}
-
-//	public abstract void reloadLabeled();
-
-
 }
