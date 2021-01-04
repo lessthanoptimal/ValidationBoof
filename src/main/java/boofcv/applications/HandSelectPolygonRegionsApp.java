@@ -90,9 +90,9 @@ public class HandSelectPolygonRegionsApp extends StillImageLabelingBase {
             final File polygonFile = new File(file.getParent(),getPolygonFileName(file));
             if (polygonFile.exists()) {
                 try {
-                    var input = new FileInputStream(polygonFile);
-                    var imageShape = new ImageDimension();
-                    var foundRegions = new DogArray<>(PolygonRegion::new);
+                    FileInputStream input = new FileInputStream(polygonFile);
+                    ImageDimension imageShape = new ImageDimension();
+                    DogArray<PolygonRegion> foundRegions = new DogArray<>(PolygonRegion::new);
                     LabeledImagePolygonCodec.decode(input, imageShape, foundRegions);
                     input.close();
                     // sanity check
@@ -177,7 +177,7 @@ public class HandSelectPolygonRegionsApp extends StillImageLabelingBase {
         System.out.println("Saving to "+outputFile.getAbsolutePath());
 
         try {
-            var output = new FileOutputStream(outputFile);
+            FileOutputStream output = new FileOutputStream(outputFile);
             LabeledImagePolygonCodec.encode((List) polygons.toList(), image.getWidth(), image.getHeight(), output);
             output.close();
         } catch (IOException e) {
