@@ -45,9 +45,9 @@ import java.awt.image.BufferedImage;
 
 /**
  * Evaluates uncalibrated three view reconstruction using stereo disparity. Structure of each scene is unknown.
- * Observations indicate that stereo disparity is a resonable performance metric. if the sparse reconstruction
+ * Observations indicate that stereo disparity is a reasonable performance metric. if the sparse reconstruction
  * is poor the rectification will be poor too. Making stereo disparity calculation fail. A disparity is only accepted
- * if the region has sufficient texture and has a low enough error. Therefor only regions which can yield
+ * if the region has sufficient texture and has a low enough error. There for, only regions which can yield
  * results are considered and the matches must be good.
  *
  * @author Peter Abeles
