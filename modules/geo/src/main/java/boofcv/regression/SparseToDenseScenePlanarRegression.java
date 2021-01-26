@@ -1,9 +1,10 @@
 package boofcv.regression;
 
-import boofcv.alg.sfm.structure.ImageSequenceToSparseScene;
+import boofcv.alg.sfm.structure.SparseSceneToDenseCloud;
 import boofcv.common.*;
 import boofcv.factory.sfm.FactorySceneReconstruction;
 import boofcv.io.UtilIO;
+import boofcv.metrics.mvs.SparseToDenseScenePlanarMetrics;
 import boofcv.metrics.mvs.UncalibratedToSparseScenePlanarMetrics;
 import boofcv.struct.image.ImageDataType;
 import boofcv.struct.image.ImageGray;
@@ -20,18 +21,18 @@ import java.util.List;
  *
  * @author Peter Abeles
  */
-public class UncalibratedSparseReconstructionPlanarRegression<T extends ImageGray<T>>
+public class SparseToDenseScenePlanarRegression<T extends ImageGray<T>>
         extends BaseRegression implements ImageRegression {
 
     public static final String PATH_DATA = "data/mvs";
 
     RuntimeSummary outputRuntime;
 
-    ImageSequenceToSparseScene<T> alg;
+    SparseSceneToDenseCloud<T> alg;
 
-    UncalibratedToSparseScenePlanarMetrics<T> evaluator = new UncalibratedToSparseScenePlanarMetrics<>();
+    SparseToDenseScenePlanarMetrics<T> evaluator = new SparseToDenseScenePlanarMetrics<>();
 
-    public UncalibratedSparseReconstructionPlanarRegression() {
+    public SparseToDenseScenePlanarRegression() {
         super(BoofRegressionConstants.TYPE_GEOMETRY);
     }
 
@@ -39,17 +40,17 @@ public class UncalibratedSparseReconstructionPlanarRegression<T extends ImageGra
     public void process(ImageDataType type) throws IOException {
 
         outputRuntime = new RuntimeSummary();
-        outputRuntime.initializeLog(directoryRuntime, getClass(), "RUN_NViewReconstruction.txt");
+        outputRuntime.initializeLog(directoryRuntime, getClass(), "RUN_SparseToDenseCloud.txt");
 
-        PrintStream out = new PrintStream(new File(directoryMetrics, "ACC_NViewReconstruction.txt"));
+        PrintStream out = new PrintStream(new File(directoryMetrics, "ACC_SparseToDenseCloud.txt"));
         BoofRegressionConstants.printGenerator(out, getClass());
-        out.println("# Uncalibrated Multi-View Sparse Reconstruction using Planar Regions");
+        out.println("# Sparse to Dense Cloud Reconstruction using Planar Regions");
         out.println();
-        out.println("#           Dataset,           Views, Point, mean,  p50,  p95, max");
-        out.println("#                              Used,  Count, (px), (px), (px), (px)");
+        out.println("#           Dataset,            Points, mean,  p50,  p95, max");
+        out.println("#                                1e3  , (px), (px), (px), (px)");
 
         Class<T> imageType = ImageDataType.typeToSingleClass(type);
-        alg = FactorySceneReconstruction.sequenceToSparseScene(null, ImageType.single(imageType));
+        alg = FactorySceneReconstruction.sparseSceneToDenseCloud(null, ImageType.single(imageType));
 
         // Load all the data directories
         File inputDir = new File(PATH_DATA);
@@ -74,6 +75,11 @@ public class UncalibratedSparseReconstructionPlanarRegression<T extends ImageGra
             if (!dir.isDirectory()) {
                 continue;
             }
+            // make sure it has the required files. Not all scenes have reconstructions already
+            if (!new File(dir, SparseToDenseScenePlanarMetrics.SCENE_NAME).exists() ||
+                    !new File(dir, SparseToDenseScenePlanarMetrics.IMAGE_MAP_NAME).exists())
+                continue;
+
             System.out.println("Evaluating " + dir.getName());
             try {
                 if (!evaluator.process(dir, alg)) {
@@ -82,10 +88,9 @@ public class UncalibratedSparseReconstructionPlanarRegression<T extends ImageGra
                     continue;
                 }
                 UncalibratedToSparseScenePlanarMetrics.RegionScore score = evaluator.allScore;
-                double percentUsed = evaluator.fractionReconstructed * 100.0;
 
-                out.printf("%-30s %5.1f%% %5d %5.1f %5.1f %5.1f %5.1f\n",
-                        dir.getName(), percentUsed, score.count, score.mean, score.p50, score.p95, score.p100);
+                out.printf("%-30s %7d %5.1f %5.1f %5.1f %5.1f\n",
+                        dir.getName(), score.count/1000, score.mean, score.p50, score.p95, score.p100);
                 outputRuntime.out.printf("%-30s %d\n", dir.getName(), evaluator.processingTimeMS);
                 runtimes.add(evaluator.processingTimeMS);
 
@@ -120,6 +125,6 @@ public class UncalibratedSparseReconstructionPlanarRegression<T extends ImageGra
     public static void main(String[] args) throws IOException, IllegalAccessException, InstantiationException, ClassNotFoundException {
         BoofRegressionConstants.clearCurrentResults();
 //        RegressionRunner.main(new String[]{UncalibratedSparseReconstructionPlanarRegression.class.getName(),ImageDataType.F32.toString()});
-        RegressionRunner.main(new String[]{UncalibratedSparseReconstructionPlanarRegression.class.getName(), ImageDataType.U8.toString()});
+        RegressionRunner.main(new String[]{SparseToDenseScenePlanarRegression.class.getName(), ImageDataType.U8.toString()});
     }
 }
