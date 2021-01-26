@@ -2,7 +2,7 @@ package boofcv.regression;
 
 import boofcv.common.*;
 import boofcv.io.UtilIO;
-import boofcv.metrics.mvs.ThreeViewStereoPerformance;
+import boofcv.metrics.mvs.ThreeViewStereoMetrics;
 import boofcv.struct.image.ImageDataType;
 import org.ddogleg.stats.StatisticsDogArray;
 import org.ddogleg.struct.DogArray_F64;
@@ -23,7 +23,7 @@ public class ThreeViewReconstructionRegression extends BaseRegression implements
 
     RuntimeSummary outputRuntime;
 
-    ThreeViewStereoPerformance evaluator = new ThreeViewStereoPerformance();
+    ThreeViewStereoMetrics evaluator = new ThreeViewStereoMetrics();
 
     public ThreeViewReconstructionRegression() {
         super(BoofRegressionConstants.TYPE_GEOMETRY);

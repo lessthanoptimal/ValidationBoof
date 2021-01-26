@@ -52,7 +52,7 @@ import java.awt.image.BufferedImage;
  *
  * @author Peter Abeles
  */
-public class ThreeViewStereoPerformance {
+public class ThreeViewStereoMetrics {
     GrayU8 image01,image02,image03;
     double cx,cy;
 
