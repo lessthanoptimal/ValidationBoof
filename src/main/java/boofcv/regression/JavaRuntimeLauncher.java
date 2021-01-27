@@ -24,7 +24,7 @@ public class JavaRuntimeLauncher {
     private String classPath;
     // amount of memory allocated to the JVM
     private long memoryInMB = 200;
-    // if the process doesn't finish in this number of milliesconds it's considered frozen and killed
+    // if the process doesn't finish in this number of milliseconds it's considered frozen and killed
     private long frozenTime = 60*1000;
 
     // amount of time it actually took to execute in milliseconds
@@ -201,19 +201,24 @@ public class JavaRuntimeLauncher {
     }
 
     private String[] configureArguments( Class mainClass , String ...args ) {
-        String out[] = new String[7+args.length];
+        String[] out = new String[8+args.length];
 
         String app = System.getProperty("java.home")+"/bin/java";
 
+        // run headless to avoid this issue:
+        // Exception in thread "main" java.awt.AWTError: Can't connect to X11 window server using
+        // 'localhost:10.0' as the value of the DISPLAY variable.
+
         out[0] = app;
         out[1] = "-server";
-        out[2] = "-Xms"+memoryInMB+"M";
-        out[3] = "-Xmx"+memoryInMB+"M";
-        out[4] = "-classpath";
-        out[5] = classPath;
-        out[6] = mainClass.getName();
+        out[2] = "-Djava.awt.headless=true";
+        out[3] = "-Xms"+memoryInMB+"M";
+        out[4] = "-Xmx"+memoryInMB+"M";
+        out[5] = "-classpath";
+        out[6] = classPath;
+        out[7] = mainClass.getName();
         for (int i = 0; i < args.length; i++) {
-            out[7+i] = args[i];
+            out[8+i] = args[i];
         }
         return out;
     }
