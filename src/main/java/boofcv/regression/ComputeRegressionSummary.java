@@ -198,7 +198,7 @@ public class ComputeRegressionSummary {
         ComputeRuntimeRegressionSummary runtimeSummary = new ComputeRuntimeRegressionSummary();
         summary += "\n";
         summary += "------------------------------------------------------------------------\n";
-        summary += runtimeSummary.computeSummary();
+        summary += runtimeSummary.computeSummary(System.err);
         summary += "</pre></body></html>\n";
 
         return summary;

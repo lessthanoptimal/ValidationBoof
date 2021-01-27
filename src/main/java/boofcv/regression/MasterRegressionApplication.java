@@ -236,10 +236,6 @@ public class MasterRegressionApplication {
 		return dateFormat.format(date);
 	}
 
-	public interface FileTest {
-		boolean isTarget( File f );
-	}
-
 	public static void main(String[] args) throws IOException {
 
 		boolean doBenchmark = true;

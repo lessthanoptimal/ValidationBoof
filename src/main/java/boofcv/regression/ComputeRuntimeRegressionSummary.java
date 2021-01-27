@@ -5,7 +5,7 @@ import boofcv.common.SettingsLocal;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.UncheckedIOException;
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,21 +31,23 @@ public class ComputeRuntimeRegressionSummary {
     final ParseRuntimeResults rawBaseline = new ParseRuntimeResults();
     final ParseRuntimeResults rawCurrent = new ParseRuntimeResults();
 
-    public String computeSummary() {
+    public String computeSummary(PrintStream err) {
         try {
             SettingsLocal.load();
-        } catch (IOException e) {
-            throw new UncheckedIOException(e);
+            resultsCompared = 0;
+            flagged.clear();
+            missMatches.clear();
+            exceptions.clear();
+
+            processAllResults();
+
+            return resultsToString();
+        } catch (Exception e) {
+            e.printStackTrace(err);
+            return "Exception computing runtime summary.\n"+
+                    "  Type="+e.getClass().getName()+"\n"+
+                    "  Message="+e.getMessage()+"\n";
         }
-
-        resultsCompared = 0;
-        flagged.clear();
-        missMatches.clear();
-        exceptions.clear();
-
-        processAllResults();
-
-        return resultsToString();
     }
 
     private String resultsToString() {
@@ -237,6 +239,6 @@ public class ComputeRuntimeRegressionSummary {
     }
 
     public static void main(String[] args) {
-        System.out.println(new ComputeRuntimeRegressionSummary().computeSummary());
+        System.out.println(new ComputeRuntimeRegressionSummary().computeSummary(System.err));
     }
 }
