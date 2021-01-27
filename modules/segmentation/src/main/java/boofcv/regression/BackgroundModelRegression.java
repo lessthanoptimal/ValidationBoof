@@ -54,7 +54,6 @@ public class BackgroundModelRegression extends BaseRegression implements ImageRe
         out.println("# <data set> <# truth> <mean F> <mean precision> <mean recall>");
         out.println();
 
-
         RuntimeSummary runtime = new RuntimeSummary();
         runtime.initializeLog(directoryRuntime, getClass(),"RUN_background_stationary.txt");
 
@@ -73,10 +72,17 @@ public class BackgroundModelRegression extends BaseRegression implements ImageRe
 
                 System.out.println(info.name+" "+f.getName());
 
-                metrics.evaluate(f,info.algorithm);
+                try {
+                    metrics.evaluate(f, info.algorithm);
 
-                summaryTimeMS.addAll(metrics.periodMS);
-                runtime.printStatsRow(f.getName(),metrics.periodMS);
+                    summaryTimeMS.addAll(metrics.periodMS);
+                    runtime.printStatsRow(f.getName(), metrics.periodMS);
+                } catch (Exception e) {
+                    errorLog.println("------------------------------------------------------------------");
+                    errorLog.println("Exception in "+f.getPath());
+                    e.printStackTrace(errorLog);
+                    e.printStackTrace(System.err);
+                }
             }
             out.println();
             runtime.out.println();
