@@ -1,0 +1,11 @@
+# GENERATOR PointTrackerRegression
+# Elapsed time in milliseconds
+
+Summary:
+                              N       Mean      P05      P50      P95      MAX
+  DefaultKLT                 2874  4.69735  2.57395  4.61424  6.95296  61.5554
+  HarrisNCC                  2874  7.52346  6.70686  7.18022  8.99364  23.6194
+  ShiTomasiNCC               2874  9.47603  8.37805  9.07192   11.114  19.9724
+  FastNCC                    2874  13.0921  10.2685   12.369  16.0947  24.8329
+  FhBrief                    2874  39.6275  37.4753  39.4133  42.1713  125.371
+  FhKltSurf                  2874  6.44942  2.88251   4.3573  6.35727  87.9406

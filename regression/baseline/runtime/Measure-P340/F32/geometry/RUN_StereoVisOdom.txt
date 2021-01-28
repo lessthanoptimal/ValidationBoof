@@ -1,0 +1,24 @@
+# GENERATOR StereoVisualOdometryRegression
+# Elapsed time in milliseconds
+
+StereoDepth
+                              N       Mean      P05      P50      P95      MAX
+  Leuven07                   1174  15.5224  12.9771  14.8848  18.0128  106.977
+  KITTI00                    4540  29.5464  22.9767  31.0334   32.726  53.3575
+
+DualPnP
+                              N       Mean      P05      P50      P95      MAX
+  Leuven07                   1174  14.9386  9.88805  14.8363   18.912  38.8168
+  KITTI00                    4540  34.4673  18.6196  37.3283  39.9678  65.9163
+
+QuadPnP
+                              N       Mean      P05      P50      P95      MAX
+  Leuven07                   1174  13.6166  13.2393  13.5684  14.0886  30.8376
+  KITTI00                    4540  29.5348  27.8472  29.4267  31.4651  64.6234
+
+
+Summary:
+                              N       Mean      P05      P50      P95      MAX
+  StereoDepth                5714   26.665  13.7197  30.4531   32.613  106.977
+  DualPnP                    5714  30.4549  13.1846  36.2471  39.8467  65.9163
+  QuadPnP                    5714  26.2642  13.4301  29.0171  31.3607  64.6234

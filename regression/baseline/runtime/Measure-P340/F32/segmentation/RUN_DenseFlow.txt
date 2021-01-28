@@ -1,0 +1,10 @@
+# GENERATOR DenseFlowRegression
+# Elapsed time in milliseconds
+
+Summary:
+                              N       Mean      P05      P50      P95      MAX
+  KLT                           8  2559.61  1583.54   2180.9   3342.3  3453.45
+  Region                        8  15331.5  9673.24  14556.2  19546.5  20227.3
+  HornSchunck                   8  2005.77  1075.47  1601.74  2697.37  2938.51
+  HornSchunckPyr                8  3236.78   2020.7  2938.63  4199.06  4312.99
+  Brox                          8  6000.44  1362.21  5329.69  9634.56  11004.8
