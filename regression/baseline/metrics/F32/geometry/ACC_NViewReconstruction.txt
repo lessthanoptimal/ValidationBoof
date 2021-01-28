@@ -1,0 +1,18 @@
+# GENERATOR UncalibratedSparseReconstructionPlanarRegression
+# Uncalibrated Multi-View Sparse Reconstruction using Planar Regions
+
+#           Dataset,           Views, Point, mean,  p50,  p95, max
+#                              Used,  Count, (px), (px), (px), (px)
+steps_reg_01                    36.0%  1948   3.9   1.3  11.8 685.5
+steps_wide_01                  100.0%  8953   0.9   0.4   1.5  97.8
+steps_zoom_01                   66.7%   929 138.9   6.7 215.6 8158.8
+towel_01                       FAILED
+towel_box                      FAILED
+
+Summary:
+  scenarios         = 3
+  failed            = 2
+  points inside     = 11830
+  regions evaluated = 79
+  skipped views     = 12
+  mean error (px)   = 47.86401546840176
