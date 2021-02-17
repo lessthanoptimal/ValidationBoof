@@ -153,10 +153,10 @@ public class CreateDetectDescribeFile<T extends ImageBase<T>, D extends TupleDes
 
 			desc = alg.getDescription(i);
 			outDescribe.printf("%.3f %.3f %f",pt.getX(), pt.getY(),yaw);
-			for( int j = 0; j < desc.value.length; j++ ) {
-				if( Double.isNaN(desc.value[j]))
+			for( int j = 0; j < desc.data.length; j++ ) {
+				if( Double.isNaN(desc.data[j]))
 					throw new IllegalArgumentException("NaN detected in description");
-				outDescribe.printf(" %.10f",desc.value[j]);
+				outDescribe.printf(" %.10f",desc.data[j]);
 			}
 			outDescribe.println();
 		}

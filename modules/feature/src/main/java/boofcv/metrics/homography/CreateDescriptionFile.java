@@ -133,10 +133,10 @@ public class CreateDescriptionFile<T extends ImageBase<T>, D extends TupleDesc_F
 				// save the location and tuple description
 				out.printf("%.3f %.3f %f",result.x,result.y,result.yaw);
 				D desc = result.desc;
-				for( int i = 0; i < desc.value.length; i++ ) {
-					if( Double.isNaN(desc.value[i]))
+				for( int i = 0; i < desc.data.length; i++ ) {
+					if( Double.isNaN(desc.data[i]))
 						throw new IllegalArgumentException("NaN detected in description");
-					out.printf(" %.10f",desc.value[i]);
+					out.printf(" %.10f",desc.data[i]);
 				}
 				out.println();
 			}

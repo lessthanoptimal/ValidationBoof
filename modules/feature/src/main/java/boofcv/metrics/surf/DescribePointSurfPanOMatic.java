@@ -84,7 +84,7 @@ public class DescribePointSurfPanOMatic<II extends ImageGray<II>> extends Descri
 		// declare the feature if needed
 		if( ret == null )
 			ret = new TupleDesc_F64(featureDOF);
-		else if( ret.value.length != featureDOF )
+		else if( ret.data.length != featureDOF )
 			throw new IllegalArgumentException("Provided feature must have "+featureDOF+" values");
 
 		// extract descriptor
@@ -106,7 +106,7 @@ public class DescribePointSurfPanOMatic<II extends ImageGray<II>> extends Descri
 				for(int aVIt = 0; aVIt < iVecLen; ++aVIt)
 				{
 					double a = _cmp[aYIt][aXIt][aVIt];
-					ret.value[aV] = a;
+					ret.data[aV] = a;
 					aV++;
 				}
 			}

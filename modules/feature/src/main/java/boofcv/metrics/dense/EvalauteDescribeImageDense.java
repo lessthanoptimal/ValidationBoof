@@ -77,7 +77,7 @@ public class EvalauteDescribeImageDense<T extends ImageBase<T>>
                 // Compute and add to the list the Euclidean norm for the descriptor vector
                 double total = 0;
                 for (int k = 0; k < t.size(); k++) {
-                    total += t.value[k]*t.value[k];
+                    total += t.data[k]*t.data[k];
                 }
                 magnitude.add(Math.sqrt(total));
             }
