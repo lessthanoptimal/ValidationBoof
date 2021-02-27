@@ -1,13 +1,12 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
-import urllib
+import urllib.request
 from subprocess import call
 
 files = ["ellipse_v1.zip","polygon_v1.zip","lines_v1.zip"]
 
 for f in files:
     print("retrieving "+f)
-    thefile = urllib.URLopener()
-    thefile.retrieve("https://boofcv.org/notwiki/regression/shape/"+f,f)
+    url = "https://boofcv.org/notwiki/regression/shape/"+f
+    urllib.request.urlretrieve(url,f)
     call(["unzip",f])
-

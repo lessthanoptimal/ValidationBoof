@@ -37,7 +37,6 @@ public class ComputeRegressionSummary {
     int totalMatched;
 
     String summary;
-    boolean hasMissMatch;
 
     String emailUsername;
     String emailPassword;
@@ -91,8 +90,6 @@ public class ComputeRegressionSummary {
             }
         }
 
-        hasMissMatch = missmatched.size() > 0;
-
         // make it easier to read later on
         Collections.sort(missmatched);
         Collections.sort(currentUnique);
@@ -120,12 +117,15 @@ public class ComputeRegressionSummary {
                 });
 
         try {
-            String noticed = "  " + (hasMissMatch ? "Miss Match" : "");
+            // Make it easy to identify changes from the e-mail subject
+            boolean good = missmatched.isEmpty() && currentUnique.isEmpty() && baselineUnique.isEmpty();
+            String noticed = good ? "Good" : String.format("Fault: MM %2d CU %2d BU %d",
+                    missmatched.size(), currentUnique.size(), baselineUnique.size());
 
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress(emailUsername + "@gmail.com"));
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(emailDestination));
-            message.setSubject("ValidationBoof Summary" + noticed);
+            message.setSubject("ValidationBoof " + noticed);
             message.setContent(summary, "text/html; charset=utf-8");
 
             Transport.send(message);

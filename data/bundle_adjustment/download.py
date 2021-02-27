@@ -1,13 +1,12 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
-import urllib
+import urllib.request
 from subprocess import call
 
 files = ["bundle_adjustment_in_the_large.tar.bz2"]
 
 for f in files:
     print("retrieving "+f)
-    thefile = urllib.URLopener()
-    thefile.retrieve("https://boofcv.org/notwiki/regression/sba/"+f,f)
+    url = "https://boofcv.org/notwiki/regression/sba/"+f
+    urllib.request.urlretrieve(url,f)
     call(["tar","-xjf",f])
-

@@ -1,6 +1,6 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
 
-import urllib
+import urllib.request
 from subprocess import call
 
 files = ["chessboard_v2.zip","circle_hexagonal_v1_1.zip","circle_regular_v1.zip",
@@ -9,7 +9,6 @@ files = ["chessboard_v2.zip","circle_hexagonal_v1_1.zip","circle_regular_v1.zip"
 
 for f in files:
     print("retrieving "+f)
-    thefile = urllib.URLopener()
-    thefile.retrieve("https://boofcv.org/notwiki/regression/fiducial/"+f,f)
+    url = "https://boofcv.org/notwiki/regression/fiducial/"+f
+    urllib.request.urlretrieve(url,f)
     call(["unzip",f])
-
