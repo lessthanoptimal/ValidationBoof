@@ -28,7 +28,6 @@ import org.ejml.data.DMatrixRMaj;
 import org.ejml.ops.MatrixIO;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -40,27 +39,26 @@ import java.util.List;
  */
 public class LoadHomographyBenchmarkFiles {
 
-	public static final String DATA_SETS[] = new String[]
+	public static final String[] DATA_SETS = new String[]
 			{"bikes/","boat/","graf/","leuven/","ubc/","trees/", "wall/","bark/"};
 
-	private static SerializationDefinitionManager manager;
-
-	static {
-		manager = new SerializationDefinitionManager();
+	private static SerializationDefinitionManager createSerializationManager() {
+		SerializationDefinitionManager manager = new SerializationDefinitionManager();
 		manager.addPath("boofcv.alg.feature.benchmark.homography");
 		manager.addPath("georegression.struct.point");
 		manager.loadDefinition(DetectionInfo.class, "location","scale","yaw");
 		manager.loadDefinition(FeatureInfo.class, "location","orientation","description");
 		manager.loadDefinition(Point2D_F64.class, "x","y");
-		manager.loadDefinition(TupleDesc_F64.class,"value" );
+		manager.loadDefinition(TupleDesc_F64.class,"data" );
+		return manager;
 	}
 
 	public static List<DetectionInfo> loadDetection( String fileName ) {
-
 		try {
+			SerializationDefinitionManager manager = createSerializationManager();
 			InputStream stream = new FileInputStream(fileName);
-			ReadCsvObjectSmart<DetectionInfo> parser = new ReadCsvObjectSmart<DetectionInfo>(stream,manager,"DetectionInfo");
-			List<DetectionInfo> ret = new ArrayList<DetectionInfo>();
+			ReadCsvObjectSmart<DetectionInfo> parser = new ReadCsvObjectSmart<>(stream,manager,"DetectionInfo");
+			List<DetectionInfo> ret = new ArrayList<>();
 			while( true ) {
 				DetectionInfo data = parser.nextObject(null);
 				if( data != null )
@@ -68,8 +66,6 @@ public class LoadHomographyBenchmarkFiles {
 				else
 					return ret;
 			}
-		} catch (FileNotFoundException e) {
-			throw new RuntimeException(e);
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
@@ -78,10 +74,11 @@ public class LoadHomographyBenchmarkFiles {
 
 	public static List<FeatureInfo> loadDescription( String fileName ) {
 		try {
+			SerializationDefinitionManager manager = createSerializationManager();
 			InputStream stream = new FileInputStream(fileName);
-			ReadCsvObjectSmart<FeatureInfo> parser = new ReadCsvObjectSmart<FeatureInfo>(stream,manager,"FeatureInfo");
+			ReadCsvObjectSmart<FeatureInfo> parser = new ReadCsvObjectSmart<>(stream, manager, "FeatureInfo");
 			int descLength = Integer.parseInt(parser.extractWords().get(0));
-			List<FeatureInfo> ret = new ArrayList<FeatureInfo>();
+			List<FeatureInfo> ret = new ArrayList<>();
 			while( true ) {
 				FeatureInfo data = parser.nextObject(new FeatureInfo(descLength));
 				if( data != null )
@@ -89,8 +86,6 @@ public class LoadHomographyBenchmarkFiles {
 				else
 					return ret;
 			}
-		} catch (FileNotFoundException e) {
-			throw new RuntimeException(e);
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
