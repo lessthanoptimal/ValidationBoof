@@ -49,6 +49,8 @@ public class UncalibratedSparseReconstructionPlanarRegression<T extends ImageGra
         out.println("#                              Used,  Count, (px), (px), (px), (px)");
 
         Class<T> imageType = ImageDataType.typeToSingleClass(type);
+//        ConfigSequenceToSparseScene config = new ConfigSequenceToSparseScene();
+//        config.pairwise.score.type = ConfigEpipolarScore3D.Type.FUNDAMENTAL_ERROR;
         alg = FactorySceneReconstruction.sequenceToSparseScene(null, ImageType.single(imageType));
 
         // Load all the data directories
@@ -78,7 +80,7 @@ public class UncalibratedSparseReconstructionPlanarRegression<T extends ImageGra
             try {
                 if (!evaluator.process(dir, alg)) {
                     totalFailed++;
-                    out.printf("%-30s FAILED\n",dir.getName());
+                    out.printf("%-30s FAILED\n", dir.getName());
                     continue;
                 }
                 UncalibratedToSparseScenePlanarMetrics.RegionScore score = evaluator.allScore;
@@ -95,7 +97,7 @@ public class UncalibratedSparseReconstructionPlanarRegression<T extends ImageGra
                 totalSkippedImages += evaluator.totalSkippedImages;
                 averageMeanError += evaluator.allScore.mean;
             } catch (Exception e) {
-                out.printf("%-30s CRASHED\n",dir.getName());
+                out.printf("%-30s CRASHED\n", dir.getName());
                 errorLog.println("Log Name: " + dir.getName());
                 e.printStackTrace(errorLog);
                 e.printStackTrace(System.err);
@@ -108,7 +110,7 @@ public class UncalibratedSparseReconstructionPlanarRegression<T extends ImageGra
         out.println("  points inside     = " + totalPoints);
         out.println("  regions evaluated = " + totalRegions);
         out.println("  skipped views     = " + totalSkippedImages);
-        out.println("  mean error (px)   = " + averageMeanError / totalScenarios);
+        out.printf("  mean error (px)   = %.2f", averageMeanError / totalScenarios);
         out.close();
 
         outputRuntime.out.println();
