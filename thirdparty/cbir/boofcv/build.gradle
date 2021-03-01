@@ -2,6 +2,12 @@
 dependencies {
     api project(':modules:common')
     api project(':modules:recognition')
+
+    // Fixes limitations on the built in image reader, breaks jars
+    // There's some META-INF files that need to be merged. Maybe this shadow thing can fix it
+    ['core','jpeg','tiff'].each { String a ->
+        api group: 'com.twelvemonkeys.imageio', name: 'imageio-'+a, version: '3.6.3'
+    }
 }
 
 task CbirJar(type: Jar) {
@@ -25,12 +31,13 @@ task CbirJar(type: Jar) {
     }
 }
 
-// Example: GRADLE_OPTS="-Xms50g -Xmx50g" ./gradlew cbirMaster run --console=plain
+// Example: ./gradlew cbirMaster run --console=plain
 task cbirMaster(type: JavaExec) {
     dependsOn build
     group = "Execution"
     description = "Master application for CBIR tasks"
     classpath = sourceSets.main.runtimeClasspath
     main = "validation.GenerateResultsForIPOL2018"
+    jvmArgs = ['-Xms50g', '-Xmx50g']
     args System.getProperty("exec.args", "").split()
 }

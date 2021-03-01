@@ -16,6 +16,8 @@ import org.ddogleg.struct.DogArray;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 /**
@@ -37,8 +39,11 @@ public class ImageRecognitionUtils<T extends ImageBase<T>> {
 
     public ImageType<T> imageType;
 
-    PrintStream err = System.err;
-    PrintStream out = System.out;
+    public PrintStream err = System.err;
+    public PrintStream out = System.out;
+
+    // number of times an exception happened while reading images
+    public long imageReadFaults;
 
     public ImageRecognitionUtils(ImageType<T> imageType) {
         this.imageType = imageType;
@@ -101,21 +106,31 @@ public class ImageRecognitionUtils<T extends ImageBase<T>> {
         // Make sure there really are no images in it
         database.clearDatabase();
 
-        System.out.println("Cleared DB");
-
         ImageFileListIterator<T> iterator = new ImageFileListIterator<>(paths, imageType);
         iterator.setFilter(FactoryFilterLambdas.createDownSampleFilter(targetPixelCount,imageType));
+        imageReadFaults = 0;
+        iterator.setException((index,path,e)->{imageReadFaults++;e.printStackTrace(err);});
 
         int index=0;
         long time0 = System.currentTimeMillis();
         try {
+            long timePrev = System.currentTimeMillis();
             while (iterator.hasNext()) {
                 T image = iterator.next();
                 index = iterator.getIndex();
                 database.addImage(""+index, image);
 
-                if (index%100==0)
-                    out.println("Added "+index+" / "+paths.size());
+                if (index%100==0) {
+                    // Print out how long it took to process these images so that performance issues are
+                    // easier to diagnosis
+                    long timeCurrent = System.currentTimeMillis();
+                    double elapsed = (timeCurrent-timePrev)*1e-3;
+                    timePrev = timeCurrent;
+                    String time = LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss"));
+                    String memory = String.format("%.1f",Runtime.getRuntime().freeMemory()/(1024.0*1024.0));
+                    out.printf("Added %d / %d elapsed %.1f (s) %s %s (mb)\n",
+                            index,paths.size(),elapsed, time, memory);
+                }
             }
         } catch (RuntimeException e) {
             e.printStackTrace(err);
@@ -127,7 +142,7 @@ public class ImageRecognitionUtils<T extends ImageBase<T>> {
 
         // Save the model with images
         RecognitionIO.saveNister2006(database,new File(directory,benchmarkName));
-        out.println("done");
+        out.println("Done! read_faults="+imageReadFaults);
     }
 
     public void classify( String modelName, String benchmarkName, List<String> paths ) {
@@ -144,6 +159,8 @@ public class ImageRecognitionUtils<T extends ImageBase<T>> {
 
         ImageFileListIterator<T> iterator = new ImageFileListIterator<>(paths, imageType);
         iterator.setFilter(FactoryFilterLambdas.createDownSampleFilter(targetPixelCount,imageType));
+        imageReadFaults = 0;
+        iterator.setException((index,path,e)->{imageReadFaults++;e.printStackTrace(err);});
 
         int index=0;
         try {
@@ -152,13 +169,19 @@ public class ImageRecognitionUtils<T extends ImageBase<T>> {
             resultsOut.println("# BoofCV Version "+ BoofVersion.VERSION+" GIT_SHA "+BoofVersion.GIT_SHA);
 
             long time0 = System.currentTimeMillis();
+            long timePrev = System.currentTimeMillis();
             DogArray<ImageRecognition.Match> matches = new DogArray<>(ImageRecognition.Match::new);
             while (iterator.hasNext()) {
                 T image = iterator.next();
                 index = iterator.getIndex();
 
-                if (index%100==0)
-                    out.println("Classifying "+index+" / "+paths.size());
+                if (index%100==0) {
+                    long timeCurrent = System.currentTimeMillis();
+                    double elapsed = (timeCurrent-timePrev)*1e-3;
+                    timePrev = timeCurrent;
+                    String time = LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss"));
+                    out.printf("Classifying %d / %d elapsed %.1f (s) %s\n",index,paths.size(),elapsed, time);
+                }
 
                 if (!database.findBestMatch(image, matches)) {
                     err.println("Failed to retrieve. "+index);
@@ -184,7 +207,7 @@ public class ImageRecognitionUtils<T extends ImageBase<T>> {
             e.printStackTrace(err);
             err.println("Failed on index="+index+" path="+paths.get(index));
         }
-        out.println("done");
+        out.println("Done! read_faults="+imageReadFaults);
     }
 
     public static class ModelInfo {
