@@ -1,0 +1,36 @@
+
+dependencies {
+    api project(':modules:common')
+    api project(':modules:recognition')
+}
+
+task CbirJar(type: Jar) {
+    manifest {
+        attributes 'Implementation-Title': 'BoofCV CBIR Jar',
+                'Implementation-Version': 1,
+                'Main-Class': 'validation.GenerateResultsForIPOL2018'
+    }
+
+    outputs.upToDateWhen { false }
+
+    from sourceSets.main.output
+
+    dependsOn configurations.runtimeClasspath
+    from { configurations.runtimeClasspath.findAll { it.name.endsWith('jar') }.collect { zipTree(it) } } {
+        exclude 'META-INF/*.RSA', 'META-INF/*.SF', 'META-INF/*.DSA'
+    }
+
+    doLast {
+        archivePath.renameTo(file('BoofCBIR.jar'))
+    }
+}
+
+// Example: GRADLE_OPTS="-Xms50g -Xmx50g" ./gradlew cbirMaster run --console=plain
+task cbirMaster(type: JavaExec) {
+    dependsOn build
+    group = "Execution"
+    description = "Master application for CBIR tasks"
+    classpath = sourceSets.main.runtimeClasspath
+    main = "validation.GenerateResultsForIPOL2018"
+    args System.getProperty("exec.args", "").split()
+}
