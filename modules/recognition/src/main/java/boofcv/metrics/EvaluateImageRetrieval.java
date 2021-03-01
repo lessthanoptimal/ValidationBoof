@@ -114,7 +114,6 @@ public class EvaluateImageRetrieval<T extends ImageBase<T>> {
         config.features.detectFastHessian.maxFeaturesAll = 2000;
         config.features.detectFastHessian.extract.radius = 4;
         config.distanceNorm = RecognitionVocabularyTreeNister2006.DistanceTypes.L2;
-        config.maxMatches = 1000;
 
         evaluator.printHeaders();
         evaluator.evaluate(new ImageRecognitionNister2006<>(config, ImageType.SB_U8));

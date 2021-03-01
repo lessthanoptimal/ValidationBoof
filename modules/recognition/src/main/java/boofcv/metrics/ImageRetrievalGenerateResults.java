@@ -92,7 +92,7 @@ public class ImageRetrievalGenerateResults<T extends ImageBase<T>> {
                 try {
                     T image = iterator.next();
                     long time0 = System.nanoTime();
-                    if (!target.findBestMatch(image, matches)) {
+                    if (!target.query(image, querySize, matches)) {
                         totalFailed++;
                         continue;
                     }

@@ -37,6 +37,8 @@ public class ImageRecognitionUtils<T extends ImageBase<T>> {
     // rescale images so that they have this pixel count approximately
     public int targetPixelCount = 800*600;
 
+    public int querySize = 1000;
+
     public ImageType<T> imageType;
 
     public PrintStream err = System.err;
@@ -183,7 +185,7 @@ public class ImageRecognitionUtils<T extends ImageBase<T>> {
                     out.printf("Classifying %d / %d elapsed %.1f (s) %s\n",index,paths.size(),elapsed, time);
                 }
 
-                if (!database.findBestMatch(image, matches)) {
+                if (!database.query(image, querySize, matches)) {
                     err.println("Failed to retrieve. "+index);
                     continue;
                 }
