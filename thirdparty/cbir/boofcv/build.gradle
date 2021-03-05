@@ -31,13 +31,13 @@ task CbirJar(type: Jar) {
     }
 }
 
-// Example: ./gradlew --no-daemon cbirMaster -Pexecargs=path/to/data
+// Example: ./gradlew --no-daemon cbirMaster -Pxmx=40g --args='path/to/data'
 task cbirMaster(type: JavaExec, dependsOn: build) {
+    def maxMem = "-Xmx"+(project.hasProperty("xmx") ? project.property("xmx").toString() : '20g')
+    println("maxMem="+maxMem)
     group = "Execution"
     description = "Master application for CBIR tasks"
     classpath = sourceSets.main.runtimeClasspath
     main = "validation.GenerateResultsForIPOL2018"
-    jvmArgs = ['-Xms15g', '-Xmx20g']
-    if (project.hasProperty("execargs"))
-        args execargs.split()
+    jvmArgs = ['-Xms15g', maxMem]
 }
