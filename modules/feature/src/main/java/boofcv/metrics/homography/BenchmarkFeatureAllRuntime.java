@@ -35,7 +35,7 @@ import java.io.IOException;
  *
  * @author Peter Abeles
  */
-public class BenchmarkFeatureAllRuntime<T extends ImageGray<T>, D extends TupleDesc> {
+public class BenchmarkFeatureAllRuntime<T extends ImageGray<T>, D extends TupleDesc<D>> {
 
 	Class<T> imageType;
 	DetectDescribePoint<T,D> alg;

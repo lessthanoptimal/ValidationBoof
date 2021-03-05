@@ -38,12 +38,12 @@ public class CreateDetectDescribeFiles {
 
 		CreateDetectDescribeFile.Factory factory = new CreateDetectDescribeFile.Factory() {
 			@Override
-			public <T extends ImageBase<T>, D extends TupleDesc_F64> DetectDescribePoint<T, D> create(ImageType<T> imageType) {
+			public <T extends ImageBase<T>> DetectDescribePoint<T, TupleDesc_F64> create(ImageType<T> imageType) {
 				return FactoryDetectDescribe.sift(null,imageType.getImageClass());
 			}
 		};
 
-		CreateDetectDescribeFile<GrayF32,TupleDesc_F64> cdf =
+		CreateDetectDescribeFile<GrayF32> cdf =
 				new CreateDetectDescribeFile<>(factory, ImageType.Family.GRAY, ImageDataType.F32,"BOOFCV_SIFTN");
 
 		cdf.directory(directory,"./");

@@ -43,12 +43,12 @@ import java.io.PrintStream;
  * @author Peter Abeles
  */
 @SuppressWarnings("unchecked")
-public class CreateDetectDescribeFile<T extends ImageBase<T>, D extends TupleDesc_F64> {
+public class CreateDetectDescribeFile<T extends ImageBase<T>> {
 
 	// Creates the descriptor once the input image type is fully known
 	Factory factory;
 	// algorithm that detects the features
-	DetectDescribePoint<T,D> alg;
+	DetectDescribePoint<T,TupleDesc_F64> alg;
 	// type of input image
 	ImageType<T> imageType;
 	// name of the detector
@@ -165,7 +165,7 @@ public class CreateDetectDescribeFile<T extends ImageBase<T>, D extends TupleDes
 	}
 
 	public interface Factory {
-		<T extends ImageBase<T>, D extends TupleDesc_F64>
-		DetectDescribePoint<T,D> create( ImageType<T> imageType );
+		<T extends ImageBase<T>>
+		DetectDescribePoint<T,TupleDesc_F64> create( ImageType<T> imageType );
 	}
 }

@@ -114,7 +114,6 @@ public class DetectDescribeRegression extends BaseRegression implements ImageReg
 
 	public static <T extends ImageGray<T>>
 	Info surf( boolean stable , boolean color ) {
-
 		ConfigFastHessian configDetect = new ConfigFastHessian(3, 2, -1,1, 9, 4, 4);
 
 		String variant;
@@ -130,9 +129,8 @@ public class DetectDescribeRegression extends BaseRegression implements ImageReg
 		Info ret = new Info();
 		ret.name = "BoofSURF-"+variant;
 		ret.factory = new CreateDetectDescribeFile.Factory() {
-			@Override
-			public <IT extends ImageBase<IT>, D extends TupleDesc_F64>
-			DetectDescribePoint<IT, D> create(ImageType<IT> imageType) {
+			@Override public <IT extends ImageBase<IT>>
+			DetectDescribePoint<IT, TupleDesc_F64> create(ImageType<IT> imageType) {
 				Class type = imageType.getImageClass();
 				if( color ) {
 					if( stable )
@@ -162,8 +160,8 @@ public class DetectDescribeRegression extends BaseRegression implements ImageReg
 		ret.name = "BriefSO-FastHess";
 		ret.factory = new CreateDetectDescribeFile.Factory() {
 			@Override
-			public <IT extends ImageBase<IT>, D extends TupleDesc_F64>
-			DetectDescribePoint<IT, D> create(ImageType<IT> imageType) {
+			public <IT extends ImageBase<IT>>
+			DetectDescribePoint<IT,TupleDesc_F64> create(ImageType<IT> imageType) {
 				Class type = imageType.getImageClass();
 				InterestPointDetector detector = FactoryInterestPoint.fastHessian(configDetect,type);
 				DescribeRegionPoint describe = FactoryDescribeRegionPoint.brief(configDesc,type);
@@ -187,13 +185,13 @@ public class DetectDescribeRegression extends BaseRegression implements ImageReg
 		configDet.extract.radius = 3;
 		configDet.extract.threshold = 0f;
 		configDet.maxFeaturesPerScale = 3500;
+//		configDet.maxFeaturesAll = 2000;
 
 		Info ret = new Info();
 		ret.name = "BoofSIFT";
 		ret.factory = new CreateDetectDescribeFile.Factory() {
-			@Override
-			public <IT extends ImageBase<IT>, D extends TupleDesc_F64>
-			DetectDescribePoint<IT, D> create(ImageType<IT> imageType) {
+			@Override public <IT extends ImageBase<IT>>
+			DetectDescribePoint<IT,TupleDesc_F64> create(ImageType<IT> imageType) {
 				return FactoryDetectDescribe.sift(config,imageType.getImageClass());
 			}
 		};

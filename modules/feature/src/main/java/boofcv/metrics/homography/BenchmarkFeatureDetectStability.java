@@ -161,7 +161,7 @@ public class BenchmarkFeatureDetectStability {
 			transforms.add(h);
 		}
 
-		List<DetectionInfo> detections[] = new ArrayList[nameBase.size()];
+		List<DetectionInfo>[] detections = new ArrayList[nameBase.size()];
 		for( int i = 0; i < nameBase.size(); i++ ) {
 			String detectName = new File(inputLocation,String.format("DETECTED_%s_%s_%s.txt", dataSetName, nameBase.get(i), algSuffix)).getPath();
 			detections[i] = LoadHomographyBenchmarkFiles.loadDetection(detectName);
@@ -212,9 +212,6 @@ public class BenchmarkFeatureDetectStability {
 
 	/**
 	 * Associates two sets of features against each other.
-	 * @param keyFrame
-	 * @param targetFrame
-	 * @param keyToTarget
 	 */
 	private void associationScore(List<DetectionInfo> keyFrame,
 								  List<DetectionInfo> targetFrame,
@@ -231,7 +228,7 @@ public class BenchmarkFeatureDetectStability {
 		Point2D_F32 src = new Point2D_F32();
 		Point2D_F32 expected = new Point2D_F32();
 
-		Point2D_F32 sample[] = new Point2D_F32[4];
+		Point2D_F32[] sample = new Point2D_F32[4];
 		for( int i = 0; i < sample.length; i++ )
 			sample[i] = new Point2D_F32();
 		Point2D_F32 sampleDst = new Point2D_F32();
@@ -280,7 +277,7 @@ public class BenchmarkFeatureDetectStability {
 		fractionAmbiguous = ((double)numAmbiguous)/((double)maxCorrect);
 	}
 
-	public static void main( String args[] ) throws FileNotFoundException {
+	public static void main(String[] args) throws FileNotFoundException {
 		double tolerance = 1.5;
 
 		BenchmarkFeatureDetectStability app = new BenchmarkFeatureDetectStability( "","",tolerance);

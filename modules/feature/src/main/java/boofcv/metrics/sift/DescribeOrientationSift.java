@@ -41,7 +41,8 @@ import java.util.List;
 public class DescribeOrientationSift
 		implements DescribeRegionPoint<GrayF32, TupleDesc_F64>
 {
-	UnrollSiftScaleSpaceGradient ss;
+	SiftScaleSpace ss;
+	UnrollSiftScaleSpaceGradient gradient = new UnrollSiftScaleSpaceGradient();
 
 	OrientationHistogramSift orientation;
 	DescribePointSift describe;
@@ -51,12 +52,13 @@ public class DescribeOrientationSift
 								   SiftScaleSpace ss ) {
 		this.orientation = orientation;
 		this.describe = describe;
-		this.ss = new UnrollSiftScaleSpaceGradient(ss);
+		this.ss = ss;
 	}
 
 	@Override
 	public void setImage(GrayF32 image) {
-		ss.setImage(image);
+		ss.process(image);
+		gradient.process(ss);
 	}
 
 	@Override
@@ -69,7 +71,7 @@ public class DescribeOrientationSift
 
 		double sigma = radius / BoofDefaults.SIFT_SCALE_TO_RADIUS;
 
-		UnrollSiftScaleSpaceGradient.ImageScale image = ss.lookup(sigma);
+		UnrollSiftScaleSpaceGradient.ImageScale image = gradient.lookup(sigma);
 
 		orientation.setImageGradient(image.derivX,image.derivY);
 		describe.setImageGradient(image.derivX,image.derivY);
@@ -85,7 +87,7 @@ public class DescribeOrientationSift
 
 		double sigma = radius / BoofDefaults.SIFT_SCALE_TO_RADIUS;
 
-		UnrollSiftScaleSpaceGradient.ImageScale image = ss.lookup(sigma);
+		UnrollSiftScaleSpaceGradient.ImageScale image = gradient.lookup(sigma);
 
 		orientation.setImageGradient(image.derivX,image.derivY);
 		describe.setImageGradient(image.derivX,image.derivY);
