@@ -1,5 +1,6 @@
 package validation;
 
+import boofcv.factory.feature.describe.ConfigConvertTupleDesc;
 import boofcv.io.MirrorStream;
 import boofcv.io.UtilIO;
 import boofcv.struct.image.GrayU8;
@@ -19,10 +20,14 @@ public class GenerateResultsForIPOL2018 {
     public static final String NAME = "IPOL2018";
 
     public static void main(String[] args) throws FileNotFoundException {
+        System.out.println("args.length="+args.length);
+        String directoryData = args.length > 0 ? args[0] : "data";
+        System.out.println("input data path: "+directoryData);
+
         // Sanity check to make sure the JPEG issue is being handled
         Iterator<ImageReader> readers = ImageIO.getImageReadersByFormatName("JPEG");
         while (readers.hasNext()) {
-            System.out.println("reader: " + readers.next());
+            System.out.println("JPEG formats: " + readers.next());
         }
 
         // Create the logs
@@ -30,11 +35,11 @@ public class GenerateResultsForIPOL2018 {
         try (PrintStream outStream = new PrintStream("stdout_log.txt")) {
 
             // Load file paths to all the images
-            List<String> ukbenchImages = UtilIO.listImages("../data/full", true);
+            List<String> ukbenchImages = UtilIO.listImages(new File(directoryData,"full").getPath(), true);
             System.out.println("ukbench.size=" + ukbenchImages.size());
 
             List<String> flickrImages = new ArrayList<>();
-            File flickerDir = new File("../data/images");
+            File flickerDir = new File(new File(directoryData,"images").getPath());
             File[] children = flickerDir.listFiles();
             if (children == null)
                 throw new RuntimeException("No flicker directories");
@@ -60,7 +65,9 @@ public class GenerateResultsForIPOL2018 {
             utils.err = new PrintStream(new MirrorStream(System.err, errorStream));
             utils.out = new PrintStream(new MirrorStream(System.out, outStream));
 
-            ImageRecognitionUtils.ModelInfo defaultModel = new ImageRecognitionUtils.ModelInfo("default");
+            var defaultModel = new ImageRecognitionUtils.ModelInfo("default");
+            defaultModel.config.features.convertDescriptor.outputData = ConfigConvertTupleDesc.DataType.F32;
+            defaultModel.config.features.detectFastHessian.maxFeaturesAll = 500;
 
             // Generate the model, add images to data base, generate classification results
             System.out.println("Creating model...");

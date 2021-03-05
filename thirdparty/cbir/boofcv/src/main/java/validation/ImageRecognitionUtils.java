@@ -26,7 +26,6 @@ import java.util.List;
  * @author Peter Abeles
  */
 public class ImageRecognitionUtils<T extends ImageBase<T>> {
-    public static final File DATA_DIRECTORY = new File("thirdparty/cbir/data");
     public static final String MODEL_PATH = "cbir_models";
 
     public static final String CONFIG_FILE_NAME = "config.yaml";
