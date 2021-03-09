@@ -39,5 +39,5 @@ task cbirMaster(type: JavaExec, dependsOn: build) {
     description = "Master application for CBIR tasks"
     classpath = sourceSets.main.runtimeClasspath
     main = "validation.GenerateResultsForIPOL2018"
-    jvmArgs = ['-Xms15g', maxMem]
+    jvmArgs = ['-Xms5g', maxMem]
 }

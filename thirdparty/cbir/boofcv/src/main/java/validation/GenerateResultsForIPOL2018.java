@@ -1,5 +1,6 @@
 package validation;
 
+import boofcv.alg.scene.nister2006.RecognitionVocabularyTreeNister2006;
 import boofcv.factory.feature.describe.ConfigConvertTupleDesc;
 import boofcv.io.MirrorStream;
 import boofcv.io.UtilIO;
@@ -67,7 +68,11 @@ public class GenerateResultsForIPOL2018 {
 
             var defaultModel = new ImageRecognitionUtils.ModelInfo("default");
             defaultModel.config.features.convertDescriptor.outputData = ConfigConvertTupleDesc.DataType.F32;
-            defaultModel.config.features.detectFastHessian.maxFeaturesAll = 500;
+            defaultModel.config.features.detectFastHessian.extract.threshold = 0;
+            defaultModel.config.features.detectFastHessian.extract.radius = 4;
+            defaultModel.config.features.detectFastHessian.maxFeaturesAll = 750;
+            defaultModel.config.maxDistanceFromLeaf = 2;
+            defaultModel.config.distanceNorm = RecognitionVocabularyTreeNister2006.DistanceTypes.L2;
 
             // Generate the model, add images to data base, generate classification results
             System.out.println("Creating model...");
