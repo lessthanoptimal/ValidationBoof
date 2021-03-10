@@ -33,9 +33,6 @@ public class ImageRecognitionUtils<T extends ImageBase<T>> {
 
     public boolean force = false;
 
-    // rescale images so that they have this pixel count approximately
-    public int targetPixelCount = 800*600;
-
     public int querySize = 1000;
 
     public ImageType<T> imageType;
@@ -68,12 +65,12 @@ public class ImageRecognitionUtils<T extends ImageBase<T>> {
         UtilIO.saveConfig(model.config,new File(directory,CONFIG_FILE_NAME));
 
         ImageRecognitionNister2006<T,?> target = new ImageRecognitionNister2006<>(model.config, imageType);
+        target.setVerbose(System.out,null);
 
         // TODO create a config for image preprocessing and save that to the directory too
 
         out.println("Learning "+model.name+" images.size="+imagePaths.size());
         ImageFileListIterator<T> iterator = new ImageFileListIterator<>(imagePaths, imageType);
-        iterator.setFilter(FactoryFilterLambdas.createDownSampleFilter(targetPixelCount,imageType));
         long time0 = System.currentTimeMillis();
         try {
             target.learnModel(iterator);
@@ -108,7 +105,6 @@ public class ImageRecognitionUtils<T extends ImageBase<T>> {
         database.clearDatabase();
 
         ImageFileListIterator<T> iterator = new ImageFileListIterator<>(paths, imageType);
-        iterator.setFilter(FactoryFilterLambdas.createDownSampleFilter(targetPixelCount,imageType));
         imageReadFaults = 0;
         iterator.setException((index,path,e)->{imageReadFaults++;e.printStackTrace(err);});
 
@@ -159,7 +155,6 @@ public class ImageRecognitionUtils<T extends ImageBase<T>> {
         ImageRecognition<T> database = RecognitionIO.loadNister2006(new File(directory,benchmarkName), imageType);
 
         ImageFileListIterator<T> iterator = new ImageFileListIterator<>(paths, imageType);
-        iterator.setFilter(FactoryFilterLambdas.createDownSampleFilter(targetPixelCount,imageType));
         imageReadFaults = 0;
         iterator.setException((index,path,e)->{imageReadFaults++;e.printStackTrace(err);});
 

@@ -67,12 +67,17 @@ public class GenerateResultsForIPOL2018 {
             utils.out = new PrintStream(new MirrorStream(System.out, outStream));
 
             var defaultModel = new ImageRecognitionUtils.ModelInfo("default");
-            defaultModel.config.features.convertDescriptor.outputData = ConfigConvertTupleDesc.DataType.F32;
             defaultModel.config.features.detectFastHessian.extract.threshold = 0;
-            defaultModel.config.features.detectFastHessian.extract.radius = 4;
-            defaultModel.config.features.detectFastHessian.maxFeaturesAll = 750;
-            defaultModel.config.maxDistanceFromLeaf = 2;
-            defaultModel.config.distanceNorm = RecognitionVocabularyTreeNister2006.DistanceTypes.L2;
+            defaultModel.config.features.detectFastHessian.extract.radius = 2;
+            // You can get better retrieval with more features, but you start running into hard limits.
+            // With this value you can train on about 20,000 images with SURF before you blow past the limits
+            // of an integer length array. This can be fixed in code without much difficulty, but you are
+            // already using 8G of memory.
+            defaultModel.config.features.detectFastHessian.maxFeaturesAll = 1500;
+            defaultModel.config.features.detectFastHessian.maxFeaturesPerScale = 600;
+            defaultModel.config.minimumDepthFromRoot = 3;
+            defaultModel.config.distanceNorm = RecognitionVocabularyTreeNister2006.DistanceTypes.L1;
+
 
             // Generate the model, add images to data base, generate classification results
             System.out.println("Creating model...");
