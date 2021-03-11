@@ -40,27 +40,28 @@ public class GenerateResultsForIPOL2018 {
             System.out.println("ukbench.size=" + ukbenchImages.size());
 
             List<String> flickrImages = new ArrayList<>();
-            File flickerDir = new File(new File(directoryData,"images").getPath());
-            File[] children = flickerDir.listFiles();
-            if (children == null)
-                throw new RuntimeException("No flicker directories");
-            List<File> sorted = Arrays.asList(children);
-            Collections.sort(sorted);
-            for (File d : sorted) {
-                if (!d.isDirectory() || d.isHidden())
-                    continue;
-                // All valid directories are numbers
-                try {
-                    Integer.parseInt(d.getName());
-                } catch (Exception e) {
-                    continue;
-                }
-                flickrImages.addAll(UtilIO.listImages(d.getAbsolutePath(), true));
-            }
-
-            System.out.println("flicker.size=" + flickrImages.size());
+//            File flickerDir = new File(new File(directoryData,"images").getPath());
+//            File[] children = flickerDir.listFiles();
+//            if (children == null)
+//                throw new RuntimeException("No flicker directories");
+//            List<File> sorted = Arrays.asList(children);
+//            Collections.sort(sorted);
+//            for (File d : sorted) {
+//                if (!d.isDirectory() || d.isHidden())
+//                    continue;
+//                // All valid directories are numbers
+//                try {
+//                    Integer.parseInt(d.getName());
+//                } catch (Exception e) {
+//                    continue;
+//                }
+//                flickrImages.addAll(UtilIO.listImages(d.getAbsolutePath(), true));
+//            }
+//
+//            System.out.println("flicker.size=" + flickrImages.size());
 
             ImageRecognitionUtils<GrayU8> utils = new ImageRecognitionUtils<>(ImageType.SB_U8);
+            utils.pathHome = new File("cbir_models");
 
             // Save to the logs and print to standard outputs
             utils.err = new PrintStream(new MirrorStream(System.err, errorStream));
@@ -74,9 +75,21 @@ public class GenerateResultsForIPOL2018 {
             // of an integer length array. This can be fixed in code without much difficulty, but you are
             // already using 8G of memory.
             defaultModel.config.features.detectFastHessian.maxFeaturesAll = 1500;
-            defaultModel.config.features.detectFastHessian.maxFeaturesPerScale = 600;
+//            defaultModel.config.features.detectFastHessian.maxFeaturesPerScale = 600;
             defaultModel.config.minimumDepthFromRoot = 3;
             defaultModel.config.distanceNorm = RecognitionVocabularyTreeNister2006.DistanceTypes.L1;
+            // 0.8747
+            defaultModel.config.minimumDepthFromRoot = 2;
+            defaultModel.config.tree.branchFactor = 27;
+            defaultModel.config.tree.maximumLevel = 4;
+            // 0.8813
+            defaultModel.config.minimumDepthFromRoot = 0;
+            // 0.8818
+            defaultModel.config.features.detectFastHessian.extract.radius = 6;
+            defaultModel.config.features.detectFastHessian.maxFeaturesAll = 500;
+            // 0.8439 and 30min to run. 2x faster!
+            defaultModel.config.features.detectFastHessian.extract.radius = 2;
+            // 0.8601 and 30min still
 
 
             // Generate the model, add images to data base, generate classification results

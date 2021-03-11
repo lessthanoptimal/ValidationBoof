@@ -20,13 +20,16 @@ public class ImageRetrievalEvaluateResults {
     // Summary results are saved here
     public PrintStream outSummary = System.out;
 
+    // A single number that summarizes all the results
+    public double score;
+
     public void printSummaryHeader() {
         outSummary.println("# All performance is in Mean Average Precision (mAP) The numbers refer to the number");
         outSummary.println("# of queries considered. 100 = first 100 queries");
         outSummary.println("# file_name, count, mAP=ALL, 1, 5, 10, 20, 50, 100, 200, 500");
     }
 
-    public void evaluate(String testName, File resultsFile, ImageRetrievalEvaluationData sets) {
+    public boolean evaluate(String testName, File resultsFile, ImageRetrievalEvaluationData sets) {
         outDetailed.println("# Image Retrieval Detailed Results for " + testName);
         outDetailed.println("# Average Precision is computed for each image and saved here");
 
@@ -118,6 +121,7 @@ public class ImageRetrievalEvaluateResults {
         } catch (IOException e) {
             e.printStackTrace(err);
             e.printStackTrace();
+            return false;
         }
         outDetailed.flush();
 
@@ -134,5 +138,8 @@ public class ImageRetrievalEvaluateResults {
                 mAP_200/totalResults,
                 mAP_500/totalResults);
         outSummary.flush();
+
+        score = mAP/totalResults;
+        return true;
     }
 }

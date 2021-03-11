@@ -34,10 +34,19 @@ task CbirJar(type: Jar) {
 // Example: ./gradlew --no-daemon cbirMaster -Pxmx=40g --args='path/to/data'
 task cbirMaster(type: JavaExec, dependsOn: build) {
     def maxMem = "-Xmx"+(project.hasProperty("xmx") ? project.property("xmx").toString() : '20g')
-    println("maxMem="+maxMem)
     group = "Execution"
     description = "Master application for CBIR tasks"
     classpath = sourceSets.main.runtimeClasspath
     main = "validation.GenerateResultsForIPOL2018"
+    jvmArgs = ['-Xms5g', maxMem]
+}
+
+// ./gradlew --no-daemon tuneNister2006 --args='-i datasets/data/small -o tuning2006'
+task tuneNister2006(type: JavaExec, dependsOn: build) {
+    def maxMem = "-Xmx"+(project.hasProperty("xmx") ? project.property("xmx").toString() : '20g')
+    group = "Execution"
+    description = "Master application for Tuneing Nister 2006"
+    classpath = sourceSets.main.runtimeClasspath
+    main = "validation.TuneImageRecognitionNister2006"
     jvmArgs = ['-Xms5g', maxMem]
 }
