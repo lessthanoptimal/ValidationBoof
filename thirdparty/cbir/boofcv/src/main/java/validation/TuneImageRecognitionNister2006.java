@@ -61,8 +61,8 @@ public class TuneImageRecognitionNister2006 {
 
             int digits = BoofMiscOps.numDigits(generator.getNumTrials());
             while (generator.hasNext()) {
-                System.out.println("Grid trial " + generator.getTrial());
                 ConfigImageRecognitionNister2006 config = generator.next();
+                System.out.println("Grid trial " + generator.getTrial());
 
                 evaluate(dirUkbench, String.format("%0" + digits + "d", generator.getTrial()), ukbench, config);
                 evaluate(dirInria, String.format("%0" + digits + "d", generator.getTrial()), inria, config);
@@ -82,10 +82,8 @@ public class TuneImageRecognitionNister2006 {
 
         ImageRecognitionUtils.ModelInfo model = new ImageRecognitionUtils.ModelInfo(trialDir, config);
 
-        PrintStream printErr = new PrintStream(new File(outputDir, trialDir + "/log_stderr.txt"));
-        PrintStream printOut = new PrintStream(new File(outputDir, trialDir + "/log_stdout.txt"));
-
-        try {
+        try (PrintStream printErr = new PrintStream(new File(outputDir, trialDir + "/log_stderr.txt"));
+             PrintStream printOut = new PrintStream(new File(outputDir, trialDir + "/log_stdout.txt"))) {
             long time0 = System.currentTimeMillis();
             ImageRecognitionUtils<GrayU8> utils = new ImageRecognitionUtils<>(ImageType.SB_U8);
             utils.pathHome = outputDir;
@@ -117,21 +115,18 @@ public class TuneImageRecognitionNister2006 {
 
             // Save how long it took to process and the start/stoptime
             FileUtils.write(new File(outputDir, trialDir + "/elapsed_time.txt"),
-                    "" + (time1-time0)+" (ms) "+BoofMiscOps.milliToHuman(time1-time0)+"\n"+
-                    BoofMiscOps.timeStr(time0)+"\n"+BoofMiscOps.timeStr(time1)+"\n", StandardCharsets.UTF_8);
+                    "" + (time1 - time0) + " (ms) " + BoofMiscOps.milliToHuman(time1 - time0) + "\n" +
+                            BoofMiscOps.timeStr(time0) + "\n" + BoofMiscOps.timeStr(time1) + "\n", StandardCharsets.UTF_8);
 
             evaluate.outSummary.close();
             evaluate.outDetailed.close();
-        } finally {
-            printErr.close();
-            printOut.close();
         }
     }
 
 
     /**
      * First 1000 images from ukbench dataset.
-     *
+     * <p>
      * TODO link to source
      */
     private ImageRetrievalEvaluationData datasetUkBench1000() {
