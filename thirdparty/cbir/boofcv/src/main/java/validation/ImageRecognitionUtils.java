@@ -8,7 +8,6 @@ import boofcv.io.UtilIO;
 import boofcv.io.image.ImageFileListIterator;
 import boofcv.io.recognition.RecognitionIO;
 import boofcv.misc.BoofMiscOps;
-import boofcv.misc.FactoryFilterLambdas;
 import boofcv.struct.image.ImageBase;
 import boofcv.struct.image.ImageType;
 import org.ddogleg.struct.DogArray;
@@ -26,7 +25,10 @@ import java.util.List;
 public class ImageRecognitionUtils<T extends ImageBase<T>> {
 
     public static final String CONFIG_FILE_NAME = "config.yaml";
-    public static final String MODEL_FILE_NAME = "model";
+    //  where the trained model without any images is saved
+    public static final String MODEL_NAME = "model";
+    // Where the trained model with images in the database is saved
+    public static final String DB_NAME = "model_images";
 
     public File pathHome = new File(".");
 
@@ -54,8 +56,8 @@ public class ImageRecognitionUtils<T extends ImageBase<T>> {
         File directory = new File(pathHome, model.name);
 
         // If it already exists, don't regenerate it
-        if (!force && new File(directory, MODEL_FILE_NAME).exists()) {
-            out.println(MODEL_FILE_NAME + " exists already.");
+        if (!force && new File(directory, MODEL_NAME).exists()) {
+            out.println(MODEL_NAME + " exists already.");
             return true;
         }
 
@@ -82,24 +84,24 @@ public class ImageRecognitionUtils<T extends ImageBase<T>> {
         long time1 = System.currentTimeMillis();
         out.println("Elapsed time: " + (time1 - time0) * 1e-3 + " (s)");
 
-        RecognitionIO.saveNister2006(target, new File(directory, MODEL_FILE_NAME));
+        RecognitionIO.saveNister2006(target, new File(directory, MODEL_NAME));
         out.println("done");
         return true;
     }
 
-    public boolean addImagesToDataBase(String modelName, String benchmarkName, List<String> paths) {
+    public boolean addImagesToDataBase(String modelName, List<String> paths) {
         File directory = new File(pathHome, modelName);
 
         // If it already exists, don't regenerate it
-        if (!force && new File(directory, benchmarkName).exists()) {
-            out.println(benchmarkName + " exists already.");
+        if (!force && new File(directory, DB_NAME).exists()) {
+            out.println(DB_NAME + " exists already.");
             return true;
         }
 
         System.out.println("Loading DB");
         // Load the model without images
         ImageRecognitionNister2006<T, ?> database =
-                RecognitionIO.loadNister2006(new File(directory, MODEL_FILE_NAME), imageType);
+                RecognitionIO.loadNister2006(new File(directory, MODEL_NAME), imageType);
         System.out.println("Clearing DB");
 
         // Make sure there really are no images in it
@@ -142,22 +144,22 @@ public class ImageRecognitionUtils<T extends ImageBase<T>> {
         out.println("Elapsed time: " + (time1 - time0) * 1e-3 + " (s)");
 
         // Save the model with images
-        RecognitionIO.saveNister2006(database, new File(directory, benchmarkName));
+        RecognitionIO.saveNister2006(database, new File(directory, DB_NAME));
         out.println("Done! read_faults=" + imageReadFaults);
         return true;
     }
 
-    public boolean classify(String modelName, String benchmarkName, List<String> paths) {
+    public boolean classify(String modelName, List<String> paths) {
         File directory = new File(pathHome, modelName);
 
         // If it already exists, don't regenerate it
-        if (!force && new File(directory, benchmarkName + "_results.csv").exists()) {
-            out.println(benchmarkName + "_results.csv" + " exists already.");
+        if (!force && new File(directory, "results.csv").exists()) {
+            out.println(modelName + "_results.csv" + " exists already.");
             return true;
         }
 
         // Load the model without images
-        ImageRecognition<T> database = RecognitionIO.loadNister2006(new File(directory, benchmarkName), imageType);
+        ImageRecognition<T> database = RecognitionIO.loadNister2006(new File(directory, DB_NAME), imageType);
 
         ImageFileListIterator<T> iterator = new ImageFileListIterator<>(paths, imageType);
         imageReadFaults = 0;
@@ -168,7 +170,7 @@ public class ImageRecognitionUtils<T extends ImageBase<T>> {
 
         int index = 0;
         try {
-            PrintStream resultsOut = new PrintStream(new FileOutputStream(new File(directory, benchmarkName + "_results.csv")));
+            PrintStream resultsOut = new PrintStream(new FileOutputStream(new File(directory, "results.csv")));
             resultsOut.println("# BoofCV Image Retrieval Results");
             resultsOut.println("# BoofCV Version " + BoofVersion.VERSION + " GIT_SHA " + BoofVersion.GIT_SHA);
 
@@ -214,6 +216,14 @@ public class ImageRecognitionUtils<T extends ImageBase<T>> {
         }
         out.println("Done! read_faults=" + imageReadFaults);
         return true;
+    }
+
+    /** Free up some space and delete all the generated models but leave results behind */
+    public void deleteModels(String modelName) {
+        File directory = new File(pathHome, modelName);
+
+        UtilIO.deleteRecursive(new File(directory, MODEL_NAME));
+        UtilIO.deleteRecursive(new File(directory, DB_NAME));
     }
 
     public static class ModelInfo {

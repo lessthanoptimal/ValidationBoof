@@ -44,8 +44,8 @@ public class TuneImageRecognitionNister2006 {
         generator.setDiscretizationRule("tree.maximumLevel", ConfigGeneratorGrid.Discretization.INTEGER_VALUES);
 
         generator.initialize();
-        generator.getConfigBase().features.detectFastHessian.maxFeaturesAll = 500;
-        generator.getConfigBase().features.detectFastHessian.maxFeaturesPerScale = 0;
+        generator.getConfigurationBase().features.detectFastHessian.maxFeaturesAll = 500;
+        generator.getConfigurationBase().features.detectFastHessian.maxFeaturesPerScale = 0;
 
         // Evaluate on these two smaller datasets
         ImageRetrievalEvaluationData ukbench = datasetUkBench1000();
@@ -94,10 +94,10 @@ public class TuneImageRecognitionNister2006 {
             if (!utils.createAndSave(model, dataset.getTraining()))
                 return;
             System.out.println("Adding images...");
-            if (!utils.addImagesToDataBase(model.name, "images", dataset.getDataBase()))
+            if (!utils.addImagesToDataBase(model.name, dataset.getDataBase()))
                 return;
             System.out.println("Classifying images...");
-            if (!utils.classify(model.name, "images", dataset.getQuery()))
+            if (!utils.classify(model.name, dataset.getQuery()))
                 return;
 
             // Generic performance metrics and save to disk
@@ -105,7 +105,7 @@ public class TuneImageRecognitionNister2006 {
             ImageRetrievalEvaluateResults evaluate = new ImageRetrievalEvaluateResults();
             evaluate.outSummary = new PrintStream(new File(outputDir, trialDir + "/summary.txt"));
             evaluate.outDetailed = new PrintStream(new File(outputDir, trialDir + "/detailed.txt"));
-            if (!evaluate.evaluate("images", new File(outputDir, trialDir + "/images_results.csv"), dataset))
+            if (!evaluate.evaluate("images", new File(outputDir, trialDir + "/results.csv"), dataset))
                 return;
 
             long time1 = System.currentTimeMillis();
@@ -120,6 +120,9 @@ public class TuneImageRecognitionNister2006 {
 
             evaluate.outSummary.close();
             evaluate.outDetailed.close();
+
+            // Free up disk space
+            utils.deleteModels(model.name);
         }
     }
 

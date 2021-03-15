@@ -1,7 +1,6 @@
 package validation;
 
 import boofcv.alg.scene.nister2006.RecognitionVocabularyTreeNister2006;
-import boofcv.factory.feature.describe.ConfigConvertTupleDesc;
 import boofcv.io.MirrorStream;
 import boofcv.io.UtilIO;
 import boofcv.struct.image.GrayU8;
@@ -12,7 +11,9 @@ import javax.imageio.ImageReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintStream;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * @author Peter Abeles
@@ -99,9 +100,9 @@ public class GenerateResultsForIPOL2018 {
             List<String> everything = new ArrayList<>(ukbenchImages.size() + flickrImages.size());
             everything.addAll(ukbenchImages);
             everything.addAll(flickrImages);
-            utils.addImagesToDataBase(defaultModel.name, NAME, everything);
+            utils.addImagesToDataBase(defaultModel.name, everything);
             System.out.println("Classifying images...");
-            utils.classify(defaultModel.name, NAME, ukbenchImages);
+            utils.classify(defaultModel.name, ukbenchImages);
         } catch (RuntimeException e) {
             e.printStackTrace();
             e.printStackTrace(errorStream);
