@@ -1,7 +1,6 @@
 package validation;
 
 import boofcv.io.UtilIO;
-import boofcv.metrics.ImageFilesInFixedSets;
 import boofcv.metrics.ImageRetrievalEvaluateResults;
 import boofcv.metrics.ImageRetrievalEvaluationData;
 
@@ -39,7 +38,7 @@ public class EvaluateResultsForIPOL2018 {
 
     public static void main(String[] args) {
         System.out.println("args.length="+args.length);
-        String resultsFile = args.length > 0 ? args[0] : "IPOL2018_results.csv";
+        String resultsFile = args.length > 0 ? args[0] : "results.csv";
         System.out.println("input data path: "+resultsFile);
 
         ImageRetrievalEvaluateResults evaluate = new ImageRetrievalEvaluateResults();
