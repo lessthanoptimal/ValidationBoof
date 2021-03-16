@@ -32,6 +32,8 @@ public class TuneImageRecognitionNister2006 {
     String pathToData = "";
     @Option(name = "-o", aliases = {"--Output"}, usage = "Output directory where results should be saved to")
     String pathToResults = ".";
+    @Option(name = "--ConfigPath", usage = "Which config should it use as the baseline")
+    String pathToConfig = "";
 
     ConfigGeneratorGrid<ConfigImageRecognitionNister2006> generator;
 
@@ -44,14 +46,18 @@ public class TuneImageRecognitionNister2006 {
         generator.setDiscretizationRule("tree.maximumLevel", ConfigGeneratorGrid.Discretization.INTEGER_VALUES);
 
         generator.initialize();
-        generator.getConfigurationBase().features.detectFastHessian.maxFeaturesAll = 500;
-        generator.getConfigurationBase().features.detectFastHessian.maxFeaturesPerScale = 0;
+
+        // See if the user wants to override the default base config
+        if (!pathToConfig.isEmpty()) {
+            ConfigImageRecognitionNister2006 canonical = UtilIO.loadConfig(new File(pathToConfig));
+            generator.getConfigurationBase().setTo(canonical);
+        }
 
         // Evaluate on these two smaller datasets
         ImageRetrievalEvaluationData ukbench = datasetUkBench1000();
         ImageRetrievalEvaluationData inria = datasetInria();
 
-        File directoryBase = new File(pathToResults, "grid_tree");
+        File directoryBase = new File(pathToResults);
         BoofMiscOps.checkTrue(directoryBase.mkdirs());
         try {
             FileUtils.write(new File(directoryBase, "grid_settings.txt"), generator.toStringSettings(), StandardCharsets.UTF_8);
