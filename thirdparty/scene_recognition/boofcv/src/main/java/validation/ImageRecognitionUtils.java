@@ -196,7 +196,7 @@ public class ImageRecognitionUtils<T extends ImageBase<T>> {
                 }
 
                 if (!database.query(image, querySize, matches)) {
-                    err.println("Failed to retrieve. " + index);
+                    err.println("Failed to retrieve. index=" + index+" path="+iterator.getPaths().get(index));
                     continue;
                 }
 

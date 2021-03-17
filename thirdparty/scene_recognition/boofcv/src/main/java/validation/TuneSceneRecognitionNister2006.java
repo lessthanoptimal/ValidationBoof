@@ -21,19 +21,27 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.io.UncheckedIOException;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Tool for finding the optimal set of parameters.
+ *
  * @author Peter Abeles
  */
-public class TuneImageRecognitionNister2006 {
-
-    @Option(name = "-i", aliases = {"--Input"}, usage = "Input directory with all the input image datasets")
-    String pathToData = "";
+public class TuneSceneRecognitionNister2006 {
+    @Option(name = "-t", aliases = {"--Training"}, usage = "Path to training dataset")
+    String pathToTraining = "";
+    @Option(name = "-q", aliases = {"--Query"}, usage = "Path to query dataset. If blank, assumed to be query.")
+    String pathToQuery = "";
+    @Option(name = "-d", aliases = {"--Distract"}, usage = "Path to images to use as distractors. 'glob:' and 'regex:' allowed")
+    String pathToDistractors = "";
     @Option(name = "-o", aliases = {"--Output"}, usage = "Output directory where results should be saved to")
     String pathToResults = ".";
     @Option(name = "--ConfigPath", usage = "Which config should it use as the baseline")
     String pathToConfig = "";
+    @Option(name = "--QueryFormat", usage = "Specify if 'holidays' or 'ukbench' images are being querried")
+    String queryFormat = "holidays";
 
     ConfigGeneratorGrid<ConfigImageRecognitionNister2006> generator;
 
@@ -54,24 +62,19 @@ public class TuneImageRecognitionNister2006 {
         }
 
         // Evaluate on these two smaller datasets
-        ImageRetrievalEvaluationData ukbench = datasetUkBench1000();
-        ImageRetrievalEvaluationData inria = datasetInria();
+        ImageRetrievalEvaluationData dataset = createDataset();
 
         File directoryBase = new File(pathToResults);
-        BoofMiscOps.checkTrue(directoryBase.mkdirs());
+        BoofMiscOps.checkTrue(directoryBase.mkdirs(),"Output already exists: "+directoryBase.getAbsolutePath());
         try {
             FileUtils.write(new File(directoryBase, "grid_settings.txt"), generator.toStringSettings(), StandardCharsets.UTF_8);
-
-            File dirUkbench = new File(directoryBase, "ukbench1000");
-            File dirInria = new File(directoryBase, "inria");
 
             int digits = BoofMiscOps.numDigits(generator.getNumTrials());
             while (generator.hasNext()) {
                 ConfigImageRecognitionNister2006 config = generator.next();
                 System.out.println("Grid trial " + generator.getTrial());
 
-                evaluate(dirUkbench, String.format("%0" + digits + "d", generator.getTrial()), ukbench, config);
-                evaluate(dirInria, String.format("%0" + digits + "d", generator.getTrial()), inria, config);
+                evaluate(directoryBase, String.format("%0" + digits + "d", generator.getTrial()), dataset, config);
             }
         } catch (IOException e) {
             throw new UncheckedIOException(e);
@@ -132,73 +135,75 @@ public class TuneImageRecognitionNister2006 {
         }
     }
 
-
     /**
-     * First 1000 images from ukbench dataset.
-     * <p>
-     * TODO link to source
+     * Creates an evaluation dataset given the command line arguments
      */
-    private ImageRetrievalEvaluationData datasetUkBench1000() {
-        List<String> all = UtilIO.listSmart(
-                new File("glob:" + pathToData, "ukbench1000/ukbench*jpg").getPath(), true, (f) -> true);
+    private ImageRetrievalEvaluationData createDataset() {
+        List<String> training = UtilIO.listSmart(pathToTraining, true, (f) -> true);
+        BoofMiscOps.checkTrue(!training.isEmpty(), "Training is empty. Check path");
+        List<String> query;
+        if (pathToQuery.isEmpty())
+            query = training;
+        else
+            query = UtilIO.listSmart(pathToQuery, true, (f) -> true);
+        BoofMiscOps.checkTrue(!query.isEmpty(), "query is empty. Check path");
+        List<String> distractors = UtilIO.listSmart(pathToDistractors, true, (f) -> true);
+        List<String> all = new ArrayList<>(query.size() + distractors.size());
+        all.addAll(query);
+        all.addAll(distractors);
 
-        if (all.isEmpty())
-            throw new RuntimeException("ukbench1000 is empty. Is path correct?");
+        System.out.println("training.size=" + training.size());
+        System.out.println("query.size=" + query.size());
+        System.out.println("distractors.size=" + distractors.size());
 
-        // @formatter:off
-        return new ImageRetrievalEvaluationData() {
-            @Override public List<String> getTraining() {return all;}
-            @Override public List<String> getDataBase() {return getTraining();}
-            @Override public List<String> getQuery() {return getTraining();}
-            @Override public boolean isMatch(int query, int dataset) {return (query/4)==(dataset/4);}
-            @Override public int getTotalMatches(int query) {return 4;}
-        };
-        // @formatter:on
-    }
+        if (queryFormat.equalsIgnoreCase("ukbench")) {
+            // @formatter:off
+            return new ImageRetrievalEvaluationData() {
+                @Override public List<String> getTraining() {return training;}
+                @Override public List<String> getDataBase() {return all;}
+                @Override public List<String> getQuery() {return query;}
+                @Override public boolean isMatch(int query, int dataset) {return (query/4)==(dataset/4);}
+                @Override public int getTotalMatches(int query) {return 4;}
+            };
+            // @formatter:on
+        } else if (queryFormat.equalsIgnoreCase("holidays")) {
+            // Inria files indicate which images are related based on the file name, which is a number.
+            final int divisor = 100;
+            int lastNumber = Integer.parseInt(FilenameUtils.getBaseName(new File(query.get(query.size() - 1)).getName()));
+            int totalSets = lastNumber / divisor + 1;
 
-    /**
-     * The two INRIA datasets combined. Should be 813+680=1494 images
-     * <p>
-     * TODO link to source
-     */
-    private ImageRetrievalEvaluationData datasetInria() {
-        List<String> all = UtilIO.listSmart(
-                new File("glob:" + pathToData, "inria/*jpg").getPath(), true, (f) -> true);
+            // Number of matches each query has in the database
+            DogArray_I32 setCounts = new DogArray_I32();
+            setCounts.resize(totalSets);
 
-        if (all.isEmpty())
-            throw new RuntimeException("inria is empty. Is path correct?");
+            // precompute number of membership in each set
+            for (int i = 0; i < query.size(); i++) {
+                int number = Integer.parseInt(FilenameUtils.getBaseName(new File(query.get(i)).getName()));
+                setCounts.data[number / divisor]++;
+            }
 
-        // Inria files indicate which images are related based on the file name, which is a number.
-        final int divisor = 100;
-        int lastNumber = Integer.parseInt(FilenameUtils.getBaseName(new File(all.get(all.size() - 1)).getName()));
-        int totalSets = lastNumber / divisor + 1;
-
-        // Number of matches each query has in the database
-        DogArray_I32 setCounts = new DogArray_I32();
-        setCounts.resize(totalSets);
-
-        // precompute number of membership in each set
-        for (int i = 0; i < all.size(); i++) {
-            int number = Integer.parseInt(FilenameUtils.getBaseName(new File(all.get(i)).getName()));
-            setCounts.data[number / divisor]++;
+            // @formatter:off
+            return new ImageRetrievalEvaluationData() {
+                @Override public List<String> getTraining() {return training;}
+                @Override public List<String> getDataBase() {return all;}
+                @Override public List<String> getQuery() {return query;}
+                @Override public boolean isMatch(int queryID, int datasetID) {
+                    // query images are first in the list
+                    if (datasetID>=query.size())
+                        return false;
+                    int numberQuery = Integer.parseInt(FilenameUtils.getBaseName(new File(query.get(queryID)).getName()));
+                    int numberDataset = Integer.parseInt(FilenameUtils.getBaseName(new File(query.get(datasetID)).getName()));
+                    return numberQuery/divisor == numberDataset/divisor;
+                }
+                @Override public int getTotalMatches(int queryID) {
+                    int number = Integer.parseInt(FilenameUtils.getBaseName(new File(query.get(queryID)).getName()));
+                    return setCounts.get(number/divisor);
+                }
+            };
+            // @formatter:on
+        } else {
+            throw new IllegalArgumentException("Unknown query format: " + queryFormat);
         }
-
-        // @formatter:off
-        return new ImageRetrievalEvaluationData() {
-            @Override public List<String> getTraining() {return all;}
-            @Override public List<String> getDataBase() {return getTraining();}
-            @Override public List<String> getQuery() {return getTraining();}
-            @Override public boolean isMatch(int query, int dataset) {
-                int numberQuery = Integer.parseInt(FilenameUtils.getBaseName(new File(all.get(query)).getName()));
-                int numberDataset = Integer.parseInt(FilenameUtils.getBaseName(new File(all.get(dataset)).getName()));
-                return numberQuery/divisor == numberDataset/divisor;
-            }
-            @Override public int getTotalMatches(int query) {
-                int number = Integer.parseInt(FilenameUtils.getBaseName(new File(all.get(query)).getName()));
-                return setCounts.get(number/divisor);
-            }
-        };
-        // @formatter:on
     }
 
     private static void printHelpExit(CmdLineParser parser) {
@@ -209,7 +214,7 @@ public class TuneImageRecognitionNister2006 {
     }
 
     public static void main(String[] args) {
-        TuneImageRecognitionNister2006 generator = new TuneImageRecognitionNister2006();
+        TuneSceneRecognitionNister2006 generator = new TuneSceneRecognitionNister2006();
         CmdLineParser parser = new CmdLineParser(generator);
 
         if (args.length == 0) {
