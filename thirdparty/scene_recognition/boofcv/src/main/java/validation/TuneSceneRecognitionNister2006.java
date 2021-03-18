@@ -10,8 +10,6 @@ import boofcv.struct.ConfigGeneratorGrid;
 import boofcv.struct.image.GrayU8;
 import boofcv.struct.image.ImageType;
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.FilenameUtils;
-import org.ddogleg.struct.DogArray_I32;
 import org.kohsuke.args4j.CmdLineException;
 import org.kohsuke.args4j.CmdLineParser;
 import org.kohsuke.args4j.Option;
@@ -30,17 +28,19 @@ import java.util.List;
  * @author Peter Abeles
  */
 public class TuneSceneRecognitionNister2006 {
-    @Option(name = "-t", aliases = {"--Training"}, usage = "Path to training dataset")
+    @Option(name = "-t", aliases = {"--Training"}, usage = "Path to training dataset. 'glob:' and 'regex:' allowed")
     String pathToTraining = "";
-    @Option(name = "-q", aliases = {"--Query"}, usage = "Path to query dataset. If blank, assumed to be query.")
+    @Option(name = "-q", aliases = {"--Query"},
+            usage = "Path to query dataset. If blank, assumed to be training. 'glob:' and 'regex:' allowed")
     String pathToQuery = "";
-    @Option(name = "-d", aliases = {"--Distract"}, usage = "Path to images to use as distractors. 'glob:' and 'regex:' allowed")
+    @Option(name = "-d", aliases = {"--Distract"},
+            usage = "Path to images to use as distractors. 'glob:' and 'regex:' allowed")
     String pathToDistractors = "";
     @Option(name = "-o", aliases = {"--Output"}, usage = "Output directory where results should be saved to")
     String pathToResults = ".";
     @Option(name = "--ConfigPath", usage = "Which config should it use as the baseline")
     String pathToConfig = "";
-    @Option(name = "--QueryFormat", usage = "Specify if 'holidays' or 'ukbench' images are being querried")
+    @Option(name = "--QueryFormat", usage = "Specify if 'holidays' or 'ukbench' images are being queried")
     String queryFormat = "holidays";
 
     ConfigGeneratorGrid<ConfigSceneRecognitionNister2006> generator;
@@ -61,11 +61,17 @@ public class TuneSceneRecognitionNister2006 {
             generator.getConfigurationBase().setTo(canonical);
         }
 
+        // Forcing this to be zero to avoid biasing it towards trees with more depth
+        generator.getConfigurationBase().minimumDepthFromRoot = 0;
+        // This is intended to make queries with large number of images run MUCH faster but can degrade
+        // performance potentially. Without it the speed is untenable for a large study.
+        generator.getConfigurationBase().maximumQueryImagesInNode.setRelative(0.01, 10_000);
+
         // Evaluate on these two smaller datasets
         ImageRetrievalEvaluationData dataset = createDataset();
 
         File directoryBase = new File(pathToResults);
-        BoofMiscOps.checkTrue(directoryBase.mkdirs(),"Output already exists: "+directoryBase.getAbsolutePath());
+        BoofMiscOps.checkTrue(directoryBase.mkdirs(), "Output already exists: " + directoryBase.getAbsolutePath());
         try {
             FileUtils.write(new File(directoryBase, "grid_settings.txt"), generator.toStringSettings(), StandardCharsets.UTF_8);
 
@@ -155,61 +161,15 @@ public class TuneSceneRecognitionNister2006 {
         System.out.println("training.size=" + training.size());
         System.out.println("query.size=" + query.size());
         System.out.println("distractors.size=" + distractors.size());
+        // pause for a second so you can read these numbers
+        BoofMiscOps.sleep(1_000);
 
-        if (queryFormat.equalsIgnoreCase("ukbench")) {
-            // @formatter:off
-            return new ImageRetrievalEvaluationData() {
-                @Override public List<String> getTraining() {return training;}
-                @Override public List<String> getDataBase() {return all;}
-                @Override public List<String> getQuery() {return query;}
-                @Override public boolean isMatch(int query, int dataset) {return (query/4)==(dataset/4);}
-                @Override public int getTotalMatches(int query) {return 4;}
-            };
-            // @formatter:on
-        } else if (queryFormat.equalsIgnoreCase("holidays")) {
-            // Inria files indicate which images are related based on the file name, which is a number.
-            final int divisor = 100;
-            int lastNumber = Integer.parseInt(FilenameUtils.getBaseName(new File(query.get(query.size() - 1)).getName()));
-            int totalSets = lastNumber / divisor + 1;
-
-            // Number of matches each query has in the database
-            DogArray_I32 setCounts = new DogArray_I32();
-            setCounts.resize(totalSets);
-
-            // precompute number of membership in each set
-            for (int i = 0; i < query.size(); i++) {
-                int number = Integer.parseInt(FilenameUtils.getBaseName(new File(query.get(i)).getName()));
-                setCounts.data[number / divisor]++;
-            }
-
-            // @formatter:off
-            return new ImageRetrievalEvaluationData() {
-                @Override public List<String> getTraining() {return training;}
-                @Override public List<String> getDataBase() {return all;}
-                @Override public List<String> getQuery() {return query;}
-                @Override public boolean isMatch(int queryID, int datasetID) {
-                    // query images are first in the list
-                    if (datasetID>=query.size())
-                        return false;
-                    int numberQuery = Integer.parseInt(FilenameUtils.getBaseName(new File(query.get(queryID)).getName()));
-                    int numberDataset = Integer.parseInt(FilenameUtils.getBaseName(new File(query.get(datasetID)).getName()));
-                    return numberQuery/divisor == numberDataset/divisor;
-                }
-                @Override public int getTotalMatches(int queryID) {
-                    int number = Integer.parseInt(FilenameUtils.getBaseName(new File(query.get(queryID)).getName()));
-                    return setCounts.get(number/divisor);
-                }
-            };
-            // @formatter:on
-        } else {
-            throw new IllegalArgumentException("Unknown query format: " + queryFormat);
-        }
+        return SceneRecognitionUtils.evaluateByFormat(queryFormat, training, all, query);
     }
 
     private static void printHelpExit(CmdLineParser parser) {
         parser.getProperties().withUsageWidth(120);
         parser.printUsage(System.out);
-
         System.exit(1);
     }
 

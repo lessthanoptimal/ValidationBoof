@@ -3,7 +3,6 @@ package validation;
 import boofcv.io.MirrorStream;
 import boofcv.io.UtilIO;
 import boofcv.metrics.ImageRetrievalEvaluateResults;
-import boofcv.metrics.ImageRetrievalEvaluationData;
 import boofcv.misc.BoofMiscOps;
 import boofcv.struct.image.GrayU8;
 import boofcv.struct.image.ImageType;
@@ -19,24 +18,10 @@ import java.util.*;
  * @author Peter Abeles
  */
 public class GenerateResultsForIPOL2018 {
-    public static ImageRetrievalEvaluationData foo(List<String> all) {
-        return new ImageRetrievalEvaluationData() {
-            @Override public List<String> getTraining() {throw new RuntimeException("Bad");}
-            @Override public List<String> getDataBase() {throw new RuntimeException("Bad");}
-            @Override public List<String> getQuery() {return all;}
-            @Override public boolean isMatch(int query, int dataset) {
-                return (query/4)==(dataset/4);
-            }
-            @Override public int getTotalMatches(int query) {
-                return 4;
-            }
-        };
-    }
-
     public static void main(String[] args) throws FileNotFoundException {
-        System.out.println("args.length="+args.length);
+        System.out.println("args.length=" + args.length);
         String directoryData = args.length > 0 ? args[0] : "data";
-        System.out.println("input data path: "+directoryData);
+        System.out.println("input data path: " + directoryData);
 
         // Sanity check to make sure the JPEG issue is being handled
         Iterator<ImageReader> readers = ImageIO.getImageReadersByFormatName("JPEG");
@@ -44,18 +29,18 @@ public class GenerateResultsForIPOL2018 {
             System.out.println("JPEG formats: " + readers.next());
         }
         var defaultModel = new SceneRecognitionUtils.ModelInfo("default");
-        File resultsDir = new File("cbir_models/"+defaultModel.name);
+        File resultsDir = new File("cbir_models/" + defaultModel.name);
         if (resultsDir.exists()) {
-            System.out.println("Directory already exists. Will attempt to resume. "+resultsDir.getAbsolutePath());
+            System.out.println("Directory already exists. Will attempt to resume. " + resultsDir.getAbsolutePath());
         } else {
             BoofMiscOps.checkTrue(resultsDir.mkdirs());
         }
 
         // Create the logs
-        try (PrintStream outStream = new PrintStream(new File(resultsDir,"stdout_log.txt"));
-             PrintStream errorStream = new PrintStream(new File(resultsDir,"stderr_log.txt"));
-             PrintStream resultsSummary = new PrintStream(new File(resultsDir,"results_summary.txt"));
-             PrintStream resultsDetailed = new PrintStream(new File(resultsDir,"results_detailed.txt"))) {
+        try (PrintStream outStream = new PrintStream(new File(resultsDir, "stdout_log.txt"));
+             PrintStream errorStream = new PrintStream(new File(resultsDir, "stderr_log.txt"));
+             PrintStream resultsSummary = new PrintStream(new File(resultsDir, "results_summary.txt"));
+             PrintStream resultsDetailed = new PrintStream(new File(resultsDir, "results_detailed.txt"))) {
             try {
                 // Load file paths to all the images
                 List<String> ukbenchImages = UtilIO.listImages(new File(directoryData, "full").getPath(), true);
@@ -105,7 +90,8 @@ public class GenerateResultsForIPOL2018 {
                 evaluate.outSummary = new PrintStream(new MirrorStream(System.out, resultsSummary));
                 evaluate.outDetailed = resultsDetailed;
                 evaluate.evaluate(defaultModel.name,
-                        new File("cbir_models/" + defaultModel.name + "/results.csv"), foo(ukbenchImages));
+                        new File("cbir_models/" + defaultModel.name + "/results.csv"),
+                        SceneRecognitionUtils.evaluateUkbench(null, null, ukbenchImages));
             } catch (RuntimeException e) {
                 e.printStackTrace();
                 e.printStackTrace(errorStream);

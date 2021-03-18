@@ -3,67 +3,63 @@ package validation;
 import boofcv.io.UtilIO;
 import boofcv.metrics.ImageRetrievalEvaluateResults;
 import boofcv.metrics.ImageRetrievalEvaluationData;
-import org.apache.commons.io.FilenameUtils;
-import org.ddogleg.struct.DogArray_I32;
+import org.kohsuke.args4j.CmdLineException;
+import org.kohsuke.args4j.CmdLineParser;
+import org.kohsuke.args4j.Option;
 
 import java.io.File;
 import java.util.List;
 
 /**
+ * Commandline application for computing performance metrics from a results file
+ *
  * @author Peter Abeles
  */
 public class EvaluateResultsFile {
-    public static ImageRetrievalEvaluationData holidaysDONOTCOPYCODE(List<String> query) {
-        // Inria files indicate which images are related based on the file name, which is a number.
-        final int divisor = 100;
-        int lastNumber = Integer.parseInt(FilenameUtils.getBaseName(new File(query.get(query.size() - 1)).getName()));
-        int totalSets = lastNumber / divisor + 1;
+    @Option(name = "-q", aliases = {"--Query"}, usage = "Path to query dataset. Used to sanity check results.")
+    String pathToQuery = "";
 
-        // Number of matches each query has in the database
-        DogArray_I32 setCounts = new DogArray_I32();
-        setCounts.resize(totalSets);
+    @Option(name = "-r", aliases = {"--Results"}, usage = "Path to results file")
+    String pathToResults = ".";
 
-        // precompute number of membership in each set
-        for (int i = 0; i < query.size(); i++) {
-            int number = Integer.parseInt(FilenameUtils.getBaseName(new File(query.get(i)).getName()));
-            setCounts.data[number / divisor]++;
-        }
+    @Option(name = "--QueryFormat", usage = "Specify if 'holidays' or 'ukbench' images are being querried")
+    String queryFormat = "holidays";
 
-        // @formatter:off
-        return new ImageRetrievalEvaluationData() {
-            @Override public List<String> getTraining() {throw new IllegalArgumentException("Bad");}
-            @Override public List<String> getDataBase() {throw new IllegalArgumentException("Bad");}
-            @Override public List<String> getQuery() {return query;}
-            @Override public boolean isMatch(int queryID, int datasetID) {
-                // query images are first in the list
-                if (datasetID>=query.size())
-                    return false;
-                int numberQuery = Integer.parseInt(FilenameUtils.getBaseName(new File(query.get(queryID)).getName()));
-                int numberDataset = Integer.parseInt(FilenameUtils.getBaseName(new File(query.get(datasetID)).getName()));
-                return numberQuery/divisor == numberDataset/divisor;
-            }
-            @Override public int getTotalMatches(int queryID) {
-                int number = Integer.parseInt(FilenameUtils.getBaseName(new File(query.get(queryID)).getName()));
-                return setCounts.get(number/divisor);
-            }
-        };
-        // @formatter:on
-    }
-    public static void main(String[] args) {
-        System.out.println("args.length="+args.length);
-        String directoryData = args.length > 0 ? args[0] : "data";
-        System.out.println("input data path: "+directoryData);
 
-        List<String> queryList = UtilIO.listSmart(directoryData, true, (f) -> true);
+    public void evaluate() {
+        List<String> queryList = UtilIO.listSmart(pathToQuery, true, (f) -> true);
         if (queryList.isEmpty()) {
             System.err.println("No images found");
             System.exit(1);
         }
 
+        ImageRetrievalEvaluationData set = SceneRecognitionUtils.evaluateByFormat(queryFormat,null,null,queryList);
         ImageRetrievalEvaluateResults evaluate = new ImageRetrievalEvaluateResults();
-//        evaluate.err = utils.err;
-//        evaluate.outSummary = new PrintStream(new MirrorStream(System.out, resultsSummary));
-//        evaluate.outDetailed = resultsDetailed;
-        evaluate.evaluate("IPOL",new File("/home/pja/projects/ValidationBoof/thirdparty/scene_recognition/ipol/ipol_results.csv"), holidaysDONOTCOPYCODE(queryList));
+        evaluate.evaluate("HmmName", new File(pathToResults), set);
+    }
+
+    private static void printHelpExit(CmdLineParser parser) {
+        parser.getProperties().withUsageWidth(120);
+        parser.printUsage(System.out);
+
+        System.exit(1);
+    }
+
+    public static void main(String[] args) {
+        EvaluateResultsFile generator = new EvaluateResultsFile();
+        CmdLineParser parser = new CmdLineParser(generator);
+
+        if (args.length == 0) {
+            printHelpExit(parser);
+        }
+
+        try {
+            parser.parseArgument(args);
+            generator.evaluate();
+        } catch (CmdLineException e) {
+            // handling of wrong arguments
+            System.err.println(e.getMessage());
+            printHelpExit(parser);
+        }
     }
 }

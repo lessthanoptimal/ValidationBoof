@@ -7,10 +7,13 @@ import boofcv.abst.scene.nister2006.SceneRecognitionNister2006;
 import boofcv.io.UtilIO;
 import boofcv.io.image.ImageFileListIterator;
 import boofcv.io.recognition.RecognitionIO;
+import boofcv.metrics.ImageRetrievalEvaluationData;
 import boofcv.misc.BoofMiscOps;
 import boofcv.struct.image.ImageBase;
 import boofcv.struct.image.ImageType;
+import org.apache.commons.io.FilenameUtils;
 import org.ddogleg.struct.DogArray;
+import org.ddogleg.struct.DogArray_I32;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -64,12 +67,11 @@ public class SceneRecognitionUtils<T extends ImageBase<T>> {
         if (!directory.exists())
             BoofMiscOps.checkTrue(directory.mkdirs());
 
-        UtilIO.saveConfig(model.config, new File(directory, CONFIG_FILE_NAME));
+        // Save the config, but only the differences so that it's easy to see the changes
+        UtilIO.saveConfig(model.config, new ConfigSceneRecognitionNister2006(), new File(directory, CONFIG_FILE_NAME));
 
         SceneRecognitionNister2006<T, ?> target = new SceneRecognitionNister2006<>(model.config, imageType);
         target.setVerbose(System.out, null);
-
-        // TODO create a config for image preprocessing and save that to the directory too
 
         out.println("Learning " + model.name + " images.size=" + imagePaths.size());
         ImageFileListIterator<T> iterator = new ImageFileListIterator<>(imagePaths, imageType);
@@ -162,10 +164,8 @@ public class SceneRecognitionUtils<T extends ImageBase<T>> {
         System.out.print("  loading model ");
         long timeLoad0 = System.currentTimeMillis();
         SceneRecognition<T> database = RecognitionIO.loadNister2006(new File(directory, DB_NAME), imageType);
-        System.out.println((System.currentTimeMillis()-timeLoad0)/1000.0+" (s)");
+        System.out.println((System.currentTimeMillis() - timeLoad0) / 1000.0 + " (s)");
 //        ((SceneRecognitionNister2006<T,?>)database).getDatabaseN().setVerbose(System.out,null);
-        // This is intended to make queries with large number of images run MUCH faster. Might degrade results too.
-        ((SceneRecognitionNister2006<T,?>)database).getDatabaseN().maximumQueryImagesInNode.setFixed(10_000);
 
         ImageFileListIterator<T> iterator = new ImageFileListIterator<>(paths, imageType);
         imageReadFaults = 0;
@@ -196,7 +196,7 @@ public class SceneRecognitionUtils<T extends ImageBase<T>> {
                 }
 
                 if (!database.query(image, querySize, matches)) {
-                    err.println("Failed to retrieve. index=" + index+" path="+iterator.getPaths().get(index));
+                    err.println("Failed to retrieve. index=" + index + " path=" + iterator.getPaths().get(index));
                     continue;
                 }
 
@@ -224,7 +224,81 @@ public class SceneRecognitionUtils<T extends ImageBase<T>> {
         return true;
     }
 
-    /** Free up some space and delete all the generated models but leave results behind */
+    public static ImageRetrievalEvaluationData evaluateByFormat(String queryFormat,
+                                                                List<String> training,
+                                                                List<String> database,
+                                                                List<String> query) {
+        if (queryFormat.equalsIgnoreCase("ukbench")) {
+            return SceneRecognitionUtils.evaluateUkbench(training, database, query);
+        } else if (queryFormat.equalsIgnoreCase("holidays")) {
+            return SceneRecognitionUtils.evaluateHolidays(training, database, query);
+        } else {
+            throw new IllegalArgumentException("Unknown query format: " + queryFormat);
+        }
+    }
+
+    public static ImageRetrievalEvaluationData evaluateUkbench(List<String> training,
+                                                               List<String> database,
+                                                               List<String> query) {
+        // @formatter:off
+        return new ImageRetrievalEvaluationData() {
+            @Override public List<String> getTraining() {return training;}
+            @Override public List<String> getDataBase() {return database;}
+            @Override public List<String> getQuery() {return query;}
+            @Override public boolean isMatch(int query, int dataset) {
+                return (query/4)==(dataset/4);
+            }
+            @Override public int getTotalMatches(int query) {
+                return 4;
+            }
+        };
+        // @formatter:on
+    }
+
+    public static ImageRetrievalEvaluationData evaluateHolidays(List<String> training,
+                                                                List<String> database,
+                                                                List<String> query) {
+        // Inria files indicate which images are related based on the file name, which is a number.
+        final int divisor = 100;
+        int lastNumber = Integer.parseInt(FilenameUtils.getBaseName(new File(query.get(query.size() - 1)).getName()));
+        int totalSets = lastNumber / divisor + 1;
+
+        // Number of matches each query has in the database
+        DogArray_I32 setCounts = new DogArray_I32();
+        setCounts.resize(totalSets);
+
+        // precompute number of membership in each set
+        for (int i = 0; i < query.size(); i++) {
+            int number = Integer.parseInt(FilenameUtils.getBaseName(new File(query.get(i)).getName()));
+            setCounts.data[number / divisor]++;
+        }
+
+        // @formatter:off
+        return new ImageRetrievalEvaluationData() {
+            @Override public List<String> getTraining() {return training;}
+            @Override public List<String> getDataBase() {return database;}
+            @Override public List<String> getQuery() {return query;}
+            @Override public boolean isMatch(int queryID, int datasetID) {
+                // query images are first in the list
+                if (datasetID>=query.size())
+                    return false;
+                int numberQuery = Integer.parseInt(FilenameUtils.getBaseName(new File(query.get(queryID)).getName()));
+                int numberDataset = Integer.parseInt(FilenameUtils.getBaseName(new File(query.get(datasetID)).getName()));
+                return numberQuery/divisor == numberDataset/divisor;
+            }
+            @Override public int getTotalMatches(int queryID) {
+                if (queryID>=query.size())
+                    return 0;
+                int number = Integer.parseInt(FilenameUtils.getBaseName(new File(query.get(queryID)).getName()));
+                return setCounts.get(number/divisor);
+            }
+        };
+        // @formatter:on
+    }
+
+    /**
+     * Free up some space and delete all the generated models but leave results behind
+     */
     public void deleteModels(String modelName) {
         File directory = new File(pathHome, modelName);
 
