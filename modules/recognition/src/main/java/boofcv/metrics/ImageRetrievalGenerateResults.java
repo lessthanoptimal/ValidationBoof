@@ -1,7 +1,7 @@
 package boofcv.metrics;
 
 import boofcv.BoofVersion;
-import boofcv.abst.scene.ImageRecognition;
+import boofcv.abst.scene.SceneRecognition;
 import boofcv.io.image.ImageFileListIterator;
 import boofcv.misc.BoofMiscOps;
 import boofcv.struct.image.ImageBase;
@@ -42,7 +42,7 @@ public class ImageRetrievalGenerateResults<T extends ImageBase<T>> {
         this.imageType = imageType;
     }
 
-    public void process(ImageRecognition<T> target, ImageRetrievalEvaluationData sets, File outputFile) {
+    public void process(SceneRecognition<T> target, ImageRetrievalEvaluationData sets, File outputFile) {
         // reset metrics
         totalExceptions = 0;
         timeTrainingMS = 0;
@@ -78,7 +78,7 @@ public class ImageRetrievalGenerateResults<T extends ImageBase<T>> {
 
         // Look up images
         timeLookUpMS = 0;
-        DogArray<ImageRecognition.Match> matches = new DogArray<>(ImageRecognition.Match::new);
+        DogArray<SceneRecognition.Match> matches = new DogArray<>(SceneRecognition.Match::new);
         List<String> query = sets.getQuery();
         ImageFileListIterator<T> iterator = new ImageFileListIterator<>(query, imageType);
 

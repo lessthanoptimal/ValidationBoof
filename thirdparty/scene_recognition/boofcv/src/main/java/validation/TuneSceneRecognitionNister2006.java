@@ -1,6 +1,6 @@
 package validation;
 
-import boofcv.abst.scene.nister2006.ConfigImageRecognitionNister2006;
+import boofcv.abst.scene.nister2006.ConfigSceneRecognitionNister2006;
 import boofcv.io.MirrorStream;
 import boofcv.io.UtilIO;
 import boofcv.metrics.ImageRetrievalEvaluateResults;
@@ -43,10 +43,10 @@ public class TuneSceneRecognitionNister2006 {
     @Option(name = "--QueryFormat", usage = "Specify if 'holidays' or 'ukbench' images are being querried")
     String queryFormat = "holidays";
 
-    ConfigGeneratorGrid<ConfigImageRecognitionNister2006> generator;
+    ConfigGeneratorGrid<ConfigSceneRecognitionNister2006> generator;
 
     public void searchGridTreeParams() {
-        generator = new ConfigGeneratorGrid<>(0xDEADBEEF, ConfigImageRecognitionNister2006.class);
+        generator = new ConfigGeneratorGrid<>(0xDEADBEEF, ConfigSceneRecognitionNister2006.class);
 
         generator.rangeOfIntegers("tree.branchFactor", 8, 32);
         generator.rangeOfIntegers("tree.maximumLevel", 2, 7);
@@ -57,7 +57,7 @@ public class TuneSceneRecognitionNister2006 {
 
         // See if the user wants to override the default base config
         if (!pathToConfig.isEmpty()) {
-            ConfigImageRecognitionNister2006 canonical = UtilIO.loadConfig(new File(pathToConfig));
+            ConfigSceneRecognitionNister2006 canonical = UtilIO.loadConfig(new File(pathToConfig));
             generator.getConfigurationBase().setTo(canonical);
         }
 
@@ -71,7 +71,7 @@ public class TuneSceneRecognitionNister2006 {
 
             int digits = BoofMiscOps.numDigits(generator.getNumTrials());
             while (generator.hasNext()) {
-                ConfigImageRecognitionNister2006 config = generator.next();
+                ConfigSceneRecognitionNister2006 config = generator.next();
                 System.out.println("Grid trial " + generator.getTrial());
 
                 evaluate(directoryBase, String.format("%0" + digits + "d", generator.getTrial()), dataset, config);
@@ -83,18 +83,18 @@ public class TuneSceneRecognitionNister2006 {
 
     private void evaluate(File outputDir, String trialDir,
                           ImageRetrievalEvaluationData dataset,
-                          ConfigImageRecognitionNister2006 config) throws IOException {
+                          ConfigSceneRecognitionNister2006 config) throws IOException {
         BoofMiscOps.checkTrue(new File(outputDir, trialDir).mkdirs());
 
         // Save grid parameter values
         FileUtils.write(new File(outputDir, trialDir + "/grid_state.txt"), generator.toStringState(), StandardCharsets.UTF_8);
 
-        ImageRecognitionUtils.ModelInfo model = new ImageRecognitionUtils.ModelInfo(trialDir, config);
+        SceneRecognitionUtils.ModelInfo model = new SceneRecognitionUtils.ModelInfo(trialDir, config);
 
         try (PrintStream printErr = new PrintStream(new File(outputDir, trialDir + "/log_stderr.txt"));
              PrintStream printOut = new PrintStream(new File(outputDir, trialDir + "/log_stdout.txt"))) {
             long time0 = System.currentTimeMillis();
-            ImageRecognitionUtils<GrayU8> utils = new ImageRecognitionUtils<>(ImageType.SB_U8);
+            SceneRecognitionUtils<GrayU8> utils = new SceneRecognitionUtils<>(ImageType.SB_U8);
             utils.pathHome = outputDir;
             utils.err = new PrintStream(new MirrorStream(System.err, printErr));
             utils.out = new PrintStream(new MirrorStream(System.out, printOut));

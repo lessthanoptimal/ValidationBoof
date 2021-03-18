@@ -1,9 +1,9 @@
 package validation;
 
 import boofcv.BoofVersion;
-import boofcv.abst.scene.ImageRecognition;
-import boofcv.abst.scene.nister2006.ConfigImageRecognitionNister2006;
-import boofcv.abst.scene.nister2006.ImageRecognitionNister2006;
+import boofcv.abst.scene.SceneRecognition;
+import boofcv.abst.scene.nister2006.ConfigSceneRecognitionNister2006;
+import boofcv.abst.scene.nister2006.SceneRecognitionNister2006;
 import boofcv.io.UtilIO;
 import boofcv.io.image.ImageFileListIterator;
 import boofcv.io.recognition.RecognitionIO;
@@ -22,7 +22,7 @@ import java.util.List;
 /**
  * @author Peter Abeles
  */
-public class ImageRecognitionUtils<T extends ImageBase<T>> {
+public class SceneRecognitionUtils<T extends ImageBase<T>> {
 
     public static final String CONFIG_FILE_NAME = "config.yaml";
     //  where the trained model without any images is saved
@@ -45,7 +45,7 @@ public class ImageRecognitionUtils<T extends ImageBase<T>> {
     public long imageReadFaults;
 
 
-    public ImageRecognitionUtils(ImageType<T> imageType) {
+    public SceneRecognitionUtils(ImageType<T> imageType) {
         this.imageType = imageType;
     }
 
@@ -66,7 +66,7 @@ public class ImageRecognitionUtils<T extends ImageBase<T>> {
 
         UtilIO.saveConfig(model.config, new File(directory, CONFIG_FILE_NAME));
 
-        ImageRecognitionNister2006<T, ?> target = new ImageRecognitionNister2006<>(model.config, imageType);
+        SceneRecognitionNister2006<T, ?> target = new SceneRecognitionNister2006<>(model.config, imageType);
         target.setVerbose(System.out, null);
 
         // TODO create a config for image preprocessing and save that to the directory too
@@ -100,7 +100,7 @@ public class ImageRecognitionUtils<T extends ImageBase<T>> {
 
         System.out.println("Loading DB");
         // Load the model without images
-        ImageRecognitionNister2006<T, ?> database =
+        SceneRecognitionNister2006<T, ?> database =
                 RecognitionIO.loadNister2006(new File(directory, MODEL_NAME), imageType);
         System.out.println("Clearing DB");
 
@@ -161,11 +161,11 @@ public class ImageRecognitionUtils<T extends ImageBase<T>> {
         // Load the model without images
         System.out.print("  loading model ");
         long timeLoad0 = System.currentTimeMillis();
-        ImageRecognition<T> database = RecognitionIO.loadNister2006(new File(directory, DB_NAME), imageType);
+        SceneRecognition<T> database = RecognitionIO.loadNister2006(new File(directory, DB_NAME), imageType);
         System.out.println((System.currentTimeMillis()-timeLoad0)/1000.0+" (s)");
-//        ((ImageRecognitionNister2006<T,?>)database).getDatabaseN().setVerbose(System.out,null);
+//        ((SceneRecognitionNister2006<T,?>)database).getDatabaseN().setVerbose(System.out,null);
         // This is intended to make queries with large number of images run MUCH faster. Might degrade results too.
-        ((ImageRecognitionNister2006<T,?>)database).getDatabaseN().maximumQueryImagesInNode.setFixed(10_000);
+        ((SceneRecognitionNister2006<T,?>)database).getDatabaseN().maximumQueryImagesInNode.setFixed(10_000);
 
         ImageFileListIterator<T> iterator = new ImageFileListIterator<>(paths, imageType);
         imageReadFaults = 0;
@@ -182,7 +182,7 @@ public class ImageRecognitionUtils<T extends ImageBase<T>> {
 
             long time0 = System.currentTimeMillis();
             long timePrev = System.currentTimeMillis();
-            DogArray<ImageRecognition.Match> matches = new DogArray<>(ImageRecognition.Match::new);
+            DogArray<SceneRecognition.Match> matches = new DogArray<>(SceneRecognition.Match::new);
             while (iterator.hasNext()) {
                 T image = iterator.next();
                 index = iterator.getIndex();
@@ -234,13 +234,13 @@ public class ImageRecognitionUtils<T extends ImageBase<T>> {
 
     public static class ModelInfo {
         public final String name;
-        public final ConfigImageRecognitionNister2006 config = new ConfigImageRecognitionNister2006();
+        public final ConfigSceneRecognitionNister2006 config = new ConfigSceneRecognitionNister2006();
 
         public ModelInfo(String name) {
             this.name = name;
         }
 
-        public ModelInfo(String name, ConfigImageRecognitionNister2006 config) {
+        public ModelInfo(String name, ConfigSceneRecognitionNister2006 config) {
             this.name = name;
             this.config.setTo(config);
         }

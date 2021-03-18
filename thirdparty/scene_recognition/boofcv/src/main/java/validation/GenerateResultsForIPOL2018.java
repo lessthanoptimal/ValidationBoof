@@ -43,7 +43,7 @@ public class GenerateResultsForIPOL2018 {
         while (readers.hasNext()) {
             System.out.println("JPEG formats: " + readers.next());
         }
-        var defaultModel = new ImageRecognitionUtils.ModelInfo("default");
+        var defaultModel = new SceneRecognitionUtils.ModelInfo("default");
         File resultsDir = new File("cbir_models/"+defaultModel.name);
         if (resultsDir.exists()) {
             System.out.println("Directory already exists. Will attempt to resume. "+resultsDir.getAbsolutePath());
@@ -82,7 +82,7 @@ public class GenerateResultsForIPOL2018 {
 
                 System.out.println("flicker.size=" + flickrImages.size());
 
-                ImageRecognitionUtils<GrayU8> utils = new ImageRecognitionUtils<>(ImageType.SB_U8);
+                SceneRecognitionUtils<GrayU8> utils = new SceneRecognitionUtils<>(ImageType.SB_U8);
                 utils.pathHome = new File("cbir_models");
 
                 // Save to the logs and print to standard outputs

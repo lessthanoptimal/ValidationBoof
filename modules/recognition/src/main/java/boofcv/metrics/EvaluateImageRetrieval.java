@@ -1,8 +1,8 @@
 package boofcv.metrics;
 
-import boofcv.abst.scene.ImageRecognition;
-import boofcv.abst.scene.nister2006.ConfigImageRecognitionNister2006;
-import boofcv.abst.scene.nister2006.ImageRecognitionNister2006;
+import boofcv.abst.scene.SceneRecognition;
+import boofcv.abst.scene.nister2006.ConfigSceneRecognitionNister2006;
+import boofcv.abst.scene.nister2006.SceneRecognitionNister2006;
 import boofcv.alg.scene.nister2006.RecognitionVocabularyTreeNister2006;
 import boofcv.factory.feature.describe.ConfigConvertTupleDesc;
 import boofcv.misc.BoofMiscOps;
@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Runs implementations of {@link ImageRecognition} through various benchmarks and prints out the results.
+ * Runs implementations of {@link SceneRecognition} through various benchmarks and prints out the results.
  *
  * @author Peter Abeles
  **/
@@ -50,7 +50,7 @@ public class EvaluateImageRetrieval<T extends ImageBase<T>> {
         results.printSummaryHeader();
     }
 
-    public void evaluate(ImageRecognition<T> target) {
+    public void evaluate(SceneRecognition<T> target) {
         // Crate working directory if it doesn't exist
         if (!workingDirectory.exists())
             BoofMiscOps.checkTrue(workingDirectory.mkdirs());
@@ -107,7 +107,7 @@ public class EvaluateImageRetrieval<T extends ImageBase<T>> {
         evaluator.outRuntime = new PrintStream("cbir_runtime.txt");
         evaluator.outAccuracy = new PrintStream("cbir_accuracy.txt");
 
-        ConfigImageRecognitionNister2006 config = new ConfigImageRecognitionNister2006();
+        ConfigSceneRecognitionNister2006 config = new ConfigSceneRecognitionNister2006();
 //        config.features.typeDescribe = ConfigDescribeRegionPoint.DescriptorType.SIFT;
 //        config.features.typeDetector = ConfigDetectInterestPoint.DetectorType.SIFT;
         config.features.convertDescriptor.outputData = ConfigConvertTupleDesc.DataType.F32;
@@ -116,6 +116,6 @@ public class EvaluateImageRetrieval<T extends ImageBase<T>> {
         config.distanceNorm = RecognitionVocabularyTreeNister2006.DistanceTypes.L2;
 
         evaluator.printHeaders();
-        evaluator.evaluate(new ImageRecognitionNister2006<>(config, ImageType.SB_U8));
+        evaluator.evaluate(new SceneRecognitionNister2006<>(config, ImageType.SB_U8));
     }
 }
