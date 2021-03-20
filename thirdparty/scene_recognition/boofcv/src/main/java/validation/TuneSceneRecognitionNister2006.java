@@ -1,12 +1,16 @@
 package validation;
 
 import boofcv.abst.scene.nister2006.ConfigSceneRecognitionNister2006;
+import boofcv.factory.feature.describe.ConfigDescribeRegionPoint;
+import boofcv.factory.feature.detect.interest.ConfigDetectInterestPoint;
 import boofcv.io.MirrorStream;
 import boofcv.io.UtilIO;
 import boofcv.metrics.ImageRetrievalEvaluateResults;
 import boofcv.metrics.ImageRetrievalEvaluationData;
 import boofcv.misc.BoofMiscOps;
+import boofcv.struct.ConfigGenerator;
 import boofcv.struct.ConfigGeneratorGrid;
+import boofcv.struct.ConfigGeneratorRandom;
 import boofcv.struct.image.GrayU8;
 import boofcv.struct.image.ImageType;
 import org.apache.commons.io.FileUtils;
@@ -23,7 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Tool for finding the optimal set of parameters.
+ * Tool for finding the optimal set of parameters for Nister2006.
  *
  * @author Peter Abeles
  */
@@ -44,11 +48,13 @@ public class TuneSceneRecognitionNister2006 {
     String queryFormat = "holidays";
     @Option(name = "--TrainingFraction", usage = "Use a fraction of the 'training' dataset to train")
     double trainingFraction = 1.0;
-
-    ConfigGeneratorGrid<ConfigSceneRecognitionNister2006> generator;
+    @Option(name = "--Trials", usage = "Number of random trials to perform, if applicable")
+    int numRandomTrials = 400;
+    @Option(name = "--Task", usage = "Which task should it run. TREE_STRUCTURE, SURF, SIFT")
+    String taskName = Task.TREE_STRUCTURE.name();
 
     public void searchGridTreeParams() {
-        generator = new ConfigGeneratorGrid<>(0xDEADBEEF, ConfigSceneRecognitionNister2006.class);
+        var generator = new ConfigGeneratorGrid<>(0xDEADBEEF, ConfigSceneRecognitionNister2006.class);
 
         generator.rangeOfIntegers("tree.branchFactor", 8, 32);
         generator.rangeOfIntegers("tree.maximumLevel", 2, 7);
@@ -69,34 +75,115 @@ public class TuneSceneRecognitionNister2006 {
         // performance potentially. Without it the speed is untenable for a large study.
         generator.getConfigurationBase().queryMaximumImagesInNode.setRelative(0.01, 10_000);
 
+        performParameterSearch(generator);
+    }
+
+    private void performParameterSearch(ConfigGenerator<ConfigSceneRecognitionNister2006> generator) {
         // Evaluate on these two smaller datasets
         ImageRetrievalEvaluationData dataset = createDataset();
 
         File directoryBase = new File(pathToResults);
         BoofMiscOps.checkTrue(directoryBase.mkdirs(), "Output already exists: " + directoryBase.getAbsolutePath());
         try {
-            FileUtils.write(new File(directoryBase, "grid_settings.txt"), generator.toStringSettings(), StandardCharsets.UTF_8);
+            FileUtils.write(new File(directoryBase, "tuning_settings.txt"), generator.toStringSettings(), StandardCharsets.UTF_8);
+            FileUtils.write(new File(directoryBase, "application_arguments.txt"), argumentsToString(), StandardCharsets.UTF_8);
 
             int digits = BoofMiscOps.numDigits(generator.getNumTrials());
             while (generator.hasNext()) {
                 ConfigSceneRecognitionNister2006 config = generator.next();
                 System.out.println("Grid trial " + generator.getTrial());
 
-                evaluate(directoryBase, String.format("%0" + digits + "d", generator.getTrial()), dataset, config);
+                String trialDir = String.format("%0" + digits + "d", generator.getTrial());
+                BoofMiscOps.checkTrue(new File(directoryBase, trialDir).mkdirs());
+                FileUtils.write(new File(directoryBase, trialDir + "/grid_state.txt"), generator.toStringState(), StandardCharsets.UTF_8);
+
+                evaluate(directoryBase, trialDir, dataset, config);
             }
         } catch (IOException e) {
             throw new UncheckedIOException(e);
         }
     }
 
+    public void searchMinimumDepth() {
+        var generator = new ConfigGeneratorGrid<>(0xDEADBEEF, ConfigSceneRecognitionNister2006.class);
+
+        // This really should be a dynamic distribution based on maximumLevel
+        generator.rangeOfIntegers("minimumDepthFromRoot", 0, 4);
+
+        generator.initialize();
+
+        // See if the user wants to override the default base config
+        if (!pathToConfig.isEmpty()) {
+            ConfigSceneRecognitionNister2006 canonical = UtilIO.loadConfig(new File(pathToConfig));
+            generator.getConfigurationBase().setTo(canonical);
+        }
+
+        // This is intended to make queries with large number of images run MUCH faster but can degrade
+        // performance potentially. Without it the speed is untenable for a large study.
+        generator.getConfigurationBase().queryMaximumImagesInNode.setRelative(0.01, 10_000);
+
+        performParameterSearch(generator);
+    }
+
+    public void searchSurfParams() {
+        var generator = new ConfigGeneratorRandom<>(numRandomTrials, 0xDEADBEEF, ConfigSceneRecognitionNister2006.class);
+        generator.rangeOfIntegers("features.detectFastHessian.maxFeaturesPerScale", 100, 2000);
+        generator.rangeOfFloats("features.detectFastHessian.extract.threshold", 0.0, 100.0);
+        generator.rangeOfIntegers("features.detectFastHessian.extract.radius", 1, 15);
+        generator.rangeOfIntegers("features.detectFastHessian.numberOfOctaves", 1, 6);
+
+        generator.initialize();
+
+        // See if the user wants to override the default base config
+        if (!pathToConfig.isEmpty()) {
+            ConfigSceneRecognitionNister2006 canonical = UtilIO.loadConfig(new File(pathToConfig));
+            generator.getConfigurationBase().setTo(canonical);
+        }
+
+        // make sure it's configured for SURF
+        generator.getConfigurationBase().features.typeDescribe = ConfigDescribeRegionPoint.DescriptorType.SURF_STABLE;
+        generator.getConfigurationBase().features.typeDetector = ConfigDetectInterestPoint.DetectorType.FAST_HESSIAN;
+        // Forcing this to be zero to avoid biasing it towards trees with more depth
+        generator.getConfigurationBase().minimumDepthFromRoot = 0;
+        // This is intended to make queries with large number of images run MUCH faster but can degrade
+        // performance potentially. Without it the speed is untenable for a large study.
+        generator.getConfigurationBase().queryMaximumImagesInNode.setRelative(0.01, 10_000);
+
+        performParameterSearch(generator);
+    }
+
+    public void searchSiftParams() {
+        var generator = new ConfigGeneratorRandom<>(numRandomTrials, 0xDEADBEEF, ConfigSceneRecognitionNister2006.class);
+        generator.rangeOfIntegers("features.detectSift.maxFeaturesPerScale", 100, 2000);
+        generator.rangeOfFloats("features.detectSift.extract.threshold", 0.0, 20.0);
+        generator.rangeOfFloats("features.detectSift.extract.edgeR", 2.0, 20.0);
+        generator.rangeOfIntegers("features.detectSift.extract.radius", 1, 15);
+        generator.rangeOfFloats("features.scaleSpaceSift.sigma0", 0.5, 10.0);
+        generator.rangeOfIntegers("features.scaleSpaceSift.lastOctave", 1, 7);
+
+        generator.initialize();
+
+        // See if the user wants to override the default base config
+        if (!pathToConfig.isEmpty()) {
+            ConfigSceneRecognitionNister2006 canonical = UtilIO.loadConfig(new File(pathToConfig));
+            generator.getConfigurationBase().setTo(canonical);
+        }
+
+        // make sure it's configured for SIFT
+        generator.getConfigurationBase().features.typeDescribe = ConfigDescribeRegionPoint.DescriptorType.SIFT;
+        generator.getConfigurationBase().features.typeDetector = ConfigDetectInterestPoint.DetectorType.SIFT;
+        // Forcing this to be zero to avoid biasing it towards trees with more depth
+        generator.getConfigurationBase().minimumDepthFromRoot = 0;
+        // This is intended to make queries with large number of images run MUCH faster but can degrade
+        // performance potentially. Without it the speed is untenable for a large study.
+        generator.getConfigurationBase().queryMaximumImagesInNode.setRelative(0.01, 10_000);
+
+        performParameterSearch(generator);
+    }
+
     private void evaluate(File outputDir, String trialDir,
                           ImageRetrievalEvaluationData dataset,
                           ConfigSceneRecognitionNister2006 config) throws IOException {
-        BoofMiscOps.checkTrue(new File(outputDir, trialDir).mkdirs());
-
-        // Save grid parameter values
-        FileUtils.write(new File(outputDir, trialDir + "/grid_state.txt"), generator.toStringState(), StandardCharsets.UTF_8);
-
         SceneRecognitionUtils.ModelInfo model = new SceneRecognitionUtils.ModelInfo(trialDir, config);
 
         try (PrintStream printErr = new PrintStream(new File(outputDir, trialDir + "/log_stderr.txt"));
@@ -110,12 +197,15 @@ public class TuneSceneRecognitionNister2006 {
             System.out.println("Creating model...");
             if (!utils.createAndSave(model, dataset.getTraining()))
                 return;
+            long elapsedTraining = utils.elapsedTimeMS;
             System.out.println("Adding images...");
             if (!utils.addImagesToDataBase(model.name, dataset.getDataBase()))
                 return;
+            long elapsedDB = utils.elapsedTimeMS;
             System.out.println("Classifying images...");
             if (!utils.classify(model.name, dataset.getQuery()))
                 return;
+            long elapsedClassifying = utils.elapsedTimeMS;
 
             // Generic performance metrics and save to disk
             System.out.println("Evaluating classifications...");
@@ -130,10 +220,14 @@ public class TuneSceneRecognitionNister2006 {
             // Make a very easy to read file with a single number that can be used to compare results
             FileUtils.write(new File(outputDir, trialDir + "/score.txt"), "" + evaluate.score, StandardCharsets.UTF_8);
 
-            // Save how long it took to process and the start/stoptime
-            FileUtils.write(new File(outputDir, trialDir + "/elapsed_time.txt"),
+            // Save how long it took to process and the start/stop time
+            FileUtils.write(new File(outputDir, trialDir + "/time.txt"),
                     "" + (time1 - time0) + " (ms) " + BoofMiscOps.milliToHuman(time1 - time0) + "\n" +
-                            BoofMiscOps.timeStr(time0) + "\n" + BoofMiscOps.timeStr(time1) + "\n", StandardCharsets.UTF_8);
+                            BoofMiscOps.timeStr(time0) + "\n" + BoofMiscOps.timeStr(time1) + "\n" +
+                            String.format("training %.1f (s)\n", elapsedTraining * 1e-3) +
+                            String.format("database %.1f (s)\n", elapsedDB * 1e-3) +
+                            String.format("classifying %.1f (s)\n", elapsedClassifying * 1e-3)
+                    , StandardCharsets.UTF_8);
 
             evaluate.outSummary.close();
             evaluate.outDetailed.close();
@@ -158,7 +252,7 @@ public class TuneSceneRecognitionNister2006 {
 
         // Prune some of the training dataset, if requested
         if (trainingFraction < 1.0) {
-            training = training.subList(0, (int)(trainingFraction*training.size()));
+            training = training.subList(0, (int) (trainingFraction * training.size()));
         }
 
         List<String> distractors = UtilIO.listSmart(pathToDistractors, true, (f) -> true);
@@ -173,6 +267,30 @@ public class TuneSceneRecognitionNister2006 {
         BoofMiscOps.sleep(10_000);
 
         return SceneRecognitionUtils.evaluateByFormat(queryFormat, training, all, query);
+    }
+
+    private String argumentsToString() {
+        String text = "";
+        text += "pathToTraining,"+pathToTraining+"\n";
+        text += "pathToQuery,"+pathToQuery+"\n";
+        text += "pathToDistractors,"+pathToDistractors+"\n";
+        text += "pathToResults,"+pathToResults+"\n";
+        text += "pathToConfig,"+pathToConfig+"\n";
+        text += "queryFormat,"+queryFormat+"\n";
+        text += "trainingFraction,"+trainingFraction+"\n";
+        text += "numRandomTrials,"+numRandomTrials+"\n";
+        text += "taskName,"+taskName+"\n";
+        return text;
+    }
+
+    /**
+     * Tune which parameters
+     */
+    enum Task {
+        TREE_STRUCTURE,
+        MINIMUM_DEPTH,
+        SURF,
+        SIFT,
     }
 
     private static void printHelpExit(CmdLineParser parser) {
@@ -191,7 +309,27 @@ public class TuneSceneRecognitionNister2006 {
 
         try {
             parser.parseArgument(args);
-            generator.searchGridTreeParams();
+
+            // Fuzzy logic for selecting the task
+            Task task = null;
+            double bestScore = 0;
+            for (Task t : Task.values()) {
+                double score = BoofMiscOps.similarity(t.name(), generator.taskName);
+                if (score > bestScore) {
+                    bestScore = score;
+                    task = t;
+                }
+            }
+            if (task == null)
+                throw new RuntimeException("No task selected?");
+            System.out.println("Task: "+task);
+            switch (task) {
+                case TREE_STRUCTURE: generator.searchGridTreeParams(); break;
+                case SURF: generator.searchSurfParams(); break;
+                case SIFT: generator.searchSiftParams(); break;
+                case MINIMUM_DEPTH: generator.searchMinimumDepth(); break;
+                default: throw new RuntimeException("Not yet implemented. " + task);
+            }
         } catch (CmdLineException e) {
             // handling of wrong arguments
             System.err.println(e.getMessage());

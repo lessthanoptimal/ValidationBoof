@@ -47,6 +47,8 @@ public class SceneRecognitionUtils<T extends ImageBase<T>> {
     // number of times an exception happened while reading images
     public long imageReadFaults;
 
+    // How long the operation tool in milliseconds
+    public long elapsedTimeMS;
 
     public SceneRecognitionUtils(ImageType<T> imageType) {
         this.imageType = imageType;
@@ -56,6 +58,7 @@ public class SceneRecognitionUtils<T extends ImageBase<T>> {
      * Creates a new model and saves it to disk
      */
     public boolean createAndSave(ModelInfo model, List<String> imagePaths) {
+        elapsedTimeMS = 0;
         File directory = new File(pathHome, model.name);
 
         // If it already exists, don't regenerate it
@@ -84,7 +87,8 @@ public class SceneRecognitionUtils<T extends ImageBase<T>> {
             return false;
         }
         long time1 = System.currentTimeMillis();
-        out.println("Elapsed time: " + (time1 - time0) * 1e-3 + " (s)");
+        elapsedTimeMS = time1-time0;
+        out.println("Elapsed time: " + elapsedTimeMS* 1e-3 + " (s)");
 
         RecognitionIO.saveNister2006(target, new File(directory, MODEL_NAME));
         out.println("done");
@@ -143,7 +147,8 @@ public class SceneRecognitionUtils<T extends ImageBase<T>> {
             return false;
         }
         long time1 = System.currentTimeMillis();
-        out.println("Elapsed time: " + (time1 - time0) * 1e-3 + " (s)");
+        elapsedTimeMS = time1-time0;
+        out.println("Elapsed time: " + elapsedTimeMS * 1e-3 + " (s)");
 
         // Save the model with images
         RecognitionIO.saveNister2006(database, new File(directory, DB_NAME));
@@ -152,6 +157,7 @@ public class SceneRecognitionUtils<T extends ImageBase<T>> {
     }
 
     public boolean classify(String modelName, List<String> paths) {
+        elapsedTimeMS = 0;
         File directory = new File(pathHome, modelName);
 
         // If it already exists, don't regenerate it
@@ -213,8 +219,9 @@ public class SceneRecognitionUtils<T extends ImageBase<T>> {
                 resultsOut.println();
             }
             long time1 = System.currentTimeMillis();
+            elapsedTimeMS = time1-time0;
             resultsOut.close();
-            out.println("Elapsed time: " + (time1 - time0) * 1e-3 + " (s)");
+            out.println("Elapsed time: " + elapsedTimeMS* 1e-3 + " (s)");
         } catch (Exception e) {
             e.printStackTrace(err);
             err.println("Failed on index=" + index + " path=" + paths.get(index));
