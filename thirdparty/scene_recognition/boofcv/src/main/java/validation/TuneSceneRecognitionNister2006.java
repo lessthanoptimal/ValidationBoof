@@ -50,7 +50,7 @@ public class TuneSceneRecognitionNister2006 {
     double trainingFraction = 1.0;
     @Option(name = "--Trials", usage = "Number of random trials to perform, if applicable")
     int numRandomTrials = 400;
-    @Option(name = "--Task", usage = "Which task should it run. TREE_STRUCTURE, SURF, SIFT")
+    @Option(name = "--Task", usage = "Which task should it run. TREE_STRUCTURE, SURF, SIFT, MINIMUM_DEPTH")
     String taskName = Task.TREE_STRUCTURE.name();
 
     public void searchGridTreeParams() {
@@ -75,10 +75,10 @@ public class TuneSceneRecognitionNister2006 {
         // performance potentially. Without it the speed is untenable for a large study.
         generator.getConfigurationBase().queryMaximumImagesInNode.setRelative(0.01, 10_000);
 
-        performParameterSearch(generator);
+        performParameterSearch(generator, false);
     }
 
-    private void performParameterSearch(ConfigGenerator<ConfigSceneRecognitionNister2006> generator) {
+    private void performParameterSearch(ConfigGenerator<ConfigSceneRecognitionNister2006> generator, boolean runBaseConfig) {
         // Evaluate on these two smaller datasets
         ImageRetrievalEvaluationData dataset = createDataset();
 
@@ -88,6 +88,14 @@ public class TuneSceneRecognitionNister2006 {
             FileUtils.write(new File(directoryBase, "tuning_settings.txt"), generator.toStringSettings(), StandardCharsets.UTF_8);
             FileUtils.write(new File(directoryBase, "application_arguments.txt"), argumentsToString(), StandardCharsets.UTF_8);
 
+            // If requested, run the base config first so we can see if things are actually better
+            if (runBaseConfig) {
+                String trialDir = "base";
+                BoofMiscOps.checkTrue(new File(directoryBase, trialDir).mkdirs());
+                evaluate(directoryBase, trialDir, dataset, generator.getConfigurationBase());
+            }
+
+            // Go through all the generated configurations and save the results
             int digits = BoofMiscOps.numDigits(generator.getNumTrials());
             while (generator.hasNext()) {
                 ConfigSceneRecognitionNister2006 config = generator.next();
@@ -95,7 +103,7 @@ public class TuneSceneRecognitionNister2006 {
 
                 String trialDir = String.format("%0" + digits + "d", generator.getTrial());
                 BoofMiscOps.checkTrue(new File(directoryBase, trialDir).mkdirs());
-                FileUtils.write(new File(directoryBase, trialDir + "/grid_state.txt"), generator.toStringState(), StandardCharsets.UTF_8);
+                FileUtils.write(new File(directoryBase, trialDir + "/generator_state.txt"), generator.toStringState(), StandardCharsets.UTF_8);
 
                 evaluate(directoryBase, trialDir, dataset, config);
             }
@@ -122,7 +130,7 @@ public class TuneSceneRecognitionNister2006 {
         // performance potentially. Without it the speed is untenable for a large study.
         generator.getConfigurationBase().queryMaximumImagesInNode.setRelative(0.01, 10_000);
 
-        performParameterSearch(generator);
+        performParameterSearch(generator, false);
     }
 
     public void searchSurfParams() {
@@ -149,7 +157,7 @@ public class TuneSceneRecognitionNister2006 {
         // performance potentially. Without it the speed is untenable for a large study.
         generator.getConfigurationBase().queryMaximumImagesInNode.setRelative(0.01, 10_000);
 
-        performParameterSearch(generator);
+        performParameterSearch(generator, true);
     }
 
     public void searchSiftParams() {
@@ -178,7 +186,7 @@ public class TuneSceneRecognitionNister2006 {
         // performance potentially. Without it the speed is untenable for a large study.
         generator.getConfigurationBase().queryMaximumImagesInNode.setRelative(0.01, 10_000);
 
-        performParameterSearch(generator);
+        performParameterSearch(generator, true);
     }
 
     private void evaluate(File outputDir, String trialDir,
