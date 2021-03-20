@@ -42,6 +42,8 @@ public class TuneSceneRecognitionNister2006 {
     String pathToConfig = "";
     @Option(name = "--QueryFormat", usage = "Specify if 'holidays' or 'ukbench' images are being queried")
     String queryFormat = "holidays";
+    @Option(name = "--TrainingFraction", usage = "Use a fraction of the 'training' dataset to train")
+    double trainingFraction = 1.0;
 
     ConfigGeneratorGrid<ConfigSceneRecognitionNister2006> generator;
 
@@ -65,7 +67,7 @@ public class TuneSceneRecognitionNister2006 {
         generator.getConfigurationBase().minimumDepthFromRoot = 0;
         // This is intended to make queries with large number of images run MUCH faster but can degrade
         // performance potentially. Without it the speed is untenable for a large study.
-        generator.getConfigurationBase().maximumQueryImagesInNode.setRelative(0.01, 10_000);
+        generator.getConfigurationBase().queryMaximumImagesInNode.setRelative(0.01, 10_000);
 
         // Evaluate on these two smaller datasets
         ImageRetrievalEvaluationData dataset = createDataset();
@@ -153,6 +155,12 @@ public class TuneSceneRecognitionNister2006 {
         else
             query = UtilIO.listSmart(pathToQuery, true, (f) -> true);
         BoofMiscOps.checkTrue(!query.isEmpty(), "query is empty. Check path");
+
+        // Prune some of the training dataset, if requested
+        if (trainingFraction < 1.0) {
+            training = training.subList(0, (int)(trainingFraction*training.size()));
+        }
+
         List<String> distractors = UtilIO.listSmart(pathToDistractors, true, (f) -> true);
         List<String> all = new ArrayList<>(query.size() + distractors.size());
         all.addAll(query);
@@ -162,7 +170,7 @@ public class TuneSceneRecognitionNister2006 {
         System.out.println("query.size=" + query.size());
         System.out.println("distractors.size=" + distractors.size());
         // pause for a second so you can read these numbers
-        BoofMiscOps.sleep(1_000);
+        BoofMiscOps.sleep(10_000);
 
         return SceneRecognitionUtils.evaluateByFormat(queryFormat, training, all, query);
     }
