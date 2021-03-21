@@ -231,7 +231,7 @@ public class TuneSceneRecognitionNister2006 {
             long time1 = System.currentTimeMillis();
 
             // Make a very easy to read file with a single number that can be used to compare results
-            FileUtils.write(new File(outputDir, trialDir + "/score.txt"), "" + evaluate.score, StandardCharsets.UTF_8);
+            FileUtils.write(new File(outputDir, trialDir + "/score.txt"), "" + evaluate.score + "\n", StandardCharsets.UTF_8);
 
             // Save how long it took to process and the start/stop time
             FileUtils.write(new File(outputDir, trialDir + "/time.txt"),
