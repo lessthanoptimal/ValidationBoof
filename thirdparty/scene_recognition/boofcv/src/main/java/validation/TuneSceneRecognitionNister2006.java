@@ -202,24 +202,29 @@ public class TuneSceneRecognitionNister2006 {
             utils.err = new PrintStream(new MirrorStream(System.err, printErr));
             utils.out = new PrintStream(new MirrorStream(System.out, printOut));
 
-            System.out.println("Creating model...");
+            utils.out.println("training.size="+dataset.getTraining().size());
+            utils.out.println("database.size="+dataset.getDataBase().size());
+            utils.out.println("query.size="+dataset.getQuery().size());
+            utils.out.println();
+            utils.out.println("Creating model...");
             if (!utils.createAndSave(model, dataset.getTraining()))
                 return;
             long elapsedTraining = utils.elapsedTimeMS;
-            System.out.println("Adding images...");
+            utils.out.println("Adding images...");
             if (!utils.addImagesToDataBase(model.name, dataset.getDataBase()))
                 return;
             long elapsedDB = utils.elapsedTimeMS;
-            System.out.println("Classifying images...");
+            utils.out.println("Classifying images...");
             if (!utils.classify(model.name, dataset.getQuery()))
                 return;
             long elapsedClassifying = utils.elapsedTimeMS;
 
             // Generic performance metrics and save to disk
-            System.out.println("Evaluating classifications...");
+            utils.out.println("Evaluating classifications...");
             ImageRetrievalEvaluateResults evaluate = new ImageRetrievalEvaluateResults();
             evaluate.outSummary = new PrintStream(new File(outputDir, trialDir + "/summary.txt"));
             evaluate.outDetailed = new PrintStream(new File(outputDir, trialDir + "/detailed.txt"));
+            evaluate.printSummaryHeader();
             if (!evaluate.evaluate("images", new File(outputDir, trialDir + "/results.csv"), dataset))
                 return;
 

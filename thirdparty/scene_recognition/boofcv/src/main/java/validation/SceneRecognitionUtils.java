@@ -201,10 +201,9 @@ public class SceneRecognitionUtils<T extends ImageBase<T>> {
                     out.printf("Classifying %d / %d elapsed %.1f (s) %s\n", index, paths.size(), elapsed, time);
                 }
 
-                if (!database.query(image, querySize, matches)) {
-                    err.println("Failed to retrieve. index=" + index + " path=" + iterator.getPaths().get(index));
-                    continue;
-                }
+                // Look up the image and intentionally ignore the return value since we want to log all results
+                // even if it finds nothing
+                database.query(image, querySize, matches);
 
                 // Save the file name and index. This information is redundant but can act as a sanity check
                 resultsOut.print(iterator.getIndex() + "," + paths.get(iterator.getIndex()));
