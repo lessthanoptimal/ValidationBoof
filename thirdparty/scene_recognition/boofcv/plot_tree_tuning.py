@@ -8,7 +8,6 @@ from os.path import join
 
 # Set up the path and make sure it knows which directory it's in
 project_home = os.path.dirname(os.path.realpath(__file__))
-os.chdir(project_home)
 sys.path.append(os.path.join(project_home, "../../../scripts"))
 
 from validationboof import *
@@ -71,7 +70,7 @@ if options.tree_grid_path:
 
     # Read in what parameters were searched in this grid search
     grid_settings = {}
-    with open(join(options.tree_grid_path, "grid_settings.txt"), 'r') as file:
+    with open(join(options.tree_grid_path, "tuning_settings.txt"), 'r') as file:
         lines = file.read().splitlines()
         for line in lines:
             if 'range-integers' not in line:
@@ -92,7 +91,7 @@ if options.tree_grid_path:
             score = float(file.read().replace('\n', ''))
 
         parameters = {}
-        with open(join(d, "grid_state.txt"), 'r') as file:
+        with open(join(d, "generator_state.txt"), 'r') as file:
             lines = file.read().splitlines()
             for line in lines:
                 words = line.split(',')
