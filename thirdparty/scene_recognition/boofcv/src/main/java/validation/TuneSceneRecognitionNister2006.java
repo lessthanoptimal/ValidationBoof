@@ -164,7 +164,7 @@ public class TuneSceneRecognitionNister2006 {
         var generator = new ConfigGeneratorRandom<>(numRandomTrials, 0xDEADBEEF, ConfigSceneRecognitionNister2006.class);
         generator.rangeOfIntegers("features.detectSift.maxFeaturesPerScale", 100, 2000);
         generator.rangeOfFloats("features.detectSift.extract.threshold", 0.0, 20.0);
-        generator.rangeOfFloats("features.detectSift.extract.edgeR", 2.0, 20.0);
+        generator.rangeOfFloats("features.detectSift.edgeR", 2.0, 20.0);
         generator.rangeOfIntegers("features.detectSift.extract.radius", 1, 15);
         generator.rangeOfFloats("features.scaleSpaceSift.sigma0", 0.5, 10.0);
         generator.rangeOfIntegers("features.scaleSpaceSift.lastOctave", 1, 7);
