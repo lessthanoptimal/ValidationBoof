@@ -162,12 +162,13 @@ public class TuneSceneRecognitionNister2006 {
 
     public void searchSiftParams() {
         var generator = new ConfigGeneratorRandom<>(numRandomTrials, 0xDEADBEEF, ConfigFeatureToSceneRecognition.class);
-        generator.rangeOfIntegers("features.detectSift.maxFeaturesPerScale", 100, 2000);
-        generator.rangeOfFloats("features.detectSift.extract.threshold", 0.0, 20.0);
-        generator.rangeOfFloats("features.detectSift.edgeR", 2.0, 20.0);
-        generator.rangeOfIntegers("features.detectSift.extract.radius", 1, 15);
-        generator.rangeOfFloats("features.scaleSpaceSift.sigma0", 0.5, 10.0);
-        generator.rangeOfIntegers("features.scaleSpaceSift.lastOctave", 1, 7);
+        generator.rangeOfIntegers("features.detectSift.maxFeaturesPerScale", 200, 2000);
+        generator.rangeOfFloats("features.detectSift.extract.threshold", 0.0, 2.0);
+//        generator.rangeOfFloats("features.detectSift.edgeR", 2.0, 20.0);
+        generator.rangeOfIntegers("features.detectSift.extract.radius", 1, 10);
+        generator.rangeOfFloats("features.scaleSpaceSift.sigma0", 1.0, 5.0);
+        generator.rangeOfIntegers("features.scaleSpaceSift.lastOctave", 2, 7);
+        generator.rangeOfFloats("features.describeSift.sigmaToPixels", 0.25, 2.5);
 
         generator.initialize();
 
