@@ -139,7 +139,7 @@ public class TuneSceneRecognitionNister2006 {
         generator.rangeOfFloats("features.detectFastHessian.extract.threshold", 0.0, 2.0);
         generator.rangeOfIntegers("features.detectFastHessian.extract.radius", 1, 10);
         generator.rangeOfIntegers("features.detectFastHessian.numberOfOctaves", 1, 6);
-        generator.rangeOfIntegers("features.describeSurfStability.widthSample", 1, 6);
+        generator.rangeOfFloats("features.describeSurfStability.widthSample", 1, 6);
 
         generator.initialize();
 
@@ -165,11 +165,11 @@ public class TuneSceneRecognitionNister2006 {
         var generator = new ConfigGeneratorRandom<>(numRandomTrials, 0xDEADBEEF, ConfigFeatureToSceneRecognition.class);
         generator.rangeOfIntegers("features.detectSift.maxFeaturesPerScale", 200, 2000);
         generator.rangeOfFloats("features.detectSift.extract.threshold", 0.0, 2.0);
-//        generator.rangeOfFloats("features.detectSift.edgeR", 2.0, 20.0);
+//        generator.rangeOfFloats("features.detectSift.edgeR", 2.0, 20.0); Made little difference
         generator.rangeOfIntegers("features.detectSift.extract.radius", 1, 10);
-        generator.rangeOfFloats("features.scaleSpaceSift.sigma0", 1.0, 5.0);
+        generator.rangeOfFloats("features.scaleSpaceSift.sigma0", 0.5, 5.0);
         generator.rangeOfIntegers("features.scaleSpaceSift.lastOctave", 2, 7);
-        generator.rangeOfFloats("features.describeSift.sigmaToPixels", 0.25, 2.5);
+        generator.rangeOfFloats("features.describeSift.sigmaToPixels", 0.25, 5.0);
 
         generator.initialize();
 
