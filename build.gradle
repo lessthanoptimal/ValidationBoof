@@ -44,7 +44,7 @@ allprojects{
         api files("$project.rootDir/lib/ProjectBUBO.jar")
 
         ['boofcv-core','boofcv-io','boofcv-swing','boofcv-ffmpeg','boofcv-simulation','boofcv-kotlin',
-         'boofcv-recognition', 'boofcv-reconstruction', 'demonstrations'].each
+         'boofcv-recognition', 'boofcv-reconstruction', 'demonstrations','boofcv-learning'].each
                 { String a -> api group: 'org.boofcv', name: a, version: version }
         api group: 'com.google.guava', name: 'guava', version: '17.0'
         api group: 'commons-io', name: 'commons-io', version: '2.6'

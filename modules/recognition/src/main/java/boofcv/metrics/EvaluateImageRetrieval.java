@@ -1,10 +1,10 @@
 package boofcv.metrics;
 
+import boofcv.abst.scene.ConfigFeatureToSceneRecognition;
 import boofcv.abst.scene.SceneRecognition;
-import boofcv.abst.scene.nister2006.ConfigSceneRecognitionNister2006;
-import boofcv.abst.scene.nister2006.SceneRecognitionNister2006;
 import boofcv.alg.scene.nister2006.RecognitionVocabularyTreeNister2006;
 import boofcv.factory.feature.describe.ConfigConvertTupleDesc;
+import boofcv.factory.scene.FactorySceneRecognition;
 import boofcv.misc.BoofMiscOps;
 import boofcv.struct.image.GrayU8;
 import boofcv.struct.image.ImageBase;
@@ -107,15 +107,15 @@ public class EvaluateImageRetrieval<T extends ImageBase<T>> {
         evaluator.outRuntime = new PrintStream("cbir_runtime.txt");
         evaluator.outAccuracy = new PrintStream("cbir_accuracy.txt");
 
-        ConfigSceneRecognitionNister2006 config = new ConfigSceneRecognitionNister2006();
+        ConfigFeatureToSceneRecognition config = new ConfigFeatureToSceneRecognition();
 //        config.features.typeDescribe = ConfigDescribeRegionPoint.DescriptorType.SIFT;
 //        config.features.typeDetector = ConfigDetectInterestPoint.DetectorType.SIFT;
         config.features.convertDescriptor.outputData = ConfigConvertTupleDesc.DataType.F32;
         config.features.detectFastHessian.maxFeaturesAll = 2000;
         config.features.detectFastHessian.extract.radius = 4;
-        config.distanceNorm = RecognitionVocabularyTreeNister2006.DistanceTypes.L2;
+        config.recognizeNister2006.distanceNorm = RecognitionVocabularyTreeNister2006.DistanceTypes.L2;
 
         evaluator.printHeaders();
-        evaluator.evaluate(new SceneRecognitionNister2006<>(config, ImageType.SB_U8));
+        evaluator.evaluate(FactorySceneRecognition.createFeatureToScene(config, ImageType.SB_U8));
     }
 }

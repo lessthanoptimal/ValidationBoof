@@ -1,9 +1,10 @@
 package validation;
 
 import boofcv.BoofVersion;
+import boofcv.abst.scene.ConfigFeatureToSceneRecognition;
 import boofcv.abst.scene.SceneRecognition;
-import boofcv.abst.scene.nister2006.ConfigSceneRecognitionNister2006;
-import boofcv.abst.scene.nister2006.SceneRecognitionNister2006;
+import boofcv.abst.scene.WrapFeatureToSceneRecognition;
+import boofcv.factory.scene.FactorySceneRecognition;
 import boofcv.io.UtilIO;
 import boofcv.io.image.ImageFileListIterator;
 import boofcv.io.recognition.RecognitionIO;
@@ -71,9 +72,9 @@ public class SceneRecognitionUtils<T extends ImageBase<T>> {
             BoofMiscOps.checkTrue(directory.mkdirs());
 
         // Save the config, but only the differences so that it's easy to see the changes
-        UtilIO.saveConfig(model.config, new ConfigSceneRecognitionNister2006(), new File(directory, CONFIG_FILE_NAME));
+        UtilIO.saveConfig(model.config, new ConfigFeatureToSceneRecognition(), new File(directory, CONFIG_FILE_NAME));
 
-        SceneRecognitionNister2006<T, ?> target = new SceneRecognitionNister2006<>(model.config, imageType);
+        WrapFeatureToSceneRecognition<T,?> target = FactorySceneRecognition.createFeatureToScene(model.config, imageType);
         target.setVerbose(System.out, null);
 
         out.println("Learning " + model.name + " images.size=" + imagePaths.size());
@@ -90,7 +91,7 @@ public class SceneRecognitionUtils<T extends ImageBase<T>> {
         elapsedTimeMS = time1-time0;
         out.println("Elapsed time: " + elapsedTimeMS* 1e-3 + " (s)");
 
-        RecognitionIO.saveNister2006(target, new File(directory, MODEL_NAME));
+        RecognitionIO.saveFeatureToScene(target, new File(directory, MODEL_NAME));
         out.println("done");
         return true;
     }
@@ -106,8 +107,8 @@ public class SceneRecognitionUtils<T extends ImageBase<T>> {
 
         System.out.println("Loading DB");
         // Load the model without images
-        SceneRecognitionNister2006<T, ?> database =
-                RecognitionIO.loadNister2006(new File(directory, MODEL_NAME), imageType);
+        WrapFeatureToSceneRecognition<T, ?> database =
+                RecognitionIO.loadFeatureToScene(new File(directory, MODEL_NAME), imageType);
         System.out.println("Clearing DB");
 
         // Make sure there really are no images in it
@@ -151,7 +152,7 @@ public class SceneRecognitionUtils<T extends ImageBase<T>> {
         out.println("Elapsed time: " + elapsedTimeMS * 1e-3 + " (s)");
 
         // Save the model with images
-        RecognitionIO.saveNister2006(database, new File(directory, DB_NAME));
+        RecognitionIO.saveFeatureToScene(database, new File(directory, DB_NAME));
         out.println("Done! read_faults=" + imageReadFaults);
         return true;
     }
@@ -169,7 +170,7 @@ public class SceneRecognitionUtils<T extends ImageBase<T>> {
         // Load the model without images
         System.out.print("  loading model ");
         long timeLoad0 = System.currentTimeMillis();
-        SceneRecognition<T> database = RecognitionIO.loadNister2006(new File(directory, DB_NAME), imageType);
+        SceneRecognition<T> database = RecognitionIO.loadFeatureToScene(new File(directory, DB_NAME), imageType);
         System.out.println((System.currentTimeMillis() - timeLoad0) / 1000.0 + " (s)");
 //        ((SceneRecognitionNister2006<T,?>)database).getDatabaseN().setVerbose(System.out,null);
 
@@ -314,13 +315,13 @@ public class SceneRecognitionUtils<T extends ImageBase<T>> {
 
     public static class ModelInfo {
         public final String name;
-        public final ConfigSceneRecognitionNister2006 config = new ConfigSceneRecognitionNister2006();
+        public final ConfigFeatureToSceneRecognition config = new ConfigFeatureToSceneRecognition();
 
         public ModelInfo(String name) {
             this.name = name;
         }
 
-        public ModelInfo(String name, ConfigSceneRecognitionNister2006 config) {
+        public ModelInfo(String name, ConfigFeatureToSceneRecognition config) {
             this.name = name;
             this.config.setTo(config);
         }

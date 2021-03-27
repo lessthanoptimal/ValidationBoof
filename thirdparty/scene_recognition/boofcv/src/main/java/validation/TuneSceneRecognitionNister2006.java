@@ -1,6 +1,6 @@
 package validation;
 
-import boofcv.abst.scene.nister2006.ConfigSceneRecognitionNister2006;
+import boofcv.abst.scene.ConfigFeatureToSceneRecognition;
 import boofcv.factory.feature.describe.ConfigDescribeRegionPoint;
 import boofcv.factory.feature.detect.interest.ConfigDetectInterestPoint;
 import boofcv.io.MirrorStream;
@@ -54,31 +54,31 @@ public class TuneSceneRecognitionNister2006 {
     String taskName = Task.TREE_STRUCTURE.name();
 
     public void searchGridTreeParams() {
-        var generator = new ConfigGeneratorGrid<>(0xDEADBEEF, ConfigSceneRecognitionNister2006.class);
+        var generator = new ConfigGeneratorGrid<>(0xDEADBEEF, ConfigFeatureToSceneRecognition.class);
 
-        generator.rangeOfIntegers("tree.branchFactor", 8, 32);
-        generator.rangeOfIntegers("tree.maximumLevel", 2, 7);
-        generator.setDiscretizationRule("tree.branchFactor", ConfigGeneratorGrid.Discretization.INTEGER_VALUES);
-        generator.setDiscretizationRule("tree.maximumLevel", ConfigGeneratorGrid.Discretization.INTEGER_VALUES);
+        generator.rangeOfIntegers("recognizeNister2006.tree.branchFactor", 8, 32);
+        generator.rangeOfIntegers("recognizeNister2006.tree.maximumLevel", 2, 7);
+        generator.setDiscretizationRule("recognizeNister2006.tree.branchFactor", ConfigGeneratorGrid.Discretization.INTEGER_VALUES);
+        generator.setDiscretizationRule("recognizeNister2006.tree.maximumLevel", ConfigGeneratorGrid.Discretization.INTEGER_VALUES);
 
         generator.initialize();
 
         // See if the user wants to override the default base config
         if (!pathToConfig.isEmpty()) {
-            ConfigSceneRecognitionNister2006 canonical = UtilIO.loadConfig(new File(pathToConfig));
+            ConfigFeatureToSceneRecognition canonical = UtilIO.loadConfig(new File(pathToConfig));
             generator.getConfigurationBase().setTo(canonical);
         }
 
         // Forcing this to be zero to avoid biasing it towards trees with more depth
-        generator.getConfigurationBase().minimumDepthFromRoot = 0;
+        generator.getConfigurationBase().recognizeNister2006.minimumDepthFromRoot = 0;
         // This is intended to make queries with large number of images run MUCH faster but can degrade
         // performance potentially. Without it the speed is untenable for a large study.
-        generator.getConfigurationBase().queryMaximumImagesInNode.setRelative(0.01, 10_000);
+        generator.getConfigurationBase().recognizeNister2006.queryMaximumImagesInNode.setRelative(0.01, 10_000);
 
         performParameterSearch(generator, false);
     }
 
-    private void performParameterSearch(ConfigGenerator<ConfigSceneRecognitionNister2006> generator, boolean runBaseConfig) {
+    private void performParameterSearch(ConfigGenerator<ConfigFeatureToSceneRecognition> generator, boolean runBaseConfig) {
         // Evaluate on these two smaller datasets
         ImageRetrievalEvaluationData dataset = createDataset();
 
@@ -98,7 +98,7 @@ public class TuneSceneRecognitionNister2006 {
             // Go through all the generated configurations and save the results
             int digits = BoofMiscOps.numDigits(generator.getNumTrials());
             while (generator.hasNext()) {
-                ConfigSceneRecognitionNister2006 config = generator.next();
+                ConfigFeatureToSceneRecognition config = generator.next();
                 System.out.println("Grid trial " + generator.getTrial());
 
                 String trialDir = String.format("%0" + digits + "d", generator.getTrial());
@@ -113,7 +113,7 @@ public class TuneSceneRecognitionNister2006 {
     }
 
     public void searchMinimumDepth() {
-        var generator = new ConfigGeneratorGrid<>(0xDEADBEEF, ConfigSceneRecognitionNister2006.class);
+        var generator = new ConfigGeneratorGrid<>(0xDEADBEEF, ConfigFeatureToSceneRecognition.class);
 
         // This really should be a dynamic distribution based on maximumLevel
         generator.rangeOfIntegers("minimumDepthFromRoot", 0, 4);
@@ -122,19 +122,19 @@ public class TuneSceneRecognitionNister2006 {
 
         // See if the user wants to override the default base config
         if (!pathToConfig.isEmpty()) {
-            ConfigSceneRecognitionNister2006 canonical = UtilIO.loadConfig(new File(pathToConfig));
+            ConfigFeatureToSceneRecognition canonical = UtilIO.loadConfig(new File(pathToConfig));
             generator.getConfigurationBase().setTo(canonical);
         }
 
         // This is intended to make queries with large number of images run MUCH faster but can degrade
         // performance potentially. Without it the speed is untenable for a large study.
-        generator.getConfigurationBase().queryMaximumImagesInNode.setRelative(0.01, 10_000);
+        generator.getConfigurationBase().recognizeNister2006.queryMaximumImagesInNode.setRelative(0.01, 10_000);
 
         performParameterSearch(generator, false);
     }
 
     public void searchSurfParams() {
-        var generator = new ConfigGeneratorRandom<>(numRandomTrials, 0xDEADBEEF, ConfigSceneRecognitionNister2006.class);
+        var generator = new ConfigGeneratorRandom<>(numRandomTrials, 0xDEADBEEF, ConfigFeatureToSceneRecognition.class);
         generator.rangeOfIntegers("features.detectFastHessian.maxFeaturesPerScale", 100, 2000);
         generator.rangeOfFloats("features.detectFastHessian.extract.threshold", 0.0, 100.0);
         generator.rangeOfIntegers("features.detectFastHessian.extract.radius", 1, 15);
@@ -144,7 +144,7 @@ public class TuneSceneRecognitionNister2006 {
 
         // See if the user wants to override the default base config
         if (!pathToConfig.isEmpty()) {
-            ConfigSceneRecognitionNister2006 canonical = UtilIO.loadConfig(new File(pathToConfig));
+            ConfigFeatureToSceneRecognition canonical = UtilIO.loadConfig(new File(pathToConfig));
             generator.getConfigurationBase().setTo(canonical);
         }
 
@@ -152,16 +152,16 @@ public class TuneSceneRecognitionNister2006 {
         generator.getConfigurationBase().features.typeDescribe = ConfigDescribeRegionPoint.DescriptorType.SURF_STABLE;
         generator.getConfigurationBase().features.typeDetector = ConfigDetectInterestPoint.DetectorType.FAST_HESSIAN;
         // Forcing this to be zero to avoid biasing it towards trees with more depth
-        generator.getConfigurationBase().minimumDepthFromRoot = 0;
+        generator.getConfigurationBase().recognizeNister2006.minimumDepthFromRoot = 0;
         // This is intended to make queries with large number of images run MUCH faster but can degrade
         // performance potentially. Without it the speed is untenable for a large study.
-        generator.getConfigurationBase().queryMaximumImagesInNode.setRelative(0.01, 10_000);
+        generator.getConfigurationBase().recognizeNister2006.queryMaximumImagesInNode.setRelative(0.01, 10_000);
 
         performParameterSearch(generator, true);
     }
 
     public void searchSiftParams() {
-        var generator = new ConfigGeneratorRandom<>(numRandomTrials, 0xDEADBEEF, ConfigSceneRecognitionNister2006.class);
+        var generator = new ConfigGeneratorRandom<>(numRandomTrials, 0xDEADBEEF, ConfigFeatureToSceneRecognition.class);
         generator.rangeOfIntegers("features.detectSift.maxFeaturesPerScale", 100, 2000);
         generator.rangeOfFloats("features.detectSift.extract.threshold", 0.0, 20.0);
         generator.rangeOfFloats("features.detectSift.edgeR", 2.0, 20.0);
@@ -173,7 +173,7 @@ public class TuneSceneRecognitionNister2006 {
 
         // See if the user wants to override the default base config
         if (!pathToConfig.isEmpty()) {
-            ConfigSceneRecognitionNister2006 canonical = UtilIO.loadConfig(new File(pathToConfig));
+            ConfigFeatureToSceneRecognition canonical = UtilIO.loadConfig(new File(pathToConfig));
             generator.getConfigurationBase().setTo(canonical);
         }
 
@@ -181,17 +181,17 @@ public class TuneSceneRecognitionNister2006 {
         generator.getConfigurationBase().features.typeDescribe = ConfigDescribeRegionPoint.DescriptorType.SIFT;
         generator.getConfigurationBase().features.typeDetector = ConfigDetectInterestPoint.DetectorType.SIFT;
         // Forcing this to be zero to avoid biasing it towards trees with more depth
-        generator.getConfigurationBase().minimumDepthFromRoot = 0;
+        generator.getConfigurationBase().recognizeNister2006.minimumDepthFromRoot = 0;
         // This is intended to make queries with large number of images run MUCH faster but can degrade
         // performance potentially. Without it the speed is untenable for a large study.
-        generator.getConfigurationBase().queryMaximumImagesInNode.setRelative(0.01, 10_000);
+        generator.getConfigurationBase().recognizeNister2006.queryMaximumImagesInNode.setRelative(0.01, 10_000);
 
         performParameterSearch(generator, true);
     }
 
     private void evaluate(File outputDir, String trialDir,
                           ImageRetrievalEvaluationData dataset,
-                          ConfigSceneRecognitionNister2006 config) throws IOException {
+                          ConfigFeatureToSceneRecognition config) throws IOException {
         SceneRecognitionUtils.ModelInfo model = new SceneRecognitionUtils.ModelInfo(trialDir, config);
 
         try (PrintStream printErr = new PrintStream(new File(outputDir, trialDir + "/log_stderr.txt"));

@@ -1,6 +1,6 @@
 package validation;
 
-import boofcv.abst.scene.nister2006.ConfigSceneRecognitionNister2006;
+import boofcv.abst.scene.ConfigFeatureToSceneRecognition;
 import boofcv.factory.feature.describe.ConfigDescribeRegionPoint;
 import boofcv.factory.feature.detect.interest.ConfigDetectInterestPoint;
 import boofcv.io.UtilIO;
@@ -13,8 +13,8 @@ import java.io.File;
  * @author Peter Abeles
  */
 public class GenerateConfigs {
-    public static ConfigSceneRecognitionNister2006 createSift() {
-        ConfigSceneRecognitionNister2006 config = new ConfigSceneRecognitionNister2006();
+    public static ConfigFeatureToSceneRecognition createSift() {
+        ConfigFeatureToSceneRecognition config = new ConfigFeatureToSceneRecognition();
 
         config.features.typeDescribe = ConfigDescribeRegionPoint.DescriptorType.SIFT;
         config.features.typeDetector = ConfigDetectInterestPoint.DetectorType.SIFT;
@@ -25,8 +25,8 @@ public class GenerateConfigs {
         return config;
     }
 
-    public static ConfigSceneRecognitionNister2006 createSurf() {
-        ConfigSceneRecognitionNister2006 config = new ConfigSceneRecognitionNister2006();
+    public static ConfigFeatureToSceneRecognition createSurf() {
+        ConfigFeatureToSceneRecognition config = new ConfigFeatureToSceneRecognition();
 
         config.features.typeDescribe = ConfigDescribeRegionPoint.DescriptorType.SURF_STABLE;
         config.features.typeDetector = ConfigDetectInterestPoint.DetectorType.FAST_HESSIAN;
@@ -37,8 +37,8 @@ public class GenerateConfigs {
         return config;
     }
 
-    public static ConfigSceneRecognitionNister2006 createBrief() {
-        ConfigSceneRecognitionNister2006 config = new ConfigSceneRecognitionNister2006();
+    public static ConfigFeatureToSceneRecognition createBrief() {
+        ConfigFeatureToSceneRecognition config = new ConfigFeatureToSceneRecognition();
 
         config.features.typeDescribe = ConfigDescribeRegionPoint.DescriptorType.BRIEF;
         config.features.typeDetector = ConfigDetectInterestPoint.DetectorType.FAST_HESSIAN;
@@ -50,7 +50,7 @@ public class GenerateConfigs {
     }
 
     public static void main(String[] args) {
-        ConfigSceneRecognitionNister2006 canonical = new ConfigSceneRecognitionNister2006();
+        ConfigFeatureToSceneRecognition canonical = new ConfigFeatureToSceneRecognition();
 
         UtilIO.saveConfig(createSift(), canonical, new File("config_sift.yaml"));
         UtilIO.saveConfig(createSurf(), canonical, new File("config_surf.yaml"));
