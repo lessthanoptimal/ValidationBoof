@@ -136,9 +136,10 @@ public class TuneSceneRecognitionNister2006 {
     public void searchSurfParams() {
         var generator = new ConfigGeneratorRandom<>(numRandomTrials, 0xDEADBEEF, ConfigFeatureToSceneRecognition.class);
         generator.rangeOfIntegers("features.detectFastHessian.maxFeaturesPerScale", 100, 2000);
-        generator.rangeOfFloats("features.detectFastHessian.extract.threshold", 0.0, 100.0);
-        generator.rangeOfIntegers("features.detectFastHessian.extract.radius", 1, 15);
+        generator.rangeOfFloats("features.detectFastHessian.extract.threshold", 0.0, 2.0);
+        generator.rangeOfIntegers("features.detectFastHessian.extract.radius", 1, 10);
         generator.rangeOfIntegers("features.detectFastHessian.numberOfOctaves", 1, 6);
+        generator.rangeOfIntegers("features.describeSurfStability.widthSample", 1, 6);
 
         generator.initialize();
 
