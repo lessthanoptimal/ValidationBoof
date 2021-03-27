@@ -183,7 +183,7 @@ public class ThreeViewStereoMetrics {
 
         AssociateDescription<TupleDesc_F64> associate = FactoryAssociation.generic(configAssociate,detDesc);
 
-        AssociateThreeByPairs<TupleDesc_F64> associateThree = new AssociateThreeByPairs<>(associate,TupleDesc_F64.class);
+        AssociateThreeByPairs<TupleDesc_F64> associateThree = new AssociateThreeByPairs<>(associate);
 
         associateThree.setFeaturesA(features01, sets01);
         associateThree.setFeaturesB(features02, sets02);
