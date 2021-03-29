@@ -169,7 +169,9 @@ public class TuneSceneRecognitionNister2006 {
         generator.rangeOfIntegers("features.detectSift.extract.radius", 1, 10);
         generator.rangeOfFloats("features.scaleSpaceSift.sigma0", 0.5, 5.0);
         generator.rangeOfIntegers("features.scaleSpaceSift.lastOctave", 2, 7);
-        generator.rangeOfFloats("features.describeSift.sigmaToPixels", 0.25, 5.0);
+        generator.rangeOfFloats("features.describeSift.sigmaToPixels", 0.25, 3.0);
+        generator.rangeOfFloats("features.describeSift.weightingSigmaFraction", 0.1, 2.0);
+        generator.rangeOfFloats("features.describeSift.maxDescriptorElementValue", 0.05, 1.0);
 
         generator.initialize();
 
