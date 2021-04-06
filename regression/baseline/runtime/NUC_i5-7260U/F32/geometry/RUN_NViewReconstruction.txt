@@ -1,10 +1,10 @@
 # GENERATOR UncalibratedSparseReconstructionPlanarRegression
 # Elapsed time in milliseconds
 
-steps_reg_01                   81384
-steps_wide_01                  38668
-steps_zoom_01                  36523
+steps_reg_01                   78338
+steps_wide_01                  37084
+steps_zoom_01                  37534
 
 Summary:
                               N       Mean      P05      P50      P95      MAX
-  summary                       3  52191.7    36523    38668    38668    81384
+  summary                       3  50985.3    37084    37534    37534    78338

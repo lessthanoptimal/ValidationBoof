@@ -1,10 +1,10 @@
 ---- Native Access Info
 OS: Ubuntu 16.04.7 LTS
 CPU: Intel(R) Core(TM) i5-7260U CPU @ 2.20GHz
-Ave Load: 1m=3.53 5m=2.19 15m=0.93
+Ave Load: 1m=3.47 5m=2.33 15m=1.07
 ----
 Runtime.getRuntime().availableProcessors(): 4
-Runtime.getRuntime().freeMemory(): 252618384
+Runtime.getRuntime().freeMemory(): 252618464
 Runtime.getRuntime().totalMemory(): 264241152
 =========== java.specification.version
 14
@@ -25,7 +25,7 @@ Azul Systems, Inc.
 =========== sun.arch.data.model
 64
 =========== os.version
-4.15.0-117-generic
+4.15.0-140-generic
 =========== java.runtime.name
 OpenJDK Runtime Environment
 =========== file.encoding

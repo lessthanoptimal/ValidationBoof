@@ -7,11 +7,11 @@
 Total Frames = 1174
 Total Faults = 1
 Fraction with no update 0.0017035775127768314
-Ave per estimate:      distance 0.2734452  rotation 0.000678179
-Ave per distance:      distance   5.37896% deg/unit = 7.64e-03
-Ave Skip 20:           distance   1.76336% deg/unit = 2.60e-03
-Absolute:              location  79.12457  rotation   1.95 degrees
-Integral per distance: distance   0.77255% deg/unit = 1.72e-05
+Ave per estimate:      distance 0.2660350  rotation 0.000663998
+Ave per distance:      distance   5.23319% deg/unit = 7.48e-03
+Ave Skip 20:           distance   1.78186% deg/unit = 2.44e-03
+Absolute:              location 104.36232  rotation   2.41 degrees
+Integral per distance: distance   0.79175% deg/unit = 1.37e-04
 
 ###################################################################################
 # Dataset: KITTI00
@@ -19,8 +19,8 @@ Integral per distance: distance   0.77255% deg/unit = 1.72e-05
 Total Frames = 4540
 Total Faults = 0
 Fraction with no update 0.0
-Ave per estimate:      distance 0.0203066  rotation 0.000848885
-Ave per distance:      distance   2.47549% deg/unit = 5.93e-02
-Ave Skip 20:           distance   1.75855% deg/unit = 2.05e-02
-Absolute:              location  15.79487  rotation   6.89 degrees
-Integral per distance: distance   0.50557% deg/unit = 1.83e-04
+Ave per estimate:      distance 0.0206055  rotation 0.000846950
+Ave per distance:      distance   2.51193% deg/unit = 5.92e-02
+Ave Skip 20:           distance   1.78972% deg/unit = 2.03e-02
+Absolute:              location  22.11677  rotation   6.09 degrees
+Integral per distance: distance   0.53837% deg/unit = 3.27e-05

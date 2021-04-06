@@ -3,16 +3,16 @@
 
 #           Dataset,           Views, Point, mean,  p50,  p95, max
 #                              Used,  Count, (px), (px), (px), (px)
-steps_reg_01                    36.0%  1679   0.6   0.5   1.6   5.4
-steps_wide_01                  100.0%  7817   0.8   0.4   1.4  94.0
-steps_zoom_01                   19.4%   308   3.9   0.5  19.1  76.7
+steps_reg_01                    36.0%  1681   0.7   0.5   1.7   6.8
+steps_wide_01                  100.0%  7911   0.8   0.4   1.4  94.2
+steps_zoom_01                   19.4%    50  21.4   6.0  77.5 241.4
 towel_01                       FAILED
-towel_box                      FAILED
+towel_box                      CRASHED
 
 Summary:
   scenarios         = 3
-  failed            = 2
-  points inside     = 9804
+  failed            = 1
+  points inside     = 9642
   regions evaluated = 59
   skipped views     = 17
-  mean error (px)   = 1.78
+  mean error (px)   = 7.62
