@@ -6,6 +6,11 @@ Description of changes to benchmarks and justifications for change in performanc
 - Tooling
   * Automated checks for runtime performance
   * Format summary e-mail with HTML and uses fixed sized font
+- Ransac
+  * Anything that used RANSAC and similar had its random seed changed. This is due to its internal
+    implementation being modified to enable concurrency
+- ObjectTrackingRegression
+  * Sparse Flow's speed is computed differently to take in account it not processing images after losing track
 - TODO add regression for sparse reconstruction. Compare against known parameters and approximate known motion
 - TODO cloud sharpness test for planar
 

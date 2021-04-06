@@ -90,6 +90,9 @@ public class CreateGroundTruth {
 
 		this.outputDirectory = outputDirectory;
 
+		robustH = new Ransac<>(123123, 7500, 1, mm, AssociatedPair.class);
+		robustH.setModel(()->generatorH, ()->distance);
+
 		// create distortion to remove lens distortion
 		// Adjust the distortion so that the undistorted image only shows image pixels
 		Point2Transform2_F32 allInside = LensDistortionOps_F32.

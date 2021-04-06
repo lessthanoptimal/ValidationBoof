@@ -33,6 +33,10 @@ public class GenerateDetectionsMilTrackData<T extends ImageBase<T>> {
 	// Processing time for each frame
 	public DogArray_F64 periodMS = new DogArray_F64();
 
+	public PrintStream err = System.err;
+	// Should it save how long it took to process after track was lost? Some code stops processing after that happens
+	public boolean recordTimingAfterLostTrack = true;
+
 	public GenerateDetectionsMilTrackData(ImageType<T> type) {
 		input = type.createImage(1,1);
 	}
@@ -86,67 +90,61 @@ public class GenerateDetectionsMilTrackData<T extends ImageBase<T>> {
 		Quadrilateral_F64 found = new Quadrilateral_F64();
 		Rectangle2D_F64 bounding = new Rectangle2D_F64();
 
-		PrintStream out;
-
-		try {
-			out = new PrintStream(new File(outputDirectory,outputName+"_"+dataName+".txt"));
-		} catch (FileNotFoundException e) {
-			throw new RuntimeException(e);
-		}
-
 		int[] frames = parseFramesFile(path + "/" + dataName + "_frames.txt");
 
 		int imageNum = frames[0];
 		boolean firstImage = true;
 
-		while( imageNum <= frames[1] ) {
-
-			String imageName = String.format("%s/imgs/img%05d.png",path,imageNum);
-			BufferedImage image = UtilImageIO.loadImage(imageName);
-			if( image == null ) {
-				if( imageNum == 0 ) {
-					imageNum++;
-					// might start on index 1
-					continue;
-				} else {
-					break;
+		try (PrintStream out = new PrintStream(new File(outputDirectory,outputName+"_"+dataName+".txt"))){
+			while( imageNum <= frames[1] ) {
+				String imageName = String.format("%s/imgs/img%05d.png",path,imageNum);
+				BufferedImage image = UtilImageIO.loadImage(imageName);
+				if( image == null ) {
+					if( imageNum == 0 ) {
+						imageNum++;
+						// might start on index 1
+						continue;
+					} else {
+						break;
+					}
 				}
-			}
 
-			input.reshape(image.getWidth(),image.getHeight());
-			try {
+				input.reshape(image.getWidth(),image.getHeight());
 				ConvertBufferedImage.convertFrom(image, input, true);
-			} catch( RuntimeException e ) {
-				System.out.print("Image type not supported");
-				break;
-			}
-			boolean detected;
+				boolean detected;
 
-			long time0 = System.nanoTime();
-			if( firstImage ) {
-				firstImage = false;
-				detected = tracker.initialize(input,initial);
-				found.setTo(initial);
-			} else {
-				detected = tracker.process(input,found);
-			}
-			long time1 = System.nanoTime();
-			periodMS.add((time1-time0)*1e-6);
+				long time0 = System.nanoTime();
+				if( firstImage ) {
+					firstImage = false;
+					detected = tracker.initialize(input,initial);
+					found.setTo(initial);
+				} else {
+					detected = tracker.process(input,found);
+				}
+				long time1 = System.nanoTime();
 
-			if( !detected ) {
+				if (recordTimingAfterLostTrack||detected)
+					periodMS.add((time1-time0)*1e-6);
+
+				if( !detected ) {
 //				System.out.print("-");
-				out.printf("%05d,nan,nan,nan,nan\n", imageNum);
-			} else {
-				UtilPolygons2D_F64.bounding(found,bounding);
+					out.printf("%05d,nan,nan,nan,nan\n", imageNum);
+				} else {
+					UtilPolygons2D_F64.bounding(found,bounding);
 //				System.out.print("+");
-				out.printf("%05d,%f,%f,%f,%f\n",imageNum,bounding.p0.x,bounding.p0.y,bounding.p1.x,bounding.p1.y);
-			}
-			System.out.printf("%4d  %f %f\n",imageNum,bounding.p0.x,bounding.p0.y);
+					out.printf("%05d,%f,%f,%f,%f\n",imageNum,bounding.p0.x,bounding.p0.y,bounding.p1.x,bounding.p1.y);
+				}
+				System.out.printf("%4d  %f %f\n",imageNum,bounding.p0.x,bounding.p0.y);
 
-			imageNum++;
+				imageNum++;
+			}
+		} catch( RuntimeException e ) {
+			System.out.println("Exception: "+e.getMessage());
+			e.printStackTrace(err);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace(err);
 		}
 		System.out.println();
-		out.close();
 	}
 
 	public static void main(String[] args) {

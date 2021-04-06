@@ -79,6 +79,7 @@ public class FactoryEvaluationTrackerObjectQuad {
 		Info info = new Info();
 		info.name = "BoofCV-SparseFlow";
 		info.imageType = new ImageType(ImageType.Family.GRAY,dataType,1);
+		info.recordTimingAfterLostTrack = false;
 
 		info.tracker = FactoryTrackerObjectQuad.sparseFlow(null, ImageDataType.typeToSingleClass(dataType),null);
 		return info;
@@ -89,5 +90,6 @@ public class FactoryEvaluationTrackerObjectQuad {
 		public String name;
 		public ImageType imageType;
 		public TrackerObjectQuad tracker;
+		public boolean recordTimingAfterLostTrack = true;
 	}
 }

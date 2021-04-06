@@ -22,6 +22,9 @@ public class ObjectTrackingRegression extends BaseRegression implements ImageReg
 	RuntimeSummary outputSpeed;
 	DogArray_F64 summaryPeriod = new DogArray_F64();
 
+	// Should it save how long it took to process after track was lost? Some code stops processing after that happens
+	public boolean recordTimingAfterLostTrack = true;
+
 	public ObjectTrackingRegression() {
 		super(BoofRegressionConstants.TYPE_TRACKING);
 	}
@@ -37,6 +40,7 @@ public class ObjectTrackingRegression extends BaseRegression implements ImageReg
 
 		// compute raw detections
 		for( FactoryEvaluationTrackerObjectQuad.Info info : all ) {
+			recordTimingAfterLostTrack = info.recordTimingAfterLostTrack;
 			summaryPeriod.reset();
 			outputSpeed.out.println(info.name);
 			outputSpeed.printUnitsRow(false);
@@ -59,6 +63,8 @@ public class ObjectTrackingRegression extends BaseRegression implements ImageReg
 
 		GenerateDetectionsMilTrackData<Input> generator = new GenerateDetectionsMilTrackData<>(imageType);
 		generator.setOutputDirectory(trackingOutputDir);
+		generator.err = errorLog;
+		generator.recordTimingAfterLostTrack = recordTimingAfterLostTrack;
 
 		for( String videoName : GenerateDetectionsMilTrackData.videos ) {
 			try {
@@ -81,6 +87,8 @@ public class ObjectTrackingRegression extends BaseRegression implements ImageReg
 
 		GenerateDetectionsTldData<Input> generator = new GenerateDetectionsTldData<>(imageType);
 		generator.setOutputDirectory(trackingOutputDir);
+		generator.err = errorLog;
+		generator.recordTimingAfterLostTrack = recordTimingAfterLostTrack;
 
 		for( String dataName : GenerateDetectionsTldData.videos ) {
 			try {

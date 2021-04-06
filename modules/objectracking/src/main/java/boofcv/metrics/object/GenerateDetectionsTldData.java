@@ -4,6 +4,7 @@ import boofcv.abst.tracker.TrackerObjectQuad;
 import boofcv.common.BoofRegressionConstants;
 import boofcv.io.image.ConvertBufferedImage;
 import boofcv.io.image.UtilImageIO;
+import boofcv.misc.BoofMiscOps;
 import boofcv.struct.image.ImageBase;
 import boofcv.struct.image.ImageDataType;
 import boofcv.struct.image.ImageType;
@@ -32,6 +33,10 @@ public class GenerateDetectionsTldData<T extends ImageBase<T>> {
 	// Processing time for each frame
 	public DogArray_F64 periodMS = new DogArray_F64();
 
+	public PrintStream err = System.err;
+	// Should it save how long it took to process after track was lost? Some code stops processing after that happens
+	public boolean recordTimingAfterLostTrack = true;
+
 	public GenerateDetectionsTldData(ImageType<T> type) {
 		input = type.createImage(1,1);
 	}
@@ -45,7 +50,7 @@ public class GenerateDetectionsTldData<T extends ImageBase<T>> {
 		periodMS.reset();
 
 		if( !outputDirectory.exists() )
-			outputDirectory.mkdirs();
+			BoofMiscOps.checkTrue(outputDirectory.mkdirs());
 
 		String path = "data/track_rect/TLD/"+dataName;
 		Quadrilateral_F64 initial = new Quadrilateral_F64();
@@ -54,51 +59,48 @@ public class GenerateDetectionsTldData<T extends ImageBase<T>> {
 		Quadrilateral_F64 found = new Quadrilateral_F64();
 		Rectangle2D_F64 bounding = new Rectangle2D_F64();
 
-		PrintStream out;
-
-		try {
-			out = new PrintStream(new File(outputDirectory,outputName+"_"+dataName+".txt"));
-		} catch (FileNotFoundException e) {
-			throw new RuntimeException(e);
-		}
-
 		String imageType = new File(path+"/00001.jpg").exists() ? "jpg" : "png";
 
-		int imageNum = 0;
-		while( true ) {
-			String imageName = String.format("%s/%05d.%s",path,imageNum+1,imageType);
-			BufferedImage image = UtilImageIO.loadImage(imageName);
-			if( image == null )
-				break;
+		try (PrintStream out = new PrintStream(new File(outputDirectory,outputName+"_"+dataName+".txt"))) {
+			int imageNum = 0;
+			while (true) {
+				String imageName = String.format("%s/%05d.%s", path, imageNum + 1, imageType);
+				BufferedImage image = UtilImageIO.loadImage(imageName);
+				if (image == null)
+					break;
 
-			input.reshape(image.getWidth(),image.getHeight());
-			ConvertBufferedImage.convertFrom(image,input,true);
+				input.reshape(image.getWidth(), image.getHeight());
+				ConvertBufferedImage.convertFrom(image, input, true);
 
-			boolean detected;
+				boolean detected;
 
-			long time0 = System.nanoTime();
-			if( imageNum == 0 ) {
-				detected = tracker.initialize(input,initial);
-			} else {
-				detected = tracker.process(input,found);
+				long time0 = System.nanoTime();
+				if (imageNum == 0) {
+					detected = tracker.initialize(input, initial);
+				} else {
+					detected = tracker.process(input, found);
+				}
+				long time1 = System.nanoTime();
+				if (recordTimingAfterLostTrack || detected)
+					periodMS.add((time1 - time0) * 1e-6);
+				if (!detected) {
+					System.out.print("-");
+					out.println("nan,nan,nan,nan");
+				} else {
+					UtilPolygons2D_F64.bounding(found, bounding);
+					System.out.print("+");
+					out.printf("%f,%f,%f,%f\n", bounding.p0.x, bounding.p0.y, bounding.p1.x, bounding.p1.y);
+				}
+
+				imageNum++;
+				if (imageNum % 50 == 0)
+					System.out.println();
 			}
-			long time1 = System.nanoTime();
-			periodMS.add((time1-time0)*1e-6);
-			if( !detected ) {
-				System.out.print("-");
-				out.println("nan,nan,nan,nan");
-			} else {
-				UtilPolygons2D_F64.bounding(found,bounding);
-				System.out.print("+");
-				out.printf("%f,%f,%f,%f\n",bounding.p0.x,bounding.p0.y,bounding.p1.x,bounding.p1.y);
-			}
-
-			imageNum++;
-			if( imageNum % 50 == 0 )
-				System.out.println();
+		} catch (FileNotFoundException | RuntimeException e) {
+			System.out.println("Exception message="+e.getMessage());
+			e.printStackTrace(err);
 		}
 		System.out.println();
-		out.close();
 	}
 
 	public static <Input extends ImageBase<Input>>
