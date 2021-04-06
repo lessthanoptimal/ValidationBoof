@@ -1,7 +1,7 @@
 ---- Native Access Info
 OS: Ubuntu 16.04.7 LTS
 CPU: Intel(R) Core(TM) i5-7260U CPU @ 2.20GHz
-Ave Load: 1m=3.47 5m=2.33 15m=1.07
+Ave Load: 1m=3.23 5m=2.27 15m=0.99
 ----
 Runtime.getRuntime().availableProcessors(): 4
 Runtime.getRuntime().freeMemory(): 252618464

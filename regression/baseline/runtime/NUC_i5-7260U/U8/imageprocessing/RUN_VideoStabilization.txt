@@ -3,13 +3,13 @@
 
 KLT_Homography_planar
                               N       Mean      P05      P50      P95      MAX
-  shake.mjpeg                  71  26.1168  14.6259  20.2501  56.6369  149.285
+  shake.mjpeg                  71  26.0397  17.8821  22.2841  34.3388  154.776
 
 KLT_Homography_gray
                               N       Mean      P05      P50      P95      MAX
-  shake.mjpeg                  71  11.9148  8.51699  11.2363  15.7747   20.154
+  shake.mjpeg                  71  12.5532   9.1106  12.0708  16.6549  17.4626
 
 Summary:
                               N       Mean      P05      P50      P95      MAX
-  KLT_Homography_planar        71  26.1168  14.6259  20.2501  56.6369  149.285
-  KLT_Homography_gray          71  11.9148  8.51699  11.2363  15.7747   20.154
+  KLT_Homography_planar        71  26.0397  17.8821  22.2841  34.3388  154.776
+  KLT_Homography_gray          71  12.5532   9.1106  12.0708  16.6549  17.4626

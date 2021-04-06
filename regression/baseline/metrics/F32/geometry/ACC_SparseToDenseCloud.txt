@@ -11,4 +11,4 @@ Summary:
   points inside     = 2874903
   regions evaluated = 40
   skipped views     = 0
-  mean error (px)   = 1.4389696119171507
+  mean error (px)   = 1.4389649337188655

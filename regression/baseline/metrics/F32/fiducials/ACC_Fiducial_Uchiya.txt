@@ -6,15 +6,15 @@
 # maxPixelError = 5.41
 
 Summary:
- correct            :  115 /  144
+ correct            :  114 /  144
  wrong order        : 0
  wrong ID           : 0
  duplicates         : 0
  false positives    : 0
- false negative     : 29
+ false negative     : 30
 Corner errors:
- precision 50%         : 0.4111007013656809
- precision 90%         : 0.8087938587757264
+ precision 50%         : 0.4040606575834282
+ precision 90%         : 0.8082309441905084
  precision 100%        : 1.9160526853706086
 
 ---------------------------------------------------
@@ -47,9 +47,9 @@ Summary:
  false positives    : 0
  false negative     : 0
 Corner errors:
- precision 50%         : 2.8119356680011673
- precision 90%         : 5.5158895644123245
- precision 100%        : 11.021807666983891
+ precision 50%         : 2.909311560903923
+ precision 90%         : 6.128954279872987
+ precision 100%        : 8.311787731855151
 
 ---------------------------------------------------
 
@@ -81,7 +81,7 @@ Summary:
  false positives    : 0
  false negative     : 6
 Corner errors:
- precision 50%         : 0.960201412431915
+ precision 50%         : 1.0201562409655487
  precision 90%         : 1.877131433563559
  precision 100%        : 4.461410769460485
 
@@ -122,7 +122,7 @@ Corner errors:
 ---------------------------------------------------
 
 ---------------------------------------------------
-total correct / total expected =  586 / 636
+total correct / total expected =  585 / 636
 
 ##########################################################################################
 ######                Static Metrics
