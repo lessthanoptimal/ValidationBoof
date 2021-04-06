@@ -41,6 +41,7 @@ public class SparseToDenseScenePlanarRegression<T extends ImageGray<T>>
 
         outputRuntime = new RuntimeSummary();
         outputRuntime.initializeLog(directoryRuntime, getClass(), "RUN_SparseToDenseCloud.txt");
+        outputRuntime.out.println("default\n");
 
         PrintStream out = new PrintStream(new File(directoryMetrics, "ACC_SparseToDenseCloud.txt"));
         BoofRegressionConstants.printGenerator(out, getClass());
@@ -91,7 +92,7 @@ public class SparseToDenseScenePlanarRegression<T extends ImageGray<T>>
 
                 out.printf("%-30s %7d %5.1f %5.1f %5.1f %5.1f\n",
                         dir.getName(), score.count/1000, score.mean, score.p50, score.p95, score.p100);
-                outputRuntime.out.printf("%-30s %d\n", dir.getName(), evaluator.processingTimeMS);
+                outputRuntime.out.printf("  %-30s %d\n", dir.getName(), evaluator.processingTimeMS);
                 runtimes.add(evaluator.processingTimeMS);
 
                 totalScenarios++;

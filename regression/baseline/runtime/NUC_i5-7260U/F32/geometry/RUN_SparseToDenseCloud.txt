@@ -1,7 +1,8 @@
 # GENERATOR SparseToDenseScenePlanarRegression
 # Elapsed time in milliseconds
 
-steps_wide_01                  37690
+default
+  steps_wide_01                  37690
 
 Summary:
                               N       Mean      P05      P50      P95      MAX

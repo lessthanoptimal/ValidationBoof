@@ -40,6 +40,7 @@ public class UncalibratedSparseReconstructionPlanarRegression<T extends ImageGra
 
         outputRuntime = new RuntimeSummary();
         outputRuntime.initializeLog(directoryRuntime, getClass(), "RUN_NViewReconstruction.txt");
+        outputRuntime.out.println("default\n");
 
         PrintStream out = new PrintStream(new File(directoryMetrics, "ACC_NViewReconstruction.txt"));
         BoofRegressionConstants.printGenerator(out, getClass());
@@ -88,7 +89,7 @@ public class UncalibratedSparseReconstructionPlanarRegression<T extends ImageGra
 
                 out.printf("%-30s %5.1f%% %5d %5.1f %5.1f %5.1f %5.1f\n",
                         dir.getName(), percentUsed, score.count, score.mean, score.p50, score.p95, score.p100);
-                outputRuntime.out.printf("%-30s %d\n", dir.getName(), evaluator.processingTimeMS);
+                outputRuntime.out.printf("  %-30s %d\n", dir.getName(), evaluator.processingTimeMS);
                 runtimes.add(evaluator.processingTimeMS);
 
                 totalScenarios++;
