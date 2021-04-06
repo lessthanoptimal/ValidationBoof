@@ -28,7 +28,7 @@ import georegression.struct.homography.Homography2D_F64;
 import georegression.struct.homography.UtilHomography_F64;
 import georegression.struct.point.Point2D_F64;
 import org.ddogleg.fitting.modelset.ModelManager;
-import org.ddogleg.fitting.modelset.ModelMatcher;
+import org.ddogleg.fitting.modelset.ModelMatcherPost;
 import org.ddogleg.fitting.modelset.ransac.Ransac;
 import org.ejml.data.DMatrixRMaj;
 
@@ -72,8 +72,7 @@ public class CreateGroundTruth {
 	ModelManager<Homography2D_F64> mm = new ModelManagerHomography2D_F64();
 
 	// Use RANSAC to estimate the Homography matrix
-	ModelMatcher<Homography2D_F64,AssociatedPair> robustH =
-			new Ransac<Homography2D_F64, AssociatedPair>(123123,mm,generatorH,distance,7500,1);
+	ModelMatcherPost<Homography2D_F64,AssociatedPair> robustH;
 
 	RefineEpipolar refineH = FactoryMultiView.homographyRefine(1e-8, 1000, EpipolarError.SAMPSON);
 
@@ -102,6 +101,9 @@ public class CreateGroundTruth {
 		FactoryEvaluationTrackers<GrayF32> factory = new FactoryEvaluationTrackers<GrayF32>(GrayF32.class);
 
 		tracker = factory.create(EvaluatedAlgorithm.FH_SURF_KLT);
+
+		robustH = new Ransac<>(123123, 7500, 1, mm, AssociatedPair.class);
+		robustH.setModel(()->generatorH, ()->distance);
 	}
 
 	public void process( SimpleImageSequence<GrayF32> sequence ) throws FileNotFoundException {

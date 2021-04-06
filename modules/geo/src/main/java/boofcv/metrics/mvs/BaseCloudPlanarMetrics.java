@@ -20,7 +20,7 @@ import georegression.struct.point.Point3D_F64;
 import georegression.struct.se.Se3_F64;
 import gnu.trove.map.TObjectIntMap;
 import org.apache.commons.io.FilenameUtils;
-import org.ddogleg.fitting.modelset.ModelMatcher;
+import org.ddogleg.fitting.modelset.ModelMatcherPost;
 import org.ddogleg.fitting.modelset.lmeds.LeastMedianOfSquares;
 import org.ddogleg.stats.StatisticsDogArray;
 import org.ddogleg.struct.DogArray;
@@ -77,11 +77,11 @@ public class BaseCloudPlanarMetrics {
     protected DogArray_F64 allErrors = new DogArray_F64();
 
     // Use a robust fit to the plane to avoid outliers skewing results
-    ModelMatcher<PlaneGeneral3D_F64, Point3D_F64> fitPlane;
+    ModelMatcherPost<PlaneGeneral3D_F64, Point3D_F64> fitPlane;
 
     public BaseCloudPlanarMetrics() {
-        fitPlane = new LeastMedianOfSquares<>(0xBEEF, 100, new ModelManagerPlaneGeneral3D_F64(),
-                new GeneratorPlaneGeneral3D_F64(), new PointDistanceFromPlaneGeneral_F64());
+        fitPlane = new LeastMedianOfSquares<>(0xBEEF, 100, new ModelManagerPlaneGeneral3D_F64(), Point3D_F64.class);
+        fitPlane.setModel(GeneratorPlaneGeneral3D_F64::new, PointDistanceFromPlaneGeneral_F64::new);
     }
 
     protected boolean evaluateCloud(File directory, List<String> imageNames,
