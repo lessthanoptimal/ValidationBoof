@@ -4,5 +4,5 @@ target_metric=Milliseconds
 
 Individual
                                Milliseconds
-                    algebraic7 4976
-                       linear7 197
+                    algebraic7 5014
+                       linear7 193
