@@ -204,7 +204,7 @@ public class SceneRecognitionUtils<T extends ImageBase<T>> {
 
                 // Look up the image and intentionally ignore the return value since we want to log all results
                 // even if it finds nothing
-                database.query(image, querySize, matches);
+                database.query(image, null, querySize, matches);
 
                 // Save the file name and index. This information is redundant but can act as a sanity check
                 resultsOut.print(iterator.getIndex() + "," + paths.get(iterator.getIndex()));

@@ -1,7 +1,7 @@
 package validation;
 
 import boofcv.abst.scene.ConfigFeatureToSceneRecognition;
-import boofcv.factory.feature.describe.ConfigDescribeRegionPoint;
+import boofcv.factory.feature.describe.ConfigDescribeRegion;
 import boofcv.factory.feature.detect.interest.ConfigDetectInterestPoint;
 import boofcv.io.MirrorStream;
 import boofcv.io.UtilIO;
@@ -11,6 +11,7 @@ import boofcv.misc.BoofMiscOps;
 import boofcv.struct.ConfigGenerator;
 import boofcv.struct.ConfigGeneratorGrid;
 import boofcv.struct.ConfigGeneratorRandom;
+import boofcv.struct.ConfigGeneratorVector;
 import boofcv.struct.image.GrayU8;
 import boofcv.struct.image.ImageType;
 import org.apache.commons.io.FileUtils;
@@ -50,11 +51,12 @@ public class TuneSceneRecognitionNister2006 {
     double trainingFraction = 1.0;
     @Option(name = "--Trials", usage = "Number of random trials to perform, if applicable")
     int numRandomTrials = 400;
-    @Option(name = "--Task", usage = "Which task should it run. TREE_STRUCTURE, SURF, SIFT, MINIMUM_DEPTH")
+    @Option(name = "--Task", usage = "Which task should it run. TREE_STRUCTURE, SURF_RND, SIFT_RND, SURF_VEC, SIFT_VEC, MINIMUM_DEPTH")
     String taskName = Task.TREE_STRUCTURE.name();
 
     public void searchGridTreeParams() {
-        var generator = new ConfigGeneratorGrid<>(0xDEADBEEF, ConfigFeatureToSceneRecognition.class);
+        ConfigGeneratorGrid<ConfigFeatureToSceneRecognition> generator =
+                new ConfigGeneratorGrid<>(0xDEADBEEF, ConfigFeatureToSceneRecognition.class);
 
         generator.rangeOfIntegers("recognizeNister2006.tree.branchFactor", 8, 32);
         generator.rangeOfIntegers("recognizeNister2006.tree.maximumLevel", 2, 7);
@@ -81,6 +83,8 @@ public class TuneSceneRecognitionNister2006 {
     private void performParameterSearch(ConfigGenerator<ConfigFeatureToSceneRecognition> generator, boolean runBaseConfig) {
         // Evaluate on these two smaller datasets
         ImageRetrievalEvaluationData dataset = createDataset();
+
+        System.out.println("Parameter Search\n  trials: "+generator.getNumTrials());
 
         File directoryBase = new File(pathToResults);
         BoofMiscOps.checkTrue(directoryBase.mkdirs(), "Output already exists: " + directoryBase.getAbsolutePath());
@@ -113,7 +117,8 @@ public class TuneSceneRecognitionNister2006 {
     }
 
     public void searchMinimumDepth() {
-        var generator = new ConfigGeneratorGrid<>(0xDEADBEEF, ConfigFeatureToSceneRecognition.class);
+        ConfigGeneratorGrid<ConfigFeatureToSceneRecognition> generator =
+                new ConfigGeneratorGrid<>(0xDEADBEEF, ConfigFeatureToSceneRecognition.class);
 
         // This really should be a dynamic distribution based on maximumLevel
         generator.rangeOfIntegers("minimumDepthFromRoot", 0, 4);
@@ -133,8 +138,9 @@ public class TuneSceneRecognitionNister2006 {
         performParameterSearch(generator, false);
     }
 
-    public void searchSurfParams() {
-        var generator = new ConfigGeneratorRandom<>(numRandomTrials, 0xDEADBEEF, ConfigFeatureToSceneRecognition.class);
+    public void searchSurfRandom() {
+        ConfigGeneratorRandom<ConfigFeatureToSceneRecognition> generator =
+                new ConfigGeneratorRandom<>(numRandomTrials, 0xDEADBEEF, ConfigFeatureToSceneRecognition.class);
         generator.rangeOfIntegers("features.detectFastHessian.maxFeaturesPerScale", 100, 2000);
         generator.rangeOfFloats("features.detectFastHessian.extract.threshold", 0.0, 2.0);
         generator.rangeOfIntegers("features.detectFastHessian.extract.radius", 1, 10);
@@ -150,8 +156,8 @@ public class TuneSceneRecognitionNister2006 {
         }
 
         // make sure it's configured for SURF
-        generator.getConfigurationBase().features.typeDescribe = ConfigDescribeRegionPoint.DescriptorType.SURF_STABLE;
-        generator.getConfigurationBase().features.typeDetector = ConfigDetectInterestPoint.DetectorType.FAST_HESSIAN;
+        generator.getConfigurationBase().features.typeDescribe = ConfigDescribeRegion.Type.SURF_STABLE;
+        generator.getConfigurationBase().features.typeDetector = ConfigDetectInterestPoint.Type.FAST_HESSIAN;
         // Forcing this to be zero to avoid biasing it towards trees with more depth
         generator.getConfigurationBase().recognizeNister2006.minimumDepthFromRoot = 0;
         // This is intended to make queries with large number of images run MUCH faster but can degrade
@@ -161,8 +167,37 @@ public class TuneSceneRecognitionNister2006 {
         performParameterSearch(generator, true);
     }
 
-    public void searchSiftParams() {
-        var generator = new ConfigGeneratorRandom<>(numRandomTrials, 0xDEADBEEF, ConfigFeatureToSceneRecognition.class);
+    public void searchSurfVector() {
+        ConfigGeneratorVector<ConfigFeatureToSceneRecognition> generator =
+                new ConfigGeneratorVector<>(0xDEADBEEF, ConfigFeatureToSceneRecognition.class);
+        generator.setRangeDiscretization(20);
+        generator.rangeOfIntegers("features.detectFastHessian.maxFeaturesPerScale", 0, 2000);
+        generator.rangeOfFloats("features.detectFastHessian.extract.threshold", 0.0, 2.0);
+        generator.rangeOfIntegers("features.detectFastHessian.extract.radius", 1, 10);
+        generator.rangeOfIntegers("features.detectFastHessian.initialSampleStep", 1, 3);
+        generator.rangeOfIntegers("features.detectFastHessian.initialSize", 7, 11);
+        generator.rangeOfIntegers("features.detectFastHessian.numberOfOctaves", 1, 8);
+        generator.rangeOfIntegers("features.detectFastHessian.numberScalesPerOctave", 3, 5);
+        generator.rangeOfFloats("features.describeSurfStability.widthSample", 1, 6);
+
+        generator.initialize();
+
+        // See if the user wants to override the default base config
+        if (!pathToConfig.isEmpty()) {
+            ConfigFeatureToSceneRecognition canonical = UtilIO.loadConfig(new File(pathToConfig));
+            generator.getConfigurationBase().setTo(canonical);
+        }
+
+        // make sure it's configured for SURF
+        generator.getConfigurationBase().features.typeDescribe = ConfigDescribeRegion.Type.SURF_STABLE;
+        generator.getConfigurationBase().features.typeDetector = ConfigDetectInterestPoint.Type.FAST_HESSIAN;
+
+        performParameterSearch(generator, true);
+    }
+
+    public void searchSiftRandom() {
+        ConfigGeneratorRandom<ConfigFeatureToSceneRecognition> generator =
+                new ConfigGeneratorRandom<>(numRandomTrials, 0xDEADBEEF, ConfigFeatureToSceneRecognition.class);
         generator.rangeOfIntegers("features.detectSift.maxFeaturesPerScale", 200, 2000);
         generator.rangeOfFloats("features.detectSift.extract.threshold", 0.0, 2.0);
         generator.rangeOfFloats("features.detectSift.edgeR", 2.0, 20.0);
@@ -182,13 +217,36 @@ public class TuneSceneRecognitionNister2006 {
         }
 
         // make sure it's configured for SIFT
-        generator.getConfigurationBase().features.typeDescribe = ConfigDescribeRegionPoint.DescriptorType.SIFT;
-        generator.getConfigurationBase().features.typeDetector = ConfigDetectInterestPoint.DetectorType.SIFT;
-        // Forcing this to be zero to avoid biasing it towards trees with more depth
-        generator.getConfigurationBase().recognizeNister2006.minimumDepthFromRoot = 0;
-        // This is intended to make queries with large number of images run MUCH faster but can degrade
-        // performance potentially. Without it the speed is untenable for a large study.
-        generator.getConfigurationBase().recognizeNister2006.queryMaximumImagesInNode.setRelative(0.01, 10_000);
+        generator.getConfigurationBase().features.typeDescribe = ConfigDescribeRegion.Type.SIFT;
+        generator.getConfigurationBase().features.typeDetector = ConfigDetectInterestPoint.Type.SIFT;
+
+        performParameterSearch(generator, true);
+    }
+
+    public void searchSiftVector() {
+        ConfigGeneratorVector<ConfigFeatureToSceneRecognition> generator =
+                new ConfigGeneratorVector<>(0xDEADBEEF, ConfigFeatureToSceneRecognition.class);
+        generator.rangeOfIntegers("features.detectSift.maxFeaturesPerScale", 0, 2000);
+        generator.rangeOfFloats("features.detectSift.extract.threshold", 0.0, 2.0);
+        generator.rangeOfFloats("features.detectSift.edgeR", 2.0, 20.0);
+        generator.rangeOfIntegers("features.detectSift.extract.radius", 1, 10);
+        generator.rangeOfFloats("features.scaleSpaceSift.sigma0", 0.5, 5.0);
+        generator.rangeOfIntegers("features.scaleSpaceSift.lastOctave", 2, 7);
+        generator.rangeOfFloats("features.describeSift.sigmaToPixels", 0.25, 3.0);
+        generator.rangeOfFloats("features.describeSift.weightingSigmaFraction", 0.1, 2.0);
+        generator.rangeOfFloats("features.describeSift.maxDescriptorElementValue", 0.05, 1.0);
+
+        generator.initialize();
+
+        // See if the user wants to override the default base config
+        if (!pathToConfig.isEmpty()) {
+            ConfigFeatureToSceneRecognition canonical = UtilIO.loadConfig(new File(pathToConfig));
+            generator.getConfigurationBase().setTo(canonical);
+        }
+
+        // make sure it's configured for SIFT
+        generator.getConfigurationBase().features.typeDescribe = ConfigDescribeRegion.Type.SIFT;
+        generator.getConfigurationBase().features.typeDetector = ConfigDetectInterestPoint.Type.SIFT;
 
         performParameterSearch(generator, true);
     }
@@ -306,8 +364,10 @@ public class TuneSceneRecognitionNister2006 {
     enum Task {
         TREE_STRUCTURE,
         MINIMUM_DEPTH,
-        SURF,
-        SIFT,
+        SURF_RND,
+        SIFT_RND,
+        SURF_VEC,
+        SIFT_VEC,
     }
 
     private static void printHelpExit(CmdLineParser parser) {
@@ -342,8 +402,10 @@ public class TuneSceneRecognitionNister2006 {
             System.out.println("Task: "+task);
             switch (task) {
                 case TREE_STRUCTURE: generator.searchGridTreeParams(); break;
-                case SURF: generator.searchSurfParams(); break;
-                case SIFT: generator.searchSiftParams(); break;
+                case SURF_RND: generator.searchSurfRandom(); break;
+                case SURF_VEC: generator.searchSurfVector(); break;
+                case SIFT_RND: generator.searchSiftRandom(); break;
+                case SIFT_VEC: generator.searchSiftVector(); break;
                 case MINIMUM_DEPTH: generator.searchMinimumDepth(); break;
                 default: throw new RuntimeException("Not yet implemented. " + task);
             }

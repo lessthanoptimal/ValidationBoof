@@ -1,7 +1,7 @@
 package validation;
 
 import boofcv.abst.scene.ConfigFeatureToSceneRecognition;
-import boofcv.factory.feature.describe.ConfigDescribeRegionPoint;
+import boofcv.factory.feature.describe.ConfigDescribeRegion;
 import boofcv.factory.feature.detect.interest.ConfigDetectInterestPoint;
 import boofcv.io.UtilIO;
 
@@ -16,11 +16,8 @@ public class GenerateConfigs {
     public static ConfigFeatureToSceneRecognition createSift() {
         ConfigFeatureToSceneRecognition config = new ConfigFeatureToSceneRecognition();
 
-        config.features.typeDescribe = ConfigDescribeRegionPoint.DescriptorType.SIFT;
-        config.features.typeDetector = ConfigDetectInterestPoint.DetectorType.SIFT;
-        config.features.detectSift.maxFeaturesAll = 500;
-        config.features.detectSift.extract.threshold = 0.0f;
-        config.features.detectSift.extract.radius = 2;
+        config.features.typeDescribe = ConfigDescribeRegion.Type.SIFT;
+        config.features.typeDetector = ConfigDetectInterestPoint.Type.SIFT;
 
         return config;
     }
@@ -28,11 +25,8 @@ public class GenerateConfigs {
     public static ConfigFeatureToSceneRecognition createSurf() {
         ConfigFeatureToSceneRecognition config = new ConfigFeatureToSceneRecognition();
 
-        config.features.typeDescribe = ConfigDescribeRegionPoint.DescriptorType.SURF_STABLE;
-        config.features.typeDetector = ConfigDetectInterestPoint.DetectorType.FAST_HESSIAN;
-        config.features.detectFastHessian.maxFeaturesAll = 500;
-        config.features.detectFastHessian.extract.threshold = 0.0f;
-        config.features.detectFastHessian.extract.radius = 2;
+        config.features.typeDescribe = ConfigDescribeRegion.Type.SURF_STABLE;
+        config.features.typeDetector = ConfigDetectInterestPoint.Type.FAST_HESSIAN;
 
         return config;
     }
@@ -40,11 +34,8 @@ public class GenerateConfigs {
     public static ConfigFeatureToSceneRecognition createBrief() {
         ConfigFeatureToSceneRecognition config = new ConfigFeatureToSceneRecognition();
 
-        config.features.typeDescribe = ConfigDescribeRegionPoint.DescriptorType.BRIEF;
-        config.features.typeDetector = ConfigDetectInterestPoint.DetectorType.FAST_HESSIAN;
-        config.features.detectFastHessian.maxFeaturesAll = 500;
-        config.features.detectFastHessian.extract.threshold = 0.0f;
-        config.features.detectFastHessian.extract.radius = 2;
+        config.features.typeDescribe = ConfigDescribeRegion.Type.BRIEF;
+        config.features.typeDetector = ConfigDetectInterestPoint.Type.FAST_HESSIAN;
 
         return config;
     }
