@@ -2,7 +2,7 @@ package boofcv.metrics.mvs;
 
 import boofcv.abst.geo.bundle.SceneStructureMetric;
 import boofcv.alg.geo.MultiViewOps;
-import boofcv.alg.sfm.structure.ImageSequenceToSparseScene;
+import boofcv.alg.structure.ImageSequenceToSparseScene;
 import boofcv.io.image.LookUpImageFilesByPath;
 import boofcv.io.image.UtilImageIO;
 import boofcv.struct.image.ImageGray;

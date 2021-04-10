@@ -11,7 +11,7 @@ import boofcv.common.*;
 import boofcv.factory.disparity.ConfigDisparityBM;
 import boofcv.factory.disparity.DisparityError;
 import boofcv.factory.disparity.FactoryStereoDisparity;
-import boofcv.factory.feature.describe.ConfigDescribeRegionPoint;
+import boofcv.factory.feature.describe.ConfigDescribeRegion;
 import boofcv.factory.feature.detect.interest.ConfigDetectInterestPoint;
 import boofcv.factory.feature.detect.selector.ConfigSelectLimit;
 import boofcv.factory.sfm.ConfigStereoDualTrackPnP;
@@ -183,10 +183,10 @@ public class StereoVisualOdometryRegression extends BaseRegression implements Im
 		config.tracker.klt.maximumTracks.setFixed(400);
 
 		// for stereo associations
-		config.tracker.detDesc.typeDescribe = ConfigDescribeRegionPoint.DescriptorType.BRIEF;
+		config.tracker.detDesc.typeDescribe = ConfigDescribeRegion.Type.BRIEF;
 		config.tracker.detDesc.describeBrief.fixed = true;
 
-		config.tracker.detDesc.typeDetector = ConfigDetectInterestPoint.DetectorType.POINT;
+		config.tracker.detDesc.typeDetector = ConfigDetectInterestPoint.Type.POINT;
 		config.tracker.detDesc.detectPoint.type = PointDetectorTypes.SHI_TOMASI;
 		config.tracker.detDesc.detectPoint.scaleRadius = 11.0;
 		config.tracker.detDesc.detectPoint.shiTomasi.radius = 4;
@@ -232,7 +232,7 @@ public class StereoVisualOdometryRegression extends BaseRegression implements Im
 		config.refineIterations = 50;
 		config.bundleConverge.maxIterations = 0; // yes turning it off made it slightly more accurate
 
-		config.detectDescribe.typeDetector = ConfigDetectInterestPoint.DetectorType.POINT;
+		config.detectDescribe.typeDetector = ConfigDetectInterestPoint.Type.POINT;
 		config.detectDescribe.detectPoint.type = PointDetectorTypes.SHI_TOMASI;
 		config.detectDescribe.detectPoint.scaleRadius = 11;
 		config.detectDescribe.detectPoint.shiTomasi.radius = 2;
@@ -240,7 +240,7 @@ public class StereoVisualOdometryRegression extends BaseRegression implements Im
 		config.detectDescribe.detectPoint.general.maxFeatures = 600;
 		config.detectDescribe.detectPoint.general.threshold = 50;
 
-		config.detectDescribe.typeDescribe = ConfigDescribeRegionPoint.DescriptorType.BRIEF;
+		config.detectDescribe.typeDescribe = ConfigDescribeRegion.Type.BRIEF;
 		config.detectDescribe.describeBrief.fixed = true;
 //		config.detectDescribe.typeDescribe = ConfigDescribeRegionPoint.DescriptorType.SURF_FAST;
 

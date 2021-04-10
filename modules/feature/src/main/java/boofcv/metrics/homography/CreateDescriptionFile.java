@@ -19,7 +19,7 @@
 
 package boofcv.metrics.homography;
 
-import boofcv.abst.feature.describe.DescribeRegionPoint;
+import boofcv.abst.feature.describe.DescribePointRadiusAngle;
 import boofcv.io.image.ConvertBufferedImage;
 import boofcv.io.image.UtilImageIO;
 import boofcv.struct.feature.TupleDesc_F64;
@@ -42,10 +42,10 @@ import java.util.List;
  *
  * @author Peter Abeles
  */
-public class CreateDescriptionFile<T extends ImageBase<T>, D extends TupleDesc_F64> {
+public class CreateDescriptionFile<T extends ImageBase<T>> {
 
 	// algorithm that describes the features
-	protected DescribeRegionPoint<T,D> describe;
+	protected DescribePointRadiusAngle<T,TupleDesc_F64> describe;
 
 	// type of input image
    ImageType<T> imageType;
@@ -59,8 +59,8 @@ public class CreateDescriptionFile<T extends ImageBase<T>, D extends TupleDesc_F
 	 * @param imageType Type of input file.
 	 * @param descriptionName The name of the description algorithm.  This name is appended to output files.
 	 */
-	public CreateDescriptionFile(DescribeRegionPoint<T,D> describe,
-                                ImageType<T> imageType,
+	public CreateDescriptionFile(DescribePointRadiusAngle<T,TupleDesc_F64> describe,
+								 ImageType<T> imageType,
 								 String descriptionName ) {
 		this.describe = describe;
 		this.imageType = imageType;
@@ -132,7 +132,7 @@ public class CreateDescriptionFile<T extends ImageBase<T>, D extends TupleDesc_F
 			for( Description result : descList ) {
 				// save the location and tuple description
 				out.printf("%.3f %.3f %f",result.x,result.y,result.yaw);
-				D desc = result.desc;
+				TupleDesc_F64 desc = result.desc;
 				for( int i = 0; i < desc.data.length; i++ ) {
 					if( Double.isNaN(desc.data[i]))
 						throw new IllegalArgumentException("NaN detected in description");
@@ -148,7 +148,7 @@ public class CreateDescriptionFile<T extends ImageBase<T>, D extends TupleDesc_F
 	{
 		List<Description> ret = new ArrayList<Description>();
 
-		D found = describe.createDescription();
+		TupleDesc_F64 found = describe.createDescription();
 		if( describe.process(x,y,theta,scale,found) ) {
 			Description d = new Description();
 			d.x = x;
@@ -165,7 +165,7 @@ public class CreateDescriptionFile<T extends ImageBase<T>, D extends TupleDesc_F
 	protected class Description
 	{
 		public double x,y, yaw,scale;
-		public D desc;
+		public TupleDesc_F64 desc;
 
 		public Description() {
 		}

@@ -1,8 +1,8 @@
 package boofcv.regression;
 
-import boofcv.alg.sfm.structure.ImageSequenceToSparseScene;
+import boofcv.alg.structure.ImageSequenceToSparseScene;
 import boofcv.common.*;
-import boofcv.factory.sfm.FactorySceneReconstruction;
+import boofcv.factory.structure.FactorySceneReconstruction;
 import boofcv.io.UtilIO;
 import boofcv.metrics.mvs.UncalibratedToSparseScenePlanarMetrics;
 import boofcv.struct.image.ImageDataType;

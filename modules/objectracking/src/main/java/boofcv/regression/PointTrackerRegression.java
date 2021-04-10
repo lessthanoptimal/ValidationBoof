@@ -7,7 +7,7 @@ import boofcv.abst.feature.orientation.ConfigOrientation2;
 import boofcv.abst.tracker.PointTracker;
 import boofcv.alg.tracker.klt.ConfigPKlt;
 import boofcv.common.*;
-import boofcv.factory.feature.describe.ConfigDescribeRegionPoint;
+import boofcv.factory.feature.describe.ConfigDescribeRegion;
 import boofcv.factory.feature.detect.interest.ConfigDetectInterestPoint;
 import boofcv.factory.tracker.ConfigPointTracker;
 import boofcv.factory.tracker.FactoryPointTracker;
@@ -180,8 +180,8 @@ public class PointTrackerRegression extends BaseRegression implements ImageRegre
 		config.hybrid.pruneCloseTracks = false; // it's evaluated by how long tracks last. Pruning these would be bad
 		config.hybrid.maxInactiveTracks = 10000; // essentially unlimited tracks since this never spawns new tracks
 		config.hybrid.thresholdRespawn.setTo(ConfigLength.relative(0.5,100));
-		config.detDesc.typeDescribe = ConfigDescribeRegionPoint.DescriptorType.SURF_STABLE;
-		config.detDesc.typeDetector = ConfigDetectInterestPoint.DetectorType.FAST_HESSIAN;
+		config.detDesc.typeDescribe = ConfigDescribeRegion.Type.SURF_STABLE;
+		config.detDesc.typeDetector = ConfigDetectInterestPoint.Type.FAST_HESSIAN;
 		config.detDesc.detectFastHessian.maxFeaturesPerScale = 200;
 		config.detDesc.detectFastHessian.extract.radius = 2;
 		config.detDesc.detectFastHessian.extract.threshold = 1;
@@ -201,9 +201,9 @@ public class PointTrackerRegression extends BaseRegression implements ImageRegre
 
 		ConfigPointTracker config = new ConfigPointTracker();
 		config.typeTracker = ConfigPointTracker.TrackerType.DDA;
-		config.detDesc.typeDescribe = ConfigDescribeRegionPoint.DescriptorType.BRIEF;
+		config.detDesc.typeDescribe = ConfigDescribeRegion.Type.BRIEF;
 		config.detDesc.describeBrief.fixed = false;
-		config.detDesc.typeDetector = ConfigDetectInterestPoint.DetectorType.FAST_HESSIAN;
+		config.detDesc.typeDetector = ConfigDetectInterestPoint.Type.FAST_HESSIAN;
 		config.detDesc.detectFastHessian.maxFeaturesPerScale = 200;
 		config.detDesc.orientation.type = ConfigOrientation2.Type.AVERAGE;
 
@@ -218,11 +218,11 @@ public class PointTrackerRegression extends BaseRegression implements ImageRegre
 	public Info createHarrisNCC( Class bandType ) {
 		ConfigPointTracker config = new ConfigPointTracker();
 		config.typeTracker = ConfigPointTracker.TrackerType.DDA;
-		config.detDesc.typeDescribe = ConfigDescribeRegionPoint.DescriptorType.TEMPLATE;
+		config.detDesc.typeDescribe = ConfigDescribeRegion.Type.TEMPLATE;
 		config.detDesc.describeTemplate.type = ConfigTemplateDescribe.Type.NCC;
 		config.detDesc.describeTemplate.width = 7;
 		config.detDesc.describeTemplate.height = 7;
-		config.detDesc.typeDetector = ConfigDetectInterestPoint.DetectorType.POINT;
+		config.detDesc.typeDetector = ConfigDetectInterestPoint.Type.POINT;
 		config.detDesc.detectPoint.type = PointDetectorTypes.HARRIS;
 		config.detDesc.detectPoint.harris.kappa = 0.04;
 		config.detDesc.detectPoint.harris.radius = 3;
@@ -243,11 +243,11 @@ public class PointTrackerRegression extends BaseRegression implements ImageRegre
 
 		ConfigPointTracker config = new ConfigPointTracker();
 		config.typeTracker = ConfigPointTracker.TrackerType.DDA;
-		config.detDesc.typeDescribe = ConfigDescribeRegionPoint.DescriptorType.TEMPLATE;
+		config.detDesc.typeDescribe = ConfigDescribeRegion.Type.TEMPLATE;
 		config.detDesc.describeTemplate.type = ConfigTemplateDescribe.Type.NCC;
 		config.detDesc.describeTemplate.width = 7;
 		config.detDesc.describeTemplate.height = 7;
-		config.detDesc.typeDetector = ConfigDetectInterestPoint.DetectorType.POINT;
+		config.detDesc.typeDetector = ConfigDetectInterestPoint.Type.POINT;
 		config.detDesc.detectPoint.type = PointDetectorTypes.SHI_TOMASI;
 		config.detDesc.detectPoint.shiTomasi.radius = 3;
 		config.detDesc.detectPoint.scaleRadius = 2.0;
@@ -267,11 +267,11 @@ public class PointTrackerRegression extends BaseRegression implements ImageRegre
 
 		ConfigPointTracker config = new ConfigPointTracker();
 		config.typeTracker = ConfigPointTracker.TrackerType.DDA;
-		config.detDesc.typeDescribe = ConfigDescribeRegionPoint.DescriptorType.TEMPLATE;
+		config.detDesc.typeDescribe = ConfigDescribeRegion.Type.TEMPLATE;
 		config.detDesc.describeTemplate.type = ConfigTemplateDescribe.Type.NCC;
 		config.detDesc.describeTemplate.width = 7;
 		config.detDesc.describeTemplate.height = 7;
-		config.detDesc.typeDetector = ConfigDetectInterestPoint.DetectorType.POINT;
+		config.detDesc.typeDetector = ConfigDetectInterestPoint.Type.POINT;
 		config.detDesc.detectPoint.type = PointDetectorTypes.FAST;
 		config.detDesc.detectPoint.fast.pixelTol = 6;
 		config.detDesc.detectPoint.fast.minContinuous = 9;

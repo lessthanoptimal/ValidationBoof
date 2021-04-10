@@ -19,8 +19,8 @@
 
 package boofcv.metrics.surf;
 
-import boofcv.abst.feature.describe.DescribeRegionPoint;
-import boofcv.abst.feature.describe.WrapDescribeSurf;
+import boofcv.abst.feature.describe.DescribePointRadiusAngle;
+import boofcv.abst.feature.describe.DescribeSurf_RadiusAngle;
 import boofcv.abst.feature.detdesc.DetectDescribePoint;
 import boofcv.abst.feature.detect.interest.ConfigFastHessian;
 import boofcv.abst.feature.orientation.ConfigSlidingIntegral;
@@ -28,7 +28,7 @@ import boofcv.abst.feature.orientation.OrientationIntegral;
 import boofcv.alg.feature.describe.DescribePointSurf;
 import boofcv.alg.feature.describe.DescribePointSurfPlanar;
 import boofcv.alg.transform.ii.GIntegralImageOps;
-import boofcv.factory.feature.describe.FactoryDescribePointAlgs;
+import boofcv.factory.feature.describe.FactoryDescribeAlgs;
 import boofcv.factory.feature.detdesc.FactoryDetectDescribe;
 import boofcv.factory.feature.orientation.FactoryOrientationAlgs;
 import boofcv.struct.feature.TupleDesc_F64;
@@ -44,7 +44,7 @@ public class FactorySurf {
 	 * Java port of Pan-o-Matic's descriptor to make examing its behavior easier.
 	 */
 	public static <T extends ImageGray<T>, II extends ImageGray<II>>
-	DescribeRegionPoint<T,TupleDesc_F64> surfPanOMaticInBoofCV(boolean isOriented, Class<T> imageType) {
+	DescribePointRadiusAngle<T,TupleDesc_F64> surfPanOMaticInBoofCV(boolean isOriented, Class<T> imageType) {
 		OrientationIntegral<II> orientation = null;
 
 		Class<II> integralType = GIntegralImageOps.getIntegralType(imageType);
@@ -54,14 +54,14 @@ public class FactorySurf {
 					sliding_ii(new ConfigSlidingIntegral(0.65, Math.PI / 3.0, 8, -1, 6), integralType);
 
 		DescribePointSurf<II> alg = new DescribePointSurfPanOMatic<II>(integralType);
-		return new WrapDescribeSurf<T,II>( alg , imageType );
+		return new DescribeSurf_RadiusAngle<T,II>( alg , imageType );
 	}
 
 	/**
 	 * Creates a BoofCV SURF descriptor
 	 */
 	public static <T extends ImageBase<T>, II extends ImageGray<II>>
-	DescribeRegionPoint<T,TupleDesc_F64> surf( boolean stable , ImageType<T> imageType )
+	DescribePointRadiusAngle<T,TupleDesc_F64> surf( boolean stable , ImageType<T> imageType )
 	{
 		Class bandType = imageType.getDataType().getDataType();
 		Class integralType = GIntegralImageOps.getIntegralType(bandType);
@@ -74,9 +74,9 @@ public class FactorySurf {
 			orientation = FactoryOrientationAlgs.average_ii(null,integralType);
 
 		if( stable ) {
-			describe = FactoryDescribePointAlgs.surfStability(null,integralType);
+			describe = FactoryDescribeAlgs.surfStability(null,integralType);
 		} else {
-			describe = FactoryDescribePointAlgs.surfSpeed(null,integralType);
+			describe = FactoryDescribeAlgs.surfSpeed(null,integralType);
 		}
 
 		if( ImageType.Family.GRAY == imageType.getFamily() )

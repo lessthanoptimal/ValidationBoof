@@ -20,7 +20,7 @@
 package boofcv.metrics.homography;
 
 
-import boofcv.abst.feature.describe.DescribeRegionPoint;
+import boofcv.abst.feature.describe.DescribePointRadiusAngle;
 import boofcv.io.image.ConvertBufferedImage;
 import boofcv.struct.feature.TupleDesc;
 import boofcv.struct.image.ImageGray;
@@ -37,52 +37,49 @@ import java.util.List;
  *
  * @author Peter Abeles
  */
-public class BenchmarkFeatureDescribeRuntime<T extends ImageGray<T>, D extends TupleDesc> {
+public class BenchmarkFeatureDescribeRuntime<T extends ImageGray<T>, TD extends TupleDesc<TD>> {
 
-	Class<T> imageType;
-	DescribeRegionPoint<T,D> alg;
+    Class<T> imageType;
+    DescribePointRadiusAngle<T, TD> alg;
 
-	public BenchmarkFeatureDescribeRuntime(Class<T> imageType, DescribeRegionPoint<T,D> alg) {
-		this.imageType = imageType;
-		this.alg = alg;
-	}
+    public BenchmarkFeatureDescribeRuntime(Class<T> imageType, DescribePointRadiusAngle<T, TD> alg) {
+        this.imageType = imageType;
+        this.alg = alg;
+    }
 
-	public void benchmark( String directory , int imageNumber , String detector )
-			throws IOException
-	{
-		String detectName = String.format("%s/DETECTED_img%d_%s.txt", directory, imageNumber, detector);
-		String imageName = String.format("%s/img%d.png", directory, imageNumber);
+    public void benchmark(String directory, int imageNumber, String detector)
+            throws IOException {
+        String detectName = String.format("%s/DETECTED_img%d_%s.txt", directory, imageNumber, detector);
+        String imageName = String.format("%s/img%d.png", directory, imageNumber);
 
-		BufferedImage image = ImageIO.read(new File(imageName));
+        BufferedImage image = ImageIO.read(new File(imageName));
 
-		T input = ConvertBufferedImage.convertFromSingle(image,null,imageType);
+        T input = ConvertBufferedImage.convertFromSingle(image, null, imageType);
 
-		List<DetectionInfo> detections = LoadHomographyBenchmarkFiles.loadDetection(detectName);
+        List<DetectionInfo> detections = LoadHomographyBenchmarkFiles.loadDetection(detectName);
 
-		long best = Long.MAX_VALUE;
+        long best = Long.MAX_VALUE;
 
-		for( int i = 0; i < 10; i++ ) {
+        for (int i = 0; i < 10; i++) {
+            TD desc = alg.createDescription();
+            long before = System.currentTimeMillis();
 
-			D desc = alg.createDescription();
+            alg.setImage(input);
 
-			long before = System.currentTimeMillis();
+            for (DetectionInfo d : detections) {
+                alg.process(d.location.x, d.location.y, d.yaw, d.scale, desc);
+            }
 
-			alg.setImage(input);
+            long after = System.currentTimeMillis();
+            long elapsed = after - before;
 
-			for( DetectionInfo d : detections ) {
-				alg.process(d.location.x, d.location.y, d.yaw, d.scale, desc);
-			}
+            System.out.println("time = " + elapsed);
 
-			long after = System.currentTimeMillis();
-			long elapsed = after-before;
+            if (elapsed < best)
+                best = elapsed;
+        }
 
-			System.out.println("time = "+elapsed);
-
-			if( elapsed < best )
-				best = elapsed;
-		}
-
-		System.out.println();
-		System.out.println("Best = "+best);
-	}
+        System.out.println();
+        System.out.println("Best = " + best);
+    }
 }

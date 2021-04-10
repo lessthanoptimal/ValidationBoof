@@ -20,7 +20,7 @@
 package boofcv.metrics.sift;
 
 import boofcv.BoofDefaults;
-import boofcv.abst.feature.describe.DescribeRegionPoint;
+import boofcv.abst.feature.describe.DescribePointRadiusAngle;
 import boofcv.alg.feature.describe.DescribePointSift;
 import boofcv.alg.feature.detect.interest.SiftScaleSpace;
 import boofcv.alg.feature.detect.interest.UnrollSiftScaleSpaceGradient;
@@ -39,7 +39,7 @@ import java.util.List;
  * @author Peter Abeles
  */
 public class DescribeOrientationSift
-		implements DescribeRegionPoint<GrayF32, TupleDesc_F64>
+		implements DescribePointRadiusAngle<GrayF32, TupleDesc_F64>
 {
 	SiftScaleSpace ss;
 	UnrollSiftScaleSpaceGradient gradient = new UnrollSiftScaleSpaceGradient();

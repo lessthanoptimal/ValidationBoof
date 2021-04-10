@@ -20,7 +20,7 @@
 package boofcv.metrics.surf;
 
 import boofcv.BoofDefaults;
-import boofcv.abst.feature.describe.DescribeRegionPoint;
+import boofcv.abst.feature.describe.DescribePointRadiusAngle;
 import boofcv.abst.feature.orientation.OrientationIntegral;
 import boofcv.alg.feature.describe.DescribePointSurfPlanar;
 import boofcv.alg.transform.ii.GIntegralImageOps;
@@ -37,7 +37,7 @@ import boofcv.struct.image.Planar;
  * @author Peter Abeles
  */
 public class DescribeOrientationSurfColor<T extends ImageGray<T>, II extends ImageGray<II>>
-		implements DescribeRegionPoint<Planar<T>, TupleDesc_F64>
+		implements DescribePointRadiusAngle<Planar<T>, TupleDesc_F64>
 {
 	private OrientationIntegral<II> orientation;
 	private DescribePointSurfPlanar<II> describe;

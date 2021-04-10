@@ -4,7 +4,7 @@ import boofcv.abst.feature.associate.AssociateDescription;
 import boofcv.abst.feature.associate.ScoreAssociateEuclideanSq;
 import boofcv.abst.feature.associate.ScoreAssociation;
 import boofcv.abst.feature.describe.ConfigBrief;
-import boofcv.abst.feature.describe.DescribeRegionPoint;
+import boofcv.abst.feature.describe.DescribePointRadiusAngle;
 import boofcv.abst.feature.detdesc.ConfigCompleteSift;
 import boofcv.abst.feature.detdesc.DetectDescribePoint;
 import boofcv.abst.feature.detect.interest.ConfigFastHessian;
@@ -15,7 +15,7 @@ import boofcv.abst.feature.orientation.OrientationIntegral;
 import boofcv.abst.feature.orientation.OrientationIntegralToImage;
 import boofcv.alg.transform.ii.GIntegralImageOps;
 import boofcv.common.*;
-import boofcv.factory.feature.describe.FactoryDescribeRegionPoint;
+import boofcv.factory.feature.describe.FactoryDescribePointRadiusAngle;
 import boofcv.factory.feature.detdesc.FactoryDetectDescribe;
 import boofcv.factory.feature.detect.interest.FactoryInterestPoint;
 import boofcv.factory.feature.orientation.FactoryOrientationAlgs;
@@ -164,7 +164,7 @@ public class DetectDescribeRegression extends BaseRegression implements ImageReg
 			DetectDescribePoint<IT,TupleDesc_F64> create(ImageType<IT> imageType) {
 				Class type = imageType.getImageClass();
 				InterestPointDetector detector = FactoryInterestPoint.fastHessian(configDetect,type);
-				DescribeRegionPoint describe = FactoryDescribeRegionPoint.brief(configDesc,type);
+				DescribePointRadiusAngle describe = FactoryDescribePointRadiusAngle.brief(configDesc,type);
 
 				Class iiType = GIntegralImageOps.getIntegralType(type);
 				OrientationIntegral ori = FactoryOrientationAlgs.average_ii(null,iiType );

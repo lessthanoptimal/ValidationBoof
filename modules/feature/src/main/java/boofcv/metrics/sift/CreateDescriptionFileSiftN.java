@@ -31,7 +31,7 @@ import java.util.List;
 /**
  * @author Peter Abeles
  */
-public class CreateDescriptionFileSiftN extends CreateDescriptionFile<GrayF32, TupleDesc_F64> {
+public class CreateDescriptionFileSiftN extends CreateDescriptionFile<GrayF32> {
 	/**
 	 * Defines the set of images and detection files that are to be processed.
 	 *

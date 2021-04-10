@@ -13,14 +13,14 @@ import boofcv.alg.geo.RectifyImageOps;
 import boofcv.alg.geo.bundle.cameras.BundlePinholeSimplified;
 import boofcv.alg.geo.rectify.RectifyCalibrated;
 import boofcv.alg.misc.ImageStatistics;
-import boofcv.alg.sfm.structure.ThreeViewEstimateMetricScene;
+import boofcv.alg.structure.ThreeViewEstimateMetricScene;
 import boofcv.core.image.ConvertImage;
 import boofcv.factory.disparity.ConfigDisparityBMBest5;
 import boofcv.factory.disparity.DisparityError;
 import boofcv.factory.disparity.FactoryStereoDisparity;
 import boofcv.factory.feature.associate.ConfigAssociate;
 import boofcv.factory.feature.associate.FactoryAssociation;
-import boofcv.factory.feature.describe.ConfigDescribeRegionPoint;
+import boofcv.factory.feature.describe.ConfigDescribeRegion;
 import boofcv.factory.feature.detdesc.ConfigDetectDescribe;
 import boofcv.factory.feature.detdesc.FactoryDetectDescribe;
 import boofcv.factory.feature.detect.interest.ConfigDetectInterestPoint;
@@ -138,12 +138,12 @@ public class ThreeViewStereoMetrics {
         image03 = ConvertImage.average(color03,null);
 
         ConfigDetectDescribe configDetDesc = new ConfigDetectDescribe();
-        configDetDesc.typeDetector = ConfigDetectInterestPoint.DetectorType.FAST_HESSIAN;
+        configDetDesc.typeDetector = ConfigDetectInterestPoint.Type.FAST_HESSIAN;
         configDetDesc.detectFastHessian.extract.radius = 12;
         configDetDesc.detectFastHessian.maxFeaturesPerScale = 500;
 //        configDetDesc.detectFastHessian.maxFeaturesAll = 1000;
 
-        configDetDesc.typeDescribe = ConfigDescribeRegionPoint.DescriptorType.SURF_STABLE;
+        configDetDesc.typeDescribe = ConfigDescribeRegion.Type.SURF_STABLE;
 
         DetectDescribePoint<GrayU8, TupleDesc_F64> detDesc = FactoryDetectDescribe.generic(configDetDesc,GrayU8.class);
 

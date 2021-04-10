@@ -19,13 +19,13 @@
 
 package boofcv.metrics.sift;
 
-import boofcv.abst.feature.describe.DescribeRegionPoint;
+import boofcv.abst.feature.describe.DescribePointRadiusAngle;
 import boofcv.abst.feature.detdesc.DetectDescribePoint;
 import boofcv.abst.feature.detect.interest.InterestPointDetector;
 import boofcv.alg.feature.describe.DescribePointSift;
 import boofcv.alg.feature.detect.interest.SiftScaleSpace;
 import boofcv.alg.feature.orientation.OrientationHistogramSift;
-import boofcv.factory.feature.describe.FactoryDescribePointAlgs;
+import boofcv.factory.feature.describe.FactoryDescribeAlgs;
 import boofcv.factory.feature.detdesc.FactoryDetectDescribe;
 import boofcv.factory.feature.detect.interest.FactoryInterestPoint;
 import boofcv.factory.feature.orientation.FactoryOrientationAlgs;
@@ -37,11 +37,11 @@ import boofcv.struct.image.GrayF32;
  */
 public class FactorySift {
 
-	public static DescribeRegionPoint<GrayF32, TupleDesc_F64>
+	public static DescribePointRadiusAngle<GrayF32, TupleDesc_F64>
 	createDescriptor() {
 		SiftScaleSpace ss = new SiftScaleSpace(-1,5,3,2.75f);
 		OrientationHistogramSift orientation = FactoryOrientationAlgs.sift(null,GrayF32.class);
-		DescribePointSift sift = FactoryDescribePointAlgs.sift(null,GrayF32.class);
+		DescribePointSift sift = FactoryDescribeAlgs.sift(null,GrayF32.class);
 
 		return new DescribeOrientationSift(orientation,sift,ss);
 	}

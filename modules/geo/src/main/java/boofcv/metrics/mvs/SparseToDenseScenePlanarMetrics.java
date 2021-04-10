@@ -1,7 +1,7 @@
 package boofcv.metrics.mvs;
 
 import boofcv.abst.geo.bundle.SceneStructureMetric;
-import boofcv.alg.sfm.structure.SparseSceneToDenseCloud;
+import boofcv.alg.structure.SparseSceneToDenseCloud;
 import boofcv.io.geo.MultiViewIO;
 import boofcv.io.image.LookUpImageFilesByPath;
 import boofcv.io.image.UtilImageIO;

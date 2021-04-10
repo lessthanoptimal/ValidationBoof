@@ -20,7 +20,7 @@
 package boofcv.metrics.surf;
 
 import boofcv.BoofDefaults;
-import boofcv.abst.feature.describe.DescribeRegionPoint;
+import boofcv.abst.feature.describe.DescribePointRadiusAngle;
 import boofcv.abst.feature.orientation.OrientationIntegral;
 import boofcv.alg.feature.describe.DescribePointSurf;
 import boofcv.alg.transform.ii.GIntegralImageOps;
@@ -34,8 +34,7 @@ import boofcv.struct.image.ImageType;
  * @author Peter Abeles
  */
 public class DescribeOrientationSurf<T extends ImageGray<T>, II extends ImageGray<II>>
-		implements DescribeRegionPoint<T,TupleDesc_F64>
-{
+		implements DescribePointRadiusAngle<T,TupleDesc_F64> {
 	private OrientationIntegral<II> orientation;
 	private DescribePointSurf<II> describe;
 
