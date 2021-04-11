@@ -15,6 +15,7 @@ import boofcv.struct.ConfigGeneratorVector;
 import boofcv.struct.image.GrayU8;
 import boofcv.struct.image.ImageType;
 import org.apache.commons.io.FileUtils;
+import org.ddogleg.struct.Tuple2;
 import org.kohsuke.args4j.CmdLineException;
 import org.kohsuke.args4j.CmdLineParser;
 import org.kohsuke.args4j.Option;
@@ -92,6 +93,16 @@ public class TuneSceneRecognitionNister2006 {
             FileUtils.write(new File(directoryBase, "tuning_settings.txt"), generator.toStringSettings(), StandardCharsets.UTF_8);
             FileUtils.write(new File(directoryBase, "application_arguments.txt"), argumentsToString(), StandardCharsets.UTF_8);
 
+            if (generator instanceof ConfigGeneratorVector) {
+                // Make it much easier to process vector data by saying how many elements are in each parameter
+                String text = "";
+                List<Tuple2<String,Integer>> paramCounts = ((ConfigGeneratorVector<?>)generator).getParameterCounts();
+                for (Tuple2<String,Integer> p : paramCounts ) {
+                    text += p.d0 + "," + p.d1 + "\n";
+                }
+                FileUtils.write(new File(directoryBase, "parameter_counts.txt"), text, StandardCharsets.UTF_8);
+            }
+            
             // If requested, run the base config first so we can see if things are actually better
             if (runBaseConfig) {
                 String trialDir = "base";
