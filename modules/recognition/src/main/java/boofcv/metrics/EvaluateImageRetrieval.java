@@ -2,6 +2,7 @@ package boofcv.metrics;
 
 import boofcv.abst.scene.ConfigFeatureToSceneRecognition;
 import boofcv.abst.scene.SceneRecognition;
+import boofcv.alg.scene.bow.BowDistanceTypes;
 import boofcv.alg.scene.nister2006.RecognitionVocabularyTreeNister2006;
 import boofcv.factory.feature.describe.ConfigConvertTupleDesc;
 import boofcv.factory.scene.FactorySceneRecognition;
@@ -113,7 +114,7 @@ public class EvaluateImageRetrieval<T extends ImageBase<T>> {
         config.features.convertDescriptor.outputData = ConfigConvertTupleDesc.DataType.F32;
         config.features.detectFastHessian.maxFeaturesAll = 2000;
         config.features.detectFastHessian.extract.radius = 4;
-        config.recognizeNister2006.distanceNorm = RecognitionVocabularyTreeNister2006.DistanceTypes.L2;
+        config.recognizeNister2006.distanceNorm = BowDistanceTypes.L2;
 
         evaluator.printHeaders();
         evaluator.evaluate(FactorySceneRecognition.createFeatureToScene(config, ImageType.SB_U8));

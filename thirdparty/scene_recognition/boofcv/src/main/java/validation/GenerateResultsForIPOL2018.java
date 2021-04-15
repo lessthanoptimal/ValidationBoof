@@ -28,7 +28,7 @@ public class GenerateResultsForIPOL2018 {
         while (readers.hasNext()) {
             System.out.println("JPEG formats: " + readers.next());
         }
-        var defaultModel = new SceneRecognitionUtils.ModelInfo("default");
+        SceneRecognitionUtils.ModelInfo defaultModel = new SceneRecognitionUtils.ModelInfo("default");
         File resultsDir = new File("cbir_models/" + defaultModel.name);
         if (resultsDir.exists()) {
             System.out.println("Directory already exists. Will attempt to resume. " + resultsDir.getAbsolutePath());
