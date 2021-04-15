@@ -42,11 +42,21 @@ task cbirMaster(type: JavaExec, dependsOn: build) {
 }
 
 // ./gradlew --no-daemon tuneNister2006  -Pxmx=20g --args='-t glob:holidays/*.jpg -d glob:mirflickr5K/*.jpg --QueryFormat holidays -o surf_holidays'
-task tuneNister2006(type: JavaExec, dependsOn: build) {
+task tuneBowNister2006(type: JavaExec, dependsOn: build) {
     def maxMem = "-Xmx"+(project.hasProperty("xmx") ? project.property("xmx").toString() : '20g')
     group = "Execution"
-    description = "Master application for Tuneing Nister 2006"
+    description = "Master application for Tuning Nister 2006"
     classpath = sourceSets.main.runtimeClasspath
     main = "validation.TuneSceneRecognitionNister2006"
+    jvmArgs = ['-Xms5g', maxMem]
+}
+
+// ./gradlew --no-daemon tuneBowNN  -Pxmx=20g --args='-t glob:holidays/*.jpg -d glob:mirflickr5K/*.jpg --QueryFormat holidays -o surf_holidays'
+task tuneBowNN(type: JavaExec, dependsOn: build) {
+    def maxMem = "-Xmx"+(project.hasProperty("xmx") ? project.property("xmx").toString() : '20g')
+    group = "Execution"
+    description = "Master application for Tuning BOW Nearest Neighbor"
+    classpath = sourceSets.main.runtimeClasspath
+    main = "validation.TuneSceneRecognitionNearestNeighbor"
     jvmArgs = ['-Xms5g', maxMem]
 }
