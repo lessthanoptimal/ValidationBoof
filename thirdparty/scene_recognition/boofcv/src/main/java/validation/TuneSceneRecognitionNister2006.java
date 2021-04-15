@@ -64,8 +64,8 @@ public class TuneSceneRecognitionNister2006 {
         generator.setDiscretizationRule("recognizeNister2006.tree.branchFactor", ConfigGeneratorGrid.Discretization.INTEGER_VALUES);
         generator.setDiscretizationRule("recognizeNister2006.tree.maximumLevel", ConfigGeneratorGrid.Discretization.INTEGER_VALUES);
 
-        generator.initialize();
         generator.getConfigurationBase().typeRecognize = ConfigFeatureToSceneRecognition.Type.NISTER_2006;
+        generator.initialize();
 
         // See if the user wants to override the default base config
         if (!pathToConfig.isEmpty()) {

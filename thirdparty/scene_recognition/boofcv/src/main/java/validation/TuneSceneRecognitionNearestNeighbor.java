@@ -1,7 +1,6 @@
 package validation;
 
 import boofcv.abst.scene.ConfigFeatureToSceneRecognition;
-import boofcv.alg.scene.bow.BowDistanceTypes;
 import boofcv.io.UtilIO;
 import boofcv.misc.BoofMiscOps;
 import boofcv.struct.ConfigGeneratorGrid;
@@ -20,17 +19,19 @@ public class TuneSceneRecognitionNearestNeighbor extends TuneSceneRecognition {
     @Option(name = "--Task", usage = "Which task should it run. DICTIONARY, SURF_RND, SIFT_RND, SURF_VEC, SIFT_VEC, MINIMUM_DEPTH")
     String taskName = Task.DICTIONARY.name();
 
+    /**
+     * Course search on number of words and NN accuracy
+     */
     public void searchDictionaryGrid() {
         ConfigGeneratorGrid<ConfigFeatureToSceneRecognition> generator =
                 new ConfigGeneratorGrid<>(0xDEADBEEF, ConfigFeatureToSceneRecognition.class);
 
         generator.setRangeDiscretization(20);
-        generator.rangeOfIntegers("recognizeNeighbor.numberOfWords", 1000, 100_000);
-        generator.setOfEnums("recognizeNeighbor.distanceNorm", BowDistanceTypes.values());
+        generator.setOfIntegers("recognizeNeighbor.numberOfWords", 100,200,500,1000,2000,5000,10_000,20_000,50_000,100_0000);
+        generator.setOfIntegers("recognizeNeighbor.nearestNeighbor.randomForest.maxNodesSearched", 100,200);
 
-        generator.initialize();
         generator.getConfigurationBase().typeRecognize = ConfigFeatureToSceneRecognition.Type.NEAREST_NEIGHBOR;
-
+        generator.initialize();
 
         // See if the user wants to override the default base config
         if (!pathToConfig.isEmpty()) {
