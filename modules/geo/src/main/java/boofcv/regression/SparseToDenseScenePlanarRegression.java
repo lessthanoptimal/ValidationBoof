@@ -68,9 +68,10 @@ public class SparseToDenseScenePlanarRegression<T extends ImageGray<T>>
         int totalPoints = 0;
         int totalRegions = 0;
         int totalSkippedImages = 0;
-        double averageMeanError = 0;
+        DogArray_F64 meanErrors = new DogArray_F64();
         int totalScenarios = 0;
         int totalFailed = 0;
+        int totalCrashed = 0;
 
         for (File dir : children) {
             if (!dir.isDirectory()) {
@@ -99,22 +100,25 @@ public class SparseToDenseScenePlanarRegression<T extends ImageGray<T>>
                 totalPoints += evaluator.allScore.count;
                 totalRegions += evaluator.totalRegions;
                 totalSkippedImages += evaluator.totalSkippedImages;
-                averageMeanError += evaluator.allScore.mean;
+                meanErrors.add(evaluator.allScore.mean);
             } catch (Exception e) {
+                totalCrashed++;
                 out.printf("%-30s CRASHED\n",dir.getName());
                 errorLog.println("Log Name: " + dir.getName());
                 e.printStackTrace(errorLog);
                 e.printStackTrace(System.err);
             }
         }
+        meanErrors.sort();
         out.println();
         out.println("Summary:");
         out.println("  scenarios         = " + totalScenarios);
         out.println("  failed            = " + totalFailed);
+        out.println("  crashed           = " + totalCrashed);
         out.println("  points inside     = " + totalPoints);
         out.println("  regions evaluated = " + totalRegions);
         out.println("  skipped views     = " + totalSkippedImages);
-        out.println("  mean error (px)   = " + averageMeanError / totalScenarios);
+        out.println("  median error (px) = " + meanErrors.getFraction(0.5));
         out.close();
 
         outputRuntime.out.println();

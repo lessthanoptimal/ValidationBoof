@@ -3,10 +3,10 @@
 
 default
 
-  steps_reg_01                   61337
-  steps_wide_01                  33133
-  steps_zoom_01                  22302
+  bucket_loop_01                 113379
+  steps_reg_01                   63020
+  steps_wide_01                  34042
 
 Summary:
                               N       Mean      P05      P50      P95      MAX
-  summary                       3    38924    22302    33133    33133    61337
+  summary                       3    70147    34042    63020    63020   113379
