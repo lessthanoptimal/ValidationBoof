@@ -3,18 +3,18 @@
 
 #           Dataset,           Views, Point, mean,  p50,  p95, max
 #                              Used,  Count, (px), (px), (px), (px)
-bucket_loop_01                  72.0%  9580 2420.7   1.7  62.3 16920794.9
-steps_reg_01                    36.0%  1707   2.4   0.5   1.8 822.3
-steps_wide_01                  100.0%  7431   0.8   0.4   1.4  95.0
-steps_zoom_01                  FAILED
+bucket_loop_01                  70.7% 11106   2.1   0.9   3.2 381.7
+steps_reg_01                    64.0%  3629   1.1   0.4   1.6 190.1
+steps_wide_01                  100.0%  9168   0.8   0.4   1.4  94.6
+steps_zoom_01                   44.4%   399   1.1   0.7   3.5   7.0
 towel_01                       FAILED
-towel_box                      CRASHED
+towel_box                      FAILED
 
 Summary:
-  scenarios         = 3
+  scenarios         = 4
   failed            = 2
-  crashed           = 1
-  points inside     = 18718
-  regions evaluated = 87
-  skipped views     = 14
-  median error (px) = 2.3646183724922536
+  crashed           = 0
+  points inside     = 24302
+  regions evaluated = 111
+  skipped views     = 17
+  median error (px) = 1.0780964996638012
