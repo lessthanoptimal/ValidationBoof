@@ -2,8 +2,9 @@
 # Elapsed time in milliseconds
 
 default
-  steps_wide_01                  37512
+
+  steps_wide_01                  8308
 
 Summary:
                               N       Mean      P05      P50      P95      MAX
-  summary                       1    37512    37512    37512    37512    37512
+  summary                       1     8308     8308     8308     8308     8308

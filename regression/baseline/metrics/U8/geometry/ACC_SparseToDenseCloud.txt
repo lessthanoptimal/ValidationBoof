@@ -8,7 +8,8 @@ steps_wide_01                     2384   0.6   0.4   1.7 107.5
 Summary:
   scenarios         = 1
   failed            = 0
+  crashed           = 0
   points inside     = 2384886
   regions evaluated = 40
   skipped views     = 0
-  mean error (px)   = 0.584198722519876
+  median error (px) = 0.584198722519876
