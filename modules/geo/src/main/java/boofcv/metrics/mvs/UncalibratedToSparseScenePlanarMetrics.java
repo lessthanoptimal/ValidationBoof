@@ -7,6 +7,8 @@ import boofcv.abst.tracker.PointTracker;
 import boofcv.alg.geo.MultiViewOps;
 import boofcv.alg.similar.ConfigSimilarImagesSceneRecognition;
 import boofcv.alg.similar.ConfigSimilarImagesTrackThenMatch;
+import boofcv.alg.similar.SimilarImagesSceneRecognition;
+import boofcv.alg.similar.SimilarImagesTrackThenMatch;
 import boofcv.alg.structure.*;
 import boofcv.factory.scene.FactorySceneRecognition;
 import boofcv.factory.structure.ConfigEpipolarScore3D;
@@ -56,10 +58,10 @@ public class UncalibratedToSparseScenePlanarMetrics<T extends ImageGray<T>>
     SceneStructureMetric scene = null;
     List<ImageDimension> listDimensions = new ArrayList<>();
 
-    public double timeSimilarMS;
-    public double timePairwiseMS;
-    public double timeMetricMS;
-    public double timeBundleMS;
+    public long timeSimilarMS;
+    public long timePairwiseMS;
+    public long timeMetricMS;
+    public long timeBundleMS;
 
     public UncalibratedToSparseScenePlanarMetrics() {
         // TODO consider making all of this as default settings?
@@ -76,18 +78,19 @@ public class UncalibratedToSparseScenePlanarMetrics<T extends ImageGray<T>>
      * Processes an uncalibrated image sequence inside the directory and attempts to reconstruct it
      */
     public boolean processSequence(File directory) {
+        processingTimeMS = 0;
+        fractionReconstructed = 0;
+
         // Find all images inside the input directory
         List<String> imageNames = UtilIO.listSmartImages(directory.getPath(), true);
         if (imageNames.isEmpty())
             return false;
 
-        final var similarImages = FactorySceneReconstruction.createTrackThenMatch(configSimilarTracker, ImageType.SB_U8);
+        SimilarImagesTrackThenMatch<GrayU8,?> similarImages = FactorySceneReconstruction.createTrackThenMatch(configSimilarTracker, ImageType.SB_U8);
         PointTracker<GrayU8> tracker = FactoryPointTracker.tracker(configTracker, GrayU8.class, null);
-        var activeTracks = new ArrayList<PointTrack>();
+        List<PointTrack> activeTracks = new ArrayList<>();
 
-        fractionReconstructed = 0;
-
-        var images = new LoadFileImageSequence2<>(imageNames, ImageType.SB_U8);
+        LoadFileImageSequence2<GrayU8> images = new LoadFileImageSequence2<>(imageNames, ImageType.SB_U8);
 
         // Compute the sparse scene from the image sequence while noting how long it took
         long time0 = System.currentTimeMillis();
@@ -112,16 +115,17 @@ public class UncalibratedToSparseScenePlanarMetrics<T extends ImageGray<T>>
     }
 
     public boolean processUnordered(File directory) {
+        processingTimeMS = 0;
+        fractionReconstructed = 0;
+
         // Find all images inside the input directory
         List<String> imageNames = UtilIO.listSmartImages(directory.getPath(), true);
         if (imageNames.isEmpty())
             return false;
 
-        final var similarImages = FactorySceneReconstruction.createSimilarImages(configSimilarUnordered, ImageType.SB_U8);
+        SimilarImagesSceneRecognition<GrayU8,?> similarImages = FactorySceneReconstruction.createSimilarImages(configSimilarUnordered, ImageType.SB_U8);
 
-        fractionReconstructed = 0;
-
-        var images = new LoadFileImageSequence2<>(imageNames, ImageType.SB_U8);
+        LoadFileImageSequence2<GrayU8> images = new LoadFileImageSequence2<>(imageNames, ImageType.SB_U8);
 
         // Compute the sparse scene from the image sequence while noting how long it took
         long time0 = System.currentTimeMillis();
@@ -168,7 +172,11 @@ public class UncalibratedToSparseScenePlanarMetrics<T extends ImageGray<T>>
         }
         computeScore(allErrors, allScore);
 
+        System.out.printf("Time (s): similar=%.1f pairwise=%.1f metric=%.1f bundle=%.1f\n",
+                timeSimilarMS/1000.0, timePairwiseMS/1000.0, timeMetricMS/1000.0, timeBundleMS/1000.0);
+
         fractionReconstructed = image_to_viewSbaIdx.size() / (double) imageNames.size();
+        processingTimeMS += timeSimilarMS + timePairwiseMS + timeMetricMS + timeBundleMS;
         return true;
     }
 
@@ -186,7 +194,7 @@ public class UncalibratedToSparseScenePlanarMetrics<T extends ImageGray<T>>
     private @Nullable
     SceneWorkingGraph computeMetric() {
         out.println("  computing metric");
-        var metric = new MetricFromUncalibratedPairwiseGraph();
+        MetricFromUncalibratedPairwiseGraph metric = new MetricFromUncalibratedPairwiseGraph();
         metric.setVerbose(System.out, BoofMiscOps.hashSet(BoofVerbose.RECURSIVE));
 
         long time0 = System.currentTimeMillis();
@@ -200,7 +208,7 @@ public class UncalibratedToSparseScenePlanarMetrics<T extends ImageGray<T>>
 
     public boolean bundleAdjustmentRefine(SceneWorkingGraph working) {
         out.println("  computing final bundle adjustment");
-        var refine = new RefineMetricWorkingGraph();
+        RefineMetricWorkingGraph refine = new RefineMetricWorkingGraph();
         long time0 = System.currentTimeMillis();
         // Bundle adjustment is run twice, with the worse 5% of points discarded in an attempt to reduce noise
         refine.metricSba.keepFraction = 0.95;

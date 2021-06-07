@@ -46,7 +46,8 @@ public class UncalibratedSparseReconstructionPlanarRegression<T extends ImageGra
     public void process() throws IOException {
         outputRuntime = new RuntimeSummary();
         outputRuntime.initializeLog(directoryRuntime, getClass(), "RUN_NViewReconstruction.txt");
-        outputRuntime.out.println("default\n");
+        outputRuntime.out.println("default");
+        outputRuntime.out.printf("  %-30s %5s %7s %6s %6s %6s\n","","all","similar","pair","metric","sba");
 
         PrintStream out = new PrintStream(new File(directoryMetrics, "ACC_NViewReconstruction.txt"));
         BoofRegressionConstants.printGenerator(out, getClass());
@@ -116,7 +117,10 @@ public class UncalibratedSparseReconstructionPlanarRegression<T extends ImageGra
 
                 out.printf("%-30s %5.1f%% %6d %5.1f %5.1f %5.1f %5.1f\n",
                         dir.getName(), percentUsed, score.count, score.mean, score.p50, score.p95, score.p100);
-                outputRuntime.out.printf("  %-30s %d\n", dir.getName(), evaluator.processingTimeMS);
+                outputRuntime.out.printf("  %-30s %6.1f %6.1f %6.1f %6.1f %6.1f\n", dir.getName(),
+                        evaluator.processingTimeMS/1000.0,
+                        evaluator.timeSimilarMS/1000.0, evaluator.timePairwiseMS/1000.0,
+                        evaluator.timeMetricMS/1000.0, evaluator.timeBundleMS/1000.0);
                 runtimes.add(evaluator.processingTimeMS);
 
                 totalScenarios++;

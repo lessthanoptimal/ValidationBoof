@@ -3,8 +3,8 @@
 
 default
 
-  steps_wide_01                  6783
+  steps_wide_01                  6733
 
 Summary:
                               N       Mean      P05      P50      P95      MAX
-  summary                       1     6783     6783     6783     6783     6783
+  summary                       1     6733     6733     6733     6733     6733
