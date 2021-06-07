@@ -11,8 +11,8 @@ import java.io.IOException;
 import java.io.PrintStream;
 
 /**
- * Regression test to see if the results of calibration have changed.  Intrinsic parameters are estimated given a known
- * set of calibration points and the estiamted parameters are output.
+ * Regression test to see if the results of calibration have changed. Intrinsic parameters are estimated given a known
+ * set of calibration points and the estimated parameters are outputted.
  *
  * @author Peter Abeles
  */

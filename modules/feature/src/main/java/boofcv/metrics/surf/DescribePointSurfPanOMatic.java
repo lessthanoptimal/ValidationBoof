@@ -54,7 +54,7 @@ public class DescribePointSurfPanOMatic<II extends ImageGray<II>> extends Descri
 	}
 
 	/**
-	 * Create a SURF-64 descriptor.  See [1] for details.
+	 * Create a SURF-64 descriptor. See [1] for details.
 	 */
 	public DescribePointSurfPanOMatic(Class<II> imageType) {
 		this(4,5,2, 4.5 , true,imageType);
@@ -62,7 +62,7 @@ public class DescribePointSurfPanOMatic<II extends ImageGray<II>> extends Descri
 
 	/**
 	 * <p>
-	 * Computes the SURF descriptor for the specified interest point.  If the feature
+	 * Computes the SURF descriptor for the specified interest point. If the feature
 	 * goes outside of the image border (including convolution kernels) then null is returned.
 	 * </p>
 	 *

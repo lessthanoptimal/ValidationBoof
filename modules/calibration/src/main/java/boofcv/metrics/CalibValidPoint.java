@@ -4,7 +4,7 @@ import georegression.struct.point.Point2D_F64;
 import georegression.struct.point.Vector2D_F64;
 
 /**
- * Point which lies on the edge of a feature in the calibration target.  Vector says where the dark part should be.
+ * Point which lies on the edge of a feature in the calibration target. Vector says where the dark part should be.
  *
  * @author Peter Abeles
  */

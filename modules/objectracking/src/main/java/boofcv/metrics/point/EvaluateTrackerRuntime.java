@@ -95,7 +95,7 @@ public class EvaluateTrackerRuntime<T extends ImageGray<T>> implements Serializa
 	}
 
 	/**
-	 * Prints out the standard out and error from the slave and checks its health.  Exits if
+	 * Prints out the standard out and error from the slave and checks its health. Exits if
 	 * the slave has finished or is declared frozen.
 	 */
 	private double monitorSlave(Process pr, BufferedReader input, BufferedReader error)

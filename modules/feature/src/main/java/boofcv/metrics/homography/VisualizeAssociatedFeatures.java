@@ -107,7 +107,7 @@ public class VisualizeAssociatedFeatures {
 	public static void main( String args[] ) {
 		ScoreAssociation score = new ScoreAssociateEuclideanSq.F64();
 
-		// No backwards validation.  Want to show strength of descriptor and post processing validation
+		// No backwards validation. Want to show strength of descriptor and post processing validation
 		ConfigAssociateGreedy configGreedy = new ConfigAssociateGreedy();
 		configGreedy.forwardsBackwards = false;
 		configGreedy.maxErrorThreshold = -1;

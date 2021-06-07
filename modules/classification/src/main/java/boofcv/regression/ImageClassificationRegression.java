@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * This regression test is a change detection.  Makes sure it produces the same results as previous versions
+ * This regression test is a change detection. Makes sure it produces the same results as previous versions
  * but does not check the results quality.
  *
  * @author Peter Abeles
@@ -31,7 +31,7 @@ public class ImageClassificationRegression extends BaseRegression implements Ima
 	@Override
 	public void process(ImageDataType type) throws IOException {
 		if( type.isInteger() ) {
-			throw new ImageTypeNotSupportedException("Only F32 images supported.  Skipping");
+			throw new ImageTypeNotSupportedException("Only F32 images supported. Skipping");
 		}
 
 		RuntimeSummary runtime = new RuntimeSummary();
@@ -39,7 +39,7 @@ public class ImageClassificationRegression extends BaseRegression implements Ima
 
 		PrintStream out = new PrintStream(new File(directoryMetrics,"ACC_image_classification_change.txt"));
 		BoofRegressionConstants.printGenerator(out,getClass());
-		out.println("# Regression tests which outputs image classification results.  A change indicates");
+		out.println("# Regression tests which outputs image classification results. A change indicates");
 		out.println("# that the algorithm has changed in some way and should be inspected more closely.");
 
 		List<Info> classifiers = new ArrayList<>();

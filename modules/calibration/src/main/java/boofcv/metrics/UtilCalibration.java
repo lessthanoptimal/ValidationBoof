@@ -98,9 +98,9 @@ public class UtilCalibration {
 	}
 
 	/**
-	 * Converts a set of line segments into validation points.  It is assumed that each line
-	 * traces along a shape in a clock-wise direction.  Therefor the darkest part will be to
-	 * the line's right.  Sample points are not placed on edges since those tend to resolve poorly
+	 * Converts a set of line segments into validation points. It is assumed that each line
+	 * traces along a shape in a clock-wise direction. Therefor the darkest part will be to
+	 * the line's right. Sample points are not placed on edges since those tend to resolve poorly
 	 * on the image and the orientation becomes unclear, when looking at each line one at a time
 	 *
 	 */

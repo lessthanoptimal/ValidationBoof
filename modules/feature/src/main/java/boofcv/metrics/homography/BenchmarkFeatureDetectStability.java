@@ -83,7 +83,7 @@ public class BenchmarkFeatureDetectStability {
 	}
 
 	/**
-	 * Scans the directory for images with the specified suffix.  These names are
+	 * Scans the directory for images with the specified suffix. These names are
 	 * used to find all the description files.
 	 *
 	 * @param directory Directory containing images and description files.
@@ -108,7 +108,7 @@ public class BenchmarkFeatureDetectStability {
 	}
 
 	/**
-	 * For each input image it loads the specified descriptions.  These are then associated
+	 * For each input image it loads the specified descriptions. These are then associated
 	 * against each other and the results compared.
 	 *
 	 * @param algSuffix String used to identify feature description files.

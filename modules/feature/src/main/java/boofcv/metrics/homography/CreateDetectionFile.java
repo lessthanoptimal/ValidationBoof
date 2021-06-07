@@ -34,7 +34,7 @@ import java.io.PrintStream;
 
 
 /**
- * Detects the locations of features inside each image and saves to a file.  All the files
+ * Detects the locations of features inside each image and saves to a file. All the files
  * in a directory are processed that have the appropriate extension.
  *
  * @author Peter Abeles
@@ -56,7 +56,7 @@ public class CreateDetectionFile<T extends ImageGray<T>> {
 	 *
 	 * @param alg Algorithm used to detect interest points.
 	 * @param imageType Primitive of input image that is processed.
-	 * @param detectorName Name of the detector.  Put into output file name.
+	 * @param detectorName Name of the detector. Put into output file name.
 	 */
 	public CreateDetectionFile(InterestPointDetector<T> alg, OrientationImage<T> orientation,
 							   Class<T> imageType, String detectorName) {

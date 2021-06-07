@@ -14,7 +14,7 @@ import static boofcv.metrics.FiducialCommon.parseLandmarks;
 
 /**
  * Uses previously computed transforms from fiducial to camera to reproject corner points back onto the image.
- * It then matches these up with hand selected corners and see if there are matches.  Errors and types of
+ * It then matches these up with hand selected corners and see if there are matches. Errors and types of
  * mistakes are accumulated and printed out.
  *
  * @author Peter Abeles

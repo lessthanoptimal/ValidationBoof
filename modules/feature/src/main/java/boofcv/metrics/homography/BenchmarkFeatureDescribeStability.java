@@ -90,7 +90,7 @@ public class BenchmarkFeatureDescribeStability {
 	}
 
 	/**
-	 * Scans the directory for images with the specified suffix.  These names are
+	 * Scans the directory for images with the specified suffix. These names are
 	 * used to find all the description files.
 	 *
 	 * @param directory Directory containing images and description files.
@@ -116,7 +116,7 @@ public class BenchmarkFeatureDescribeStability {
 	}
 
 	/**
-	 * For each input image it loads the specified descriptions.  These are then associated
+	 * For each input image it loads the specified descriptions. These are then associated
 	 * against each other and the results compared.
 	 *
 	 * @param algSuffix String used to identify feature description files.
@@ -324,7 +324,7 @@ public class BenchmarkFeatureDescribeStability {
 	public static void main( String args[] ) throws FileNotFoundException {
 		double tolerance = 3;
 
-		// No backwards validation.  Want to show strength of descriptor and post processing validation
+		// No backwards validation. Want to show strength of descriptor and post processing validation
 		ConfigAssociateGreedy configGreedy = new ConfigAssociateGreedy();
 		configGreedy.forwardsBackwards = false;
 		configGreedy.maxErrorThreshold = -1;

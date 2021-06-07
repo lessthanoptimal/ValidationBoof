@@ -43,8 +43,8 @@ import static boofcv.regression.PointTrackerRegression.pathToData;
 
 
 /**
- * Post processes image sequences to create groups truth.  Image transforms are assumed to be well described
- * by a homography.  For each frame in the sequence lens distortion is first removed then the best fit
+ * Post processes image sequences to create groups truth. Image transforms are assumed to be well described
+ * by a homography. For each frame in the sequence lens distortion is first removed then the best fit
  * homography is found to the first frame in the sequence.
  *
  * @author Peter Abeles
@@ -170,7 +170,7 @@ public class CreateGroundTruth {
 	}
 
 	/**
-	 * Removes lens distortion from the input image.  Returns undistorted image.
+	 * Removes lens distortion from the input image. Returns undistorted image.
 	 */
 	private GrayF32 undistort( GrayF32 input ) {
 		GrayF32 ret = new GrayF32(input.width,input.height);

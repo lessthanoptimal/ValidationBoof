@@ -245,7 +245,7 @@ public class FiducialCommon {
 				if( expectedId[i] == id)
 					return widths[i];
 			}
-			// just return the first one as a default.  In all the current datasets  everything is the same size
+			// just return the first one as a default. In all the current datasets  everything is the same size
 			return widths[0];
 		}
 	}

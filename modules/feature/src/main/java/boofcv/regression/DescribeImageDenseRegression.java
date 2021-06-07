@@ -48,7 +48,7 @@ public class DescribeImageDenseRegression extends BaseRegression implements Imag
 		algs.add(new Info("SURF-S-"+type, FactoryDescribeImageDense.surfStable(new ConfigDenseSurfStable(sampling),imageType)));
 		algs.add(new Info("SIFT-"+type, FactoryDescribeImageDense.sift(new ConfigDenseSift(sampling),imageType)));
 
-		// provide a couple of convenient images.  Results shouldn't vary too much
+		// provide a couple of convenient images. Results shouldn't vary too much
 		List<String> images = new ArrayList<String>();
 		images.add("data/fiducials/square_border_image/standard/distance_angle/image00001.png");
 		images.add("data/calibration_mono/chessboard/distant/image00000.jpg");

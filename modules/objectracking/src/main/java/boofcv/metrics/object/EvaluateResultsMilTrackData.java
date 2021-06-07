@@ -26,7 +26,7 @@ public class EvaluateResultsMilTrackData {
 		File resultsFile = new File(inputName);
 
 		if( resultsFile.length() == 0 ) {
-			throw new RuntimeException(inputName+" is empty.  Skipping. MIL");
+			throw new RuntimeException(inputName+" is empty. Skipping. MIL");
 		}
 
 		BufferedReader readerTruth = new BufferedReader(new FileReader(path + "/" + dataName + "_gt.txt"));

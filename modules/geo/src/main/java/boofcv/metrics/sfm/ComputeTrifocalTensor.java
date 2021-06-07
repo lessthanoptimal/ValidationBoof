@@ -49,7 +49,7 @@ public class ComputeTrifocalTensor {
 	public static void saveTrifocal( TrifocalTensor tensor , File outputPath ) throws FileNotFoundException {
 		PrintStream out = new PrintStream(outputPath);
 
-		out.println("# BoofCV results file for trifocal tensor estimate. Row-major 3x3 matrices.  T1,T2,T3");
+		out.println("# BoofCV results file for trifocal tensor estimate. Row-major 3x3 matrices. T1,T2,T3");
 
 		outputMatrix3x3(tensor.T1, out);
 		outputMatrix3x3(tensor.T2, out);

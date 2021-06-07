@@ -21,8 +21,8 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * Estimates the location of fiducials in the input images.  Results are saved to the specified output directory.
- * The detector should be configured such that the fiducial is of size 1.  THe actual size will be read later on
+ * Estimates the location of fiducials in the input images. Results are saved to the specified output directory.
+ * The detector should be configured such that the fiducial is of size 1. THe actual size will be read later on
  * and the translation adjusted.
  *
  * @author Peter Abeles
@@ -98,7 +98,7 @@ public abstract class BaseEstimateSquareFiducialToCamera<T extends ImageBase<T>>
 			File outFile = new File(outputDirectory,inputName.substring(0,inputName.length()-3)+"csv");
 			PrintStream out = new PrintStream(outFile);
 			out.println("# Detected fiducials inside of "+inputName);
-			out.println("# 4 lines for each detection. line 1 = detected fiducial.  lines 2-4 = rigid body transform, row major");
+			out.println("# 4 lines for each detection. line 1 = detected fiducial. lines 2-4 = rigid body transform, row major");
 			Se3_F64 fiducialToSensor = new Se3_F64();
 			for (int i = 0; i < detector.totalFound(); i++) {
 				long which = detector.getId(i);
@@ -134,7 +134,7 @@ public abstract class BaseEstimateSquareFiducialToCamera<T extends ImageBase<T>>
 			files = UtilIO.listByPrefix(dataSetDir.getAbsolutePath(),null, "jpg");
 		}
 		if( files.size() == 0 ) {
-			throw new IllegalArgumentException("No images found.  paths correct?");
+			throw new IllegalArgumentException("No images found. paths correct?");
 		}
 		Collections.sort(files);
 

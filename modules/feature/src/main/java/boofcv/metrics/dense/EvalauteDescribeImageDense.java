@@ -70,7 +70,7 @@ public class EvalauteDescribeImageDense<T extends ImageBase<T>>
 
             original = copy(alg.getDescriptions());
 
-            // precompute the norm for original descriptors.  Used later to normalize the scale of a descriptor
+            // precompute the norm for original descriptors. Used later to normalize the scale of a descriptor
             magnitude.reset();
             for (int j = 0; j < original.size(); j++) {
                 TupleDesc_F64 t = original.get(j);

@@ -40,7 +40,7 @@ public class JavaRuntimeLauncher {
     boolean printAlive = true;
 
     /**
-     * Constructor.  Configures which library it is to be launching a class from/related to
+     * Constructor. Configures which library it is to be launching a class from/related to
      * @param pathJars List of paths to all the jars
      */
     public JavaRuntimeLauncher( List<String> pathJars ) {
@@ -57,7 +57,7 @@ public class JavaRuntimeLauncher {
     }
 
     /**
-     * Specifies the amount of time the process has to complete.  After which it is considered frozen and
+     * Specifies the amount of time the process has to complete. After which it is considered frozen and
      * will be killed
      * @param frozenTime time in milliseconds
      */
@@ -116,7 +116,7 @@ public class JavaRuntimeLauncher {
     }
 
     /**
-     * Prints out the standard out and error from the slave and checks its health.  Exits if
+     * Prints out the standard out and error from the slave and checks its health. Exits if
      * the slave has finished or is declared frozen.
      *
      * @return true if successful or false if it was forced to kill the slave because it was frozen

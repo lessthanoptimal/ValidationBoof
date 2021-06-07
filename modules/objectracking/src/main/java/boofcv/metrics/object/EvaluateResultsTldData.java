@@ -26,7 +26,7 @@ public class EvaluateResultsTldData {
 		try {
 			readerRect = new BufferedReader(new FileReader(inputFile));
 		} catch( IOException e ) {
-			throw new RuntimeException("TLD. Can't find file. Skipping.  "+inputFile);
+			throw new RuntimeException("TLD. Can't find file. Skipping. "+inputFile);
 		}
 
 		TldResults stats = new TldResults();

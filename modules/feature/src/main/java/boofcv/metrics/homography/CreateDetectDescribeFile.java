@@ -37,7 +37,7 @@ import java.io.PrintStream;
 
 
 /**
- * Detects the locations of features inside each image and saves to a file.  All the files
+ * Detects the locations of features inside each image and saves to a file. All the files
  * in a directory are processed that have the appropriate extension.
  *
  * @author Peter Abeles
@@ -60,7 +60,7 @@ public class CreateDetectDescribeFile<T extends ImageBase<T>> {
 	 * Configures detector
 	 *
 	 * @param factory Creates a DetectDescribePoint once image type is known
-	 * @param algName Name of the detector.  Put into output file name.
+	 * @param algName Name of the detector. Put into output file name.
 	 */
 	public CreateDetectDescribeFile(Factory factory,
 									ImageType.Family imageFamily, ImageDataType dataType, String algName) {

@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Converts from a list of points with shape indexes into a list of point sets.  Changed file format
+ * Converts from a list of points with shape indexes into a list of point sets. Changed file format
  * at one point
  *
  * @author Peter Abeles

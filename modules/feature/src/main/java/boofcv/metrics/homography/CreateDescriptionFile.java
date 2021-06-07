@@ -37,7 +37,7 @@ import java.util.List;
 
 
 /**
- * Creates a file describing each detected image feature.  The input directory is scanned for images
+ * Creates a file describing each detected image feature. The input directory is scanned for images
  * and when is found the specified detection file is loaded.
  *
  * @author Peter Abeles
@@ -57,7 +57,7 @@ public class CreateDescriptionFile<T extends ImageBase<T>> {
 	 *
 	 * @param describe Algorithm which creates a description for the feature.
 	 * @param imageType Type of input file.
-	 * @param descriptionName The name of the description algorithm.  This name is appended to output files.
+	 * @param descriptionName The name of the description algorithm. This name is appended to output files.
 	 */
 	public CreateDescriptionFile(DescribePointRadiusAngle<T,TupleDesc_F64> describe,
 								 ImageType<T> imageType,
@@ -68,12 +68,12 @@ public class CreateDescriptionFile<T extends ImageBase<T>> {
 	}
 
 	/**
-	 * Scans a all the files in a directory looking for matching image files.  Once a match is found it then
-	 * looks up the corresponding detection file.  For each input image a description of all the detected
+	 * Scans a all the files in a directory looking for matching image files. Once a match is found it then
+	 * looks up the corresponding detection file. For each input image a description of all the detected
 	 * features is saved to a file.
 	 *
 	 * @param pathToDirectory Location of the directory being searched.
-	 * @param imageSuffix Input image type.  All images have this suffix.
+	 * @param imageSuffix Input image type. All images have this suffix.
 	 * @param detectionSuffix Name of the detection log.
 	 * @throws java.io.FileNotFoundException
 	 */

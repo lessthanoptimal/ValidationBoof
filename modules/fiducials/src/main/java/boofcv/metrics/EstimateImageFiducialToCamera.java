@@ -17,8 +17,8 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- * Estimates the location of fiducials in the input images.  Results are saved to the specified output directory.
- * The detector should be configured such that the fiducial is of size 1.  THe actual size will be read later on
+ * Estimates the location of fiducials in the input images. Results are saved to the specified output directory.
+ * The detector should be configured such that the fiducial is of size 1. THe actual size will be read later on
  * and the translation adjusted.
  *
  * @author Peter Abeles

@@ -260,7 +260,7 @@ public class HandSelectPolygonRegionsApp extends StillImageLabelingBase {
             if (closestPt.distance2(target) > tol*tol)
                 continue;
 
-            // insert the point.  since a grow array is used this isn't trivial
+            // insert the point. since a grow array is used this isn't trivial
             polygon.vertexes.grow();
             for (int k = polygon.size()-1; k > i; k--) {
                 polygon.get(k).setTo(polygon.get(k-1));

@@ -173,7 +173,7 @@ public class FiducialRegression extends BaseRegression implements ImageRegressio
 			throws IOException
 	{
 		if( !dataSetsRoot.exists() ) {
-			errorLog.println("Can't compute \"always visible\" metrics.  Doesn't exist. "+dataSetsRoot.getPath());
+			errorLog.println("Can't compute \"always visible\" metrics. Doesn't exist. "+dataSetsRoot.getPath());
 			return;
 		}
 

@@ -1,13 +1,9 @@
 package boofcv.regression;
 
-import boofcv.alg.structure.ImageSequenceToSparseScene;
 import boofcv.common.*;
-import boofcv.factory.structure.FactorySceneReconstruction;
 import boofcv.io.UtilIO;
 import boofcv.metrics.mvs.UncalibratedToSparseScenePlanarMetrics;
-import boofcv.struct.image.ImageDataType;
 import boofcv.struct.image.ImageGray;
-import boofcv.struct.image.ImageType;
 import org.ddogleg.struct.DogArray_F64;
 
 import java.io.File;
@@ -17,17 +13,19 @@ import java.util.List;
 
 /**
  * Regression test for uncalibrated image scene reconstruction using planar labels
+ * <p>
+ * NOTE: This is a file based regression and not an image based regression even though it processes images. All
+ * the image processing has been tested elsewhere. The new stuff that is being tested here is all geometric code.
  *
  * @author Peter Abeles
  */
 public class UncalibratedSparseReconstructionPlanarRegression<T extends ImageGray<T>>
-        extends BaseRegression implements ImageRegression {
+        extends BaseRegression implements FileRegression {
 
-    public static final String PATH_DATA = "data/mvs";
+    public static final String PATH_SEQUENCE_DATA = "data/mvs/sequences";
+    public static final String PATH_UNORDERED_DATA = "data/mvs/unordered";
 
     RuntimeSummary outputRuntime;
-
-    ImageSequenceToSparseScene<T> alg;
 
     UncalibratedToSparseScenePlanarMetrics<T> evaluator = new UncalibratedToSparseScenePlanarMetrics<>();
 
@@ -35,9 +33,17 @@ public class UncalibratedSparseReconstructionPlanarRegression<T extends ImageGra
         super(BoofRegressionConstants.TYPE_GEOMETRY);
     }
 
-    @Override
-    public void process(ImageDataType type) throws IOException {
+    DogArray_F64 runtimes = new DogArray_F64();
+    DogArray_F64 meanErrors = new DogArray_F64();
+    int totalPoints = 0;
+    int totalRegions = 0;
+    int totalSkippedImages = 0;
+    int totalScenarios = 0;
+    int totalFailed = 0;
+    int totalCrashed = 0;
 
+    @Override
+    public void process() throws IOException {
         outputRuntime = new RuntimeSummary();
         outputRuntime.initializeLog(directoryRuntime, getClass(), "RUN_NViewReconstruction.txt");
         outputRuntime.out.println("default\n");
@@ -46,66 +52,27 @@ public class UncalibratedSparseReconstructionPlanarRegression<T extends ImageGra
         BoofRegressionConstants.printGenerator(out, getClass());
         out.println("# Uncalibrated Multi-View Sparse Reconstruction using Planar Regions");
         out.println();
-        out.println("#           Dataset,           Views, Point, mean,  p50,  p95, max");
-        out.println("#                              Used,  Count, (px), (px), (px), (px)");
-
-        Class<T> imageType = ImageDataType.typeToSingleClass(type);
-//        ConfigSequenceToSparseScene config = new ConfigSequenceToSparseScene();
-//        config.pairwise.score.type = ConfigEpipolarScore3D.Type.FUNDAMENTAL_ERROR;
-        alg = FactorySceneReconstruction.sequenceToSparseScene(null, ImageType.single(imageType));
-
-        // Load all the data directories
-        File inputDir = new File(PATH_DATA);
-        List<File> children = UtilIO.listFilesSorted(inputDir);
-        if (children.isEmpty()) {
-            errorLog.println("No input directories found! path=" + inputDir.getPath());
-            return;
-        }
+        out.println("#           Dataset,           Views,  Point, mean,  p50,  p95, max");
+        out.println("#                              Used,   Count, (px), (px), (px), (px)");
 
         // Point output to correct location
         evaluator.err = errorLog;
 
-        DogArray_F64 runtimes = new DogArray_F64();
-        int totalPoints = 0;
-        int totalRegions = 0;
-        int totalSkippedImages = 0;
-        DogArray_F64 meanErrors = new DogArray_F64();
-        int totalScenarios = 0;
-        int totalFailed = 0;
-        int totalCrashed = 0;
+        runtimes.reset();
+        meanErrors.reset();
+        totalPoints = 0;
+        totalRegions = 0;
+        totalSkippedImages = 0;
+        totalScenarios = 0;
+        totalFailed = 0;
+        totalCrashed = 0;
 
-        for (File dir : children) {
-            if (!dir.isDirectory()) {
-                continue;
-            }
-            System.out.println("Evaluating " + dir.getName());
-            try {
-                if (!evaluator.process(dir, alg)) {
-                    totalFailed++;
-                    out.printf("%-30s FAILED\n", dir.getName());
-                    continue;
-                }
-                UncalibratedToSparseScenePlanarMetrics.RegionScore score = evaluator.allScore;
-                double percentUsed = evaluator.fractionReconstructed * 100.0;
+        // Load all the data directories
+        if (processDirectory(PATH_SEQUENCE_DATA, out, (dir) -> evaluator.processSequence(dir)))
+            return;
 
-                out.printf("%-30s %5.1f%% %5d %5.1f %5.1f %5.1f %5.1f\n",
-                        dir.getName(), percentUsed, score.count, score.mean, score.p50, score.p95, score.p100);
-                outputRuntime.out.printf("  %-30s %d\n", dir.getName(), evaluator.processingTimeMS);
-                runtimes.add(evaluator.processingTimeMS);
-
-                totalScenarios++;
-                totalPoints += evaluator.allScore.count;
-                totalRegions += evaluator.totalRegions;
-                totalSkippedImages += evaluator.totalSkippedImages;
-                meanErrors.add(evaluator.allScore.mean);
-            } catch (Exception e) {
-                totalCrashed++;
-                out.printf("%-30s CRASHED\n", dir.getName());
-                errorLog.println("Log Name: " + dir.getName());
-                e.printStackTrace(errorLog);
-                e.printStackTrace(System.err);
-            }
-        }
+        if (processDirectory(PATH_UNORDERED_DATA, out, (dir) -> evaluator.processUnordered(dir)))
+            return;
 
         meanErrors.sort();
         out.println();
@@ -125,9 +92,56 @@ public class UncalibratedSparseReconstructionPlanarRegression<T extends ImageGra
         outputRuntime.out.close();
     }
 
+    private boolean processDirectory(String dataPath, PrintStream out, ProcessDirectory<File> op) {
+        File inputDir = new File(dataPath);
+        List<File> children = UtilIO.listFilesSorted(inputDir);
+        if (children.isEmpty()) {
+            errorLog.println("No input directories found! path=" + inputDir.getPath());
+            return true;
+        }
+
+        for (File dir : children) {
+            if (!dir.isDirectory()) {
+                continue;
+            }
+            System.out.println("Evaluating " + dir.getName());
+            try {
+                if (!op.process(dir)) {
+                    totalFailed++;
+                    out.printf("%-30s FAILED\n", dir.getName());
+                    continue;
+                }
+                UncalibratedToSparseScenePlanarMetrics.RegionScore score = evaluator.allScore;
+                double percentUsed = evaluator.fractionReconstructed * 100.0;
+
+                out.printf("%-30s %5.1f%% %6d %5.1f %5.1f %5.1f %5.1f\n",
+                        dir.getName(), percentUsed, score.count, score.mean, score.p50, score.p95, score.p100);
+                outputRuntime.out.printf("  %-30s %d\n", dir.getName(), evaluator.processingTimeMS);
+                runtimes.add(evaluator.processingTimeMS);
+
+                totalScenarios++;
+                totalPoints += evaluator.allScore.count;
+                totalRegions += evaluator.totalRegions;
+                totalSkippedImages += evaluator.totalSkippedImages;
+                meanErrors.add(evaluator.allScore.mean);
+            } catch (Exception e) {
+                totalCrashed++;
+                out.printf("%-30s CRASHED\n", dir.getName());
+                errorLog.println("Log Name: " + dir.getName());
+                e.printStackTrace(errorLog);
+                e.printStackTrace(System.err);
+            }
+        }
+        return false;
+    }
+
+    @FunctionalInterface
+    interface ProcessDirectory<T> {
+        boolean process(T object);
+    }
+
     public static void main(String[] args) throws IOException, IllegalAccessException, InstantiationException, ClassNotFoundException {
         BoofRegressionConstants.clearCurrentResults();
-//        RegressionRunner.main(new String[]{UncalibratedSparseReconstructionPlanarRegression.class.getName(),ImageDataType.F32.toString()});
-        RegressionRunner.main(new String[]{UncalibratedSparseReconstructionPlanarRegression.class.getName(), ImageDataType.U8.toString()});
+        RegressionRunner.main(new String[]{UncalibratedSparseReconstructionPlanarRegression.class.getName()});
     }
 }

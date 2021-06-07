@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Classifies images and saves the results.  Can be used to detect changes.
+ * Classifies images and saves the results. Can be used to detect changes.
  *
  * @author Peter Abeles
  */

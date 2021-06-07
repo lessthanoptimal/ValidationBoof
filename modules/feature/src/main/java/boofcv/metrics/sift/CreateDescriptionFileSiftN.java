@@ -35,7 +35,7 @@ public class CreateDescriptionFileSiftN extends CreateDescriptionFile<GrayF32> {
 	/**
 	 * Defines the set of images and detection files that are to be processed.
 	 *
-	 * @param descriptionName The name of the description algorithm.  This name is appended to output files.
+	 * @param descriptionName The name of the description algorithm. This name is appended to output files.
 	 */
 	public CreateDescriptionFileSiftN(String descriptionName) {
 		super(FactorySift.createDescriptor(), ImageType.single(GrayF32.class), descriptionName);

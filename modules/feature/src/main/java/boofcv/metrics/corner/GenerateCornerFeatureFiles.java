@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Generates files which list all the detected features.  Basically creates ground truth for changes
+ * Generates files which list all the detected features. Basically creates ground truth for changes
  * to the algortihms
  *
  * @author Peter Abeles

@@ -57,7 +57,7 @@ public class GenerateTrifocalObservations {
 		DMatrixRMaj P3 = PerspectiveOps.createCameraMatrix(se3.R, se3.T, K, null);
 
 		PrintStream outCamera = new PrintStream("camera_matrix.txt");
-		outCamera.println("# Trifocal Test: Camera matrices 3x4 in row major order.  Camera 1,2,3");
+		outCamera.println("# Trifocal Test: Camera matrices 3x4 in row major order. Camera 1,2,3");
 		printCameraMatrix(P1, outCamera);
 		printCameraMatrix(P2, outCamera);
 		printCameraMatrix(P3, outCamera);

@@ -21,7 +21,7 @@ import java.util.List;
  * True positives: Any detected fiducial which matched a hand selected one within tolerance.
  *                 * correct: Correct ID and orientation
  *                 * wrong orientation: Correct ID but had to be rotated to match
- *                 * wrong ID: The wrong ID was assigned to it.  Orientation isn't considered
+ *                 * wrong ID: The wrong ID was assigned to it. Orientation isn't considered
  * False Positive: A detected fiducial which did not match any labeled fiducials in the image.
  * False Negative: No detected fiducial was found to be within tolerance.
  *
@@ -37,7 +37,7 @@ public abstract class BaseEvaluateFiducialToCamera implements FiducialEvaluateIn
 	CameraPinholeBrown intrinsic;
 	// ID's of the detected fiducials
 	long[] expected;
-	// The number of times a fiducial was detected.  This will include wrong ID's and orientations
+	// The number of times a fiducial was detected. This will include wrong ID's and orientations
 	long[] fiducialDetected;
 
 	@Override
@@ -54,7 +54,7 @@ public abstract class BaseEvaluateFiducialToCamera implements FiducialEvaluateIn
 	Vector3D_F64[] fiducialNormal;
 	Se3_F64[] fiducialPose;
 
-	// if a fiducial was detected it's quad is stored here.  If there are multiple detections
+	// if a fiducial was detected it's quad is stored here. If there are multiple detections
 	// the only the first detection is saved.
 	List<Point2D_F64>[] detectedCorners;
 
@@ -89,7 +89,7 @@ public abstract class BaseEvaluateFiducialToCamera implements FiducialEvaluateIn
 	// NOTE: Duplicate refers to physical fuducial not duplicate IDs
 	int totalDuplicates;
 	// transform from libraries fiducial coordinate system (prior to scaling by its width) into
-	// the standard one.  Which is +z up, origin at fiducial center. sides aligned along axises, +y top +x right
+	// the standard one. Which is +z up, origin at fiducial center. sides aligned along axises, +y top +x right
 	private Se3_F64 transformToStandard;
 
 	public BaseEvaluateFiducialToCamera() {
@@ -311,7 +311,7 @@ public abstract class BaseEvaluateFiducialToCamera implements FiducialEvaluateIn
 	public double scoreInOrder( List<Point2D_F64> found , List<Point2D_F64> truth , double errors[] ) {
 		double meanError = 0;
 		if( truth.size() != found.size() ) {
-			System.out.println("Egads.  Incorrect number of control points in visible file? "
+			System.out.println("Egads. Incorrect number of control points in visible file? "
 					+truth.size()+" vs "+found.size());
 		}
 		for (int i = 0; i < found.size(); i++) {

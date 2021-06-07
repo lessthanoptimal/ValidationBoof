@@ -43,7 +43,7 @@ public class EvaluateStaticFiducialSequence extends BaseEvaluateFiducialToCamera
 		if( !justSummary )
 			outputResults.println("# (file) (detected ID) (matched id) (out of order) (match pixel error)");
 
-		// list of all detections for each fiducial.  used to compute precision
+		// list of all detections for each fiducial. used to compute precision
 		List<List<Point2D_F64>>[] allDetections = new ArrayList[expected.length];
 		for (int i = 0; i < allDetections.length; i++) {
 			allDetections[i] = new ArrayList<>();
@@ -177,7 +177,7 @@ public class EvaluateStaticFiducialSequence extends BaseEvaluateFiducialToCamera
 	}
 
 	/**
-	 * Computes the precision by finding the average corner for each detection.  Then it computes
+	 * Computes the precision by finding the average corner for each detection. Then it computes
 	 * the error for all corners
 	 */
 	public static DogArray_F64 computePrecision(List<List<Point2D_F64>>[] allDetections) {
