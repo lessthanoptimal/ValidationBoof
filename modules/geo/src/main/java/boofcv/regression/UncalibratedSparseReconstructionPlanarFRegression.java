@@ -19,7 +19,7 @@ import java.util.List;
  *
  * @author Peter Abeles
  */
-public class UncalibratedSparseReconstructionPlanarRegression<T extends ImageGray<T>>
+public class UncalibratedSparseReconstructionPlanarFRegression<T extends ImageGray<T>>
         extends BaseRegression implements FileRegression {
 
     public static final String PATH_SEQUENCE_DATA = "data/mvs/sequences";
@@ -29,7 +29,7 @@ public class UncalibratedSparseReconstructionPlanarRegression<T extends ImageGra
 
     UncalibratedToSparseScenePlanarMetrics<T> evaluator = new UncalibratedToSparseScenePlanarMetrics<>();
 
-    public UncalibratedSparseReconstructionPlanarRegression() {
+    public UncalibratedSparseReconstructionPlanarFRegression() {
         super(BoofRegressionConstants.TYPE_GEOMETRY);
     }
 
@@ -146,6 +146,6 @@ public class UncalibratedSparseReconstructionPlanarRegression<T extends ImageGra
 
     public static void main(String[] args) throws IOException, IllegalAccessException, InstantiationException, ClassNotFoundException {
         BoofRegressionConstants.clearCurrentResults();
-        RegressionRunner.main(new String[]{UncalibratedSparseReconstructionPlanarRegression.class.getName()});
+        RegressionRunner.main(new String[]{UncalibratedSparseReconstructionPlanarFRegression.class.getName()});
     }
 }
