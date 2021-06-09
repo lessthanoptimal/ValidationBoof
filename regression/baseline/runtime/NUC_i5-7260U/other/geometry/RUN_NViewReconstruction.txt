@@ -1,0 +1,15 @@
+# GENERATOR UncalibratedSparseReconstructionPlanarFRegression
+# Elapsed time in milliseconds
+
+default
+                                   all similar   pair metric    sba
+  bucket_loop_01                  257.4   22.5  189.9   41.8    3.2
+  steps_reg_01                    190.5   12.5  162.0   13.8    2.2
+  steps_wide_01                    45.9    4.5   34.1    6.2    1.2
+  steps_zoom_01                   116.3    8.9   77.4   22.9    7.1
+  drone_buildings_01              366.4   14.1  350.3    2.0    0.1
+  drone_park_01                   300.6   12.4  262.8   23.4    1.9
+
+Summary:
+                              N       Mean      P05      P50      P95      MAX
+  summary                       6   212862    45946   190516   300580   366433

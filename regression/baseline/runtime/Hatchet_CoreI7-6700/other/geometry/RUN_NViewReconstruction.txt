@@ -1,4 +1,4 @@
-# GENERATOR UncalibratedSparseReconstructionPlanarRegression
+# GENERATOR UncalibratedSparseReconstructionPlanarFRegression
 # Elapsed time in milliseconds
 
 default

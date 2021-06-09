@@ -1,4 +1,4 @@
-# GENERATOR UncalibratedSparseReconstructionPlanarRegression
+# GENERATOR UncalibratedSparseReconstructionPlanarFRegression
 # Uncalibrated Multi-View Sparse Reconstruction using Planar Regions
 
 #           Dataset,           Views,  Point, mean,  p50,  p95, max

@@ -1,10 +1,10 @@
 ---- Native Access Info
 OS: Ubuntu 16.04.7 LTS
 CPU: Intel(R) Core(TM) i5-7260U CPU @ 2.20GHz
-Ave Load: 1m=3.23 5m=2.27 15m=0.99
+Ave Load: 1m=1.13 5m=0.63 15m=0.24
 ----
 Runtime.getRuntime().availableProcessors(): 4
-Runtime.getRuntime().freeMemory(): 252618464
+Runtime.getRuntime().freeMemory(): 252620504
 Runtime.getRuntime().totalMemory(): 264241152
 =========== java.specification.version
 14
@@ -25,7 +25,7 @@ Azul Systems, Inc.
 =========== sun.arch.data.model
 64
 =========== os.version
-4.15.0-140-generic
+4.15.0-142-generic
 =========== java.runtime.name
 OpenJDK Runtime Environment
 =========== file.encoding
@@ -47,7 +47,7 @@ US
 =========== sun.boot.library.path
 /opt/jdk/zulu14.28.21-ca-jdk14.0.1-linux_x64/lib
 =========== sun.java.command
-regression.jar
+regression.jar -t UncalibratedSparseReconstructionPlanarFRegression
 =========== java.vendor.url.bug
 http://www.azulsystems.com/support/
 =========== java.io.tmpdir
