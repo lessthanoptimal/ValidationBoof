@@ -23,6 +23,23 @@ allprojects{
         maven { url = "https://oss.sonatype.org/content/repositories/snapshots/" }
     }
 
+    java {
+        withJavadocJar()
+        withSourcesJar()
+        toolchain { languageVersion = JavaLanguageVersion.of(15) }
+    }
+
+    // Prevents tons of errors if someone is using ASCII
+    tasks.withType(JavaCompile).configureEach { options.encoding = "UTF-8" }
+    // Creates Java 8 byte code
+    tasks.withType(JavaCompile).configureEach { options.release = 8 }
+
+    javadoc {
+        configure(options) {
+            failOnError = false
+        }
+    }
+
     dependencies {
         api files("$project.rootDir/lib/ProjectBUBO.jar")
 
@@ -142,5 +159,5 @@ dependencies {
 
 wrapper {
     distributionType = Wrapper.DistributionType.BIN
-    gradleVersion = '6.4.1'
+    gradleVersion = '6.8.3'
 }

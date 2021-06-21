@@ -109,7 +109,7 @@ public class UncalibratedSparseReconstructionPlanarFRegression<T extends ImageGr
             try {
                 if (!op.process(dir)) {
                     totalFailed++;
-                    out.printf("%-30s FAILED\n", dir.getName());
+                    out.printf("%-30s EXCEPTION_LOOK_AT_LOG\n", dir.getName());
                     continue;
                 }
                 UncalibratedToSparseScenePlanarMetrics.RegionScore score = evaluator.allScore;

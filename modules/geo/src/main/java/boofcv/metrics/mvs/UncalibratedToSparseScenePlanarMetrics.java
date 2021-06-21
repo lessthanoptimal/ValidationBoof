@@ -11,7 +11,6 @@ import boofcv.alg.similar.SimilarImagesSceneRecognition;
 import boofcv.alg.similar.SimilarImagesTrackThenMatch;
 import boofcv.alg.structure.*;
 import boofcv.factory.scene.FactorySceneRecognition;
-import boofcv.factory.structure.ConfigEpipolarScore3D;
 import boofcv.factory.structure.ConfigGeneratePairwiseImageGraph;
 import boofcv.factory.structure.FactorySceneReconstruction;
 import boofcv.factory.tracker.ConfigPointTracker;
@@ -20,7 +19,6 @@ import boofcv.io.UtilIO;
 import boofcv.io.wrapper.images.LoadFileImageSequence2;
 import boofcv.misc.BoofMiscOps;
 import boofcv.struct.image.GrayU8;
-import boofcv.struct.image.ImageDimension;
 import boofcv.struct.image.ImageGray;
 import boofcv.struct.image.ImageType;
 import georegression.struct.point.Point3D_F64;
@@ -54,9 +52,9 @@ public class UncalibratedToSparseScenePlanarMetrics<T extends ImageGray<T>>
 
     // Storage for intermediate results
     PairwiseImageGraph pairwise = null;
-    LookUpSimilarImages similarImages;
+    LookUpSimilarImages dbSimilar;
+    LookUpCameraInfo dbCams;
     SceneStructureMetric scene = null;
-    List<ImageDimension> listDimensions = new ArrayList<>();
 
     public long timeSimilarMS;
     public long timePairwiseMS;
@@ -64,14 +62,6 @@ public class UncalibratedToSparseScenePlanarMetrics<T extends ImageGray<T>>
     public long timeBundleMS;
 
     public UncalibratedToSparseScenePlanarMetrics() {
-        // TODO consider making all of this as default settings?
-        configSimilarTracker.recognizeNister2006.learningMinimumPointsForChildren.setFixed(20);
-        configSimilarUnordered.recognizeNister2006.learningMinimumPointsForChildren.setFixed(20);
-
-        configPairwise.score.type = ConfigEpipolarScore3D.Type.FUNDAMENTAL_ERROR;
-        configPairwise.score.typeErrors.minimumInliers.setRelative(0.5, 50);
-        configPairwise.score.typeErrors.maxRatioScore = 10.0;
-        configPairwise.score.ransacF.inlierThreshold = 2.0;
     }
 
     /**
@@ -86,7 +76,7 @@ public class UncalibratedToSparseScenePlanarMetrics<T extends ImageGray<T>>
         if (imageNames.isEmpty())
             return false;
 
-        SimilarImagesTrackThenMatch<GrayU8,?> similarImages = FactorySceneReconstruction.createTrackThenMatch(configSimilarTracker, ImageType.SB_U8);
+        SimilarImagesTrackThenMatch<GrayU8, ?> similarImages = FactorySceneReconstruction.createTrackThenMatch(configSimilarTracker, ImageType.SB_U8);
         PointTracker<GrayU8> tracker = FactoryPointTracker.tracker(configTracker, GrayU8.class, null);
         List<PointTrack> activeTracks = new ArrayList<>();
 
@@ -94,22 +84,20 @@ public class UncalibratedToSparseScenePlanarMetrics<T extends ImageGray<T>>
 
         // Compute the sparse scene from the image sequence while noting how long it took
         long time0 = System.currentTimeMillis();
+        similarImages.initialize(images.getWidth(), images.getHeight());
+        dbCams = new LookUpCameraInfo();
+        dbCams.addCameraCanonical(images.getWidth(), images.getHeight(), 60);
         while (images.hasNext()) {
             GrayU8 gray = images.next();
-            if (images.getFrameNumber() == 0) {
-                similarImages.initialize(gray.width, gray.height);
-            }
-
             tracker.process(gray);
             tracker.spawnTracks();
             tracker.getActiveTracks(activeTracks);
             similarImages.processFrame(gray, activeTracks, tracker.getFrameID());
-
-            listDimensions.add(new ImageDimension(gray.width, gray.height));
+            dbCams.addView(similarImages.frames.getTail().frameID, 0);
         }
         similarImages.finishedTracking();
         timeSimilarMS = System.currentTimeMillis() - time0;
-        this.similarImages = similarImages;
+        this.dbSimilar = similarImages;
 
         return computeReconstruction(directory, imageNames);
     }
@@ -123,24 +111,23 @@ public class UncalibratedToSparseScenePlanarMetrics<T extends ImageGray<T>>
         if (imageNames.isEmpty())
             return false;
 
-        SimilarImagesSceneRecognition<GrayU8,?> similarImages = FactorySceneReconstruction.createSimilarImages(configSimilarUnordered, ImageType.SB_U8);
+        SimilarImagesSceneRecognition<GrayU8, ?> similarImages = FactorySceneReconstruction.createSimilarImages(configSimilarUnordered, ImageType.SB_U8);
 
         LoadFileImageSequence2<GrayU8> images = new LoadFileImageSequence2<>(imageNames, ImageType.SB_U8);
 
         // Compute the sparse scene from the image sequence while noting how long it took
         long time0 = System.currentTimeMillis();
+        dbCams = new LookUpCameraInfo();
+        dbCams.addCameraCanonical(images.getWidth(), images.getHeight(), 60);
         while (images.hasNext()) {
-            while (images.hasNext()) {
-                GrayU8 gray = images.next();
-                similarImages.addImage(images.getFrameNumber() + "", gray);
-                listDimensions.add(new ImageDimension(gray.width, gray.height));
-            }
-
-            similarImages.fixate();
+            GrayU8 gray = images.next();
+            String viewID = images.getFrameNumber() + "";
+            similarImages.addImage(viewID, gray);
+            dbCams.addView(viewID, 0);
         }
         similarImages.fixate();
         timeSimilarMS = System.currentTimeMillis() - time0;
-        this.similarImages = similarImages;
+        this.dbSimilar = similarImages;
 
         return computeReconstruction(directory, imageNames);
     }
@@ -172,8 +159,9 @@ public class UncalibratedToSparseScenePlanarMetrics<T extends ImageGray<T>>
         }
         computeScore(allErrors, allScore);
 
+        // Intentionally printing to stdout as this is logged in runtime
         System.out.printf("Time (s): similar=%.1f pairwise=%.1f metric=%.1f bundle=%.1f\n",
-                timeSimilarMS/1000.0, timePairwiseMS/1000.0, timeMetricMS/1000.0, timeBundleMS/1000.0);
+                timeSimilarMS / 1000.0, timePairwiseMS / 1000.0, timeMetricMS / 1000.0, timeBundleMS / 1000.0);
 
         fractionReconstructed = image_to_viewSbaIdx.size() / (double) imageNames.size();
         processingTimeMS += timeSimilarMS + timePairwiseMS + timeMetricMS + timeBundleMS;
@@ -186,7 +174,7 @@ public class UncalibratedToSparseScenePlanarMetrics<T extends ImageGray<T>>
         generatePairwise.setVerbose(System.out, BoofMiscOps.hashSet(BoofVerbose.RECURSIVE));
 
         long time0 = System.currentTimeMillis();
-        generatePairwise.process(similarImages);
+        generatePairwise.process(dbSimilar, dbCams);
         pairwise = generatePairwise.getGraph();
         timePairwiseMS = System.currentTimeMillis() - time0;
     }
@@ -198,7 +186,7 @@ public class UncalibratedToSparseScenePlanarMetrics<T extends ImageGray<T>>
         metric.setVerbose(System.out, BoofMiscOps.hashSet(BoofVerbose.RECURSIVE));
 
         long time0 = System.currentTimeMillis();
-        if (!metric.process(similarImages, pairwise)) {
+        if (!metric.process(dbSimilar, dbCams, pairwise)) {
             return null;
         }
         timeMetricMS = System.currentTimeMillis() - time0;
@@ -212,7 +200,7 @@ public class UncalibratedToSparseScenePlanarMetrics<T extends ImageGray<T>>
         long time0 = System.currentTimeMillis();
         // Bundle adjustment is run twice, with the worse 5% of points discarded in an attempt to reduce noise
         refine.metricSba.keepFraction = 0.95;
-        if (!refine.process(similarImages, working)) {
+        if (!refine.process(dbSimilar, working)) {
             return false;
         }
         scene = refine.metricSba.structure;
