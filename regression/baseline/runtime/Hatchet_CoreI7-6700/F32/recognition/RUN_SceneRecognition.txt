@@ -1,0 +1,16 @@
+# GENERATOR SceneRecognitionRegression
+# Elapsed time in seconds
+
+Nister2006
+                         NA   NQ training  adding  lookup
+  ukbench500            375  125    17.4    23.7     8.0
+
+NearestNeighbor
+                         NA   NQ training  adding  lookup
+  ukbench500            375  125   117.9    49.2    15.6
+
+
+Summary:
+                              N       Mean      P05      P50      P95      MAX
+  Nister2006                    1  49.0877  49.0877  49.0877  49.0877  49.0877
+  NearestNeighbor               1  182.681  182.681  182.681  182.681  182.681
