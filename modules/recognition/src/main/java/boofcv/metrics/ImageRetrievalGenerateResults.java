@@ -25,6 +25,9 @@ public class ImageRetrievalGenerateResults<T extends ImageBase<T>> {
 
     public PrintStream err = System.err;
 
+    public int countAdd;
+    public int countQuery;
+
     // Number of matches it will request
     public int querySize = 1000;
 
@@ -46,6 +49,8 @@ public class ImageRetrievalGenerateResults<T extends ImageBase<T>> {
         // reset metrics
         totalExceptions = 0;
         timeTrainingMS = 0;
+        countAdd = 0;
+        countQuery = 0;
 
         // learn how to classify this dataset
         timeTrainingMS = BoofMiscOps.timeNano(() ->
@@ -68,6 +73,7 @@ public class ImageRetrievalGenerateResults<T extends ImageBase<T>> {
                     target.addImage(""+index, image);
                     long time1 = System.nanoTime();
                     timeAddingMS += (time1-time0)*1e-6;
+                    countAdd++;
                 }
             } catch (RuntimeException e) {
                 totalExceptions++;
@@ -111,6 +117,7 @@ public class ImageRetrievalGenerateResults<T extends ImageBase<T>> {
                         out.print(","+matches.get(i).id);
                     }
                     out.println();
+                    countQuery++;
                 } catch (RuntimeException e) {
                     totalExceptions++;
                     e.printStackTrace(err);

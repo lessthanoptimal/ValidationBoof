@@ -96,7 +96,7 @@ public class ImageRetrievalEvaluateResults {
         allAveragePrecision.sort();
 
         // median Average Prevision
-        outSummary.printf("%-30s %7d %6.4f %6.4f %6.4f %6.4f %6.4f %6.4f\n",
+        outSummary.printf("  %-30s %7d %6.4f %6.4f %6.4f %6.4f %6.4f %6.4f\n",
                 testName, totalResults,
                 sumAveragePrecision/totalResults,
                 allAveragePrecision.getFraction(0.01),

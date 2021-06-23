@@ -1,0 +1,11 @@
+# GENERATOR SceneRecognitionRegression
+# Performance based on average precision statistics.
+# mAP = mean average precision, xAP = x% percentile average precision
+# of queries considered. 100 = first 100 queries
+# file_name, count, mAP, 1AP, 2AP, 5AP, 50AP, 95AP
+
+Nister2006
+  ukbench500                         125 0.9567 0.0998 0.3407 0.6429 1.0000 1.0000
+
+NearestNeighbor
+  ukbench500                         125 0.9410 0.1130 0.2205 0.5526 1.0000 1.0000

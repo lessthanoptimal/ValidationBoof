@@ -24,6 +24,8 @@ public class BoofRegressionConstants {
     public static final String TYPE_TRACKING = "tracking";
     public static final String TYPE_SEGMENTATION = "segmentation";
     public static final String TYPE_SHAPE = "shape";
+    public static final String TYPE_RECOGNITION = "recognition";
+
 
     public static final String CURRENT_DIRECTORY = "regression/current/";
     public static final String BASELINE_DIRECTORY = "regression/baseline/";

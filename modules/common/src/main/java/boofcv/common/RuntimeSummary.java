@@ -18,37 +18,44 @@ public class RuntimeSummary {
     public int digits = 7;
     public PrintStream out = System.out;
 
+    public String units = "milliseconds";
+
     public List<SummaryInfo> summary = new ArrayList<>();
+
+    public RuntimeSummary() {
+    }
+
+    public RuntimeSummary(String units) {
+        this.units = units;
+    }
 
     public void reset() {
         summary.clear();
     }
 
-
     /**
      * Standard initialization. Creates the log. Prints the default header.
      */
-    public void initializeLog(String directory, Class which, String fileName ) {
+    public void initializeLog(String directory, Class which, String fileName) {
         try {
-            out = new PrintStream(new File(directory,fileName));
+            out = new PrintStream(new File(directory, fileName));
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
         BoofRegressionConstants.printGenerator(out, which);
-        out.println("# Elapsed time in milliseconds");
+        out.println("# Elapsed time in " + units);
         out.println();
     }
 
     public void printUnitsRow(boolean summary) {
-        String format = "%"+(1+digits)+"s";
-        if( summary )
+        String format = "%" + (1 + digits) + "s";
+        if (summary)
             out.println("Summary:");
-        out.printf("  %24s    N   "+format+" "+format+" "+format+" "+format+" "+format+"\n","","Mean","P05","P50","P95","MAX");
+        out.printf("  %24s    N   " + format + " " + format + " " + format + " " + format + " " + format + "\n", "", "Mean", "P05", "P50", "P95", "MAX");
     }
 
-    public void printStatsRow(String name , DogArray_F64 measurements)
-    {
-        FancyPrint f = new FancyPrint(new DecimalFormat("#"),digits+1,4);
+    public void printStatsRow(String name, DogArray_F64 measurements) {
+        FancyPrint f = new FancyPrint(new DecimalFormat("#"), digits + 1, 4);
 
         measurements.sort();
         int N = measurements.size;
@@ -60,27 +67,26 @@ public class RuntimeSummary {
 
         // The two spaces before the string is used to make it visually easier to see that this is a seperate block of
         // results in documents with multiple blocks
-        String format = "%"+digits+"s";
-        out.printf("  %-24s %6d  "+format+"  "+format+"  "+format+"  "+format+"  "+format+"\n",name,N,mean,P05,P50,P95,MAX);
+        String format = "%" + digits + "s";
+        out.printf("  %-24s %6d  " + format + "  " + format + "  " + format + "  " + format + "  " + format + "\n", name, N, mean, P05, P50, P95, MAX);
         out.flush();
     }
 
     public void printSummaryResults() {
         printUnitsRow(true);
-        for( SummaryInfo info : summary ) {
-            printStatsRow(info.name,info.measurements);
+        for (SummaryInfo info : summary) {
+            printStatsRow(info.name, info.measurements);
         }
     }
 
-    public void saveSummary( String name , DogArray_F64 measurements ) {
+    public void saveSummary(String name, DogArray_F64 measurements) {
         SummaryInfo info = new SummaryInfo();
         info.name = name;
         info.measurements.addAll(measurements);
         this.summary.add(info);
     }
 
-    private static class SummaryInfo
-    {
+    private static class SummaryInfo {
         DogArray_F64 measurements = new DogArray_F64();
         String name;
     }

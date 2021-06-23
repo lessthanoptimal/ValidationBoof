@@ -3,7 +3,6 @@ package boofcv.metrics;
 import boofcv.abst.scene.ConfigFeatureToSceneRecognition;
 import boofcv.abst.scene.SceneRecognition;
 import boofcv.alg.scene.bow.BowDistanceTypes;
-import boofcv.alg.scene.nister2006.RecognitionVocabularyTreeNister2006;
 import boofcv.factory.feature.describe.ConfigConvertTupleDesc;
 import boofcv.factory.scene.FactorySceneRecognition;
 import boofcv.misc.BoofMiscOps;
@@ -33,10 +32,12 @@ public class EvaluateImageRetrieval<T extends ImageBase<T>> {
     public PrintStream outAccuracy = System.out;
     public PrintStream outRuntime = System.out;
 
-    List<Dataset> listOfSets = new ArrayList<>();
+    public List<Dataset> listOfSets = new ArrayList<>();
     ImageType<T> imageType;
 
-    ImageRetrievalEvaluateResults results = new ImageRetrievalEvaluateResults();
+    public final ImageRetrievalEvaluateResults results = new ImageRetrievalEvaluateResults();
+
+    public double totalTimeMS;
 
     public EvaluateImageRetrieval(ImageType<T> imageType) {
         this.imageType = imageType;
@@ -44,14 +45,24 @@ public class EvaluateImageRetrieval<T extends ImageBase<T>> {
         listOfSets.add(inriaHolidays());
     }
 
+    public void addDataset(String name, ImageRetrievalEvaluationData sets) {
+        listOfSets.add(new Dataset(name, sets));
+    }
+
     public void printHeaders() {
-        outRuntime.printf("%-20s %s %s %s, units=seconds\n", "name", "training", "adding", "lookup");
+        outRuntime.printf("%-20s %6s %s %s, units=seconds\n", "name", "training", "adding", "lookup");
         results.err = err;
         results.outSummary = outAccuracy;
         results.printSummaryHeader();
     }
 
-    public void evaluate(SceneRecognition<T> target) {
+    public void evaluate(String name, SceneRecognition<T> target) {
+        outRuntime.println(name);
+        outRuntime.printf("  %-20s %4s %4s %7s %7s %7s\n", "", "NA", "NQ", "training", "adding", "lookup");
+
+        results.err = err;
+        results.outSummary = outAccuracy;
+
         // Crate working directory if it doesn't exist
         if (!workingDirectory.exists())
             BoofMiscOps.checkTrue(workingDirectory.mkdirs());
@@ -63,25 +74,29 @@ public class EvaluateImageRetrieval<T extends ImageBase<T>> {
         // Dump debugging info since this can be slow
         target.setVerbose(System.out, null);
 
+        totalTimeMS = 0.0;
+
         for (Dataset dataset : listOfSets) {
             File resultsFile = new File(workingDirectory, dataset.name);
             System.out.println("Processing: " + dataset.name);
             generate.process(target, dataset.sets, resultsFile);
-            outRuntime.printf("%-20s %7.1f %7.1f %7.1f\n",
-                    dataset.name, generate.timeTrainingMS/1000.0, generate.timeAddingMS/1000.0, generate.timeLookUpMS /1000.0);
+            outRuntime.printf("  %-20s %4d %4d %7.1f %7.1f %7.1f\n",
+                    dataset.name, generate.countAdd, generate.countQuery, generate.timeTrainingMS/1000.0, generate.timeAddingMS/1000.0, generate.timeLookUpMS/1000.0);
+
+            totalTimeMS += (generate.timeTrainingMS + generate.timeAddingMS + generate.timeLookUpMS)/1000.0;
 
             // Save the detailed output for future debugging
             try {
                 results.outDetailed = new PrintStream(new FileOutputStream(
-                        new File(workingDirectory, dataset.name+"_detailed.txt")));
+                        new File(workingDirectory, dataset.name + "_detailed.txt")));
             } catch (FileNotFoundException e) {
                 e.printStackTrace(err);
-                System.out.println("Exception "+e.getMessage());
+                System.out.println("Exception " + e.getMessage());
                 continue;
             }
             results.evaluate(dataset.name, resultsFile, dataset.sets);
         }
-        System.out.println("Done!");
+        System.out.println("Done with " + name + "!");
     }
 
     private Dataset datasetUkBench80() {
@@ -98,9 +113,17 @@ public class EvaluateImageRetrieval<T extends ImageBase<T>> {
         return ds;
     }
 
-    private static class Dataset {
+    public static class Dataset {
         String name;
         ImageRetrievalEvaluationData sets;
+
+        public Dataset() {
+        }
+
+        public Dataset(String name, ImageRetrievalEvaluationData sets) {
+            this.name = name;
+            this.sets = sets;
+        }
     }
 
     public static void main(String[] args) throws FileNotFoundException {
@@ -117,6 +140,6 @@ public class EvaluateImageRetrieval<T extends ImageBase<T>> {
         config.recognizeNister2006.distanceNorm = BowDistanceTypes.L2;
 
         evaluator.printHeaders();
-        evaluator.evaluate(FactorySceneRecognition.createFeatureToScene(config, ImageType.SB_U8));
+        evaluator.evaluate("", FactorySceneRecognition.createFeatureToScene(config, ImageType.SB_U8));
     }
 }
