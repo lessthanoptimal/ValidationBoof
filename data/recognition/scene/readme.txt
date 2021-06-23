@@ -1,0 +1,1 @@
+Datasets for scene recognition regression tests.
