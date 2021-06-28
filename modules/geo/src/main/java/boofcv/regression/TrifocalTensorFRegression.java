@@ -35,21 +35,22 @@ public class TrifocalTensorFRegression extends BaseRegression implements FileReg
         // initialize directories
         inputDirectory = new File(SIMULATED_PATH);
         FileUtils.deleteDirectory(inputDirectory);
-        outputDirectory = new File(SIMULATED_PATH+"/estimated");
+        outputDirectory = new File(SIMULATED_PATH + "/estimated");
 
 
         // performance output
-        evaulator.out = new PrintStream( new File(directoryMetrics, "ACC_TrifocalTensor.txt") );
+        evaulator.out = new PrintStream(new File(directoryMetrics, "ACC_TrifocalTensor.txt"));
         BoofRegressionConstants.printGenerator(evaulator.out, getClass());
+        evaulator.out.println("# Transfer pixel error\n");
         evaulator.directoryObservations = new File(SIMULATED_PATH);
-        evaulator.directoryResults = new File(SIMULATED_PATH+"/estimated");
+        evaulator.directoryResults = new File(SIMULATED_PATH + "/estimated");
 
         // set up runtime results file
         outputRuntime = new PrintStream(new File(directoryRuntime, "RUN_TrifocalTensor.txt"));
         BoofRegressionConstants.printGenerator(outputRuntime, getClass());
-        outputRuntime.println("\n"+ValidationConstants.TARGET_OVERRIDE+"Milliseconds");
+        outputRuntime.println("\n" + ValidationConstants.TARGET_OVERRIDE + "Milliseconds");
         outputRuntime.println("\nIndividual");
-        outputRuntime.printf("%30s Milliseconds\n","");
+        outputRuntime.printf("%30s Milliseconds\n", "");
 
         System.out.println("Generating trifocal data");
         new GenerateTrifocalObservations().initialize(SIMULATED_PATH).generate();
@@ -59,11 +60,11 @@ public class TrifocalTensorFRegression extends BaseRegression implements FileReg
         configAlg7.which = EnumTrifocal.ALGEBRAIC_7;
         configAlg7.converge.maxIterations = 300;
         Estimate1ofTrifocalTensor alg = FactoryMultiView.trifocal_1(configAlg7);
-        process(alg,"algebraic7");
+        process(alg, "algebraic7");
         ConfigTrifocal configLinear7 = new ConfigTrifocal();
         configLinear7.which = EnumTrifocal.LINEAR_7;
         alg = FactoryMultiView.trifocal_1(configLinear7);
-        process(alg,"linear7");
+        process(alg, "linear7");
 
         evaulator.out.close();
         outputRuntime.close();
@@ -71,12 +72,12 @@ public class TrifocalTensorFRegression extends BaseRegression implements FileReg
         System.out.println("Done trifocal");
     }
 
-    private void process( Estimate1ofTrifocalTensor alg , String name ) throws IOException {
+    private void process(Estimate1ofTrifocalTensor alg, String name) throws IOException {
         inputDirectory = new File(SIMULATED_PATH);
         long time = ComputeTrifocalTensor.compute(inputDirectory, alg, name, outputDirectory);
         evaulator.evaluate(name);
 
-        outputRuntime.printf("%30s %s\n",name, time);
+        outputRuntime.printf("%30s %s\n", name, time);
     }
 
     public static void main(String[] args)
