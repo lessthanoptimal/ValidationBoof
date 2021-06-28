@@ -86,13 +86,13 @@ public class SparseToDenseScenePlanarRegression<T extends ImageGray<T>>
             try {
                 if (!evaluator.process(dir, alg)) {
                     totalFailed++;
-                    out.printf("%-30s FAILED\n",dir.getName());
+                    out.printf("%-30s FAILED\n", dir.getName());
                     continue;
                 }
                 UncalibratedToSparseScenePlanarMetrics.RegionScore score = evaluator.allScore;
 
                 out.printf("%-30s %7d %5.1f %5.1f %5.1f %5.1f\n",
-                        dir.getName(), score.count/1000, score.mean, score.p50, score.p95, score.p100);
+                        dir.getName(), score.count / 1000, score.mean, score.p50, score.p95, score.p100);
                 outputRuntime.out.printf("  %-30s %d\n", dir.getName(), evaluator.processingTimeMS);
                 runtimes.add(evaluator.processingTimeMS);
 
@@ -103,12 +103,19 @@ public class SparseToDenseScenePlanarRegression<T extends ImageGray<T>>
                 meanErrors.add(evaluator.allScore.mean);
             } catch (Exception e) {
                 totalCrashed++;
-                out.printf("%-30s CRASHED\n",dir.getName());
+                out.printf("%-30s CRASHED\n", dir.getName());
                 errorLog.println("Log Name: " + dir.getName());
                 e.printStackTrace(errorLog);
                 e.printStackTrace(System.err);
             }
         }
+
+        // Give a useful error message and abort if things went really wrong
+        if (totalScenarios == 0) {
+            errorLog.println("No scenarios found/processed: path_data=" + PATH_DATA);
+            return;
+        }
+
         meanErrors.sort();
         out.println();
         out.println("Summary:");
