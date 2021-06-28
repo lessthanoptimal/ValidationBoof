@@ -1,5 +1,5 @@
 # GENERATOR ImageClassificationRegression
-# Regression tests which outputs image classification results.  A change indicates
+# Regression tests which outputs image classification results. A change indicates
 # that the algorithm has changed in some way and should be inspected more closely.
 
 Evaluating NiN_ImageNet
