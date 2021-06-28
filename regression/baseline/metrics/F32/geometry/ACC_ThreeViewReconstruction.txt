@@ -2,68 +2,68 @@
 # Uncalibrated Three View Reconstruction Performance. Stereo association percentage
 # (name) (score: higher better) (rectified area: higher better)
 
-               apartment_bush_  63.44  90.54
-             apartment_road_a_  44.13  89.35
+               apartment_bush_  63.34  90.54
+             apartment_road_a_  44.07  89.35
                        barrel_  95.96  71.07
-                      bobcats_  79.14  77.73
-                        books_  95.97  86.72
-                         bowl_  75.81  89.92
-                   building_a_  17.82  46.64
-                      chicken_  70.67  83.49
+                      bobcats_  71.68  77.40
+                        books_  95.96  86.73
+                         bowl_  75.91  89.92
+                   building_a_  18.28  22.30
+                      chicken_  71.93  85.10
          christmass_display_a_  55.16  73.82
                          deer_  80.60  97.34
-                       dinner_  77.75  81.21
-                 dinner_table_  72.96  87.81
-                         eggs_  66.89  96.18
+                       dinner_  77.85  81.21
+                 dinner_table_  72.85  87.82
+                         eggs_  66.35  96.34
                 fence_grass_a_  89.02  94.91
-                fence_grass_b_  55.62  72.66
-                   fig_leaves_  57.21  78.63
+                fence_grass_b_  55.43  72.72
+                   fig_leaves_  75.63  83.66
                      figuresA_  82.32  90.84
                       house_a_  81.85  74.28
-                      house_b_  37.78  81.18
-                     kitchenA_  74.96  91.68
-                     kitchenB_  58.47  88.37
-                      library_  65.19  82.72
-              minecraft_cave1_  57.74  95.89
-              minecraft_cave2_  59.79  95.81
-            minecraft_distant_  81.90  89.55
-               minecraft_high_  57.85  99.28
-                    mono_wall_   8.34  91.64
-              parking_meter_a_  70.99  81.31
-                      pebbles_  88.23  81.32
-                      pelican_  87.47  77.24
-                     people_a_  57.19  66.53
-                     people_b_  39.44  58.95
+                      house_b_  30.49  45.17
+                     kitchenA_  81.97  90.73
+                     kitchenB_  58.50  88.37
+                      library_  65.39  83.01
+              minecraft_cave1_  57.66  95.90
+              minecraft_cave2_  59.90  95.81
+            minecraft_distant_  81.89  89.55
+               minecraft_high_  57.37  99.28
+                    mono_wall_   6.22  91.23
+              parking_meter_a_  71.13  81.31
+                      pebbles_  88.24  81.32
+                      pelican_  86.96  76.96
+                     people_a_  57.30  66.53
+                     people_b_  39.52  58.95
                      person_a_  84.43  92.95
-                        power_  73.35  81.27
-                       puddle_  83.80  84.66
-                   pumpkintop_  90.06  80.91
-                       road_a_  52.98  88.68
-                         rock_  43.44  71.18
-                  rock_leaves_  71.75  94.53
-                     rockview_  76.16  86.42
-                      safeway_  27.07  91.91
-                      santa_a_  83.17  53.28
-                         seal_  94.35  90.37
-                sf_building_a_  25.29  58.98
-                sf_building_b_  33.98  45.02
-                sf_building_c_  62.53  75.41
-                sf_building_d_   4.86  45.51
-                  sf_bus_stop_  59.92  85.27
-                   sf_grass_a_   4.71  51.59
-            sf_intersection_a_  46.85  93.69
-                     sf_thing_  77.70  51.15
-               shuffleboard_a_  77.09  92.00
-               shuffleboard_b_  80.71  58.97
-                        skull_  70.83  68.40
-                   succulents_  50.33  85.41
-                   triflowers_  68.06  93.30
-                       turkey_  71.61  90.39
-                  uni_pacific_   4.22  54.57
-                    waterdrip_  73.86  91.10
+                        power_  73.32  81.26
+                       puddle_  83.72  84.63
+                   pumpkintop_  90.00  81.07
+                       road_a_  50.90  93.15
+                         rock_  43.83  68.10
+                  rock_leaves_  92.42  96.53
+                     rockview_  76.79  86.42
+                      safeway_  27.20  91.91
+                      santa_a_  82.58  53.49
+                         seal_  94.38  90.18
+                sf_building_a_  39.90  55.29
+                sf_building_b_  33.99  45.02
+                sf_building_c_  63.36  72.93
+                sf_building_d_   4.92  45.52
+                  sf_bus_stop_  59.95  85.27
+                   sf_grass_a_  60.59  50.85
+            sf_intersection_a_  46.74  93.69
+                     sf_thing_  77.69  51.15
+               shuffleboard_a_  77.04  92.00
+               shuffleboard_b_  80.39  58.57
+                        skull_  70.99  68.89
+                   succulents_  66.84  78.82
+                   triflowers_  68.01  93.30
+                       turkey_  71.12  90.44
+                  uni_pacific_  18.89  35.27
+                    waterdrip_  73.85  91.10
 
 Summary:
 total = 59  failed = 0
     metric    mean     P03     P50     P97
-     score 0.62725 0.04708 0.70672 0.94354
-      area 0.80026 0.45511 0.84658 0.96180
+     score 0.64926 0.06225 0.71119 0.94378
+      area 0.78597 0.35266 0.84634 0.96527
