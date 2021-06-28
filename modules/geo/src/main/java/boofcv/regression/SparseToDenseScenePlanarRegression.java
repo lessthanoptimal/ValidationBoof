@@ -24,7 +24,7 @@ import java.util.List;
 public class SparseToDenseScenePlanarRegression<T extends ImageGray<T>>
         extends BaseRegression implements ImageRegression {
 
-    public static final String PATH_DATA = "data/mvs";
+    public static final String PATH_DATA = "data/mvs/sequences";
 
     RuntimeSummary outputRuntime;
 
