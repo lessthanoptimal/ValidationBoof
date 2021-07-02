@@ -23,8 +23,6 @@ import java.util.List;
  * @author Peter Abeles
  **/
 public class EvaluateImageRetrieval<T extends ImageBase<T>> {
-    public static final String DATA_DIR = "data/cbir";
-
     // Where temp results are stored
     public File workingDirectory = new File("tmp");
 
@@ -41,6 +39,9 @@ public class EvaluateImageRetrieval<T extends ImageBase<T>> {
 
     public EvaluateImageRetrieval(ImageType<T> imageType) {
         this.imageType = imageType;
+    }
+    
+    public void addDefaultDatasets() {
         listOfSets.add(datasetUkBench80());
         listOfSets.add(inriaHolidays());
     }
@@ -102,14 +103,14 @@ public class EvaluateImageRetrieval<T extends ImageBase<T>> {
     private Dataset datasetUkBench80() {
         Dataset ds = new Dataset();
         ds.name = "ukbench_80";
-        ds.sets = new ImageFilesInFixedSets(0, 4, new File(DATA_DIR + "/ukbench_80"));
+        ds.sets = new ImageFilesInFixedSets(0, 4, new File("data/cbir/ukbench_80"));
         return ds;
     }
 
     private Dataset inriaHolidays() {
         Dataset ds = new Dataset();
         ds.name = "inria_holidays";
-        ds.sets = new InriaSets(100, new File(DATA_DIR + "/inria_holidays"));
+        ds.sets = new InriaSets(100, new File("data/cbir/inria_holidays"));
         return ds;
     }
 
