@@ -1,0 +1,120 @@
+# GENERATOR EvaluateEpipolarScore3DFRegression
+classification_translate_general
+#  noise (px), pairs, correct inliers, correct classification
+0.00 500 1.000 true
+0.10 500 1.000 true
+0.20 500 1.000 true
+0.50 498 1.000 true
+0.75 500 0.992 true
+1.00 499 0.942 true
+1.25 500 0.858 true
+1.50 500 0.772 true
+2.00 500 0.602 true
+3.00 500 0.478 true
+
+classification_rotate_general
+#  noise (px), pairs, correct inliers, correct classification
+0.00 491 1.000 true
+0.10 492 1.000 true
+0.20 495 1.000 true
+0.50 497 1.000 true
+0.75 495 0.996 true
+1.00 491 0.951 true
+1.25 488 0.916 false
+1.50 490 0.833 false
+2.00 492 0.703 false
+3.00 491 0.536 false
+
+classification_translate_planar
+#  noise (px), pairs, correct inliers, correct classification
+0.00 500 1.000 true
+0.10 500 1.000 true
+0.20 500 1.000 true
+0.50 500 1.000 true
+0.75 500 0.996 true
+1.00 500 0.964 true
+1.25 500 0.920 true
+1.50 500 0.828 true
+2.00 500 0.710 true
+3.00 500 0.544 true
+
+classification_rotate_planar
+#  noise (px), pairs, correct inliers, correct classification
+0.00 499 1.000 true
+0.10 499 1.000 true
+0.20 498 1.000 true
+0.50 500 1.000 true
+0.75 499 0.996 true
+1.00 499 0.966 true
+1.25 499 0.894 false
+1.50 500 0.870 false
+2.00 500 0.708 false
+3.00 499 0.529 false
+
+relative_score_general
+#  translation, pairs, score, correct inliers, correct classification
+0.00 500   2.5 1.000 true
+0.05 500   2.5 1.000 false
+0.10 500   3.3 1.000 true
+0.15 500   5.1 1.000 true
+0.20 500   6.9 1.000 true
+0.25 500   9.3 1.000 true
+0.30 500  11.9 1.000 true
+0.50 500  24.0 1.000 true
+0.60 500  25.0 1.000 true
+0.70 500  25.0 1.000 true
+0.80 500  25.0 1.000 true
+0.90 500  25.0 1.000 true
+0.95 500  25.0 1.000 true
+1.00 500  25.0 1.000 true
+
+relative_score_planar
+#  translation, pairs, score, correct inliers, correct classification
+0.00 500   2.5 1.000 true
+0.05 500   2.5 1.000 false
+0.10 500   2.5 1.000 false
+0.15 500   2.5 1.000 false
+0.20 500   2.5 1.000 false
+0.25 500   2.5 1.000 false
+0.30 500   2.5 1.000 false
+0.50 500   2.7 1.000 false
+0.60 500   3.1 1.000 true
+0.70 500   3.7 1.000 true
+0.80 500   4.3 1.000 true
+0.90 500   5.0 1.000 true
+0.95 500   5.4 1.000 true
+1.00 500   5.7 1.000 true
+
+bad_prior_general
+#  prior-f, pairs, score, correct inliers, correct classification
+  50.0 498  24.9 1.000 true
+  75.0 498  24.9 1.000 true
+ 100.0 498  24.9 1.000 true
+ 200.0 498  24.9 1.000 true
+ 300.0 498  24.9 1.000 true
+ 400.0 498  24.9 1.000 true
+ 500.0 498  24.9 1.000 true
+ 700.0 498  24.9 1.000 true
+1000.0 498  24.9 1.000 true
+2000.0 498  24.9 1.000 true
+3000.0 498  24.9 1.000 true
+
+bad_prior_planar
+#  prior-f, pairs, score, correct inliers, correct classification
+  50.0 500  25.0 1.000 true
+  75.0 500  25.0 1.000 true
+ 100.0 500  25.0 1.000 true
+ 200.0 500  25.0 1.000 true
+ 300.0 500  25.0 1.000 true
+ 400.0 500  25.0 1.000 true
+ 500.0 500  25.0 1.000 true
+ 700.0 500  25.0 1.000 true
+1000.0 500  25.0 1.000 true
+2000.0 500  25.0 1.000 true
+3000.0 500  25.0 1.000 true
+
+Classification: N=40, correct=0.80, mean_inlier=0.89, failures=0
+Relative Score: N=28, better=0.56, failed=0
+Priors: N=22, correct=1.00, mean_inlier=1.00, failures=0
+All Summary: N=90, correct=0.82, mean_inlier=0.95, failures=0
+Most miss classifications in a row: 7

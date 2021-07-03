@@ -11,8 +11,11 @@ Description of changes to benchmarks and justifications for change in performanc
     implementation being modified to enable concurrency
 - ObjectTrackingRegression
   * Sparse Flow's speed is computed differently to take in account it not processing images after losing track
-- TODO add regression for sparse reconstruction. Compare against known parameters and approximate known motion
-- TODO cloud sharpness test for planar
+- TrifocalTensorFRegression
+  * Was incorrectly implemented before and has better metrics now
+- New Regression
+  * EvaluateEpipolarScore3DFRegression
+  * Sparse and Dense Reconstruction with planar regions
 
 ## Version 0.37
 2020/12/21
