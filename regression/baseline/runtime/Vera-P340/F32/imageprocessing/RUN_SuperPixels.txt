@@ -1,0 +1,9 @@
+# GENERATOR SuperPixelRegression
+# Elapsed time in milliseconds
+
+Summary:
+                              N       Mean      P05      P50      P95      MAX
+  FH04                          2  401.766  311.704  311.704  311.704  491.828
+  MeanShift                     2  2321.98  1799.01  1799.01  1799.01  2844.95
+  SLIC                          2  605.837  428.438  428.438  428.438  783.235
+  Watershed                     2   57.198  54.0793  54.0793  54.0793  60.3168

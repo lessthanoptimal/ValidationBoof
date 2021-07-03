@@ -1,0 +1,8 @@
+# GENERATOR TrifocalTensorFRegression
+
+target_metric=Milliseconds
+
+Individual
+                               Milliseconds
+                    algebraic7 4015
+                       linear7 154
