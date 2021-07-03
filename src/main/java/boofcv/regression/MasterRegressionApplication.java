@@ -32,6 +32,7 @@ public class MasterRegressionApplication {
 	@Option(name="-m",aliases = {"--SingleModule"}, usage="If specified then it will only run the specified module")
 	String singleModule = null;
 
+	// TODO turn this into a list
 	@Option(name="-t",aliases = {"--TestName"}, usage="Run all tests which match this name")
 	String specificTest = null;
 
