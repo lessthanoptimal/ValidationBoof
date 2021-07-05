@@ -15,6 +15,7 @@ import georegression.struct.se.SpecialEuclideanOps_F64;
 import org.ddogleg.struct.DogArray;
 import org.ddogleg.struct.DogArray_F64;
 import org.ddogleg.struct.DogArray_I32;
+import org.ddogleg.struct.FastAccess;
 import org.ejml.data.DMatrixRMaj;
 
 import java.io.PrintStream;
@@ -29,16 +30,21 @@ import java.util.Random;
  */
 public class EvaluateEpipolarScore3D {
     public EpipolarScore3D score3D;
-    public PrintStream metricsLog = System.out;
+    // Individual scenario results are sent to this log
+    public PrintStream scenarioLog = System.out;
+    // Summary results are sent to this log
+    public PrintStream summaryLog = System.out;
+    // Errors are sent to this log
     public PrintStream errorLog = System.err;
 
+    // how many trials must have correct classification for it ot be a success
+    public static final double SUCCESS_FRACTION = 0.6;
     public static double defaultNoisePixels = 0.5;
-    public static double defaultInlierFraction = 0.75;
 
     private double cloudDistanceZ = -1;
 
-    // Used to compute overall summary of results
-    DogArray<Performance> overallResults = new DogArray<>(Performance::new);
+    // Results for each scenario considered
+    DogArray<ScenarioResults> scenarioResults = new DogArray<>(ScenarioResults::new, ScenarioResults::reset);
 
     public final DogArray_F64 timingMS = new DogArray_F64();
 
@@ -58,7 +64,6 @@ public class EvaluateEpipolarScore3D {
     // work space
     DMatrixRMaj fundamental = new DMatrixRMaj(3, 3);
     DogArray_I32 inliersIdx = new DogArray_I32();
-    int failures = 0;
     int featuresA = 0;
     int featuresB = 0;
 
@@ -67,39 +72,18 @@ public class EvaluateEpipolarScore3D {
         rand = new Random(32);
         scenarioSummaries.clear();
         timingMS.reset();
-        overallResults.reset();
+        scenarioResults.reset();
 
         evaluateClassification();
         evaluateRelativeScore();
         evaluateBadPriors();
+        evaluateForwardMotion();
+        evaluateFocalZoom();
 
-        printClassificationSummary("All Summary", overallResults);
+        printClassificationSummary("All Summary", scenarioResults);
         for (String text : scenarioSummaries) {
-            metricsLog.print(text);
+            summaryLog.print(text);
         }
-
-        // One last metric to see if there's a serious problem that summary results won't highlight
-        computeMostFailuresInARow();
-    }
-
-    /**
-     * Little bit of a hack, but this is intended to detect situations where it constantly failures due to
-     * an unhandled degerate case
-     */
-    private void computeMostFailuresInARow() {
-        int mostFailuresInARow = 0;
-        int failuresInARow = 0;
-        for (int i = 1; i < overallResults.size; i++) {
-            if (overallResults.get(i).correctClassification) {
-                failuresInARow = 0;
-                continue;
-            }
-
-            failuresInARow++;
-            if (failuresInARow > mostFailuresInARow)
-                mostFailuresInARow = failuresInARow;
-        }
-        metricsLog.println("Most miss classifications in a row: " + mostFailuresInARow);
     }
 
     private void reset() {
@@ -117,31 +101,54 @@ public class EvaluateEpipolarScore3D {
     protected void evaluateRelativeScore() {
         reset();
 
-        failures = 0;
-        DogArray<Performance> scenarioResults = new DogArray<>(Performance::new);
+        DogArray<ScenarioResults> results = new DogArray<>(ScenarioResults::new);
 
-        evaluateRelativeScore(false, scenarioResults);
-        evaluateRelativeScore(true, scenarioResults);
+        evaluateRelativeScore(false, results.grow().performance);
+        evaluateRelativeScore(true, results.grow().performance);
+
+        int errors = 0;
+        int failed = 0; // scenarios it completed failed to classify correctly
+        int trials = 0;
 
         // Score should increase every frame. Number of pairs should be the same too
         int higherScores = 0;
-        for (int i = 1; i < scenarioResults.size; i++) {
-            Performance a = scenarioResults.get(i - 1);
-            Performance b = scenarioResults.get(i);
-            if (b.score > a.score)
-                higherScores++;
+        for (int indexResults = 0; indexResults < results.size; indexResults++) {
+            FastAccess<Performance> performance = results.get(indexResults).performance;
+            trials += performance.size;
 
-            // Make this as a failure so that it gets debugged. simulation parameters should be tuned so that
-            // the pair count is constant and only geometric information is available to compare the scores
-            if (a.pairCount != b.pairCount)
-                failures++;
+            // check how well it classified the results
+            int scenarioErrors = 0;
+            for (int i = 1; i < performance.size; i++) {
+                if (!performance.get(i).correctClassification) {
+                    scenarioErrors++;
+                }
+            }
+            errors += scenarioErrors;
+            if (performance.size - scenarioErrors < performance.size * SUCCESS_FRACTION) {
+                failed++;
+            }
+
+            // See if the geometric score constantly increased
+            for (int i = 1; i < performance.size; i++) {
+                Performance a = performance.get(i - 1);
+                Performance b = performance.get(i);
+                if (b.score > a.score)
+                    higherScores++;
+
+                // This test is designed to evaluate how well it can evaluate geometric quality and not just the number
+                // of inliers so the number of inliers must be the same
+                if (a.pairCount != b.pairCount)
+                    throw new RuntimeException("Try tuning again");
+            }
         }
 
-        scenarioSummaries.add(String.format("Relative Score: N=%d, better=%.2f, failed=%d\n",
-                scenarioResults.size, higherScores / (double) (scenarioResults.size - 1), failures));
+
+        scenarioSummaries.add(String.format("%15s: scenarios=%d failed=%d, trails=%d better=%.2f errors=%d\n",
+                "Relative Score", results.size, failed,
+                trials, higherScores / (double) (trials - scenarioResults.size), errors));
 
         // Add scenario results to the overall results
-        overallResults.copyAll(scenarioResults.toList(), (src, dst) -> dst.setTo(src));
+        scenarioResults.copyAll(results.toList(), (src, dst) -> dst.setTo(src));
     }
 
     protected void evaluateRelativeScore(boolean planar, DogArray<Performance> allResults) {
@@ -151,8 +158,8 @@ public class EvaluateEpipolarScore3D {
         priorA.setTo(cameraA);
         priorB.setTo(cameraB);
 
-        metricsLog.println("relative_score_" + (planar ? "planar" : "general"));
-        metricsLog.println("#  translation, pairs, score, correct inliers, correct classification");
+        scenarioLog.println("relative_score_" + (planar ? "planar" : "general"));
+        scenarioLog.println("#  translation, pairs, score, correct inliers, correct classification");
 
         createCloud(planar, 500);
 
@@ -160,10 +167,9 @@ public class EvaluateEpipolarScore3D {
             boolean success = evaluateRelativeScore(translation, allResults.grow());
             if (!success) {
                 allResults.removeTail();
-                failures++;
             }
         }
-        metricsLog.println();
+        scenarioLog.println();
     }
 
     protected boolean evaluateRelativeScore(double translation, Performance performance) {
@@ -175,11 +181,11 @@ public class EvaluateEpipolarScore3D {
 
         boolean success = evaluateScene(translation != 0.0, 0.0, performance, viewA_to_viewB);
         if (success) {
-            metricsLog.printf("%4.2f %3d %5.1f %5.3f %s\n", translation, performance.pairCount,
+            scenarioLog.printf("%4.2f %3d %5.1f %5.3f %s\n", translation, performance.pairCount,
                     performance.score, performance.correctInlierFraction, performance.correctClassification);
             timingMS.add(performance.timeMS);
         } else {
-            metricsLog.printf("%3.1f EXCEPTION\n", translation);
+            scenarioLog.printf("%3.1f EXCEPTION\n", translation);
         }
 
         return success;
@@ -191,18 +197,17 @@ public class EvaluateEpipolarScore3D {
     protected void evaluateBadPriors() {
         reset();
 
-        failures = 0;
-        DogArray<Performance> scenarioResults = new DogArray<>(Performance::new);
+        DogArray<ScenarioResults> results = new DogArray<>(ScenarioResults::new);
 
-        evaluateBadPriors(false, scenarioResults);
-        evaluateBadPriors(true, scenarioResults);
+        evaluateBadPriors(false, results.grow().performance);
+        evaluateBadPriors(true, results.grow().performance);
 
-        printClassificationSummary("Priors", scenarioResults);
+        printClassificationSummary("Priors", results);
     }
 
     protected void evaluateBadPriors(boolean planar, DogArray<Performance> allResults) {
-        metricsLog.println("bad_prior_" + (planar ? "planar" : "general"));
-        metricsLog.println("#  prior-f, pairs, score, correct inliers, correct classification");
+        scenarioLog.println("bad_prior_" + (planar ? "planar" : "general"));
+        scenarioLog.println("#  prior-f, pairs, score, correct inliers, correct classification");
 
         int numPoints = 500;
         createCloud(planar, numPoints);
@@ -216,53 +221,118 @@ public class EvaluateEpipolarScore3D {
             Performance performance = allResults.grow();
             boolean success = evaluateScene(true, defaultNoisePixels, performance, viewA_to_viewB);
             if (success) {
-                metricsLog.printf("%6.1f %3d %5.1f %5.3f %s\n", priorFocal, performance.pairCount,
+                scenarioLog.printf("%6.1f %3d %5.1f %5.3f %s\n", priorFocal, performance.pairCount,
                         performance.score, performance.correctInlierFraction, performance.correctClassification);
                 timingMS.add(performance.timeMS);
             } else {
                 allResults.removeTail();
-                failures++;
-                metricsLog.printf("%6.1f EXCEPTION\n", priorFocal);
+                scenarioLog.printf("%6.1f EXCEPTION\n", priorFocal);
             }
         }
-        metricsLog.println();
+        scenarioLog.println();
     }
 
     /**
-     * Evalute performance when 3D vs rotation is very clear, but the amount of noise is increase. Tests under
+     * Move the camera forward in the +z direction. This type of motion can be confused with a change in focal length.
+     */
+    protected void evaluateForwardMotion() {
+        DogArray<ScenarioResults> results = new DogArray<>(ScenarioResults::new);
+        evaluateForwardMotion(true, results.grow().performance);
+        evaluateForwardMotion(false, results.grow().performance);
+
+        printClassificationSummary("ForwardZ", results);
+    }
+
+    protected void evaluateForwardMotion(boolean twoCameras, DogArray<Performance> allResults) {
+        reset();
+        createCloud(false, 500);
+
+        if (!twoCameras) {
+            cameraB.setTo(cameraA);
+            priorB.setTo(priorA);
+        }
+
+        String name = "forward_";
+        name += twoCameras ? "two" : "one";
+
+        scenarioLog.println(name);
+        scenarioLog.println("#  noise (px), pairs, correct inliers, correct classification");
+        for (double z : new double[]{0.05, 0.1, 0.2}) {
+            for (double sigma : new double[]{0.0, 0.1, 0.2, 0.5, 0.75, 1.0, 1.25, 1.5, 2.0, 3.0}) {
+
+                // Specify the relationship as either pure translation or pure rotation
+                Se3_F64 viewA_to_viewB = SpecialEuclideanOps_F64.eulerXyz(0.0, 0.0, z, 0.0, 0.0, 0.0, null);
+                Performance performance = allResults.grow();
+
+                if (evaluateScene(true, sigma, performance, viewA_to_viewB)) {
+                    scenarioLog.printf("%4.2f %3d %5.3f %s\n", sigma, performance.pairCount,
+                            performance.correctInlierFraction, performance.correctClassification);
+                    timingMS.add(performance.timeMS);
+                } else {
+                    scenarioLog.printf("%4.2f EXCEPTION\n", sigma);
+                }
+            }
+        }
+
+        scenarioLog.println();
+    }
+
+    /**
+     * Focal length changes but there's pure rotation
+     */
+    protected void evaluateFocalZoom() {
+        DogArray<ScenarioResults> results = new DogArray<>(ScenarioResults::new);
+        evaluateFocalZoom(false, results.grow().performance);
+        evaluateFocalZoom(true, results.grow().performance);
+
+        printClassificationSummary("FocalZoom", results);
+    }
+
+    protected void evaluateFocalZoom(boolean planar, DogArray<Performance> allResults) {
+        reset();
+
+        // There is no actual motion
+        Se3_F64 viewA_to_viewB = new Se3_F64();
+        createCloud(planar, 500);
+
+        String name = "focal_zoom_" + (planar ? "planar" : "cloud");
+
+        scenarioLog.println(name);
+        scenarioLog.println("#  noise (px), pairs, correct inliers, correct classification");
+        for (double f : new double[]{800, 1000, 1200}) {
+            cameraB.fx = cameraB.fy = f;
+            priorB.setTo(cameraB);
+
+            for (double sigma : new double[]{0.0, 0.1, 0.2, 0.5, 0.75, 1.0, 1.25, 1.5, 2.0, 3.0}) {
+
+                Performance performance = allResults.grow();
+                if (evaluateScene(false, sigma, performance, viewA_to_viewB)) {
+                    scenarioLog.printf("%4.2f %3d %5.3f %s\n", sigma, performance.pairCount,
+                            performance.correctInlierFraction, performance.correctClassification);
+                    timingMS.add(performance.timeMS);
+                } else {
+                    scenarioLog.printf("%4.2f EXCEPTION\n", sigma);
+                }
+            }
+        }
+
+        scenarioLog.println();
+    }
+
+    /**
+     * Evaluate performance when 3D vs rotation is very clear, but the amount of noise is increase. Tests under
      * general 3D cloud and planar scene.
      */
     protected void evaluateClassification() {
         reset();
-        failures = 0;
 
-        DogArray<Performance> scenarioResults = new DogArray<>(Performance::new);
-        evaluateClassification(true, false, scenarioResults);
-        evaluateClassification(false, false, scenarioResults);
-        evaluateClassification(true, true, scenarioResults);
-        evaluateClassification(false, true, scenarioResults);
+        DogArray<ScenarioResults> results = new DogArray<>(ScenarioResults::new);
+        evaluateClassification(true, false, results.grow().performance);
+        evaluateClassification(false, false, results.grow().performance);
+        evaluateClassification(true, true, results.grow().performance);
+        evaluateClassification(false, true, results.grow().performance);
 
-        printClassificationSummary("Classification", scenarioResults);
-    }
-
-    private void printClassificationSummary(String metricName, DogArray<Performance> scenarioResults) {
-        // Copy into the overall summary
-        if (scenarioResults != overallResults)
-            overallResults.copyAll(scenarioResults.toList(), (src, dst) -> dst.setTo(src));
-
-        // Summarize the performance across all scenarios
-        double meanInlier = 0.0;
-        int totalCorrectClassification = 0;
-        for (Performance p : scenarioResults.toList()) {
-            meanInlier += p.correctInlierFraction;
-            if (p.correctClassification)
-                totalCorrectClassification += 1;
-        }
-        meanInlier /= scenarioResults.size;
-        double fractionCorrect = totalCorrectClassification / (double) scenarioResults.size;
-
-        scenarioSummaries.add(String.format("%s: N=%d, correct=%.2f, mean_inlier=%.2f, failures=%d\n",
-                metricName, scenarioResults.size, fractionCorrect, meanInlier, failures));
+        printClassificationSummary("Classification", results);
     }
 
     protected void evaluateClassification(boolean translate, boolean planar, DogArray<Performance> allResults) {
@@ -270,27 +340,25 @@ public class EvaluateEpipolarScore3D {
         name += translate ? "translate" : "rotate";
         name += "_" + (planar ? "planar" : "general");
 
-        metricsLog.println(name);
-        metricsLog.println("#  noise (px), pairs, correct inliers, correct classification");
+        scenarioLog.println(name);
+        scenarioLog.println("#  noise (px), pairs, correct inliers, correct classification");
         for (double sigma : new double[]{0.0, 0.1, 0.2, 0.5, 0.75, 1.0, 1.25, 1.5, 2.0, 3.0}) {
             Performance performance = allResults.grow();
             boolean success = evaluateClassification(translate, planar, sigma, performance);
             if (success) {
-                metricsLog.printf("%4.2f %3d %5.3f %s\n", sigma, performance.pairCount,
+                scenarioLog.printf("%4.2f %3d %5.3f %s\n", sigma, performance.pairCount,
                         performance.correctInlierFraction, performance.correctClassification);
                 timingMS.add(performance.timeMS);
             } else {
-                metricsLog.printf("%4.2f EXCEPTION\n", sigma);
-                failures++;
+                scenarioLog.printf("%4.2f EXCEPTION\n", sigma);
             }
         }
 
-        metricsLog.println();
+        scenarioLog.println();
     }
 
     protected boolean evaluateClassification(boolean translate, boolean planar, double noiseSigma, Performance performance) {
-        int numPoints = 500;
-        createCloud(planar, numPoints);
+        createCloud(planar, 500);
 
         // Specify the relationship as either pure translation or pure rotation
         Se3_F64 viewA_to_viewB;
@@ -308,7 +376,7 @@ public class EvaluateEpipolarScore3D {
             cloud = UtilPoint3D_F64.random(plane, 1.0, numPoints, rand);
         } else {
             cloud = UtilPoint3D_F64.random(new Point3D_F64(0, 0, cloudDistanceZ),
-                    -1, 1, -1, 1, -0.5, 0.5,numPoints, rand);
+                    -1, 1, -1, 1, -0.5, 0.5, numPoints, rand);
         }
     }
 
@@ -377,12 +445,65 @@ public class EvaluateEpipolarScore3D {
         return true;
     }
 
+    private void printClassificationSummary(String metricName, DogArray<ScenarioResults> results) {
+        // Copy into the overall summary
+        if (scenarioResults != results)
+            scenarioResults.copyAll(results.toList(), (src, dst) -> dst.setTo(src));
+
+        // Summarize the performance across all scenarios
+        double meanInlier = 0.0;
+        int totalCorrectClassification = 0;
+        int failed = 0; // scenarios it completed failed to classify correctly
+        int errors = 0;
+        int trials = 0;
+        for (ScenarioResults r : results.toList()) {
+            trials += r.performance.size;
+            int scenarioCorrect = 0;
+            for (Performance p : r.performance.toList()) {
+                meanInlier += p.correctInlierFraction;
+                if (p.correctClassification) {
+                    scenarioCorrect++;
+                    totalCorrectClassification += 1;
+                }
+            }
+            errors += r.performance.size - scenarioCorrect;
+            if (scenarioCorrect < r.performance.size * SUCCESS_FRACTION) {
+                failed++;
+            }
+        }
+        meanInlier /= trials;
+        double fractionCorrect = totalCorrectClassification / (double) trials;
+
+        scenarioSummaries.add(String.format("%15s: scenarios=%d failed=%d, trials=%d correct=%.2f mean_inlier=%.2f errors=%d\n",
+                metricName, results.size, failed, trials, fractionCorrect, meanInlier, errors));
+    }
+
+    static class ScenarioResults {
+        public DogArray<Performance> performance = new DogArray<>(Performance::new, Performance::reset);
+
+        public void reset() {
+            performance.reset();
+        }
+
+        public void setTo(ScenarioResults src) {
+            performance.copyAll(src.performance.toList(), (s, d) -> d.setTo(s));
+        }
+    }
+
     static class Performance {
         double correctInlierFraction;
         boolean correctClassification;
         double timeMS;
         int pairCount;
         double score;
+
+        public void reset() {
+            correctInlierFraction = 0.0;
+            correctClassification = false;
+            timeMS = 0;
+            pairCount = 0;
+            score = -1;
+        }
 
         public void setTo(Performance src) {
             this.correctInlierFraction = src.correctInlierFraction;
@@ -399,7 +520,8 @@ public class EvaluateEpipolarScore3D {
 
         EvaluateEpipolarScore3D evaluator = new EvaluateEpipolarScore3D();
         evaluator.score3D = FactorySceneReconstruction.epipolarScore3D(config);
-//        evaluator.evaluateRelativeScore();
-        evaluator.evaluate();
+//        evaluator.score3D.setVerbose(System.out, BoofMiscOps.hashSet(BoofVerbose.RECURSIVE));
+        evaluator.evaluateFocalZoom();
+//        evaluator.evaluate();
     }
 }

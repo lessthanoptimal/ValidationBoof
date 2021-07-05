@@ -44,8 +44,14 @@ public class EvaluateEpipolarScore3DFRegression extends BaseRegression implement
             BoofRegressionConstants.printGenerator(out, getClass());
 
             evaluator.score3D = FactorySceneReconstruction.epipolarScore3D(config);
-            evaluator.metricsLog = out;
+            evaluator.summaryLog = out;
             evaluator.errorLog = errorLog;
+
+            // Add what was evaluated to the log
+            out.println("# class="+evaluator.score3D.getClass().getSimpleName());
+            out.println();
+
+            // Compute performance
             evaluator.evaluate();
 
             outputRuntime.printStatsRow(name, evaluator.timingMS);
