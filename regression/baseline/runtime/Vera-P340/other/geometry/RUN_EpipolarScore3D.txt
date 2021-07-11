@@ -1,0 +1,8 @@
+# GENERATOR EvaluateEpipolarScore3DFRegression
+# Elapsed time in milliseconds
+
+Summary:
+                              N       Mean      P05      P50      P95      MAX
+  FundamentalRotation         210  185.625  3.98251   34.639  652.795  719.732
+  FundamentalCompatible       210  182.564  5.10438  28.4819  654.479  707.232
+  ModelInliers                210   181.12  1.69016  28.1338  656.129  708.137
