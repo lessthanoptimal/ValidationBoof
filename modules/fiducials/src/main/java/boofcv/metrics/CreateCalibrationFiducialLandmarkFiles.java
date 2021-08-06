@@ -1,7 +1,7 @@
 package boofcv.metrics;
 
 import boofcv.abst.fiducial.calib.ConfigGridDimen;
-import boofcv.abst.geo.calibration.DetectorFiducialCalibration;
+import boofcv.abst.geo.calibration.DetectSingleFiducialCalibration;
 import boofcv.factory.fiducial.FactoryFiducialCalibration;
 import georegression.struct.point.Point2D_F64;
 
@@ -15,13 +15,13 @@ import java.util.List;
 public class CreateCalibrationFiducialLandmarkFiles {
 	public static void main(String[] args) throws FileNotFoundException {
 		ConfigGridDimen config = new ConfigGridDimen(5,7,1);
-		DetectorFiducialCalibration detector = FactoryFiducialCalibration.chessboardX(null,config);
+		DetectSingleFiducialCalibration detector = FactoryFiducialCalibration.chessboardX(null,config);
 //		ConfigGridDimen config = new ConfigGridDimen(5,7,1,1);
-//		DetectorFiducialCalibration detector = FactoryFiducialCalibration.squareGrid(config);
+//		DetectSingleFiducialCalibration detector = FactoryFiducialCalibration.squareGrid(config);
 //		ConfigGridDimen config = new ConfigGridDimen(5,6,4,5);
-//		DetectorFiducialCalibration detector = FactoryFiducialCalibration.circleHexagonalGrid(null,config);
+//		DetectSingleFiducialCalibration detector = FactoryFiducialCalibration.circleHexagonalGrid(null,config);
 //		ConfigCircleRegularGrid config = new ConfigCircleRegularGrid(4,3,4,6);
-//		DetectorFiducialCalibration detector = FactoryFiducialCalibration.circleRegularGrid(config);
+//		DetectSingleFiducialCalibration detector = FactoryFiducialCalibration.circleRegularGrid(config);
 
 		List<Point2D_F64> points = detector.getLayout();
 

@@ -2,7 +2,6 @@ package boofcv.regression;
 
 import boofcv.abst.fiducial.QrCodeDetector;
 import boofcv.common.*;
-import boofcv.factory.fiducial.ConfigQrCode;
 import boofcv.factory.fiducial.FactoryFiducial;
 import boofcv.metrics.qrcode.DetectQrCodesInImages;
 import boofcv.metrics.qrcode.EvaluateQrCodeDecoding;
@@ -45,11 +44,11 @@ public class QrCodeRegression extends BaseRegression implements ImageRegression 
 		evaluateMessage.err = errorLog;
 		BoofRegressionConstants.printGenerator(evaluateMessage.out, getClass());
 
-		ConfigQrCode config = new ConfigQrCode();
-//		config.threshold = ConfigThreshold.local(ThresholdType.LOCAL_MEAN,15);
+//		ConfigQrCode config = new ConfigQrCode();
+//		config.threshold = ConfigThreshold.local(ThresholdType.LOCAL_NICK, 40);
 //		config.threshold.scale = 0.95;
 
-		QrCodeDetector defaultDetector = FactoryFiducial.qrcode(config,imageType);
+		QrCodeDetector defaultDetector = FactoryFiducial.qrcode(null, imageType);
 
 		process("default",defaultDetector);
 

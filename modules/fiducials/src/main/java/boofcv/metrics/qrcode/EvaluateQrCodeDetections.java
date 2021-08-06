@@ -69,6 +69,7 @@ public class EvaluateQrCodeDetections {
                     averageOverlap += bestOverlap;
                 } else {
                     falseNegative++;
+//                    System.out.println("False negative: "+dataName+" truthIdx="+i+" p[0].p="+t.get(0));
                 }
             }
 

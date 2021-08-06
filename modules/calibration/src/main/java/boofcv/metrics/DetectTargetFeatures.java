@@ -1,7 +1,7 @@
 package boofcv.metrics;
 
 import boofcv.abst.fiducial.calib.ConfigGridDimen;
-import boofcv.abst.geo.calibration.DetectorFiducialCalibration;
+import boofcv.abst.geo.calibration.DetectSingleFiducialCalibration;
 import boofcv.alg.geo.calibration.CalibrationObservation;
 import boofcv.factory.fiducial.FactoryFiducialCalibration;
 import boofcv.io.UtilIO;
@@ -27,7 +27,7 @@ public class DetectTargetFeatures {
 
 	public static void main( String args[] ) throws FileNotFoundException {
 		// detects the calibration target points
-		DetectorFiducialCalibration detector = FactoryFiducialCalibration.
+		DetectSingleFiducialCalibration detector = FactoryFiducialCalibration.
 //				chessboard(null, new ConfigGridDimen(5, 7, 30));
 				circleRegularGrid(null,new ConfigGridDimen(4, 3, 4, 6));
 

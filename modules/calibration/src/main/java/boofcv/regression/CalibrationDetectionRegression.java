@@ -2,7 +2,7 @@ package boofcv.regression;
 
 import boofcv.abst.fiducial.calib.CalibrationPatterns;
 import boofcv.abst.fiducial.calib.ConfigGridDimen;
-import boofcv.abst.geo.calibration.DetectorFiducialCalibration;
+import boofcv.abst.geo.calibration.DetectSingleFiducialCalibration;
 import boofcv.alg.geo.calibration.CalibrationObservation;
 import boofcv.common.*;
 import boofcv.common.misc.PointFileCodec;
@@ -161,7 +161,7 @@ public class CalibrationDetectionRegression extends BaseRegression implements Im
 				File[] filesArray = new File(dir).listFiles();
 				if (filesArray != null) {
 					File descFile = new File(dir, "description.txt");
-					DetectorFiducialCalibration detector = d.creator.create(descFile);
+					DetectSingleFiducialCalibration detector = d.creator.create(descFile);
 
 					List<File> files = Arrays.asList(filesArray);
 					Collections.sort(files);
@@ -227,7 +227,7 @@ public class CalibrationDetectionRegression extends BaseRegression implements Im
 				name,error50,error95,error100,success,m.total);
 	}
 
-	private void evaluate(DetectorFiducialCalibration detector, String detectorName,
+	private void evaluate(DetectSingleFiducialCalibration detector, String detectorName,
 						  OverallMetrics metrics, PrintStream output, List<File> files) {
 		metrics.processingTimeMS.reset();
 		for( File f : files ) {
@@ -339,12 +339,12 @@ public class CalibrationDetectionRegression extends BaseRegression implements Im
 	}
 
 	interface CreateCalibration {
-		DetectorFiducialCalibration create( File file );
+		DetectSingleFiducialCalibration create( File file );
 	}
 
 	static class CreateChessboardBinary implements CreateCalibration {
 		@Override
-		public DetectorFiducialCalibration create(File file) {
+		public DetectSingleFiducialCalibration create(File file) {
 			ConfigGridDimen config;
 			if( !file.exists() )
 				config = new ConfigGridDimen(7, 5,30);
@@ -357,7 +357,7 @@ public class CalibrationDetectionRegression extends BaseRegression implements Im
 
 	static class CreateChessboardXCorner implements CreateCalibration {
 		@Override
-		public DetectorFiducialCalibration create(File file) {
+		public DetectSingleFiducialCalibration create(File file) {
 			ConfigGridDimen config;
 			if( !file.exists() )
 				config = new ConfigGridDimen(7,5,30);
@@ -370,7 +370,7 @@ public class CalibrationDetectionRegression extends BaseRegression implements Im
 
 	static class CreateSquareGrid implements CreateCalibration {
 		@Override
-		public DetectorFiducialCalibration create(File file) {
+		public DetectSingleFiducialCalibration create(File file) {
 			ConfigGridDimen config;
 			if( !file.exists() )
 				config = new ConfigGridDimen(4, 3,30,30);
@@ -383,7 +383,7 @@ public class CalibrationDetectionRegression extends BaseRegression implements Im
 
 	static class CreateCircleRegular implements CreateCalibration {
 		@Override
-		public DetectorFiducialCalibration create(File file) {
+		public DetectSingleFiducialCalibration create(File file) {
 			ConfigGridDimen config;
 			if( !file.exists() )
 				config = new ConfigGridDimen(4, 3,4,6);
@@ -396,7 +396,7 @@ public class CalibrationDetectionRegression extends BaseRegression implements Im
 
 	static class CreateCircleHexagonal implements CreateCalibration {
 		@Override
-		public DetectorFiducialCalibration create(File file) {
+		public DetectSingleFiducialCalibration create(File file) {
 			ConfigGridDimen config;
 			if( !file.exists() )
 				config = new ConfigGridDimen(8, 5,2,6);
