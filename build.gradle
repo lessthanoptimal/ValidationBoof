@@ -3,12 +3,12 @@ plugins {
 }
 
 gversion {
-    srcDir       = "src/main/java"
+    srcDir = "src/main/java"
     classPackage = "boofcv"
-    className    = "ValidationBoofVersion"
+    className = "ValidationBoofVersion"
 }
 
-allprojects{
+allprojects {
     group = 'org.boofcv'
     version = '0.39-SNAPSHOT'
 
@@ -32,7 +32,7 @@ allprojects{
     // Prevents tons of errors if someone is using ASCII
     tasks.withType(JavaCompile).configureEach { options.encoding = "UTF-8" }
     // Creates Java 8 byte code
-    tasks.withType(JavaCompile).configureEach { options.release = 8 }
+//    tasks.withType(JavaCompile).configureEach { options.release = 8 }
 
     javadoc {
         configure(options) {
@@ -43,8 +43,8 @@ allprojects{
     dependencies {
         api files("$project.rootDir/lib/ProjectBUBO.jar")
 
-        ['boofcv-core','boofcv-io','boofcv-swing','boofcv-ffmpeg','boofcv-simulation','boofcv-kotlin',
-         'boofcv-recognition', 'boofcv-reconstruction', 'demonstrations','boofcv-learning'].each
+        ['boofcv-core', 'boofcv-io', 'boofcv-swing', 'boofcv-ffmpeg', 'boofcv-simulation', 'boofcv-kotlin',
+         'boofcv-pdf', 'boofcv-recognition', 'boofcv-reconstruction', 'demonstrations', 'boofcv-learning'].each
                 { String a -> api group: 'org.boofcv', name: a, version: version }
         api group: 'com.google.guava', name: 'guava', version: '17.0'
         api group: 'commons-io', name: 'commons-io', version: '2.6'
@@ -78,7 +78,7 @@ subprojects {
 //            exclude 'META-INF/*.RSA', 'META-INF/*.SF', 'META-INF/*.DSA'
 //        } with jar
 
-        doLast {  archivePath.renameTo(file('module_regression.jar')) }
+        doLast { archivePath.renameTo(file('module_regression.jar')) }
     }
 
     clean.doFirst { delete "module_regression.jar" }
@@ -100,17 +100,21 @@ task pointLabelJar(type: Jar) {
 
     outputs.upToDateWhen { false }
 
-    from { configurations.compile.findAll{
-        it.name.matches("boofcv-(recognition|feature|geo|sfm|calibration|ip|io|swing).*")||
-    it.name.matches("(common-|georegression|ddogleg|ejml).*")}.collect {
-        it.isDirectory() ? it :  zipTree(it) } }
+    from {
+        configurations.compile.findAll {
+            it.name.matches("boofcv-(recognition|feature|geo|sfm|calibration|ip|io|swing).*") ||
+                    it.name.matches("(common-|georegression|ddogleg|ejml).*")
+        }.collect {
+            it.isDirectory() ? it : zipTree(it)
+        }
+    }
     with jar
 
     doLast { archivePath.renameTo(file('label_points.jar')) }
 }
 
 // Create a jar which contains all the applications
-task regressionJar(type: Jar, dependsOn: ':build' ) {
+task regressionJar(type: Jar, dependsOn: ':build') {
 
     manifest {
         attributes 'Implementation-Title': 'Regression Jar',
@@ -137,10 +141,10 @@ task regressionJar(type: Jar, dependsOn: ':build' ) {
 clean.doFirst { delete "regression.jar" }
 
 def not_modules = new ArrayList();
-not_modules.addAll(subprojects.findAll{x->x.path.startsWith(':thirdparty')})
+not_modules.addAll(subprojects.findAll { x -> x.path.startsWith(':thirdparty') })
 not_modules.add(project(':modules'))
-not_modules = not_modules.collect{p->p.path}
-not_modules.each {String a ->
+not_modules = not_modules.collect { p -> p.path }
+not_modules.each { String a ->
     project(a) {
         jar.enabled = false
         install.enabled = false
