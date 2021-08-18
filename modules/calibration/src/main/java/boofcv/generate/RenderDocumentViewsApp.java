@@ -1,9 +1,8 @@
-package boofcv;
+package boofcv.generate;
 
 import boofcv.alg.filter.blur.GBlurImageOps;
 import boofcv.alg.misc.GImageMiscOps;
 import boofcv.app.PaperSize;
-import boofcv.generate.Unit;
 import boofcv.io.image.ConvertBufferedImage;
 import boofcv.io.image.UtilImageIO;
 import boofcv.misc.BoofMiscOps;
@@ -38,11 +37,11 @@ import java.util.Random;
  */
 public class RenderDocumentViewsApp {
     @Option(name = "-i", aliases = {"--Input"}, usage = "PDF of marker")
-    String inputFile;
+    public String inputFile;
     @Option(name = "-o", aliases = {"--Output"}, usage = "Output directory for rendered images.")
-    String destinationDir = ".";
+    public String destinationDir = ".";
     @Option(name = "-l", aliases = {"--Landmarks"}, usage = "Landmarks file")
-    String landmarksFile;
+    public String landmarksFile;
 
     // Units the simulator uses
     Unit units = Unit.METER;
@@ -105,7 +104,7 @@ public class RenderDocumentViewsApp {
         for (int blurCount = 0; blurCount < 3; blurCount++) {
             blurSigma = blurCount;
 
-            File outputDir = new File(destinationDir, "fisheye_orbit_blur" + blurCount);
+            File outputDir = new File(destinationDir, "fisheye_blur" + blurCount);
             if (!outputDir.exists())
                 BoofMiscOps.checkTrue(outputDir.mkdirs());
 
@@ -129,6 +128,7 @@ public class RenderDocumentViewsApp {
             PDDocument document = PDDocument.load(new File(inputFile));
             PDFRenderer renderer = new PDFRenderer(document);
             BufferedImage image = renderer.renderImage(0);
+            document.close();
 
             double widthIn = document.getPage(0).getMediaBox().getWidth() / 72.0;
             double heightIn = document.getPage(0).getMediaBox().getHeight() / 72.0;
@@ -144,7 +144,7 @@ public class RenderDocumentViewsApp {
     }
 
     private void renderMovingAway(SimulatePlanarWorld simulator, GrayF32 markerImage) {
-        File outputDir = new File(destinationDir, "brown_away");
+        File outputDir = new File(destinationDir, "move_away");
         if (!outputDir.exists())
             BoofMiscOps.checkTrue(outputDir.mkdirs());
 
@@ -158,7 +158,7 @@ public class RenderDocumentViewsApp {
     }
 
     private void renderRotatingZ(SimulatePlanarWorld simulator, GrayF32 markerImage) {
-        File outputDir = new File(destinationDir, "brown_rotate_z");
+        File outputDir = new File(destinationDir, "rotate_z");
         if (!outputDir.exists())
             BoofMiscOps.checkTrue(outputDir.mkdirs());
 
@@ -181,7 +181,7 @@ public class RenderDocumentViewsApp {
         for (int blurCount = 0; blurCount < 5; blurCount++) {
             blurSigma = blurCount;
 
-            File outputDir = new File(destinationDir, "brown_rotate_axis_sigma" + blurCount);
+            File outputDir = new File(destinationDir, "axis_blur" + blurCount);
             if (!outputDir.exists())
                 BoofMiscOps.checkTrue(outputDir.mkdirs());
 

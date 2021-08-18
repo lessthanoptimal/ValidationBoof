@@ -53,7 +53,7 @@ public class CreateEcoCheckCornerFile {
 
     public static void main(String[] args) {
         CreateEcoCheckCornerFile app = new CreateEcoCheckCornerFile();
-        ConfigECoCheckMarkers config = ConfigECoCheckMarkers.singleShape(9, 7, 3.0, 1);
+        ConfigECoCheckMarkers config = ConfigECoCheckMarkers.singleShape(9, 7, 1, 3.0);
         app.generate(config);
         config.errorCorrectionLevel = 0;
         app.generate(config);

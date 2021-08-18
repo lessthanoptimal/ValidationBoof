@@ -1,5 +1,6 @@
 package boofcv.metrics.ecocheck;
 
+import boofcv.common.misc.ParseHelper;
 import boofcv.io.UtilIO;
 import boofcv.misc.BoofMiscOps;
 import boofcv.parsing.UniqueMarkerObserved;
@@ -7,11 +8,8 @@ import boofcv.struct.geo.PointIndex2D_F64;
 import org.ddogleg.struct.DogArray_B;
 import org.ddogleg.struct.DogArray_F64;
 
-import java.io.File;
-import java.io.PrintStream;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.io.*;
+import java.util.*;
 
 import static boofcv.parsing.ParseCalibrationConfigFiles.parseObservedECoCheck;
 import static boofcv.parsing.ParseCalibrationConfigFiles.parseUniqueMarkerTruth;
@@ -27,11 +25,13 @@ public class EvaluateECoCheckDetections {
     Statistics summary = new Statistics();
     Statistics scenario = new Statistics();
 
-    PrintStream out = System.out;
-    PrintStream err = System.err;
+    public PrintStream out = System.out;
+    public PrintStream err = System.err;
 
     File rootTruth;
     File rootFound;
+
+    public final Map<String,DogArray_F64> runtimeResults = new HashMap<>();
 
     public void evaluateRecursive(String foundPath, String truthPath) {
         out.println("# ECoCheck detection performance using labeled markers and corners.");
@@ -40,8 +40,12 @@ public class EvaluateECoCheckDetections {
         rootFound = new File(foundPath);
         rootTruth = new File(truthPath);
 
+        runtimeResults.clear();
         summary.reset();
         evaluateRecursive(rootTruth);
+
+        out.println();
+        summary.print(out, "Summary");
     }
 
     private void evaluateRecursive(File truthPath) {
@@ -70,21 +74,43 @@ public class EvaluateECoCheckDetections {
 
 //            System.out.println("Processing: " + b.getPath() + " " + f.getPath());
             if (evaluate(b.getPath(), f.getPath())) {
-                scenario.print(out, f.getName());
+                String relativePath = new File(relativeToRoot, f.getName()).getPath();
+                scenario.print(out, relativePath);
                 summary.add(scenario);
+
+                loadRuntime(new File(b.getPath(), "runtime.txt"), relativePath);
             } else {
                 evaluateRecursive(f);
             }
         }
+    }
 
-        out.println();
-        summary.print(out, "Summary");
+    protected void loadRuntime( File file, String key ) {
+        if (!file.exists()) {
+            err.println("Runtime does not exist. file="+file.getPath());
+            return;
+        }
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+            DogArray_F64 times = new DogArray_F64();
+
+            while (true) {
+                String line = ParseHelper.skipComments(reader);
+                if (line == null)
+                    break;
+                times.add(Double.parseDouble(line.split(" ")[1]));
+            }
+
+            runtimeResults.put(key, times);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**
      * Compare detected results against the true expected results and compute performance metrics
      */
-    public boolean evaluate(String detectionPath, String truthPath) {
+    protected boolean evaluate(String detectionPath, String truthPath) {
         scenario.reset();
 
         List<String> listFoundPath = UtilIO.listSmart("glob:" + detectionPath + "/found_*.txt", true, (f)->true);
@@ -211,7 +237,7 @@ public class EvaluateECoCheckDetections {
                 error100 = errors.getFraction(1.0);
             }
 
-            out.printf("%-30s %3d %3d %3d %5d %3d %3d %d %d %6.2f %6.2f\n", directory,
+            out.printf("%-40s %3d %3d %3d %5d %3d %3d %d %d %6.2f %6.2f\n", directory,
                     totalMarkers, falsePositiveMarker, falseNegativeMarker,
                     totalCorners, falsePositiveCorner, falseNegativeCorner,
                     duplicateMarkers, duplicateCorners,
