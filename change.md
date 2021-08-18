@@ -16,6 +16,8 @@ Description of changes to benchmarks and justifications for change in performanc
 - New Regression
   * EvaluateEpipolarScore3DFRegression
   * Sparse and Dense Reconstruction with planar regions
+- Results
+  * QR Code has been updated after improving local lighting invariance to decoding
 
 ## Version 0.37
 2020/12/21

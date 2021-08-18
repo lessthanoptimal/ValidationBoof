@@ -7,21 +7,21 @@
 # MD = multiple detection of truth qr code
 # Overlap = average overlap across true positives
 
-             blurred N  65 TP  26 FN  39 FP   0 MD   0 Overlap  98.6%
-        bright_spots N  97 TP  22 FN  75 FP   0 MD   0 Overlap  98.0%
-          brightness N  85 TP  67 FN  18 FP   0 MD   0 Overlap  97.8%
+             blurred N  65 TP  27 FN  38 FP   0 MD   0 Overlap  98.5%
+        bright_spots N  97 TP  27 FN  70 FP   0 MD   0 Overlap  97.9%
+          brightness N  85 TP  68 FN  17 FP   0 MD   0 Overlap  97.8%
                close N  40 TP  31 FN   9 FP   0 MD   0 Overlap  99.9%
-              curved N   5 TP   1 FN   4 FP   0 MD   0 Overlap  99.5%
+              curved N   5 TP   2 FN   3 FP   0 MD   0 Overlap  98.4%
              damaged N  43 TP   7 FN  36 FP   0 MD   0 Overlap  99.4%
                glare N  53 TP  17 FN  36 FP   0 MD   0 Overlap  99.1%
         high_version N  37 TP  15 FN  22 FP   0 MD   0 Overlap  99.1%
                 lots N 420 TP 419 FN   1 FP   0 MD   0 Overlap  99.8%
-             monitor N  17 TP  11 FN   6 FP   0 MD   0 Overlap  99.8%
+             monitor N  17 TP  14 FN   3 FP   0 MD   0 Overlap  99.8%
              nominal N  78 TP  70 FN   8 FP   0 MD   0 Overlap  99.3%
         noncompliant N  26 TP   1 FN  25 FP   0 MD   0 Overlap  99.7%
         pathological N  23 TP  10 FN  13 FP   0 MD   0 Overlap  98.4%
-         perspective N  35 TP  29 FN   6 FP   0 MD   0 Overlap  99.8%
+         perspective N  35 TP  28 FN   7 FP   0 MD   0 Overlap  99.8%
            rotations N 133 TP 129 FN   4 FP   0 MD   0 Overlap  99.7%
              shadows N  20 TP  17 FN   3 FP   0 MD   0 Overlap  99.5%
 
-Summary N 1177 TP 872 FP   0
+Summary N 1177 TP 882 FP   0
