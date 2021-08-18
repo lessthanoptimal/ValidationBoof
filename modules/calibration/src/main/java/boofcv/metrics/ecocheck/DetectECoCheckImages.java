@@ -14,29 +14,27 @@ import boofcv.struct.geo.PointIndex2D_F64;
 import boofcv.struct.image.GrayF32;
 import boofcv.struct.image.ImageGray;
 import org.apache.commons.io.FilenameUtils;
-import org.ddogleg.struct.DogArray_F64;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.PrintStream;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
 /**
- * Detects
+ * Searches for EcoCheck inside of images and saves the location of found markers and their corners.
  *
  * @author Peter Abeles
  */
-public class DetectEcoCheckImages<T extends ImageGray<T>> {
+public class DetectECoCheckImages<T extends ImageGray<T>> {
     /**
      * Where results are written to
      */
-    public File outputPath = new File(".");
-
-    public ProcessTime processTime = (a, b) -> {
-    };
+    public File outputPath = new File("ecocheck_detections");
 
     public ECoCheckDetector<T> detector;
 
@@ -44,7 +42,10 @@ public class DetectEcoCheckImages<T extends ImageGray<T>> {
 
     T gray;
 
-    public DetectEcoCheckImages(ConfigECoCheckMarkers configMarkers, Class<T> imageType) {
+    // Number of iterations it will perform before processing an image for real to make runtime results more accurate
+    int warmIterations = 3;
+
+    public DetectECoCheckImages(ConfigECoCheckMarkers configMarkers, Class<T> imageType) {
         detector = FactoryFiducial.ecocheck(null, configMarkers, imageType).getDetector();
         gray = GeneralizedImageOps.createSingleBand(imageType, 1, 1);
     }
@@ -54,6 +55,9 @@ public class DetectEcoCheckImages<T extends ImageGray<T>> {
         detectRecursive(directory);
     }
 
+    /**
+     * Searches for images recursively in the specified directory and attempts to detect EcoCheck markers when found
+     */
     public void detectRecursive(File directory) {
         File[] children = directory.listFiles();
         if (children == null)
@@ -68,9 +72,10 @@ public class DetectEcoCheckImages<T extends ImageGray<T>> {
         File relativeToRoot = root.toPath().relativize(directory.toPath()).toFile();
         File base = new File(outputPath, relativeToRoot.getPath());
 
-        DogArray_F64 processingTime = new DogArray_F64();
+        PrintStream runtimeOut = null;
 
         for (File c : listChildren) {
+            // Depth first search to find images.
             if (c.isDirectory()) {
                 detectRecursive(c);
                 continue;
@@ -84,22 +89,38 @@ public class DetectEcoCheckImages<T extends ImageGray<T>> {
                 if (!base.exists())
                     BoofMiscOps.checkTrue(base.mkdirs());
                 foundImage = true;
+
+                // Open file for saving runtime performance
+                try {
+                    runtimeOut = new PrintStream(new File(base, "runtime.txt"), StandardCharsets.UTF_8);
+                    runtimeOut.println("# ECoCheck runtime in milliseconds. path="+relativeToRoot.getPath());
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
             }
 
             BufferedImage buffered = UtilImageIO.loadImage(c.getPath());
             ConvertBufferedImage.convertFrom(buffered, true, gray);
 
+            // "warm up" to make profiling results more accurate
+            while (warmIterations > 0) {
+                detector.process(gray);
+                warmIterations--;
+            }
+
+            // Process image while measuring execution time
             long time0 = System.nanoTime();
             detector.process(gray);
             long time1 = System.nanoTime();
-            processingTime.add((time1 - time0) * 1e-6);
 
-            saveResults(new File(base, FilenameUtils.getBaseName(c.getName()) + ".txt"));
-        }
+            // Write out runtime speed
+            runtimeOut.printf("%s %.6f\n",c.getName(),(time1 - time0) * 1e-6);
 
-        if (processingTime.size > 0) {
-            processTime.detectionTimes(base.getPath(), processingTime);
+            // Save found landmarks
+            saveResults(new File(base, "found_"+FilenameUtils.getBaseName(c.getName()) + ".txt"));
         }
+        if (runtimeOut != null)
+            runtimeOut.close();
     }
 
     private void saveResults(File outputPath) {
@@ -127,17 +148,14 @@ public class DetectEcoCheckImages<T extends ImageGray<T>> {
         }
     }
 
-    @FunctionalInterface
-    public interface ProcessTime {
-        void detectionTimes(String name, DogArray_F64 times);
-    }
-
     public static void main(String[] args) {
-        ConfigECoCheckMarkers config = ConfigECoCheckMarkers.singleShape(9, 7, 1.0, 1);
+        String encoding = "9x7e0n1";
+        ConfigECoCheckMarkers config = ConfigECoCheckMarkers.parse(encoding, 1.0);
+        config.errorCorrectionLevel = 0;
 
-        var app = new DetectEcoCheckImages<>(config, GrayF32.class);
-        app.outputPath = new File("ecocheck_found");
-        app.detect(new File("ecocheck"));
+        var app = new DetectECoCheckImages<>(config, GrayF32.class);
+        app.outputPath = new File("ecocheck_"+encoding+"_found");
+        app.detect(new File("ecocheck_"+encoding));
         System.out.println("Done!");
     }
 }

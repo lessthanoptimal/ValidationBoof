@@ -99,7 +99,7 @@ public class ParseCalibrationConfigFiles {
         }
     }
 
-    public static List<UniqueMarkerObserved> parseObservedMarkers(File file) {
+    public static List<UniqueMarkerObserved> parseObservedECoCheck(File file) {
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
             List<UniqueMarkerObserved> found = new ArrayList<>();
 
@@ -128,5 +128,30 @@ public class ParseCalibrationConfigFiles {
         }
     }
 
+    public static List<UniqueMarkerObserved> parseUniqueMarkerTruth(File file) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+            List<UniqueMarkerObserved> found = new ArrayList<>();
 
+            String line = ParseHelper.skipComments(reader);
+            BoofMiscOps.checkTrue(line.startsWith("image.shape"));
+            int numMarkers = Integer.parseInt(reader.readLine().split("=")[1]);
+            for (int markerIdx = 0; markerIdx < numMarkers; markerIdx++) {
+                UniqueMarkerObserved marker = new UniqueMarkerObserved();
+                marker.markerID = Integer.parseInt(reader.readLine().split("=")[1]);
+                int numCorners = Integer.parseInt(reader.readLine().split("=")[1]);
+                for (int cornerIdx = 0; cornerIdx < numCorners; cornerIdx++) {
+                    String[] words = reader.readLine().split(" ");
+                    PointIndex2D_F64 landmark = marker.landmarks.grow();
+                    landmark.index = Integer.parseInt(words[0]);
+                    landmark.p.x = Double.parseDouble(words[1]);
+                    landmark.p.y = Double.parseDouble(words[2]);
+                }
+                found.add(marker);
+            }
+
+            return found;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

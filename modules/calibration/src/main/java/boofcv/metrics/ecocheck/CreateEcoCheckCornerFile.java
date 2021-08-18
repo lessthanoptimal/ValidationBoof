@@ -41,8 +41,8 @@ public class CreateEcoCheckCornerFile {
                 Point2D_F64 p = corners.get(i);
                 // These corners are going to be in a coordinate system that has the origin in the document center
                 // that needs to be changed to the document's top left corner
-                double x = paperWidth / 2 + p.x;
-                double y = paperHeight / 2 + p.y;
+                double x = paperWidth / 2.0 + p.x;
+                double y = paperHeight / 2.0 + p.y;
 
                 out.printf("%.8f %.8f\n", x, y);
             }
