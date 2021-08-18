@@ -103,7 +103,6 @@ public class DetectEcoCheckImages<T extends ImageGray<T>> {
     }
 
     private void saveResults(File outputPath) {
-
         // Merge split marker and remove unknown markers
         List<ECoCheckFound> filtered = ECoCheckUtils.mergeAndRemoveUnknown(detector.found.toList());
 

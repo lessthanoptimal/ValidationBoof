@@ -2,13 +2,17 @@ package boofcv;
 
 import boofcv.alg.filter.blur.GBlurImageOps;
 import boofcv.alg.misc.GImageMiscOps;
+import boofcv.generate.Unit;
 import boofcv.io.image.ConvertBufferedImage;
 import boofcv.io.image.UtilImageIO;
 import boofcv.misc.BoofMiscOps;
+import boofcv.parsing.MarkerDocumentLandmarks;
+import boofcv.parsing.ParseCalibrationConfigFiles;
 import boofcv.simulation.SimulatePlanarWorld;
 import boofcv.struct.calib.CameraPinholeBrown;
 import boofcv.struct.calib.CameraUniversalOmni;
 import boofcv.struct.image.GrayF32;
+import georegression.struct.point.Point2D_F64;
 import georegression.struct.se.Se3_F64;
 import georegression.struct.se.SpecialEuclideanOps_F64;
 import org.apache.pdfbox.pdmodel.PDDocument;
@@ -20,7 +24,9 @@ import org.kohsuke.args4j.Option;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.util.Random;
 
 /**
@@ -36,6 +42,10 @@ public class RenderDocumentViewsApp {
     String inputFile;
     @Option(name = "-o", aliases = {"--Output"}, usage = "Output directory for rendered images.")
     String destinationDir = ".";
+    @Option(name = "-l", aliases = {"--Landmarks"}, usage = "Landmarks file")
+    String landmarksFile;
+
+    Unit units = Unit.METER;
 
     double markerZ = 3.0;
 
@@ -48,7 +58,14 @@ public class RenderDocumentViewsApp {
 
     Random rand;
 
+    MarkerDocumentLandmarks landmarks;
+    Point2D_F64 pixel = new Point2D_F64();
+
     public void process() {
+        if (landmarksFile != null) {
+            landmarks = ParseCalibrationConfigFiles.parseDocumentLandmarks(new File(landmarksFile));
+        }
+
         rand = new Random(234);
         GrayF32 markerImage = loadMarkerImage();
 
@@ -67,15 +84,18 @@ public class RenderDocumentViewsApp {
         Se3_F64 markerToWorld = SpecialEuclideanOps_F64.eulerXyz(0, 0, markerZ, 0.02, Math.PI, 0, null);
         simulator.addSurface(markerToWorld, markerWidth, markerImage);
 
-        renderMovingAway(simulator);
-        renderRotatingZ(simulator);
+        renderMovingAway(simulator, markerImage);
+        renderRotatingZ(simulator, markerImage);
         renderBlurredRotatingAxis(simulator, markerImage);
     }
 
     private void renderFisheyeScenarios(GrayF32 markerImage, SimulatePlanarWorld simulator) {
+        simulator.resetScene();
+
         CameraUniversalOmni intrinsic = new CameraUniversalOmni(2);
         intrinsic.fsetRadial(0.2265, 6.720).fsetMirror(2.8).fsetK(1300, 1300, 0, 700, 700, 1400, 1400);
         simulator.setCamera(intrinsic);
+        simulator.setWorldToCamera(new Se3_F64());
 
         for (int blurCount = 0; blurCount < 3; blurCount++) {
             blurSigma = blurCount;
@@ -89,11 +109,11 @@ public class RenderDocumentViewsApp {
             for (int indexYaw = 0; indexYaw < 30; indexYaw++) {
                 simulator.resetScene();
 
-                double yaw = -Math.PI / 2 + +(Math.PI - span) / 2.0 + indexYaw * span / 29.0;
+                double yaw = -Math.PI / 2 + (Math.PI - span) / 2.0 + indexYaw * span / 29.0;
                 Se3_F64 markerToWorld = SpecialEuclideanOps_F64.eulerXyz(fisheyeMarkerZ * Math.sin(yaw), 0, fisheyeMarkerZ * Math.cos(yaw), 0.02, Math.PI + yaw, 0, null);
                 simulator.addSurface(markerToWorld, markerWidth, markerImage);
 
-                UtilImageIO.saveImage(noise(simulator.render(), defaultNoise), new File(outputDir, String.format("image%02d.png", indexYaw)).getPath());
+                saveSimulatedImage(simulator, outputDir, indexYaw);
             }
         }
     }
@@ -113,7 +133,7 @@ public class RenderDocumentViewsApp {
         }
     }
 
-    private void renderMovingAway(SimulatePlanarWorld simulator) {
+    private void renderMovingAway(SimulatePlanarWorld simulator, GrayF32 markerImage) {
         File outputDir = new File(destinationDir, "brown_away");
         if (!outputDir.exists())
             BoofMiscOps.checkTrue(outputDir.mkdirs());
@@ -123,11 +143,11 @@ public class RenderDocumentViewsApp {
             double distance = (N - i - 1) * (markerZ - 0.3) / (N - 1);
             Se3_F64 worldToCamera = SpecialEuclideanOps_F64.eulerXyz(0, 0, -distance, 0., 0, 0, null);
             simulator.setWorldToCamera(worldToCamera);
-            UtilImageIO.saveImage(noise(simulator.render(), defaultNoise), new File(outputDir, String.format("image%02d.png", i)).getPath());
+            saveSimulatedImage(simulator, outputDir, i);
         }
     }
 
-    private void renderRotatingZ(SimulatePlanarWorld simulator) {
+    private void renderRotatingZ(SimulatePlanarWorld simulator, GrayF32 markerImage) {
         File outputDir = new File(destinationDir, "brown_rotate_z");
         if (!outputDir.exists())
             BoofMiscOps.checkTrue(outputDir.mkdirs());
@@ -137,7 +157,7 @@ public class RenderDocumentViewsApp {
             double angle = 2.0 * Math.PI * i / N;
             Se3_F64 worldToCamera = SpecialEuclideanOps_F64.eulerXyz(0, 0, -(markerZ - 0.5), 0., 0, angle, null);
             simulator.setWorldToCamera(worldToCamera);
-            UtilImageIO.saveImage(noise(simulator.render(), defaultNoise), new File(outputDir, String.format("image%02d.png", i)).getPath());
+            saveSimulatedImage(simulator, outputDir, i);
         }
     }
 
@@ -162,8 +182,46 @@ public class RenderDocumentViewsApp {
                 Se3_F64 markerToWorld = SpecialEuclideanOps_F64.eulerXyz(0, 0, markerZ, 0.02, Math.PI + angle, 0, null);
                 simulator.addSurface(markerToWorld, markerWidth, markerImage);
 
-                UtilImageIO.saveImage(noise(simulator.render(), defaultNoise), new File(outputDir, String.format("image%02d.png", i)).getPath());
+                saveSimulatedImage(simulator, outputDir, i);
             }
+        }
+    }
+
+    private void saveSimulatedImage(SimulatePlanarWorld simulator, File outputDir, int i) {
+        GrayF32 rendered = noise(simulator.render(), defaultNoise);
+        UtilImageIO.saveImage(rendered, new File(outputDir, String.format("image%02d.png", i)).getPath());
+
+        if (landmarks == null)
+            return;
+
+        double documentWidth = landmarks.paper.convertWidth(landmarks.units);
+        double documentHeight = landmarks.paper.convertHeight(landmarks.units);
+
+        try (PrintStream out = new PrintStream(new File(outputDir, String.format("landmarks_image%02d.txt", i)))) {
+            out.println("# True marker landmark locations");
+            out.println("image.shape="+rendered.width+"x"+rendered.height);
+
+            int total = 0;
+            for (int landmarkIdx = 0; landmarkIdx < landmarks.landmarks.size; landmarkIdx++) {
+                Point2D_F64 p = landmarks.landmarks.get(landmarkIdx);
+                double convert = landmarks.units.convert(1.0, units);
+                simulator.computePixel(0, convert*(p.x-documentWidth/2), convert*(p.y-documentHeight/2), pixel);
+                if (!rendered.isInBounds((int)pixel.x, (int)pixel.y))
+                    continue;
+                total++;
+            }
+            out.println("count=" + total);
+            for (int landmarkIdx = 0; landmarkIdx < landmarks.landmarks.size; landmarkIdx++) {
+                Point2D_F64 p = landmarks.landmarks.get(landmarkIdx);
+                double convert = landmarks.units.convert(1.0, units);
+                simulator.computePixel(0, convert*(p.x-documentWidth/2), convert*(p.y-documentHeight/2), pixel);
+                if (!rendered.isInBounds((int)pixel.x, (int)pixel.y))
+                    continue;
+
+                out.printf("%d %.8f %.8f\n", landmarkIdx, pixel.x, pixel.y);
+            }
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 

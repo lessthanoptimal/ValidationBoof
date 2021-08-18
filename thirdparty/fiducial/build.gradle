@@ -1,5 +1,6 @@
 
 dependencies {
     compile project(':modules:common')
+    compile project(':modules:calibration')
     compile project(':')
 }
