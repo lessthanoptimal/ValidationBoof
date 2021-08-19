@@ -230,7 +230,8 @@ public class EvaluateMarkerLandmarkDetections {
 
     public static void main(String[] args) {
         var app = new EvaluateMarkerLandmarkDetections();
-//        app.evaluateRecursive("ecocheck_9x7e3n1_found", "ecocheck_9x7e3n1");
         app.evaluateRecursive("ecocheck_9x7e0n1_found", "ecocheck_9x7e0n1");
+        app.evaluateRecursive("ecocheck_9x7e3n1_found", "ecocheck_9x7e3n1");
+        app.evaluateRecursive("charuco/charuco_6X8_6X6_100_found", "charuco/charuco_6X8_6X6_100");
     }
 }

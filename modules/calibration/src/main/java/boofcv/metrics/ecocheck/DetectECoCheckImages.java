@@ -131,13 +131,13 @@ public class DetectECoCheckImages<T extends ImageGray<T>> {
     }
 
     public static void main(String[] args) {
-        String encoding = "9x7e0n1";
-        ConfigECoCheckMarkers config = ConfigECoCheckMarkers.parse(encoding, 1.0);
-        config.errorCorrectionLevel = 0;
+        for ( String encoding : new String[]{"9x7e0n1","9x7e3n1"}) {
+            ConfigECoCheckMarkers config = ConfigECoCheckMarkers.parse(encoding, 1.0);
 
-        var app = new DetectECoCheckImages<>(config, GrayF32.class);
-        app.outputPath = new File("ecocheck_" + encoding + "_found");
-        app.detect(new File("ecocheck_" + encoding));
+            var app = new DetectECoCheckImages<>(config, GrayF32.class);
+            app.outputPath = new File("ecocheck_" + encoding + "_found");
+            app.detect(new File("ecocheck_" + encoding));
+        }
         System.out.println("Done!");
     }
 }
