@@ -88,9 +88,13 @@ public class ParseCalibrationConfigFiles {
             var document = new MarkerDocumentLandmarks(paper, unit);
 
             int count = Integer.parseInt(line.split("=")[1]);
+            document.landmarks.resize(count);
             for (int i = 0; i < count; i++) {
                 String[] words = reader.readLine().split(" ");
-                document.landmarks.grow().setTo(Double.parseDouble(words[0]), Double.parseDouble(words[1]));
+                int landmarkID = Integer.parseInt(words[0]);
+                double x = Double.parseDouble(words[1]);
+                double y = Double.parseDouble(words[2]);
+                document.landmarks.get(landmarkID).setTo(x, y);
             }
 
             return document;
@@ -120,6 +124,34 @@ public class ParseCalibrationConfigFiles {
                     landmark.p.y = Double.parseDouble(words[2]);
                 }
                 found.add(marker);
+            }
+
+            return found;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static ObservedLandmarkMarkers parseObservedLandmarkMarker(File file) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+            ObservedLandmarkMarkers found = new ObservedLandmarkMarkers();
+
+            String line = ParseHelper.skipComments(reader);
+            BoofMiscOps.checkTrue(line.startsWith("image.shape"));
+            found.milliseconds = Double.parseDouble(reader.readLine().split("=")[1]);
+            int numMarkers = Integer.parseInt(reader.readLine().split("=")[1]);
+            for (int markerIdx = 0; markerIdx < numMarkers; markerIdx++) {
+                UniqueMarkerObserved marker = found.markers.grow();
+                marker.markerID = Integer.parseInt(reader.readLine().split("=")[1]);
+                int numLandmarks = Integer.parseInt(reader.readLine().split("=")[1]);
+                marker.landmarks.resize(numLandmarks);
+                for (int landmarkIdx = 0; landmarkIdx < numLandmarks; landmarkIdx++) {
+                    String[] words = reader.readLine().split(" ");
+                    PointIndex2D_F64 landmark = marker.landmarks.get(landmarkIdx);
+                    landmark.index = Integer.parseInt(words[0]);
+                    landmark.p.x = Double.parseDouble(words[1]);
+                    landmark.p.y = Double.parseDouble(words[2]);
+                }
             }
 
             return found;

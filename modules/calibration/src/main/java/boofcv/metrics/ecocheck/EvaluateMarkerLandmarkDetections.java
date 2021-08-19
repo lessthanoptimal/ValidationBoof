@@ -1,17 +1,18 @@
 package boofcv.metrics.ecocheck;
 
-import boofcv.common.misc.ParseHelper;
 import boofcv.io.UtilIO;
 import boofcv.misc.BoofMiscOps;
+import boofcv.parsing.ObservedLandmarkMarkers;
+import boofcv.parsing.ParseCalibrationConfigFiles;
 import boofcv.parsing.UniqueMarkerObserved;
 import boofcv.struct.geo.PointIndex2D_F64;
 import org.ddogleg.struct.DogArray_B;
 import org.ddogleg.struct.DogArray_F64;
 
-import java.io.*;
+import java.io.File;
+import java.io.PrintStream;
 import java.util.*;
 
-import static boofcv.parsing.ParseCalibrationConfigFiles.parseObservedECoCheck;
 import static boofcv.parsing.ParseCalibrationConfigFiles.parseUniqueMarkerTruth;
 
 /**
@@ -20,7 +21,7 @@ import static boofcv.parsing.ParseCalibrationConfigFiles.parseUniqueMarkerTruth;
  *
  * @author Peter Abeles
  */
-public class EvaluateECoCheckDetections {
+public class EvaluateMarkerLandmarkDetections {
 
     Statistics summary = new Statistics();
     Statistics scenario = new Statistics();
@@ -31,10 +32,10 @@ public class EvaluateECoCheckDetections {
     File rootTruth;
     File rootFound;
 
-    public final Map<String,DogArray_F64> runtimeResults = new HashMap<>();
+    public final Map<String, DogArray_F64> runtimeResults = new HashMap<>();
 
     public void evaluateRecursive(String foundPath, String truthPath) {
-        out.println("# ECoCheck detection performance using labeled markers and corners.");
+        out.println("# Detection performance using labeled markers and corners.");
         out.println("# name (count markers) (marker false positive) (marker false negative) (count corners) (corner FP) (corner FN) (duplicate markers) (duplicate corners) err90 err100");
         out.println();
         rootFound = new File(foundPath);
@@ -73,48 +74,26 @@ public class EvaluateECoCheckDetections {
             }
 
 //            System.out.println("Processing: " + b.getPath() + " " + f.getPath());
-            if (evaluate(b.getPath(), f.getPath())) {
+            DogArray_F64 runtime = new DogArray_F64();
+            if (evaluate(b.getPath(), f.getPath(), runtime)) {
                 String relativePath = new File(relativeToRoot, f.getName()).getPath();
                 scenario.print(out, relativePath);
                 summary.add(scenario);
-
-                loadRuntime(new File(b.getPath(), "runtime.txt"), relativePath);
+                runtimeResults.put(relativePath, runtime);
             } else {
                 evaluateRecursive(f);
             }
         }
     }
 
-    protected void loadRuntime( File file, String key ) {
-        if (!file.exists()) {
-            err.println("Runtime does not exist. file="+file.getPath());
-            return;
-        }
-
-        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
-            DogArray_F64 times = new DogArray_F64();
-
-            while (true) {
-                String line = ParseHelper.skipComments(reader);
-                if (line == null)
-                    break;
-                times.add(Double.parseDouble(line.split(" ")[1]));
-            }
-
-            runtimeResults.put(key, times);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     /**
      * Compare detected results against the true expected results and compute performance metrics
      */
-    protected boolean evaluate(String detectionPath, String truthPath) {
+    protected boolean evaluate(String detectionPath, String truthPath, DogArray_F64 runtime) {
         scenario.reset();
 
-        List<String> listFoundPath = UtilIO.listSmart("glob:" + detectionPath + "/found_*.txt", true, (f)->true);
-        List<String> listTruthPath = UtilIO.listSmart("glob:" + truthPath + "/landmarks_*.txt", true, (f)->true);
+        List<String> listFoundPath = UtilIO.listSmart("glob:" + detectionPath + "/found_*.txt", true, (f) -> true);
+        List<String> listTruthPath = UtilIO.listSmart("glob:" + truthPath + "/landmarks_*.txt", true, (f) -> true);
         BoofMiscOps.checkEq(listFoundPath.size(), listTruthPath.size());
 
         if (listFoundPath.isEmpty())
@@ -122,26 +101,27 @@ public class EvaluateECoCheckDetections {
 
         for (int imageIndex = 0; imageIndex < listFoundPath.size(); imageIndex++) {
             try {
-                List<UniqueMarkerObserved> found = parseObservedECoCheck(new File(listFoundPath.get(imageIndex)));
+                ObservedLandmarkMarkers found = ParseCalibrationConfigFiles.parseObservedLandmarkMarker(new File(listFoundPath.get(imageIndex)));
                 List<UniqueMarkerObserved> expected = parseUniqueMarkerTruth(new File(listTruthPath.get(imageIndex)));
 //                System.out.println("path="+listFoundPath.get(imageIndex));
                 evaluateImage(found, expected);
+                runtime.add(found.milliseconds);
             } catch (RuntimeException e) {
                 e.printStackTrace(err);
-                err.println("Error processing "+listFoundPath.get(imageIndex)+" "+listTruthPath.get(imageIndex));
+                err.println("Error processing " + listFoundPath.get(imageIndex) + " " + listTruthPath.get(imageIndex));
             }
         }
 
         return true;
     }
 
-    void evaluateImage(List<UniqueMarkerObserved> found, List<UniqueMarkerObserved> expected) {
+    void evaluateImage(ObservedLandmarkMarkers found, List<UniqueMarkerObserved> expected) {
         scenario.totalMarkers += expected.size();
 
         DogArray_B markerMatched = new DogArray_B();
         markerMatched.resetResize(expected.size(), false);
         DogArray_B cornerMatched = new DogArray_B();
-        for (UniqueMarkerObserved f : found) {
+        for (UniqueMarkerObserved f : found.markers.toList()) {
             UniqueMarkerObserved e = null;
             for (int i = 0; i < expected.size(); i++) {
                 if (expected.get(i).markerID == f.markerID) {
@@ -202,6 +182,7 @@ public class EvaluateECoCheckDetections {
         public int duplicateCorners = 0;
         public int duplicateMarkers = 0;
         public DogArray_F64 errors = new DogArray_F64();
+        public DogArray_F64 runtime = new DogArray_F64();
 
         public void reset() {
             totalMarkers = 0;
@@ -213,6 +194,7 @@ public class EvaluateECoCheckDetections {
             duplicateCorners = 0;
             duplicateMarkers = 0;
             errors.reset();
+            runtime.reset();
         }
 
         public void add(Statistics src) {
@@ -225,6 +207,7 @@ public class EvaluateECoCheckDetections {
             duplicateCorners += src.duplicateCorners;
             duplicateMarkers += src.duplicateMarkers;
             errors.addAll(src.errors);
+            runtime.addAll(src.runtime);
         }
 
         public void print(PrintStream out, String directory) {
@@ -246,8 +229,8 @@ public class EvaluateECoCheckDetections {
     }
 
     public static void main(String[] args) {
-        var app = new EvaluateECoCheckDetections();
-        app.evaluateRecursive("ecocheck_9x7e3n1_found", "ecocheck_9x7e3n1");
+        var app = new EvaluateMarkerLandmarkDetections();
+//        app.evaluateRecursive("ecocheck_9x7e3n1_found", "ecocheck_9x7e3n1");
         app.evaluateRecursive("ecocheck_9x7e0n1_found", "ecocheck_9x7e0n1");
     }
 }

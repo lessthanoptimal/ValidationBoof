@@ -1,5 +1,5 @@
 # GENERATOR ECoCheckDetectionRegression
-# ECoCheck detection performance using labeled markers and corners.
+# Detection performance using labeled markers and corners.
 # name (count markers) (marker false positive) (marker false negative) (count corners) (corner FP) (corner FN) (duplicate markers) (duplicate corners) err90 err100
 
 9x7e0n1/axis_blur0                        20   0   2   864   0  57 0 0   0.28   0.44

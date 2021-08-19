@@ -9,7 +9,10 @@ import org.ddogleg.struct.DogArray;
  * @author Peter Abeles
  */
 public class UniqueMarkerObserved {
+    /** Marker ID */
     public int markerID;
+
+    /** Location on landmarks on the observed marker */
     public final DogArray<PointIndex2D_F64> landmarks = new DogArray<>(PointIndex2D_F64::new);
 
     public PointIndex2D_F64 findLandmark( int id ) {

@@ -4,7 +4,7 @@ import boofcv.abst.fiducial.calib.ConfigECoCheckMarkers;
 import boofcv.common.*;
 import boofcv.generate.RenderDocumentViewsApp;
 import boofcv.metrics.ecocheck.DetectECoCheckImages;
-import boofcv.metrics.ecocheck.EvaluateECoCheckDetections;
+import boofcv.metrics.ecocheck.EvaluateMarkerLandmarkDetections;
 import boofcv.struct.image.ImageDataType;
 import org.ddogleg.struct.DogArray_F64;
 
@@ -53,7 +53,7 @@ public class ECoCheckDetectionRegression extends BaseRegression implements Image
         }
 
         System.out.println("Evaluating");
-        var evaluator = new EvaluateECoCheckDetections();
+        var evaluator = new EvaluateMarkerLandmarkDetections();
         evaluator.out = new PrintStream(new File(directoryMetrics, "ACC_ECoCheck.txt"));
         evaluator.err = errorLog;
         BoofRegressionConstants.printGenerator(evaluator.out, getClass());
@@ -84,7 +84,7 @@ public class ECoCheckDetectionRegression extends BaseRegression implements Image
 
     public static void main(String[] args) throws IOException, ClassNotFoundException, IllegalAccessException, InstantiationException {
         BoofRegressionConstants.clearCurrentResults();
-//        RegressionRunner.main(new String[]{ECoCheckDetectionRegression.class.getName(),ImageDataType.F32.toString()});
-        RegressionRunner.main(new String[]{ECoCheckDetectionRegression.class.getName(),ImageDataType.U8.toString()});
+        RegressionRunner.main(new String[]{ECoCheckDetectionRegression.class.getName(),ImageDataType.F32.toString()});
+//        RegressionRunner.main(new String[]{ECoCheckDetectionRegression.class.getName(),ImageDataType.U8.toString()});
     }
 }

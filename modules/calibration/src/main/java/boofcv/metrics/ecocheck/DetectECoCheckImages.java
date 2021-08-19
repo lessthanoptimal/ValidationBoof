@@ -18,9 +18,7 @@ import org.apache.commons.io.FilenameUtils;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.PrintStream;
-import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -72,8 +70,6 @@ public class DetectECoCheckImages<T extends ImageGray<T>> {
         File relativeToRoot = root.toPath().relativize(directory.toPath()).toFile();
         File base = new File(outputPath, relativeToRoot.getPath());
 
-        PrintStream runtimeOut = null;
-
         for (File c : listChildren) {
             // Depth first search to find images.
             if (c.isDirectory()) {
@@ -85,18 +81,10 @@ public class DetectECoCheckImages<T extends ImageGray<T>> {
                 continue;
 
             if (!foundImage) {
-                System.out.println("Processing: "+directory.getPath());
+                System.out.println("Processing: " + directory.getPath());
                 if (!base.exists())
                     BoofMiscOps.checkTrue(base.mkdirs());
                 foundImage = true;
-
-                // Open file for saving runtime performance
-                try {
-                    runtimeOut = new PrintStream(new File(base, "runtime.txt"), StandardCharsets.UTF_8);
-                    runtimeOut.println("# ECoCheck runtime in milliseconds. path="+relativeToRoot.getPath());
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
             }
 
             BufferedImage buffered = UtilImageIO.loadImage(c.getPath());
@@ -112,32 +100,26 @@ public class DetectECoCheckImages<T extends ImageGray<T>> {
             long time0 = System.nanoTime();
             detector.process(gray);
             long time1 = System.nanoTime();
-
-            // Write out runtime speed
-            runtimeOut.printf("%s %.6f\n",c.getName(),(time1 - time0) * 1e-6);
+            double milliseconds = (time1 - time0) * 1e-6;
 
             // Save found landmarks
-            saveResults(new File(base, "found_"+FilenameUtils.getBaseName(c.getName()) + ".txt"));
+            saveResults(new File(base, "found_" + FilenameUtils.getBaseName(c.getName()) + ".txt"), milliseconds);
         }
-        if (runtimeOut != null)
-            runtimeOut.close();
     }
 
-    private void saveResults(File outputPath) {
+    private void saveResults(File outputPath, double timeMS) {
         // Merge split marker and remove unknown markers
         List<ECoCheckFound> filtered = ECoCheckUtils.mergeAndRemoveUnknown(detector.found.toList());
 
         try (PrintStream out = new PrintStream(outputPath)) {
             out.println("# ECoCheck Detections. BoofCV " + BoofVersion.VERSION);
             out.println("image.shape=" + gray.width + "," + gray.height);
+            out.println("milliseconds=" + timeMS);
             out.println("markers=" + filtered.size());
-
             for (int i = 0; i < filtered.size(); i++) {
                 ECoCheckFound found = filtered.get(i);
                 out.println("marker=" + found.markerID);
-                out.println("decoded_cells.size=" + found.decodedCells.size);
-                out.println("shape=" + found.squareRows + "," + found.squareCols);
-                out.println("corners.size=" + found.corners.size);
+                out.println("landmarks.size=" + found.corners.size);
                 for (int cornerIdx = 0; cornerIdx < found.corners.size; cornerIdx++) {
                     PointIndex2D_F64 c = found.corners.get(cornerIdx);
                     out.printf("%d %.5f %.5f\n", c.index, c.p.x, c.p.y);
@@ -154,8 +136,8 @@ public class DetectECoCheckImages<T extends ImageGray<T>> {
         config.errorCorrectionLevel = 0;
 
         var app = new DetectECoCheckImages<>(config, GrayF32.class);
-        app.outputPath = new File("ecocheck_"+encoding+"_found");
-        app.detect(new File("ecocheck_"+encoding));
+        app.outputPath = new File("ecocheck_" + encoding + "_found");
+        app.detect(new File("ecocheck_" + encoding));
         System.out.println("Done!");
     }
 }
