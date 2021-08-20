@@ -1,10 +1,10 @@
 package boofcv.metrics.ecocheck;
 
+import boofcv.common.parsing.ObservedLandmarkMarkers;
+import boofcv.common.parsing.ParseCalibrationConfigFiles;
+import boofcv.common.parsing.UniqueMarkerObserved;
 import boofcv.io.UtilIO;
 import boofcv.misc.BoofMiscOps;
-import boofcv.parsing.ObservedLandmarkMarkers;
-import boofcv.parsing.ParseCalibrationConfigFiles;
-import boofcv.parsing.UniqueMarkerObserved;
 import boofcv.struct.geo.PointIndex2D_F64;
 import org.ddogleg.struct.DogArray_B;
 import org.ddogleg.struct.DogArray_F64;
@@ -13,7 +13,7 @@ import java.io.File;
 import java.io.PrintStream;
 import java.util.*;
 
-import static boofcv.parsing.ParseCalibrationConfigFiles.parseUniqueMarkerTruth;
+import static boofcv.common.parsing.ParseCalibrationConfigFiles.parseUniqueMarkerTruth;
 
 /**
  * Process labeled ground truth and found detections to compute performance metrics based on detection rate and

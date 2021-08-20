@@ -2,8 +2,8 @@ package boofcv.metrics;
 
 import boofcv.abst.fiducial.FiducialDetector;
 import boofcv.abst.fiducial.calib.ConfigGridDimen;
+import boofcv.common.parsing.ParseCalibrationConfigFiles;
 import boofcv.factory.fiducial.FactoryFiducial;
-import boofcv.parsing.ParseCalibrationConfigFiles;
 import boofcv.struct.image.GrayU8;
 import boofcv.struct.image.ImageGray;
 

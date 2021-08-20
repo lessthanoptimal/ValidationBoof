@@ -1,4 +1,4 @@
-package boofcv.parsing;
+package boofcv.common.parsing;
 
 import boofcv.app.PaperSize;
 import boofcv.generate.Unit;

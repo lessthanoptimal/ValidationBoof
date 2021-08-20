@@ -21,8 +21,8 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.util.*;
 
-import static boofcv.parsing.ParseCalibrationConfigFiles.parseGridDimen3;
-import static boofcv.parsing.ParseCalibrationConfigFiles.parseGridDimen4;
+import static boofcv.common.parsing.ParseCalibrationConfigFiles.parseGridDimen3;
+import static boofcv.common.parsing.ParseCalibrationConfigFiles.parseGridDimen4;
 
 /**
  * @author Peter Abeles

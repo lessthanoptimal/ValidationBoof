@@ -1,4 +1,4 @@
-package boofcv.parsing;
+package boofcv.common.parsing;
 
 import boofcv.struct.geo.PointIndex2D_F64;
 import org.ddogleg.struct.DogArray;
@@ -21,5 +21,13 @@ public class UniqueMarkerObserved {
                 return landmarks.get(i);
         }
         return null;
+    }
+
+    public void setTo( UniqueMarkerObserved src ) {
+        this.markerID = src.markerID;
+        this.landmarks.resetResize(src.landmarks.size);
+        for (int i = 0; i < landmarks.size; i++) {
+            landmarks.get(i).setTo(src.landmarks.get(i));
+        }
     }
 }

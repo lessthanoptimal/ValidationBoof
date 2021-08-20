@@ -9,7 +9,7 @@ import boofcv.struct.image.ImageGray;
 import java.io.File;
 import java.io.IOException;
 
-import static boofcv.parsing.ParseCalibrationConfigFiles.parseGridDimen4;
+import static boofcv.common.parsing.ParseCalibrationConfigFiles.parseGridDimen4;
 
 /**
  * @author Peter Abeles

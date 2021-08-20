@@ -1,4 +1,4 @@
-package boofcv.parsing;
+package boofcv.common.parsing;
 
 import org.ddogleg.struct.DogArray;
 

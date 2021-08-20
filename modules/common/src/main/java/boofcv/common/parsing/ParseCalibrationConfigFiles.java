@@ -1,4 +1,4 @@
-package boofcv.parsing;
+package boofcv.common.parsing;
 
 import boofcv.abst.fiducial.calib.ConfigGridDimen;
 import boofcv.app.PaperSize;
@@ -80,14 +80,14 @@ public class ParseCalibrationConfigFiles {
     public static MarkerDocumentLandmarks parseDocumentLandmarks(File file) {
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
             String line = ParseHelper.skipComments(reader);
-            PaperSize paper = PaperSize.lookup(line.split("=")[1]);
+            PaperSize paper = PaperSize.lookup(afterEq(line,"paper"));
             line = ParseHelper.skipComments(reader);
-            Unit unit = Unit.lookup(line.split("=")[1]);
+            Unit unit = Unit.lookup(afterEq(line,"units"));
             line = ParseHelper.skipComments(reader);
 
             var document = new MarkerDocumentLandmarks(paper, unit);
 
-            int count = Integer.parseInt(line.split("=")[1]);
+            int count = Integer.parseInt(afterEq(line,"count"));
             document.landmarks.resize(count);
             for (int i = 0; i < count; i++) {
                 String[] words = reader.readLine().split(" ");
@@ -138,12 +138,12 @@ public class ParseCalibrationConfigFiles {
 
             String line = ParseHelper.skipComments(reader);
             BoofMiscOps.checkTrue(line.startsWith("image.shape"));
-            found.milliseconds = Double.parseDouble(reader.readLine().split("=")[1]);
-            int numMarkers = Integer.parseInt(reader.readLine().split("=")[1]);
+            found.milliseconds = Double.parseDouble(afterEq(reader.readLine(),"milliseconds"));
+            int numMarkers = Integer.parseInt(afterEq(reader.readLine(),"markers"));
             for (int markerIdx = 0; markerIdx < numMarkers; markerIdx++) {
                 UniqueMarkerObserved marker = found.markers.grow();
-                marker.markerID = Integer.parseInt(reader.readLine().split("=")[1]);
-                int numLandmarks = Integer.parseInt(reader.readLine().split("=")[1]);
+                marker.markerID = Integer.parseInt(afterEq(reader.readLine(),"marker"));
+                int numLandmarks = Integer.parseInt(afterEq(reader.readLine(),"landmarks.size"));
                 marker.landmarks.resize(numLandmarks);
                 for (int landmarkIdx = 0; landmarkIdx < numLandmarks; landmarkIdx++) {
                     String[] words = reader.readLine().split(" ");
@@ -166,11 +166,11 @@ public class ParseCalibrationConfigFiles {
 
             String line = ParseHelper.skipComments(reader);
             BoofMiscOps.checkTrue(line.startsWith("image.shape"));
-            int numMarkers = Integer.parseInt(reader.readLine().split("=")[1]);
+            int numMarkers = Integer.parseInt(afterEq(reader.readLine(),"markers"));
             for (int markerIdx = 0; markerIdx < numMarkers; markerIdx++) {
                 UniqueMarkerObserved marker = new UniqueMarkerObserved();
-                marker.markerID = Integer.parseInt(reader.readLine().split("=")[1]);
-                int numCorners = Integer.parseInt(reader.readLine().split("=")[1]);
+                marker.markerID = Integer.parseInt(afterEq(reader.readLine(),"marker"));
+                int numCorners = Integer.parseInt(afterEq(reader.readLine(),"corners.size"));
                 for (int cornerIdx = 0; cornerIdx < numCorners; cornerIdx++) {
                     String[] words = reader.readLine().split(" ");
                     PointIndex2D_F64 landmark = marker.landmarks.grow();
@@ -185,5 +185,12 @@ public class ParseCalibrationConfigFiles {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private static String afterEq(String line, String key) {
+        String[] words = line.split("=");
+        if (!words[0].equals(key))
+            throw new RuntimeException("Expected '" + key + "' not '" + words[0] + "'");
+        return words[1];
     }
 }
