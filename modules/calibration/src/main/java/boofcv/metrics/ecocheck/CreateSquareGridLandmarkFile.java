@@ -68,8 +68,39 @@ public class CreateSquareGridLandmarkFile {
                 double y = row * squareSize + offsetY;
                 for (int col = 0; col < cols; col++) {
                     double x = col * squareSize + offsetX;
-                    int landmarkID = row*cols + col;
+                    int landmarkID = row * cols + col;
                     out.printf("%d %.8f %.8f\n", landmarkID, x, y);
+                }
+            }
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void generate(String name, int rows, int cols, double squareSize, double space) {
+        try (PrintStream out = new PrintStream(name + ".txt")) {
+            out.printf("# Grid marker: rows=%d cols=%d square=%f\n", rows, cols, squareSize);
+            out.println("paper=" + paper.name);
+            out.println("units=" + unit.name());
+            out.println("count=" + rows * cols * 4);
+
+            double markerWidth = cols * (squareSize + space) - space;
+            double markerHeight = rows * (squareSize + space) - space;
+
+            double offsetX = (paper.convertWidth(unit) - markerWidth) / 2;
+            double offsetY = (paper.convertHeight(unit) - markerHeight) / 2;
+
+            int cornerCols = cols * 2;
+
+            for (int row = 0; row < rows; row++) {
+                double y = row * (squareSize + space) + offsetY;
+                for (int col = 0; col < cols; col++) {
+                    double x = col * (squareSize + space) + offsetX;
+                    int landmarkID = 2 * (rows - row - 1) * cornerCols + col * 2;
+                    out.printf("%d %.8f %.8f\n", landmarkID + cornerCols, x, y);
+                    out.printf("%d %.8f %.8f\n", landmarkID + 1 + cornerCols, x + squareSize, y);
+                    out.printf("%d %.8f %.8f\n", landmarkID + 1, x + squareSize, y + squareSize);
+                    out.printf("%d %.8f %.8f\n", landmarkID, x, y + squareSize);
                 }
             }
         } catch (FileNotFoundException e) {
@@ -84,5 +115,6 @@ public class CreateSquareGridLandmarkFile {
         config.errorCorrectionLevel = 0;
         app.generate(config);
         app.generate("charuco_6X8", 7, 5, 3.0);
+        app.generate("aruco_grids/corners_7x5", 7, 5, 3.0, 0.8);
     }
 }

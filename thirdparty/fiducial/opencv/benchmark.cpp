@@ -21,24 +21,8 @@ using namespace cv;
 namespace po = boost::program_options;
 namespace bf = boost::filesystem;
 
-std::string filter_string(const std::string &message) {
-    std::string c = message;
-    for (std::string::iterator iter = c.begin(); iter != c.end();) {
-        if (!std::isprint(*iter))
-            iter = c.erase(iter);
-        else
-            ++iter; // not erased, increment iterator
-    }
-    return c;
-}
-
-void run_opencv(const bf::path &image_path, const bf::path &output_path) {
+void run_charuco(const bf::path &image_path, const bf::path &output_path) {
     Mat image = imread(image_path.c_str(), IMREAD_GRAYSCALE | IMREAD_IGNORE_ORIENTATION);
-
-    //    cout << "output_pat "<<output_path<<endl;
-
-    //    cout << "loaded image. w="<<image.rows<<" x "<<image.cols<<" channels "<<image.channels()<<endl;
-
     if (image.channels() != 1) {
         cout << "Color image???" << endl;
         exit(1);
@@ -61,7 +45,6 @@ void run_opencv(const bf::path &image_path, const bf::path &output_path) {
     try {
         cv::aruco::detectMarkers(image, board->dictionary, markerCorners, markerIds, params);
         if (!markerIds.empty()) {
-            cv::aruco::drawDetectedMarkers(image, markerCorners, markerIds);
             cv::aruco::interpolateCornersCharuco(markerCorners, markerIds, image, board, charucoCorners, charucoIds);
         }
     } catch (...) {
@@ -100,20 +83,96 @@ void run_opencv(const bf::path &image_path, const bf::path &output_path) {
     else
         cout << "*";
     cout.flush();
-//    cout << "detected " << total << " valid " << valid << endl;
 }
 
-void detect_markers(const string &input_path, const string &output_path, cv::QRCodeDetector *scanner = nullptr) {
+void run_aruco_grid(const bf::path &image_path, const bf::path &output_path) {
+    Mat image = imread(image_path.c_str(), IMREAD_GRAYSCALE | IMREAD_IGNORE_ORIENTATION);
+    if (image.channels() != 1) {
+        cout << "Color image???" << endl;
+        exit(1);
+    }
+
+    int rows = 7;
+    int cols = 5;
+
+    int cornerCols = cols * 2;
+
+    cv::Ptr<cv::aruco::Dictionary> dictionary = cv::aruco::getPredefinedDictionary(cv::aruco::DICT_6X6_250);
+    cv::Ptr<cv::aruco::GridBoard> board = cv::aruco::GridBoard::create(5, 7, 0.04, 0.01, dictionary);
+    cv::Ptr<cv::aruco::DetectorParameters> params = cv::aruco::DetectorParameters::create();
+
+    std::vector<int> ids;
+    std::vector<std::vector<cv::Point2f> > corners;
+
+    // output to a stream instead of the file initially just in case it does processing at this stage
+    std::ostringstream streamMem;
+
+    auto time0 = chrono::steady_clock::now();
+    try {
+        cv::aruco::detectMarkers(image, dictionary, corners, ids);
+    } catch (...) {
+        cout << "Exception!!!" << endl;
+    }
+    auto time1 = chrono::steady_clock::now();
+
+    int valid = 0;
+    if (!corners.empty()) {
+        valid++;
+        for (size_t idx = 0; idx < ids.size(); ++idx) {
+            const auto id = ids[idx];
+            const auto &quad = corners[idx];
+
+            int row = id / cols;
+            int col = id % cols;
+
+            int cornerRow = row * 2;
+            int cornerCol = col * 2;
+
+            const auto &c0 = quad[0];
+            const auto &c1 = quad[1];
+            const auto &c2 = quad[2];
+            const auto &c3 = quad[3];
+
+            int idx0 = cornerRow * cornerCols + cornerCol;
+            int idx1 = cornerRow * cornerCols + cornerCol + 1;
+            int idx2 = (cornerRow + 1) * cornerCols + cornerCol + 1;
+            int idx3 = (cornerRow + 1) * cornerCols + cornerCol;
+
+            streamMem << idx0 << " " << c0.x << " " << c0.y << std::endl;
+            streamMem << idx1 << " " << c1.x << " " << c1.y << std::endl;
+            streamMem << idx2 << " " << c2.x << " " << c2.y << std::endl;
+            streamMem << idx3 << " " << c3.x << " " << c3.y << std::endl;
+        }
+    }
+
+    double milliseconds = 1e-6 * chrono::duration_cast<chrono::nanoseconds>(time1 - time0).count();
+
+    ofstream file;
+    file.open(output_path.c_str());
+    file << "# ArUco Grid OpenCV: " << image_path.filename() << std::endl;
+    file << "image.shape=" << image.cols << "," << image.rows << std::endl;
+    file << "milliseconds=" << std::setprecision(4) << milliseconds << endl;
+    if (valid == 0) {
+        file << "markers.size=0" << std::endl;
+    } else {
+        file << "markers.size=1" << std::endl;
+        file << "marker=0" << std::endl;
+        file << "landmarks.size=" << corners.size()*4 << std::endl;
+        file << streamMem.str();
+    }
+
+    if (valid < 10)
+        cout << valid;
+    else
+        cout << "*";
+    cout.flush();
+}
+
+void detect_markers(const string &input_path, const string &output_path, bool use_grid) {
 //    cout << "Input Path:  " << input_path << endl;
 //    cout << "Output Path: " << output_path << endl;
 
     bf::create_directory(bf::path(output_path));
-
-    bool first = scanner == nullptr;
-
-    if (first) {
-        scanner = new cv::QRCodeDetector();
-    }
 
     bf::path p(input_path);
 
@@ -131,20 +190,18 @@ void detect_markers(const string &input_path, const string &output_path, cv::QRC
             output = output / ("found_" + itr->path().filename().string());
             output = bf::change_extension(output, "txt");
 
-            run_opencv(itr->path(), output);
-//            cout << current_file << endl;
+            if (use_grid) {
+                run_aruco_grid(itr->path(), output);
+            } else {
+                run_charuco(itr->path(), output);
+            }
         } else {
             bf::path output(output_path);
             output = output / itr->path().filename();
-            detect_markers(itr->path().string(), output.string(), scanner);
+            detect_markers(itr->path().string(), output.string(), use_grid);
         }
     }
     cout << endl;
-
-
-    if (first) {
-        delete scanner;
-    }
 }
 
 int main(int argc, char *argv[]) {
@@ -153,7 +210,8 @@ int main(int argc, char *argv[]) {
         desc.add_options()
                 ("help", "produce help message")
                 ("Input,I", po::value<std::string>(), "input path")
-                ("Output,O", po::value<std::string>(), "output path");
+                ("Output,O", po::value<std::string>(), "output path")
+                ("ArucoGrid","If true then it will ");
 
         po::variables_map vm;
         po::store(po::parse_command_line(argc, argv, desc), vm);
@@ -174,7 +232,15 @@ int main(int argc, char *argv[]) {
             cout << "Output path was not set.\n";
             return 0;
         }
-        detect_markers(vm["Input"].as<string>(), vm["Output"].as<string>());
+
+        bool use_grid = vm.count("ArucoGrid")>0;
+        if (use_grid) {
+            cout << "Marker: ArUco Grid" << endl;
+        } else {
+            cout << "Marker: ChArUco" << endl;
+        }
+
+        detect_markers(vm["Input"].as<string>(), vm["Output"].as<string>(), use_grid);
     } catch (exception &e) {
         cerr << "error: " << e.what() << "\n";
         return 1;

@@ -233,5 +233,6 @@ public class EvaluateMarkerLandmarkDetections {
         app.evaluateRecursive("ecocheck_9x7e0n1_found", "ecocheck_9x7e0n1");
         app.evaluateRecursive("ecocheck_9x7e3n1_found", "ecocheck_9x7e3n1");
         app.evaluateRecursive("charuco/charuco_6X8_6X6_100_found", "charuco/charuco_6X8_6X6_100");
+        app.evaluateRecursive("aruco_grids/7x5_6X6_found", "aruco_grids/7x5_6X6");
     }
 }
