@@ -66,6 +66,9 @@ public class RenderDocumentViewsApp {
     Point2D_F64 pixel = new Point2D_F64();
 
     public void process() {
+        System.out.println("Input PDF: " + inputFile);
+        System.out.println("Output:    " + destinationDir);
+
         if (landmarksFile != null) {
             landmarks = ParseCalibrationConfigFiles.parseDocumentLandmarks(new File(landmarksFile));
         }
@@ -75,6 +78,7 @@ public class RenderDocumentViewsApp {
 
         SimulatePlanarWorld simulator = new SimulatePlanarWorld();
         simulator.setBackground(10);
+        simulator.enableHighAccuracy();
 
         renderBrownScenarios(markerImage, simulator);
         renderFisheyeScenarios(markerImage, simulator);
@@ -215,30 +219,27 @@ public class RenderDocumentViewsApp {
             for (int landmarkIdx = 0; landmarkIdx < landmarks.landmarks.size; landmarkIdx++) {
                 Point2D_F64 p = landmarks.landmarks.get(landmarkIdx);
                 double convert = landmarks.units.convert(1.0, units);
-                simulator.computePixel(0, convert * (p.x - documentWidth / 2), -convert * (p.y - documentHeight / 2), pixel);
+                simulator.computePixel(0, convert * (p.x - documentWidth / 2.0), convert * (p.y - documentHeight / 2.0), pixel);
                 if (!rendered.isInBounds((int) pixel.x, (int) pixel.y))
                     continue;
                 total++;
             }
             // If nothing is visible there are no markers
             if (total == 0) {
-                out.println("markers=0");
+                out.println("markers.size=0");
                 return;
             }
-            out.println("markers=1"); // hard coded for 1 marker being visible
+            out.println("markers.size=1"); // hard coded for 1 marker being visible
             out.println("marker=0");
-            out.println("corners.size=" + total);
+            out.println("landmarks.size=" + total);
             for (int landmarkIdx = 0; landmarkIdx < landmarks.landmarks.size; landmarkIdx++) {
                 Point2D_F64 p = landmarks.landmarks.get(landmarkIdx);
                 double convert = landmarks.units.convert(1.0, units);
-                simulator.computePixel(0, convert * (p.x - documentWidth / 2), convert * (p.y - documentHeight / 2), pixel);
+                simulator.computePixel(0, convert * (p.x - documentWidth / 2.0), convert * (p.y - documentHeight / 2.0), pixel);
                 if (!rendered.isInBounds((int) pixel.x, (int) pixel.y))
                     continue;
 
-                // The 1/2 a pixel to compensate for a bias in the rendering system that hasn't been root caused yet
-                // manual inspection show's it's clearly off by about 1/2 a pixel. Possibly caused by interpolation
-                // when rendering.
-                out.printf("%d %.8f %.8f\n", landmarkIdx, pixel.x+0.5, pixel.y+0.5);
+                out.printf("%d %.8f %.8f\n", landmarkIdx, pixel.x, pixel.y);
             }
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);

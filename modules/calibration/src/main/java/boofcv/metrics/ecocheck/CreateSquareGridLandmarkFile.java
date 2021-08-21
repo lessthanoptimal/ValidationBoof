@@ -110,7 +110,7 @@ public class CreateSquareGridLandmarkFile {
 
     public static void main(String[] args) {
         CreateSquareGridLandmarkFile app = new CreateSquareGridLandmarkFile();
-        ConfigECoCheckMarkers config = ConfigECoCheckMarkers.singleShape(9, 7, 3.0, 1);
+        ConfigECoCheckMarkers config = ConfigECoCheckMarkers.singleShape(9, 7, 1, 3.0);
         app.generate(config);
         config.errorCorrectionLevel = 0;
         app.generate(config);

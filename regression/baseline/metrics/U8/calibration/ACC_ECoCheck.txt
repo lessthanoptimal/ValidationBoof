@@ -2,25 +2,25 @@
 # Detection performance using labeled markers and corners.
 # name (count markers) (marker false positive) (marker false negative) (count corners) (corner FP) (corner FN) (duplicate markers) (duplicate corners) err90 err100
 
-9x7e0n1/axis_blur0                        20   0   2   864   0  57 0 0   0.28   0.44
-9x7e0n1/axis_blur1                        20   0   2   864   0   0 0 0   0.28   0.44
-9x7e0n1/axis_blur2                        20   0   4   768   0  42 0 0   0.25 235.05
-9x7e0n1/axis_blur3                        20   0   9   528   0  24 0 2   0.26 213.91
+9x7e0n1/axis_blur0                        20   0   2   864   0  32 0 0   0.14   0.22
+9x7e0n1/axis_blur1                        20   0   3   816   0   0 0 0   0.14   0.25
+9x7e0n1/axis_blur2                        20   0   4   768   0   0 0 0   0.14   0.27
+9x7e0n1/axis_blur3                        20   0  10   480   0   0 0 0   0.18   0.28
 9x7e0n1/axis_blur4                        20   0  20     0   0   0 0 0    NaN    NaN
-9x7e0n1/fisheye_blur0                     30   0   0  1440   0   0 0 0   0.21   0.34
-9x7e0n1/fisheye_blur1                     30   0   0  1440   0   0 0 0   0.20   0.32
-9x7e0n1/fisheye_blur2                     30   0   0  1440   0   0 0 0   0.20   0.37
-9x7e0n1/move_away                         30   0   0  1440   0  86 0 0   0.48   1.41
-9x7e0n1/rotate_z                          40   0   0  1920   0   0 0 0   0.14   0.27
-9x7e3n1/axis_blur0                        20   0   2   864   0  44 0 0   0.28   0.55
-9x7e3n1/axis_blur1                        20   0   4   768   0   0 0 0   0.27   0.43
-9x7e3n1/axis_blur2                        20   0  10   480   0   0 0 0   0.21   0.36
+9x7e0n1/fisheye_blur0                     30   0   0  1440   0   0 0 0   0.11   0.18
+9x7e0n1/fisheye_blur1                     30   0   0  1440   0   0 0 0   0.11   0.20
+9x7e0n1/fisheye_blur2                     30   0   0  1440   0   0 0 0   0.13   0.24
+9x7e0n1/move_away                         30   0   1  1392   0  39 0 0   0.18   0.96
+9x7e0n1/rotate_z                          40   0   0  1920   0   0 0 0   0.14   0.22
+9x7e3n1/axis_blur0                        20   0   2   864   0  10 0 0   0.14   0.22
+9x7e3n1/axis_blur1                        20   0   4   768   0   0 0 0   0.14   0.25
+9x7e3n1/axis_blur2                        20   0   9   528   0   0 0 0   0.15   0.27
 9x7e3n1/axis_blur3                        20   0  20     0   0   0 0 0    NaN    NaN
 9x7e3n1/axis_blur4                        20   0  20     0   0   0 0 0    NaN    NaN
-9x7e3n1/fisheye_blur0                     30   0   0  1440   0   0 0 0   0.21   0.34
-9x7e3n1/fisheye_blur1                     30   0   0  1440   0   0 0 0   0.20   0.32
+9x7e3n1/fisheye_blur0                     30   0   0  1440   0   0 0 0   0.11   0.18
+9x7e3n1/fisheye_blur1                     30   0   0  1440   0   0 0 0   0.11   0.20
 9x7e3n1/fisheye_blur2                     30   0  30     0   0   0 0 0    NaN    NaN
-9x7e3n1/move_away                         30   0   3  1296   0  42 0 0   0.46   1.07
-9x7e3n1/rotate_z                          40   0   0  1920   0   0 0 0   0.14   0.27
+9x7e3n1/move_away                         30   0   3  1296   0  14 0 0   0.17   0.66
+9x7e3n1/rotate_z                          40   0   0  1920   0   0 0 0   0.14   0.22
 
-Summary                                  520   0 126 18912   0 295 0 2   0.27 235.05
+Summary                                  520   0 128 18816   0  95 0 0   0.14   0.96

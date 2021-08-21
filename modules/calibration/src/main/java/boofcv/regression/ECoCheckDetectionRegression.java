@@ -85,6 +85,6 @@ public class ECoCheckDetectionRegression extends BaseRegression implements Image
     public static void main(String[] args) throws IOException, ClassNotFoundException, IllegalAccessException, InstantiationException {
         BoofRegressionConstants.clearCurrentResults();
         RegressionRunner.main(new String[]{ECoCheckDetectionRegression.class.getName(),ImageDataType.F32.toString()});
-//        RegressionRunner.main(new String[]{ECoCheckDetectionRegression.class.getName(),ImageDataType.U8.toString()});
+        RegressionRunner.main(new String[]{ECoCheckDetectionRegression.class.getName(),ImageDataType.U8.toString()});
     }
 }

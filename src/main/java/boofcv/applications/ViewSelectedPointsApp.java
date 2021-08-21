@@ -79,7 +79,8 @@ public class ViewSelectedPointsApp extends JPanel {
             return;
         }
 
-        display.setImage(image);
+        window.setTitle(file.getName());
+        display.setBufferedImageNoChange(image);
         display.repaint();
     }
 

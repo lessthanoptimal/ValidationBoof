@@ -139,7 +139,7 @@ public class ParseCalibrationConfigFiles {
             String line = ParseHelper.skipComments(reader);
             BoofMiscOps.checkTrue(line.startsWith("image.shape"));
             found.milliseconds = Double.parseDouble(afterEq(reader.readLine(),"milliseconds"));
-            int numMarkers = Integer.parseInt(afterEq(reader.readLine(),"markers"));
+            int numMarkers = Integer.parseInt(afterEq(reader.readLine(),"markers.size"));
             for (int markerIdx = 0; markerIdx < numMarkers; markerIdx++) {
                 UniqueMarkerObserved marker = found.markers.grow();
                 marker.markerID = Integer.parseInt(afterEq(reader.readLine(),"marker"));
@@ -166,11 +166,11 @@ public class ParseCalibrationConfigFiles {
 
             String line = ParseHelper.skipComments(reader);
             BoofMiscOps.checkTrue(line.startsWith("image.shape"));
-            int numMarkers = Integer.parseInt(afterEq(reader.readLine(),"markers"));
+            int numMarkers = Integer.parseInt(afterEq(reader.readLine(),"markers.size"));
             for (int markerIdx = 0; markerIdx < numMarkers; markerIdx++) {
                 UniqueMarkerObserved marker = new UniqueMarkerObserved();
                 marker.markerID = Integer.parseInt(afterEq(reader.readLine(),"marker"));
-                int numCorners = Integer.parseInt(afterEq(reader.readLine(),"corners.size"));
+                int numCorners = Integer.parseInt(afterEq(reader.readLine(),"landmarks.size"));
                 for (int cornerIdx = 0; cornerIdx < numCorners; cornerIdx++) {
                     String[] words = reader.readLine().split(" ");
                     PointIndex2D_F64 landmark = marker.landmarks.grow();

@@ -115,7 +115,7 @@ public class DetectECoCheckImages<T extends ImageGray<T>> {
             out.println("# ECoCheck Detections. BoofCV " + BoofVersion.VERSION);
             out.println("image.shape=" + gray.width + "," + gray.height);
             out.println("milliseconds=" + timeMS);
-            out.println("markers=" + filtered.size());
+            out.println("markers.size=" + filtered.size());
             for (int i = 0; i < filtered.size(); i++) {
                 ECoCheckFound found = filtered.get(i);
                 out.println("marker=" + found.markerID);
