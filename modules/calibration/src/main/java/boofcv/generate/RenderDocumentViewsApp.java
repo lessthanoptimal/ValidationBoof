@@ -2,6 +2,7 @@ package boofcv.generate;
 
 import boofcv.alg.filter.blur.GBlurImageOps;
 import boofcv.alg.misc.GImageMiscOps;
+import boofcv.alg.misc.PixelMath;
 import boofcv.app.PaperSize;
 import boofcv.common.parsing.MarkerDocumentLandmarks;
 import boofcv.common.parsing.ParseCalibrationConfigFiles;
@@ -36,6 +37,10 @@ import java.util.Random;
  * @author Peter Abeles
  */
 public class RenderDocumentViewsApp {
+    // TODO motion blur - linear
+    // TODO motion blur - rotational
+    // TODO bright and dark spots
+
     @Option(name = "-i", aliases = {"--Input"}, usage = "PDF of marker")
     public String inputFile;
     @Option(name = "-o", aliases = {"--Output"}, usage = "Output directory for rendered images.")
@@ -92,6 +97,7 @@ public class RenderDocumentViewsApp {
         Se3_F64 markerToWorld = SpecialEuclideanOps_F64.eulerXyz(0, 0, markerZ, 0.02, Math.PI, 0, null);
         simulator.addSurface(markerToWorld, paper.convertWidth(units), markerImage);
 
+        renderFadeToBlack(simulator, markerImage);
         renderMovingAway(simulator, markerImage);
         renderRotatingZ(simulator, markerImage);
         renderBlurredRotatingAxis(simulator, markerImage);
@@ -145,6 +151,27 @@ public class RenderDocumentViewsApp {
             System.exit(1);
             throw new RuntimeException(e);
         }
+    }
+
+    private void renderFadeToBlack(SimulatePlanarWorld simulator, GrayF32 markerImage) {
+        File outputDir = new File(destinationDir, "fade");
+        if (!outputDir.exists())
+            BoofMiscOps.checkTrue(outputDir.mkdirs());
+
+        Se3_F64 worldToCamera = SpecialEuclideanOps_F64.eulerXyz(0, 0, -markerZ*0.8, 0., 0, 0, null);
+        simulator.setWorldToCamera(worldToCamera);
+
+        GrayF32 texture = simulator.getImageRect(0).texture.clone();
+
+        int N = 12;
+        for (int i = 0; i < N; i++) {
+            double brightness = (N-i-1)/(double)(N-1) + 0.02;
+            PixelMath.multiply(texture, (float)brightness, simulator.getImageRect(0).texture);
+            saveSimulatedImage(simulator, outputDir, i);
+        }
+
+        // Undo the changes so that other scenarios are not messed up by it
+        simulator.getImageRect(0).texture.setTo(texture);
     }
 
     private void renderMovingAway(SimulatePlanarWorld simulator, GrayF32 markerImage) {
@@ -262,8 +289,8 @@ public class RenderDocumentViewsApp {
     }
 
     public static void main(String[] args) {
-        RenderDocumentViewsApp generator = new RenderDocumentViewsApp();
-        CmdLineParser parser = new CmdLineParser(generator);
+        var generator = new RenderDocumentViewsApp();
+        var parser = new CmdLineParser(generator);
         try {
             parser.parseArgument(args);
             if (generator.inputFile == null)

@@ -4,7 +4,6 @@ import boofcv.BoofVersion;
 import boofcv.abst.fiducial.calib.ConfigECoCheckMarkers;
 import boofcv.alg.fiducial.calib.ecocheck.ECoCheckDetector;
 import boofcv.alg.fiducial.calib.ecocheck.ECoCheckFound;
-import boofcv.alg.fiducial.calib.ecocheck.ECoCheckUtils;
 import boofcv.core.image.GeneralizedImageOps;
 import boofcv.factory.fiducial.FactoryFiducial;
 import boofcv.io.image.ConvertBufferedImage;
@@ -109,7 +108,7 @@ public class DetectECoCheckImages<T extends ImageGray<T>> {
 
     private void saveResults(File outputPath, double timeMS) {
         // Merge split marker and remove unknown markers
-        List<ECoCheckFound> filtered = ECoCheckUtils.mergeAndRemoveUnknown(detector.found.toList());
+        List<ECoCheckFound> filtered = detector.getUtils().mergeAndRemoveUnknown(detector.found.toList());
 
         try (PrintStream out = new PrintStream(outputPath)) {
             out.println("# ECoCheck Detections. BoofCV " + BoofVersion.VERSION);
