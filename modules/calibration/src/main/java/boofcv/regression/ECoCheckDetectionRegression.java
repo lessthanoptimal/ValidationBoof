@@ -36,7 +36,7 @@ public class ECoCheckDetectionRegression extends BaseRegression implements Image
         File generatedBase = new File(fileTmp, "generated");
         File detectedBase = new File(fileTmp, "detected");
 
-        for ( String encoding : new String[]{"9x7e3n1","9x7e0n1"}) {
+        for (String encoding : new String[]{"9x7e3n1", "9x7e0n1"}) {
             System.out.println("Rendering");
             var generator = new RenderDocumentViewsApp();
             generator.inputFile = new File(new File(pathCalibration), "ecocheck_" + encoding + ".pdf").getPath();
@@ -47,7 +47,7 @@ public class ECoCheckDetectionRegression extends BaseRegression implements Image
             System.out.println("Detecting");
             ConfigECoCheckMarkers configMarkers = ConfigECoCheckMarkers.parse(encoding, 1.0);
             final Class imageType = ImageDataType.typeToSingleClass(type);
-            DetectECoCheckImages<?> detector = new DetectECoCheckImages<>(configMarkers, imageType);
+            var detector = new DetectECoCheckImages<>(configMarkers, imageType);
             detector.outputPath = new File(detectedBase, encoding);
             detector.detect(new File(generator.destinationDir));
         }
@@ -84,7 +84,7 @@ public class ECoCheckDetectionRegression extends BaseRegression implements Image
 
     public static void main(String[] args) throws IOException, ClassNotFoundException, IllegalAccessException, InstantiationException {
         BoofRegressionConstants.clearCurrentResults();
-        RegressionRunner.main(new String[]{ECoCheckDetectionRegression.class.getName(),ImageDataType.F32.toString()});
-        RegressionRunner.main(new String[]{ECoCheckDetectionRegression.class.getName(),ImageDataType.U8.toString()});
+        RegressionRunner.main(new String[]{ECoCheckDetectionRegression.class.getName(), ImageDataType.F32.toString()});
+        RegressionRunner.main(new String[]{ECoCheckDetectionRegression.class.getName(), ImageDataType.U8.toString()});
     }
 }

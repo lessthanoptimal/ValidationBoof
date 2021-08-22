@@ -130,7 +130,7 @@ public class DetectECoCheckImages<T extends ImageGray<T>> {
     }
 
     public static void main(String[] args) {
-        for ( String encoding : new String[]{"9x7e0n1","9x7e3n1"}) {
+        for (String encoding : new String[]{"9x7e0n1", "9x7e3n1"}) {
             ConfigECoCheckMarkers config = ConfigECoCheckMarkers.parse(encoding, 1.0);
 
             var app = new DetectECoCheckImages<>(config, GrayF32.class);

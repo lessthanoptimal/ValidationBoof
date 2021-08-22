@@ -67,9 +67,12 @@ public class EvaluateMarkerLandmarkDetections {
         }
 
         for (File f : listChildren) {
+            if (!f.isDirectory())
+                continue;
+
             File b = new File(baseFound, f.getName());
             if (!b.exists()) {
-                err.println("Missing directory: " + b.getPath());
+                err.println("Missing child: " + b.getPath());
                 continue;
             }
 
