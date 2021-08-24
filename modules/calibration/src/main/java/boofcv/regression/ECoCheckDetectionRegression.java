@@ -20,7 +20,7 @@ import java.util.List;
  */
 public class ECoCheckDetectionRegression extends BaseRegression implements ImageRegression {
 
-    String pathCalibration = "data/calibration_mono/ecocheck";
+    String pathDataset = "data/calibration_mono/ecocheck";
 
     // directory used as temporary workspace
     File fileTmp = new File("tmp");
@@ -33,23 +33,28 @@ public class ECoCheckDetectionRegression extends BaseRegression implements Image
     @Override
     public void process(ImageDataType type) throws IOException {
         // Generate images
-        File generatedBase = new File(fileTmp, "generated");
+        File generatedBase = new File(pathDataset);
         File detectedBase = new File(fileTmp, "detected");
 
         for (String encoding : new String[]{"9x7e3n1", "9x7e0n1"}) {
             System.out.println("Rendering");
-            var generator = new RenderDocumentViewsApp();
-            generator.inputFile = new File(new File(pathCalibration), "ecocheck_" + encoding + ".pdf").getPath();
-            generator.destinationDir = new File(generatedBase, encoding).getPath();
-            generator.landmarksFile = new File(new File(pathCalibration), "corners_9x7.txt").getPath();
-            generator.process();
+            File renderedOutput =  new File(generatedBase, encoding);
+
+            // Render the simulated data if it doesn't already exist
+            if (!renderedOutput.exists()) {
+                var generator = new RenderDocumentViewsApp();
+                generator.inputFile = new File(new File(pathDataset), "ecocheck_" + encoding + ".pdf").getPath();
+                generator.destinationDir = renderedOutput.getPath();
+                generator.landmarksFile = new File(new File(pathDataset), "corners_9x7.txt").getPath();
+                generator.process();
+            }
 
             System.out.println("Detecting");
             ConfigECoCheckMarkers configMarkers = ConfigECoCheckMarkers.parse(encoding, 1.0);
             final Class imageType = ImageDataType.typeToSingleClass(type);
             var detector = new DetectECoCheckImages<>(configMarkers, imageType);
             detector.outputPath = new File(detectedBase, encoding);
-            detector.detect(new File(generator.destinationDir));
+            detector.detect(renderedOutput);
         }
 
         System.out.println("Evaluating");
