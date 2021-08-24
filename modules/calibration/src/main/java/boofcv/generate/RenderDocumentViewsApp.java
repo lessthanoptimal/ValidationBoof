@@ -166,8 +166,9 @@ public class RenderDocumentViewsApp {
     private void renderLinearMotionBlur(SimulatePlanarWorld simulator, GrayF32 markerImage) {
         File outputDir = setupScenarioOutput("linear_blur");
 
-        int numAngles = 6 * trialCountFactor;
-        int numMagnitudes = 7 * trialCountFactor;
+        // taking the sqrt to keep the growth linear
+        int numAngles = (int) Math.round(6 * Math.sqrt(trialCountFactor));
+        int numMagnitudes = (int) Math.round(7 * Math.sqrt(trialCountFactor));
 
         GrayF32 workImage = new GrayF32(1, 1);
         ImageBorder<GrayF32> border = FactoryImageBorder.single(BorderType.EXTENDED, GrayF32.class);
@@ -189,7 +190,6 @@ public class RenderDocumentViewsApp {
                 Kernel2D_F32 psf = MotionBlurOps.linearMotionPsf(magnitude, theta);
 
                 postRender = (image) -> {
-                    workImage.reshape(image.width, image.height);
                     GConvolveImageOps.convolve(psf, image, workImage, border);
                     return workImage;
                 };
@@ -199,7 +199,7 @@ public class RenderDocumentViewsApp {
         }
 
         // remove the post process filter
-        postRender = (img)-> img;
+        postRender = (img) -> img;
     }
 
     private void renderFadeToBlack(SimulatePlanarWorld simulator, GrayF32 markerImage) {
