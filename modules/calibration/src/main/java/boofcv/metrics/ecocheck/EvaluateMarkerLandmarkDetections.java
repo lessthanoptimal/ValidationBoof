@@ -32,6 +32,11 @@ public class EvaluateMarkerLandmarkDetections {
     File rootTruth;
     File rootFound;
 
+    // log landmarks with very large errors
+    public double largeErrorTol = 10.0;
+    // If not null then bad landmarks will be logged
+    public PrintStream outBad = null;
+
     public final Map<String, DogArray_F64> runtimeResults = new HashMap<>();
 
     public void evaluateRecursive(String foundPath, String truthPath) {
@@ -97,17 +102,18 @@ public class EvaluateMarkerLandmarkDetections {
 
         List<String> listFoundPath = UtilIO.listSmart("glob:" + detectionPath + "/found_*.txt", true, (f) -> true);
         List<String> listTruthPath = UtilIO.listSmart("glob:" + truthPath + "/landmarks_*.txt", true, (f) -> true);
-        BoofMiscOps.checkEq(listFoundPath.size(), listTruthPath.size());
+        BoofMiscOps.checkEq(listFoundPath.size(), listTruthPath.size(), detectionPath);
 
         if (listFoundPath.isEmpty())
             return false;
 
         for (int imageIndex = 0; imageIndex < listFoundPath.size(); imageIndex++) {
             try {
-                ObservedLandmarkMarkers found = ParseCalibrationConfigFiles.parseObservedLandmarkMarker(new File(listFoundPath.get(imageIndex)));
+                File foundFile = new File(listFoundPath.get(imageIndex));
+                ObservedLandmarkMarkers found = ParseCalibrationConfigFiles.parseObservedLandmarkMarker(foundFile);
                 List<UniqueMarkerObserved> expected = parseUniqueMarkerTruth(new File(listTruthPath.get(imageIndex)));
 //                System.out.println("path="+listFoundPath.get(imageIndex));
-                evaluateImage(found, expected);
+                evaluateImage(found, expected, foundFile);
                 runtime.add(found.milliseconds);
             } catch (RuntimeException e) {
                 e.printStackTrace(err);
@@ -118,7 +124,7 @@ public class EvaluateMarkerLandmarkDetections {
         return true;
     }
 
-    void evaluateImage(ObservedLandmarkMarkers found, List<UniqueMarkerObserved> expected) {
+    void evaluateImage(ObservedLandmarkMarkers found, List<UniqueMarkerObserved> expected, File foundFile) {
         scenario.totalMarkers += expected.size();
 
         DogArray_B markerMatched = new DogArray_B();
@@ -166,7 +172,14 @@ public class EvaluateMarkerLandmarkDetections {
                 }
 
                 cornerMatched.set(foundLandmark.index, true);
-                scenario.errors.add(foundLandmark.p.distance(truthLandmark.p));
+                double error = foundLandmark.p.distance(truthLandmark.p);
+                scenario.errors.add(error);
+
+                if (outBad != null && error > largeErrorTol) {
+                    outBad.printf("bad landmark: error=%6.1f landmarkID=%d file=%s\n"
+                            ,error,foundLandmark.index,foundFile.getPath());
+                }
+
             }
 
             scenario.falseNegativeCorner += cornerMatched.count(false);
@@ -233,6 +246,7 @@ public class EvaluateMarkerLandmarkDetections {
 
     public static void main(String[] args) {
         var app = new EvaluateMarkerLandmarkDetections();
+//        app.outBad = System.out;
         app.evaluateRecursive("ecocheck_9x7e0n1_found", "ecocheck_9x7e0n1");
         app.evaluateRecursive("ecocheck_9x7e3n1_found", "ecocheck_9x7e3n1");
         app.evaluateRecursive("charuco/charuco_6X8_6X6_100_found", "charuco/charuco_6X8_6X6_100");

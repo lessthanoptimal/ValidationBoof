@@ -1,17 +1,24 @@
 package boofcv.generate;
 
+import boofcv.alg.distort.motion.MotionBlurOps;
 import boofcv.alg.filter.blur.GBlurImageOps;
+import boofcv.alg.filter.convolve.GConvolveImageOps;
 import boofcv.alg.misc.GImageMiscOps;
 import boofcv.alg.misc.PixelMath;
 import boofcv.app.PaperSize;
 import boofcv.common.parsing.MarkerDocumentLandmarks;
 import boofcv.common.parsing.ParseCalibrationConfigFiles;
+import boofcv.core.image.border.FactoryImageBorder;
+import boofcv.io.UtilIO;
 import boofcv.io.image.ConvertBufferedImage;
 import boofcv.io.image.UtilImageIO;
 import boofcv.misc.BoofMiscOps;
 import boofcv.simulation.SimulatePlanarWorld;
+import boofcv.struct.border.BorderType;
+import boofcv.struct.border.ImageBorder;
 import boofcv.struct.calib.CameraPinholeBrown;
 import boofcv.struct.calib.CameraUniversalOmni;
+import boofcv.struct.convolve.Kernel2D_F32;
 import boofcv.struct.image.GrayF32;
 import georegression.struct.point.Point2D_F64;
 import georegression.struct.se.Se3_F64;
@@ -37,8 +44,6 @@ import java.util.Random;
  * @author Peter Abeles
  */
 public class RenderDocumentViewsApp {
-    // TODO motion blur - linear
-    // TODO motion blur - rotational
     // TODO bright and dark spots
 
     @Option(name = "-i", aliases = {"--Input"}, usage = "PDF of marker")
@@ -47,6 +52,12 @@ public class RenderDocumentViewsApp {
     public String destinationDir = ".";
     @Option(name = "-l", aliases = {"--Landmarks"}, usage = "Landmarks file")
     public String landmarksFile;
+    @Option(name = "-s", aliases = {"--ScaleCounts"}, usage = "Used to scale up the number of trials in each scenario")
+    public int trialCountFactor = 1;
+    @Option(name = "--Seed", usage = "Seed for random number generator")
+    public long randomSeed = 234;
+    @Option(name = "--PixelNoise", usage = "Amount of gaussian noise added to each pixel's intensity")
+    double pixelNoiseSigma = 5.0;
 
     // Units the simulator uses
     Unit units = Unit.METER;
@@ -56,14 +67,13 @@ public class RenderDocumentViewsApp {
     // nominal distance of the marker used in several scenarios
     double markerZ = 3.0;
 
-    // Amount of Gaussian noise added to each pixel
-    double defaultNoise = 5.0;
-
     // Amount of blur applied to each image
     double blurSigma = 0.0;
 
     // storage for blurred image
     GrayF32 blurred = new GrayF32(1, 1);
+
+    PostRenderProcess postRender = (img) -> img;
 
     Random rand;
 
@@ -78,7 +88,7 @@ public class RenderDocumentViewsApp {
             landmarks = ParseCalibrationConfigFiles.parseDocumentLandmarks(new File(landmarksFile));
         }
 
-        rand = new Random(234);
+        rand = new Random(randomSeed);
         GrayF32 markerImage = loadMarkerImage();
 
         SimulatePlanarWorld simulator = new SimulatePlanarWorld();
@@ -97,6 +107,7 @@ public class RenderDocumentViewsApp {
         Se3_F64 markerToWorld = SpecialEuclideanOps_F64.eulerXyz(0, 0, markerZ, 0.02, Math.PI, 0, null);
         simulator.addSurface(markerToWorld, paper.convertWidth(units), markerImage);
 
+        renderLinearMotionBlur(simulator, markerImage);
         renderFadeToBlack(simulator, markerImage);
         renderMovingAway(simulator, markerImage);
         renderRotatingZ(simulator, markerImage);
@@ -114,16 +125,15 @@ public class RenderDocumentViewsApp {
         for (int blurCount = 0; blurCount < 3; blurCount++) {
             blurSigma = blurCount;
 
-            File outputDir = new File(destinationDir, "fisheye_blur" + blurCount);
-            if (!outputDir.exists())
-                BoofMiscOps.checkTrue(outputDir.mkdirs());
+            File outputDir = setupScenarioOutput("fisheye_blur" + blurCount);
 
             double fisheyeMarkerZ = 0.20;
             double span = Math.PI * 0.7;
-            for (int indexYaw = 0; indexYaw < 30; indexYaw++) {
+            int numTrials = 30 * trialCountFactor;
+            for (int indexYaw = 0; indexYaw < numTrials; indexYaw++) {
                 simulator.resetScene();
 
-                double yaw = -Math.PI / 2 + (Math.PI - span) / 2.0 + indexYaw * span / 29.0;
+                double yaw = -Math.PI / 2 + (Math.PI - span) / 2.0 + indexYaw * span / (numTrials - 1);
                 Se3_F64 markerToWorld = SpecialEuclideanOps_F64.eulerXyz(fisheyeMarkerZ * Math.sin(yaw), 0, fisheyeMarkerZ * Math.cos(yaw), 0.02, Math.PI + yaw, 0, null);
                 simulator.addSurface(markerToWorld, paper.convertWidth(units), markerImage);
 
@@ -153,20 +163,62 @@ public class RenderDocumentViewsApp {
         }
     }
 
-    private void renderFadeToBlack(SimulatePlanarWorld simulator, GrayF32 markerImage) {
-        File outputDir = new File(destinationDir, "fade");
-        if (!outputDir.exists())
-            BoofMiscOps.checkTrue(outputDir.mkdirs());
+    private void renderLinearMotionBlur(SimulatePlanarWorld simulator, GrayF32 markerImage) {
+        File outputDir = setupScenarioOutput("linear_blur");
 
-        Se3_F64 worldToCamera = SpecialEuclideanOps_F64.eulerXyz(0, 0, -markerZ*0.8, 0., 0, 0, null);
-        simulator.setWorldToCamera(worldToCamera);
+        int numAngles = 6 * trialCountFactor;
+        int numMagnitudes = 7 * trialCountFactor;
+
+        GrayF32 workImage = new GrayF32(1, 1);
+        ImageBorder<GrayF32> border = FactoryImageBorder.single(BorderType.EXTENDED, GrayF32.class);
+
+        int trial = 0;
+        for (int angleidx = 0; angleidx < numAngles; angleidx++) {
+            double theta = Math.PI * angleidx / numAngles;
+            for (int magIdx = 0; magIdx < numMagnitudes; magIdx++) {
+                double magnitude = (1 + magIdx) * 3;
+
+                // Shuffle the target around a little-bit to avoid special due to rendering from dominating
+                double tx = rand.nextGaussian() * 0.005;
+                double ty = rand.nextGaussian() * 0.005;
+                double tz = rand.nextGaussian() * 0.01;
+
+                Se3_F64 worldToCamera = SpecialEuclideanOps_F64.eulerXyz(tx, ty, tz + -markerZ * 0.8, 0, 0, 0, null);
+                simulator.setWorldToCamera(worldToCamera);
+
+                Kernel2D_F32 psf = MotionBlurOps.linearMotionPsf(magnitude, theta);
+
+                postRender = (image) -> {
+                    workImage.reshape(image.width, image.height);
+                    GConvolveImageOps.convolve(psf, image, workImage, border);
+                    return workImage;
+                };
+
+                saveSimulatedImage(simulator, outputDir, trial++);
+            }
+        }
+
+        // remove the post process filter
+        postRender = (img)-> img;
+    }
+
+    private void renderFadeToBlack(SimulatePlanarWorld simulator, GrayF32 markerImage) {
+        File outputDir = setupScenarioOutput("fade");
 
         GrayF32 texture = simulator.getImageRect(0).texture.clone();
 
-        int N = 12;
-        for (int i = 0; i < N; i++) {
-            double brightness = (N-i-1)/(double)(N-1) + 0.02;
-            PixelMath.multiply(texture, (float)brightness, simulator.getImageRect(0).texture);
+        int numTrials = 12 * trialCountFactor;
+        for (int i = 0; i < numTrials; i++) {
+            // Shuffle the target around a little-bit to avoid special due to rendering from dominating
+            double rotX = rand.nextGaussian() * 1e-2;
+            double rotY = rand.nextGaussian() * 1e-2;
+            double rotZ = rand.nextGaussian() * 1e-1;
+
+            Se3_F64 worldToCamera = SpecialEuclideanOps_F64.eulerXyz(0, 0, -markerZ * 0.8, rotX, rotY, rotZ, null);
+            simulator.setWorldToCamera(worldToCamera);
+
+            double brightness = (numTrials - i - 1) / (double) (numTrials - 1) + 0.02;
+            PixelMath.multiply(texture, (float) brightness, simulator.getImageRect(0).texture);
             saveSimulatedImage(simulator, outputDir, i);
         }
 
@@ -175,25 +227,27 @@ public class RenderDocumentViewsApp {
     }
 
     private void renderMovingAway(SimulatePlanarWorld simulator, GrayF32 markerImage) {
-        File outputDir = new File(destinationDir, "move_away");
-        if (!outputDir.exists())
-            BoofMiscOps.checkTrue(outputDir.mkdirs());
+        File outputDir = setupScenarioOutput("move_away");
 
-        int N = 30;
+        int N = 40 * trialCountFactor;
+        double maxDistanceAway = markerZ * 1.5;
         for (int i = 0; i < N; i++) {
-            double distance = (N - i - 1) * (markerZ - 0.3) / (N - 1);
-            Se3_F64 worldToCamera = SpecialEuclideanOps_F64.eulerXyz(0, 0, -distance, 0., 0, 0, null);
+            // Shuffle the target around a little-bit to avoid special due to rendering from dominating
+            double rotX = rand.nextGaussian() * 1e-2;
+            double rotY = rand.nextGaussian() * 1e-2;
+            double rotZ = rand.nextGaussian() * 1e-1;
+
+            double distance = markerZ - 0.3 - maxDistanceAway * i / (N - 1);
+            Se3_F64 worldToCamera = SpecialEuclideanOps_F64.eulerXyz(0, 0, -distance, rotX, rotY, rotZ, null);
             simulator.setWorldToCamera(worldToCamera);
             saveSimulatedImage(simulator, outputDir, i);
         }
     }
 
     private void renderRotatingZ(SimulatePlanarWorld simulator, GrayF32 markerImage) {
-        File outputDir = new File(destinationDir, "rotate_z");
-        if (!outputDir.exists())
-            BoofMiscOps.checkTrue(outputDir.mkdirs());
+        File outputDir = setupScenarioOutput("rotate_z");
 
-        int N = 40;
+        int N = 40 * trialCountFactor;
         for (int i = 0; i < N; i++) {
             double angle = 2.0 * Math.PI * i / N;
             Se3_F64 worldToCamera = SpecialEuclideanOps_F64.eulerXyz(0, 0, -(markerZ - 0.5), 0., 0, angle, null);
@@ -206,15 +260,14 @@ public class RenderDocumentViewsApp {
         Se3_F64 worldToCamera = SpecialEuclideanOps_F64.eulerXyz(0, 0, -(markerZ - 0.5), 0., 0, 0, null);
         simulator.setWorldToCamera(worldToCamera);
 
-        int N = 20;
+        int N = 20 * trialCountFactor;
         double sweep = Math.PI * 0.95;
 
         for (int blurCount = 0; blurCount < 5; blurCount++) {
             blurSigma = blurCount;
 
-            File outputDir = new File(destinationDir, "axis_blur" + blurCount);
-            if (!outputDir.exists())
-                BoofMiscOps.checkTrue(outputDir.mkdirs());
+            File outputDir = setupScenarioOutput("axis_blur" + blurCount);
+
 
             for (int i = 0; i < N; i++) {
                 simulator.resetScene();
@@ -229,8 +282,9 @@ public class RenderDocumentViewsApp {
     }
 
     private void saveSimulatedImage(SimulatePlanarWorld simulator, File outputDir, int i) {
-        GrayF32 rendered = noise(simulator.render(), defaultNoise);
-        UtilImageIO.saveImage(rendered, new File(outputDir, String.format("image%02d.png", i)).getPath());
+
+        GrayF32 rendered = noise(postRender.process(simulator.render()), pixelNoiseSigma);
+        UtilImageIO.saveImage(rendered, new File(outputDir, String.format("image%03d.png", i)).getPath());
 
         if (landmarks == null)
             return;
@@ -238,7 +292,7 @@ public class RenderDocumentViewsApp {
         double documentWidth = landmarks.paper.convertWidth(landmarks.units);
         double documentHeight = landmarks.paper.convertHeight(landmarks.units);
 
-        try (PrintStream out = new PrintStream(new File(outputDir, String.format("landmarks_image%02d.txt", i)))) {
+        try (PrintStream out = new PrintStream(new File(outputDir, String.format("landmarks_image%03d.txt", i)))) {
             out.println("# True marker landmark locations");
             out.println("image.shape=" + rendered.width + "x" + rendered.height);
 
@@ -282,10 +336,31 @@ public class RenderDocumentViewsApp {
         return image;
     }
 
+    private File setupScenarioOutput(String move_away) {
+        File outputDir = new File(destinationDir, move_away);
+
+        try {
+            // Delete old files just in case the last time it was run there were more generated
+            if (outputDir.exists())
+                UtilIO.delete(outputDir, f -> true);
+
+            BoofMiscOps.checkTrue(outputDir.mkdirs());
+        } catch (IOException ignore) {
+        }
+
+        System.out.println("Rendering " + outputDir.getName());
+        return outputDir;
+    }
+
     private static void printHelpExit(CmdLineParser parser) {
         parser.getProperties().withUsageWidth(120);
         parser.printUsage(System.out);
         System.exit(1);
+    }
+
+    @FunctionalInterface
+    public interface PostRenderProcess {
+        GrayF32 process(GrayF32 image);
     }
 
     public static void main(String[] args) {
