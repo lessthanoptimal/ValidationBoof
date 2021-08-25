@@ -40,8 +40,11 @@ public class EvaluateMarkerLandmarkDetections {
     public final Map<String, DogArray_F64> runtimeResults = new HashMap<>();
 
     public void evaluateRecursive(String foundPath, String truthPath) {
+        System.out.println("\nfound path = " + foundPath);
         out.println("# Detection performance using labeled markers and corners.");
-        out.println("# name (count markers) (marker false positive) (marker false negative) (count corners) (corner FP) (corner FN) (duplicate markers) (duplicate corners) err90 err100");
+        out.println("# name (count markers) (marker false positive) (marker false negative), (count corners) (percent FP) (percent FN), (duplicate markers) (duplicate corners), error50 err90 err100");
+        out.printf("# %-38s %3s %3s %4s , %5s %4s %4s , %2s %2s , %-6s %-6s %-6s\n",
+                "", "CM", "MFP", "MFN", "CC", "CFP", "CFN", "DM", "DC", "  E50", "  E90", "  E100");
         out.println();
         rootFound = new File(foundPath);
         rootTruth = new File(truthPath);
@@ -177,7 +180,7 @@ public class EvaluateMarkerLandmarkDetections {
 
                 if (outBad != null && error > largeErrorTol) {
                     outBad.printf("bad landmark: error=%6.1f landmarkID=%d file=%s\n"
-                            ,error,foundLandmark.index,foundFile.getPath());
+                            , error, foundLandmark.index, foundFile.getPath());
                 }
 
             }
@@ -228,19 +231,23 @@ public class EvaluateMarkerLandmarkDetections {
 
         public void print(PrintStream out, String directory) {
             errors.sort();
-            double error90, error100;
+            double error50, error90, error100;
             if (errors.isEmpty()) {
-                error90 = error100 = Double.NaN;
+                error50 = error90 = error100 = Double.NaN;
             } else {
+                error50 = errors.getFraction(0.5);
                 error90 = errors.getFraction(0.9);
                 error100 = errors.getFraction(1.0);
             }
 
-            out.printf("%-40s %3d %3d %3d %5d %3d %3d %d %d %6.2f %6.2f\n", directory,
+            double percentFalsePositiveCorner = 100.0*falsePositiveCorner/totalCorners;
+            double percentFalseNegativeCorner = 100.0*falseNegativeCorner/totalCorners;
+
+            out.printf("%-40s %3d %3d %4d , %5d %4.1f %4.1f , %2d %2d , %6.2f %6.2f %6.2f\n", directory,
                     totalMarkers, falsePositiveMarker, falseNegativeMarker,
-                    totalCorners, falsePositiveCorner, falseNegativeCorner,
+                    totalCorners, percentFalsePositiveCorner, percentFalseNegativeCorner,
                     duplicateMarkers, duplicateCorners,
-                    error90, error100);
+                    error50, error90, error100);
         }
     }
 
