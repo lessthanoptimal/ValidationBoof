@@ -6,6 +6,8 @@ import boofcv.common.parsing.UniqueMarkerObserved;
 import boofcv.demonstrations.shapes.ShapeVisualizePanel;
 import boofcv.gui.BoofSwingUtil;
 import boofcv.gui.StandardAlgConfigPanel;
+import boofcv.gui.calibration.DisplayPinholeCalibrationPanel;
+import boofcv.gui.controls.JCheckBoxValue;
 import boofcv.gui.controls.JSpinnerNumber;
 import boofcv.gui.feature.VisualizeFeatures;
 import boofcv.gui.image.ShowImages;
@@ -79,9 +81,13 @@ public class ViewSelectedPointsApp extends JPanel {
             return;
         }
 
-        window.setTitle(file.getName());
-        display.setBufferedImageNoChange(image);
-        display.repaint();
+        SwingUtilities.invokeLater(() -> {
+            window.setTitle(file.getName());
+            controls.setImageSize(image.getWidth(), image.getHeight());
+            display.setBufferedImageNoChange(image);
+            display.repaint();
+        });
+
     }
 
     private void openPoints() {
@@ -93,7 +99,7 @@ public class ViewSelectedPointsApp extends JPanel {
             landmarks = ParseCalibrationConfigFiles.parseObservedLandmarkMarker(file);
             display.repaint();
             return;
-        } catch (RuntimeException ignore){}
+        } catch (RuntimeException ignore) {}
         try {
             List<UniqueMarkerObserved> doc = ParseCalibrationConfigFiles.parseUniqueMarkerTruth(file);
             ObservedLandmarkMarkers obs = new ObservedLandmarkMarkers();
@@ -102,7 +108,9 @@ public class ViewSelectedPointsApp extends JPanel {
             }
             this.landmarks = obs;
             display.repaint();
-        } catch (RuntimeException ignore){}
+            return;
+        } catch (RuntimeException ignore) {}
+        System.out.println("Failed to load: " + file.getPath());
     }
 
     class DisplayPanel extends ShapeVisualizePanel {
@@ -113,15 +121,17 @@ public class ViewSelectedPointsApp extends JPanel {
 
 
             ObservedLandmarkMarkers landmarks = ViewSelectedPointsApp.this.landmarks;
-            landmarks.markers.forEach(marker->{
-                marker.landmarks.forEach(p->{
-                    VisualizeFeatures.drawPoint(g2, scale*p.p.x, scale*p.p.y, 5, Color.RED, true);
-                });
+            landmarks.markers.forEach(marker -> {
+                if (controls.showNumbers.value) {
+                    DisplayPinholeCalibrationPanel.drawFeatureID(g2, 18, marker.landmarks.toList(), null, scale);
+                }
+                marker.landmarks.forEach(
+                        p -> VisualizeFeatures.drawPoint(g2, scale * p.p.x, scale * p.p.y, 5, Color.RED, true));
             });
         }
 
         @Override
-        public void setScale( double scale ) {
+        public void setScale(double scale) {
             controls.setZoom(scale);
             super.setScale(controls.selectZoom.value.doubleValue());
         }
@@ -130,10 +140,13 @@ public class ViewSelectedPointsApp extends JPanel {
     class ControlPanel extends StandardAlgConfigPanel {
         protected JSpinnerNumber selectZoom = spinnerWrap(1.0, MIN_ZOOM, MAX_ZOOM, 1.0);
         protected JLabel imageSizeLabel = new JLabel();
+        protected JCheckBoxValue showNumbers = checkboxWrap("Show Numbers", false);
 
         public ControlPanel() {
+            setPreferredSize(new Dimension(200,200));
             addLabeled(imageSizeLabel, "Image Size");
             addLabeled(selectZoom.spinner, "Zoom");
+            addAlignLeft(showNumbers.check);
         }
 
         @Override
@@ -141,6 +154,9 @@ public class ViewSelectedPointsApp extends JPanel {
             if (source == selectZoom.spinner) {
                 selectZoom.value = (Number) selectZoom.spinner.getValue();
                 display.setScale(selectZoom.value.doubleValue());
+            } else if (source == showNumbers.check) {
+                showNumbers.updateValue();
+                display.repaint();
             }
         }
 
@@ -159,7 +175,7 @@ public class ViewSelectedPointsApp extends JPanel {
         }
     }
 
-    public void displayImmediate( String appName ) {
+    public void displayImmediate(String appName) {
         this.appName = appName;
         window = ShowImages.showWindow(this, appName, true);
         window.setJMenuBar(menuBar);
