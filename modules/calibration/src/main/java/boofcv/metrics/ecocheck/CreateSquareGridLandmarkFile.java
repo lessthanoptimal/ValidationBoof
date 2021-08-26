@@ -124,5 +124,7 @@ public class CreateSquareGridLandmarkFile {
         app.generate(config);
         app.generate("charuco_6X8", 7, 5, 3.0);
         app.generate("aruco_grids/corners_7x5", 7, 5, 3.0, 0.8);
+        double offset = 1.0/80.0;
+        app.generateOffset("caltag", 8, 6, 3.0, 0.75+1.5-offset, 0.75+1.5-offset);
     }
 }

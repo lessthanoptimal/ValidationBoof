@@ -13,6 +13,9 @@ import boofcv.struct.geo.PointIndex2D_F64;
 import boofcv.struct.image.GrayF32;
 import boofcv.struct.image.ImageGray;
 import org.apache.commons.io.FilenameUtils;
+import org.kohsuke.args4j.CmdLineException;
+import org.kohsuke.args4j.CmdLineParser;
+import org.kohsuke.args4j.Option;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -28,6 +31,13 @@ import java.util.List;
  * @author Peter Abeles
  */
 public class DetectECoCheckImages<T extends ImageGray<T>> {
+    @Option(name = "-i", aliases = {"--Input"}, usage = "Path to directory with labeled scenarios")
+    public String inputDirectory;
+    @Option(name = "-o", aliases = {"--Output"}, usage = "Where it should save the output to")
+    public String outputFile = ".";
+    @Option(name = "-e", aliases = {"--Encoding"}, usage = "Which encoding should it use")
+    public String encodingString = "9x7e3n1";
+
     /**
      * Where results are written to
      */
@@ -37,17 +47,32 @@ public class DetectECoCheckImages<T extends ImageGray<T>> {
 
     private File root;
 
-    T gray;
+    final T gray;
+    final Class<T> imageType;
 
     // Number of iterations it will perform before processing an image for real to make runtime results more accurate
     int warmIterations = 3;
 
-    public DetectECoCheckImages(ConfigECoCheckMarkers configMarkers, Class<T> imageType) {
-        detector = FactoryFiducial.ecocheck(null, configMarkers, imageType).getDetector();
+    public DetectECoCheckImages(Class<T> imageType) {
         gray = GeneralizedImageOps.createSingleBand(imageType, 1, 1);
+        this.imageType = imageType;
     }
 
+    /**
+     * Calls detect using command line arguments
+     */
+    public void detectCommandline() {
+        ConfigECoCheckMarkers config = ConfigECoCheckMarkers.parse(encodingString, 1.0);
+        detector = FactoryFiducial.ecocheck(null, config, imageType).getDetector();
+        outputPath = new File(outputFile);
+        detect(new File(inputDirectory));
+    }
+
+    /**
+     * Calls detect with the specified directory and whichever detector has been specified
+     */
     public void detect(File directory) {
+        BoofMiscOps.checkTrue(detector != null, "You must specify the detector!");
         this.root = directory;
         detectRecursive(directory);
     }
@@ -129,14 +154,32 @@ public class DetectECoCheckImages<T extends ImageGray<T>> {
         }
     }
 
-    public static void main(String[] args) {
-        for (String encoding : new String[]{"9x7e0n1", "9x7e3n1"}) {
-            ConfigECoCheckMarkers config = ConfigECoCheckMarkers.parse(encoding, 1.0);
+    private static void printHelpExit(CmdLineParser parser) {
+        parser.getProperties().withUsageWidth(120);
+        parser.printUsage(System.out);
+        System.exit(1);
+    }
 
-            var app = new DetectECoCheckImages<>(config, GrayF32.class);
-            app.outputPath = new File("ecocheck_" + encoding + "_found");
-            app.detect(new File("ecocheck_" + encoding));
+    public static void main(String[] args) {
+        var generator = new DetectECoCheckImages<>(GrayF32.class);
+        var parser = new CmdLineParser(generator);
+        try {
+            parser.parseArgument(args);
+            if (generator.inputDirectory == null)
+                printHelpExit(parser);
+            generator.detectCommandline();
+        } catch (CmdLineException e) {
+            // handling of wrong arguments
+            System.err.println(e.getMessage());
+            printHelpExit(parser);
         }
-        System.out.println("Done!");
+//        for (String encoding : new String[]{"9x7e0n1", "9x7e3n1"}) {
+//            ConfigECoCheckMarkers config = ConfigECoCheckMarkers.parse(encoding, 1.0);
+//
+//            var app = new DetectECoCheckImages<>(config, GrayF32.class);
+//            app.outputPath = new File("ecocheck_" + encoding + "_found");
+//            app.detect(new File("ecocheck_" + encoding));
+//        }
+//        System.out.println("Done!");
     }
 }

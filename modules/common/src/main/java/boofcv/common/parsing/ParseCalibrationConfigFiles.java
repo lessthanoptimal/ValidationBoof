@@ -157,6 +157,9 @@ public class ParseCalibrationConfigFiles {
             return found;
         } catch (IOException e) {
             throw new RuntimeException(e);
+        } catch (RuntimeException e) {
+            System.err.println("Failed parsing "+file.getPath());
+            throw e;
         }
     }
 

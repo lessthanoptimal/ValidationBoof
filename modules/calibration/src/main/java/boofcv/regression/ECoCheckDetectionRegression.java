@@ -2,6 +2,7 @@ package boofcv.regression;
 
 import boofcv.abst.fiducial.calib.ConfigECoCheckMarkers;
 import boofcv.common.*;
+import boofcv.factory.fiducial.FactoryFiducial;
 import boofcv.generate.RenderDocumentViewsApp;
 import boofcv.metrics.ecocheck.DetectECoCheckImages;
 import boofcv.metrics.ecocheck.EvaluateMarkerLandmarkDetections;
@@ -50,9 +51,10 @@ public class ECoCheckDetectionRegression extends BaseRegression implements Image
             }
 
             System.out.println("Detecting");
-            ConfigECoCheckMarkers configMarkers = ConfigECoCheckMarkers.parse(encoding, 1.0);
             final Class imageType = ImageDataType.typeToSingleClass(type);
-            var detector = new DetectECoCheckImages<>(configMarkers, imageType);
+            var detector = new DetectECoCheckImages<>(imageType);
+            ConfigECoCheckMarkers configMarkers = ConfigECoCheckMarkers.parse(encoding, 1.0);
+            detector.detector = FactoryFiducial.ecocheck(null, configMarkers, imageType).getDetector();
             detector.outputPath = new File(detectedBase, encoding);
             detector.detect(renderedOutput);
         }
