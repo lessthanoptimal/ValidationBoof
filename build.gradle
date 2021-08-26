@@ -23,6 +23,8 @@ allprojects {
         maven { url = "https://oss.sonatype.org/content/repositories/snapshots/" }
     }
 
+    project.ext.set("jabel_version", '0.3.0')
+
     java {
         withJavadocJar()
         withSourcesJar()
@@ -53,6 +55,8 @@ allprojects {
         api 'org.apache.commons:commons-lang3:3.7'
 
         api 'com.sun.mail:javax.mail:1.6.0'
+
+        annotationProcessor("com.github.bsideup.jabel:jabel-javac-plugin:${project.jabel_version}")
 
         testCompile group: 'junit', name: 'junit', version: '4.12'
     }
