@@ -259,5 +259,6 @@ public class EvaluateMarkerLandmarkDetections {
         app.evaluateRecursive("charuco/charuco_6X8_6X6_100_found", "charuco/charuco_6X8_6X6_100");
         app.evaluateRecursive("aruco_grids/7x5_6X6_found", "aruco_grids/7x5_6X6");
         app.evaluateRecursive("aruco_grids/original_found_aruco3", "aruco_grids/original");
+//        app.evaluateRecursive("found/tcad", "renderings/tcad");
     }
 }

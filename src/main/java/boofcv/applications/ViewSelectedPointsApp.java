@@ -71,7 +71,7 @@ public class ViewSelectedPointsApp extends JPanel {
     }
 
     private void openImage() {
-        File file = BoofSwingUtil.openFileChooser(ViewSelectedPointsApp.this, BoofSwingUtil.FileTypes.IMAGES);
+        File file = BoofSwingUtil.openFileChooser("ViewPoints_Image", BoofSwingUtil.FileTypes.IMAGES);
         if (file == null)
             return;
 
@@ -91,7 +91,7 @@ public class ViewSelectedPointsApp extends JPanel {
     }
 
     private void openPoints() {
-        File file = BoofSwingUtil.openFileChooser(ViewSelectedPointsApp.this, BoofSwingUtil.FileTypes.FILES);
+        File file = BoofSwingUtil.openFileChooser("ViewPoints_Points", BoofSwingUtil.FileTypes.FILES);
         if (file == null)
             return;
 

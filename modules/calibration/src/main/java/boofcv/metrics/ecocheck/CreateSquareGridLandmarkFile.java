@@ -55,14 +55,22 @@ public class CreateSquareGridLandmarkFile {
      * Generic generator for a square grid
      */
     public void generate(String name, int rows, int cols, double squareSize) {
+        double offsetX = (paper.convertWidth(unit) - (cols - 1) * squareSize) / 2;
+        double offsetY = (paper.convertHeight(unit) - (rows - 1) * squareSize) / 2;
+
+        generateOffset(name, rows, cols, squareSize, offsetX, offsetY);
+    }
+
+    /**
+     * Generic generator for a square grid
+     */
+    public void generateOffset(String name, int rows, int cols, double squareSize,
+                               double offsetX, double offsetY) {
         try (PrintStream out = new PrintStream(name + ".txt")) {
             out.printf("# Grid marker: rows=%d cols=%d square=%f\n", rows, cols, squareSize);
             out.println("paper=" + paper.name);
             out.println("units=" + unit.name());
             out.println("count=" + rows * cols);
-
-            double offsetX = (paper.convertWidth(unit) - (cols - 1) * squareSize) / 2;
-            double offsetY = (paper.convertHeight(unit) - (rows - 1) * squareSize) / 2;
 
             for (int row = 0; row < rows; row++) {
                 double y = row * squareSize + offsetY;
