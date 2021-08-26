@@ -44,8 +44,6 @@ import java.util.Random;
  * @author Peter Abeles
  */
 public class RenderDocumentViewsApp {
-    // TODO simulate shadows
-
     @Option(name = "-i", aliases = {"--Input"}, usage = "PDF of marker")
     public String inputFile;
     @Option(name = "-o", aliases = {"--Output"}, usage = "Output directory for rendered images.")
@@ -90,13 +88,18 @@ public class RenderDocumentViewsApp {
 
         rand = new Random(randomSeed);
         GrayF32 markerImage = loadMarkerImage();
+        // let's make the black and white colors less extreme
+        // This is more realistic as you rarely have pure white and black
+        PixelMath.multiply(markerImage, 0.9f, markerImage);
+        PixelMath.plus(markerImage, 60, markerImage);
+        PixelMath.boundImage(markerImage, 0, 255);
 
         SimulatePlanarWorld simulator = new SimulatePlanarWorld();
         simulator.setBackground(10);
         simulator.enableHighAccuracy();
 
         renderBrownScenarios(markerImage, simulator);
-//        renderFisheyeScenarios(markerImage, simulator);
+        renderFisheyeScenarios(markerImage, simulator);
 
         System.out.println("Done!");
     }
@@ -107,6 +110,7 @@ public class RenderDocumentViewsApp {
         Se3_F64 markerToWorld = SpecialEuclideanOps_F64.eulerXyz(0, 0, markerZ, 0.02, Math.PI, 0, null);
         simulator.addSurface(markerToWorld, paper.convertWidth(units), markerImage);
 
+        renderShadows(simulator, markerImage);
         renderSpotlight(simulator, markerImage);
         renderLinearMotionBlur(simulator, markerImage);
         renderFadeToBlack(simulator, markerImage);
@@ -206,9 +210,8 @@ public class RenderDocumentViewsApp {
     private void renderSpotlight(SimulatePlanarWorld simulator, GrayF32 markerImage) {
         File outputDir = setupScenarioOutput("spotlight");
 
-        GrayF32 texture = simulator.getImageRect(0).texture.clone();
-
         SimulatePlanarWorld.SurfaceRect rect = simulator.getImageRect(0);
+        GrayF32 texture = rect.texture.clone();
 
         int numSpotlights = 3;
 
@@ -226,30 +229,87 @@ public class RenderDocumentViewsApp {
             // dim the target by 0.1f on average. Don't want to use a fixed value just in case that happens
             // to be a special case for some algorithm. The minimum dim was selected where most libraries could process
             // it without issue. This isn't a test for super dim targets, but handling of abrupt bright spots.
-            PixelMath.multiply(texture, 0.075f + rand.nextFloat()*0.05f, rect.texture);
+            PixelMath.multiply(texture, 0.075f + rand.nextFloat() * 0.05f, rect.texture);
 
             // Create bright rectangles that are centered randomly on the target
             postRender = (image) -> {
                 for (int spotlightIdx = 0; spotlightIdx < numSpotlights; spotlightIdx++) {
                     rect.rectInCamera();
-                    double rectX = rect.width3D*(0.5-rand.nextDouble());
-                    double rectY = rect.height3D*(0.5-rand.nextDouble());
+                    double rectX = rect.width3D * (0.5 - rand.nextDouble());
+                    double rectY = rect.height3D * (0.5 - rand.nextDouble());
 
                     simulator.computePixel(0, rectX, rectY, center);
 
-                    double radius = 10 + rand.nextDouble()*80;
-                    float scale = 2.0f + rand.nextFloat()*5;
-                    float add = 4.0f + rand.nextFloat()*5;
-                    int x0 = (int)(center.x - radius);
-                    int y0 = (int)(center.y - radius);
-                    int x1 = (int)(x0 + 1 + 2*radius);
-                    int y1 = (int)(y0 + 1 + 2*radius);
+                    double radius = 10 + rand.nextDouble() * 80;
+                    float scale = 2.0f + rand.nextFloat() * 5;
+                    float add = 4.0f + rand.nextFloat() * 5;
+                    int x0 = (int) (center.x - radius);
+                    int y0 = (int) (center.y - radius);
+                    int x1 = (int) (x0 + 1 + 2 * radius);
+                    int y1 = (int) (y0 + 1 + 2 * radius);
 
                     for (int y = y0; y < y1; y++) {
-                        int pixelIndex = image.getIndex(0,y);
+                        int pixelIndex = image.getIndex(0, y);
                         for (int x = x0; x < x1; x++) {
-                            float v =image.data[pixelIndex+x];
-                            image.data[pixelIndex+x] = Math.min(255.0f, add + v*scale);
+                            float v = image.data[pixelIndex + x];
+                            image.data[pixelIndex + x] = Math.min(255.0f, add + v * scale);
+                        }
+                    }
+                }
+                return image;
+            };
+
+            saveSimulatedImage(simulator, outputDir, trial);
+        }
+
+        // Undo the changes so that other scenarios are not messed up by it
+        simulator.getImageRect(0).texture.setTo(texture);
+        postRender = (img) -> img;
+    }
+
+    private void renderShadows(SimulatePlanarWorld simulator, GrayF32 markerImage) {
+        File outputDir = setupScenarioOutput("shadows");
+
+        SimulatePlanarWorld.SurfaceRect rect = simulator.getImageRect(0);
+        GrayF32 texture = rect.texture.clone();
+
+        int numSpotlights = 3;
+
+        var center = new Point2D_F64();
+        int numTrials = 30 * trialCountFactor;
+        for (int trial = 0; trial < numTrials; trial++) {
+            // Shuffle the target around a little-bit to avoid special due to rendering from dominating
+            double rotX = rand.nextGaussian() * 1e-2;
+            double rotY = rand.nextGaussian() * 1e-2;
+            double rotZ = rand.nextGaussian() * 1e-1;
+
+            Se3_F64 worldToCamera = SpecialEuclideanOps_F64.eulerXyz(0, 0, -markerZ * 0.8, rotX, rotY, rotZ, null);
+            simulator.setWorldToCamera(worldToCamera);
+
+            // Adjust target brightness
+            PixelMath.multiply(texture, 0.8f + rand.nextFloat() * 0.2f, rect.texture);
+
+            // Create bright rectangles that are centered randomly on the target
+            postRender = (image) -> {
+                for (int spotlightIdx = 0; spotlightIdx < numSpotlights; spotlightIdx++) {
+                    rect.rectInCamera();
+                    double rectX = rect.width3D * (0.5 - rand.nextDouble());
+                    double rectY = rect.height3D * (0.5 - rand.nextDouble());
+
+                    simulator.computePixel(0, rectX, rectY, center);
+
+                    double radius = 10 + rand.nextDouble() * 80;
+                    float scale = 1.0f / (2.0f + rand.nextFloat() * 3);
+                    int x0 = (int) (center.x - radius);
+                    int y0 = (int) (center.y - radius);
+                    int x1 = (int) (x0 + 1 + 2 * radius);
+                    int y1 = (int) (y0 + 1 + 2 * radius);
+
+                    for (int y = y0; y < y1; y++) {
+                        int pixelIndex = image.getIndex(0, y);
+                        for (int x = x0; x < x1; x++) {
+                            float v = image.data[pixelIndex + x];
+                            image.data[pixelIndex + x] = Math.max(0.0f, v * scale);
                         }
                     }
                 }
