@@ -8,8 +8,13 @@ import boofcv.misc.BoofMiscOps;
 import boofcv.struct.geo.PointIndex2D_F64;
 import org.ddogleg.struct.DogArray_B;
 import org.ddogleg.struct.DogArray_F64;
+import org.jetbrains.annotations.Nullable;
+import org.kohsuke.args4j.CmdLineException;
+import org.kohsuke.args4j.CmdLineParser;
+import org.kohsuke.args4j.Option;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.PrintStream;
 import java.util.*;
 
@@ -22,24 +27,56 @@ import static boofcv.common.parsing.ParseCalibrationConfigFiles.parseUniqueMarke
  * @author Peter Abeles
  */
 public class EvaluateMarkerLandmarkDetections {
+    @Option(name = "-f", aliases = {"--Found"}, usage = "Path to found data.")
+    public String foundPath = "";
+
+    @Option(name = "-t", aliases = {"--Truth"}, usage = "Path to truth data.")
+    public String truthPath = "";
+
+    @Option(name = "-o", aliases = {"--Output"}, usage = "Where it should dump machine readable metrics.")
+    public String machinePath = "";
 
     Statistics summary = new Statistics();
     Statistics scenario = new Statistics();
+    Statistics fileStats = new Statistics();
 
     public PrintStream out = System.out;
     public PrintStream err = System.err;
 
     File rootTruth;
     File rootFound;
+    // If it's told to save machine-readable results, this is where they should go
+    File rootOutput;
 
     // log landmarks with very large errors
     public double largeErrorTol = 10.0;
     // If not null then bad landmarks will be logged
     public PrintStream outBad = null;
 
+    // It should save
+    public boolean saveMachineReadable = false;
+
     public final Map<String, DogArray_F64> runtimeResults = new HashMap<>();
 
+    /**
+     * Evaluates the directories specified using command line arguments
+     */
+    public void evaluateCommandline() {
+        BoofMiscOps.checkTrue(!foundPath.isEmpty(), "Must specify found path");
+        BoofMiscOps.checkTrue(!truthPath.isEmpty(), "Must specify truth path");
+
+        evaluateRecursive(foundPath, truthPath);
+    }
+
+    /**
+     * Evalutes the directories which are specified as arguments
+     */
     public void evaluateRecursive(String foundPath, String truthPath) {
+        saveMachineReadable = !machinePath.isEmpty();
+        if (saveMachineReadable) {
+            rootOutput = new File(machinePath);
+        }
+
         System.out.println("\nfound path = " + foundPath);
         out.println("# Detection performance using labeled markers and corners.");
         out.println("# name (count markers) (marker false positive) (marker false negative), (count corners) (percent FP) (percent FN), (duplicate markers) (duplicate corners), error50 err90 err100");
@@ -68,11 +105,14 @@ public class EvaluateMarkerLandmarkDetections {
 
         File relativeToRoot = rootTruth.toPath().relativize(truthPath.toPath()).toFile();
         File baseFound = new File(rootFound, relativeToRoot.getPath());
+        File baseOutput = new File(rootOutput, relativeToRoot.getPath());
 
         if (!baseFound.exists()) {
             err.println("Missing directory: " + baseFound.getPath());
             return;
         }
+
+        PrintStream machineOut = createOutputStream(baseOutput, "scenarios.txt");
 
         for (File f : listChildren) {
             if (!f.isDirectory())
@@ -84,23 +124,51 @@ public class EvaluateMarkerLandmarkDetections {
                 continue;
             }
 
+            File outputDir = new File(baseOutput, f.getName());
+
 //            System.out.println("Processing: " + b.getPath() + " " + f.getPath());
             DogArray_F64 runtime = new DogArray_F64();
-            if (evaluate(b.getPath(), f.getPath(), runtime)) {
+            if (evaluate(b.getPath(), f.getPath(), runtime, outputDir.getPath())) {
                 String relativePath = new File(relativeToRoot, f.getName()).getPath();
                 scenario.print(out, relativePath);
+                if (saveMachineReadable)
+                    scenario.printMachine(machineOut, f.getName());
                 summary.add(scenario);
                 runtimeResults.put(relativePath, runtime);
             } else {
                 evaluateRecursive(f);
             }
         }
+
+        if (machineOut!=null)
+            machineOut.close();
+
+        PrintStream summaryOut = createOutputStream(baseOutput, "summary.txt");
+        if (summaryOut != null) {
+            summary.printMachine(summaryOut, "summary");
+            summaryOut.close();
+        }
+    }
+
+    @Nullable
+    private PrintStream createOutputStream(File baseOutput, String fileName) {
+        PrintStream machineOut = null;
+        if (saveMachineReadable) {
+            try {
+                UtilIO.mkdirs(baseOutput);
+                machineOut = new PrintStream(new File(baseOutput, fileName));
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+        return machineOut;
     }
 
     /**
      * Compare detected results against the true expected results and compute performance metrics
      */
-    protected boolean evaluate(String detectionPath, String truthPath, DogArray_F64 runtime) {
+    protected boolean evaluate(String detectionPath, String truthPath, DogArray_F64 runtime,
+                               String outputPath) {
         scenario.reset();
 
         List<String> listFoundPath = UtilIO.listSmart("glob:" + detectionPath + "/found_*.txt", true, (f) -> true);
@@ -110,6 +178,7 @@ public class EvaluateMarkerLandmarkDetections {
         if (listFoundPath.isEmpty())
             return false;
 
+        PrintStream machineOut = createOutputStream(new File(outputPath), "images.txt");
         for (int imageIndex = 0; imageIndex < listFoundPath.size(); imageIndex++) {
             try {
                 File foundFile = new File(listFoundPath.get(imageIndex));
@@ -117,6 +186,9 @@ public class EvaluateMarkerLandmarkDetections {
                 List<UniqueMarkerObserved> expected = parseUniqueMarkerTruth(new File(listTruthPath.get(imageIndex)));
 //                System.out.println("path="+listFoundPath.get(imageIndex));
                 evaluateImage(found, expected, foundFile);
+                if (machineOut != null)
+                    fileStats.printMachine(machineOut, foundFile.getName());
+                scenario.add(fileStats);
                 runtime.add(found.milliseconds);
             } catch (RuntimeException e) {
                 e.printStackTrace(err);
@@ -124,11 +196,16 @@ public class EvaluateMarkerLandmarkDetections {
             }
         }
 
+        if (machineOut != null) {
+            machineOut.close();
+        }
+
         return true;
     }
 
     void evaluateImage(ObservedLandmarkMarkers found, List<UniqueMarkerObserved> expected, File foundFile) {
-        scenario.totalMarkers += expected.size();
+        fileStats.reset();
+        fileStats.totalMarkers += expected.size();
 
         DogArray_B markerMatched = new DogArray_B();
         markerMatched.resetResize(expected.size(), false);
@@ -139,7 +216,7 @@ public class EvaluateMarkerLandmarkDetections {
                 if (expected.get(i).markerID == f.markerID) {
                     e = expected.get(i);
                     if (markerMatched.get(i)) {
-                        scenario.duplicateMarkers++;
+                        fileStats.duplicateMarkers++;
                     }
                     markerMatched.set(i, true);
                     break;
@@ -147,20 +224,20 @@ public class EvaluateMarkerLandmarkDetections {
             }
 
             if (e == null) {
-                scenario.falsePositiveMarker++;
+                fileStats.falsePositiveMarker++;
                 continue;
             }
 
             // crude estimate of max size
             cornerMatched.resetResize(e.landmarks.size, false);
 
-            scenario.totalCorners += e.landmarks.size;
+            fileStats.totalCorners += e.landmarks.size;
             for (int i = 0; i < f.landmarks.size; i++) {
                 PointIndex2D_F64 foundLandmark = f.landmarks.get(i);
                 PointIndex2D_F64 truthLandmark = e.findLandmark(foundLandmark.index);
                 if (truthLandmark == null) {
 //                    System.out.println("FP corner. "+foundLandmark);
-                    scenario.falsePositiveCorner++;
+                    fileStats.falsePositiveCorner++;
                     continue;
                 }
 
@@ -171,12 +248,12 @@ public class EvaluateMarkerLandmarkDetections {
 
                 // If there's a duplicate record it
                 if (cornerMatched.get(foundLandmark.index)) {
-                    scenario.duplicateCorners++;
+                    fileStats.duplicateCorners++;
                 }
 
                 cornerMatched.set(foundLandmark.index, true);
                 double error = foundLandmark.p.distance(truthLandmark.p);
-                scenario.errors.add(error);
+                fileStats.errors.add(error);
 
                 if (outBad != null && error > largeErrorTol) {
                     outBad.printf("bad landmark: error=%6.1f landmarkID=%d file=%s\n"
@@ -185,10 +262,10 @@ public class EvaluateMarkerLandmarkDetections {
 
             }
 
-            scenario.falseNegativeCorner += cornerMatched.count(false);
+            fileStats.falseNegativeCorner += cornerMatched.count(false);
         }
 
-        scenario.falseNegativeMarker += markerMatched.count(false);
+        fileStats.falseNegativeMarker += markerMatched.count(false);
     }
 
     static class Statistics {
@@ -249,16 +326,53 @@ public class EvaluateMarkerLandmarkDetections {
                     duplicateMarkers, duplicateCorners,
                     error50, error90, error100);
         }
+
+        public void printMachine(PrintStream out, String directory) {
+            errors.sort();
+            double error50, error90, error100;
+            if (errors.isEmpty()) {
+                error50 = error90 = error100 = Double.NaN;
+            } else {
+                error50 = errors.getFraction(0.5);
+                error90 = errors.getFraction(0.9);
+                error100 = errors.getFraction(1.0);
+            }
+
+            double fractionFalsePositiveCorner = falsePositiveCorner/(double)totalCorners;
+            double fractionFalseNegativeCorner = falseNegativeCorner/(double)totalCorners;
+
+            out.printf("%s %d %d %d %d %.5e %.5e %d %d %.5e %.5e %.5e\n", directory,
+                    totalMarkers, falsePositiveMarker, falseNegativeMarker,
+                    totalCorners, fractionFalsePositiveCorner, fractionFalseNegativeCorner,
+                    duplicateMarkers, duplicateCorners,
+                    error50, error90, error100);
+        }
+    }
+
+    private static void printHelpExit(CmdLineParser parser) {
+        parser.getProperties().withUsageWidth(120);
+        parser.printUsage(System.out);
+        System.exit(1);
     }
 
     public static void main(String[] args) {
         var app = new EvaluateMarkerLandmarkDetections();
-//        app.outBad = System.out;
-        app.evaluateRecursive("ecocheck_9x7e0n1_found", "ecocheck_9x7e0n1");
-        app.evaluateRecursive("ecocheck_9x7e3n1_found", "ecocheck_9x7e3n1");
-        app.evaluateRecursive("charuco/charuco_6X8_6X6_100_found", "charuco/charuco_6X8_6X6_100");
-        app.evaluateRecursive("aruco_grids/7x5_6X6_found", "aruco_grids/7x5_6X6");
-        app.evaluateRecursive("aruco_grids/original_found_aruco3", "aruco_grids/original");
+        var parser = new CmdLineParser(app);
+        try {
+            parser.parseArgument(args);
+            app.evaluateCommandline();
+        } catch (CmdLineException e) {
+            // handling of wrong arguments
+            System.err.println(e.getMessage());
+            printHelpExit(parser);
+        }
+//        var app = new EvaluateMarkerLandmarkDetections();
+////        app.outBad = System.out;
+//        app.evaluateRecursive("ecocheck_9x7e0n1_found", "ecocheck_9x7e0n1");
+//        app.evaluateRecursive("ecocheck_9x7e3n1_found", "ecocheck_9x7e3n1");
+//        app.evaluateRecursive("charuco/charuco_6X8_6X6_100_found", "charuco/charuco_6X8_6X6_100");
+//        app.evaluateRecursive("aruco_grids/7x5_6X6_found", "aruco_grids/7x5_6X6");
+//        app.evaluateRecursive("aruco_grids/original_found_aruco3", "aruco_grids/original");
 //        app.evaluateRecursive("found/tcad", "renderings/tcad");
     }
 }
