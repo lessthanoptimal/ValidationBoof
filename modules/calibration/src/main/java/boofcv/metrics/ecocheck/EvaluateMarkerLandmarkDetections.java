@@ -6,6 +6,7 @@ import boofcv.common.parsing.UniqueMarkerObserved;
 import boofcv.io.UtilIO;
 import boofcv.misc.BoofMiscOps;
 import boofcv.struct.geo.PointIndex2D_F64;
+import org.apache.commons.io.FilenameUtils;
 import org.ddogleg.struct.DogArray_B;
 import org.ddogleg.struct.DogArray_F64;
 import org.jetbrains.annotations.Nullable;
@@ -57,6 +58,9 @@ public class EvaluateMarkerLandmarkDetections {
     public boolean saveMachineReadable = false;
 
     public final Map<String, DogArray_F64> runtimeResults = new HashMap<>();
+
+    // Workspace for saving per landmark errors in a file
+    StringBuffer stringLandmarkErrors = new StringBuffer(10000);
 
     /**
      * Evaluates the directories specified using command line arguments
@@ -140,7 +144,7 @@ public class EvaluateMarkerLandmarkDetections {
             }
         }
 
-        if (machineOut!=null)
+        if (machineOut != null)
             machineOut.close();
 
         PrintStream summaryOut = createOutputStream(baseOutput, "summary.txt");
@@ -186,8 +190,17 @@ public class EvaluateMarkerLandmarkDetections {
                 List<UniqueMarkerObserved> expected = parseUniqueMarkerTruth(new File(listTruthPath.get(imageIndex)));
 //                System.out.println("path="+listFoundPath.get(imageIndex));
                 evaluateImage(found, expected, foundFile);
-                if (machineOut != null)
+                if (machineOut != null) {
                     fileStats.printMachine(machineOut, foundFile.getName());
+                    String name = FilenameUtils.getBaseName(foundFile.getName());
+
+                    // Save the error every found feature in the image
+                    PrintStream individualImage = createOutputStream(new File(outputPath), name+".txt");
+                    if (individualImage != null) {
+                        individualImage.print(stringLandmarkErrors.toString());
+                        individualImage.close();
+                    }
+                }
                 scenario.add(fileStats);
                 runtime.add(found.milliseconds);
             } catch (RuntimeException e) {
@@ -206,6 +219,12 @@ public class EvaluateMarkerLandmarkDetections {
     void evaluateImage(ObservedLandmarkMarkers found, List<UniqueMarkerObserved> expected, File foundFile) {
         fileStats.reset();
         fileStats.totalMarkers += expected.size();
+
+        if (saveMachineReadable) {
+            stringLandmarkErrors.setLength(0);
+            stringLandmarkErrors.append("# individual landmark errors. marker, feature, dx, dy\n");
+            stringLandmarkErrors.append("# ").append(foundFile.getPath()).append("\n");
+        }
 
         DogArray_B markerMatched = new DogArray_B();
         markerMatched.resetResize(expected.size(), false);
@@ -254,6 +273,10 @@ public class EvaluateMarkerLandmarkDetections {
                 cornerMatched.set(foundLandmark.index, true);
                 double error = foundLandmark.p.distance(truthLandmark.p);
                 fileStats.errors.add(error);
+
+                if (saveMachineReadable)
+                    stringLandmarkErrors.append(String.format("%d %d %.6f %.6f\n", e.markerID, foundLandmark.index,
+                            foundLandmark.p.x - truthLandmark.p.x, foundLandmark.p.y - truthLandmark.p.y));
 
                 if (outBad != null && error > largeErrorTol) {
                     outBad.printf("bad landmark: error=%6.1f landmarkID=%d file=%s\n"
@@ -317,8 +340,8 @@ public class EvaluateMarkerLandmarkDetections {
                 error100 = errors.getFraction(1.0);
             }
 
-            double percentFalsePositiveCorner = 100.0*falsePositiveCorner/totalCorners;
-            double percentFalseNegativeCorner = 100.0*falseNegativeCorner/totalCorners;
+            double percentFalsePositiveCorner = 100.0 * falsePositiveCorner / totalCorners;
+            double percentFalseNegativeCorner = 100.0 * falseNegativeCorner / totalCorners;
 
             out.printf("%-40s %3d %3d %4d , %5d %4.1f %4.1f , %2d %2d , %6.2f %6.2f %6.2f\n", directory,
                     totalMarkers, falsePositiveMarker, falseNegativeMarker,
@@ -338,8 +361,8 @@ public class EvaluateMarkerLandmarkDetections {
                 error100 = errors.getFraction(1.0);
             }
 
-            double fractionFalsePositiveCorner = falsePositiveCorner/(double)totalCorners;
-            double fractionFalseNegativeCorner = falseNegativeCorner/(double)totalCorners;
+            double fractionFalsePositiveCorner = falsePositiveCorner / (double) totalCorners;
+            double fractionFalseNegativeCorner = falseNegativeCorner / (double) totalCorners;
 
             out.printf("%s %d %d %d %d %.5e %.5e %d %d %.5e %.5e %.5e\n", directory,
                     totalMarkers, falsePositiveMarker, falseNegativeMarker,
