@@ -1,5 +1,6 @@
 package boofcv.applications;
 
+import boofcv.common.misc.PointFileCodec;
 import boofcv.common.parsing.ObservedLandmarkMarkers;
 import boofcv.common.parsing.ParseCalibrationConfigFiles;
 import boofcv.common.parsing.UniqueMarkerObserved;
@@ -12,6 +13,7 @@ import boofcv.gui.controls.JSpinnerNumber;
 import boofcv.gui.feature.VisualizeFeatures;
 import boofcv.gui.image.ShowImages;
 import boofcv.io.image.UtilImageIO;
+import georegression.struct.point.Point2D_F64;
 
 import javax.swing.*;
 import java.awt.*;
@@ -110,6 +112,20 @@ public class ViewSelectedPointsApp extends JPanel {
             display.repaint();
             return;
         } catch (RuntimeException ignore) {}
+
+        try {
+            List<Point2D_F64> points = PointFileCodec.load(file);
+            ObservedLandmarkMarkers obs = new ObservedLandmarkMarkers();
+            UniqueMarkerObserved m = obs.markers.grow();
+            for (int i = 0; i < points.size(); i++) {
+                Point2D_F64 p = points.get(i);
+                m.landmarks.grow().setTo(p.x, p.y, i);
+            }
+            this.landmarks = obs;
+            display.repaint();
+            return;
+        } catch (RuntimeException ignore) {}
+
         System.out.println("Failed to load: " + file.getPath());
     }
 
