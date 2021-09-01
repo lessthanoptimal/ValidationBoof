@@ -30,6 +30,7 @@ import org.kohsuke.args4j.CmdLineException;
 import org.kohsuke.args4j.CmdLineParser;
 import org.kohsuke.args4j.Option;
 
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -152,7 +153,13 @@ public class RenderDocumentViewsApp {
         try {
             PDDocument document = PDDocument.load(new File(inputFile));
             PDFRenderer renderer = new PDFRenderer(document);
-            BufferedImage image = renderer.renderImage(0);
+            RenderingHints r = new RenderingHints(null);
+            // Anti aliasing isn't turned on since it introduces a bias
+            // PURE stroke seems to get rid of the white lines and doesn't bias the end result
+            r.put(RenderingHints.KEY_STROKE_CONTROL, RenderingHints.VALUE_STROKE_PURE);
+            renderer.setRenderingHints(r);
+            // Increase scale of loaded image to reduce sampling artifacts
+            BufferedImage image = renderer.renderImage(0, 5.0f);
             document.close();
 
             double widthIn = document.getPage(0).getMediaBox().getWidth() / 72.0;

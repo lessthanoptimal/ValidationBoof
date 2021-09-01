@@ -2,7 +2,12 @@ package boofcv.metrics.ecocheck;
 
 import boofcv.abst.fiducial.calib.ConfigECoCheckMarkers;
 import boofcv.alg.fiducial.calib.ecocheck.ECoCheckUtils;
+import boofcv.alg.fiducial.calib.hammingchess.HammingChessboardGenerator;
+import boofcv.alg.fiducial.calib.hamminggrids.HammingGridGenerator;
 import boofcv.app.PaperSize;
+import boofcv.factory.fiducial.ConfigHammingChessboard;
+import boofcv.factory.fiducial.ConfigHammingGrid;
+import boofcv.factory.fiducial.HammingDictionary;
 import boofcv.generate.Unit;
 import georegression.struct.point.Point2D_F64;
 
@@ -45,6 +50,60 @@ public class CreateSquareGridLandmarkFile {
                 double y = paperHeight / 2.0 + p.y;
 
                 out.printf("%d %.8f %.8f\n", cornerID, x, y);
+            }
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void generate(ConfigHammingChessboard config) {
+        double paperWidth = paper.convertWidth(unit);
+        double paperHeight = paper.convertHeight(unit);
+
+        var generator = new HammingChessboardGenerator(config);
+        generator.saveCornerLocations();
+
+        List<Point2D_F64> corners = generator.corner;
+
+        double offsetX = paperWidth/2.0 - config.getMarkerWidth()/2.0;
+        double offsetY = paperHeight/2.0 - config.getMarkerHeight()/2.0;
+
+        try (PrintStream out = new PrintStream("chessboard_corners_" + config.numRows+ "x" + config.numCols + ".txt")) {
+            out.printf("# Location of Hamming Chessboard Corners: rows=%d cols=%d square=%f\n",
+                    config.numRows, config.numCols, config.squareSize);
+            out.println("paper=" + paper.name);
+            out.println("units=" + unit.name());
+            out.println("count=" + corners.size());
+            for (int cornerID = 0; cornerID < corners.size(); cornerID++) {
+                Point2D_F64 p = corners.get(cornerID);
+                out.printf("%d %.8f %.8f\n", cornerID, offsetX + p.x, offsetY + p.y);
+            }
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void generate(ConfigHammingGrid config) {
+        double paperWidth = paper.convertWidth(unit);
+        double paperHeight = paper.convertHeight(unit);
+
+        var generator = new HammingGridGenerator(config);
+        generator.saveCornerLocations();
+
+        double offsetX = paperWidth/2.0 - config.getMarkerWidth()/2.0;
+        double offsetY = paperHeight/2.0 - config.getMarkerHeight()/2.0;
+
+        List<Point2D_F64> corners = generator.corner;
+
+        try (PrintStream out = new PrintStream("squaregrid_corners_" + config.numRows+ "x" + config.numCols+ ".txt")) {
+            out.printf("# Location of Hamming Grid Corners: rows=%d cols=%d square=%f space=%f\n",
+                    config.numRows, config.numCols, config.squareSize, config.spaceToSquare);
+            out.println("paper=" + paper.name);
+            out.println("units=" + unit.name());
+            out.println("count=" + corners.size());
+            for (int cornerID = 0; cornerID < corners.size(); cornerID++) {
+                Point2D_F64 p = corners.get(cornerID);
+                    out.printf("%d %.8f %.8f\n", cornerID, offsetX + p.x, offsetY + p.y);
             }
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
@@ -121,10 +180,13 @@ public class CreateSquareGridLandmarkFile {
         ConfigECoCheckMarkers config = ConfigECoCheckMarkers.singleShape(9, 7, 1, 3.0);
         app.generate(config);
         config.errorCorrectionLevel = 0;
-        app.generate(config);
-        app.generate("charuco_6X8", 7, 5, 3.0);
-        app.generate("aruco_grids/corners_7x5", 7, 5, 3.0, 0.8);
-        double offset = 1.0/80.0;
-        app.generateOffset("caltag", 8, 6, 3.0, 0.75+1.5-offset, 0.75+1.5-offset);
+//        app.generate(config);
+        app.generate(ConfigHammingChessboard.create(HammingDictionary.ARUCO_ORIGINAL, 8,6, 3.0));
+        app.generate(ConfigHammingGrid.create(HammingDictionary.ARUCO_ORIGINAL, 7,5, 3.0, 0.2));
+//        app.generate("charuco_6X8", 7, 5, 3.0);
+//        app.generate("charuco_6X8", 7, 5, 3.0);
+//        app.generate("aruco_grids/corners_7x5", 7, 5, 3.0, 0.8);
+//        double offset = 1.0/80.0;
+//        app.generateOffset("caltag", 8, 6, 3.0, 0.75+1.5-offset, 0.75+1.5-offset);
     }
 }
