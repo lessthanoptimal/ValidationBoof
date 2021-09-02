@@ -63,7 +63,7 @@ public class CreateSquareGridLandmarkFile {
         var generator = new HammingChessboardGenerator(config);
         generator.saveCornerLocations();
 
-        List<Point2D_F64> corners = generator.corner;
+        List<Point2D_F64> corners = generator.corners;
 
         double offsetX = paperWidth/2.0 - config.getMarkerWidth()/2.0;
         double offsetY = paperHeight/2.0 - config.getMarkerHeight()/2.0;
@@ -93,7 +93,7 @@ public class CreateSquareGridLandmarkFile {
         double offsetX = paperWidth/2.0 - config.getMarkerWidth()/2.0;
         double offsetY = paperHeight/2.0 - config.getMarkerHeight()/2.0;
 
-        List<Point2D_F64> corners = generator.corner;
+        List<Point2D_F64> corners = generator.corners;
 
         try (PrintStream out = new PrintStream("squaregrid_corners_" + config.numRows+ "x" + config.numCols+ ".txt")) {
             out.printf("# Location of Hamming Grid Corners: rows=%d cols=%d square=%f space=%f\n",

@@ -128,7 +128,12 @@ public class RenderDocumentViewsApp {
         simulator.setCamera(intrinsic);
         simulator.setWorldToCamera(new Se3_F64());
 
-        for (int blurCount = 0; blurCount < 3; blurCount++) {
+        renderFisheyeBlur(markerImage, simulator);
+        renderFisheyeExtreme(markerImage, simulator);
+    }
+
+    private void renderFisheyeBlur(GrayF32 markerImage, SimulatePlanarWorld simulator) {
+        for (int blurCount = 0; blurCount < 5; blurCount++) {
             blurSigma = blurCount;
 
             File outputDir = setupScenarioOutput("fisheye_blur" + blurCount);
@@ -146,6 +151,31 @@ public class RenderDocumentViewsApp {
                 saveSimulatedImage(simulator, outputDir, indexYaw);
             }
         }
+        blurSigma = 0;
+    }
+
+    private void renderFisheyeExtreme(GrayF32 markerImage, SimulatePlanarWorld simulator) {
+            File outputDir = setupScenarioOutput("fisheye_extreme");
+
+            double fisheyeMarkerZ = 0.05;
+            double span = Math.PI * 0.15;
+            int numTrials = 30 * trialCountFactor;
+            for (int indexYaw = 0; indexYaw < numTrials; indexYaw++) {
+                simulator.resetScene();
+
+                double yaw = -span / 2.0 + indexYaw * span / (numTrials - 1);
+
+                double tx = rand.nextGaussian() * 0.005 + fisheyeMarkerZ * Math.sin(yaw);
+                double ty = rand.nextGaussian() * 0.02;
+                double tz = rand.nextGaussian() * 0.005 + fisheyeMarkerZ * Math.cos(yaw);
+
+                double rotX = rand.nextGaussian()*1e-2;
+
+                Se3_F64 markerToWorld = SpecialEuclideanOps_F64.eulerXyz(tx, ty, tz, rotX, Math.PI + yaw, 0, null);
+                simulator.addSurface(markerToWorld, paper.convertWidth(units), markerImage);
+
+                saveSimulatedImage(simulator, outputDir, indexYaw);
+            }
     }
 
     @NotNull
