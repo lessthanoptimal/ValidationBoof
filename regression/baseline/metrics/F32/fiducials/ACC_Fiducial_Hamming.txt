@@ -10,7 +10,7 @@ Summary:
  wrong order        : 0
  wrong ID           : 0
  duplicates         : 0
- false positives    : 1
+ false positives    : 0
  false negative     : 16
 Corner errors:
  precision 50%         : 0.3184138380523897
@@ -27,7 +27,7 @@ Summary:
  wrong order        : 0
  wrong ID           : 0
  duplicates         : 0
- false positives    : 4
+ false positives    : 1
  false negative     : 5
 Corner errors:
  precision 50%         : 0.2842930298975362
@@ -44,7 +44,7 @@ Summary:
  wrong order        : 0
  wrong ID           : 0
  duplicates         : 0
- false positives    : 17
+ false positives    : 5
  false negative     : 0
 Corner errors:
  precision 50%         : 0.6142200379743641
@@ -118,7 +118,7 @@ Summary:
  wrong order        : 0
  wrong ID           : 0
  duplicates         : 0
- false positive     : 5
+ false positive     : 1
  false negative     : 0
 Normal Angle (deg):     828
  errors 50%         : 0.03956144285741455
@@ -147,7 +147,7 @@ Summary:
  wrong order        : 0
  wrong ID           : 0
  duplicates         : 0
- false positive     : 1
+ false positive     : 0
  false negative     : 0
 Normal Angle (deg):     816
  errors 50%         : 0.15902472937805615
@@ -176,7 +176,7 @@ total correct / total expected = 1650 /1650
 
 # set_01   sequence with known always visible targets
 total frames 335
-false positives 6
+false positives 1
  fiducial id | visible | multiple 
 00000           335            0
 00004           335            0
