@@ -1,9 +1,7 @@
 package boofcv.regression;
 
 import boofcv.common.*;
-import boofcv.factory.fiducial.ConfigFiducialBinary;
-import boofcv.factory.fiducial.ConfigFiducialImage;
-import boofcv.factory.fiducial.FactoryFiducial;
+import boofcv.factory.fiducial.*;
 import boofcv.factory.filter.binary.ConfigThreshold;
 import boofcv.factory.filter.binary.ThresholdType;
 import boofcv.metrics.*;
@@ -64,6 +62,11 @@ public class FiducialRegression extends BaseRegression implements ImageRegressio
 			@Override public Object newInstance()
 		{return FactoryFiducial.squareImage(new ConfigFiducialImage(), fast, imageType);}};
 		process("ImageFast", new EstimateImageFiducialToCamera(factory), "square_border_image",false);
+
+		factory = new FactoryObjectAbstract() {
+			@Override public Object newInstance()
+			{return FactoryFiducial.squareHamming(ConfigHammingMarker.loadDictionary(HammingDictionary.ARUCO_MIP_25h7), null, imageType);}};
+		process("Hamming", new EstimateBinaryFiducialToCamera(factory), "square_border_hamming",false);
 
 		process("ChessboardBinary", new EstimateChessboardToCameraBinary(imageType), "chessboard", true);
 
@@ -224,6 +227,7 @@ public class FiducialRegression extends BaseRegression implements ImageRegressio
 
 	public static void main(String[] args) throws IOException, IllegalAccessException, InstantiationException, ClassNotFoundException {
 		BoofRegressionConstants.clearCurrentResults();
-		RegressionRunner.main(new String[]{FiducialRegression.class.getName(),ImageDataType.F32.toString()});
+//		RegressionRunner.main(new String[]{FiducialRegression.class.getName(),ImageDataType.F32.toString()});
+		RegressionRunner.main(new String[]{FiducialRegression.class.getName(),ImageDataType.U8.toString()});
 	}
 }

@@ -45,7 +45,7 @@ public class FiducialCommon {
 
 			List<String> words = new ArrayList<String>();
 			for (int i = 0; i < 4; i++) {
-				String w[] = reader.readLine().split(" ");
+				String[] w = reader.readLine().split(" ");
 				for (int j = 0; j < w.length; j++) {
 					words.add(w[j]);
 				}
@@ -62,7 +62,7 @@ public class FiducialCommon {
 
 			String line = reader.readLine();
 			while( line != null ) {
-				String w[] = line.split(" ");
+				String[] w = line.split(" ");
 				if( w[0].equalsIgnoreCase("radial")) {
 					int N = w.length-1;
 					out.radial = new double[N];
@@ -111,6 +111,7 @@ public class FiducialCommon {
 		// TODO fix this horrible hack
 		if( file.getPath().contains("binary") ||
 				file.getPath().contains("chessboard") ||
+				file.getPath().contains("hamming") ||
 				file.getPath().contains("random_dots")) {
 			library = new LibraryBinary();
 		} else {
@@ -149,7 +150,7 @@ public class FiducialCommon {
 			List<String> names = new ArrayList<String>();
 
 			while( line != null && line.length() != 0) {
-				String words[] = line.split(" ");
+				String[] words = line.split(" ");
 				names.add(words[1]);
 				widths.add(Double.parseDouble(words[0]));
 				line = reader.readLine();
@@ -171,7 +172,7 @@ public class FiducialCommon {
 
 			while( line != null ) {
 				Landmarks landmark = new Landmarks();
-				String words[] = line.split(" ");
+				String[] words = line.split(" ");
 				landmark.id = Integer.parseInt(words[0]);
 
 				for (int i = 1; i < words.length; i +=2 ) {
@@ -211,8 +212,8 @@ public class FiducialCommon {
 
 	public static class LibraryBinary implements Library
 	{
-		int expectedId[];
-		double widths[];
+		int[] expectedId;
+		double[] widths;
 
 		@Override
 		public void init(List<Double> widths, List<String> names) {
@@ -253,7 +254,7 @@ public class FiducialCommon {
 	public static class LibraryImage implements Library
 	{
 		List<String> names = new ArrayList<String>();
-		double widths[];
+		double[] widths;
 
 		@Override
 		public void init(List<Double> widths, List<String> names) {

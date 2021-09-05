@@ -190,22 +190,34 @@ public class HandSelectPolygonsApp <T extends ImageGray<T>> extends Demonstratio
 	}
 
 	void handleShiftUp() {
-		for( Polygon2D_F64 p : polygons ) {
-			UtilPolygons2D_F64.shiftUp(p);
+		if (activeIdx==-1) {
+			for (Polygon2D_F64 p : polygons) {
+				UtilPolygons2D_F64.shiftUp(p);
+			}
+		} else {
+			UtilPolygons2D_F64.shiftUp(polygons.get(activeIdx));
 		}
 		imagePanel.repaint();
 	}
 
 	void handleShiftDown() {
-		for( Polygon2D_F64 p : polygons ) {
-			UtilPolygons2D_F64.shiftDown(p);
+		if (activeIdx==-1) {
+			for (Polygon2D_F64 p : polygons) {
+				UtilPolygons2D_F64.shiftDown(p);
+			}
+		} else {
+			UtilPolygons2D_F64.shiftDown(polygons.get(activeIdx));
 		}
 		imagePanel.repaint();
 	}
 
 	void handleFlip() {
-		for( Polygon2D_F64 p : polygons ) {
-			UtilPolygons2D_F64.flip(p);
+		if (activeIdx==-1) {
+			for (Polygon2D_F64 p : polygons) {
+				UtilPolygons2D_F64.flip(p);
+			}
+		} else {
+			UtilPolygons2D_F64.flip(polygons.get(activeIdx));
 		}
 		imagePanel.repaint();
 	}
