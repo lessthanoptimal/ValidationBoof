@@ -117,6 +117,8 @@ public class EvaluateMarkerLandmarkDetections {
         }
 
         PrintStream machineOut = createOutputStream(baseOutput, "scenarios.txt");
+        if (machineOut != null)
+            Statistics.printMachineHeader(machineOut);
 
         for (File f : listChildren) {
             if (!f.isDirectory())
@@ -149,6 +151,7 @@ public class EvaluateMarkerLandmarkDetections {
 
         PrintStream summaryOut = createOutputStream(baseOutput, "summary.txt");
         if (summaryOut != null) {
+            Statistics.printMachineHeader(summaryOut);
             summary.printMachine(summaryOut, "summary");
             summaryOut.close();
         }
@@ -183,6 +186,10 @@ public class EvaluateMarkerLandmarkDetections {
             return false;
 
         PrintStream machineOut = createOutputStream(new File(outputPath), "images.txt");
+        if (machineOut != null) {
+            Statistics.printMachineHeader(machineOut);
+        }
+
         for (int imageIndex = 0; imageIndex < listFoundPath.size(); imageIndex++) {
             try {
                 File foundFile = new File(listFoundPath.get(imageIndex));
@@ -348,6 +355,11 @@ public class EvaluateMarkerLandmarkDetections {
                     totalCorners, percentFalsePositiveCorner, percentFalseNegativeCorner,
                     duplicateMarkers, duplicateCorners,
                     error50, error90, error100);
+        }
+
+        public static void printMachineHeader(PrintStream out) {
+            out.printf("# %s %s %s %s %s %s %s %s %s %s %s %s\n",
+                    "directory", "total_markers", "fp_markers", "fn_markers", "total_corners", "ffp_corners", "ffn_corners", "dup_markers", "dup_corners", "err50", "err90", "err100");
         }
 
         public void printMachine(PrintStream out, String directory) {
