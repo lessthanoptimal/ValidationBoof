@@ -7,7 +7,7 @@ import boofcv.common.parsing.UniqueMarkerObserved;
 import boofcv.demonstrations.shapes.ShapeVisualizePanel;
 import boofcv.gui.BoofSwingUtil;
 import boofcv.gui.StandardAlgConfigPanel;
-import boofcv.gui.calibration.DisplayPinholeCalibrationPanel;
+import boofcv.gui.calibration.UtilCalibrationGui;
 import boofcv.gui.controls.JCheckBoxValue;
 import boofcv.gui.controls.JSpinnerNumber;
 import boofcv.gui.feature.VisualizeFeatures;
@@ -139,7 +139,7 @@ public class ViewSelectedPointsApp extends JPanel {
             ObservedLandmarkMarkers landmarks = ViewSelectedPointsApp.this.landmarks;
             landmarks.markers.forEach(marker -> {
                 if (controls.showNumbers.value) {
-                    DisplayPinholeCalibrationPanel.drawFeatureID(g2, 18, marker.landmarks.toList(), null, scale);
+                    UtilCalibrationGui.drawFeatureID(g2, 18, marker.landmarks.toList(), null, scale);
                 }
                 marker.landmarks.forEach(
                         p -> VisualizeFeatures.drawPoint(g2, scale * p.p.x, scale * p.p.y, 5, Color.RED, true));
