@@ -20,11 +20,13 @@ import boofcv.struct.calib.CameraPinholeBrown;
 import boofcv.struct.calib.CameraUniversalOmni;
 import boofcv.struct.convolve.Kernel2D_F32;
 import boofcv.struct.image.GrayF32;
+import georegression.metric.UtilAngle;
 import georegression.struct.point.Point2D_F64;
 import georegression.struct.se.Se3_F64;
 import georegression.struct.se.SpecialEuclideanOps_F64;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.rendering.PDFRenderer;
+import org.ddogleg.struct.DogArray_F64;
 import org.jetbrains.annotations.NotNull;
 import org.kohsuke.args4j.CmdLineException;
 import org.kohsuke.args4j.CmdLineParser;
@@ -74,6 +76,9 @@ public class RenderDocumentViewsApp {
 
     PostRenderProcess postRender = (img) -> img;
 
+    // Master random number generate. Some scenarios used the same seed multiple time. That see is selected from
+    // the master.
+    Random masterRand;
     Random rand;
 
     MarkerDocumentLandmarks landmarks;
@@ -87,7 +92,8 @@ public class RenderDocumentViewsApp {
             landmarks = ParseCalibrationConfigFiles.parseDocumentLandmarks(new File(landmarksFile));
         }
 
-        rand = new Random(randomSeed);
+        masterRand = new Random(randomSeed);
+        rand = new Random(masterRand.nextLong());
         GrayF32 markerImage = loadMarkerImage();
         // let's make the black and white colors less extreme
         // This is more realistic as you rarely have pure white and black
@@ -133,49 +139,83 @@ public class RenderDocumentViewsApp {
     }
 
     private void renderFisheyeBlur(GrayF32 markerImage, SimulatePlanarWorld simulator) {
+        long seed = masterRand.nextLong();
         for (int blurCount = 0; blurCount < 5; blurCount++) {
+            // only vary the blur in each scenario
+            rand = new Random(seed);
+
             blurSigma = blurCount;
 
-            File outputDir = setupScenarioOutput("fisheye_blur" + blurCount);
+            File outputDir = setupScenarioOutput("fisheye_blur_" + blurCount);
 
             double fisheyeMarkerZ = 0.20;
             double span = Math.PI * 0.7;
             int numTrials = 30 * trialCountFactor;
+            DogArray_F64 parameters = new DogArray_F64();
             for (int indexYaw = 0; indexYaw < numTrials; indexYaw++) {
                 simulator.resetScene();
 
                 double yaw = -Math.PI / 2 + (Math.PI - span) / 2.0 + indexYaw * span / (numTrials - 1);
+                parameters.add(UtilAngle.degree(yaw));
                 Se3_F64 markerToWorld = SpecialEuclideanOps_F64.eulerXyz(fisheyeMarkerZ * Math.sin(yaw), 0, fisheyeMarkerZ * Math.cos(yaw), 0.02, Math.PI + yaw, 0, null);
                 simulator.addSurface(markerToWorld, paper.convertWidth(units), markerImage);
 
                 saveSimulatedImage(simulator, outputDir, indexYaw);
             }
+            saveParameters(parameters, "Yaw (deg)", outputDir);
         }
+
         blurSigma = 0;
     }
 
     private void renderFisheyeExtreme(GrayF32 markerImage, SimulatePlanarWorld simulator) {
-            File outputDir = setupScenarioOutput("fisheye_extreme");
+        File outputDir = setupScenarioOutput("fisheye_extreme");
 
-            double fisheyeMarkerZ = 0.05;
-            double span = Math.PI * 0.15;
-            int numTrials = 30 * trialCountFactor;
-            for (int indexYaw = 0; indexYaw < numTrials; indexYaw++) {
-                simulator.resetScene();
+        double fisheyeMarkerZ = 0.05;
+        double span = Math.PI * 0.25;
+        int numTrials = 30 * trialCountFactor;
 
-                double yaw = -span / 2.0 + indexYaw * span / (numTrials - 1);
+        DogArray_F64 parameters = new DogArray_F64();
+        for (int indexYaw = 0; indexYaw < numTrials; indexYaw++) {
+            simulator.resetScene();
 
-                double tx = rand.nextGaussian() * 0.005 + fisheyeMarkerZ * Math.sin(yaw);
-                double ty = rand.nextGaussian() * 0.02;
-                double tz = rand.nextGaussian() * 0.005 + fisheyeMarkerZ * Math.cos(yaw);
+            double yaw = -span / 2.0 + indexYaw * span / (numTrials - 1);
+            parameters.add(UtilAngle.degree(yaw));
 
-                double rotX = rand.nextGaussian()*1e-2;
+            double tx = rand.nextGaussian() * 0.005 + fisheyeMarkerZ * Math.sin(yaw);
+            double ty = rand.nextGaussian() * 0.02;
+            double tz = rand.nextGaussian() * 0.005 + fisheyeMarkerZ * Math.cos(yaw);
 
-                Se3_F64 markerToWorld = SpecialEuclideanOps_F64.eulerXyz(tx, ty, tz, rotX, Math.PI + yaw, 0, null);
-                simulator.addSurface(markerToWorld, paper.convertWidth(units), markerImage);
+            double rotX = rand.nextGaussian() * 1e-2;
 
-                saveSimulatedImage(simulator, outputDir, indexYaw);
+            Se3_F64 markerToWorld = SpecialEuclideanOps_F64.eulerXyz(tx, ty, tz, rotX, Math.PI + yaw, 0, null);
+            simulator.addSurface(markerToWorld, paper.convertWidth(units), markerImage);
+
+            saveSimulatedImage(simulator, outputDir, indexYaw);
+        }
+        saveParameters(parameters, "Yaw (deg)", outputDir);
+    }
+
+    /**
+     * Creates a parameter file so that the major parameter used to generate each image is known
+     *
+     * @param parameters parameter values for each image
+     * @param name       Parameter name
+     * @param outputDir  where to save
+     */
+    private void saveParameters(DogArray_F64 parameters, String name, File outputDir) {
+        try (PrintStream out = new PrintStream(new File(outputDir, "parameters.cvs"))) {
+            out.println("# parameters file");
+            out.println("name=" + name);
+            out.println("count=" + parameters.size);
+            out.printf("%.6e", parameters.get(0));
+            for (int i = 1; i < parameters.size; i++) {
+                out.printf(" %.6e", parameters.get(i));
             }
+            out.println();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     @NotNull
@@ -365,7 +405,7 @@ public class RenderDocumentViewsApp {
         File outputDir = setupScenarioOutput("fade");
 
         GrayF32 texture = simulator.getImageRect(0).texture.clone();
-
+        DogArray_F64 parameters = new DogArray_F64();
         int numTrials = 12 * trialCountFactor;
         for (int i = 0; i < numTrials; i++) {
             // Shuffle the target around a little-bit to avoid special due to rendering from dominating
@@ -377,9 +417,11 @@ public class RenderDocumentViewsApp {
             simulator.setWorldToCamera(worldToCamera);
 
             double brightness = (numTrials - i - 1) / (double) (numTrials - 1) + 0.02;
+            parameters.add(brightness);
             PixelMath.multiply(texture, (float) brightness, simulator.getImageRect(0).texture);
             saveSimulatedImage(simulator, outputDir, i);
         }
+        saveParameters(parameters, "Brightness", outputDir);
 
         // Undo the changes so that other scenarios are not messed up by it
         simulator.getImageRect(0).texture.setTo(texture);
@@ -390,29 +432,36 @@ public class RenderDocumentViewsApp {
 
         int N = 40 * trialCountFactor;
         double maxDistanceAway = markerZ * 1.5;
+
+        DogArray_F64 parameters = new DogArray_F64();
         for (int i = 0; i < N; i++) {
-            // Shuffle the target around a little-bit to avoid special due to rendering from dominating
+            // Shuffle the target around a little-bit to avoid an unlucky edge case biasing results
             double rotX = rand.nextGaussian() * 1e-2;
             double rotY = rand.nextGaussian() * 1e-2;
             double rotZ = rand.nextGaussian() * 1e-1;
 
             double distance = markerZ - 0.3 - maxDistanceAway * i / (N - 1);
+            parameters.add(distance);
             Se3_F64 worldToCamera = SpecialEuclideanOps_F64.eulerXyz(0, 0, -distance, rotX, rotY, rotZ, null);
             simulator.setWorldToCamera(worldToCamera);
             saveSimulatedImage(simulator, outputDir, i);
         }
+        saveParameters(parameters, "Distance (m)", outputDir);
     }
 
     private void renderRotatingZ(SimulatePlanarWorld simulator, GrayF32 markerImage) {
         File outputDir = setupScenarioOutput("rotate_z");
 
+        var parameters = new DogArray_F64();
         int N = 40 * trialCountFactor;
         for (int i = 0; i < N; i++) {
             double angle = 2.0 * Math.PI * i / N;
+            parameters.add(UtilAngle.degree(angle));
             Se3_F64 worldToCamera = SpecialEuclideanOps_F64.eulerXyz(0, 0, -(markerZ - 0.5), 0., 0, angle, null);
             simulator.setWorldToCamera(worldToCamera);
             saveSimulatedImage(simulator, outputDir, i);
         }
+        saveParameters(parameters, "Angle (deg)", outputDir);
     }
 
     private void renderBlurredRotatingAxis(SimulatePlanarWorld simulator, GrayF32 markerImage) {
@@ -421,22 +470,27 @@ public class RenderDocumentViewsApp {
 
         int N = 20 * trialCountFactor;
         double sweep = Math.PI * 0.95;
+        long seed = masterRand.nextLong();
 
         for (int blurCount = 0; blurCount < 5; blurCount++) {
+            // Use the same random seed for all blur scenarios so that only the blur changes
+            rand = new Random(seed);
             blurSigma = blurCount;
 
-            File outputDir = setupScenarioOutput("axis_blur" + blurCount);
+            File outputDir = setupScenarioOutput("axis_blur_" + blurCount);
 
-
+            var parameters = new DogArray_F64();
             for (int i = 0; i < N; i++) {
                 simulator.resetScene();
 
                 double angle = -Math.PI / 2.0 + (Math.PI - sweep) / 2.0 + i * sweep / (N - 1);
+                parameters.add(UtilAngle.degree(angle));
                 Se3_F64 markerToWorld = SpecialEuclideanOps_F64.eulerXyz(0, 0, markerZ, 0.02, Math.PI + angle, 0, null);
                 simulator.addSurface(markerToWorld, paper.convertWidth(units), markerImage);
 
                 saveSimulatedImage(simulator, outputDir, i);
             }
+            saveParameters(parameters, "Angle (deg)", outputDir);
         }
     }
 
