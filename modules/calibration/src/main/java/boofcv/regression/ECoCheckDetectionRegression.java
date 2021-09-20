@@ -37,7 +37,7 @@ public class ECoCheckDetectionRegression extends BaseRegression implements Image
         File generatedBase = new File(pathDataset);
         File detectedBase = new File(fileTmp, "detected");
 
-        for (String encoding : new String[]{"9x7e3n1", "9x7e0n1"}) {
+        for (String encoding : new String[]{"9x7n1", "9x7n1e0"}) {
             System.out.println("Rendering");
             File renderedOutput =  new File(generatedBase, encoding);
 
