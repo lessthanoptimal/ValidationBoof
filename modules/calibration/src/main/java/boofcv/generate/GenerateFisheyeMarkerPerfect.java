@@ -70,7 +70,7 @@ public class GenerateFisheyeMarkerPerfect {
 			g2.draw(ellipse);
 		}
 
-		ShowImages.showWindow(render.getBufferred(),"Moo", true);
+		ShowImages.showWindow(render.getBuffered(),"Moo", true);
 		ShowImages.showWindow(output,baseName, true);
 	}
 }

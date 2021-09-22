@@ -31,7 +31,7 @@ public class GenerateChessboardPerfect {
 
 			render.chessboard(rows, cols, side);
 
-			BufferedImage template = render.getBufferred();
+			BufferedImage template = render.getBuffered();
 			BufferedImage output = new BufferedImage(template.getWidth(), template.getHeight(), template.getType());
 
 			// generate images with offsets as a way to flush out more pathological conditions
