@@ -27,7 +27,7 @@ error_log.flush()
 # Paths need to be absolute since they are passed to EJML code, which is relative to that repo
 email_path = os.path.abspath(os.path.join(project_home, "../email_login.txt"))
 regression_path = os.path.abspath(os.path.join(project_home, "../runtime_regression"))
-local_settings_path = os.path.abspath(os.path.join(project_home, "../local_settings.yaml"))
+local_settings_path = os.path.abspath(os.path.join(project_home, "../settings_local.yaml"))
 
 print("regression_path", regression_path)
 
