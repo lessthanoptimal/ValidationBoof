@@ -24,7 +24,7 @@ error_log.write(datetime.datetime.now().strftime('# %Y %b %d %H:%M\n'))
 error_log.write("Project Directory: "+project_home+"\n")
 error_log.flush()
 
-# Paths need to be absolute since they are passed to EJML code, which is relative to that repo
+# Paths need to be absolute since they are passed to the code, which is relative to that repo
 email_path = os.path.abspath(os.path.join(project_home, "../email_login.txt"))
 regression_path = os.path.abspath(os.path.join(project_home, "../runtime_regression"))
 local_settings_path = os.path.abspath(os.path.join(project_home, "../settings_local.yaml"))
@@ -47,7 +47,7 @@ def send_email( message ):
 
                 BODY = '\r\n'.join(['To: %s' % destination,
                                     'From: %s' % (username+"@gmail.com"),
-                                    'Subject: %s' % "EJML Regression Fatal Error",
+                                    'Subject: %s' % "BoofCV Runtime Regression Fatal Error",
                                     '', message])
 
                 server.sendmail(username+"@gmail.com",[destination],BODY)
