@@ -50,6 +50,9 @@ public class DetectECoCheckImages<T extends ImageGray<T>> {
     final T gray;
     final Class<T> imageType;
 
+    // Number of images it processed
+    public int totalProcessed;
+
     // Number of iterations it will perform before processing an image for real to make runtime results more accurate
     int warmIterations = 3;
 
@@ -74,6 +77,7 @@ public class DetectECoCheckImages<T extends ImageGray<T>> {
     public void detect(File directory) {
         BoofMiscOps.checkTrue(detector != null, "You must specify the detector!");
         this.root = directory;
+        totalProcessed = 0;
         detectRecursive(directory);
     }
 
@@ -125,6 +129,9 @@ public class DetectECoCheckImages<T extends ImageGray<T>> {
             detector.process(gray);
             long time1 = System.nanoTime();
             double milliseconds = (time1 - time0) * 1e-6;
+
+            // Note that this image has been processed
+            totalProcessed++;
 
             // Save found landmarks
             saveResults(new File(base, "found_" + FilenameUtils.getBaseName(c.getName()) + ".txt"), milliseconds);

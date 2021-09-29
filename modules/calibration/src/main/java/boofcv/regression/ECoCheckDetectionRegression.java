@@ -39,24 +39,39 @@ public class ECoCheckDetectionRegression extends BaseRegression implements Image
 
         for (String encoding : new String[]{"9x7n1", "9x7n1e0"}) {
             System.out.println("Rendering");
-            File renderedOutput =  new File(generatedBase, encoding);
+            File renderedOutput = new File(generatedBase, encoding);
 
-            // Render the simulated data if it doesn't already exist
-            if (!renderedOutput.exists()) {
-                var generator = new RenderDocumentViewsApp();
-                generator.inputFile = new File(new File(pathDataset), "ecocheck_" + encoding + ".pdf").getPath();
-                generator.destinationDir = renderedOutput.getPath();
-                generator.landmarksFile = new File(new File(pathDataset), "corners_9x7.txt").getPath();
-                generator.process();
+            try {
+                // Render the simulated data if it doesn't already exist
+                if (!renderedOutput.exists()) {
+                    var generator = new RenderDocumentViewsApp();
+                    generator.inputFile = new File(new File(pathDataset), "ecocheck_" + encoding + ".pdf").getPath();
+                    generator.destinationDir = renderedOutput.getPath();
+                    generator.landmarksFile = new File(new File(pathDataset), "corners_9x7.txt").getPath();
+                    generator.process();
+                }
+            } catch (RuntimeException e) {
+                e.printStackTrace(errorLog);
+                errorLog.println("Failed to render encoding: '" + encoding + "'");
+                continue;
             }
 
-            System.out.println("Detecting");
-            final Class imageType = ImageDataType.typeToSingleClass(type);
-            var detector = new DetectECoCheckImages<>(imageType);
-            ConfigECoCheckMarkers configMarkers = ConfigECoCheckMarkers.parse(encoding, 1.0);
-            detector.detector = FactoryFiducial.ecocheck(null, configMarkers, imageType).getDetector();
-            detector.outputPath = new File(detectedBase, encoding);
-            detector.detect(renderedOutput);
+            try {
+                System.out.println("Detecting");
+                final Class imageType = ImageDataType.typeToSingleClass(type);
+                var detector = new DetectECoCheckImages<>(imageType);
+                ConfigECoCheckMarkers configMarkers = ConfigECoCheckMarkers.parse(encoding, 1.0);
+                detector.detector = FactoryFiducial.ecocheck(null, configMarkers, imageType).getDetector();
+                detector.outputPath = new File(detectedBase, encoding);
+                detector.detect(renderedOutput);
+
+                if (detector.totalProcessed == 0) {
+                    errorLog.println("Detected no images! encoding=" + encoding);
+                }
+            } catch (RuntimeException e) {
+                e.printStackTrace(errorLog);
+                errorLog.println("Failed when detecting encoding: '" + encoding + "'");
+            }
         }
 
         System.out.println("Evaluating");
