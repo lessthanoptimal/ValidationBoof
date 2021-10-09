@@ -10,7 +10,7 @@ gversion {
 
 allprojects {
     group = 'org.boofcv'
-    version = '0.39-SNAPSHOT'
+    version = '0.40-SNAPSHOT'
 
     apply plugin: 'idea'
     apply plugin: 'java-library'
@@ -33,8 +33,8 @@ allprojects {
 
     // Prevents tons of errors if someone is using ASCII
     tasks.withType(JavaCompile).configureEach { options.encoding = "UTF-8" }
-    // Creates Java 8 byte code
-    tasks.withType(JavaCompile).configureEach { options.release = 8 }
+    // Creates Java 11 byte code
+    tasks.withType(JavaCompile).configureEach { options.release = 11 }
 
     javadoc {
         configure(options) {
