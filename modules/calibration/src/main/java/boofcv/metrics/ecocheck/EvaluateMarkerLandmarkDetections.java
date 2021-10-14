@@ -7,6 +7,7 @@ import boofcv.io.UtilIO;
 import boofcv.misc.BoofMiscOps;
 import boofcv.struct.geo.PointIndex2D_F64;
 import org.apache.commons.io.FilenameUtils;
+import org.ddogleg.stats.StatisticsDogArray;
 import org.ddogleg.struct.DogArray_B;
 import org.ddogleg.struct.DogArray_F64;
 import org.jetbrains.annotations.Nullable;
@@ -84,8 +85,8 @@ public class EvaluateMarkerLandmarkDetections {
         System.out.println("\nfound path = " + foundPath);
         out.println("# Detection performance using labeled markers and corners.");
         out.println("# name (count markers) (marker false positive) (marker false negative), (count corners) (percent FP) (percent FN), (duplicate markers) (duplicate corners), error50 err90 err100");
-        out.printf("# %-38s %3s %3s %4s , %5s %4s %4s , %2s %2s , %-6s %-6s %-6s\n",
-                "", "CM", "MFP", "MFN", "CC", "CFP", "CFN", "DM", "DC", "  E50", "  E90", "  E100");
+        out.printf("# %-38s %3s %3s %4s , %5s %4s %4s , %2s %2s , %-6s %-6s %-6s %-6s\n",
+                "", "CM", "MFP", "MFN", "CC", "CFP", "CFN", "DM", "DC", " MEAN", "  E50", "  E90", "  E100");
         out.println();
         rootFound = new File(foundPath);
         rootTruth = new File(truthPath);
@@ -338,10 +339,11 @@ public class EvaluateMarkerLandmarkDetections {
 
         public void print(PrintStream out, String directory) {
             errors.sort();
-            double error50, error90, error100;
+            double errorMean, error50, error90, error100;
             if (errors.isEmpty()) {
-                error50 = error90 = error100 = Double.NaN;
+                errorMean = error50 = error90 = error100 = Double.NaN;
             } else {
+                errorMean = StatisticsDogArray.mean(errors);
                 error50 = errors.getFraction(0.5);
                 error90 = errors.getFraction(0.9);
                 error100 = errors.getFraction(1.0);
@@ -350,24 +352,25 @@ public class EvaluateMarkerLandmarkDetections {
             double percentFalsePositiveCorner = 100.0 * falsePositiveCorner / totalCorners;
             double percentFalseNegativeCorner = 100.0 * falseNegativeCorner / totalCorners;
 
-            out.printf("%-40s %3d %3d %4d , %5d %4.1f %4.1f , %2d %2d , %6.2f %6.2f %6.2f\n", directory,
+            out.printf("%-40s %3d %3d %4d , %5d %4.1f %4.1f , %2d %2d , %6.2f %6.2f %6.2f %6.2f\n", directory,
                     totalMarkers, falsePositiveMarker, falseNegativeMarker,
                     totalCorners, percentFalsePositiveCorner, percentFalseNegativeCorner,
                     duplicateMarkers, duplicateCorners,
-                    error50, error90, error100);
+                    errorMean, error50, error90, error100);
         }
 
         public static void printMachineHeader(PrintStream out) {
-            out.printf("# %s %s %s %s %s %s %s %s %s %s %s %s\n",
-                    "directory", "total_markers", "fp_markers", "fn_markers", "total_corners", "ffp_corners", "ffn_corners", "dup_markers", "dup_corners", "err50", "err90", "err100");
+            out.printf("# %s %s %s %s %s %s %s %s %s %s %s %s %s\n",
+                    "directory", "total_markers", "fp_markers", "fn_markers", "total_corners", "ffp_corners", "ffn_corners", "dup_markers", "dup_corners", "errMean", "err50", "err90", "err100");
         }
 
         public void printMachine(PrintStream out, String directory) {
             errors.sort();
-            double error50, error90, error100;
+            double errorMean, error50, error90, error100;
             if (errors.isEmpty()) {
-                error50 = error90 = error100 = Double.NaN;
+                errorMean = error50 = error90 = error100 = Double.NaN;
             } else {
+                errorMean = StatisticsDogArray.mean(errors);
                 error50 = errors.getFraction(0.5);
                 error90 = errors.getFraction(0.9);
                 error100 = errors.getFraction(1.0);
@@ -376,11 +379,11 @@ public class EvaluateMarkerLandmarkDetections {
             double fractionFalsePositiveCorner = falsePositiveCorner / (double) totalCorners;
             double fractionFalseNegativeCorner = falseNegativeCorner / (double) totalCorners;
 
-            out.printf("%s %d %d %d %d %.5e %.5e %d %d %.5e %.5e %.5e\n", directory,
+            out.printf("%s %d %d %d %d %.5e %.5e %d %d %.5e %.5e %.5e %.5e\n", directory,
                     totalMarkers, falsePositiveMarker, falseNegativeMarker,
                     totalCorners, fractionFalsePositiveCorner, fractionFalseNegativeCorner,
                     duplicateMarkers, duplicateCorners,
-                    error50, error90, error100);
+                    errorMean, error50, error90, error100);
         }
     }
 
