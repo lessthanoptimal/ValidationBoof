@@ -56,10 +56,10 @@ public class ECoCheckDetectionRegression extends BaseRegression implements Image
                 continue;
             }
 
+            System.out.println("Detecting");
+            final Class imageType = ImageDataType.typeToSingleClass(type);
+            var detector = new DetectECoCheckImages<>(imageType);
             try {
-                System.out.println("Detecting");
-                final Class imageType = ImageDataType.typeToSingleClass(type);
-                var detector = new DetectECoCheckImages<>(imageType);
                 ConfigECoCheckMarkers configMarkers = ConfigECoCheckMarkers.parse(encoding, 1.0);
                 detector.detector = FactoryFiducial.ecocheck(null, configMarkers, imageType).getDetector();
                 detector.outputPath = new File(detectedBase, encoding);
@@ -70,7 +70,13 @@ public class ECoCheckDetectionRegression extends BaseRegression implements Image
                 }
             } catch (RuntimeException e) {
                 e.printStackTrace(errorLog);
-                errorLog.println("Failed when detecting encoding: '" + encoding + "'");
+                String path;
+                if (detector.imageBeingProcessed == null) {
+                    path = "none";
+                } else {
+                    path = detector.imageBeingProcessed.getPath();
+                }
+                errorLog.println("Failed when detecting encoding: '" + encoding + "' path='" + path + "'");
             }
         }
 
@@ -107,6 +113,6 @@ public class ECoCheckDetectionRegression extends BaseRegression implements Image
     public static void main(String[] args) throws IOException, ClassNotFoundException, IllegalAccessException, InstantiationException {
         BoofRegressionConstants.clearCurrentResults();
         RegressionRunner.main(new String[]{ECoCheckDetectionRegression.class.getName(), ImageDataType.F32.toString()});
-        RegressionRunner.main(new String[]{ECoCheckDetectionRegression.class.getName(), ImageDataType.U8.toString()});
+//        RegressionRunner.main(new String[]{ECoCheckDetectionRegression.class.getName(), ImageDataType.U8.toString()});
     }
 }

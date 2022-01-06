@@ -56,6 +56,9 @@ public class DetectECoCheckImages<T extends ImageGray<T>> {
     // Number of iterations it will perform before processing an image for real to make runtime results more accurate
     int warmIterations = 3;
 
+    // Which image is being processed, for better error reporting
+    public File imageBeingProcessed;
+
     public DetectECoCheckImages(Class<T> imageType) {
         gray = GeneralizedImageOps.createSingleBand(imageType, 1, 1);
         this.imageType = imageType;
@@ -115,6 +118,7 @@ public class DetectECoCheckImages<T extends ImageGray<T>> {
                 foundImage = true;
             }
 
+            imageBeingProcessed = c;
             BufferedImage buffered = UtilImageIO.loadImage(c.getPath());
             ConvertBufferedImage.convertFrom(buffered, true, gray);
 
