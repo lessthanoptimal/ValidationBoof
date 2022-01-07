@@ -13,7 +13,6 @@ import java.util.List;
 import static boofcv.metrics.BaseEstimateSquareFiducialToCamera.loadImageFilesByPrefix;
 
 /**
- *
  * metrics: true positives, false positives, false negatives  fraction of area overlap in true positives
  *
  * @author Peter Abeles
@@ -28,22 +27,22 @@ public class EvaluateQrCodeDetections {
     public int multipleDetections;
     public double averageOverlap;
 
-    public void evaluate( File resultsDirectory , File truthDirectory ) {
+    public void evaluate(File resultsDirectory, File truthDirectory) {
         resetMetrics();
 
         List<String> files = loadImageFilesByPrefix(truthDirectory);
 
 
-        for( String imageName : files ) {
-            String dataName = FilenameUtils.getBaseName(imageName)+".txt";
+        for (String imageName : files) {
+            String dataName = FilenameUtils.getBaseName(imageName) + ".txt";
 
-            List<Polygon2D_F64> results = QrCodeFileCodec.loadLocations(new File(resultsDirectory,dataName).getPath());
-            List<Polygon2D_F64> truth = loadTruth(new File(truthDirectory,dataName));
+            List<Polygon2D_F64> results = QrCodeFileCodec.loadLocations(new File(resultsDirectory, dataName).getPath());
+            List<Polygon2D_F64> truth = loadTruth(new File(truthDirectory, dataName));
 
-            int matchedFound[] = new int[ results.size() ];
-            int matchedTruth[] = new int[ truth.size() ];
+            int[] matchedFound = new int[results.size()];
+            int[] matchedTruth = new int[truth.size()];
 
-            for( int i = 0; i < truth.size(); i++ ) {
+            for (int i = 0; i < truth.size(); i++) {
                 Polygon2D_F64 t = truth.get(i);
 
                 double areaTruth = t.areaSimple();
@@ -53,18 +52,18 @@ public class EvaluateQrCodeDetections {
                 for (int j = 0; j < results.size(); j++) {
                     Polygon2D_F64 r = results.get(j);
 
-                    double f = Intersection2D_F64.intersectionArea(t,r)/areaTruth;
+                    double f = Intersection2D_F64.intersectionArea(t, r) / areaTruth;
 
-                    if( f >= MATCH_MINIMUM_FRACTION ) {
+                    if (f >= MATCH_MINIMUM_FRACTION) {
                         matchedTruth[i]++;
                         matchedFound[j]++;
-                        if( f > bestOverlap ) {
+                        if (f > bestOverlap) {
                             bestOverlap = f;
                         }
                     }
                 }
 
-                if( bestOverlap > 0 ) {
+                if (bestOverlap > 0) {
                     truePositive++;
                     averageOverlap += bestOverlap;
                 } else {
@@ -74,15 +73,15 @@ public class EvaluateQrCodeDetections {
             }
 
             for (int i = 0; i < matchedTruth.length; i++) {
-                if( matchedTruth[i] > 1 ) {
+                if (matchedTruth[i] > 1) {
                     multipleDetections++;
                 }
             }
 
             for (int i = 0; i < matchedFound.length; i++) {
-                if( matchedFound[i] == 0 ) {
+                if (matchedFound[i] == 0) {
                     falsePositive++;
-                    System.out.println("false positive "+imageName);
+                    System.out.println("false positive " + imageName);
                 }
             }
             totalTruth += truth.size();
@@ -91,15 +90,15 @@ public class EvaluateQrCodeDetections {
         averageOverlap /= truePositive;
     }
 
-    private List<Polygon2D_F64> loadTruth( File f ) {
+    private List<Polygon2D_F64> loadTruth(File f) {
         List<List<Point2D_F64>> truth = PointFileCodec.loadSets(f);
 
         List<Polygon2D_F64> out = new ArrayList<>();
 
-        for( List<Point2D_F64> l : truth ) {
+        for (List<Point2D_F64> l : truth) {
             Polygon2D_F64 q = new Polygon2D_F64(4);
             for (int i = 0; i < 4; i++) {
-                q.set(i,l.get(i).x,l.get(i).y);
+                q.set(i, l.get(i).x, l.get(i).y);
             }
             out.add(q);
         }
