@@ -6,6 +6,7 @@ import boofcv.generate.RenderDocumentViewsApp;
 import boofcv.metrics.ecocheck.EvaluateMarkerLandmarkDetections;
 import boofcv.metrics.qrcode.DetectMicroQrImages;
 import boofcv.struct.image.ImageDataType;
+import boofcv.struct.image.ImageGray;
 import org.ddogleg.struct.DogArray_F64;
 
 import java.io.File;
@@ -30,8 +31,8 @@ public class MicroQrDetectionRegression extends BaseRegression implements ImageR
     @Override
     public void process(ImageDataType type) throws IOException {
         // Generate images
-        File generatedBase = new File(pathDataset);
-        File detectedBase = new File(fileTmp, "detected");
+        var generatedBase = new File(pathDataset);
+        var detectedBase = new File(fileTmp, "detected");
 
         if (!renderSyntheticImages(type, generatedBase, detectedBase))
             return;
@@ -50,11 +51,10 @@ public class MicroQrDetectionRegression extends BaseRegression implements ImageR
         runtime.out.println("default");
         runtime.printUnitsRow(false);
 
-        // TODO compute runtime results
         List<String> keys = new ArrayList<>(evaluator.runtimeResults.keySet());
         Collections.sort(keys);
 
-        DogArray_F64 combined = new DogArray_F64();
+        var combined = new DogArray_F64();
         for (String key : keys) {
             DogArray_F64 scenario = evaluator.runtimeResults.get(key);
             runtime.printStatsRow(key, scenario);
@@ -68,10 +68,10 @@ public class MicroQrDetectionRegression extends BaseRegression implements ImageR
         evaluator.out.close();
     }
 
-    private void detect(ImageDataType type, File generatedBase, File detectedBase) {
+    private <T extends ImageGray<T>> void detect(ImageDataType type, File generatedBase, File detectedBase) {
         System.out.println("Detecting");
-        final Class imageType = ImageDataType.typeToSingleClass(type);
-        var detector = new DetectMicroQrImages(imageType);
+        final Class<T> imageType = (Class)ImageDataType.typeToSingleClass(type);
+        var detector = new DetectMicroQrImages<>(imageType);
         try {
             detector.detector = FactoryFiducial.microqr(null, imageType);
             detector.outputPath = detectedBase;
@@ -94,7 +94,7 @@ public class MicroQrDetectionRegression extends BaseRegression implements ImageR
 
     private boolean renderSyntheticImages(ImageDataType type, File generatedBase, File detectedBase) {
         System.out.println("Rendering");
-        File renderedOutput = new File(generatedBase, "synthetic");
+        var renderedOutput = new File(generatedBase, "synthetic");
 
         try {
             // Render the simulated data if it doesn't already exist

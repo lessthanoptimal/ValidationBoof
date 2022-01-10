@@ -55,15 +55,15 @@ public class RuntimeSummary {
     }
 
     public void printStatsRow(String name, DogArray_F64 measurements) {
-        FancyPrint f = new FancyPrint(new DecimalFormat("#"), digits + 1, 4);
+        var f = new FancyPrint(new DecimalFormat("#"), digits + 1, 4);
 
         measurements.sort();
         int N = measurements.size;
-        String mean = f.p(StatisticsDogArray.mean(measurements));
-        String P05 = f.p(measurements.getFraction(0.05));
-        String P50 = f.p(measurements.getFraction(0.50));
-        String P95 = f.p(measurements.getFraction(0.95));
-        String MAX = f.p(measurements.getFraction(1.00));
+        String mean = N == 0 ? "NaN" : f.p(StatisticsDogArray.mean(measurements));
+        String P05 = N == 0 ? "NaN" : f.p(measurements.getFraction(0.05));
+        String P50 = N == 0 ? "NaN" : f.p(measurements.getFraction(0.50));
+        String P95 = N == 0 ? "NaN" : f.p(measurements.getFraction(0.95));
+        String MAX = N == 0 ? "NaN" : f.p(measurements.getFraction(1.00));
 
         // The two spaces before the string is used to make it visually easier to see that this is a seperate block of
         // results in documents with multiple blocks

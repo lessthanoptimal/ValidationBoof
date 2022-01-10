@@ -6,8 +6,12 @@ import boofcv.common.parsing.UniqueMarkerObserved;
 import boofcv.io.UtilIO;
 import boofcv.misc.BoofMiscOps;
 import boofcv.struct.geo.PointIndex2D_F64;
+import georegression.geometry.polygon.AreaIntersectionPolygon2D_F64;
+import georegression.metric.Distance2D_F64;
+import georegression.struct.shapes.Polygon2D_F64;
 import org.apache.commons.io.FilenameUtils;
 import org.ddogleg.stats.StatisticsDogArray;
+import org.ddogleg.struct.DogArray;
 import org.ddogleg.struct.DogArray_B;
 import org.ddogleg.struct.DogArray_F64;
 import org.jetbrains.annotations.Nullable;
@@ -29,6 +33,9 @@ import static boofcv.common.parsing.ParseCalibrationConfigFiles.parseUniqueMarke
  * @author Peter Abeles
  */
 public class EvaluateMarkerLandmarkDetections {
+    // How similar two bounding boxes must be to be considered a match
+    public static final double MATCH_MINIMUM_FRACTION = 0.1;
+
     @Option(name = "-f", aliases = {"--Found"}, usage = "Path to found data.")
     public String foundPath = "";
 
@@ -62,6 +69,10 @@ public class EvaluateMarkerLandmarkDetections {
 
     // Workspace for saving per landmark errors in a file
     StringBuffer stringLandmarkErrors = new StringBuffer(10000);
+
+    Polygon2D_F64 polyA = new Polygon2D_F64();
+    Polygon2D_F64 polyB = new Polygon2D_F64();
+    AreaIntersectionPolygon2D_F64 computeIoU = new AreaIntersectionPolygon2D_F64();
 
     /**
      * Evaluates the directories specified using command line arguments
@@ -180,8 +191,6 @@ public class EvaluateMarkerLandmarkDetections {
         scenario.reset();
 
         List<String> listFoundPath = UtilIO.listSmart("glob:" + detectionPath + "/found_*.txt", true, (f) -> true);
-        List<String> listTruthPath = UtilIO.listSmart("glob:" + truthPath + "/landmarks_*.txt", true, (f) -> true);
-        BoofMiscOps.checkEq(listFoundPath.size(), listTruthPath.size(), detectionPath);
 
         if (listFoundPath.isEmpty())
             return false;
@@ -195,7 +204,13 @@ public class EvaluateMarkerLandmarkDetections {
             try {
                 File foundFile = new File(listFoundPath.get(imageIndex));
                 ObservedLandmarkMarkers found = ParseCalibrationConfigFiles.parseObservedLandmarkMarker(foundFile);
-                List<UniqueMarkerObserved> expected = parseUniqueMarkerTruth(new File(listTruthPath.get(imageIndex)));
+                File expectedFile = new File(truthPath, "landmarks_" + foundFile.getName().split("_")[1]);
+                if (!expectedFile.exists()) {
+                    err.println("missing truth file: " + expectedFile.getPath());
+                    continue;
+                }
+
+                List<UniqueMarkerObserved> expected = parseUniqueMarkerTruth(expectedFile);
 //                System.out.println("path="+listFoundPath.get(imageIndex));
                 evaluateImage(found, expected, foundFile);
                 if (machineOut != null) {
@@ -203,7 +218,7 @@ public class EvaluateMarkerLandmarkDetections {
                     String name = FilenameUtils.getBaseName(foundFile.getName());
 
                     // Save the error every found feature in the image
-                    PrintStream individualImage = createOutputStream(new File(outputPath), name+".txt");
+                    PrintStream individualImage = createOutputStream(new File(outputPath), name + ".txt");
                     if (individualImage != null) {
                         individualImage.print(stringLandmarkErrors.toString());
                         individualImage.close();
@@ -213,7 +228,7 @@ public class EvaluateMarkerLandmarkDetections {
                 runtime.add(found.milliseconds);
             } catch (RuntimeException e) {
                 e.printStackTrace(err);
-                err.println("Error processing " + listFoundPath.get(imageIndex) + " " + listTruthPath.get(imageIndex));
+                err.println("Error processing " + listFoundPath.get(imageIndex));
             }
         }
 
@@ -239,21 +254,36 @@ public class EvaluateMarkerLandmarkDetections {
         DogArray_B cornerMatched = new DogArray_B();
         for (UniqueMarkerObserved f : found.markers.toList()) {
             UniqueMarkerObserved e = null;
+
+            // It's possible for multiple markers in the image to have the same ID. Resolve ambiguity by
+            // selecting the best fit
+            int bestFitIndex = -1;
+            double bestFitScore = 0;
+
             for (int i = 0; i < expected.size(); i++) {
-                if (expected.get(i).markerID == f.markerID) {
-                    e = expected.get(i);
-                    if (markerMatched.get(i)) {
-                        fileStats.duplicateMarkers++;
+                if (expected.get(i).markerID != f.markerID)
+                    continue;
+
+                e = expected.get(i);
+                double overlap = computeIntersectionOverUnion(e.landmarks, f.landmarks);
+                if (overlap >= MATCH_MINIMUM_FRACTION) {
+                    if (overlap > bestFitScore) {
+                        bestFitScore = overlap;
+                        bestFitIndex = i;
                     }
-                    markerMatched.set(i, true);
-                    break;
                 }
             }
 
-            if (e == null) {
+            if (bestFitIndex == -1) {
                 fileStats.falsePositiveMarker++;
                 continue;
             }
+
+            e = expected.get(bestFitIndex);
+            if (markerMatched.get(bestFitIndex)) {
+                fileStats.duplicateMarkers++;
+            }
+            markerMatched.set(bestFitIndex, true);
 
             // crude estimate of max size
             cornerMatched.resetResize(e.landmarks.size, false);
@@ -297,6 +327,20 @@ public class EvaluateMarkerLandmarkDetections {
         }
 
         fileStats.falseNegativeMarker += markerMatched.count(false);
+    }
+
+    /**
+     * Returns the intersection over union score
+     */
+    private double computeIntersectionOverUnion(DogArray<PointIndex2D_F64> markerA, DogArray<PointIndex2D_F64> markerB) {
+        // convert landmarks into a polygon
+        polyA.vertexes.resize(markerA.size);
+        markerA.forIdx((idx, v) -> polyA.get(idx).setTo(v.p));
+        polyB.vertexes.resize(markerB.size);
+        markerB.forIdx((idx, v) -> polyB.get(idx).setTo(v.p));
+
+        // Compute the score
+        return Distance2D_F64.scoreIoU(polyA, polyB, computeIoU);
     }
 
     static class Statistics {

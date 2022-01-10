@@ -34,7 +34,6 @@ public class DetectQrCodesInImages<T extends ImageGray<T>> {
     }
 
     public void process( QrCodeDetector<T> detector,  File dataSetDir ) throws IOException {
-
         if (!dataSetDir.exists()) {
             throw new DataSetDoesNotExist("The data set directory doesn't exist. " + dataSetDir.getPath());
         }
