@@ -7,6 +7,7 @@ import boofcv.metrics.ecocheck.EvaluateMarkerLandmarkDetections;
 import boofcv.metrics.qrcode.DetectMicroQrImages;
 import boofcv.struct.image.ImageDataType;
 import boofcv.struct.image.ImageGray;
+import org.apache.commons.io.FileUtils;
 import org.ddogleg.struct.DogArray_F64;
 
 import java.io.File;
@@ -98,14 +99,14 @@ public class MicroQrDetectionRegression extends BaseRegression implements ImageR
 
         try {
             // Render the simulated data if it doesn't already exist
-            if (!renderedOutput.exists()) {
+            if (!renderedOutput.exists() || FileUtils.isEmptyDirectory(renderedOutput)) {
                 var generator = new RenderDocumentViewsApp();
                 generator.inputFile = new File(generatedBase, "microqr.pdf").getPath();
                 generator.destinationDir = renderedOutput.getPath();
                 generator.landmarksFile = new File(generatedBase, "corners.txt").getPath();
                 generator.process();
             }
-        } catch (RuntimeException e) {
+        } catch (Exception e) {
             e.printStackTrace(errorLog);
             errorLog.println("Failed to render");
             return false;
@@ -116,6 +117,6 @@ public class MicroQrDetectionRegression extends BaseRegression implements ImageR
     public static void main(String[] args) throws IOException, ClassNotFoundException, IllegalAccessException, InstantiationException {
         BoofRegressionConstants.clearCurrentResults();
         RegressionRunner.main(new String[]{MicroQrDetectionRegression.class.getName(), ImageDataType.F32.toString()});
-//        RegressionRunner.main(new String[]{ECoCheckDetectionRegression.class.getName(), ImageDataType.U8.toString()});
+        RegressionRunner.main(new String[]{MicroQrDetectionRegression.class.getName(), ImageDataType.U8.toString()});
     }
 }
