@@ -96,7 +96,7 @@ public class EvaluateMarkerLandmarkDetections {
         System.out.println("\nfound path = " + foundPath);
         out.println("# Detection performance using labeled markers and corners.");
         out.println("# name (count markers) (marker false positive) (marker false negative), (count corners) (percent FP) (percent FN), (duplicate markers) (duplicate corners), error50 err90 err100");
-        out.printf("# %-38s %3s %3s %4s , %5s %4s %4s , %2s %2s , %-6s %-6s %-6s %-6s\n",
+        out.printf("# %-38s %4s %3s %4s , %5s %4s %4s , %2s %2s , %-6s %-6s %-6s %-6s\n",
                 "", "CM", "MFP", "MFN", "CC", "CFP", "CFN", "DM", "DC", " MEAN", "  E50", "  E90", "  E100");
         out.println();
         rootFound = new File(foundPath);
@@ -298,6 +298,9 @@ public class EvaluateMarkerLandmarkDetections {
                     continue;
                 }
 
+                // we need to know the image width + height to do this properly
+                boolean outsideImage = truthLandmark.p.x < 0 || truthLandmark.p.y < 0;
+
                 // We don't know initially how many landmarks there are so if we need to increase the array's size
                 if (foundLandmark.index >= cornerMatched.size) {
                     cornerMatched.resize(foundLandmark.index + 1, false);
@@ -309,16 +312,20 @@ public class EvaluateMarkerLandmarkDetections {
                 }
 
                 cornerMatched.set(foundLandmark.index, true);
+
+                // landmarks outside the image can't be manually labeled accurately and are inferred
                 double error = foundLandmark.p.distance(truthLandmark.p);
-                fileStats.errors.add(error);
+                if (!outsideImage) {
+                    fileStats.errors.add(error);
+                }
 
                 if (saveMachineReadable)
                     stringLandmarkErrors.append(String.format("%d %d %.6f %.6f\n", e.markerID, foundLandmark.index,
                             foundLandmark.p.x - truthLandmark.p.x, foundLandmark.p.y - truthLandmark.p.y));
 
                 if (outBad != null && error > largeErrorTol) {
-                    outBad.printf("bad landmark: error=%6.1f landmarkID=%d file=%s\n"
-                            , error, foundLandmark.index, foundFile.getPath());
+                    outBad.printf("bad landmark: outside=%s error=%6.1f landmarkID=%d file=%s\n"
+                            , outsideImage, error, foundLandmark.index, foundFile.getPath());
                 }
 
             }
@@ -396,7 +403,7 @@ public class EvaluateMarkerLandmarkDetections {
             double percentFalsePositiveCorner = 100.0 * falsePositiveCorner / totalCorners;
             double percentFalseNegativeCorner = 100.0 * falseNegativeCorner / totalCorners;
 
-            out.printf("%-40s %3d %3d %4d , %5d %4.1f %4.1f , %2d %2d , %6.2f %6.2f %6.2f %6.2f\n", directory,
+            out.printf("%-40s %4d %3d %4d , %5d %4.1f %4.1f , %2d %2d , %6.2f %6.2f %6.2f %6.2f\n", directory,
                     totalMarkers, falsePositiveMarker, falseNegativeMarker,
                     totalCorners, percentFalsePositiveCorner, percentFalseNegativeCorner,
                     duplicateMarkers, duplicateCorners,

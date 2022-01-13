@@ -71,6 +71,12 @@ public class HandSelectPolygonsApp <T extends ImageGray<T>> extends Demonstratio
 	}
 
 	@Override
+	public void openFile( File file, boolean addToRecent ) {
+        saveToDisk(false);
+		super.openFile( file, addToRecent );
+	}
+
+	@Override
 	public void openNextFile() {
 		saveToDisk(false);
 		super.openNextFile();
@@ -394,7 +400,7 @@ public class HandSelectPolygonsApp <T extends ImageGray<T>> extends Demonstratio
 
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(()->{
-			HandSelectPolygonsApp app = new HandSelectPolygonsApp();
+			var app = new HandSelectPolygonsApp();
 			app.openFileMenuBar();
 			app.display("Hand Select Polygon");
 		});
