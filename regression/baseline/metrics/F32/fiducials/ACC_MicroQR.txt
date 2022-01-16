@@ -1,0 +1,28 @@
+# GENERATOR MicroQrDetectionRegression
+# Detection performance using labeled markers and corners.
+# name (count markers) (marker false positive) (marker false negative), (count corners) (percent FP) (percent FN), (duplicate markers) (duplicate corners), error50 err90 err100
+#                                          CM MFP  MFN ,    CC  CFP  CFN , DM DC ,  MEAN    E50    E90    E100
+
+/angled                                     6   0    3 ,    12  0.0  0.0 ,  0  0 ,   0.82   0.80   1.25   1.68
+/lots                                    1026   0   54 ,  3888  0.0  0.0 ,  0  0 ,   0.85   0.63   1.76   7.31
+/small                                      2   0    0 ,     8  0.0  0.0 ,  0  0 ,   0.86   0.67   1.34   1.41
+/standard                                   7   0    0 ,    28  0.0  0.0 ,  0  0 ,   0.68   0.52   1.29   1.63
+synthetic/axis_blur_0                      20   0    1 ,    76  0.0  0.0 ,  0  0 ,   0.51   0.15   0.68  11.78
+synthetic/axis_blur_1                      20   0    2 ,    72  0.0  0.0 ,  0  0 ,   0.77   0.46   1.38   4.20
+synthetic/axis_blur_2                      20   0    3 ,    68  0.0  0.0 ,  0  0 ,   2.74   1.80   5.95  12.59
+synthetic/axis_blur_3                      20   0    5 ,    60  0.0  0.0 ,  0  0 ,   4.32   3.21   9.04  14.85
+synthetic/axis_blur_4                      20   0    9 ,    44  0.0  0.0 ,  0  0 ,   6.28   4.52  12.71  17.30
+synthetic/fade                             12   0    1 ,    44  0.0  0.0 ,  0  0 ,   0.31   0.17   0.45   2.18
+synthetic/fisheye_blur_0                   30   0   30 ,     0  NaN  NaN ,  0  0 ,    NaN    NaN    NaN    NaN
+synthetic/fisheye_blur_1                   30   0   30 ,     0  NaN  NaN ,  0  0 ,    NaN    NaN    NaN    NaN
+synthetic/fisheye_blur_2                   30   0   29 ,     4  0.0  0.0 ,  0  0 ,  12.34  12.87  14.89  21.49
+synthetic/fisheye_blur_3                   30   0   30 ,     0  NaN  NaN ,  0  0 ,    NaN    NaN    NaN    NaN
+synthetic/fisheye_blur_4                   30   0   26 ,    16  0.0  0.0 ,  0  0 ,  10.74   6.48  18.68  26.90
+synthetic/fisheye_extreme                  30   0   30 ,     0  NaN  NaN ,  0  0 ,    NaN    NaN    NaN    NaN
+synthetic/linear_blur                      42   0    6 ,   144  0.0  0.0 ,  0  0 ,   3.40   2.01   8.98  12.55
+synthetic/move_away                        40   0    1 ,   156  0.0  0.0 ,  0  0 ,   0.21   0.13   0.50   1.25
+synthetic/rotate_z                         40   0    0 ,   160  0.0  0.0 ,  0  0 ,   0.26   0.21   0.57   1.24
+synthetic/shadows                          30   0   25 ,    20  0.0  0.0 ,  0  0 ,   0.13   0.11   0.23   0.29
+synthetic/spotlight                        30   0   28 ,     8  0.0  0.0 ,  0  0 ,   0.62   0.53   0.97   1.71
+
+Summary                                  1515   0  313 ,  4808  0.0  0.0 ,  0  0 ,   1.03   0.61   2.03  26.90
