@@ -33,8 +33,12 @@ import static boofcv.common.parsing.ParseCalibrationConfigFiles.parseUniqueMarke
  * @author Peter Abeles
  */
 public class EvaluateMarkerLandmarkDetections {
-    // How similar two bounding boxes must be to be considered a match
-    public static final double MATCH_MINIMUM_FRACTION = 0.1;
+    // How similar two bounding boxes must be to be considered a match. Default is intended for use with IoU
+    public double minimumMatchScore = 0.1;
+
+    // Use IoU of features to decide if two markers match. This doesn't make sense if features are not all
+    // external. This should be fixed in the future...
+    public boolean useIntersectionScore = true;
 
     @Option(name = "-f", aliases = {"--Found"}, usage = "Path to found data.")
     public String foundPath = "";
@@ -95,6 +99,7 @@ public class EvaluateMarkerLandmarkDetections {
 
         System.out.println("\nfound path = " + foundPath);
         out.println("# Detection performance using labeled markers and corners.");
+        out.println("# Minimum Score " + minimumMatchScore + " useIntersectionScore " + useIntersectionScore);
         out.println("# name (count markers) (marker false positive) (marker false negative), (count corners) (percent FP) (percent FN), (duplicate markers) (duplicate corners), error50 err90 err100");
         out.printf("# %-38s %4s %3s %4s , %5s %4s %4s , %2s %2s , %-6s %-6s %-6s %-6s\n",
                 "", "CM", "MFP", "MFN", "CC", "CFP", "CFN", "DM", "DC", " MEAN", "  E50", "  E90", "  E100");
@@ -265,16 +270,22 @@ public class EvaluateMarkerLandmarkDetections {
                     continue;
 
                 e = expected.get(i);
-                double overlap = computeIntersectionOverUnion(e.landmarks, f.landmarks);
-                if (overlap >= MATCH_MINIMUM_FRACTION) {
-                    if (overlap > bestFitScore) {
-                        bestFitScore = overlap;
-                        bestFitIndex = i;
-                    }
+                double score;
+
+                if (useIntersectionScore) {
+                    score = computeIntersectionOverUnion(e.landmarks, f.landmarks);
+                } else {
+                    // If not using IoU then prefer more landmarks
+                    score = f.landmarks.size;
                 }
+                if (score > bestFitScore) {
+                    bestFitScore = score;
+                    bestFitIndex = i;
+                }
+
             }
 
-            if (bestFitIndex == -1) {
+            if (bestFitIndex == -1 || bestFitScore < minimumMatchScore) {
                 fileStats.falsePositiveMarker++;
                 continue;
             }

@@ -1,5 +1,6 @@
 # GENERATOR MicroQrDetectionRegression
 # Detection performance using labeled markers and corners.
+# Minimum Score 0.1 useIntersectionScore true
 # name (count markers) (marker false positive) (marker false negative), (count corners) (percent FP) (percent FN), (duplicate markers) (duplicate corners), error50 err90 err100
 #                                          CM MFP  MFN ,    CC  CFP  CFN , DM DC ,  MEAN    E50    E90    E100
 

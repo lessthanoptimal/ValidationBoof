@@ -82,6 +82,8 @@ public class ECoCheckDetectionRegression extends BaseRegression implements Image
 
         System.out.println("Evaluating");
         var evaluator = new EvaluateMarkerLandmarkDetections();
+        evaluator.minimumMatchScore = 1; // One corner is considered a match
+        evaluator.useIntersectionScore = false; // landmarks are not all external and IoU will be incorrect
         evaluator.out = new PrintStream(new File(directoryMetrics, "ACC_ECoCheck.txt"));
         evaluator.err = errorLog;
         BoofRegressionConstants.printGenerator(evaluator.out, getClass());
