@@ -1,6 +1,6 @@
 # GENERATOR ECoCheckDetectionRegression
 # Detection performance using labeled markers and corners.
-# Minimum Score 2.220446049250313E-16 useIntersectionScore false
+# Minimum Score 1.0 useIntersectionScore false
 # name (count markers) (marker false positive) (marker false negative), (count corners) (percent FP) (percent FN), (duplicate markers) (duplicate corners), error50 err90 err100
 #                                          CM MFP  MFN ,    CC  CFP  CFN , DM DC ,  MEAN    E50    E90    E100
 
