@@ -1,6 +1,6 @@
 
 dependencies {
-    compile project(':modules:common')
-    compile project(':modules:calibration')
-    compile project(':')
+    api project(':modules:common')
+    api project(':modules:calibration')
+    api project(':')
 }

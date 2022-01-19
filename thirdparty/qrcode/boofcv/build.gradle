@@ -1,6 +1,6 @@
 
 dependencies {
-    compile project(':modules:common')
+    api project(':modules:common')
 }
 
 task BoofCVQrCodeJar(type: Jar) {
