@@ -21,24 +21,21 @@ allprojects {
         maven { url = "https://oss.sonatype.org/content/repositories/snapshots/" }
     }
 
-    project.ext.set("jabel_version", '0.3.0')
+    project.ext.set("jabel_version", '0.4.2')
 
     java {
         withJavadocJar()
         withSourcesJar()
-        toolchain { languageVersion = JavaLanguageVersion.of(15) }
+        toolchain { languageVersion = JavaLanguageVersion.of(17) }
     }
 
-    // Prevents tons of errors if someone is using ASCII
-    tasks.withType(JavaCompile).configureEach { options.encoding = "UTF-8" }
-    // Creates Java 11 byte code
-    tasks.withType(JavaCompile).configureEach { options.release = 11 }
-
-    javadoc {
-        configure(options) {
-            failOnError = false
-        }
+    tasks.withType(JavaCompile).configureEach {
+        options.encoding = "UTF-8"
+        sourceCompatibility = 17
+        options.release = 11
     }
+
+    javadoc { configure(options) { failOnError = false } }
 
     dependencies {
         api files("$project.rootDir/lib/ProjectBUBO.jar")
@@ -70,18 +67,15 @@ subprojects {
 
         outputs.upToDateWhen { false }
 
+        duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+        archiveFile.set(file('module_regression.jar'))
+
         from sourceSets.main.output
 
         dependsOn configurations.runtimeClasspath
         from { configurations.runtimeClasspath.findAll { it.name.endsWith('jar') }.collect { zipTree(it) } } {
             exclude 'META-INF/*.RSA', 'META-INF/*.SF', 'META-INF/*.DSA'
         }
-
-//        from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }{
-//            exclude 'META-INF/*.RSA', 'META-INF/*.SF', 'META-INF/*.DSA'
-//        } with jar
-
-        doLast { archivePath.renameTo(file('module_regression.jar')) }
     }
 
     clean.doFirst { delete "module_regression.jar" }
