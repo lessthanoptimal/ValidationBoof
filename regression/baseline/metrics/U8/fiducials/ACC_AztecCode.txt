@@ -1,0 +1,25 @@
+# GENERATOR AztecCodeDetectionRegression
+# Detection performance using labeled markers and corners.
+# Minimum Score 0.1 useIntersectionScore true
+# name (count markers) (marker false positive) (marker false negative), (count corners) (percent FP) (percent FN), (duplicate markers) (duplicate corners), error50 err90 err100
+#                                          CM MFP  MFN ,    CC  CFP  CFN , DM DC ,  MEAN    E50    E90    E100
+
+synthetic/axis_blur_0                      20   0    2 ,    72  0.0  0.0 ,  0  0 ,   0.20   0.19   0.37   0.54
+synthetic/axis_blur_1                      20   0    2 ,    72  0.0  0.0 ,  0  0 ,   0.64   0.57   1.12   2.27
+synthetic/axis_blur_2                      20   0    4 ,    64  0.0  0.0 ,  0  0 ,   2.15   1.96   3.25   5.48
+synthetic/axis_blur_3                      20   0    6 ,    56  0.0  0.0 ,  0  0 ,   4.91   4.54   8.94  13.18
+synthetic/axis_blur_4                      20   0   10 ,    40  0.0  0.0 ,  0  0 ,   5.76   4.86  10.23  13.39
+synthetic/fade                             12   0    1 ,    44  0.0  0.0 ,  0  0 ,   0.27   0.21   0.47   0.94
+synthetic/fisheye_blur_0                   30   0   30 ,     0  NaN  NaN ,  0  0 ,    NaN    NaN    NaN    NaN
+synthetic/fisheye_blur_1                   30   0   30 ,     0  NaN  NaN ,  0  0 ,    NaN    NaN    NaN    NaN
+synthetic/fisheye_blur_2                   30   0   28 ,     8  0.0  0.0 ,  0  0 ,  11.47   9.61  13.55  14.47
+synthetic/fisheye_blur_3                   30   0   24 ,    24  0.0  0.0 ,  0  0 ,  10.17   8.80  16.61  18.09
+synthetic/fisheye_blur_4                   30   0   26 ,    16  0.0  0.0 ,  0  0 ,   8.80   8.36  15.38  16.63
+synthetic/fisheye_extreme                  30   0   30 ,     0  NaN  NaN ,  0  0 ,    NaN    NaN    NaN    NaN
+synthetic/linear_blur                      42   0   12 ,   120  0.0  0.0 ,  0  0 ,   2.70   1.80   6.30  11.51
+synthetic/move_away                        40   0   17 ,    92  0.0  0.0 ,  0  0 ,   0.22   0.14   0.46   1.04
+synthetic/rotate_z                         40   0    0 ,   160  0.0  0.0 ,  0  0 ,   0.26   0.21   0.49   0.89
+synthetic/shadows                          30   0   20 ,    40  0.0  0.0 ,  0  0 ,   0.16   0.15   0.20   0.52
+synthetic/spotlight                        30   0   28 ,     8  0.0  0.0 ,  0  0 ,   1.00   0.90   1.53   1.71
+
+Summary                                   474   0  270 ,   816  0.0  0.0 ,  0  0 ,   1.95   0.45   6.32  18.09

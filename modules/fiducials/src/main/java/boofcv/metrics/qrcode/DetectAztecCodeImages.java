@@ -1,8 +1,8 @@
 package boofcv.metrics.qrcode;
 
 import boofcv.BoofVersion;
-import boofcv.abst.fiducial.MicroQrCodePreciseDetector;
-import boofcv.alg.fiducial.microqr.MicroQrCode;
+import boofcv.abst.fiducial.AztecCodePreciseDetector;
+import boofcv.alg.fiducial.aztec.AztecCode;
 import boofcv.core.image.GeneralizedImageOps;
 import boofcv.factory.fiducial.FactoryFiducial;
 import boofcv.io.image.ConvertBufferedImage;
@@ -25,11 +25,11 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * Searches for Micro QR inside of images and saves the location of found markers and their corners.
+ * Searches for Aztec Codes inside of images and saves the location of found markers and their corners.
  *
  * @author Peter Abeles
  */
-public class DetectMicroQrImages<T extends ImageGray<T>> {
+public class DetectAztecCodeImages<T extends ImageGray<T>> {
     @Option(name = "-i", aliases = {"--Input"}, usage = "Path to directory with labeled scenarios")
     public String inputDirectory;
     @Option(name = "-o", aliases = {"--Output"}, usage = "Where it should save the output to")
@@ -38,9 +38,9 @@ public class DetectMicroQrImages<T extends ImageGray<T>> {
     /**
      * Where results are written to
      */
-    public File outputPath = new File("microqr_detections");
+    public File outputPath = new File("aztec_detections");
 
-    public MicroQrCodePreciseDetector<T> detector;
+    public AztecCodePreciseDetector<T> detector;
 
     private File root;
 
@@ -56,7 +56,7 @@ public class DetectMicroQrImages<T extends ImageGray<T>> {
     // Which image is being processed, for better error reporting
     public File imageBeingProcessed;
 
-    public DetectMicroQrImages(Class<T> imageType) {
+    public DetectAztecCodeImages(Class<T> imageType) {
         gray = GeneralizedImageOps.createSingleBand(imageType, 1, 1);
         this.imageType = imageType;
     }
@@ -65,7 +65,7 @@ public class DetectMicroQrImages<T extends ImageGray<T>> {
      * Calls detect using command line arguments
      */
     public void detectCommandline() {
-        detector = FactoryFiducial.microqr(null, imageType);
+        detector = FactoryFiducial.aztec(null, imageType);
         outputPath = new File(outputFile);
         detect(new File(inputDirectory));
     }
@@ -140,15 +140,15 @@ public class DetectMicroQrImages<T extends ImageGray<T>> {
 
     private void saveResults(File outputPath, double timeMS) {
         // Merge split marker and remove unknown markers
-        List<MicroQrCode> detections = detector.getDetections();
+        List<AztecCode> detections = detector.getDetections();
 
         try (PrintStream out = new PrintStream(outputPath)) {
-            out.println("# Micro QR Code Detections. BoofCV " + BoofVersion.VERSION);
+            out.println("# Aztec Code Detections. BoofCV " + BoofVersion.VERSION);
             out.println("image.shape=" + gray.width + "," + gray.height);
             out.println("milliseconds=" + timeMS);
             out.println("markers.size=" + detections.size());
             for (int i = 0; i < detections.size(); i++) {
-                MicroQrCode found = detections.get(i);
+                AztecCode found = detections.get(i);
                 out.println("marker=0");
                 out.println("landmarks.size=" + found.bounds.size());
                 for (int cornerIdx = 0; cornerIdx < found.bounds.size(); cornerIdx++) {
@@ -168,7 +168,7 @@ public class DetectMicroQrImages<T extends ImageGray<T>> {
     }
 
     public static void main(String[] args) {
-        var generator = new DetectMicroQrImages<>(GrayF32.class);
+        var generator = new DetectAztecCodeImages<>(GrayF32.class);
         var parser = new CmdLineParser(generator);
         try {
             parser.parseArgument(args);
