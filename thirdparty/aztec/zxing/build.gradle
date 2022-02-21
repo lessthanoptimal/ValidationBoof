@@ -1,0 +1,43 @@
+apply plugin: 'java-library'
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+
+    maven { url = "https://oss.sonatype.org/content/repositories/snapshots/"}
+}
+
+task ZXingAztecCodeJar(type: Jar) {
+    manifest {
+        attributes 'Implementation-Title': 'ZXing Aztec Code Jar',
+                'Implementation-Version': '1',
+                'Main-Class': 'validation.DetectAztecCodeZXingApp'
+    }
+
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    outputs.upToDateWhen { false }
+
+    archiveFile.set(file('ZXingAztecCode.jar'))
+
+    dependsOn configurations.runtimeClasspath
+    from sourceSets.main.output
+    from { configurations.runtimeClasspath.collect { zipTree(it) } } {
+        exclude 'META-INF/*.RSA', 'META-INF/*.SF', 'META-INF/*.DSA'
+    }
+
+    clean.doFirst { delete "ZXingAztecCode.jar" }
+}
+
+dependencies {
+    ['core','javase'].each { String a ->
+        api('com.google.zxing:' + a + ":3.4.1")
+    }
+
+    api group: 'args4j', name: 'args4j', version: '2.33'
+    api group: 'commons-io', name: 'commons-io', version: '2.6'
+}
+
+wrapper {
+    distributionType = Wrapper.DistributionType.BIN
+    gradleVersion = '7.3.3'
+}
