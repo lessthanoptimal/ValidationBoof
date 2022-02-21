@@ -25,6 +25,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
@@ -232,6 +233,9 @@ public class HandSelectPolygonsApp <T extends ImageGray<T>> extends Demonstratio
 
 		final Font idFont = new Font("Serif", Font.BOLD, 24);
 		final Color bgColor = new Color(0, 0, 0, 130);
+		Ellipse2D.Double c = new Ellipse2D.Double();
+		BasicStroke thinStroke = new BasicStroke(3.0f);
+		BasicStroke thickStroke = new BasicStroke(5.0f);
 
 		public VisualizePanel() {
 			setWheelScrollingEnabled(false);
@@ -275,14 +279,23 @@ public class HandSelectPolygonsApp <T extends ImageGray<T>> extends Demonstratio
 
 			if( activeIdx >= 0 ) {
 				Polygon2D_F64 active = polygons.get(activeIdx);
-				g2.setStroke(new BasicStroke(3.0f));
-				if( active.size() >= 2 )
-					VisualizeShapes.drawPolygon(active,false,scale,Color.RED,Color.BLUE,g2);
+				g2.setStroke(thinStroke);
+				if( active.size() >= 2 ) {
+					g2.setStroke(thinStroke);
+					VisualizeShapes.drawPolygon(active, false, scale, Color.RED, Color.BLUE, g2);
+				}
 				for( int i = 0; i < active.vertexes.size; i++ ) {
 					Point2D_F64 p = active.get(i);
+
 					if( i == selectedPoint ) {
-						VisualizeFeatures.drawCircle(g2, scale * p.x, scale * p.y, 7);
+						g2.setStroke(thickStroke);
+						g2.setColor(Color.BLACK);
+						VisualizeFeatures.drawCircle(g2, scale * p.x, scale * p.y, 9, c);
+						g2.setStroke(thinStroke);
+						g2.setColor(Color.WHITE);
+						VisualizeFeatures.drawCircle(g2, scale * p.x, scale * p.y, 9, c);
 					} else {
+						g2.setStroke(thickStroke);
 						VisualizeFeatures.drawPoint(g2, scale * p.x, scale * p.y, 5, Color.RED, true);
 					}
 				}

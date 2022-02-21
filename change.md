@@ -1,7 +1,12 @@
 Description of changes to benchmarks and justifications for change in performance from previous versions.
 
+## Version 0.41
+2022/
+
+- Added Aztec Code regression
+
 ## Version 0.38
-2021/
+2021/??/??
 
 - Tooling
   * Automated checks for runtime performance

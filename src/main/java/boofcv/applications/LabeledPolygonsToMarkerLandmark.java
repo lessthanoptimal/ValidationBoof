@@ -17,8 +17,11 @@ import java.util.List;
  */
 public class LabeledPolygonsToMarkerLandmark {
     public static void main(String[] args) throws FileNotFoundException {
-        for (String directory : new String[]{"angled", "lots", "small", "standard"}) {
-            List<String> foundImages = UtilIO.listSmartImages(String.format("glob:data/fiducials/microqr/%s/*.jpg", directory), true);
+        String[] directories = new File("data/fiducials/aztec").list();
+        if (directories == null)
+            return;
+        for (String directory : directories) {
+            List<String> foundImages = UtilIO.listSmartImages(String.format("glob:data/fiducials/aztec/%s/*.jpg", directory), true);
             for (String imagePath : foundImages) {
                 File imageFile = new File(imagePath);
                 String base = FilenameUtils.getBaseName(imageFile.getName());
