@@ -42,12 +42,12 @@ Summary: TP/E = 68 / 79 error =   0.326 FP = 30
 # Directory      E  D  M MM TP FP FN   Error
 image01.jpg     57 54  0  0 53  1  4  0.1867
 image02.jpg     57 58  0  0 57  1  0  0.2660
-image03.jpg     57 49  0  0 48  1  9  0.2048
+image03.jpg     57 56  0  0 55  1  2  0.2278
 image04.jpg     55 61  0  0 53  8  2  0.2377
 image05.jpg     57 61  0  0 56  5  1  0.2163
 original.png    57 57  0  0 57  0  0  0.1990
 shadow01.jpg    57 67  0  0 55 12  2  0.2398
-Summary: TP/E = 379 / 397 error =   0.221 FP = 28
+Summary: TP/E = 386 / 397 error =   0.225 FP = 28
 
 # Data Set = set01
 # Match Tolerance Corner to Polygon   = 3.0
@@ -111,5 +111,5 @@ image10.png      6  6  0  1  6  0  0  0.2140
 Summary: TP/E = 60 / 60 error =   0.236 FP = 0
 
 
-Final Summary: TP/(TP+FN) = 693 / 815    FP = 640
+Final Summary: TP/(TP+FN) = 700 / 815    FP = 640
 

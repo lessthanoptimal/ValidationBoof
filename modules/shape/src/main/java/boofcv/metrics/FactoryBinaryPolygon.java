@@ -8,26 +8,21 @@ import boofcv.struct.image.ImageGray;
 
 import java.io.File;
 
-/**
- * @author Peter Abeles
- */
-public class FactoryBinaryPolygon<T extends ImageGray<T>>
-		implements FactoryObject<DetectPolygonBinaryGrayRefine<T>>
-{
-	Class<T> imageType;
-	ConfigPolygonDetector config;
+public class FactoryBinaryPolygon<T extends ImageGray<T>> implements FactoryObject<DetectPolygonBinaryGrayRefine<T>> {
+    Class<T> imageType;
+    ConfigPolygonDetector config;
 
-	public FactoryBinaryPolygon(Class<T> imageType) {
-		this.imageType = imageType;
-	}
+    public FactoryBinaryPolygon(Class<T> imageType) {
+        this.imageType = imageType;
+    }
 
-	@Override
-	public void configure(File file) {
-		config = UtilShapeDetector.configurePolygon(file);
-	}
+    @Override
+    public void configure(File file) {
+        config = UtilShapeDetector.configurePolygon(file);
+    }
 
-	@Override
-	public DetectPolygonBinaryGrayRefine<T> newInstance() {
-		return FactoryShapeDetector.polygon(config, imageType);
-	}
+    @Override
+    public DetectPolygonBinaryGrayRefine<T> newInstance() {
+        return FactoryShapeDetector.polygon(config, imageType);
+    }
 }
