@@ -5,6 +5,8 @@ Description of changes to benchmarks and justifications for change in performanc
 
 - Added Aztec Code regression
 - DetectPolygonRegression changed values due to slight change in how relative contour thresholds are computed
+- QR Code
+  * Fixed issue with low version QR Codes where it was rejecting them where it shouldn't. Improved results.
 
 ## Version 0.38 - 0.40
 2022/1/17
