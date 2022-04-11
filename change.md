@@ -6,8 +6,8 @@ Description of changes to benchmarks and justifications for change in performanc
 - Added Aztec Code regression
 - DetectPolygonRegression changed values due to slight change in how relative contour thresholds are computed
 
-## Version 0.38
-2021/??/??
+## Version 0.38 - 0.40
+2022/1/17
 
 - Tooling
   * Automated checks for runtime performance
