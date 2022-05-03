@@ -91,7 +91,8 @@ public class ThreeViewStereoMetrics {
         intrinsic01.fsetK(cp.f,cp.f,0,cx,cy,width,height);
         intrinsic01.fsetRadial(cp.k1,cp.k2);
 
-        cp = structure.getCameras().data[1].getModel();
+        if (structure.getCameras().size > 1)
+            cp = structure.getCameras().data[1].getModel();
         CameraPinholeBrown intrinsic02 = new CameraPinholeBrown();
         intrinsic02.fsetK(cp.f,cp.f,0,cx,cy,width,height);
         intrinsic02.fsetRadial(cp.k1,cp.k2);
