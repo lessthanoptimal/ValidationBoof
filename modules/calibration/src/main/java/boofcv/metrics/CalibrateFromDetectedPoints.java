@@ -77,7 +77,7 @@ public class CalibrateFromDetectedPoints {
             for (int i = 0; i < N; i++) {
                 float x = Float.parseFloat(s[i * 2 + 2]);
                 float y = Float.parseFloat(s[i * 2 + 3]);
-                target.add(new Point2D_F64(x, y), i);
+                target.add(i, new Point2D_F64(x, y));
             }
 
             if (fileName.contains("left"))
