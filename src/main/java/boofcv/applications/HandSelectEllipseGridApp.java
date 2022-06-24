@@ -44,7 +44,7 @@ public class HandSelectEllipseGridApp extends HandSelectBase {
 				}
 
 				ConfigEllipseDetector config = new ConfigEllipseDetector();
-				config.minimumMinorAxis = 5;
+				config.minimumMinorAxis.setFixed(5);
 				BinaryEllipseDetector<GrayU8> detector = FactoryShapeDetector.ellipse(config,GrayU8.class);
 				GrayU8 gray = new GrayU8(image.getWidth(),image.getHeight());
 				GrayU8 binary = gray.createSameShape();
