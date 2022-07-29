@@ -32,8 +32,9 @@ public class CalibrateFromDetectedPoints {
     public void processStereo(File stereoDetections, boolean tangential) throws IOException {
         DetectSingleFiducialCalibration targetDesc = FactoryFiducialCalibration.chessboardX(
                 null, new ConfigGridDimen(7, 5, 30));
-        CalibrationPlanarGridZhang99 zhang99 = new CalibrationPlanarGridZhang99(targetDesc.getLayout(),
-                new Zhang99CameraBrown(targetDesc.getLayout(), true, tangential, 2));
+        var zhang99 = new CalibrationPlanarGridZhang99(
+                new Zhang99CameraBrown(true, tangential, 2));
+        zhang99.setLayout(targetDesc.getLayout());
 
         List<CalibrationObservation> left = new ArrayList<>();
         List<CalibrationObservation> right = new ArrayList<>();
@@ -68,7 +69,7 @@ public class CalibrateFromDetectedPoints {
 
         String line;
         while ((line = reader.readLine()) != null) {
-            CalibrationObservation target = new CalibrationObservation(0, 0);
+            var target = new CalibrationObservation();
 
             String[] s = line.split(" ");
             String fileName = s[0];

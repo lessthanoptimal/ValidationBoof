@@ -9,6 +9,7 @@ Description of changes to benchmarks and justifications for change in performanc
   * Fixed issue with low version QR Codes where it was rejecting them where it shouldn't. Improved results.
 - ThreeViewReconstruction
   * Algorithm got updated to have entire self calibration pipeline in RANSAC
+- Added Multi Camera Calibration regression
 
 ## Version 0.38 - 0.40
 2022/1/17
