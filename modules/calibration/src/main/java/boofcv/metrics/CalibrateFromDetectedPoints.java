@@ -115,7 +115,7 @@ public class CalibrateFromDetectedPoints {
         outputResults.println(structure.views.size);
         Rodrigues_F64 rod = new Rodrigues_F64();
         for (SceneStructureMetric.View v : structure.views.toList()) {
-            Se3_F64 world_to_view = structure.motions.get(v.parent_to_view).motion;
+            Se3_F64 world_to_view = structure.motions.get(v.parent_to_view).parent_to_view;
             ConvertRotation3D_F64.matrixToRodrigues(world_to_view.R, rod);
             double rx = rod.unitAxisRotation.x * rod.theta;
             double ry = rod.unitAxisRotation.y * rod.theta;

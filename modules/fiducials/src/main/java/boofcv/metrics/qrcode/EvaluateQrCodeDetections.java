@@ -1,6 +1,7 @@
 package boofcv.metrics.qrcode;
 
 import boofcv.common.misc.PointFileCodec;
+import boofcv.io.UtilIO;
 import georegression.metric.Intersection2D_F64;
 import georegression.struct.point.Point2D_F64;
 import georegression.struct.shapes.Polygon2D_F64;
@@ -9,8 +10,6 @@ import org.apache.commons.io.FilenameUtils;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-
-import static boofcv.metrics.BaseEstimateSquareFiducialToCamera.loadImageFilesByPrefix;
 
 /**
  * metrics: true positives, false positives, false negatives  fraction of area overlap in true positives
@@ -30,8 +29,7 @@ public class EvaluateQrCodeDetections {
     public void evaluate(File resultsDirectory, File truthDirectory) {
         resetMetrics();
 
-        List<String> files = loadImageFilesByPrefix(truthDirectory);
-
+        List<String> files = UtilIO.listSmartImages(truthDirectory.getPath(), true);
 
         for (String imageName : files) {
             String dataName = FilenameUtils.getBaseName(imageName) + ".txt";

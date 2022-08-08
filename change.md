@@ -7,6 +7,7 @@ Description of changes to benchmarks and justifications for change in performanc
 - DetectPolygonRegression changed values due to slight change in how relative contour thresholds are computed
 - QR Code
   * Fixed issue with low version QR Codes where it was rejecting them where it shouldn't. Improved results.
+  * Added more images to test set and added F-Score to metrics to make local changes easier to see
 - ThreeViewReconstruction
   * Algorithm got updated to have entire self calibration pipeline in RANSAC
 - Added Multi Camera Calibration regression

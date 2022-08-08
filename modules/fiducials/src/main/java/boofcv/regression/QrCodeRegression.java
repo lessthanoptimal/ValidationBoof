@@ -81,6 +81,7 @@ public class QrCodeRegression extends BaseRegression implements ImageRegression 
 		BoofRegressionConstants.printGenerator(metricsOut, getClass());
 
 		metricsOut.println("# QR Code Detection Metrics for "+name);
+		metricsOut.println("# F = F-Score");
 		metricsOut.println("# N  = total number of qr codes in truth set");
 		metricsOut.println("# TP = true positive");
 		metricsOut.println("# FN = false negative");
@@ -96,6 +97,7 @@ public class QrCodeRegression extends BaseRegression implements ImageRegression 
 		int totalTP = 0;
 		int totalN = 0;
 		int totalFP = 0;
+		int totalFN = 0;
 
 		boolean foundDataSets = false;
 		for( File f: listDirectories ) {
@@ -109,8 +111,8 @@ public class QrCodeRegression extends BaseRegression implements ImageRegression 
 				}
 			}
 
-			DetectQrCodesInImages evaluateDetect = new DetectQrCodesInImages();
-			EvaluateQrCodeDetections evaluateMetrics = new EvaluateQrCodeDetections();
+			var evaluateDetect = new DetectQrCodesInImages();
+			var evaluateMetrics = new EvaluateQrCodeDetections();
 			try {
 				evaluateDetect.setOutputDirectory(workDirectory);
 				evaluateDetect.process(detector, f);
@@ -118,22 +120,32 @@ public class QrCodeRegression extends BaseRegression implements ImageRegression 
 				runtime.printStatsRow(f.getName(),evaluateDetect.periodMS);
 				evaluateMetrics.evaluate(workDirectory,f);
 			} catch( RuntimeException e ) {
-				errorLog.println(e.toString());
+				System.err.println("Exception processing directory '"+f.getPath()+"'");
+				errorLog.println(e);
 				continue;
 			}
 
+			int TP = evaluateMetrics.truePositive;
+			int FP = evaluateMetrics.falsePositive;
+			int FN = evaluateMetrics.falseNegative;
+
+			double fscore = TP/(TP + 0.5*(FP + FN));
+
 			foundDataSets = true;
-			metricsOut.printf("%20s N %3d TP %3d FN %3d FP %3d MD %3d Overlap %5.1f%%\n",
+			metricsOut.printf("%20s F %4.2f N %3d TP %3d FN %3d FP %3d MD %3d Overlap %5.1f%%\n",
 					f.getName(),
-					evaluateMetrics.totalTruth,evaluateMetrics.truePositive,evaluateMetrics.falseNegative,
-					evaluateMetrics.falsePositive,evaluateMetrics.multipleDetections,100*evaluateMetrics.averageOverlap);
+					fscore, evaluateMetrics.totalTruth, TP, FN, FP,
+					evaluateMetrics.multipleDetections,100*evaluateMetrics.averageOverlap);
 
 			totalN += evaluateMetrics.totalTruth;
 			totalTP += evaluateMetrics.truePositive;
 			totalFP += evaluateMetrics.falsePositive;
+			totalFN += evaluateMetrics.falseNegative;
 		}
 
-		metricsOut.printf("\nSummary N %3d TP %3d FP %3d\n", totalN,totalTP,totalFP);
+		double fscore = totalTP/(totalTP + 0.5*(totalFP + totalFN));
+
+		metricsOut.printf("\nSummary F %4.2f N %3d TP %3d FP %3d\n", fscore, totalN, totalTP, totalFP);
 		metricsOut.close();
 
 		runtime.out.println();

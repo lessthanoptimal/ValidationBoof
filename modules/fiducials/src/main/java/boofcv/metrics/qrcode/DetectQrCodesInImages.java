@@ -4,6 +4,7 @@ import boofcv.abst.fiducial.QrCodeDetector;
 import boofcv.alg.fiducial.qrcode.QrCode;
 import boofcv.common.DataSetDoesNotExist;
 import boofcv.core.image.GeneralizedImageOps;
+import boofcv.io.UtilIO;
 import boofcv.io.image.ConvertBufferedImage;
 import boofcv.io.image.UtilImageIO;
 import boofcv.struct.image.ImageGray;
@@ -16,8 +17,6 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.util.List;
-
-import static boofcv.metrics.BaseEstimateSquareFiducialToCamera.loadImageFilesByPrefix;
 
 /**
  * Detects qr codes in an image and saves the results to a file
@@ -38,8 +37,7 @@ public class DetectQrCodesInImages<T extends ImageGray<T>> {
             throw new DataSetDoesNotExist("The data set directory doesn't exist. " + dataSetDir.getPath());
         }
 
-        List<String> files = loadImageFilesByPrefix(dataSetDir);
-
+        List<String> files = UtilIO.listSmartImages(dataSetDir.getPath(), true);
         T image = GeneralizedImageOps.createSingleBand(detector.getImageType(),1,1);
 
         periodMS.reset();
@@ -50,7 +48,7 @@ public class DetectQrCodesInImages<T extends ImageGray<T>> {
             String imageFileName = new File(path).getName();
 
             File outFile = new File(outputDirectory, FilenameUtils.getBaseName(imageFileName)+".txt");
-            PrintStream out = new PrintStream(outFile);
+            var out = new PrintStream(outFile);
             out.println("# Detected qrcodes inside of "+path+" using "+detector.getClass().getSimpleName());
             out.println("# 2 lines for each detection.");
             out.println("# Line 1: 4 corners representing bounding box in pixels");
