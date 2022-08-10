@@ -46,7 +46,7 @@ public class CalibrateMultiRegression extends BaseRegression implements ImageReg
         if (type.isInteger())
             return;
 
-        metricsOut = new PrintStream(new File(directoryMetrics, "ACC_SceneRecognition.txt"));
+        metricsOut = new PrintStream(new File(directoryMetrics, "ACC_CalibrateMulti.txt"));
         BoofRegressionConstants.printGenerator(metricsOut, getClass());
 
         var runtimeOut = new PrintStream(new File(directoryRuntime, "RUN_CalibrateMulti.txt"));
