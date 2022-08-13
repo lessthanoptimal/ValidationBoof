@@ -76,7 +76,8 @@ public class ThreeViewStereoMetrics {
         alg.configRansac.iterations = 3000;
         alg.convergeSBA.maxIterations = 40;
 
-        if( !alg.process(associated.toList(),width,height) )
+        alg.initialize(width, height);
+        if( !alg.process(associated.toList()) )
             return false;
 
         // Stereo computation. This is where we evaluate the performance
