@@ -52,6 +52,7 @@ public class CalibrateMultiRegression extends BaseRegression implements ImageReg
         var runtimeOut = new PrintStream(new File(directoryRuntime, "RUN_CalibrateMulti.txt"));
         BoofRegressionConstants.printGenerator(runtimeOut, getClass());
 
+        int totalScenarios = 0;
         var rootDir = new File(inputPath);
         for (File child : Objects.requireNonNull(rootDir.listFiles(), "No child directories")) {
             if (!child.isDirectory() || child.isHidden())
@@ -65,11 +66,16 @@ public class CalibrateMultiRegression extends BaseRegression implements ImageReg
                 evaluateCase(child);
                 long time1 = System.currentTimeMillis();
                 runtimeOut.printf("%20s period: %d (ms)\n", child.getName(), (time1 - time0));
+                totalScenarios++;
             } catch (RuntimeException e) {
                 e.printStackTrace(errorLog);
                 errorLog.println("Exception processing " + child.getName());
             }
         }
+        if (totalScenarios==0) {
+            errorLog.println("No scenarios found!");
+        }
+
         metricsOut.close();
         runtimeOut.close();
     }
