@@ -22,9 +22,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * Regression for Multi camera calibration. Computes residual error and runtime metrics.
@@ -54,7 +52,9 @@ public class CalibrateMultiRegression extends BaseRegression implements ImageReg
 
         int totalScenarios = 0;
         var rootDir = new File(inputPath);
-        for (File child : Objects.requireNonNull(rootDir.listFiles(), "No child directories")) {
+        var children = Arrays.asList(Objects.requireNonNull(rootDir.listFiles()));
+        Collections.sort(children);
+        for (File child : children) {
             if (!child.isDirectory() || child.isHidden())
                 continue;
 
@@ -142,5 +142,6 @@ public class CalibrateMultiRegression extends BaseRegression implements ImageReg
     public static void main(String[] args) throws IOException, ClassNotFoundException, IllegalAccessException, InstantiationException {
         BoofRegressionConstants.clearCurrentResults();
         RegressionRunner.main(new String[]{CalibrateMultiRegression.class.getName(), ImageDataType.F32.toString()});
+        RegressionRunner.main(new String[]{CalibrateMultiRegression.class.getName(), ImageDataType.U8.toString()});
     }
 }

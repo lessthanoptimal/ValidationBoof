@@ -11,6 +11,9 @@ Description of changes to benchmarks and justifications for change in performanc
 - ThreeViewReconstruction
   * Algorithm got updated to have entire self calibration pipeline in RANSAC
 - Added Multi Camera Calibration regression
+- NViewReconstruction
+  * Algorithm was changes so that more is done inside of RANSAC
+  * Accepting new results as baseline even though its worse. Highly sensitive to small changes.
 
 ## Version 0.38 - 0.40
 2022/1/17

@@ -3,20 +3,20 @@
 
 #           Dataset,           Views,  Point, mean,  p50,  p95, max
 #                              Used,   Count, (px), (px), (px), (px)
-bucket_loop_01                  98.8%  21513   4.9   0.8   9.9 906.9
-steps_reg_01                   100.0%   6476   4.4   0.7  18.5 606.0
-steps_wide_01                  100.0%   5896   1.2   0.2   0.9 112.7
-steps_zoom_01                  100.0%   3020   4.1   1.4  16.5 191.9
-towel_01                       100.0%   4029   1.4   0.7   4.1  35.3
-towel_box                      100.0%   3410   3.7   0.8   4.9 450.4
-drone_buildings_01              46.5%   1611  45.2  17.6 145.8 6697.8
-drone_park_01                  100.0%   3395   1.2   0.4   4.7  52.6
+bucket_loop_01                  98.8%  21235   5.3   0.8  10.5 309.2
+steps_reg_01                   100.0%   6504   4.9   0.7  19.3 891.8
+steps_wide_01                  100.0%   5857   1.2   0.2   0.9 112.7
+steps_zoom_01                   88.9%   2492   5.8   2.0  20.4 980.4
+towel_01                       100.0%   4015   1.3   0.6   3.5 820.7
+towel_box                      100.0%   3432   1.9   0.8   4.8 285.8
+drone_buildings_01              32.6%    340  34.5  18.9 135.8 282.0
+drone_park_01                  100.0%   3667   1.5   0.4   5.5  51.1
 
 Summary:
   scenarios         = 8
   failed            = 0
   crashed           = 0
-  points inside     = 49350
-  regions evaluated = 242
-  skipped views     = 6
-  median error (px) = 3.685848091123367
+  points inside     = 47542
+  regions evaluated = 238
+  skipped views     = 9
+  median error (px) = 1.9268150855442931
