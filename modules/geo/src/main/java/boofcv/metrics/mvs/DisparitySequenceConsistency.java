@@ -83,12 +83,12 @@ public class DisparitySequenceConsistency<Image extends ImageGray<Image>> {
     DogArray<PixelError> perrors = new DogArray<>(PixelError::new);
 
     // How long it took to process each log in milliseconds
-    DogArray_F64 timingMS = new DogArray_F64();
+    public final DogArray_F64 timingMS = new DogArray_F64();
 
     // Storage for
     DogArray_F64 overallErrors95 = new DogArray_F64();
 
-    boolean showVisuals = true;
+    public boolean showVisuals = true;
 
     public DisparitySequenceConsistency(StereoDisparity<Image, GrayF32> stereoDisparity) {
         this.stereoDisparity = stereoDisparity;
@@ -122,12 +122,14 @@ public class DisparitySequenceConsistency<Image extends ImageGray<Image>> {
 
         boolean first = true;
 
+        out.println("Frame Type  Overlap |  mean   p50   p95   p995  max");
+
         for (int frameIdx = 12; frameIdx < frames.size - 3; frameIdx++) {
             // Same key frame but different 'other' frames
             // This will catch biases and other artifacts when creating a single disparity image
             computeInverseDepth(frameIdx, frameIdx + 1, inverseDepth1);
             computeInverseDepth(frameIdx, frameIdx + 2, inverseDepth2);
-            out.printf("Frame: %3d same   ", frameIdx);
+            out.printf("%3d  same    ", frameIdx);
             errorMetricsSameFrame(inverseDepth1, inverseDepth2);
 
             if (first && showVisuals) {
@@ -149,7 +151,7 @@ public class DisparitySequenceConsistency<Image extends ImageGray<Image>> {
             // If there's a persistent artifact when the left frame is the same it will show up here.
             // This was inpired by the surface curving
             computeInverseDepth(frameIdx + 1, frameIdx + 3, inverseDepth1);
-            out.printf("Frame: %3d mutual ", frameIdx);
+            out.printf("%3d  project ", frameIdx);
             errorMetricsReprojected(frameIdx, inverseDepth2, frameIdx + 1, inverseDepth1);
 //            errorMetricsMutualProj(frameIdx + 1, inverseDepth1, frameIdx, inverseDepth2);
 
@@ -157,6 +159,7 @@ public class DisparitySequenceConsistency<Image extends ImageGray<Image>> {
                 SwingUtilities.invokeLater(() -> panelDiff.addImage(visualizeError(inverseDepth1.width, inverseDepth1.height), frameName));
 
 //            displayCloud(frameIdx, inverseDepth2);
+            out.flush();
         }
 
         out.println();
@@ -200,7 +203,7 @@ public class DisparitySequenceConsistency<Image extends ImageGray<Image>> {
         mean /= errors.size;
 
         errors.sort();
-        out.printf("overlap: %3d%% mean=%6.3f p50=%.3f p95=%.3f p995=%.3f max=%.3f\n",
+        out.printf("%3d%%   | %6.3f %.3f %.3f %.3f %.3f\n",
                 (int) overlap, mean,
                 errors.getFraction(0.50), errors.getFraction(0.95),
                 errors.getFraction(0.995), errors.getFraction(1.00));
@@ -476,11 +479,11 @@ public class DisparitySequenceConsistency<Image extends ImageGray<Image>> {
     public static void main(String[] args) {
         var config = new ConfigDisparityBMBest5();
         config.disparityRange = 250;
-        config.regionRadiusX = config.regionRadiusY = 12;
+        config.regionRadiusX = config.regionRadiusY = 8;
 
         StereoDisparity<GrayF32, GrayF32> stereoDisparity = FactoryStereoDisparity.blockMatchBest5(config, GrayF32.class, GrayF32.class);
 
-        String path = "data/mvs/smooth_cement_qr";
+        String path = "data/mvs/stereo_consistency/ground_tile";
 
         var app = new DisparitySequenceConsistency<>(stereoDisparity);
         app.process(new File(path));
