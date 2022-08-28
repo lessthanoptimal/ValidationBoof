@@ -47,8 +47,8 @@ public class SparseToDenseScenePlanarRegression<T extends ImageGray<T>>
         BoofRegressionConstants.printGenerator(out, getClass());
         out.println("# Sparse to Dense Cloud Reconstruction using Planar Regions");
         out.println();
-        out.println("#           Dataset,            Points, mean,  p50,  p95, max");
-        out.println("#                                1e3  , (px), (px), (px), (px)");
+        out.println("#           Dataset,            Points,  mean,   p50,   p95,   max");
+        out.println("#                                1e3  ,  (px),  (px),  (px),   (px)");
 
         Class<T> imageType = ImageDataType.typeToSingleClass(type);
         alg = FactorySceneReconstruction.sparseSceneToDenseCloud(null, ImageType.single(imageType));
@@ -91,7 +91,7 @@ public class SparseToDenseScenePlanarRegression<T extends ImageGray<T>>
                 }
                 UncalibratedToSparseScenePlanarMetrics.RegionScore score = evaluator.allScore;
 
-                out.printf("%-30s %7d %5.1f %5.1f %5.1f %5.1f\n",
+                out.printf("%-30s %7d %6.2f %6.2f %6.2f %7.2f\n",
                         dir.getName(), score.count / 1000, score.mean, score.p50, score.p95, score.p100);
                 outputRuntime.out.printf("  %-30s %d\n", dir.getName(), evaluator.processingTimeMS);
                 runtimes.add(evaluator.processingTimeMS);
@@ -125,7 +125,7 @@ public class SparseToDenseScenePlanarRegression<T extends ImageGray<T>>
         out.println("  points inside     = " + totalPoints);
         out.println("  regions evaluated = " + totalRegions);
         out.println("  skipped views     = " + totalSkippedImages);
-        out.println("  median error (px) = " + meanErrors.getFraction(0.5));
+        out.println("  median error (px) = " + String.format("%.5f", meanErrors.getFraction(0.5)));
         out.close();
 
         outputRuntime.out.println();
@@ -136,7 +136,7 @@ public class SparseToDenseScenePlanarRegression<T extends ImageGray<T>>
 
     public static void main(String[] args) throws IOException, IllegalAccessException, InstantiationException, ClassNotFoundException {
         BoofRegressionConstants.clearCurrentResults();
-//        RegressionRunner.main(new String[]{UncalibratedSparseReconstructionPlanarRegression.class.getName(),ImageDataType.F32.toString()});
-        RegressionRunner.main(new String[]{SparseToDenseScenePlanarRegression.class.getName(), ImageDataType.U8.toString()});
+        RegressionRunner.main(new String[]{SparseToDenseScenePlanarRegression.class.getName(),ImageDataType.F32.toString()});
+//        RegressionRunner.main(new String[]{SparseToDenseScenePlanarRegression.class.getName(), ImageDataType.U8.toString()});
     }
 }

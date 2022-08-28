@@ -3,13 +3,13 @@
 
 #           Dataset,            Points, mean,  p50,  p95, max
 #                                1e3  , (px), (px), (px), (px)
-steps_wide_01                     2384   0.6   0.4   1.7 107.5
+steps_wide_01                     2384   0.5   0.4   1.5 251.1
 
 Summary:
   scenarios         = 1
   failed            = 0
   crashed           = 0
-  points inside     = 2384886
+  points inside     = 2384987
   regions evaluated = 40
   skipped views     = 0
-  median error (px) = 0.584198722519876
+  median error (px) = 0.5357396517602754

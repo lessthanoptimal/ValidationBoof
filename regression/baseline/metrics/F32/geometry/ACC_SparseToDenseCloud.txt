@@ -1,15 +1,15 @@
 # GENERATOR SparseToDenseScenePlanarRegression
 # Sparse to Dense Cloud Reconstruction using Planar Regions
 
-#           Dataset,            Points, mean,  p50,  p95, max
-#                                1e3  , (px), (px), (px), (px)
-steps_wide_01                     2385   0.6   0.4   1.7 107.6
+#           Dataset,            Points,  mean,   p50,   p95,   max
+#                                1e3  ,  (px),  (px),  (px),   (px)
+steps_wide_01                     2385   0.54   0.38   1.51  107.50
 
 Summary:
   scenarios         = 1
   failed            = 0
   crashed           = 0
-  points inside     = 2385084
+  points inside     = 2385151
   regions evaluated = 40
   skipped views     = 0
-  median error (px) = 0.5920980144625664
+  median error (px) = 0.53588
