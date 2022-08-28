@@ -2,6 +2,7 @@ package boofcv.regression;
 
 import boofcv.alg.structure.SparseSceneToDenseCloud;
 import boofcv.common.*;
+import boofcv.factory.structure.ConfigSparseToDenseCloud;
 import boofcv.factory.structure.FactorySceneReconstruction;
 import boofcv.io.UtilIO;
 import boofcv.metrics.mvs.SparseToDenseScenePlanarMetrics;
@@ -51,7 +52,9 @@ public class SparseToDenseScenePlanarRegression<T extends ImageGray<T>>
         out.println("#                                1e3  ,  (px),  (px),  (px),   (px)");
 
         Class<T> imageType = ImageDataType.typeToSingleClass(type);
-        alg = FactorySceneReconstruction.sparseSceneToDenseCloud(null, ImageType.single(imageType));
+        var config = new ConfigSparseToDenseCloud();
+//        config.mvs.disparityErrorThresholdScale = 0.0;
+        alg = FactorySceneReconstruction.sparseSceneToDenseCloud(config, ImageType.single(imageType));
 
         // Load all the data directories
         File inputDir = new File(PATH_DATA);

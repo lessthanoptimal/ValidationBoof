@@ -11,6 +11,7 @@ import boofcv.alg.geo.bundle.BundleAdjustmentOps;
 import boofcv.alg.geo.rectify.DisparityParameters;
 import boofcv.alg.misc.GImageMiscOps;
 import boofcv.alg.mvs.BundleToRectificationStereoParameters;
+import boofcv.alg.mvs.MultiViewStereoOps;
 import boofcv.core.image.GeneralizedImageOps;
 import boofcv.factory.disparity.ConfigDisparityBMBest5;
 import boofcv.factory.disparity.FactoryStereoDisparity;
@@ -131,6 +132,7 @@ public class DisparitySequenceConsistency<Image extends ImageGray<Image>> {
             computeInverseDepth(frameIdx, frameIdx + 2, inverseDepth2);
             out.printf("%3d  same    ", frameIdx);
             errorMetricsSameFrame(inverseDepth1, inverseDepth2);
+//            displayCloud(frameIdx, inverseDepth2);
 
             if (first && showVisuals) {
                 first = false;
@@ -150,7 +152,7 @@ public class DisparitySequenceConsistency<Image extends ImageGray<Image>> {
             // Two key frames that observe overlapping regions
             // If there's a persistent artifact when the left frame is the same it will show up here.
             // This was inpired by the surface curving
-            computeInverseDepth(frameIdx + 1, frameIdx + 3, inverseDepth1);
+            computeInverseDepth(frameIdx + 1, frameIdx + 2, inverseDepth1);
             out.printf("%3d  project ", frameIdx);
             errorMetricsReprojected(frameIdx, inverseDepth2, frameIdx + 1, inverseDepth1);
 //            errorMetricsMutualProj(frameIdx + 1, inverseDepth1, frameIdx, inverseDepth2);
@@ -213,7 +215,7 @@ public class DisparitySequenceConsistency<Image extends ImageGray<Image>> {
 
     private void errorMetricsReprojected(int idx1, GrayF32 inverse1, int idx2, GrayF32 inverse2) {
         var intrinsic = new CameraPinholeBrown();
-        BundleAdjustmentOps.convert(scene.getViewCamera(idx1).model, 0, 0, intrinsic);
+        BundleAdjustmentOps.convert(scene.getViewCamera(idx1).model, inverse1.width, inverse1.height, intrinsic);
         var pixelToNorm = new LensDistortionBrown(intrinsic).undistort_F64(true, false);
         var normToPixel = new LensDistortionBrown(intrinsic).distort_F64(false, true);
 
@@ -223,6 +225,12 @@ public class DisparitySequenceConsistency<Image extends ImageGray<Image>> {
         var point1 = new Point4D_F64();
         var point2 = new Point4D_F64();
         var pixel2 = new Point2D_F64();
+
+//        var stereoParam = new StereoParameters();
+//        stereoParam.right_to_left.setTo(a_to_b.invert(null));
+//        stereoParam.left.setTo(intrinsic);
+//        stereoParam.right.setTo(intrinsic);
+//        CalibrationIO.save(stereoParam, "stereo_" + idx1 + "_" + idx2 + ".yaml");
 
         errors.reset();
         for (int y = 0; y < inverse1.height; y++) {
@@ -331,6 +339,12 @@ public class DisparitySequenceConsistency<Image extends ImageGray<Image>> {
         rectParam.setView1(scene.getViewCamera(idx1).model, imgA.width, imgA.height);
         rectParam.processView2(scene.getViewCamera(idx2).model, imgB.width, imgB.height, a_to_b);
 
+//        var stereoParam = new StereoParameters();
+//        stereoParam.right_to_left.setTo(a_to_b.invert(null));
+//        stereoParam.left.setTo(rectParam.intrinsic1);
+//        stereoParam.right.setTo(rectParam.intrinsic2);
+//        CalibrationIO.save(stereoParam, "stereo_" + idx1 + "_" + idx2 + ".yaml");
+
         ImageDistort<Image, Image> distortLeft =
                 RectifyDistortImageOps.rectifyImage(rectParam.intrinsic1,
                         rectParam.undist_to_rect1_F32, BorderType.EXTENDED, imgA.getImageType());
@@ -347,11 +361,23 @@ public class DisparitySequenceConsistency<Image extends ImageGray<Image>> {
         distortRight.apply(imgB, rectified2);
 
         stereoDisparity.process(rectified1, rectified2);
+        GrayF32 disparity = stereoDisparity.getDisparity();
+
+        MultiViewStereoOps.invalidateBorder(imgA.width, imgA.height, rectParam.view1_dist_to_undist,
+                rectParam.undist_to_rect1, 8, dispParam.disparityRange, disparity);
+        GImageMiscOps.maskFill(disparity, mask, 0, dispParam.disparityRange);
+
+        GrayF32 disparityScores = Objects.requireNonNull(stereoDisparity.getDisparityScore());
+
+        // Adaptive error threshold
+        float threshold = MultiViewStereoOps.averageScore(disparity, dispParam.disparityRange, disparityScores);
+        threshold *= 2;
+        MultiViewStereoOps.invalidateUsingError(disparity, dispParam.disparityRange, disparityScores, threshold);
 
         dispParam.baseline = a_to_b.T.norm();
         PerspectiveOps.matrixToPinhole(rectParam.rectifiedK, rectifiedShape.width, rectifiedShape.height, dispParam.pinhole);
 
-        transferDepthToOriginal(stereoDisparity.getDisparity(), inverseDepth);
+        transferDepthToOriginal(disparity, inverseDepth);
 
         timingMS.add(System.currentTimeMillis() - time0);
     }
@@ -370,7 +396,6 @@ public class DisparitySequenceConsistency<Image extends ImageGray<Image>> {
         var leftPoint = new Point4D_F64();
 
         int outsideRect = 0;
-        int outsideMask = 0;
         int failedProjection = 0;
 
         for (int pixelY = 0; pixelY < height; pixelY++) {
@@ -389,11 +414,6 @@ public class DisparitySequenceConsistency<Image extends ImageGray<Image>> {
 
                     if (!BoofMiscOps.isInside(disparity, rectPixX, rectPixY)) {
                         outsideRect++;
-                        continue;
-                    }
-
-                    if (mask.unsafe_get(rectPixX, rectPixY) == 0) {
-                        outsideMask++;
                         continue;
                     }
 
