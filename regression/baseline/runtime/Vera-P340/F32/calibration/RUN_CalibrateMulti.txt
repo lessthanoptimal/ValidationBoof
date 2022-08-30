@@ -1,1 +1,2 @@
 # GENERATOR CalibrateMultiRegression
+          trinocular period: 5191 (ms)

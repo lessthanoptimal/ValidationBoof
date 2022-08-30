@@ -1,0 +1,6 @@
+# GENERATOR StereoSequenceConsistencyRegression
+# Elapsed time in milliseconds
+
+Scenarios
+                              N       Mean      P05      P50      P95      MAX
+  ground_tile                  75  4747.21     4676     4729     4843     5206
