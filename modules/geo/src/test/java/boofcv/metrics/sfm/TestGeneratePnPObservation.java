@@ -97,7 +97,7 @@ public class TestGeneratePnPObservation {
         // outside the image
         SpecialEuclideanOps_F64.eulerXyz(0,1000,0,0.1,Math.PI/2.0,0,BodyToCamera);
         assertFalse(generator.renderMarker(marker,BodyToCamera,pixels));
-        SpecialEuclideanOps_F64.eulerXyz(0,0,1000,0.1,Math.PI/2.0,0,BodyToCamera);
+        SpecialEuclideanOps_F64.eulerXyz(0,0,3,0.5,Math.PI/2.0,0,BodyToCamera);
         assertFalse(generator.renderMarker(marker,BodyToCamera,pixels));
     }
 
