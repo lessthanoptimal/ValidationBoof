@@ -7,16 +7,14 @@ import boofcv.abst.geo.calibration.DetectMultiFiducialCalibration;
 import boofcv.alg.fiducial.calib.ConfigCalibrationTarget;
 import boofcv.alg.geo.calibration.CalibrationObservationSet;
 import boofcv.alg.geo.calibration.SynchronizedCalObs;
-import boofcv.common.BaseRegression;
-import boofcv.common.BoofRegressionConstants;
-import boofcv.common.ImageRegression;
-import boofcv.common.RegressionRunner;
+import boofcv.common.*;
 import boofcv.factory.fiducial.FactoryFiducialCalibration;
 import boofcv.io.UtilIO;
 import boofcv.io.image.UtilImageIO;
 import boofcv.misc.BoofMiscOps;
 import boofcv.struct.image.GrayF32;
 import boofcv.struct.image.ImageDataType;
+import org.ddogleg.struct.DogArray_F64;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -33,6 +31,7 @@ public class CalibrateMultiRegression extends BaseRegression implements ImageReg
     String inputPath = "data/calibration_multi";
 
     PrintStream metricsOut;
+    RuntimeSummary runtimeOut;
 
     public CalibrateMultiRegression() {
         super(BoofRegressionConstants.TYPE_CALIBRATION);
@@ -47,13 +46,18 @@ public class CalibrateMultiRegression extends BaseRegression implements ImageReg
         metricsOut = new PrintStream(new File(directoryMetrics, "ACC_CalibrateMulti.txt"));
         BoofRegressionConstants.printGenerator(metricsOut, getClass());
 
-        var runtimeOut = new PrintStream(new File(directoryRuntime, "RUN_CalibrateMulti.txt"));
-        BoofRegressionConstants.printGenerator(runtimeOut, getClass());
+        runtimeOut = new RuntimeSummary();
+        runtimeOut.out = new PrintStream(new File(directoryRuntime, "RUN_CalibrateMulti.txt"));
+        BoofRegressionConstants.printGenerator(runtimeOut.out, getClass());
+        runtimeOut.out.println("# All times are in milliseconds");
+        runtimeOut.out.println();
+        runtimeOut.out.println("Default:");
 
         int totalScenarios = 0;
         var rootDir = new File(inputPath);
         var children = Arrays.asList(Objects.requireNonNull(rootDir.listFiles()));
         Collections.sort(children);
+        runtimeOut.printUnitsRow(false);
         for (File child : children) {
             if (!child.isDirectory() || child.isHidden())
                 continue;
@@ -62,22 +66,19 @@ public class CalibrateMultiRegression extends BaseRegression implements ImageReg
                 continue;
 
             try {
-                long time0 = System.currentTimeMillis();
                 evaluateCase(child);
-                long time1 = System.currentTimeMillis();
-                runtimeOut.printf("%20s period: %d (ms)\n", child.getName(), (time1 - time0));
                 totalScenarios++;
             } catch (RuntimeException e) {
                 e.printStackTrace(errorLog);
                 errorLog.println("Exception processing " + child.getName());
             }
         }
-        if (totalScenarios==0) {
+        if (totalScenarios == 0) {
             errorLog.println("No scenarios found!");
         }
 
         metricsOut.close();
-        runtimeOut.close();
+        runtimeOut.out.close();
     }
 
     private void evaluateCase(File dataDir) {
@@ -112,8 +113,10 @@ public class CalibrateMultiRegression extends BaseRegression implements ImageReg
 
         // Detect calibration target in each image
         int numImages = cameras.get(0).size();
+        var timesMS = new DogArray_F64();
         for (int imageIdx = 0; imageIdx < numImages; imageIdx++) {
             var frameObs = new SynchronizedCalObs();
+            long time0 = System.nanoTime();
             for (int camIdx = 0; camIdx < cameras.size(); camIdx++) {
                 GrayF32 image = UtilImageIO.loadImage(cameras.get(camIdx).get(imageIdx), GrayF32.class);
                 detector.process(image);
@@ -126,10 +129,17 @@ public class CalibrateMultiRegression extends BaseRegression implements ImageReg
                     break;
                 }
             }
+            long time1 = System.nanoTime();
+            timesMS.add((time1 - time0) * 1e-6);
             calibrator.addObservation(frameObs);
         }
 
-        BoofMiscOps.checkTrue(calibrator.process(), "Calibration Failed!");
+        runtimeOut.printStatsRow(dataDir.getName()+"_detect",timesMS);
+        long timeNano = BoofMiscOps.timeNano(
+                ()->BoofMiscOps.checkTrue(calibrator.process(), "Calibration Failed!"));
+        timesMS.reset().add(timeNano*1e-6);
+        runtimeOut.printStatsRow(dataDir.getName()+"_calib",timesMS);
+
 
         List<CameraStatistics> stats = calibrator.getStatistics().toList();
         for (int camIdx = 0; camIdx < stats.size(); camIdx++) {
@@ -137,6 +147,8 @@ public class CalibrateMultiRegression extends BaseRegression implements ImageReg
             metricsOut.printf("  [%3d] mean=%.2f max=%.2f\n", camIdx, cam.overallMean, cam.overallMax);
         }
         metricsOut.println();
+
+
     }
 
     public static void main(String[] args) throws IOException, ClassNotFoundException, IllegalAccessException, InstantiationException {
