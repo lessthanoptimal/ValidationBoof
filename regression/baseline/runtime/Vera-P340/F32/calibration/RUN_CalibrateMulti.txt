@@ -1,2 +1,7 @@
 # GENERATOR CalibrateMultiRegression
-          trinocular period: 5191 (ms)
+# All times are in milliseconds
+
+Default:
+                              N       Mean      P05      P50      P95      MAX
+  trinocular_detect            30  150.269  135.459   143.84  159.558   306.98
+  trinocular_calib              1  518.521  518.521  518.521  518.521  518.521
