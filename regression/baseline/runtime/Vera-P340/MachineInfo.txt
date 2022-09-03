@@ -1,79 +1,51 @@
 ---- Native Access Info
-OS: Ubuntu 20.04.2 LTS
+OS: Ubuntu 20.04.4 LTS
 CPU: Intel(R) Xeon(R) W-1250 CPU @ 3.30GHz
-Ave Load: 1m=7.24 5m=2.8 15m=1.1
+Ave Load: 1m=5.61 5m=3.01 15m=1.83
 ----
 Runtime.getRuntime().availableProcessors(): 12
-Runtime.getRuntime().freeMemory(): 1033050320
-Runtime.getRuntime().totalMemory(): 1061158912
+Runtime.getRuntime().freeMemory(): 1048879912
+Runtime.getRuntime().totalMemory(): 1073741824
 =========== java.specification.version
-14
-=========== sun.management.compiler
-HotSpot 64-Bit Tiered Compilers
+17
 =========== sun.jnu.encoding
 UTF-8
-=========== java.runtime.version
-14.0.2+12
 =========== java.class.path
 regression.jar
-=========== user.name
-pja
 =========== java.vm.vendor
-AdoptOpenJDK
-=========== path.separator
-:
+Azul Systems, Inc.
 =========== sun.arch.data.model
 64
-=========== os.version
-5.6.0-1055-oem
-=========== java.runtime.name
-OpenJDK Runtime Environment
-=========== file.encoding
-UTF-8
 =========== java.vendor.url
-https://adoptopenjdk.net/
-=========== java.vm.name
-OpenJDK 64-Bit Server VM
+http://www.azul.com/
 =========== java.vm.specification.version
-14
+17
 =========== os.name
 Linux
-=========== java.vendor.version
-AdoptOpenJDK
 =========== sun.java.launcher
 SUN_STANDARD
 =========== user.country
 US
 =========== sun.boot.library.path
-/opt/jdk/jdk-14.0.2+12/lib
+/opt/jdk/zulu17.32.13-ca-jdk17.0.2-linux_x64/lib
 =========== sun.java.command
 regression.jar
-=========== java.vendor.url.bug
-https://github.com/AdoptOpenJDK/openjdk-support/issues
-=========== java.io.tmpdir
-/tmp
 =========== jdk.debug
 release
 =========== sun.cpu.endian
 little
-=========== java.version
-14.0.2
 =========== user.home
 /home/pja
-=========== user.dir
-/home/pja/projects/ValidationBoof
-=========== os.arch
-amd64
 =========== user.language
 en
+=========== sun.stderr.encoding
+UTF-8
 =========== java.specification.vendor
 Oracle Corporation
-=========== java.vm.specification.name
-Java Virtual Machine Specification
 =========== java.version.date
-2020-07-14
+2022-01-18
 =========== java.home
-/opt/jdk/jdk-14.0.2+12
+/opt/jdk/zulu17.32.13-ca-jdk17.0.2-linux_x64
 =========== file.separator
 /
 =========== java.vm.compressedOopsMode
@@ -81,19 +53,53 @@ Zero based
 =========== line.separator
 
 
-=========== java.library.path
-/usr/java/packages/lib:/usr/lib64:/lib64:/lib:/usr/lib
-=========== java.vm.info
-mixed mode, sharing
+=========== sun.stdout.encoding
+UTF-8
 =========== java.vm.specification.vendor
 Oracle Corporation
 =========== java.specification.name
 Java Platform API Specification
+=========== sun.management.compiler
+HotSpot 64-Bit Tiered Compilers
+=========== java.runtime.version
+17.0.2+8-LTS
+=========== user.name
+pja
+=========== path.separator
+:
+=========== os.version
+5.14.0-1032-oem
+=========== java.runtime.name
+OpenJDK Runtime Environment
+=========== file.encoding
+UTF-8
+=========== java.vm.name
+OpenJDK 64-Bit Server VM
+=========== java.vendor.version
+Zulu17.32+13-CA
+=========== java.vendor.url.bug
+http://www.azul.com/support/
+=========== java.io.tmpdir
+/tmp
+=========== java.version
+17.0.2
+=========== user.dir
+/home/pja/projects/ValidationBoof
+=========== os.arch
+amd64
+=========== java.vm.specification.name
+Java Virtual Machine Specification
+=========== native.encoding
+UTF-8
+=========== java.library.path
+/usr/java/packages/lib:/usr/lib64:/lib64:/lib:/usr/lib
+=========== java.vm.info
+mixed mode, sharing
 =========== java.vendor
-AdoptOpenJDK
+Azul Systems, Inc.
 =========== java.vm.version
-14.0.2+12
+17.0.2+8-LTS
 =========== sun.io.unicode.encoding
 UnicodeLittle
 =========== java.class.version
-58.0
+61.0

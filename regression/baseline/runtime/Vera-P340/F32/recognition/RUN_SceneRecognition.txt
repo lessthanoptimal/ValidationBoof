@@ -3,14 +3,14 @@
 
 Nister2006
                          NA   NQ training  adding  lookup
-  ukbench500            375  125    14.2    19.2     6.4
+  ukbench500            375  125    14.5    19.5     6.6
 
 NearestNeighbor
                          NA   NQ training  adding  lookup
-  ukbench500            375  125    95.1    40.1    13.3
+  ukbench500            375  125    98.3    40.2    12.9
 
 
 Summary:
                               N       Mean      P05      P50      P95      MAX
-  Nister2006                    1    39.85    39.85    39.85    39.85    39.85
-  NearestNeighbor               1  148.494  148.494  148.494  148.494  148.494
+  Nister2006                    1  40.5553  40.5553  40.5553  40.5553  40.5553
+  NearestNeighbor               1  151.356  151.356  151.356  151.356  151.356
