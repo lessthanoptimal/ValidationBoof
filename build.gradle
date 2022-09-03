@@ -10,7 +10,7 @@ gversion {
 
 allprojects {
     group = 'org.boofcv'
-    version = '0.41-SNAPSHOT'
+    version = '0.42-SNAPSHOT'
 
     apply plugin: 'java-library'
 
