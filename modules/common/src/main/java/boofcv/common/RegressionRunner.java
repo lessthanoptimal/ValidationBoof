@@ -77,7 +77,7 @@ public class RegressionRunner {
             try {
                 regression = (ImageRegression) o;
             } catch( ClassCastException e ) {
-                System.err.println("Can't class regression "+o.getClass().getSimpleName()+" into ImageRegression");
+                System.err.println("Can't cast "+o.getClass().getSimpleName()+" into ImageRegression");
                 System.err.println("Maybe the suffix of the regression is wrong? *Regression for image " +
                         "and *FRegression for file");
                 System.exit(1);
