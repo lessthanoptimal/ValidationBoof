@@ -44,15 +44,7 @@ public abstract class HandSelectBase {
 	protected JMenu menuFile;
 
 	{
-		try {
-			// In Mac OS X Display the menubar in the correct location
-			System.setProperty("apple.laf.useScreenMenuBar", "true");
-
-			// smoother font
-			System.setProperty("apple.awt.textantialiasing", "true");
-		} catch( Exception ignore ) {
-
-		}
+		BoofSwingUtil.initializeSwing();
 	}
 
 	public HandSelectBase( VisualizePanel imagePanel, File openFile ) {
