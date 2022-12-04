@@ -35,7 +35,6 @@ import static boofcv.gui.BoofSwingUtil.MIN_ZOOM;
  * @author Peter Abeles
  */
 public class LabelImageTextApp extends JPanel {
-    // TODO assign text to a region
     // TODO delete a point
     // TODO delete a region
     // TODO keep on moving a corner while mouse is down
@@ -202,9 +201,9 @@ public class LabelImageTextApp extends JPanel {
                 if (label.text.isEmpty())
                     continue;
 
-                double size = label.region.getSideLength(1);
+                double size = Math.max( 8, label.smallestSide());
 
-                g2.setFont(new Font("Serif", Font.BOLD, (int) (size * 0.4)));
+                g2.setFont(new Font("Serif", Font.BOLD, (int) (size * 0.7)));
                 g2.setColor(Color.GREEN);
                 Point2D_F64 p = label.region.get(0);
                 g2.drawString(label.text, (float) (scale * p.x), (float) (scale * p.y));
@@ -227,6 +226,8 @@ public class LabelImageTextApp extends JPanel {
     }
 
     public class Controls extends DetectBlackShapePanel {
+        JTextField regionLabel = textfield(100, 100);
+
         public Controls() {
             selectZoom = spinner(1, MIN_ZOOM, MAX_ZOOM, 1.0);
             display.addMouseWheelListener((e) -> {
@@ -235,21 +236,36 @@ public class LabelImageTextApp extends JPanel {
 
             addLabeled(imageSizeLabel, "Size");
             addLabeled(selectZoom, "Zoom");
+            addAlignCenter(new JLabel("Region Text"));
+            addAlignCenter(regionLabel, "Text that's assigned to a region");
 
             setPreferredSize(new Dimension(250, 200));
         }
 
+        public JTextField textfield(int panelWidth, int panelHeight) {
+            JTextField field = new JTextField();
+            field.addActionListener(this);
+            field.setPreferredSize(new Dimension(panelWidth, panelHeight));
+            return field;
+        }
+
         @Override
-        public void controlChanged(Object source) {
+        public void controlChanged(final Object source) {
             if (source == selectZoom) {
                 zoom = ((Number) selectZoom.getValue()).doubleValue();
                 display.setScale(zoom);
+            } else if(source == regionLabel) {
+                if (activeIdx == -1 && activeIdx < labeled.size)
+                    return;
+                LabeledText region = labeled.get(activeIdx);
+                region.text = regionLabel.getText();
+                display.repaint();
             }
         }
     }
 
     /**
-     * Let's the user select and adjust text regions
+     * Lets the user select and adjust text regions
      */
     public class HandleMouse extends MouseAdapter {
         @Override
@@ -272,6 +288,7 @@ public class LabelImageTextApp extends JPanel {
 
             // nothing is selected, start a new polygon
             if (activeIdx == -1) {
+                controls.regionLabel.setText("");
                 activeIdx = labeled.size();
                 labeled.grow();
             }
@@ -279,6 +296,7 @@ public class LabelImageTextApp extends JPanel {
 
             // current polygon is at max sides. start a new one
             if (active.region.size() == 4) {
+                controls.regionLabel.setText("");
                 activeIdx = labeled.size();
                 labeled.grow();
                 active = labeled.getTail();
@@ -305,15 +323,27 @@ public class LabelImageTextApp extends JPanel {
             if( matched >= 0 ) {
                 activeIdx = i;
                 selectedPoint = matched;
+                controls.regionLabel.setText(labeled.get(i).text);
                 return true;
             }
         }
         return false;
     }
 
+    /**
+     * A labeled region in the image. Specifies a polygon and text associated with it.
+     */
     private static class LabeledText {
         public String text = "";
         public Polygon2D_F64 region = new Polygon2D_F64();
+
+        public double smallestSide() {
+            double size = Double.MAX_VALUE;
+            for (int i = 0; i < region.size(); i++) {
+                size = Math.min(size, region.getSideLength(i));
+            }
+            return size;
+        }
 
         public void reset() {
             text = "";
