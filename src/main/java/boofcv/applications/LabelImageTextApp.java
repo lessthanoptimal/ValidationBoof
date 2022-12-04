@@ -11,6 +11,7 @@ import org.ddogleg.struct.DogArray;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -35,8 +36,8 @@ import static boofcv.gui.BoofSwingUtil.MIN_ZOOM;
  * @author Peter Abeles
  */
 public class LabelImageTextApp extends JPanel {
-    // TODO delete a point
-    // TODO delete a region
+    // TODO save labels
+    // TODO Open Next
     // TODO keep on moving a corner while mouse is down
     // TODO add ability to select AABB
     // TODO rotated BB
@@ -65,6 +66,8 @@ public class LabelImageTextApp extends JPanel {
         display.setListener(scale -> controls.setZoom(scale));
         display.getImagePanel().requestFocus();
         display.getImagePanel().addMouseListener(new HandleMouse());
+
+        display.addKeyListener(new KeyControls());
 
         add(controls, BorderLayout.WEST);
         add(display, BorderLayout.CENTER);
@@ -201,7 +204,7 @@ public class LabelImageTextApp extends JPanel {
                 if (label.text.isEmpty())
                     continue;
 
-                double size = Math.max( 8, label.smallestSide());
+                double size = Math.max(8, label.smallestSide());
 
                 g2.setFont(new Font("Serif", Font.BOLD, (int) (size * 0.7)));
                 g2.setColor(Color.GREEN);
@@ -254,7 +257,7 @@ public class LabelImageTextApp extends JPanel {
             if (source == selectZoom) {
                 zoom = ((Number) selectZoom.getValue()).doubleValue();
                 display.setScale(zoom);
-            } else if(source == regionLabel) {
+            } else if (source == regionLabel) {
                 if (activeIdx == -1 && activeIdx < labeled.size)
                     return;
                 LabeledText region = labeled.get(activeIdx);
@@ -281,7 +284,7 @@ public class LabelImageTextApp extends JPanel {
             }
 
             // Did the user click an existing corner?
-            if (checkAndHandleClickedCorner(p.x ,p.y)) {
+            if (checkAndHandleClickedCorner(p.x, p.y)) {
                 display.repaint();
                 return;
             }
@@ -308,19 +311,39 @@ public class LabelImageTextApp extends JPanel {
         }
     }
 
-    private boolean checkAndHandleClickedCorner( double cx , double cy ) {
-        double tol = 10.0/display.getScale();
-        for( int i = 0; i < labeled.size(); i++ ) {
+    /**
+     * Use the keyboard to manipulate labels
+     */
+    class KeyControls extends KeyAdapter {
+        @Override
+        public void keyPressed(KeyEvent e) {
+            if (activeIdx < 0 || selectedPoint < 0 || activeIdx >= labeled.size)
+                return;
+            switch (e.getKeyCode()) {
+                // Delete selected region
+                case KeyEvent.VK_DELETE, KeyEvent.VK_BACK_SPACE -> {
+                    controls.regionLabel.setText("");
+                    labeled.remove(activeIdx);
+                    activeIdx = -1;
+                }
+            }
+            display.repaint();
+        }
+    }
+
+    private boolean checkAndHandleClickedCorner(double cx, double cy) {
+        double tol = 10.0 / display.getScale();
+        for (int i = 0; i < labeled.size(); i++) {
             Polygon2D_F64 polygon = labeled.get(i).region;
             int matched = -1;
             for (int j = 0; j < polygon.size(); j++) {
-                if( polygon.get(j).distance(cx,cy) <= tol ) {
+                if (polygon.get(j).distance(cx, cy) <= tol) {
                     matched = j;
                     break;
                 }
             }
 
-            if( matched >= 0 ) {
+            if (matched >= 0) {
                 activeIdx = i;
                 selectedPoint = matched;
                 controls.regionLabel.setText(labeled.get(i).text);
