@@ -11,6 +11,9 @@ import org.ddogleg.struct.DogArray;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
@@ -32,8 +35,10 @@ import static boofcv.gui.BoofSwingUtil.MIN_ZOOM;
  * @author Peter Abeles
  */
 public class LabelImageTextApp extends JPanel {
-    // TODO let user select and open a file
-    // TODO create left control panel with zoom and stuff
+    // TODO assign text to a region
+    // TODO delete a point
+    // TODO delete a region
+    // TODO keep on moving a corner while mouse is down
     // TODO add ability to select AABB
     // TODO rotated BB
 
@@ -41,6 +46,11 @@ public class LabelImageTextApp extends JPanel {
     Controls controls = new Controls();
 
     DogArray<LabeledText> labeled = new DogArray<>(LabeledText::new, LabeledText::reset);
+
+    // Which labeled object is being manipulated
+    int activeIdx = -1;
+    // Which point on the bounding polygon is being manipulated
+    int selectedPoint = -1;
 
     // Currently open file
     File fileImage = new File("");
@@ -54,6 +64,8 @@ public class LabelImageTextApp extends JPanel {
         super(new BorderLayout());
 
         display.setListener(scale -> controls.setZoom(scale));
+        display.getImagePanel().requestFocus();
+        display.getImagePanel().addMouseListener(new HandleMouse());
 
         add(controls, BorderLayout.WEST);
         add(display, BorderLayout.CENTER);
@@ -62,10 +74,49 @@ public class LabelImageTextApp extends JPanel {
     public JMenuBar createMenuBar() {
         var menuBar = new JMenuBar();
 
+        JMenu menuFile = new JMenu("File");
+        menuFile.setMnemonic(KeyEvent.VK_F);
+        menuBar.add(menuFile);
+
+        var itemOpen = new JMenuItem("Open Image");
+        itemOpen.addActionListener(e -> openImage());
+        BoofSwingUtil.setMenuItemKeys(itemOpen, KeyEvent.VK_O, KeyEvent.VK_O);
+        menuFile.add(itemOpen);
+
+        // TODO open labels
+        // TODO save labels
+        // TODO saveAs labels
+
         return menuBar;
     }
 
-    public void openFile() {
+    public void openImage() {
+        File file = BoofSwingUtil.fileChooser(getClass().getSimpleName(), display, true, ".", null,
+                BoofSwingUtil.FileTypes.IMAGES);
+        if (file == null)
+            return;
+
+        BufferedImage image = UtilImageIO.loadImage(file.getPath());
+        if (image == null) {
+            JOptionPane.showMessageDialog(display, "Could not load image");
+            return;
+        }
+
+        // clear selection
+        activeIdx = -1;
+        selectedPoint = -1;
+
+        fileImage = file;
+        // By default, it stores labeled images right next to the input image
+        fileLabel = new File(file.getParentFile(), file.getName() + ".txt");
+        if (fileLabel.exists()) {
+            parseLabeled(fileLabel);
+        }
+        // Update the display image
+        display.setImage(image);
+    }
+
+    public void openSelectedFiles() {
         BufferedImage image = UtilImageIO.loadImageNotNull(fileImage.getPath());
         display.setImage(image);
         parseLabeled(fileLabel);
@@ -137,8 +188,19 @@ public class LabelImageTextApp extends JPanel {
             for (int i = 0; i < labeled.size; i++) {
                 LabeledText label = labeled.get(i);
 
-                g2.setColor(Color.RED);
+                // Highlight the selected region
+                if (i == activeIdx) {
+                    g2.setColor(Color.RED);
+                } else {
+                    g2.setColor(new Color(125, 255, 255));
+                }
                 renderPolygon(g2, label.region, false);
+
+                // TODO highlight selected corner
+
+                // Make sure it has text assigned to it
+                if (label.text.isEmpty())
+                    continue;
 
                 double size = label.region.getSideLength(1);
 
@@ -186,6 +248,69 @@ public class LabelImageTextApp extends JPanel {
         }
     }
 
+    /**
+     * Let's the user select and adjust text regions
+     */
+    public class HandleMouse extends MouseAdapter {
+        @Override
+        public void mousePressed(MouseEvent e) {
+            display.requestFocus();
+            // Original image coordinates, accounting for scale
+            Point2D_F64 p = display.pixelToPoint(e.getX(), e.getY());
+
+            // Center view if right mouse button
+            if (SwingUtilities.isRightMouseButton(e)) {
+                display.centerView(p.x, p.y);
+                return;
+            }
+
+            // Did the user click an existing corner?
+            if (checkAndHandleClickedCorner(p.x ,p.y)) {
+                display.repaint();
+                return;
+            }
+
+            // nothing is selected, start a new polygon
+            if (activeIdx == -1) {
+                activeIdx = labeled.size();
+                labeled.grow();
+            }
+            LabeledText active = labeled.get(activeIdx);
+
+            // current polygon is at max sides. start a new one
+            if (active.region.size() == 4) {
+                activeIdx = labeled.size();
+                labeled.grow();
+                active = labeled.getTail();
+            }
+
+            selectedPoint = active.region.size();
+            active.region.vertexes.grow().setTo(p.x, p.y);
+            display.repaint();
+        }
+    }
+
+    private boolean checkAndHandleClickedCorner( double cx , double cy ) {
+        double tol = 10.0/display.getScale();
+        for( int i = 0; i < labeled.size(); i++ ) {
+            Polygon2D_F64 polygon = labeled.get(i).region;
+            int matched = -1;
+            for (int j = 0; j < polygon.size(); j++) {
+                if( polygon.get(j).distance(cx,cy) <= tol ) {
+                    matched = j;
+                    break;
+                }
+            }
+
+            if( matched >= 0 ) {
+                activeIdx = i;
+                selectedPoint = matched;
+                return true;
+            }
+        }
+        return false;
+    }
+
     private static class LabeledText {
         public String text = "";
         public Polygon2D_F64 region = new Polygon2D_F64();
@@ -198,12 +323,13 @@ public class LabelImageTextApp extends JPanel {
 
     public static void main(String[] args) {
         var app = new LabelImageTextApp();
-        app.fileImage = new File("/home/pja/projects/ninox360/DanfossOCR/dataset/11_13_2022/IMG_0012.JPG");
-        app.fileLabel = new File("/home/pja/projects/ninox360/DanfossOCR/libs/paddleocr/results/11_13_2022/IMG_0012.txt");
+//        app.fileImage = new File("/home/pja/projects/ninox360/DanfossOCR/dataset/11_13_2022/IMG_0012.JPG");
+//        app.fileLabel = new File("/home/pja/projects/ninox360/DanfossOCR/libs/paddleocr/results/11_13_2022/IMG_0012.txt");
 
         SwingUtilities.invokeLater(() -> {
-            app.openFile();
-            ShowImages.showWindow(app, "Text Labeler");
+            app.openImage();
+            JFrame window = ShowImages.showWindow(app, "Text Labeler");
+            window.setJMenuBar(app.createMenuBar());
         });
     }
 }
