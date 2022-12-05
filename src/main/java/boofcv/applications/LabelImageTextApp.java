@@ -7,6 +7,7 @@ import boofcv.gui.image.ShowImages;
 import boofcv.io.image.UtilImageIO;
 import georegression.struct.point.Point2D_F64;
 import georegression.struct.shapes.Polygon2D_F64;
+import org.apache.commons.io.FilenameUtils;
 import org.ddogleg.struct.DogArray;
 
 import javax.swing.*;
@@ -20,10 +21,7 @@ import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Path2D;
 import java.awt.image.BufferedImage;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 
@@ -56,6 +54,8 @@ public class LabelImageTextApp extends JPanel {
     File fileImage = new File("");
     File fileLabel = new File("");
 
+    String fileChooserPrefName = getClass().getSimpleName();
+
     static {
         BoofSwingUtil.initializeSwing();
     }
@@ -85,15 +85,28 @@ public class LabelImageTextApp extends JPanel {
         BoofSwingUtil.setMenuItemKeys(itemOpen, KeyEvent.VK_O, KeyEvent.VK_O);
         menuFile.add(itemOpen);
 
+        var itemSave = new JMenuItem("Save Labels");
+        itemSave.addActionListener(e -> saveLabels(fileLabel));
+        BoofSwingUtil.setMenuItemKeys(itemSave, KeyEvent.VK_S, KeyEvent.VK_S);
+        menuFile.add(itemSave);
+
+        // Let the user select the file to save to
+        var itemSaveAs = new JMenuItem("Save Labels As");
+        itemSaveAs.addActionListener(e -> {
+            File f = BoofSwingUtil.fileChooser(fileChooserPrefName, display, false, ".", null);
+            if (f == null || f.isDirectory())
+                return;
+            saveLabels(f);
+        });
+        menuFile.add(itemSaveAs);
+
         // TODO open labels
-        // TODO save labels
-        // TODO saveAs labels
 
         return menuBar;
     }
 
     public void openImage() {
-        File file = BoofSwingUtil.fileChooser(getClass().getSimpleName(), display, true, ".", null,
+        File file = BoofSwingUtil.fileChooser(fileChooserPrefName, display, true, ".", null,
                 BoofSwingUtil.FileTypes.IMAGES);
         if (file == null)
             return;
@@ -110,7 +123,7 @@ public class LabelImageTextApp extends JPanel {
 
         fileImage = file;
         // By default, it stores labeled images right next to the input image
-        fileLabel = new File(file.getParentFile(), file.getName() + ".txt");
+        fileLabel = new File(file.getParentFile(), FilenameUtils.getBaseName(file.getName()) + ".txt");
         if (fileLabel.exists()) {
             parseLabeled(fileLabel);
         }
@@ -171,7 +184,31 @@ public class LabelImageTextApp extends JPanel {
                 }
             }
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new UncheckedIOException(e);
+        }
+    }
+
+    /**
+     * Saves the labels to disk
+     */
+    private void saveLabels(File f) {
+        Base64.Encoder encoder = Base64.getEncoder();
+        try (var output = new BufferedWriter((new FileWriter(f)))) {
+            output.write("# Handle labeled image " + f.getName() + "\n");
+            output.write("milliseconds NaN\n");
+            for (int i = 0; i < labeled.size; i++) {
+                LabeledText l = labeled.get(i);
+                output.write("" + l.region.size());
+                for (int pointIdx = 0; pointIdx < l.region.size(); pointIdx++) {
+                    Point2D_F64 p = l.region.get(pointIdx);
+                    output.write(" " + p.x + " " + p.y);
+                }
+                output.write('\n');
+                byte[] bytes = encoder.encode(l.text.getBytes(StandardCharsets.UTF_8));
+                output.write(new String(bytes, StandardCharsets.UTF_8) + "\n");
+            }
+        } catch (IOException e) {
+            throw new UncheckedIOException(e);
         }
     }
 
@@ -381,7 +418,7 @@ public class LabelImageTextApp extends JPanel {
 
         SwingUtilities.invokeLater(() -> {
             app.openImage();
-            JFrame window = ShowImages.showWindow(app, "Text Labeler");
+            JFrame window = ShowImages.showWindow(app, "Text Labeler", true);
             window.setJMenuBar(app.createMenuBar());
         });
     }
