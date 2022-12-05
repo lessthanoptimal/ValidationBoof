@@ -1,8 +1,8 @@
 package boofcv.common.parsing;
 
 import boofcv.abst.fiducial.calib.ConfigGridDimen;
-import boofcv.app.PaperSize;
 import boofcv.common.misc.ParseHelper;
+import boofcv.generate.PaperSize;
 import boofcv.generate.Unit;
 import boofcv.misc.BoofMiscOps;
 import boofcv.struct.geo.PointIndex2D_F64;
@@ -80,14 +80,14 @@ public class ParseCalibrationConfigFiles {
     public static MarkerDocumentLandmarks parseDocumentLandmarks(File file) {
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
             String line = ParseHelper.skipComments(reader);
-            PaperSize paper = PaperSize.lookup(afterEq(line,"paper"));
+            PaperSize paper = PaperSize.lookup(afterEq(line, "paper"));
             line = ParseHelper.skipComments(reader);
-            Unit unit = Unit.lookup(afterEq(line,"units"));
+            Unit unit = Unit.lookup(afterEq(line, "units"));
             line = ParseHelper.skipComments(reader);
 
             var document = new MarkerDocumentLandmarks(paper, unit);
 
-            int count = Integer.parseInt(afterEq(line,"count"));
+            int count = Integer.parseInt(afterEq(line, "count"));
             document.landmarks.resize(count);
             for (int i = 0; i < count; i++) {
                 String[] words = reader.readLine().split(" ");
@@ -138,12 +138,12 @@ public class ParseCalibrationConfigFiles {
 
             String line = ParseHelper.skipComments(reader);
             BoofMiscOps.checkTrue(line.startsWith("image.shape"));
-            found.milliseconds = Double.parseDouble(afterEq(reader.readLine(),"milliseconds"));
-            int numMarkers = Integer.parseInt(afterEq(reader.readLine(),"markers.size"));
+            found.milliseconds = Double.parseDouble(afterEq(reader.readLine(), "milliseconds"));
+            int numMarkers = Integer.parseInt(afterEq(reader.readLine(), "markers.size"));
             for (int markerIdx = 0; markerIdx < numMarkers; markerIdx++) {
                 UniqueMarkerObserved marker = found.markers.grow();
-                marker.markerID = Integer.parseInt(afterEq(reader.readLine(),"marker"));
-                int numLandmarks = Integer.parseInt(afterEq(reader.readLine(),"landmarks.size"));
+                marker.markerID = Integer.parseInt(afterEq(reader.readLine(), "marker"));
+                int numLandmarks = Integer.parseInt(afterEq(reader.readLine(), "landmarks.size"));
                 marker.landmarks.resize(numLandmarks);
                 for (int landmarkIdx = 0; landmarkIdx < numLandmarks; landmarkIdx++) {
                     String[] words = reader.readLine().split(" ");
@@ -158,7 +158,7 @@ public class ParseCalibrationConfigFiles {
         } catch (IOException e) {
             throw new RuntimeException(e);
         } catch (RuntimeException e) {
-            System.err.println("Failed parsing "+file.getPath());
+            System.err.println("Failed parsing " + file.getPath());
             throw e;
         }
     }
@@ -169,11 +169,11 @@ public class ParseCalibrationConfigFiles {
 
             String line = ParseHelper.skipComments(reader);
             BoofMiscOps.checkTrue(line.startsWith("image.shape"));
-            int numMarkers = Integer.parseInt(afterEq(reader.readLine(),"markers.size"));
+            int numMarkers = Integer.parseInt(afterEq(reader.readLine(), "markers.size"));
             for (int markerIdx = 0; markerIdx < numMarkers; markerIdx++) {
                 UniqueMarkerObserved marker = new UniqueMarkerObserved();
-                marker.markerID = Integer.parseInt(afterEq(reader.readLine(),"marker"));
-                int numCorners = Integer.parseInt(afterEq(reader.readLine(),"landmarks.size"));
+                marker.markerID = Integer.parseInt(afterEq(reader.readLine(), "marker"));
+                int numCorners = Integer.parseInt(afterEq(reader.readLine(), "landmarks.size"));
                 for (int cornerIdx = 0; cornerIdx < numCorners; cornerIdx++) {
                     String[] words = reader.readLine().split(" ");
                     PointIndex2D_F64 landmark = marker.landmarks.grow();
