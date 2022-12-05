@@ -5,7 +5,6 @@ import boofcv.alg.filter.blur.GBlurImageOps;
 import boofcv.alg.filter.convolve.GConvolveImageOps;
 import boofcv.alg.misc.GImageMiscOps;
 import boofcv.alg.misc.PixelMath;
-import boofcv.app.PaperSize;
 import boofcv.common.parsing.MarkerDocumentLandmarks;
 import boofcv.common.parsing.ParseCalibrationConfigFiles;
 import boofcv.core.image.border.FactoryImageBorder;

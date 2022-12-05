@@ -1,6 +1,6 @@
 package boofcv.common.parsing;
 
-import boofcv.app.PaperSize;
+import boofcv.generate.PaperSize;
 import boofcv.generate.Unit;
 import georegression.struct.point.Point2D_F64;
 import org.ddogleg.struct.DogArray;
