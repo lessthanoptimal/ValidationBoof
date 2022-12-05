@@ -4,6 +4,7 @@ import boofcv.demonstrations.shapes.DetectBlackShapePanel;
 import boofcv.gui.BoofSwingUtil;
 import boofcv.gui.image.ImageZoomPanel;
 import boofcv.gui.image.ShowImages;
+import boofcv.io.UtilIO;
 import boofcv.io.image.UtilImageIO;
 import georegression.struct.point.Point2D_F64;
 import georegression.struct.shapes.Polygon2D_F64;
@@ -24,6 +25,7 @@ import java.awt.image.BufferedImage;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
+import java.util.List;
 
 import static boofcv.gui.BoofSwingUtil.MAX_ZOOM;
 import static boofcv.gui.BoofSwingUtil.MIN_ZOOM;
@@ -34,8 +36,6 @@ import static boofcv.gui.BoofSwingUtil.MIN_ZOOM;
  * @author Peter Abeles
  */
 public class LabelImageTextApp extends JPanel {
-    // TODO save labels
-    // TODO Open Next
     // TODO keep on moving a corner while mouse is down
     // TODO add ability to select AABB
     // TODO rotated BB
@@ -85,6 +85,11 @@ public class LabelImageTextApp extends JPanel {
         BoofSwingUtil.setMenuItemKeys(itemOpen, KeyEvent.VK_O, KeyEvent.VK_O);
         menuFile.add(itemOpen);
 
+        var itemNext = new JMenuItem("Open Next");
+        itemNext.addActionListener(e -> openNext());
+        BoofSwingUtil.setMenuItemKeys(itemNext, KeyEvent.VK_F, KeyEvent.VK_F);
+        menuFile.add(itemNext);
+
         var itemSave = new JMenuItem("Save Labels");
         itemSave.addActionListener(e -> saveLabels(fileLabel));
         BoofSwingUtil.setMenuItemKeys(itemSave, KeyEvent.VK_S, KeyEvent.VK_S);
@@ -111,10 +116,15 @@ public class LabelImageTextApp extends JPanel {
         if (file == null)
             return;
 
+        if (!openImageFile(file)) {
+            JOptionPane.showMessageDialog(display, "Could not load image");
+        }
+    }
+
+    private boolean openImageFile(File file) {
         BufferedImage image = UtilImageIO.loadImage(file.getPath());
         if (image == null) {
-            JOptionPane.showMessageDialog(display, "Could not load image");
-            return;
+            return false;
         }
 
         // clear selection
@@ -129,6 +139,7 @@ public class LabelImageTextApp extends JPanel {
         }
         // Update the display image
         display.setImage(image);
+        return true;
     }
 
     public void openSelectedFiles() {
@@ -140,10 +151,31 @@ public class LabelImageTextApp extends JPanel {
         SwingUtilities.invokeLater(() -> controls.setImageSize(image.getWidth(), image.getHeight()));
     }
 
+    /**
+     * Opens the next image in the parent direction based on alphabetical order
+     */
     public void openNext() {
+        File parent = fileImage.getParentFile();
+        List<String> images = UtilIO.listImages(parent.getParent(), true);
 
+        int currentIdx = images.indexOf(fileImage.getName());
+
+        // Return if it's at the last image or it couldn't find the image
+        if (currentIdx < 0 || currentIdx + 1 >= images.size())
+            return;
+
+        // Attempt to open the next image
+        File f = new File(parent, images.get(currentIdx + 1));
+        if (!openImageFile(f)) {
+            JOptionPane.showMessageDialog(display, "Failed to open " + f.getName());
+        } else {
+            System.out.println(f.getParent());
+        }
     }
 
+    /**
+     * Reads a labeled file
+     */
     private void parseLabeled(File f) {
         labeled.reset();
 
