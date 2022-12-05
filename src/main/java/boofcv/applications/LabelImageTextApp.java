@@ -86,6 +86,16 @@ public class LabelImageTextApp extends JPanel {
         BoofSwingUtil.setMenuItemKeys(itemOpen, KeyEvent.VK_O, KeyEvent.VK_O);
         menuFile.add(itemOpen);
 
+        var itemLabels = new JMenuItem("Open Labels");
+        itemLabels.addActionListener(e -> {
+            File file = BoofSwingUtil.fileChooser(fileChooserPrefName + "label", display, true, ".", null);
+            if (file == null)
+                return;
+            parseLabeled(file);
+            display.repaint();
+        });
+        menuFile.add(itemLabels);
+
         var itemNext = new JMenuItem("Open Next");
         itemNext.addActionListener(e -> openNext());
         BoofSwingUtil.setMenuItemKeys(itemNext, KeyEvent.VK_I, KeyEvent.VK_I);
@@ -466,8 +476,12 @@ public class LabelImageTextApp extends JPanel {
 
         SwingUtilities.invokeLater(() -> {
             app.openImage();
+            // Abort if it didn't open an image
+            if (app.fileImage.getName().isEmpty())
+                return;
             JFrame window = ShowImages.showWindow(app, "Text Labeler", true);
             app.window = window;
+            window.setTitle(app.fileImage.getName());
             window.setJMenuBar(app.createMenuBar());
         });
     }
