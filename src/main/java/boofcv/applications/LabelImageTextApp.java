@@ -40,6 +40,7 @@ public class LabelImageTextApp extends JPanel {
     // TODO add ability to select AABB
     // TODO rotated BB
 
+    JFrame window;
     ImageDisplay display = new ImageDisplay();
     Controls controls = new Controls();
 
@@ -87,7 +88,7 @@ public class LabelImageTextApp extends JPanel {
 
         var itemNext = new JMenuItem("Open Next");
         itemNext.addActionListener(e -> openNext());
-        BoofSwingUtil.setMenuItemKeys(itemNext, KeyEvent.VK_F, KeyEvent.VK_F);
+        BoofSwingUtil.setMenuItemKeys(itemNext, KeyEvent.VK_I, KeyEvent.VK_I);
         menuFile.add(itemNext);
 
         var itemSave = new JMenuItem("Save Labels");
@@ -122,12 +123,15 @@ public class LabelImageTextApp extends JPanel {
     }
 
     private boolean openImageFile(File file) {
+        BoofSwingUtil.checkGuiThread();
         BufferedImage image = UtilImageIO.loadImage(file.getPath());
         if (image == null) {
             return false;
         }
 
         // clear selection
+        labeled.reset();
+        controls.regionLabel.setText("");
         activeIdx = -1;
         selectedPoint = -1;
 
@@ -139,6 +143,10 @@ public class LabelImageTextApp extends JPanel {
         }
         // Update the display image
         display.setImage(image);
+        display.repaint();
+
+        if (window != null)
+            window.setTitle("Text Labeler: " + file.getName());
         return true;
     }
 
@@ -155,17 +163,25 @@ public class LabelImageTextApp extends JPanel {
      * Opens the next image in the parent direction based on alphabetical order
      */
     public void openNext() {
-        File parent = fileImage.getParentFile();
-        List<String> images = UtilIO.listImages(parent.getParent(), true);
+        System.out.println("openNext");
+        // Save current work in progress
+        saveLabels(fileLabel);
 
-        int currentIdx = images.indexOf(fileImage.getName());
+        // Find the next image
+        File parent = fileImage.getParentFile();
+        List<String> images = UtilIO.listImages(parent.getPath(), true);
+
+        int currentIdx = images.indexOf(fileImage.getAbsolutePath());
 
         // Return if it's at the last image or it couldn't find the image
         if (currentIdx < 0 || currentIdx + 1 >= images.size())
             return;
 
         // Attempt to open the next image
-        File f = new File(parent, images.get(currentIdx + 1));
+        File f = new File(images.get(currentIdx + 1));
+
+        System.out.println("   opening " + f.getPath());
+
         if (!openImageFile(f)) {
             JOptionPane.showMessageDialog(display, "Failed to open " + f.getName());
         } else {
@@ -275,7 +291,7 @@ public class LabelImageTextApp extends JPanel {
 
                 double size = Math.max(8, label.smallestSide());
 
-                g2.setFont(new Font("Serif", Font.BOLD, (int) (size * 0.7)));
+                g2.setFont(new Font("Serif", Font.BOLD, (int) (scale * size * 0.7)));
                 g2.setColor(Color.GREEN);
                 Point2D_F64 p = label.region.get(0);
                 g2.drawString(label.text, (float) (scale * p.x), (float) (scale * p.y));
@@ -451,6 +467,7 @@ public class LabelImageTextApp extends JPanel {
         SwingUtilities.invokeLater(() -> {
             app.openImage();
             JFrame window = ShowImages.showWindow(app, "Text Labeler", true);
+            app.window = window;
             window.setJMenuBar(app.createMenuBar());
         });
     }
