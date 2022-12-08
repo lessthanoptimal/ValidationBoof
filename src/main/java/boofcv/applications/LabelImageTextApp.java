@@ -302,8 +302,23 @@ public class LabelImageTextApp extends JPanel {
 
                 double size = Math.max(8, label.smallestSide());
 
-                Point2D_F64 p = label.region.get(0);
-                VisualizeFiducial.drawLabel(new Point2D_F64(p.x, p.y), label.text,
+                Point2D_F64 p0 = label.region.get(0);
+                Point2D_F64 p1 = label.region.get(1);
+                Point2D_F64 p3 = label.region.get(3);
+                double cx = (p0.x + p1.x)/2;
+                double cy = (p0.y + p1.y)/2;
+
+                // Assuming the first edge is a long edge, center of offset the text to make
+                // it readable
+                double slopeX = p0.x - p3.x;
+                double slopeY = p0.y - p3.y;
+                double r = Math.sqrt(slopeX*slopeX + slopeY*slopeY);
+                slopeX /= r;
+                slopeY /= r;
+                cx += slopeX*scale*size*0.5;
+                cy += slopeY*scale*size*0.5;
+
+                VisualizeFiducial.drawLabel(new Point2D_F64(cx, cy), label.text,
                         new Font("Serif", Font.BOLD, (int) (scale * size * 0.7)),
                         Color.GREEN, textBackground, g2, scale);
             }
