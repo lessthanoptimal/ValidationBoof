@@ -2,6 +2,7 @@ package boofcv.applications;
 
 import boofcv.demonstrations.shapes.DetectBlackShapePanel;
 import boofcv.gui.BoofSwingUtil;
+import boofcv.gui.fiducial.VisualizeFiducial;
 import boofcv.gui.image.ImageZoomPanel;
 import boofcv.gui.image.ShowImages;
 import boofcv.io.UtilIO;
@@ -275,7 +276,7 @@ public class LabelImageTextApp extends JPanel {
         Ellipse2D.Double ellipse = new Ellipse2D.Double();
         Path2D path = new java.awt.geom.Path2D.Double();
         BasicStroke stroke = new BasicStroke(5.0f);
-
+        Color textBackground = new Color(0,0,0,125);
         @Override
         protected void paintInPanel(AffineTransform tran, Graphics2D g2) {
             BoofSwingUtil.antialiasing(g2);
@@ -301,10 +302,10 @@ public class LabelImageTextApp extends JPanel {
 
                 double size = Math.max(8, label.smallestSide());
 
-                g2.setFont(new Font("Serif", Font.BOLD, (int) (scale * size * 0.7)));
-                g2.setColor(Color.GREEN);
                 Point2D_F64 p = label.region.get(0);
-                g2.drawString(label.text, (float) (scale * p.x), (float) (scale * p.y));
+                VisualizeFiducial.drawLabel(new Point2D_F64(p.x, p.y), label.text,
+                        new Font("Serif", Font.BOLD, (int) (scale * size * 0.7)),
+                        Color.GREEN, textBackground, g2, scale);
             }
         }
 
