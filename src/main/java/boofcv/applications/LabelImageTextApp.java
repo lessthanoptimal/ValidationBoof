@@ -13,6 +13,8 @@ import org.apache.commons.io.FilenameUtils;
 import org.ddogleg.struct.DogArray;
 
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -152,6 +154,13 @@ public class LabelImageTextApp extends JPanel {
         if (fileLabel.exists()) {
             parseLabeled(fileLabel);
         }
+
+        // If there's only one, make it active
+        if (labeled.size == 1) {
+            activeIdx = 0;
+            controls.regionLabel.setText(labeled.get(0).text);
+        }
+
         // Update the display image
         display.setImage(image);
         display.repaint();
@@ -340,18 +349,38 @@ public class LabelImageTextApp extends JPanel {
     }
 
     public class Controls extends DetectBlackShapePanel {
-        JTextField regionLabel = textfield(100, 100);
+        JTextField regionLabel = textfield(300, 200);
 
         public Controls() {
             selectZoom = spinner(1, MIN_ZOOM, MAX_ZOOM, 1.0);
             display.addMouseWheelListener((e) -> {
                 setZoom(BoofSwingUtil.mouseWheelImageZoom(zoom, e));
             });
+            regionLabel.setMaximumSize(regionLabel.getPreferredSize());
 
             addLabeled(imageSizeLabel, "Size");
             addLabeled(selectZoom, "Zoom");
             addAlignCenter(new JLabel("Region Text"));
             addAlignCenter(regionLabel, "Text that's assigned to a region");
+            addVerticalGlue();
+
+            // Save all changes as they happen
+            regionLabel.getDocument().addDocumentListener(new DocumentListener() {
+                @Override
+                public void insertUpdate(DocumentEvent e) {
+                    controlChanged(regionLabel);
+                }
+
+                @Override
+                public void removeUpdate(DocumentEvent e) {
+                    controlChanged(regionLabel);
+                }
+
+                @Override
+                public void changedUpdate(DocumentEvent e) {
+                    controlChanged(regionLabel);
+                }
+            });
 
             setPreferredSize(new Dimension(250, 200));
         }
@@ -369,7 +398,7 @@ public class LabelImageTextApp extends JPanel {
                 zoom = ((Number) selectZoom.getValue()).doubleValue();
                 display.setScale(zoom);
             } else if (source == regionLabel) {
-                if (activeIdx == -1 && activeIdx < labeled.size)
+                if (activeIdx == -1 || activeIdx >= labeled.size)
                     return;
                 LabeledText region = labeled.get(activeIdx);
                 region.text = regionLabel.getText();
