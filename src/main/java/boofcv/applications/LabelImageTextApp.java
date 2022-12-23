@@ -21,8 +21,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.geom.AffineTransform;
-import java.awt.geom.Ellipse2D;
-import java.awt.geom.Line2D;
 import java.awt.geom.Path2D;
 import java.awt.image.BufferedImage;
 import java.io.*;
@@ -48,6 +46,9 @@ public class LabelImageTextApp extends JPanel {
     Controls controls = new Controls();
 
     DogArray<LabeledText> labeled = new DogArray<>(LabeledText::new, LabeledText::reset);
+
+    // labels when they were loaded and unmodified. Used for change detection
+    DogArray<LabeledText> unmodified = new DogArray<>(LabeledText::new, LabeledText::reset);
 
     // Which labeled object is being manipulated
     int activeIdx = -1;
@@ -94,7 +95,9 @@ public class LabelImageTextApp extends JPanel {
             File file = BoofSwingUtil.fileChooser(fileChooserPrefName + "label", display, true, ".", null);
             if (file == null)
                 return;
+            fileLabel = file;
             parseLabeled(file);
+            unmodified.reset().copyAll(labeled.toList(), (src, dst) -> dst.setTo(src));
             display.repaint();
         });
         menuFile.add(itemLabels);
@@ -149,10 +152,16 @@ public class LabelImageTextApp extends JPanel {
         selectedPoint = -1;
 
         fileImage = file;
+
+        // FOr the label, use the directory the previous label was in
+        File labelParent = fileLabel.getPath().isEmpty() ? file.getParentFile() : fileLabel.getParentFile();
+
         // By default, it stores labeled images right next to the input image
-        fileLabel = new File(file.getParentFile(), FilenameUtils.getBaseName(file.getName()) + ".txt");
+        fileLabel = new File(labelParent, FilenameUtils.getBaseName(file.getName()) + ".txt");
         if (fileLabel.exists()) {
+            System.out.println("   opening label " + fileLabel.getPath());
             parseLabeled(fileLabel);
+            unmodified.reset().copyAll(labeled.toList(), (src, dst) -> dst.setTo(src));
         }
 
         // If there's only one, make it active
@@ -170,22 +179,15 @@ public class LabelImageTextApp extends JPanel {
         return true;
     }
 
-    public void openSelectedFiles() {
-        BufferedImage image = UtilImageIO.loadImageNotNull(fileImage.getPath());
-        display.setImage(image);
-        parseLabeled(fileLabel);
-        System.out.println("text.size=" + labeled.size);
-
-        SwingUtilities.invokeLater(() -> controls.setImageSize(image.getWidth(), image.getHeight()));
-    }
-
     /**
      * Opens the next image in the parent direction based on alphabetical order
      */
     public void openNext() {
-        System.out.println("openNext");
         // Save current work in progress
-        saveLabels(fileLabel);
+        if (isLabelModified())
+            saveLabels(fileLabel);
+        else
+            System.out.println("Labels not modified");
 
         // Find the next image
         File parent = fileImage.getParentFile();
@@ -200,7 +202,7 @@ public class LabelImageTextApp extends JPanel {
         // Attempt to open the next image
         File f = new File(images.get(currentIdx + 1));
 
-        System.out.println("   opening " + f.getPath());
+        System.out.println("   opening image " + f.getPath());
 
         if (!openImageFile(f)) {
             JOptionPane.showMessageDialog(display, "Failed to open " + f.getName());
@@ -281,11 +283,9 @@ public class LabelImageTextApp extends JPanel {
     }
 
     public class ImageDisplay extends ImageZoomPanel {
-        Line2D.Double line = new Line2D.Double();
-        Ellipse2D.Double ellipse = new Ellipse2D.Double();
         Path2D path = new java.awt.geom.Path2D.Double();
-        BasicStroke stroke = new BasicStroke(5.0f);
-        Color textBackground = new Color(0,0,0,125);
+        Color textBackground = new Color(0, 0, 0, 125);
+
         @Override
         protected void paintInPanel(AffineTransform tran, Graphics2D g2) {
             BoofSwingUtil.antialiasing(g2);
@@ -314,18 +314,18 @@ public class LabelImageTextApp extends JPanel {
                 Point2D_F64 p0 = label.region.get(0);
                 Point2D_F64 p1 = label.region.get(1);
                 Point2D_F64 p3 = label.region.get(3);
-                double cx = (p0.x + p1.x)/2;
-                double cy = (p0.y + p1.y)/2;
+                double cx = (p0.x + p1.x) / 2;
+                double cy = (p0.y + p1.y) / 2;
 
                 // Assuming the first edge is a long edge, center of offset the text to make
                 // it readable
                 double slopeX = p0.x - p3.x;
                 double slopeY = p0.y - p3.y;
-                double r = Math.sqrt(slopeX*slopeX + slopeY*slopeY);
+                double r = Math.sqrt(slopeX * slopeX + slopeY * slopeY);
                 slopeX /= r;
                 slopeY /= r;
-                cx += slopeX*scale*size*0.5;
-                cy += slopeY*scale*size*0.5;
+                cx += slopeX * scale * size * 0.5;
+                cy += slopeY * scale * size * 0.5;
 
                 VisualizeFiducial.drawLabel(new Point2D_F64(cx, cy), label.text,
                         new Font("Serif", Font.BOLD, (int) (scale * size * 0.7)),
@@ -494,6 +494,21 @@ public class LabelImageTextApp extends JPanel {
     }
 
     /**
+     * Checks to see if the labels have changed
+     */
+    private boolean isLabelModified() {
+        if (unmodified.size != labeled.size)
+            return true;
+        for (int i = 0; i < unmodified.size; i++) {
+            LabeledText u = unmodified.get(i);
+            LabeledText l = labeled.get(i);
+            if (!u.isIdentical(l))
+                return true;
+        }
+        return false;
+    }
+
+    /**
      * A labeled region in the image. Specifies a polygon and text associated with it.
      */
     private static class LabeledText {
@@ -511,6 +526,17 @@ public class LabelImageTextApp extends JPanel {
         public void reset() {
             text = "";
             region.vertexes.reset();
+        }
+
+        public void setTo(LabeledText src) {
+            text = src.text;
+            region.setTo(src.region);
+        }
+
+        public boolean isIdentical(LabeledText o) {
+            if (!o.text.equals(this.text))
+                return false;
+            return region.isIdentical(o.region, 1e-16);
         }
     }
 
