@@ -21,74 +21,71 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
- *
  * @author Peter Abeles
  */
 public class HandSelectPointsApp extends HandSelectBase {
 
 	public HandSelectPointsApp( File file ) {
-		super(new SelectPointPanel(),file);
+		super(new SelectPointPanel(), file);
 
 //		addDetectQrCodes();
 		addDetectChessboard();
 	}
 
-	@Override
-	public void process(File file, BufferedImage image) {
+	@Override public void process( File file, BufferedImage image ) {
 		SelectPointPanel gui = (SelectPointPanel)this.imagePanel;
 
 		File outputFile = selectOutputFile(file);
 
-		if( outputFile.exists() ) {
+		if (outputFile.exists()) {
 			List<List<Point2D_F64>> sets = PointFileCodec.loadSets(outputFile);
-			if( sets == null ) {
+			if (sets == null) {
 				gui.addPointSet(PointFileCodec.load(outputFile.getPath()));
 			} else {
 				gui.setSets(sets);
 			}
 		}
-		infoPanel.setImageShape(image.getWidth(),image.getHeight());
+		infoPanel.setImageShape(image.getWidth(), image.getHeight());
 		gui.setImage(image);
 	}
 
 	private void addDetectQrCodes() {
-		infoPanel.handleSelectShape = ()->{
-			QrCodeDetector<GrayU8> detector = FactoryFiducial.qrcode(null,GrayU8.class);
-			GrayU8 gray = new GrayU8(1,1);
-			ConvertBufferedImage.convertFrom(image,gray);
+		infoPanel.handleSelectShape = () -> {
+			QrCodeDetector<GrayU8> detector = FactoryFiducial.qrcode(null, GrayU8.class);
+			GrayU8 gray = new GrayU8(1, 1);
+			ConvertBufferedImage.convertFrom(image, gray);
 			detector.process(gray);
 
 			SelectPointPanel gui = (SelectPointPanel)this.imagePanel;
 
-			BoofSwingUtil.invokeNowOrLater(()->{
+			BoofSwingUtil.invokeNowOrLater(() -> {
 				gui.clearPoints();
-				for(QrCode qr : detector.getDetections() ) {
+				for (QrCode qr : detector.getDetections()) {
 					List<Point2D_F64> list = new ArrayList<>();
 					for (int i = 0; i < qr.bounds.size(); i++) {
-						list.add( qr.bounds.get(i));
+						list.add(qr.bounds.get(i));
 					}
 
 					gui.addPointSet(list);
 				}
 				gui.repaint();
-				System.out.println("detected "+detector.getDetections().size());
+				System.out.println("detected " + detector.getDetections().size());
 			});
 		};
 	}
 
 	private void addDetectChessboard() {
-		infoPanel.handleSelectShape = ()->{
-			ConfigGridDimen configGrid = new ConfigGridDimen(10,7,1);
+		infoPanel.handleSelectShape = () -> {
+			ConfigGridDimen configGrid = new ConfigGridDimen(10, 7, 1);
 
-			CalibrationDetectorChessboardX detector = FactoryFiducialCalibration.chessboardX(null,configGrid);
+			CalibrationDetectorChessboardX detector = FactoryFiducialCalibration.chessboardX(null, configGrid);
 
-			GrayF32 gray = new GrayF32(1,1);
-			ConvertBufferedImage.convertFrom(image,gray);
-			if( detector.process(gray) ) {
+			GrayF32 gray = new GrayF32(1, 1);
+			ConvertBufferedImage.convertFrom(image, gray);
+			if (detector.process(gray)) {
 				SelectPointPanel gui = (SelectPointPanel)this.imagePanel;
 
-				BoofSwingUtil.invokeNowOrLater(()->{
+				BoofSwingUtil.invokeNowOrLater(() -> {
 					gui.clearPoints();
 
 					CalibrationObservation found = detector.getDetectedPoints();
@@ -100,44 +97,39 @@ public class HandSelectPointsApp extends HandSelectBase {
 					gui.repaint();
 				});
 			}
-
 		};
 	}
 
-	@Override
-	public void save() {
+	@Override public void save() {
 		SelectPointPanel gui = (SelectPointPanel)this.imagePanel;
 		File outputFile = selectOutputFile(inputFile);
 		List<List<Point2D_F64>> points = gui.getSelectedPoints();
 
-		if( points.size() == 1 ) {
+		if (points.size() == 1) {
 			PointFileCodec.save(outputFile.getPath(), "list of hand selected 2D points", points.get(0));
 			System.out.println("Saved to " + outputFile.getPath());
-		} else if( points.size() > 1 ){
+		} else if (points.size() > 1) {
 			PointFileCodec.saveSets(outputFile.getPath(), "list of hand selected 2D points", points);
 			System.out.println("Saved to " + outputFile.getPath());
 		}
 	}
 
-	@Override
-	public String getApplicationName() {
+	@Override public String getApplicationName() {
 		return "Select Point Features";
 	}
 
-	@Override
-	public void setScale( double scale ) {
+	@Override public void setScale( double scale ) {
 		SelectPointPanel gui = (SelectPointPanel)this.imagePanel;
 		gui.setScale(scale);
 	}
 
-	@Override
-	public void clearPoints() {
+	@Override public void clearPoints() {
 		SelectPointPanel gui = (SelectPointPanel)this.imagePanel;
 		gui.clearPoints();
 		gui.repaint();
 	}
 
-	public static void main(String[] args) {
-		SwingUtilities.invokeLater(()->new HandSelectPointsApp(null));
+	public static void main( String[] args ) {
+		SwingUtilities.invokeLater(() -> new HandSelectPointsApp(null));
 	}
 }
