@@ -183,11 +183,20 @@ public class LabelImageTextApp extends JPanel {
      * Opens the next image in the parent direction based on alphabetical order
      */
     public void openNext() {
-        // Save current work in progress
-        if (isLabelModified())
-            saveLabels(fileLabel);
-        else
-            System.out.println("Labels not modified");
+        // Only save the label if modified and the user is aware they are about to overwrite previous labels
+        if (isLabelModified()) {
+            if (fileLabel.exists()) {
+                int result = JOptionPane.showConfirmDialog(this, "Overwrite existing labels?", "",
+                        JOptionPane.YES_NO_OPTION,
+                        JOptionPane.QUESTION_MESSAGE);
+                if (result == JOptionPane.YES_OPTION) {
+                    saveLabels(fileLabel);
+                }
+            } else {
+                // Save current work in progress
+                saveLabels(fileLabel);
+            }
+        }
 
         // Find the next image
         File parent = fileImage.getParentFile();
@@ -542,8 +551,6 @@ public class LabelImageTextApp extends JPanel {
 
     public static void main(String[] args) {
         var app = new LabelImageTextApp();
-//        app.fileImage = new File("/home/pja/projects/ninox360/DanfossOCR/dataset/11_13_2022/IMG_0012.JPG");
-//        app.fileLabel = new File("/home/pja/projects/ninox360/DanfossOCR/libs/paddleocr/results/11_13_2022/IMG_0012.txt");
 
         SwingUtilities.invokeLater(() -> {
             app.openImage();
