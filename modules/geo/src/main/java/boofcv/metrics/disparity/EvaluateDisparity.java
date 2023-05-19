@@ -17,6 +17,8 @@ import static boofcv.metrics.disparity.MiddleburyStereoEvaluation.evaluateAll;
 import static org.ddogleg.stats.StatisticsDogArray.mean;
 
 /**
+ * Evaluates stereo disparity using ground truth stereo images
+ *
  * @author Peter Abeles
  */
 public class EvaluateDisparity<T extends ImageGray<T>> {
@@ -29,23 +31,23 @@ public class EvaluateDisparity<T extends ImageGray<T>> {
 
 	Class<T> inputType;
 
-	public EvaluateDisparity(Class<T> inputType) {
+	public EvaluateDisparity( Class<T> inputType ) {
 		this.inputType = inputType;
 	}
 
 	public void process() {
-		List<TestSubject<T>> subjects = createAlgorithms(120);
+		List<TestSubject<T>> subjects = createAlgorithms(120, inputType);
 
 		runtime.printUnitsRow(true);
 
-		out.println("# Middlebury Results for BAD_THRESH "+BAD_THRESH);
+		out.println("# Middlebury Results for BAD_THRESH " + BAD_THRESH);
 		out.println("# err = average, bp = bad percent, ip = invalid percent, tbp = total bad percent");
 		out.println();
-		for( TestSubject<T> s : subjects ) {
+		for (TestSubject<T> s : subjects) {
 			List<Score> results;
 			try {
 				results = evaluateAll(PATH_MIDDLEBURY, s.alg, BAD_THRESH);
-			} catch( RuntimeException e ) {
+			} catch (RuntimeException e) {
 				e.printStackTrace(err);
 				continue;
 			}
@@ -56,81 +58,87 @@ public class EvaluateDisparity<T extends ImageGray<T>> {
 
 			DogArray_F64 processingTimeMS = new DogArray_F64();
 			out.println(s.name);
-			for( Score r : results ) {
-				out.printf("%20s err=%5.2f bp=%5.1f ip=%5.1f tbp=%5.1f\n",r.name,r.aveError,r.badPercent,r.invalidPercent,r.totalBadPercent);
+			for (Score r : results) {
+				out.printf("%20s err=%5.2f bp=%5.1f ip=%5.1f tbp=%5.1f\n", r.name, r.aveError, r.badPercent, r.invalidPercent, r.totalBadPercent);
 				allError.add(r.aveError);
 				allBad.add(r.badPercent);
 				allInvalid.add(r.invalidPercent);
 				allTotalBad.add(r.totalBadPercent);
 				processingTimeMS.add(r.runtimeMS);
 			}
-			allError.sort();allBad.sort();allInvalid.sort();allTotalBad.sort();
+			allError.sort();
+			allBad.sort();
+			allInvalid.sort();
+			allTotalBad.sort();
 
 			out.println();
 			out.printf("Summary Mean : err=%5.2f bp=%5.1f ip=%5.1f tbp=%5.1f\n",
 					mean(allError), mean(allBad), mean(allInvalid), mean(allTotalBad));
 			out.printf("Summary 50%%  : err=%5.2f bp=%5.1f ip=%5.1f tbp=%5.1f\n",
-					allError.getFraction(0.5),allBad.getFraction(0.5),allInvalid.getFraction(0.5),allTotalBad.getFraction(0.5));
+					allError.getFraction(0.5), allBad.getFraction(0.5), allInvalid.getFraction(0.5), allTotalBad.getFraction(0.5));
 			out.printf("Summary 95%%  : err=%5.2f bp=%5.1f ip=%5.1f tbp=%5.1f\n",
-					allError.getFraction(0.95),allBad.getFraction(0.95),allInvalid.getFraction(0.95),allTotalBad.getFraction(0.95));
+					allError.getFraction(0.95), allBad.getFraction(0.95), allInvalid.getFraction(0.95), allTotalBad.getFraction(0.95));
 			out.println("----------------------------------------------------------------------------");
 
-			runtime.printStatsRow(s.name,processingTimeMS);
+			runtime.printStatsRow(s.name, processingTimeMS);
 		}
 	}
 
-	public List<TestSubject<T>> createAlgorithms(int range ) {
+	public static <T extends ImageGray<T>> List<TestSubject<T>> createAlgorithms( int range, Class<T> inputType ) {
 		List<TestSubject<T>> list = new ArrayList<>();
 
-		list.add(create_BM5(range,3,DisparityError.SAD));
-		list.add(create_BM5(range,3,DisparityError.CENSUS));
-		list.add(create_BM5(range,3,DisparityError.NCC));
+		list.add(create_BM5(range, 3, DisparityError.SAD, inputType));
+		list.add(create_BM5(range, 3, DisparityError.CENSUS, inputType));
+		list.add(create_BM5(range, 3, DisparityError.NCC, inputType));
 
-		list.add(create_BM(range,3,DisparityError.SAD));
-		list.add(create_BM(range,3,DisparityError.CENSUS));
-		list.add(create_BM(range,3,DisparityError.NCC));
+		list.add(create_BM(range, 3, DisparityError.SAD, inputType));
+		list.add(create_BM(range, 3, DisparityError.CENSUS, inputType));
+		list.add(create_BM(range, 3, DisparityError.NCC, inputType));
 
 		// SGM only supports GrayU8 images
-		if( inputType == GrayU8.class ) {
-			list.add(create_SGM(range, true, DisparitySgmError.ABSOLUTE_DIFFERENCE));
-			list.add(create_SGM(range, true, DisparitySgmError.CENSUS));
-			list.add(create_SGM(range, true, DisparitySgmError.MUTUAL_INFORMATION));
+		if (inputType == GrayU8.class) {
+			list.add(create_SGM(range, true, DisparitySgmError.ABSOLUTE_DIFFERENCE, inputType));
+			list.add(create_SGM(range, true, DisparitySgmError.CENSUS, inputType));
+			list.add(create_SGM(range, true, DisparitySgmError.MUTUAL_INFORMATION, inputType));
 		}
 
 		return list;
 	}
 
-	private TestSubject<T> create_BM5( int range , int region, DisparityError error ) {
+	private static <T extends ImageGray<T>> TestSubject<T> create_BM5(
+			int range, int region, DisparityError error, Class<T> inputType ) {
 		ConfigDisparityBMBest5 config = new ConfigDisparityBMBest5();
 		config.regionRadiusX = config.regionRadiusY = region;
 		config.errorType = error;
 		config.disparityRange = range;
-		if( DisparityError.NCC == error ) {
+		if (DisparityError.NCC == error) {
 			config.texture = 0.005;
 		}
 
 		TestSubject<T> ts = new TestSubject<>();
-		ts.alg = FactoryStereoDisparity.blockMatchBest5(config,inputType,GrayF32.class);
-		ts.name = "BM5_"+error.name();
+		ts.alg = FactoryStereoDisparity.blockMatchBest5(config, inputType, GrayF32.class);
+		ts.name = "BM5_" + error.name();
 		return ts;
 	}
 
-	private TestSubject<T> create_BM( int range , int region, DisparityError error ) {
+	private static <T extends ImageGray<T>> TestSubject<T> create_BM(
+			int range, int region, DisparityError error, Class<T> inputType  ) {
 		ConfigDisparityBM config = new ConfigDisparityBM();
 		config.regionRadiusX = config.regionRadiusY = region;
 		config.errorType = error;
 		config.disparityRange = range;
-		if( DisparityError.NCC == error ) {
+		if (DisparityError.NCC == error) {
 			config.texture = 0.005;
 		}
 
 		TestSubject<T> ts = new TestSubject<>();
-		ts.alg = FactoryStereoDisparity.blockMatch(config,inputType,GrayF32.class);
-		ts.name = "BM_"+error.name();
+		ts.alg = FactoryStereoDisparity.blockMatch(config, inputType, GrayF32.class);
+		ts.name = "BM_" + error.name();
 		return ts;
 	}
 
-	private TestSubject<T> create_SGM( int range , boolean block, DisparitySgmError error ) {
+	private static <T extends ImageGray<T>> TestSubject<T> create_SGM(
+			int range, boolean block, DisparitySgmError error, Class<T> inputType  ) {
 		ConfigDisparitySGM config = new ConfigDisparitySGM();
 		config.paths = ConfigDisparitySGM.Paths.P16;
 		config.useBlocks = block;
@@ -138,17 +146,17 @@ public class EvaluateDisparity<T extends ImageGray<T>> {
 		config.disparityRange = range;
 
 		TestSubject<T> ts = new TestSubject<>();
-		ts.alg = FactoryStereoDisparity.sgm(config,inputType,GrayF32.class);
-		ts.name = "SGM_"+error.name();
+		ts.alg = FactoryStereoDisparity.sgm(config, inputType, GrayF32.class);
+		ts.name = "SGM_" + error.name();
 		return ts;
 	}
 
 	public static class TestSubject<T extends ImageGray<T>> {
-		String name;
-		StereoDisparity<T, GrayF32> alg;
+		public String name;
+		public StereoDisparity<T, GrayF32> alg;
 	}
 
-	public static void main(String[] args) {
+	public static void main( String[] args ) {
 		EvaluateDisparity<GrayU8> app = new EvaluateDisparity<>(GrayU8.class);
 		app.process();
 	}

@@ -46,7 +46,7 @@ allprojects {
         ['boofcv-core', 'boofcv-io', 'boofcv-swing', 'boofcv-ffmpeg', 'boofcv-simulation', 'boofcv-kotlin',
          'boofcv-pdf', 'boofcv-recognition', 'boofcv-reconstruction', 'demonstrations', 'boofcv-learning',
          'applications'].each
-                { String a -> api group: 'org.boofcv', name: a, version: version }
+                { String a -> api("org.boofcv:$a:$version") }
         api group: 'com.google.guava', name: 'guava', version: '17.0'
         api group: 'commons-io', name: 'commons-io', version: '2.6'
         api group: 'args4j', name: 'args4j', version: '2.33'
