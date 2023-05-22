@@ -24,6 +24,12 @@ print("regression_path", regression_path)
 error_log.write("Start Runtime Regression\n")
 error_log.flush()
 check_cd("../../boofcv")
+run_command("git clean -fd")
+run_command("git fetch")
+run_command("git checkout SNAPSHOT")
+run_command("git reset --hard origin/SNAPSHOT")
+run_command("./gradlew clean")
+run_command("./gradlew autogenerate")
 run_command("./gradlew run --console=plain runtimeRegression -Dexec.args="
             "\"--EmailPath {} --LocalSettingsPath {} --ResultsPath {}\"".
             format(email_path,local_settings_path, regression_path))
