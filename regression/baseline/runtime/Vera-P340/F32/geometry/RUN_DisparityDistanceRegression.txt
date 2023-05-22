@@ -1,0 +1,11 @@
+# GENERATOR DisparityDistanceRegression
+# Elapsed time in milliseconds
+
+Summary:
+                              N       Mean      P05      P50      P95      MAX
+  BM5_SAD                     200  28.4529   25.773   28.334  29.7401  99.9112
+  BM5_CENSUS                  200  25.7109  23.6634  24.5159  28.5299  104.842
+  BM5_NCC                     200  35.7144  34.4194  34.9216   37.269  106.973
+  BM_SAD                      200  9.83607  8.77439   9.1788  12.5582  25.3081
+  BM_CENSUS                   200  15.8119  15.4668  15.6499  16.3393  23.3617
+  BM_NCC                      200  17.0299  14.8846  15.8878   21.892   32.126
