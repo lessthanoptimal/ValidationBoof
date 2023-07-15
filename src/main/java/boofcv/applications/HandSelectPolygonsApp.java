@@ -1,9 +1,9 @@
 package boofcv.applications;
 
 import boofcv.common.misc.PointFileCodec;
-import boofcv.demonstrations.shapes.DetectBlackShapePanel;
 import boofcv.gui.BoofSwingUtil;
 import boofcv.gui.DemonstrationBase;
+import boofcv.gui.controls.BaseImageControlPanel;
 import boofcv.gui.feature.VisualizeFeatures;
 import boofcv.gui.feature.VisualizeShapes;
 import boofcv.gui.fiducial.VisualizeFiducial;
@@ -291,7 +291,7 @@ public class HandSelectPolygonsApp extends DemonstrationBase {
 		}
 	}
 
-	class ControlPanel extends DetectBlackShapePanel {
+	class ControlPanel extends BaseImageControlPanel {
 		int numSides = 4;
 
 		JSpinner spinSides = spinner(numSides, 1, 100, 1);

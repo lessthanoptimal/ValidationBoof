@@ -1,8 +1,8 @@
 package boofcv.applications;
 
-import boofcv.demonstrations.shapes.DetectBlackShapePanel;
 import boofcv.gui.BoofSwingUtil;
 import boofcv.gui.DemonstrationBase;
+import boofcv.gui.controls.BaseImageControlPanel;
 import boofcv.gui.fiducial.VisualizeFiducial;
 import boofcv.gui.image.ImageZoomPanel;
 import boofcv.io.UtilIO;
@@ -281,7 +281,7 @@ public class HandSelectAabbRegionsApp extends DemonstrationBase {
 		path.lineTo(scale*region.tl.x, scale*region.tl.y);
 	}
 
-	class ControlPanel extends DetectBlackShapePanel {
+	class ControlPanel extends BaseImageControlPanel {
 
 		public ControlPanel() {
 			selectZoom = spinner(1.0, MIN_ZOOM, MAX_ZOOM, 1);

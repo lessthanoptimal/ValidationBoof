@@ -38,6 +38,7 @@ public class DisparityDistanceRegression extends BaseRegression implements Image
 		out.println("# Computes range error as a function from distance in a simulated planar scene");
 		out.printf("# baseline=%.4f min=%.2f max=%.2f trials=%d\n",
 				evaluator.BASELINE, evaluator.MIN_DISTANCE, evaluator.MAX_DISTANCE, evaluator.trials);
+		out.println("# \"lock\" indicates if the error sign is random. Ideally it should be 0.5.");
 		out.println("# errors are fractional errors relative to true distance");
 		out.println("#         name            lock | err25  err50  | err95  errMAX");
 		out.println();

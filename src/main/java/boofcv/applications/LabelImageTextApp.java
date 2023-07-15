@@ -1,7 +1,7 @@
 package boofcv.applications;
 
-import boofcv.demonstrations.shapes.DetectBlackShapePanel;
 import boofcv.gui.BoofSwingUtil;
+import boofcv.gui.controls.BaseImageControlPanel;
 import boofcv.gui.fiducial.VisualizeFiducial;
 import boofcv.gui.image.ImageZoomPanel;
 import boofcv.gui.image.ShowImages;
@@ -357,7 +357,7 @@ public class LabelImageTextApp extends JPanel {
         }
     }
 
-    public class Controls extends DetectBlackShapePanel {
+    public class Controls extends BaseImageControlPanel {
         JTextField regionLabel = textfield(300, 200);
 
         public Controls() {
