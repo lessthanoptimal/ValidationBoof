@@ -1,5 +1,5 @@
 plugins {
-    id "com.peterabeles.gversion" version "1.10"
+    id "com.peterabeles.gversion" version "1.10.2"
 }
 
 gversion {
@@ -10,7 +10,7 @@ gversion {
 
 allprojects {
     group = 'org.boofcv'
-    version = '0.44-SNAPSHOT'
+    version = '0.44'
 
     apply plugin: 'java-library'
 
@@ -21,7 +21,7 @@ allprojects {
         maven { url = "https://oss.sonatype.org/content/repositories/snapshots/" }
     }
 
-    project.ext.set("jabel_version", '0.4.2')
+    project.ext.set("jabel_version", '1.0.0')
 
     java {
         withJavadocJar()
