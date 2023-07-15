@@ -3,4 +3,4 @@
 
 Scenarios
                               N       Mean      P05      P50      P95      MAX
-  ground_tile                  75  4708.21     4644     4692     4797     5212
+  ground_tile                  75  4772.15     4702     4758     4871     4998

@@ -1,15 +1,16 @@
 # GENERATOR DisparityDistanceRegression
 # Computes range error as a function from distance in a simulated planar scene
 # baseline=0.0800 min=3.00 max=12.00 trials=200
+# "lock" indicates if the error sign is random. Ideally it should be 0.5.
 # errors are fractional errors relative to true distance
 #         name            lock | err25  err50  | err95  errMAX
 
-                  BM5_SAD 0.94 | 0.0158 0.0297 | 0.0559 0.0628
-               BM5_CENSUS 0.94 | 0.0171 0.0335 | 0.0679 0.0748
-                  BM5_NCC 0.87 | 0.0104 0.0205 | 0.3684 0.6598
-                   BM_SAD 0.94 | 0.0155 0.0288 | 0.0556 0.0634
-                BM_CENSUS 0.94 | 0.0172 0.0339 | 0.0685 0.0756
-                   BM_NCC 0.89 | 0.0135 0.0247 | 0.5092 0.6598
-  SGM_ABSOLUTE_DIFFERENCE 0.93 | 0.0294 0.0591 | 0.1503 0.2229
-               SGM_CENSUS 0.92 | 0.0249 0.0511 | 0.1432 0.1964
-   SGM_MUTUAL_INFORMATION 0.88 | 0.0361 0.0696 | 0.2978 0.7425
+                  BM5_SAD 0.92 | 0.0087 0.0158 | 0.0280 0.0488
+               BM5_CENSUS 0.93 | 0.0110 0.0228 | 0.0441 0.0510
+                  BM5_NCC 0.89 | 0.0089 0.0163 | 0.0652 0.0793
+                   BM_SAD 0.90 | 0.0090 0.0147 | 0.0271 0.0484
+                BM_CENSUS 0.93 | 0.0114 0.0236 | 0.0454 0.0523
+                   BM_NCC 0.92 | 0.0098 0.0189 | 0.0780 0.0989
+  SGM_ABSOLUTE_DIFFERENCE 0.89 | 0.0290 0.0565 | 0.1545 0.2117
+               SGM_CENSUS 0.86 | 0.0287 0.0510 | 0.1565 0.2038
+   SGM_MUTUAL_INFORMATION 0.86 | 0.0377 0.0655 | 0.2875 0.7056

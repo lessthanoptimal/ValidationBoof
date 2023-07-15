@@ -1,5 +1,10 @@
 Description of changes to benchmarks and justifications for change in performance from previous versions.
 
+## Version 0.44
+
+- Stereo disparity calculation improved to handle numerical issues of distant objects better
+- MicroQR ignores padding pattern by default
+
 ## Version 0.41
 2022/Sep/02
 
