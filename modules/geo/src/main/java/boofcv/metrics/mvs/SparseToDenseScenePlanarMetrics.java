@@ -43,7 +43,7 @@ public class SparseToDenseScenePlanarMetrics<T extends ImageGray<T>>
 
         // Compute the dense cloud
         long time0 = System.currentTimeMillis();
-        if (!sparseToDense.process(scene,viewIdx_to_ImageID,lookUpImages)) {
+        if (!sparseToDense.process(scene,null,viewIdx_to_ImageID,lookUpImages)) {
             out.printf("%20s FAILED\n",directory.getName());
             return false;
         }

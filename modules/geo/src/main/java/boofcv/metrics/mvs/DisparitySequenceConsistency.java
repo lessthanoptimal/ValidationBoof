@@ -215,7 +215,7 @@ public class DisparitySequenceConsistency<Image extends ImageGray<Image>> {
 
     private void errorMetricsReprojected(int idx1, GrayF32 inverse1, int idx2, GrayF32 inverse2) {
         var intrinsic = new CameraPinholeBrown();
-        BundleAdjustmentOps.convert(scene.getViewCamera(idx1).model, inverse1.width, inverse1.height, intrinsic);
+        BundleAdjustmentOps.convert(scene.getViewCamera(idx1).model, null, inverse1.width, inverse1.height, intrinsic);
         var pixelToNorm = new LensDistortionBrown(intrinsic).undistort_F64(true, false);
         var normToPixel = new LensDistortionBrown(intrinsic).distort_F64(false, true);
 
@@ -292,7 +292,7 @@ public class DisparitySequenceConsistency<Image extends ImageGray<Image>> {
     private void displayCloud(int imageIdx, GrayF32 inverseDepth) {
         BufferedImage image = loadBufferedImage(imageIdx, directory);
         var intrinsic = new CameraPinholeBrown();
-        BundleAdjustmentOps.convert(scene.getViewCamera(imageIdx).model,
+        BundleAdjustmentOps.convert(scene.getViewCamera(imageIdx).model, null,
                 image.getWidth(), image.getHeight(), intrinsic);
 
         var pixelToNorm = new LensDistortionBrown(intrinsic).undistort_F64(true, false);
@@ -336,8 +336,8 @@ public class DisparitySequenceConsistency<Image extends ImageGray<Image>> {
 
         Se3_F64 a_to_b = scene.getViewToView(idx1, idx2);
 
-        rectParam.setView1(scene.getViewCamera(idx1).model, imgA.width, imgA.height);
-        rectParam.processView2(scene.getViewCamera(idx2).model, imgB.width, imgB.height, a_to_b);
+        rectParam.setView1(scene.getViewCamera(idx1).model, null, imgA.width, imgA.height);
+        rectParam.processView2(scene.getViewCamera(idx2).model, null, imgB.width, imgB.height, a_to_b);
 
 //        var stereoParam = new StereoParameters();
 //        stereoParam.right_to_left.setTo(a_to_b.invert(null));
