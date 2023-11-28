@@ -5,6 +5,7 @@ import boofcv.abst.geo.calibration.CalibrateMultiPlanar;
 import boofcv.abst.geo.calibration.CalibrateMultiPlanar.CameraStatistics;
 import boofcv.abst.geo.calibration.DetectMultiFiducialCalibration;
 import boofcv.alg.fiducial.calib.ConfigCalibrationTarget;
+import boofcv.alg.geo.calibration.CalibrationObservation;
 import boofcv.alg.geo.calibration.CalibrationObservationSet;
 import boofcv.alg.geo.calibration.SynchronizedCalObs;
 import boofcv.common.*;
@@ -123,9 +124,10 @@ public class CalibrateMultiRegression extends BaseRegression implements ImageReg
                 CalibrationObservationSet set = frameObs.cameras.grow();
                 set.cameraID = camIdx;
                 for (int i = 0; i < detector.getDetectionCount(); i++) {
-                    if (detector.getMarkerID(i) != 0)
+                    CalibrationObservation obs = detector.getDetectedPoints(i);
+                    if (obs.target != 0)
                         continue;
-                    set.targets.grow().setTo(detector.getDetectedPoints(i));
+                    set.targets.grow().setTo(obs);
                     break;
                 }
             }

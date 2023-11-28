@@ -34,7 +34,8 @@ public class CalibrateFromDetectedPoints {
                 null, new ConfigGridDimen(7, 5, 30));
         var zhang99 = new CalibrationPlanarGridZhang99(
                 new Zhang99CameraBrown(true, tangential, 2));
-        zhang99.setLayout(targetDesc.getLayout());
+
+        zhang99.setLayouts(List.of(targetDesc.getLayout()));
 
         List<CalibrationObservation> left = new ArrayList<>();
         List<CalibrationObservation> right = new ArrayList<>();
