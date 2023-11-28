@@ -11,7 +11,6 @@ import boofcv.factory.geo.ConfigBundleAdjustment;
 import boofcv.factory.geo.FactoryMultiView;
 import boofcv.io.geo.CodecBundleAdjustmentInTheLarge;
 import boofcv.misc.BoofMiscOps;
-import org.ddogleg.optimization.lm.ConfigLevenbergMarquardt;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -49,12 +48,10 @@ public class BundleAdjustmentFRegression extends BaseRegression implements FileR
 
     @Override
     public void process() throws IOException {
-        ConfigLevenbergMarquardt configLM = new ConfigLevenbergMarquardt();
-        configLM.mixture = 0.99;
-        configLM.dampeningInitial = 1e-4;
-        configLM.hessianScaling = true;
-        ConfigBundleAdjustment configBA = new ConfigBundleAdjustment();
-        configBA.configOptimizer = configLM;
+        var configBA = new ConfigBundleAdjustment();
+        configBA.optimizer.lm.mixture = 0.99;
+        configBA.optimizer.lm.dampeningInitial = 1e-4;
+        configBA.optimizer.lm.hessianScaling = true;
         BundleAdjustment<SceneStructureMetric> sba = FactoryMultiView.bundleSparseMetric(configBA);
         evaluate(sba,"SchurLM_DSCC");
 
