@@ -14,7 +14,7 @@ def run_script(script_name):
     if not os.system("python3 " + script_name):
         return
     sys.stderr.write("Failed to run " + script_name + "\n")
-    send_email("email_login.txt", "Failed: " + script_name, sys.stderr)
+    send_email("../email_login.txt", "Failed: " + script_name, sys.stderr)
 
 
 run_script("regression_performance.py")
