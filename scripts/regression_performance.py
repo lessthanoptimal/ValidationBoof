@@ -39,16 +39,20 @@ for lib in project_list:
     run_command("./gradlew PublishToMavenLocal")
 
 # Now it's time to build
-error_log.write("Building regression\n")
+error_log.write("Updating regression repo\n")
 error_log.flush()
 check_cd(project_home)
 run_command("git checkout SNAPSHOT")
 run_command("git fetch")
 run_command("git reset --hard origin/SNAPSHOT")
 # run_command("git clean -f") <-- can't do this because it will zap the email_login.txt file!
+
+error_log.write("Building regression\n")
+error_log.flush()
 run_command("./gradlew clean")
 run_command("./gradlew moduleJars")
 run_command("./gradlew regressionJar")
+
 error_log.write("Starting regression\n")
 error_log.flush()
 run_command("java -jar regression.jar")
