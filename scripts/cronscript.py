@@ -13,7 +13,7 @@ os.chdir(os.path.dirname(os.path.realpath(__file__)))
 def run_script(script_name):
     if not os.system("python3 " + script_name):
         return
-    sys.stderr.print("Failed to run " + script_name)
+    sys.stderr.write("Failed to run " + script_name + "\n")
     send_email("email_login.txt", "Failed: " + script_name, sys.stderr)
 
 
