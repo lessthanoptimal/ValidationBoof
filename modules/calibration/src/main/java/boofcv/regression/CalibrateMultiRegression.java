@@ -94,8 +94,10 @@ public class CalibrateMultiRegression extends BaseRegression implements ImageReg
         }
 
         // Load list of images in for each camera
-        List<List<String>> cameras = new ArrayList<>();
-        for (var child : Objects.requireNonNull(dataDir.listFiles())) {
+        var cameras = new ArrayList<List<String>>();
+        var listDataFiles = Arrays.asList(Objects.requireNonNull(dataDir.listFiles()));
+        Collections.sort(listDataFiles);
+        for (var child : listDataFiles) {
             if (!child.isDirectory())
                 continue;
             cameras.add(UtilIO.listSmartImages(child.getPath(), true));
