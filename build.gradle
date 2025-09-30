@@ -45,7 +45,7 @@ allprojects {
 
         ['boofcv-core', 'boofcv-io', 'boofcv-swing', 'boofcv-ffmpeg', 'boofcv-simulation', 'boofcv-kotlin',
          'boofcv-pdf', 'boofcv-recognition', 'boofcv-reconstruction', 'demonstrations', 'boofcv-learning',
-         'applications'].each
+         'applications', 'boofcv-deepboof'].each
                 { String a -> api("org.boofcv:$a:$version") }
         api group: 'com.google.guava', name: 'guava', version: '33.2.0-jre'
         api group: 'args4j', name: 'args4j', version: '2.33'

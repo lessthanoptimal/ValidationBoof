@@ -23,6 +23,7 @@ import georegression.metric.UtilAngle;
 import georegression.struct.point.Point2D_F64;
 import georegression.struct.se.Se3_F64;
 import georegression.struct.se.SpecialEuclideanOps_F64;
+import org.apache.pdfbox.Loader;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.rendering.PDFRenderer;
 import org.ddogleg.struct.DogArray_F64;
@@ -219,8 +220,7 @@ public class RenderDocumentViewsApp {
 
     @NotNull
     private GrayF32 loadMarkerImage() {
-        try {
-            PDDocument document = PDDocument.load(new File(inputFile));
+        try (PDDocument document = Loader.loadPDF(new File(inputFile))) {
             PDFRenderer renderer = new PDFRenderer(document);
             RenderingHints r = new RenderingHints(null);
             // Anti aliasing isn't turned on since it introduces a bias
