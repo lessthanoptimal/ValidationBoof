@@ -1,0 +1,47 @@
+# GENERATOR BackgroundModelRegression
+# Elapsed time in milliseconds
+
+basic-gray
+                              N       Mean      P05      P50      P95      MAX
+  firerubixcube              1373  .209752  .164129   .19651  .252606  6.96262
+  yaser_lighting             7263  .058338  .021961  .022783  .213482  6.96262
+  yaser_walking              7763  .062464  .021992  .022813  .211889  6.96262
+
+gaussian-gray
+                              N       Mean      P05      P50      P95      MAX
+  firerubixcube              1373  .315947  .203273  .235674  .693065  9.72737
+  yaser_lighting             7263  .090547  .031549  .035336  .296528  9.72737
+  yaser_walking              7763  .109967   .03156  .035717  .416735  9.72737
+
+gmm-gray
+                              N       Mean      P05      P50      P95      MAX
+  firerubixcube              1373    2.805  1.90305  2.85184  3.31457  7.69046
+  yaser_lighting             7263   .76088  .213121  .262744  3.04251  7.69046
+  yaser_walking              7763  .796105  .214284  .267754  3.02868  7.69046
+
+basic-rgb
+                              N       Mean      P05      P50      P95      MAX
+  firerubixcube              1373  1.03575  .973883  1.01178  1.07251  19.5452
+  yaser_lighting             7263  .313289  .141225  .144332  1.03254  19.5452
+  yaser_walking              7763  .336918  .141236  .144893  1.02997  19.5452
+
+gaussian-rgb
+                              N       Mean      P05      P50      P95      MAX
+  firerubixcube              1373  2.13013  1.88147   2.0786  2.45327  14.1141
+  yaser_lighting             7263  .648314  .274557  .286479  2.24658  14.1141
+  yaser_walking              7763  .709416  .274597  .293292  2.23363  14.1141
+
+gmm-rgb
+                              N       Mean      P05      P50      P95      MAX
+  firerubixcube              1373  4.43413  3.60469   4.4655  5.12676  28.8052
+  yaser_lighting             7263  1.20476  .342494  .424549  4.82327  28.8052
+  yaser_walking              7763  1.25695   .34476   .43064  4.80543  28.8052
+
+Summary:
+                              N       Mean      P05      P50      P95      MAX
+  basic-gray                16399  .072968  .022011  .022853  .221387  6.96262
+  gaussian-gray             16399  .118612  .031569  .036479  .418388  9.72737
+  gmm-gray                  16399  .948698  .214904  .274717  3.10186  7.69046
+  basic-rgb                 16399  .384963  .141236  .144983  1.04124  19.5452
+  gaussian-rgb              16399  .801303  .274627  .304142  2.30393  14.1141
+  gmm-rgb                   16399  1.49984  .346282  .442503    4.894  28.8052

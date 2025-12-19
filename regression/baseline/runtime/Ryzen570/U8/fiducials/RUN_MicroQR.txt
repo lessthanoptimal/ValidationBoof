@@ -1,0 +1,30 @@
+# GENERATOR MicroQrDetectionRegression
+# Elapsed time in milliseconds
+
+default
+                              N       Mean      P05      P50      P95      MAX
+  /angled                       1  9.84487  9.84487  9.84487  9.84487  9.84487
+  /lots                         4  67.8747  24.1053  48.5533  52.5743  146.266
+  /small                        2  4.42396  2.44884  2.44884  2.44884  6.39908
+  /standard                     1  4.44506  4.44506  4.44506  4.44506  4.44506
+  synthetic/axis_blur_0        20  29.3842  27.8249  29.0502  31.3753  33.3024
+  synthetic/axis_blur_1        20  28.3459  27.1134  28.0188  30.1998  30.3531
+  synthetic/axis_blur_2        20  28.1972  26.8315  27.8442  29.8207  30.5625
+  synthetic/axis_blur_3        20  28.1413  26.6967  27.7901  29.9734  30.4568
+  synthetic/axis_blur_4        20  28.0633  26.5452   27.858  29.9061  29.9823
+  synthetic/fade               12   28.569  27.9408   28.172   29.279  31.2793
+  synthetic/fisheye_blur_0     30  29.5909  29.0058   29.562  30.1309  30.2004
+  synthetic/fisheye_blur_1     30  30.2308  29.1412  29.8209  32.2988   33.539
+  synthetic/fisheye_blur_2     30  29.6952  29.1589  29.6896  30.2384  30.3671
+  synthetic/fisheye_blur_3     30  29.5135  29.0892  29.5995   29.874  29.9636
+  synthetic/fisheye_blur_4     30  29.4679  28.8963  29.3508  30.0023  30.2796
+  synthetic/fisheye_extreme     30  22.8104  21.9665  22.5222  23.6872  25.8031
+  synthetic/linear_blur        42  28.8195  27.9266  28.3737  30.4094  32.5852
+  synthetic/move_away          40  30.6232   25.543  31.1986  31.4948  31.9675
+  synthetic/rotate_z           40  26.5861  26.1672  26.4456   27.296  28.4924
+  synthetic/shadows            30  28.0973  27.6398  27.9707  28.5939  30.0403
+  synthetic/spotlight          30  28.6206  27.9711  28.5639  29.4713  29.9637
+
+Summary:
+                              N       Mean      P05      P50      P95      MAX
+  summary                     482  28.6716  22.9242  28.9835  31.3492  146.266

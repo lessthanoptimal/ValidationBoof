@@ -1,0 +1,107 @@
+---- Native Access Info
+OS: Ubuntu 24.04.2 LTS
+CPU: AMD Ryzen 9 5950X 16-Core Processor
+Ave Load: 1m=4.93 5m=2.79 15m=1.8
+----
+Runtime.getRuntime().availableProcessors(): 32
+Runtime.getRuntime().freeMemory(): 1027557272
+Runtime.getRuntime().totalMemory(): 1073741824
+=========== java.specification.version
+17
+=========== sun.jnu.encoding
+UTF-8
+=========== java.class.path
+regression.jar
+=========== java.vm.vendor
+Azul Systems, Inc.
+=========== sun.arch.data.model
+64
+=========== java.vendor.url
+http://www.azul.com/
+=========== java.vm.specification.version
+17
+=========== os.name
+Linux
+=========== sun.java.launcher
+SUN_STANDARD
+=========== user.country
+US
+=========== sun.boot.library.path
+/opt/jdk/zulu17.50.19-ca-jdk17.0.11-linux_x64/lib
+=========== sun.java.command
+regression.jar
+=========== jdk.debug
+release
+=========== sun.cpu.endian
+little
+=========== user.home
+/home/pja
+=========== user.language
+en
+=========== sun.stderr.encoding
+UTF-8
+=========== java.specification.vendor
+Oracle Corporation
+=========== java.version.date
+2024-04-16
+=========== java.home
+/opt/jdk/zulu17.50.19-ca-jdk17.0.11-linux_x64
+=========== file.separator
+/
+=========== java.vm.compressedOopsMode
+Zero based
+=========== line.separator
+
+
+=========== sun.stdout.encoding
+UTF-8
+=========== java.vm.specification.vendor
+Oracle Corporation
+=========== java.specification.name
+Java Platform API Specification
+=========== sun.management.compiler
+HotSpot 64-Bit Tiered Compilers
+=========== java.runtime.version
+17.0.11+9-LTS
+=========== user.name
+pja
+=========== path.separator
+:
+=========== os.version
+6.14.0-36-generic
+=========== java.runtime.name
+OpenJDK Runtime Environment
+=========== file.encoding
+UTF-8
+=========== java.vm.name
+OpenJDK 64-Bit Server VM
+=========== java.vendor.version
+Zulu17.50+19-CA
+=========== java.vendor.url.bug
+http://www.azul.com/support/
+=========== java.io.tmpdir
+/tmp
+=========== java.version
+17.0.11
+=========== user.dir
+/home/pja/projects/ValidationBoof
+=========== sun.java2d.uiScale
+2
+=========== os.arch
+amd64
+=========== java.vm.specification.name
+Java Virtual Machine Specification
+=========== native.encoding
+UTF-8
+=========== java.library.path
+:/home/pja/projects/thirdparty/opencv-3.4.13/lib:/usr/java/packages/lib:/usr/lib64:/lib64:/lib:/usr/lib
+=========== java.vm.info
+mixed mode, sharing
+=========== java.vendor
+Azul Systems, Inc.
+=========== java.vm.version
+17.0.11+9-LTS
+=========== sun.io.unicode.encoding
+UnicodeLittle
+=========== java.class.version
+61.0

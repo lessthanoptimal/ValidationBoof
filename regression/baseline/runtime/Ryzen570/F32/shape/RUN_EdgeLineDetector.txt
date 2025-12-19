@@ -1,0 +1,8 @@
+# GENERATOR DetectLineRegression
+# Elapsed time in milliseconds
+
+Summary:
+                              N       Mean      P05      P50      P95      MAX
+  Polar                         2  4.97665  4.91212  4.91212  4.91212  5.04117
+  Foot                          2  4.87468  4.84969  4.84969  4.84969  4.89966
+  FootSub                       2   2.3391  2.13506  2.13506  2.13506  2.54314

@@ -1,0 +1,7 @@
+# GENERATOR CalibrateMultiRegression
+# All times are in milliseconds
+
+Default:
+                              N       Mean      P05      P50      P95      MAX
+  trinocular_detect            30  122.974  109.159  116.109  131.388    291.7
+  trinocular_calib              1  563.561  563.561  563.561  563.561  563.561

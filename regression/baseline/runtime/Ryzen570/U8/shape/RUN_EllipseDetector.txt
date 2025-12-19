@@ -1,0 +1,23 @@
+# GENERATOR DetectEllipseRegression
+# Elapsed time in milliseconds
+
+Global
+                              N       Mean      P05      P50      P95      MAX
+  cardboard                     6  7.98706   2.0985  3.52468  6.66315  29.2281
+  outdoors                     10  2.12825  1.75506  2.02576  2.45862  2.46246
+
+Local
+                              N       Mean      P05      P50      P95      MAX
+  cardboard                     6  5.14222  3.14892  4.81213  6.32869  6.58532
+  outdoors                     10  13.9332  7.97703  13.8822  16.3529   20.483
+
+LocalPixel
+                              N       Mean      P05      P50      P95      MAX
+  cardboard                     6  2.79448  1.55719  2.99118  3.32756  3.47328
+  outdoors                     10  11.6744  6.46544   11.867  15.2472  16.5486
+
+Summary:
+                              N       Mean      P05      P50      P95      MAX
+  Global                       16   4.3253  1.75506  2.35545  6.66315  29.2281
+  Local                        16  10.6366  3.14892  9.80087  16.3529   20.483
+  LocalPixel                   16  8.34445  1.55719  8.14564  15.2472  16.5486

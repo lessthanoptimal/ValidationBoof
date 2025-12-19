@@ -1,0 +1,35 @@
+# GENERATOR AztecCodeDetectionRegression
+# Elapsed time in milliseconds
+
+default
+                              N       Mean      P05      P50      P95      MAX
+  /crumpled_layers_02          13  8.84984   6.2217  8.07883  12.1317  16.1007
+  /crumpled_layers_17          13  10.9447  9.42316  10.6243  13.1646   13.285
+  /documents                    4  5.62758  4.53135  4.97456  5.70888  7.29554
+  /image_12mp                   6  88.4828  54.1069  67.1251  114.723  139.614
+  /layers_02                   11  3.89415  3.71699  3.86353  4.09748  4.23341
+  /layers_05                   11  4.27222  4.11311  4.25985  4.38903  4.39805
+  /layers_17                   17   7.9141  6.64647  7.27218  10.8145  11.6897
+  /monitor                     18  12.8644  9.40085  10.9084  20.0173  21.3203
+  /outdoors                    17   15.206  10.3406  12.9714  24.0844  24.1133
+  synthetic/axis_blur_0        20  29.9481  28.6694  29.4867   31.766  32.3145
+  synthetic/axis_blur_1        20  29.8326  28.5303  29.4256  31.4658  31.6371
+  synthetic/axis_blur_2        20  30.8868  28.5262  30.5767  32.9055  36.1915
+  synthetic/axis_blur_3        20  29.9588  28.6495  29.6015  31.6759  32.6632
+  synthetic/axis_blur_4        20  29.7565  28.5418  29.5089  31.3894  31.4376
+  synthetic/fade               12   30.285  29.4512  29.9008  31.5747  33.8938
+  synthetic/fisheye_blur_0     30  31.0304  30.6643  31.0221  31.3899   31.487
+  synthetic/fisheye_blur_1     30  31.0567  30.6417  31.0643  31.3652  31.7521
+  synthetic/fisheye_blur_2     30  31.4876  30.5285  31.0551  34.3407   34.464
+  synthetic/fisheye_blur_3     30  30.9122  30.2694  30.8723  31.4088  31.9635
+  synthetic/fisheye_blur_4     30   30.972  30.3908  30.9411  31.4372  31.8257
+  synthetic/fisheye_extreme     30  24.3801  23.2823  24.1617  25.1839  28.6115
+  synthetic/linear_blur        42  29.7675  29.3855  29.6956  30.3029    30.99
+  synthetic/move_away          40  33.0852   26.184  33.2553  36.1193  39.3145
+  synthetic/rotate_z           40  28.2255  27.8358  28.1865  28.7454  28.8282
+  synthetic/shadows            30   29.634  29.2129  29.5971  29.9892  30.1981
+  synthetic/spotlight          30  30.3022   29.439  30.0404  31.3504   32.273
+
+Summary:
+                              N       Mean      P05      P50      P95      MAX
+  summary                     584  27.0414  6.78823  29.7973  33.3601  139.614
