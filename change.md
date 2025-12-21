@@ -1,5 +1,9 @@
 Description of changes to benchmarks and justifications for change in performance from previous versions.
 
+# Version 1.3.0
+
+- Mean and Gaussian filters produce results within float precision. Order of ops changed
+
 ## Version 0.44
 
 - Stereo disparity calculation improved to handle numerical issues of distant objects better
