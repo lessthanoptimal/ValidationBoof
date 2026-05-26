@@ -3,6 +3,7 @@ package boofcv.metrics.vo;
 import boofcv.abst.feature.detect.interest.ConfigPointDetector;
 import boofcv.abst.tracker.PointTrack;
 import boofcv.abst.tracker.PointTracker;
+import boofcv.alg.filter.derivative.DerivativeType;
 import boofcv.alg.tracker.klt.ConfigPKlt;
 import boofcv.core.image.GeneralizedImageOps;
 import boofcv.factory.tracker.FactoryPointTracker;
@@ -308,7 +309,7 @@ public class DebugTrackerVideo <T extends ImageGray<T>> implements MouseListener
 //		ImagePointTracker<GrayF32> tracker =
 //				FactoryPointSequentialTracker.dda_FH_SURF(500,2,200,1,true,imageType);
 		PointTracker<GrayF32> tracker =
-				FactoryPointTracker.klt(configPKlt, configDet, imageType, GrayF32.class);
+				FactoryPointTracker.klt(configPKlt, DerivativeType.SOBEL, configDet, imageType, GrayF32.class);
 
 		DebugTrackerVideo app = new DebugTrackerVideo(tracker,data,imageType);
 		app.processSequence();

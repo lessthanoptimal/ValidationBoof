@@ -5,6 +5,7 @@ import boofcv.abst.feature.detect.interest.ConfigPointDetector;
 import boofcv.abst.feature.detect.interest.PointDetectorTypes;
 import boofcv.abst.sfm.d3.StereoVisualOdometry;
 import boofcv.abst.tracker.PointTracker;
+import boofcv.alg.filter.derivative.DerivativeType;
 import boofcv.alg.filter.derivative.GImageDerivativeOps;
 import boofcv.alg.tracker.klt.ConfigPKlt;
 import boofcv.common.*;
@@ -49,42 +50,42 @@ public class StereoVisualOdometryRegression extends BaseRegression implements Im
 	}
 
 	@Override
-	public void process(ImageDataType type) throws IOException {
+	public void process( ImageDataType type ) throws IOException {
 		List<Info> all = new ArrayList<>();
 
 		Class bandType = ImageDataType.typeToSingleClass(type);
 
-		all.add( createMonoDepth(bandType));
-		all.add( createDualTrackerPnP(bandType));
-		all.add( createQuadPnP(bandType));
+		all.add(createMonoDepth(bandType));
+		all.add(createDualTrackerPnP(bandType));
+		all.add(createQuadPnP(bandType));
 
 		runtime = new RuntimeSummary();
-		runtime.initializeLog(directoryRuntime,getClass(),"RUN_StereoVisOdom.txt");
+		runtime.initializeLog(directoryRuntime, getClass(), "RUN_StereoVisOdom.txt");
 
-		for( Info a : all ) {
+		for (Info a : all) {
 			summaryRuntimeMS.reset();
 			runtime.out.println(a.name);
 			runtime.printUnitsRow(false);
 
-			out = new PrintStream(new File(directoryMetrics,"ACC_StereoVisOdom_"+a.name+".txt"));
+			out = new PrintStream(new File(directoryMetrics, "ACC_StereoVisOdom_" + a.name + ".txt"));
 			BoofRegressionConstants.printGenerator(out, getClass());
-			out.println("# Evaluating: "+a.name);
+			out.println("# Evaluating: " + a.name);
 
 			try {
 				SequenceStereoImages data = new WrapParseLeuven07(new ParseLeuven07("data/leuven07"));
-				evaluate(a,data,"Leuven07");
-				for( int i = 0; i < 1; i++ ) { // can do up to 11
-					String sequence = String.format("%02d",i);
-					data = new WrapParseKITTI("data/KITTI",sequence);
-					evaluate(a,data,"KITTI"+sequence);
+				evaluate(a, data, "Leuven07");
+				for (int i = 0; i < 1; i++) { // can do up to 11
+					String sequence = String.format("%02d", i);
+					data = new WrapParseKITTI("data/KITTI", sequence);
+					evaluate(a, data, "KITTI" + sequence);
 				}
-			} catch( RuntimeException e ) {
-				errorLog.println("FAILED to process "+a.name);
+			} catch (RuntimeException e) {
+				errorLog.println("FAILED to process " + a.name);
 				e.printStackTrace(errorLog);
 				errorLog.println("---------------------------------------------------");
 			}
 			runtime.out.println();
-			runtime.saveSummary(a.name,summaryRuntimeMS);
+			runtime.saveSummary(a.name, summaryRuntimeMS);
 
 			out.close();
 		}
@@ -95,29 +96,30 @@ public class StereoVisualOdometryRegression extends BaseRegression implements Im
 		runtime.out.close();
 	}
 
-	private void evaluate( Info vo , SequenceStereoImages data , String dataName ) {
+	private void evaluate( Info vo, SequenceStereoImages data, String dataName ) {
 
 		out.println("\n###################################################################################");
-		out.println("# Dataset: "+dataName);
+		out.println("# Dataset: " + dataName);
 		out.println();
 
 		try {
-			EvaluateVisualOdometryStereo evaluator = new EvaluateVisualOdometryStereo(data,vo.vo,vo.imageType);
+			EvaluateVisualOdometryStereo evaluator = new EvaluateVisualOdometryStereo(data, vo.vo, vo.imageType);
 
 			evaluator.setOutputStream(out);
 			evaluator.initialize();
-			while( evaluator.nextFrame() ){}
+			while (evaluator.nextFrame()) {
+			}
 			summaryRuntimeMS.addAll(evaluator.processingTimeMS);
-			runtime.printStatsRow(dataName,evaluator.processingTimeMS);
-		} catch( RuntimeException e ) {
-			errorLog.println("FAILED "+vo.name+" on "+dataName);
+			runtime.printStatsRow(dataName, evaluator.processingTimeMS);
+		} catch (RuntimeException e) {
+			errorLog.println("FAILED " + vo.name + " on " + dataName);
 			e.printStackTrace(errorLog);
 			errorLog.println("---------------------------------------------------");
 		}
 		out.flush();
 	}
 
-	public static Info createMonoDepth(Class bandType ) {
+	public static Info createMonoDepth( Class bandType ) {
 		Class derivType = GImageDerivativeOps.getDerivativeType(bandType);
 
 		ConfigDisparityBM configDisparity = new ConfigDisparityBM();
@@ -159,8 +161,8 @@ public class StereoVisualOdometryRegression extends BaseRegression implements Im
 		configVO.keyframes.geoMinCoverage = 0.4;
 
 		StereoDisparitySparse<GrayF32> disparity = FactoryStereoDisparity.sparseRectifiedBM(configDisparity, bandType);
-		PointTracker tracker = FactoryPointTracker.klt(configKlt, configDet,bandType, derivType);
-		StereoVisualOdometry visodom = FactoryVisualOdometry.stereoMonoPnP(configVO,disparity,tracker,bandType);
+		PointTracker tracker = FactoryPointTracker.klt(configKlt, DerivativeType.SOBEL, configDet, bandType, derivType);
+		StereoVisualOdometry visodom = FactoryVisualOdometry.stereoMonoPnP(configVO, disparity, tracker, bandType);
 
 		Info ret = new Info();
 		ret.name = "StereoDepth";
@@ -208,7 +210,7 @@ public class StereoVisualOdometryRegression extends BaseRegression implements Im
 		Info ret = new Info();
 		ret.name = "DualPnP";
 		ret.imageType = ImageType.single(bandType);
-		ret.vo = FactoryVisualOdometry.stereoDualTrackerPnP(config,bandType);
+		ret.vo = FactoryVisualOdometry.stereoDualTrackerPnP(config, bandType);
 
 		return ret;
 	}
@@ -246,7 +248,7 @@ public class StereoVisualOdometryRegression extends BaseRegression implements Im
 
 		config.associateF2F.greedy.forwardsBackwards = false;
 		config.associateF2F.greedy.scoreRatioThreshold = 1.0;
-		config.associateF2F.maximumDistancePixels.setRelative(0.15,0);
+		config.associateF2F.maximumDistancePixels.setRelative(0.15, 0);
 
 		config.epipolarTol = 0.5;
 
@@ -264,10 +266,9 @@ public class StereoVisualOdometryRegression extends BaseRegression implements Im
 		public StereoVisualOdometry vo;
 	}
 
-	public static void main(String[] args) throws IOException, IllegalAccessException, InstantiationException, ClassNotFoundException {
+	public static void main( String[] args ) throws IOException, IllegalAccessException, InstantiationException, ClassNotFoundException {
 		BoofRegressionConstants.clearCurrentResults();
-		RegressionRunner.main(new String[]{StereoVisualOdometryRegression.class.getName(),ImageDataType.F32.toString()});
+		RegressionRunner.main(new String[]{StereoVisualOdometryRegression.class.getName(), ImageDataType.F32.toString()});
 //		RegressionRunner.main(new String[]{StereoVisualOdometryRegression.class.getName(),ImageDataType.U8.toString()});
 	}
-
 }

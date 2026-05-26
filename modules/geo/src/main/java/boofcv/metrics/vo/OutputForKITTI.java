@@ -5,6 +5,7 @@ import boofcv.abst.feature.detect.interest.ConfigPointDetector;
 import boofcv.abst.feature.detect.interest.PointDetectorTypes;
 import boofcv.abst.sfm.d3.StereoVisualOdometry;
 import boofcv.abst.tracker.PointTracker;
+import boofcv.alg.filter.derivative.DerivativeType;
 import boofcv.alg.tracker.klt.ConfigPKlt;
 import boofcv.core.image.GeneralizedImageOps;
 import boofcv.factory.disparity.ConfigDisparityBM;
@@ -58,7 +59,7 @@ public class OutputForKITTI {
 				for( int row = 0; row < 3; row++ ) {
 					for( int i = 0; i < 3; i++ )
 						output.printf("%15e ", found.getR().get(row, i));
-					output.printf("%15e", found.getT().getIdx(row));
+					output.printf("%15e", found.getT().get(row));
 					if( row != 2 )
 						output.print(" ");
 				}
@@ -86,7 +87,7 @@ public class OutputForKITTI {
 			configDet.general.radius = 3;
 			configDet.general.threshold = 1;
 
-			PointTracker<GrayF32> tracker = FactoryPointTracker.klt(configKlt, configDet, imageType, derivType);
+			PointTracker<GrayF32> tracker = FactoryPointTracker.klt(configKlt, DerivativeType.SOBEL, configDet, imageType, derivType);
 
 			ConfigDisparityBM configDisparity = new ConfigDisparityBM();
 			configDisparity.errorType = DisparityError.SAD;

@@ -6,6 +6,7 @@ import boofcv.abst.feature.detect.interest.PointDetectorTypes;
 import boofcv.abst.sfm.AccessPointTracks3D;
 import boofcv.abst.sfm.d3.StereoVisualOdometry;
 import boofcv.abst.tracker.PointTracker;
+import boofcv.alg.filter.derivative.DerivativeType;
 import boofcv.alg.filter.derivative.GImageDerivativeOps;
 import boofcv.alg.tracker.klt.ConfigPKlt;
 import boofcv.factory.disparity.ConfigDisparityBM;
@@ -301,7 +302,7 @@ public class DebugVisualOdometryStereo<T extends ImageBase<T>>
 			configDet.general.radius = 3;
 			configDet.general.threshold = 1;
 
-			tracker = FactoryPointTracker.klt(configKlt, configDet, bandType, derivType);
+			tracker = FactoryPointTracker.klt(configKlt, DerivativeType.SOBEL, configDet, bandType, derivType);
 		}
 
 		StereoVisualOdometry alg = StereoVisualOdometryRegression.createDualTrackerPnP(bandType).vo;

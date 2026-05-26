@@ -27,19 +27,19 @@ public class ComparePreviousCorner {
 	List<ImageDataType> imageTypes = new ArrayList<ImageDataType>();
 
 	PrintStream out;
-	public PrintStream errorLog=System.err;
+	public PrintStream errorLog = System.err;
 
 	public ComparePreviousCorner( PrintStream out ) {
 
 		this.out = out;
 
-		imageTypes.add( ImageDataType.U8);
-		imageTypes.add( ImageDataType.F32);
+		imageTypes.add(ImageDataType.U8);
+		imageTypes.add(ImageDataType.F32);
 	}
 
 	public void generateAll() {
-		for( ImageDataType type : imageTypes ) {
-			generateAll( ImageDataType.typeToSingleClass(type));
+		for (ImageDataType type : imageTypes) {
+			generateAll(ImageDataType.typeToSingleClass(type));
 		}
 	}
 
@@ -47,14 +47,16 @@ public class ComparePreviousCorner {
 
 		Class derivType = GImageDerivativeOps.getDerivativeType(imageType);
 
-		List<AlgInfo> detectors = createAlgorithms(imageType,derivType);
-
 		AnyImageDerivative anyDeriv = GImageDerivativeOps.createAnyDerivatives(DerivativeType.THREE,
 				imageType, derivType);
 
+		List<AlgInfo> detectors = createAlgorithms(imageType, derivType, anyDeriv.getEdgeDivisor());
+
+
+
 		for (int i = 0; i < detectors.size(); i++) {
 			ImageGray input = UtilImageIO.loadImage(GenerateCornerFeatureFiles.ImagePath, imageType);
-			if( input == null ) {
+			if (input == null) {
 				errorLog.println("Can't load " + GenerateCornerFeatureFiles.ImagePath);
 				continue;
 			}
@@ -74,15 +76,15 @@ public class ComparePreviousCorner {
 				List<Point2D_F64> expected = PointFileCodec.load(GenerateCornerFeatureFiles.outputDir + "/" + fileName);
 
 				compareLists(fileName, found, expected);
-			} catch( RuntimeException e ){
+			} catch (RuntimeException e) {
 				e.printStackTrace();
 				errorLog.println(e);
 			}
 		}
 	}
 
-	private void compareLists( String name , List<Point2D_F64> found , List<Point2D_F64> expected ) {
-		int change = found.size()-expected.size();
+	private void compareLists( String name, List<Point2D_F64> found, List<Point2D_F64> expected ) {
+		int change = found.size() - expected.size();
 
 		double residual = 0;
 		for (int i = 0; i < found.size(); i++) {
@@ -91,36 +93,35 @@ public class ComparePreviousCorner {
 			for (int j = 0; j < expected.size(); j++) {
 				Point2D_F64 p = expected.get(j);
 				double d = p.distance2(f);
-				if( d < best ) {
+				if (d < best) {
 					best = d;
 				}
 			}
 			residual += best;
 		}
-		out.println(name + " " + change + " "+residual);
+		out.println(name + " " + change + " " + residual);
 	}
 
-
-	private List<Point2D_F64> computeCorners(AlgInfo info) {
+	private List<Point2D_F64> computeCorners( AlgInfo info ) {
 		List<Point2D_F64> points = new ArrayList<Point2D_F64>();
-		if( info.detector.isDetectMaximums()) {
+		if (info.detector.isDetectMaximums()) {
 			QueueCorner corners = info.detector.getMaximums();
 			for (int j = 0; j < corners.size; j++) {
 				Point2D_I16 c = corners.get(j);
-				points.add( new Point2D_F64(c.x,c.y));
+				points.add(new Point2D_F64(c.x, c.y));
 			}
 		}
-		if( info.detector.isDetectMinimums() ) {
+		if (info.detector.isDetectMinimums()) {
 			QueueCorner corners = info.detector.getMinimums();
 			for (int j = 0; j < corners.size; j++) {
 				Point2D_I16 c = corners.get(j);
-				points.add( new Point2D_F64(c.x,c.y));
+				points.add(new Point2D_F64(c.x, c.y));
 			}
 		}
 		return points;
 	}
 
-	public static void main(String[] args) {
+	public static void main( String[] args ) {
 		ComparePreviousCorner alg = new ComparePreviousCorner(System.out);
 
 		alg.generateAll();

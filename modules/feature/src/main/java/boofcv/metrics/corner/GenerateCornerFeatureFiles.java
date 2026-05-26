@@ -40,13 +40,13 @@ public class GenerateCornerFeatureFiles {
 
 	public GenerateCornerFeatureFiles() {
 
-		imageTypes.add( ImageDataType.U8);
-		imageTypes.add( ImageDataType.F32);
+		imageTypes.add(ImageDataType.U8);
+		imageTypes.add(ImageDataType.F32);
 	}
 
 	public void generateAll() {
-		for( ImageDataType type : imageTypes ) {
-			generateAll( ImageDataType.typeToSingleClass(type));
+		for (ImageDataType type : imageTypes) {
+			generateAll(ImageDataType.typeToSingleClass(type));
 		}
 	}
 
@@ -54,13 +54,13 @@ public class GenerateCornerFeatureFiles {
 
 		Class derivType = GImageDerivativeOps.getDerivativeType(imageType);
 
-		List<AlgInfo> detectors = createAlgorithms(imageType,derivType);
-
 		AnyImageDerivative anyDeriv = GImageDerivativeOps.createAnyDerivatives(DerivativeType.THREE,
 				imageType, derivType);
 
+		List<AlgInfo> detectors = createAlgorithms(imageType, derivType, anyDeriv.getEdgeDivisor());
+
 		for (int i = 0; i < detectors.size(); i++) {
-			ImageGray input = UtilImageIO.loadImage(ImagePath,imageType);
+			ImageGray input = UtilImageIO.loadImage(ImagePath, imageType);
 			anyDeriv.setInput(input);
 			ImageGray derivX = anyDeriv.getDerivative(true);
 			ImageGray derivY = anyDeriv.getDerivative(false);
@@ -72,59 +72,59 @@ public class GenerateCornerFeatureFiles {
 			info.detector.process(input, derivX, derivY, derivXX, derivYY, derivXY);
 
 			// sanity check. There was a bug where only maximums were being saved
-			if( MAX_FEATURES != info.detector.getMinimums().size + info.detector.getMaximums().size)
+			if (MAX_FEATURES != info.detector.getMinimums().size + info.detector.getMaximums().size)
 				throw new RuntimeException("Unexpected number of features found");
-			assert(info.detector.isDetectMinimums() && info.detector.getMinimums().size > 0);
-			assert(info.detector.isDetectMaximums() && info.detector.getMaximums().size > 0);
+			assert (info.detector.isDetectMinimums() && info.detector.getMinimums().size > 0);
+			assert (info.detector.isDetectMaximums() && info.detector.getMaximums().size > 0);
 
 			List<Point2D_F64> points = new ArrayList<>();
-			if( info.detector.isDetectMaximums()) {
+			if (info.detector.isDetectMaximums()) {
 				QueueCorner corners = info.detector.getMaximums();
 				for (int j = 0; j < corners.size; j++) {
 					Point2D_I16 c = corners.get(j);
-					points.add( new Point2D_F64(c.x,c.y));
+					points.add(new Point2D_F64(c.x, c.y));
 				}
 			}
-			if( info.detector.isDetectMinimums() ) {
+			if (info.detector.isDetectMinimums()) {
 				QueueCorner corners = info.detector.getMinimums();
 				for (int j = 0; j < corners.size; j++) {
 					Point2D_I16 c = corners.get(j);
-					points.add( new Point2D_F64(c.x,c.y));
+					points.add(new Point2D_F64(c.x, c.y));
 				}
 			}
-			String fileName = info.name+"_"+(ImageDataType.classToType(imageType))+".txt";
-			PointFileCodec.save(outputDir+"/"+fileName,"Detected Corner Points",points);
+			String fileName = info.name + "_" + (ImageDataType.classToType(imageType)) + ".txt";
+			PointFileCodec.save(outputDir + "/" + fileName, "Detected Corner Points", points);
 		}
 	}
 
-	public static List<AlgInfo> createAlgorithms( Class inputType, Class derivType ) {
+	public static List<AlgInfo> createAlgorithms( Class inputImageType, Class derivImageType, int derivDivisor ) {
 
 		List<AlgInfo> out = new ArrayList<AlgInfo>();
 
 		int radius = 2;
-		ConfigGeneralDetector confDector = new ConfigGeneralDetector(MAX_FEATURES,radius,0.1f);
+		ConfigGeneralDetector confDector = new ConfigGeneralDetector(MAX_FEATURES, radius, 0.1f);
 
-		out.add( new AlgInfo("FAST",FactoryDetectPoint.createFast(confDector,null,inputType)) );
-		out.add( new AlgInfo("ShiTomasi",FactoryDetectPoint.createShiTomasi(confDector,
-				new ConfigShiTomasi(false,radius),derivType)) );
-		out.add( new AlgInfo("ShiTomasiW",FactoryDetectPoint.createShiTomasi(confDector,
-				new ConfigShiTomasi(true,radius), derivType)) );
-		out.add( new AlgInfo("Harris",FactoryDetectPoint.createHarris(confDector,
-				new ConfigHarrisCorner(false,radius), derivType)) );
-		out.add( new AlgInfo("HarrisW",FactoryDetectPoint.createHarris(confDector,
-				new ConfigHarrisCorner(true,radius),derivType)) );
-		out.add( new AlgInfo("KitRos",FactoryDetectPoint.createKitRos(confDector, derivType)) );
-		out.add( new AlgInfo("Median",FactoryDetectPoint.createMedian(confDector,inputType)) );
+		out.add(new AlgInfo("FAST", FactoryDetectPoint.createFast(confDector, null, inputImageType)));
+		out.add(new AlgInfo("ShiTomasi", FactoryDetectPoint.createShiTomasi(confDector,
+				new ConfigShiTomasi(false, radius), derivImageType, derivDivisor)));
+		out.add(new AlgInfo("ShiTomasiW", FactoryDetectPoint.createShiTomasi(confDector,
+				new ConfigShiTomasi(true, radius), derivImageType, derivDivisor)));
+		out.add(new AlgInfo("Harris", FactoryDetectPoint.createHarris(confDector,
+				new ConfigHarrisCorner(false, radius), derivImageType, derivDivisor)));
+		out.add(new AlgInfo("HarrisW", FactoryDetectPoint.createHarris(confDector,
+				new ConfigHarrisCorner(true, radius), derivImageType, derivDivisor)));
+		out.add(new AlgInfo("KitRos", FactoryDetectPoint.createKitRos(confDector, derivImageType, derivDivisor)));
+		out.add(new AlgInfo("Median", FactoryDetectPoint.createMedian(confDector, inputImageType)));
 
 		GeneralFeatureIntensity intensityHessianDet =
-				FactoryIntensityPoint.hessian(HessianBlobIntensity.Type.DETERMINANT,derivType);
+				FactoryIntensityPoint.hessian(HessianBlobIntensity.Type.DETERMINANT, derivImageType);
 		GeneralFeatureIntensity intensityHessianTrace =
-				FactoryIntensityPoint.hessian(HessianBlobIntensity.Type.TRACE,derivType);
-		GeneralFeatureIntensity intensityLaplacian = FactoryIntensityPoint.laplacian(inputType);
+				FactoryIntensityPoint.hessian(HessianBlobIntensity.Type.TRACE, derivImageType);
+		GeneralFeatureIntensity intensityLaplacian = FactoryIntensityPoint.laplacian(inputImageType);
 
-		out.add( new AlgInfo("HessianDet",FactoryDetectPoint.createGeneral(intensityHessianDet,confDector)) );
-		out.add( new AlgInfo("HessianTrace",FactoryDetectPoint.createGeneral(intensityHessianTrace,confDector)) );
-		out.add( new AlgInfo("Laplacian",FactoryDetectPoint.createGeneral(intensityLaplacian,confDector)) );
+		out.add(new AlgInfo("HessianDet", FactoryDetectPoint.createGeneral(intensityHessianDet, confDector, derivDivisor)));
+		out.add(new AlgInfo("HessianTrace", FactoryDetectPoint.createGeneral(intensityHessianTrace, confDector, derivDivisor)));
+		out.add(new AlgInfo("Laplacian", FactoryDetectPoint.createGeneral(intensityLaplacian, confDector, derivDivisor)));
 
 		return out;
 	}
@@ -133,13 +133,13 @@ public class GenerateCornerFeatureFiles {
 		public GeneralFeatureDetector detector;
 		public String name;
 
-		public AlgInfo(String name, GeneralFeatureDetector detector) {
+		public AlgInfo( String name, GeneralFeatureDetector detector ) {
 			this.detector = detector;
 			this.name = name;
 		}
 	}
 
-	public static void main(String[] args) {
+	public static void main( String[] args ) {
 		BoofConcurrency.USE_CONCURRENT = false;
 		GenerateCornerFeatureFiles generator = new GenerateCornerFeatureFiles();
 

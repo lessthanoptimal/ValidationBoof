@@ -5,6 +5,7 @@ import boofcv.abst.feature.detect.interest.ConfigPointDetector;
 import boofcv.abst.feature.detect.interest.PointDetectorTypes;
 import boofcv.abst.feature.orientation.ConfigOrientation2;
 import boofcv.abst.tracker.PointTracker;
+import boofcv.alg.filter.derivative.DerivativeType;
 import boofcv.alg.tracker.klt.ConfigPKlt;
 import boofcv.common.*;
 import boofcv.factory.feature.describe.ConfigDescribeRegion;
@@ -38,46 +39,46 @@ import java.util.List;
 @SuppressWarnings({"unchecked", "rawtypes"})
 public class PointTrackerRegression extends BaseRegression implements ImageRegression {
 
-	public static String pathToData = ValidationConstants.PATH_DATA+"abeles2012/";
+	public static String pathToData = ValidationConstants.PATH_DATA + "abeles2012/";
 	public static double tolerance = 5;
-	String[] dataDirectories = new String[]{"bricks","carpet"};
-	String[] dataSets = new String[]{"skew","rotate","move_out","move_in"};
-	String[] variousSets = new String[]{"lighting","compressed","urban"};
-	int[] skips = new int[]{1,4,8};
+	String[] dataDirectories = new String[]{"bricks", "carpet"};
+	String[] dataSets = new String[]{"skew", "rotate", "move_out", "move_in"};
+	String[] variousSets = new String[]{"lighting", "compressed", "urban"};
+	int[] skips = new int[]{1, 4, 8};
 
 	RuntimeSummary outputSpeed;
 	DogArray_F64 runtimeSummary = new DogArray_F64();
 
 	// summary for a tracker
-	double summaryMeanF,summaryMeanFA,summaryMeanPrecision,summaryMeanRecall,summaryMeanTracks,summaryImageArea;
+	double summaryMeanF, summaryMeanFA, summaryMeanPrecision, summaryMeanRecall, summaryMeanTracks, summaryImageArea;
 
 	public PointTrackerRegression() {
 		super(BoofRegressionConstants.TYPE_TRACKING);
 	}
 
 	@Override
-	public void process(ImageDataType type) throws IOException {
+	public void process( ImageDataType type ) throws IOException {
 
 		// A single file which summarizes runtime for all trackers
 		outputSpeed = new RuntimeSummary();
-		outputSpeed.initializeLog(directoryRuntime, getClass(),"RUN_PointTracker.txt");
+		outputSpeed.initializeLog(directoryRuntime, getClass(), "RUN_PointTracker.txt");
 		outputSpeed.printUnitsRow(true);
 
 		List<Info> all = new ArrayList<>();
 		Class bandType = ImageDataType.typeToSingleClass(type);
 
-		all.add( createDefaultKlt(bandType));
-		all.add( createHarrisNCC(bandType));
-		all.add( createShiNCC(bandType));
-		all.add( createFastNCC(bandType));
-		all.add( createFhBrief(bandType));
-		all.add( createFhKltSurf(bandType));
+		all.add(createDefaultKlt(bandType));
+		all.add(createHarrisNCC(bandType));
+		all.add(createShiNCC(bandType));
+		all.add(createFastNCC(bandType));
+		all.add(createFhBrief(bandType));
+		all.add(createFhKltSurf(bandType));
 
-		for( Info info : all ) {
+		for (Info info : all) {
 			try {
-				process(info,bandType);
-			} catch( RuntimeException e ) {
-				errorLog.println("Tracker "+info.name);
+				process(info, bandType);
+			} catch (RuntimeException e) {
+				errorLog.println("Tracker " + info.name);
 				e.printStackTrace(errorLog);
 				errorLog.println("----------------------------");
 			}
@@ -86,23 +87,23 @@ public class PointTrackerRegression extends BaseRegression implements ImageRegre
 		outputSpeed.out.close();
 	}
 
-	protected void process( Info info , Class bandType ) throws FileNotFoundException {
+	protected void process( Info info, Class bandType ) throws FileNotFoundException {
 		// reset summary statistics
-		summaryMeanF=summaryMeanFA=summaryMeanPrecision=summaryMeanRecall=summaryMeanTracks=summaryImageArea=0;
+		summaryMeanF = summaryMeanFA = summaryMeanPrecision = summaryMeanRecall = summaryMeanTracks = summaryImageArea = 0;
 		runtimeSummary.reset();
 
-		PrintStream outSummary = new PrintStream(new File(directoryMetrics,"ACC_PointTracker_"+info.name+".txt"));
+		PrintStream outSummary = new PrintStream(new File(directoryMetrics, "ACC_PointTracker_" + info.name + ".txt"));
 		BoofRegressionConstants.printGenerator(outSummary, getClass());
 		outSummary.println("# Inlier Tolerance " + tolerance + "  Algorithm " + info.name);
 		outSummary.println();
 		outSummary.println("# (Data Set) (Skip) (F) (F all inside) (Precision) (Recall) (Recall all inside) (Tracks) (Image Area)");
 
 		int totalTrials = 0;
-		for( String directory : dataDirectories ) {
-			for( String whichData : dataSets ) {
-				for( int skip : skips )  {
+		for (String directory : dataDirectories) {
+			for (String whichData : dataSets) {
+				for (int skip : skips) {
 					totalTrials++;
-					String path = pathToData+directory+"/"+whichData;
+					String path = pathToData + directory + "/" + whichData;
 
 					WrapPointTracker wrapped = new WrapPointTracker(info.tracker);
 					computeResults(bandType, wrapped, path, skip, outSummary);
@@ -110,17 +111,17 @@ public class PointTrackerRegression extends BaseRegression implements ImageRegre
 			}
 		}
 
-		for( String whichData : variousSets ) {
-			for( int skip : skips )  {
+		for (String whichData : variousSets) {
+			for (int skip : skips) {
 				totalTrials++;
-				String path = pathToData+"various/"+whichData;
+				String path = pathToData + "various/" + whichData;
 
 				WrapPointTracker wrapped = new WrapPointTracker(info.tracker);
 				computeResults(bandType, wrapped, path, skip, outSummary);
 			}
 		}
 
-		outputSpeed.printStatsRow(info.name,runtimeSummary);
+		outputSpeed.printStatsRow(info.name, runtimeSummary);
 
 		outSummary.println();
 		summaryMeanF /= totalTrials;
@@ -130,18 +131,17 @@ public class PointTrackerRegression extends BaseRegression implements ImageRegre
 		summaryMeanTracks /= totalTrials;
 		summaryImageArea /= totalTrials;
 		outSummary.printf("SUMMARY: F=%6.3f FA=%6.3f PR=%6.3f RE=%6.3f MT=%6.1f AREA=%3d\n",
-				summaryMeanF,summaryMeanFA,summaryMeanPrecision,summaryMeanRecall,summaryMeanTracks,(int)summaryImageArea);
+				summaryMeanF, summaryMeanFA, summaryMeanPrecision, summaryMeanRecall, summaryMeanTracks, (int)summaryImageArea);
 
 
 		outSummary.close();
 	}
 
-	private void computeResults(Class imageType,
-								EvaluationTracker tracker ,
-								String pathData, int skip,
-								PrintStream outSummary)
-			throws FileNotFoundException
-	{
+	private void computeResults( Class imageType,
+	                             EvaluationTracker tracker,
+	                             String pathData, int skip,
+	                             PrintStream outSummary )
+			throws FileNotFoundException {
 		SimpleImageSequence sequence =
 				DefaultMediaManager.INSTANCE.openVideo(pathData + "_undistorted.mjpeg", ImageType.single(imageType));
 
@@ -150,27 +150,27 @@ public class PointTrackerRegression extends BaseRegression implements ImageRegre
 
 		List<Homography2D_F64> groundTruth = LogParseHomography.parse(pathData + "_homography.txt");
 
-		EvaluateTrackerStability app = new EvaluateTrackerStability(tolerance,skip);
+		EvaluateTrackerStability app = new EvaluateTrackerStability(tolerance, skip);
 
-		app.evaluate(tracker,sequence,groundTruth,null);
+		app.evaluate(tracker, sequence, groundTruth, null);
 
 		outSummary.printf("%-24s %2d %6.3f %6.3f %6.3f %6.3f %6.3f %6.1f %3d\n", dataName, skip,
 				app.getMeanF(), app.getMeanFA(), app.getMeanPrecision(), app.getMeanRecall(), app.getMeanRecallA(),
-				app.getMeanTrackCount(),(int)app.getMeanImageArea());
+				app.getMeanTrackCount(), (int)app.getMeanImageArea());
 
 		runtimeSummary.addAll(app.elapsedTimeMS);
-		summaryMeanF = addOnlyIfCountable(summaryMeanF,app.getMeanF());
-		summaryMeanFA = addOnlyIfCountable(summaryMeanFA,app.getMeanFA());
-		summaryMeanPrecision = addOnlyIfCountable(summaryMeanPrecision,app.getMeanPrecision());
-		summaryMeanRecall = addOnlyIfCountable(summaryMeanRecall,app.getMeanRecall());
-		summaryMeanTracks = addOnlyIfCountable(summaryMeanTracks,app.getMeanTrackCount());
-		summaryImageArea = addOnlyIfCountable(summaryImageArea,app.getMeanImageArea());
+		summaryMeanF = addOnlyIfCountable(summaryMeanF, app.getMeanF());
+		summaryMeanFA = addOnlyIfCountable(summaryMeanFA, app.getMeanFA());
+		summaryMeanPrecision = addOnlyIfCountable(summaryMeanPrecision, app.getMeanPrecision());
+		summaryMeanRecall = addOnlyIfCountable(summaryMeanRecall, app.getMeanRecall());
+		summaryMeanTracks = addOnlyIfCountable(summaryMeanTracks, app.getMeanTrackCount());
+		summaryImageArea = addOnlyIfCountable(summaryImageArea, app.getMeanImageArea());
 	}
 
-	public static double addOnlyIfCountable( double value , double additive ) {
-		if( UtilEjml.isUncountable(additive))
+	public static double addOnlyIfCountable( double value, double additive ) {
+		if (UtilEjml.isUncountable(additive))
 			return value;
-		return value+additive;
+		return value + additive;
 	}
 
 	public Info createFhKltSurf( Class bandType ) {
@@ -179,7 +179,7 @@ public class PointTrackerRegression extends BaseRegression implements ImageRegre
 		config.typeTracker = ConfigPointTracker.TrackerType.HYBRID;
 		config.hybrid.pruneCloseTracks = false; // it's evaluated by how long tracks last. Pruning these would be bad
 		config.hybrid.maxInactiveTracks = 10000; // essentially unlimited tracks since this never spawns new tracks
-		config.hybrid.thresholdRespawn.setTo(ConfigLength.relative(0.5,100));
+		config.hybrid.thresholdRespawn.setTo(ConfigLength.relative(0.5, 100));
 		config.detDesc.typeDescribe = ConfigDescribeRegion.Type.SURF_STABLE;
 		config.detDesc.typeDetector = ConfigDetectInterestPoint.Type.FAST_HESSIAN;
 		config.detDesc.detectFastHessian.maxFeaturesPerScale = 200;
@@ -192,7 +192,7 @@ public class PointTrackerRegression extends BaseRegression implements ImageRegre
 		Info info = new Info();
 		info.name = "FhKltSurf";
 		info.imageType = ImageType.single(bandType);
-		info.tracker = FactoryPointTracker.tracker(config,bandType,null);
+		info.tracker = FactoryPointTracker.tracker(config, bandType, null);
 
 		return info;
 	}
@@ -210,7 +210,7 @@ public class PointTrackerRegression extends BaseRegression implements ImageRegre
 		Info info = new Info();
 		info.name = "FhBrief";
 		info.imageType = ImageType.single(bandType);
-		info.tracker = FactoryPointTracker.tracker(config,bandType,null);
+		info.tracker = FactoryPointTracker.tracker(config, bandType, null);
 
 		return info;
 	}
@@ -234,7 +234,7 @@ public class PointTrackerRegression extends BaseRegression implements ImageRegre
 		Info info = new Info();
 		info.name = "HarrisNCC";
 		info.imageType = ImageType.single(bandType);
-		info.tracker = FactoryPointTracker.tracker(config,bandType,null);
+		info.tracker = FactoryPointTracker.tracker(config, bandType, null);
 
 		return info;
 	}
@@ -258,7 +258,7 @@ public class PointTrackerRegression extends BaseRegression implements ImageRegre
 		Info info = new Info();
 		info.name = "ShiTomasiNCC";
 		info.imageType = ImageType.single(bandType);
-		info.tracker = FactoryPointTracker.tracker(config,bandType,null);
+		info.tracker = FactoryPointTracker.tracker(config, bandType, null);
 
 		return info;
 	}
@@ -283,12 +283,12 @@ public class PointTrackerRegression extends BaseRegression implements ImageRegre
 		Info info = new Info();
 		info.name = "FastNCC";
 		info.imageType = ImageType.single(bandType);
-		info.tracker = FactoryPointTracker.tracker(config,bandType,null);
+		info.tracker = FactoryPointTracker.tracker(config, bandType, null);
 
 		return info;
 	}
 
-	public Info createDefaultKlt(Class bandType) {
+	public Info createDefaultKlt( Class bandType ) {
 
 		ConfigPKlt configKlt = new ConfigPKlt();
 		configKlt.maximumTracks.setFixed(800);
@@ -301,7 +301,7 @@ public class PointTrackerRegression extends BaseRegression implements ImageRegre
 		Info info = new Info();
 		info.name = "DefaultKLT";
 		info.imageType = ImageType.single(bandType);
-		info.tracker = FactoryPointTracker.klt(configKlt, configDet,bandType,null);
+		info.tracker = FactoryPointTracker.klt(configKlt, DerivativeType.SOBEL, configDet, bandType, null);
 
 		return info;
 	}
@@ -313,9 +313,9 @@ public class PointTrackerRegression extends BaseRegression implements ImageRegre
 		public PointTracker tracker;
 	}
 
-	public static void main(String[] args) throws IOException, IllegalAccessException, InstantiationException, ClassNotFoundException {
+	public static void main( String[] args ) throws IOException, IllegalAccessException, InstantiationException, ClassNotFoundException {
 		BoofRegressionConstants.clearCurrentResults();
-		RegressionRunner.main(new String[]{PointTrackerRegression.class.getName(),ImageDataType.F32.toString()});
+		RegressionRunner.main(new String[]{PointTrackerRegression.class.getName(), ImageDataType.F32.toString()});
 //		RegressionRunner.main(new String[]{PointTrackerRegression.class.getName(),ImageDataType.U8.toString()});
 	}
 }
