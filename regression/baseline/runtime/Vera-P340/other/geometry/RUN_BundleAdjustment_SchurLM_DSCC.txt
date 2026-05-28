@@ -4,7 +4,7 @@ target_metric=Seconds
 
 Individual
                                                 Seconds
-  dubrovnik/problem-16-22106-pre.txt              10.87
-  final/problem-93-61203-pre.txt                  49.49
-  ladybug/problem-49-7776-pre.txt                  3.50
-  trafalgar/problem-21-11315-pre.txt               1.33
+  dubrovnik/problem-16-22106-pre.txt              10.52
+  final/problem-93-61203-pre.txt                  49.58
+  ladybug/problem-49-7776-pre.txt                  3.51
+  trafalgar/problem-21-11315-pre.txt               1.32

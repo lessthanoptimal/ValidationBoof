@@ -1,10 +1,10 @@
 ---- Native Access Info
-OS: Ubuntu 20.04.4 LTS
+OS: Ubuntu 20.04.6 LTS
 CPU: Intel(R) Xeon(R) W-1250 CPU @ 3.30GHz
-Ave Load: 1m=5.61 5m=3.01 15m=1.83
+Ave Load: 1m=6.94 5m=3.68 15m=1.49
 ----
 Runtime.getRuntime().availableProcessors(): 12
-Runtime.getRuntime().freeMemory(): 1048879912
+Runtime.getRuntime().freeMemory(): 1047600048
 Runtime.getRuntime().totalMemory(): 1073741824
 =========== java.specification.version
 17

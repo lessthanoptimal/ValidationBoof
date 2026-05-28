@@ -3,66 +3,66 @@
 
 Individual
                                  Milliseconds
-  apartment_bush_                2157
-  apartment_road_a_              1752
-  barrel_                        1657
-  bobcats_                       1229
-  books_                         1794
-  bowl_                          1657
-  building_a_                    1373
+  apartment_bush_                2164
+  apartment_road_a_              1795
+  barrel_                        1653
+  bobcats_                       1227
+  books_                         1804
+  bowl_                          1665
+  building_a_                    1457
   chicken_                       1731
-  christmass_display_a_          1616
-  deer_                          1665
-  dinner_                        1704
-  dinner_table_                  1753
-  eggs_                          1563
-  fence_grass_a_                 1700
-  fence_grass_b_                 1779
-  fig_leaves_                    1069
-  figuresA_                      1618
-  house_a_                       1758
-  house_b_                       1471
-  kitchenA_                      1736
-  kitchenB_                      1778
-  library_                       1682
-  minecraft_cave1_               1518
-  minecraft_cave2_               1443
-  minecraft_distant_             1659
-  minecraft_high_                1792
-  mono_wall_                     1357
-  parking_meter_a_               1613
-  pebbles_                       1826
-  pelican_                       1725
-  people_a_                      1600
-  people_b_                      1668
-  person_a_                      1723
-  power_                         1562
-  puddle_                        1719
-  pumpkintop_                    1794
-  road_a_                        1762
-  rock_                          783
-  rock_leaves_                   1964
-  rockview_                      1816
-  safeway_                       1686
-  santa_a_                       1696
-  seal_                          1425
-  sf_building_a_                 1660
-  sf_building_b_                 1563
-  sf_building_c_                 1687
+  christmass_display_a_          1609
+  deer_                          1658
+  dinner_                        1708
+  dinner_table_                  1749
+  eggs_                          1577
+  fence_grass_a_                 1718
+  fence_grass_b_                 1777
+  fig_leaves_                    1061
+  figuresA_                      1616
+  house_a_                       1748
+  house_b_                       1466
+  kitchenA_                      1730
+  kitchenB_                      1753
+  library_                       1676
+  minecraft_cave1_               1454
+  minecraft_cave2_               1448
+  minecraft_distant_             1656
+  minecraft_high_                1791
+  mono_wall_                     1345
+  parking_meter_a_               1612
+  pebbles_                       1827
+  pelican_                       1717
+  people_a_                      1604
+  people_b_                      1664
+  person_a_                      1719
+  power_                         1565
+  puddle_                        1729
+  pumpkintop_                    1798
+  road_a_                        1769
+  rock_                          786
+  rock_leaves_                   1969
+  rockview_                      1812
+  safeway_                       1690
+  santa_a_                       1698
+  seal_                          1390
+  sf_building_a_                 1645
+  sf_building_b_                 1546
+  sf_building_c_                 1676
   sf_building_d_                 1612
-  sf_bus_stop_                   1599
-  sf_grass_a_                    1632
-  sf_intersection_a_             1720
-  sf_thing_                      1497
-  shuffleboard_a_                1829
-  shuffleboard_b_                1608
-  skull_                         1558
+  sf_bus_stop_                   1601
+  sf_grass_a_                    1630
+  sf_intersection_a_             1721
+  sf_thing_                      1492
+  shuffleboard_a_                1830
+  shuffleboard_b_                1611
+  skull_                         1556
   succulents_                    1041
-  triflowers_                    1667
-  turkey_                        1782
-  uni_pacific_                   1619
-  waterdrip_                     1813
+  triflowers_                    1655
+  turkey_                        1738
+  uni_pacific_                   1621
+  waterdrip_                     1811
 
 Summary:
                               N       Mean      P05      P50      P95      MAX
-  summary                      59  1631.53     1069     1667     1826     2157
+  summary                      59  1630.02     1061     1664     1827     2164

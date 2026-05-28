@@ -3,5 +3,5 @@
 
 Default:
                               N       Mean      P05      P50      P95      MAX
-  trinocular_detect            30  150.494  135.376  144.128  161.015  303.281
-  trinocular_calib              1  498.214  498.214  498.214  498.214  498.214
+  trinocular_detect            30  143.361  127.221  136.596  154.956   304.85
+  trinocular_calib              1  560.497  560.497  560.497  560.497  560.497
