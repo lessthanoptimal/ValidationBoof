@@ -13,9 +13,9 @@ Summary:
  false positives    : 0
  false negative     : 0
 Corner errors:
- precision 50%         : 0.36220070864184906
- precision 90%         : 0.6269997626664883
- precision 100%        : 0.9252099908460424
+ precision 50%         : 0.36220070864187703
+ precision 90%         : 0.6269997626665166
+ precision 100%        : 0.9252099908460016
 
 ---------------------------------------------------
 
@@ -48,7 +48,7 @@ Summary:
  false negative     : 0
 Corner errors:
  precision 50%         : 0.35990533868949126
- precision 90%         : 0.6008128279249373
+ precision 90%         : 0.6008128279249657
  precision 100%        : 1.151946106970239
 
 ---------------------------------------------------
@@ -64,9 +64,9 @@ Summary:
  false positives    : 0
  false negative     : 2
 Corner errors:
- precision 50%         : 3.0614238628429793
- precision 90%         : 5.318873545386787
- precision 100%        : 9.96655238275584
+ precision 50%         : 3.061423862842932
+ precision 90%         : 5.3188735453866745
+ precision 100%        : 9.966552382755722
 
 ---------------------------------------------------
 
@@ -81,7 +81,7 @@ Summary:
  false positives    : 0
  false negative     : 0
 Corner errors:
- precision 50%         : 0.35943750659992413
+ precision 50%         : 0.35943750659982643
  precision 90%         : 0.6064356428149086
  precision 100%        : 1.021498517186695
 
@@ -114,7 +114,7 @@ Location            : 199
 Precision:              9600
  errors 50%         : 0.05476062824445439
  errors 90%         : 0.1762311139653049
- errors 100%        : 0.290277648547019
+ errors 100%        : 0.2902776485469403
 Accuracy:               9600
  errors 50%         : 0.5158384631935102
  errors 90%         : 0.9640961115906078
@@ -133,15 +133,15 @@ Summary:
  false positive     : 0
  false negative     : 0
 Normal Angle (deg):     199
- errors 50%         : 0.29035244906961677
+ errors 50%         : 0.2903524490683615
  errors 90%         : 0.6840791269472947
- errors 100%        : 1.140408754454672
+ errors 100%        : 1.1404087544543522
 Location            : 199
  errors 50%         : 0.005807430226993352
- errors 90%         : 0.013800110259187743
- errors 100%        : 0.021315844576996704
+ errors 90%         : 0.01380011025919482
+ errors 100%        : 0.02131584457699668
 Precision:              9600
- errors 50%         : 0.011708623707259166
+ errors 50%         : 0.011708623707278785
  errors 90%         : 0.025255761287465994
  errors 100%        : 0.09154244461008258
 Accuracy:               9600

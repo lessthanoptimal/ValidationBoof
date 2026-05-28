@@ -1,10 +1,10 @@
 # GENERATOR DenseFlowRegression
 # dataset totalValid (error 50%) (error 90%) (error 95%)
-          Dimetrodon 215820    0.13    0.43    0.64
-              Grove2 307200    0.08    0.33    0.83
-              Grove3 306794    0.14    2.57    5.37
-           Hydrangea 211712    0.12    0.69    1.38
-         RubberWhale 222970    0.08    0.32    0.78
-              Urban2 304899    0.17   12.21   16.79
-              Urban3 306746    0.18    5.56   10.81
-               Venus 159600    0.24    0.87    3.31
+          Dimetrodon 215820    0.12    0.43    0.58
+              Grove2 307200    0.08    0.31    0.70
+              Grove3 307181    0.12    1.84    4.94
+           Hydrangea 211712    0.09    0.62    1.10
+         RubberWhale 222970    0.06    0.26    0.51
+              Urban2 305664    0.12    0.74    3.26
+              Urban3 306385    0.13    2.86    7.60
+               Venus 159600    0.24    0.60    2.53

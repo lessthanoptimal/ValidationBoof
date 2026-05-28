@@ -2,8 +2,8 @@
 # class=ScoreFundamentalVsRotation
 
  Classification: scenarios=4 failed=0, trials=40 correct=0.80 mean_inlier=0.89 errors=8
- Relative Score: scenarios=2 failed=1, trails=28 better=0.63 errors=8
+ Relative Score: scenarios=2 failed=0, trails=28 better=0.38 errors=6
          Priors: scenarios=2 failed=0, trials=22 correct=1.00 mean_inlier=1.00 errors=0
        ForwardZ: scenarios=2 failed=0, trials=60 correct=0.83 mean_inlier=0.88 errors=10
-      FocalZoom: scenarios=2 failed=2, trials=60 correct=0.42 mean_inlier=0.89 errors=35
-    All Summary: scenarios=12 failed=3, trials=210 correct=0.71 mean_inlier=0.91 errors=61
+      FocalZoom: scenarios=2 failed=2, trials=60 correct=0.37 mean_inlier=0.89 errors=38
+    All Summary: scenarios=12 failed=2, trials=210 correct=0.70 mean_inlier=0.91 errors=62

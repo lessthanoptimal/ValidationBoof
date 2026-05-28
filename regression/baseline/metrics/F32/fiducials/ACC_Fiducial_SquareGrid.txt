@@ -13,9 +13,9 @@ Summary:
  false positives    : 0
  false negative     : 0
 Corner errors:
- precision 50%         : 0.3625335263444439
+ precision 50%         : 0.36253352634445374
  precision 90%         : 0.6267806365049695
- precision 100%        : 0.9241011904761233
+ precision 100%        : 0.9241011904761615
 
 ---------------------------------------------------
 
@@ -64,9 +64,9 @@ Summary:
  false positives    : 0
  false negative     : 2
 Corner errors:
- precision 50%         : 3.092212474406275
+ precision 50%         : 3.0922124744062276
  precision 90%         : 5.320023923648863
- precision 100%        : 9.966381159959564
+ precision 100%        : 9.966381159959491
 
 ---------------------------------------------------
 
@@ -82,8 +82,8 @@ Summary:
  false negative     : 0
 Corner errors:
  precision 50%         : 0.35860491861716703
- precision 90%         : 0.6069760042035857
- precision 100%        : 1.0197626017013086
+ precision 90%         : 0.6069760042035577
+ precision 100%        : 1.0197626017012782
 
 ---------------------------------------------------
 
@@ -133,17 +133,17 @@ Summary:
  false positive     : 0
  false negative     : 0
 Normal Angle (deg):     199
- errors 50%         : 0.265600978754024
- errors 90%         : 0.6188375522351249
- errors 100%        : 1.1505660327847949
+ errors 50%         : 0.26560097875676847
+ errors 90%         : 0.618837552234536
+ errors 100%        : 1.1505660327844782
 Location            : 199
  errors 50%         : 0.005693303807760451
  errors 90%         : 0.013266859737381636
- errors 100%        : 0.02222966357964612
+ errors 100%        : 0.02222966357965327
 Precision:              9600
  errors 50%         : 0.011653558417959025
  errors 90%         : 0.025170234421699026
- errors 100%        : 0.09051252612471261
+ errors 100%        : 0.09051252612472781
 Accuracy:               9600
  errors 50%         : 0.404139331427066
  errors 90%         : 0.7364571286632814

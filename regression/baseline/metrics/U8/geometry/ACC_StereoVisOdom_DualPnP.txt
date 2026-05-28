@@ -5,13 +5,13 @@
 # Dataset: Leuven07
 
 Total Frames = 1174
-Total Faults = 2
-Fraction with no update 0.0017035775127768314
-Ave per estimate:      distance 0.2793944  rotation 0.000701119
-Ave per distance:      distance   5.49599% deg/unit = 7.90e-03
-Ave Skip 20:           distance   2.03535% deg/unit = 2.22e-03
-Absolute:              location  68.78808  rotation   0.66 degrees
-Integral per distance: distance   1.34301% deg/unit = 5.93e-04
+Total Faults = 1
+Fraction with no update 8.517887563884157E-4
+Ave per estimate:      distance 0.2845498  rotation 0.000754903
+Ave per distance:      distance   5.60217% deg/unit = 8.52e-03
+Ave Skip 20:           distance   1.66877% deg/unit = 2.37e-03
+Absolute:              location  78.22135  rotation   1.79 degrees
+Integral per distance: distance   0.73385% deg/unit = 7.63e-04
 
 ###################################################################################
 # Dataset: KITTI00
@@ -19,8 +19,8 @@ Integral per distance: distance   1.34301% deg/unit = 5.93e-04
 Total Frames = 4540
 Total Faults = 0
 Fraction with no update 0.0
-Ave per estimate:      distance 0.0212667  rotation 0.000849645
-Ave per distance:      distance   2.59254% deg/unit = 5.93e-02
-Ave Skip 20:           distance   1.86341% deg/unit = 2.06e-02
-Absolute:              location  20.85451  rotation   5.03 degrees
-Integral per distance: distance   0.64273% deg/unit = 1.51e-03
+Ave per estimate:      distance 0.0206118  rotation 0.000848777
+Ave per distance:      distance   2.51270% deg/unit = 5.93e-02
+Ave Skip 20:           distance   1.80335% deg/unit = 2.04e-02
+Absolute:              location  20.98972  rotation   6.49 degrees
+Integral per distance: distance   0.51693% deg/unit = 6.56e-05
