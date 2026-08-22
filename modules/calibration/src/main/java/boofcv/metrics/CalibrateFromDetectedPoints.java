@@ -2,6 +2,7 @@ package boofcv.metrics;
 
 import boofcv.abst.fiducial.calib.ConfigGridDimen;
 import boofcv.abst.geo.bundle.SceneStructureMetric;
+import boofcv.abst.geo.calibration.ConfigCalibrateBrown;
 import boofcv.abst.geo.calibration.DetectSingleFiducialCalibration;
 import boofcv.abst.geo.calibration.ImageResults;
 import boofcv.alg.geo.calibration.CalibrationObservation;
@@ -32,8 +33,9 @@ public class CalibrateFromDetectedPoints {
     public void processStereo(File stereoDetections, boolean tangential) throws IOException {
         DetectSingleFiducialCalibration targetDesc = FactoryFiducialCalibration.chessboardX(
                 null, new ConfigGridDimen(7, 5, 30));
-        var zhang99 = new CalibrationPlanarGridZhang99(
-                new Zhang99CameraBrown(true, tangential, 2));
+
+        var configBrown = new ConfigCalibrateBrown().zeroSkew(true).numRadial(2).tangential(tangential);
+        var zhang99 = new CalibrationPlanarGridZhang99(new Zhang99CameraBrown(configBrown));
 
         zhang99.setLayouts(List.of(targetDesc.getLayout()));
 

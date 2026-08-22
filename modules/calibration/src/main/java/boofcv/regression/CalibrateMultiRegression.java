@@ -3,6 +3,7 @@ package boofcv.regression;
 import boofcv.abst.fiducial.calib.CalibrationPatterns;
 import boofcv.abst.geo.calibration.CalibrateMultiPlanar;
 import boofcv.abst.geo.calibration.CalibrateMultiPlanar.CameraStatistics;
+import boofcv.abst.geo.calibration.ConfigCalibrateBrown;
 import boofcv.abst.geo.calibration.DetectMultiFiducialCalibration;
 import boofcv.alg.fiducial.calib.ConfigCalibrationTarget;
 import boofcv.alg.geo.calibration.CalibrationObservation;
@@ -103,8 +104,9 @@ public class CalibrateMultiRegression extends BaseRegression implements ImageReg
             cameras.add(UtilIO.listSmartImages(child.getPath(), true));
         }
 
+        var configBrown = new ConfigCalibrateBrown().zeroSkew(true).numRadial(3).tangential(false);
         var calibrator = new CalibrateMultiPlanar();
-        calibrator.getCalibratorMono().configurePinhole(true, 3, false);
+        calibrator.getCalibratorMono().configurePinhole(configBrown);
         calibrator.initialize(cameras.size(), 1);
         calibrator.setTargetLayout(0, detector.getLayout(0));
 
