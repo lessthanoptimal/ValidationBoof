@@ -2,7 +2,7 @@ package boofcv.metrics.flow;
 
 import boofcv.gui.feature.VisualizeOpticalFlow;
 import boofcv.gui.image.ShowImages;
-import boofcv.struct.flow.ImageFlow;
+import boofcv.struct.image.InterleavedF32;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -18,7 +18,7 @@ public class ShowMiddleburyGroundTruthApp {
 
 		String fileName = "data/denseflow/other-gt-flow/"+which+"/flow10.flo";
 
-		ImageFlow flow = ParseMiddleburyFlow.parse(fileName);
+		InterleavedF32 flow = ParseMiddleburyFlow.parse(fileName);
 
 		BufferedImage visualized = new BufferedImage(flow.width,flow.height,BufferedImage.TYPE_INT_BGR);
 		VisualizeOpticalFlow.colorized(flow,5,visualized);

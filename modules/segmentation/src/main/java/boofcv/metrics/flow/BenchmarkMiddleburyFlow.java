@@ -4,9 +4,9 @@ import boofcv.abst.flow.DenseOpticalFlow;
 import boofcv.factory.flow.FactoryDenseOpticalFlow;
 import boofcv.io.image.ConvertBufferedImage;
 import boofcv.io.image.UtilImageIO;
-import boofcv.struct.flow.ImageFlow;
 import boofcv.struct.image.GrayF32;
 import boofcv.struct.image.ImageBase;
+import boofcv.struct.image.InterleavedF32;
 import org.ddogleg.struct.DogArray_F64;
 
 import java.awt.image.BufferedImage;
@@ -56,14 +56,14 @@ public class BenchmarkMiddleburyFlow<T extends ImageBase<T>> {
 			BufferedImage image0 = UtilImageIO.loadImage(imageName0);
 			BufferedImage image1 = UtilImageIO.loadImage(imageName1);
 
-			ImageFlow flowTruth = ParseMiddleburyFlow.parse(nameTruth);
+			InterleavedF32 flowTruth = ParseMiddleburyFlow.parse(nameTruth);
 
 			T input0 = algorithm.getInputType().createImage(flowTruth.width, flowTruth.height);
 			T input1 = algorithm.getInputType().createImage(flowTruth.width, flowTruth.height);
 			ConvertBufferedImage.convertFrom(image0,input0,true);
 			ConvertBufferedImage.convertFrom(image1,input1,true);
 
-			ImageFlow flowFound = new ImageFlow(flowTruth.width, flowTruth.height);
+			InterleavedF32 flowFound = new InterleavedF32(flowTruth.width, flowTruth.height, 2);
 
 			long before = System.nanoTime();
 			algorithm.process(input0,input1,flowFound);
@@ -74,12 +74,13 @@ public class BenchmarkMiddleburyFlow<T extends ImageBase<T>> {
 			errors.reset();
 			for (int y = 0; y < input0.height; y++) {
 				for (int x = 0; x < input0.width; x++) {
-					ImageFlow.D f = flowFound.get(x,y);
-					ImageFlow.D t = flowTruth.get(x,y);
+					// band 0 = x, band 1 = y. x is NaN when there's no flow estimate
+					float fx = flowFound.getBand(x,y,0);
+					float tx = flowTruth.getBand(x,y,0);
 
-					if( f.isValid() && t.isValid() ) {
-						float dx = f.x - t.x;
-						float dy = f.y - t.y;
+					if( !Float.isNaN(fx) && !Float.isNaN(tx) ) {
+						float dx = fx - tx;
+						float dy = flowFound.getBand(x,y,1) - flowTruth.getBand(x,y,1);
 
 						errors.add( Math.sqrt(dx*dx + dy*dy));
 					}
