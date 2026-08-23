@@ -90,10 +90,14 @@ public class EvaluateDisparity<T extends ImageGray<T>> {
 		list.add(create_BM5(range, 3, DisparityError.SAD, inputType));
 		list.add(create_BM5(range, 3, DisparityError.CENSUS, inputType));
 		list.add(create_BM5(range, 3, DisparityError.NCC, inputType));
+		list.add(create_BM5(range, 3, DisparityError.SSD, inputType));
+		list.add(create_BM5(range, 3, DisparityError.ZSSD, inputType));
 
 		list.add(create_BM(range, 3, DisparityError.SAD, inputType));
 		list.add(create_BM(range, 3, DisparityError.CENSUS, inputType));
 		list.add(create_BM(range, 3, DisparityError.NCC, inputType));
+		list.add(create_BM(range, 3, DisparityError.SSD, inputType));
+		list.add(create_BM(range, 3, DisparityError.ZSSD, inputType));
 
 		// SGM only supports GrayU8 images
 		if (inputType == GrayU8.class) {
