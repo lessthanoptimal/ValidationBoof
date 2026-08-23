@@ -1,11 +1,11 @@
 ---- Native Access Info
-OS: Ubuntu 24.04.2 LTS
+OS: Ubuntu 24.04.4 LTS
 CPU: AMD Ryzen 9 5950X 16-Core Processor
-Ave Load: 1m=4.93 5m=2.79 15m=1.8
+Ave Load: 1m=3.7 5m=1.37 15m=0.77
 ----
 Runtime.getRuntime().availableProcessors(): 32
-Runtime.getRuntime().freeMemory(): 1027557272
-Runtime.getRuntime().totalMemory(): 1073741824
+Runtime.getRuntime().freeMemory(): 60330456
+Runtime.getRuntime().totalMemory(): 83886080
 =========== java.specification.version
 17
 =========== sun.jnu.encoding
@@ -68,7 +68,7 @@ pja
 =========== path.separator
 :
 =========== os.version
-6.14.0-36-generic
+7.0.0-28-generic
 =========== java.runtime.name
 OpenJDK Runtime Environment
 =========== file.encoding
@@ -94,7 +94,7 @@ Java Virtual Machine Specification
 =========== native.encoding
 UTF-8
 =========== java.library.path
-:/home/pja/projects/thirdparty/opencv-3.4.13/lib:/usr/java/packages/lib:/usr/lib64:/lib64:/lib:/usr/lib
+:/home/pja/projects/thirdparty/opencv-3.4.13/lib:/opt/opencv-4.13.0/lib:/usr/java/packages/lib:/usr/lib64:/lib64:/lib:/usr/lib
 =========== java.vm.info
 mixed mode, sharing
 =========== java.vendor

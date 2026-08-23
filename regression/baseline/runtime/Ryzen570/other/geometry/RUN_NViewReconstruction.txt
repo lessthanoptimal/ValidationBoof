@@ -3,15 +3,15 @@
 
 default
                                    all similar   pair metric    sba
-  bucket_loop_01                  161.4   12.0  131.9   16.4    1.1
-  steps_reg_01                    110.1    6.7   74.8   26.9    1.7
-  steps_wide_01                    26.2    2.5   15.8    7.4    0.6
-  steps_zoom_01                    74.6    4.7   42.6   23.8    3.4
-  towel_01                         82.2    3.7   65.3   10.8    2.4
-  towel_box                        81.3    3.5   60.5   16.7    0.7
-  drone_buildings_01              293.8    6.0  284.4    3.0    0.4
-  drone_park_01                   215.6    5.4  197.3   10.0    2.9
+  bucket_loop_01                  155.1   10.8  126.9   16.4    1.1
+  steps_reg_01                     96.9    6.0   67.5   22.3    1.1
+  steps_wide_01                    19.2    2.4   11.1    5.1    0.6
+  steps_zoom_01                    73.3    4.2   45.1   19.5    4.4
+  towel_01                         84.0    3.3   63.9   13.9    3.0
+  towel_box                        77.1    3.1   58.0   14.1    1.9
+  drone_buildings_01              279.0    6.0  269.7    2.9    0.4
+  drone_park_01                   207.2    5.5  188.9    9.8    2.9
 
 Summary:
                               N       Mean      P05      P50      P95      MAX
-  summary                       8   130650    26208    82212   215622   293761
+  summary                       8   123971    19209    83964   207154   279030

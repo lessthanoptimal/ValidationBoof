@@ -3,6 +3,6 @@
 
 Summary:
                               N       Mean      P05      P50      P95      MAX
-  FundamentalRotation         210  158.516  3.42805  30.6675  544.524  628.162
-  FundamentalCompatible       210  152.443  4.30272  23.4489   544.59   601.98
-  ModelInliers                210  150.562  1.37584   23.162  548.338  590.561
+  FundamentalRotation         210  160.607  4.80237  35.5389  543.075  623.561
+  FundamentalCompatible       210  150.312  4.29648  23.3306  542.194  584.888
+  ModelInliers                210  150.116  1.38296  23.0946   542.22  588.534
