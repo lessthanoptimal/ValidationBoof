@@ -30,9 +30,9 @@ run_command("git checkout SNAPSHOT")
 run_command("git reset --hard origin/SNAPSHOT")
 run_command("./gradlew clean")
 run_command("./gradlew autogenerate")
-run_command("./gradlew run --console=plain runtimeRegression -Dexec.args="
-            "\"--EmailPath {} --LocalSettingsPath {} --ResultsPath {}\"".
-            format(email_path,local_settings_path, regression_path))
+run_command("./gradlew runtimeRegression --console=plain "
+              "--args=\"--EmailPath {} --LocalSettingsPath {} --ResultsPath {}\"".
+              format(email_path, local_settings_path, regression_path))
 error_log.write("Pulling latest regression code\n")
 error_log.flush()
 check_cd(project_home)
